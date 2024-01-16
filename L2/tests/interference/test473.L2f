@@ -1,0 +1,43 @@
+(@storeValueToArray
+	3
+	%A1 <- rdi
+	%a <- rsi
+	%index <- rdx
+	rdi <- %A1
+	mem rsp -8 <- :call_label_ciao__ciao__ciao__ciao__ciao__ciao__ciao__ciao_20
+	call @isAddress 1
+	:call_label_ciao__ciao__ciao__ciao__ciao__ciao__ciao__ciao_20
+	%is_A1_address <- rax
+	cjump %is_A1_address = 1 :call_label_ciao__ciao__ciao__ciao__ciao__ciao__ciao__ciao_16
+	goto :call_label_ciao__ciao__ciao__ciao__ciao__ciao__ciao__ciao_19
+	:call_label_ciao__ciao__ciao__ciao__ciao__ciao__ciao__ciao_16
+	%length <- mem %A1 0
+	rdi <- 3
+	rsi <- %length
+	mem rsp -8 <- :call_label_ciao__ciao__ciao__ciao__ciao__ciao__ciao__ciao_21
+	call @getSamller 2
+	:call_label_ciao__ciao__ciao__ciao__ciao__ciao__ciao__ciao_21
+	%length <- rax
+	:call_label_ciao__ciao__ciao__ciao__ciao__ciao__ciao__ciao_17
+	%tmp <- %index < %length
+	cjump %tmp = 1 :call_label_ciao__ciao__ciao__ciao__ciao__ciao__ciao__ciao_18
+	goto :call_label_ciao__ciao__ciao__ciao__ciao__ciao__ciao__ciao_19
+	:call_label_ciao__ciao__ciao__ciao__ciao__ciao__ciao__ciao_18
+	rdi <- %index
+	mem rsp -8 <- :call_label_ciao__ciao__ciao__ciao__ciao__ciao__ciao__ciao_22
+	call @increaseOne 1
+	:call_label_ciao__ciao__ciao__ciao__ciao__ciao__ciao__ciao_22
+	%offest_index <- rax
+	%a += %index
+	rdi <- %a
+	mem rsp -8 <- :call_label_ciao__ciao__ciao__ciao__ciao__ciao__ciao__ciao_23
+	call @encode 1
+	:call_label_ciao__ciao__ciao__ciao__ciao__ciao__ciao__ciao_23
+	%encoded_a <- rax
+	%addr @ %A1 %offest_index 8
+	mem %addr 0 <- %encoded_a
+	%index += 1
+	goto :call_label_ciao__ciao__ciao__ciao__ciao__ciao__ciao__ciao_17
+	:call_label_ciao__ciao__ciao__ciao__ciao__ciao__ciao__ciao_19
+	return
+)

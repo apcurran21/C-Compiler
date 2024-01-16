@@ -1,0 +1,78 @@
+define void @main() {
+	:EntryPoint
+	int64 %len
+	%len <- 10
+
+	int64[] %arr1
+	%arr1 <- call @GetArray(%len)
+	call @PopulateArray1(%arr1, %len)
+
+	call @printResultArray(%arr1)
+
+
+	int64[] %arr2
+	%arr2 <- call @GetArray(%len)
+	call @PopulateArray2(%arr2, %len)
+
+	call @printResultArray(%arr2)
+
+	return
+}
+
+define int64[] @GetArray(int64 %len) {
+	:EntryPoint
+	int64 %val
+	int64[] %arr
+	%len <- %len << 1
+	%len <- %len + 1
+	%val <- 1
+	%arr <- new Array(%len)
+	return %arr
+}
+
+define void @PopulateArray1(int64[] %arr, int64 %len) {
+	:EntryPoint
+	int64 %ind
+	int64 %stop
+	int64 %value
+	%ind <- 0
+	br :loopStart1
+
+	:loopStart1
+	%stop <- %len <= %ind
+	br %stop :LoopEnd :LoopContinue
+
+	:LoopContinue
+	%value <- %ind * 8
+	%value <- %value << 1
+	%value <- %value + 1
+	%arr[%ind] <- %value
+	%ind <- %ind + 1
+	br :loopStart1
+
+	:LoopEnd
+	return
+}
+
+define void @PopulateArray2(int64[] %arr, int64 %len) {
+	:EntryPoint
+	int64 %ind
+	int64 %continue
+	%ind <- 0
+	br :LoopStart2
+
+	:LoopStart2
+	%arr[%ind] <- 5
+	%ind <- %ind + 1
+	%continue <- %len >= %ind
+	br %continue :LoopStart2 :Exit
+
+	:Exit
+	return
+}
+
+define void @printResultArray(int64[] %arr) {
+	:EntryPoint
+	call print(%arr)
+	return
+}

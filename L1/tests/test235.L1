@@ -1,0 +1,70 @@
+(@test2
+(@test2
+	0 4
+	rdi <- 0
+	mem rsp 24 <- rdi
+	rdi <- 2
+	mem rsp 16 <- rdi
+	rdi <- 2
+	mem rsp 0 <- rdi
+	rdi <- 1
+	mem rsp 8 <- rdi
+	rdi <- mem rsp 8
+	rdi <- rdi
+	call print 1
+	rdi <- 3
+	rdi <- mem rsp 8
+	rsi <- rdi
+	rdi <- 900099
+	mem rsp 8 <- rdi
+	rdi <- mem rsp 8
+	rdi >>= 5
+	mem rsp 8 <- rdi
+	rdi <- mem rsp 8
+	rdi -= 78
+	mem rsp 8 <- rdi
+	rdi <- mem rsp 8
+	rdi *= 8
+	mem rsp 8 <- rdi
+	rdi <- rsi
+	mem rsp 8 <- rdi
+	:fibonacci
+	rdi <- mem rsp 8
+	rdi <- rdi
+	call print 1
+	rdi <- mem rsp 24
+	rdi <- rdi
+	mem rsp 8 <- rdi
+	rsi <- mem rsp 8
+	rdi <- mem rsp 16
+	rsi += rdi
+	mem rsp 8 <- rsi
+	rdi <- mem rsp 8
+	rdi += 1
+	mem rsp 8 <- rdi
+	rdi <- mem rsp 8
+	rdi -= 1
+	mem rsp 8 <- rdi
+	rdi <- mem rsp 8
+	rdi += 1
+	mem rsp 8 <- rdi
+	rdi <- mem rsp 16
+	rdi <- rdi
+	mem rsp 24 <- rdi
+	rdi <- mem rsp 8
+	rdi <- rdi
+	mem rsp 16 <- rdi
+	rdi <- mem rsp 16
+	rdi -= 1
+	mem rsp 16 <- rdi
+	rdi <- mem rsp 0
+	rdi += 2
+	mem rsp 0 <- rdi
+	rdi <- mem rsp 8
+	rdi <- rdi
+	rdi <- mem rsp 0
+	cjump rdi <= 22 :fibonacci
+	return
+)
+
+)

@@ -1,0 +1,8 @@
+(@divide
+	1
+	%a <- rdi
+	%res <- %a
+	%res >>= 2
+	rax <- %res
+	return
+)

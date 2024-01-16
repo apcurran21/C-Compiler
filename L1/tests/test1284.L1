@@ -1,0 +1,36 @@
+(@stub
+(@stub
+	0 0
+	return
+)
+
+(@leftShiftStuff_1
+	3 3
+	rdi <- rdi
+	mem rsp 8 <- rdi
+	rdi <- rsi
+	mem rsp 0 <- rdi
+	rdi <- rdx
+	mem rsp 16 <- rdi
+	rdi <- mem rsp 8
+	cjump rdi = 0 :WORK
+	return
+	:WORK
+	rdi <- mem rsp 0
+	rcx <- mem rsp 8
+	rdi <<= rcx
+	mem rsp 0 <- rdi
+	rcx <- mem rsp 0
+	rdi <- mem rsp 16
+	rdi <<= rcx
+	mem rsp 16 <- rdi
+	rdi <- mem rsp 16
+	rax <- rdi
+	rdi <- mem rsp 8
+	rax += rdi
+	rdi <- mem rsp 0
+	rax += rdi
+	return
+)
+
+)

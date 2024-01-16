@@ -1,0 +1,54 @@
+define @double (%v) {
+ 
+:NNNNNN
+ br :entry
+ 
+:entry
+ %v <- %v * 2
+ return %v
+}
+
+define @plus_10 (%v) {
+ 
+:NNNNNN
+ br :entry
+ 
+:entry
+ %v <- %v + 10
+ return %v
+}
+
+define @main () {
+ 
+:NNNNNN
+ br :defs
+ 
+:entry
+ %v <- 1
+ %v_encoded <- call @int_encode (%v)
+ call print (%v_encoded)
+ %func <- @double
+ %v <- call %func (%v)
+ %v_encoded <- call @int_encode (%v)
+ call print (%v_encoded)
+ %func <- @plus_10
+ %v <- call %func (%v)
+ %v_encoded <- call @int_encode (%v)
+ call print (%v_encoded)
+ return 
+ 
+:defs
+ br :entry
+}
+
+define @int_encode (%v) {
+ 
+:NNNNNN
+ br :entry
+ 
+:entry
+ %v <- %v << 1
+ %v <- %v + 1
+ return %v
+}
+

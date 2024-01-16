@@ -1,0 +1,38 @@
+(@go
+(@go
+	0 0
+	mem rsp -8 <- :goCallsFibonacciReturn
+	rdi <- 20
+	call @fibonacci 1
+	:goCallsFibonacciReturn
+	rdi <- rax
+	rdi <<= 1
+	rdi += 1
+	call print 1
+	return
+)
+
+(@fibonacci
+	1 0
+	cjump rdi = 1 :fibonacciInitialCondition
+	cjump rdi = 2 :fibonacciInitialCondition
+	rcx <- 1
+	rdx <- 1
+	rsi <- 3
+	:fibonacciFor
+	cjump rsi <= rdi :fibonacciForIntoLoop
+	rax <- r8
+	return
+	:fibonacciForIntoLoop
+	r8 <- rcx
+	r8 += rdx
+	rcx <- rdx
+	rdx <- r8
+	rsi++
+	cjump 1 = 1 :fibonacciFor
+	:fibonacciInitialCondition
+	rax <- 1
+	return
+)
+
+)

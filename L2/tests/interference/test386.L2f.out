@@ -1,0 +1,20 @@
+%fib_arr %fib_i %i %loop_done r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx rsi %tmp
+%fib_i %fib_arr %i r12 r13 r14 r15 rbp rbx %tmp
+%i %fib_arr %fib_i %loop_done r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx rsi %tmp
+%loop_done %fib_arr %i r12 r13 r14 r15 rax rbp rbx
+r10 %fib_arr %i r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx rsi
+r11 %fib_arr %i r10 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx rsi
+r12 %fib_arr %fib_i %i %loop_done r10 r11 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx rsi %tmp
+r13 %fib_arr %fib_i %i %loop_done r10 r11 r12 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx rsi %tmp
+r14 %fib_arr %fib_i %i %loop_done r10 r11 r12 r13 r15 r8 r9 rax rbp rbx rcx rdi rdx rsi %tmp
+r15 %fib_arr %fib_i %i %loop_done r10 r11 r12 r13 r14 r8 r9 rax rbp rbx rcx rdi rdx rsi %tmp
+r8 %fib_arr %i r10 r11 r12 r13 r14 r15 r9 rax rbp rbx rcx rdi rdx rsi
+r9 %fib_arr %i r10 r11 r12 r13 r14 r15 r8 rax rbp rbx rcx rdi rdx rsi
+rax %fib_arr %i %loop_done r10 r11 r12 r13 r14 r15 r8 r9 rbp rbx rcx rdi rdx rsi
+rbp %fib_arr %fib_i %i %loop_done r10 r11 r12 r13 r14 r15 r8 r9 rax rbx rcx rdi rdx rsi %tmp
+rbx %fib_arr %fib_i %i %loop_done r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rcx rdi rdx rsi %tmp
+rcx %fib_arr %i r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rdi rdx rsi
+rdi %fib_arr %i r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdx rsi
+rdx %fib_arr %i r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rsi
+rsi %fib_arr %i r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx
+%tmp %fib_arr %fib_i %i r12 r13 r14 r15 rbp rbx

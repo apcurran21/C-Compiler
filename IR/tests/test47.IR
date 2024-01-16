@@ -1,0 +1,71 @@
+define int64 @collatz(int64 %n, int64 %acc) {
+ :entry
+ int64 %nIsOdd
+ int64 %nIsOne
+ int64 %ret
+ %nIsOne <- %n = 1
+ br %nIsOne :terminal :begin
+
+ :begin
+ %nIsOdd <- %n & 1
+ br %nIsOdd :odd :even
+
+ :even
+ %n <- %n >> 1
+ br :rcheck
+
+ :odd
+ %n <- %n * 3
+ %n <- %n + 1
+ br :rcheck
+
+ :rcheck
+ %nIsOne <- %n = 1
+ %acc <- %acc + 1
+ br %nIsOne :terminal :recurse
+
+ :recurse
+ %ret <- call @collatz (%n, %acc)
+ return %ret
+
+ :terminal
+ return %acc
+}
+
+define void @main() {
+ :entry
+ int64 %r
+ int64 %i
+ int64 %isDone
+ int64 %result
+ int64 %newMax
+ %r <- call @collatz (400, 1)
+ %r <- %r << 1
+ %r <- %r + 1
+ call print (%r)
+ int64 %max
+ %max <- 0
+ %i <- 0
+ br :loop
+
+ :loop
+ %i <- %i + 1
+ %isDone <- %i >= 1000000
+ br %isDone :done :notDone
+
+ :notDone
+ %result <- call @collatz (%i, 1)
+ %newMax <- %result > %max
+ br %newMax :setMax :loop
+
+ :setMax
+ %max <- %i
+ br :loop
+
+ :done
+ %max <- %max << 1
+ %max <- %max + 1
+ call print (%max)
+ return 
+}
+

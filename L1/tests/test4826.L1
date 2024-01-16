@@ -1,0 +1,36 @@
+(@go
+(@go
+	0 0
+	rdi <- 41
+	rsi <- 1
+	call allocate 2
+	rcx <- 10
+	rcx <<= 1
+	rcx++
+	rdi <- 0
+	:loop
+	rdx <- rdi
+	rdx <<= 2
+	rdx++
+	rsi <- rdi
+	rsi <<= 3
+	rsi += 8
+	rsi += rax
+	cjump rdx <= rcx :fill
+	goto :stopFill
+	:fill
+	mem rsi 0 <- rdx
+	goto :incCount
+	:stopFill
+	mem rsi 0 <- 0
+	:incCount
+	rdi++
+	cjump rdi < 20 :loop
+	goto :continue
+	:continue
+	rdi <- rax
+	call print 1
+	return
+)
+
+)

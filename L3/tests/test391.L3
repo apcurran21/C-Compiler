@@ -1,0 +1,61 @@
+define @main () {
+    // Create arrays of size 10 and size 20 
+    %Arr1Size <- 10
+    %Arr1SizeEncoded <- %Arr1Size << 1
+    %Arr1SizeEncoded <- %Arr1SizeEncoded + 1
+    %Arr2Size <- 20
+    %Arr2SizeEncoded <- %Arr2Size << 1
+    %Arr2SizeEncoded <- %Arr2SizeEncoded + 1
+    // both initialized with 11
+    %Arr1 <- call allocate (%Arr1SizeEncoded, 11)
+    %Arr2 <- call allocate (%Arr2SizeEncoded, 11)
+
+    // Get sum of both arrays
+    %Arr1Sum <- call @CalcArrSum(%Arr1)
+    %Arr2Sum <- call @CalcArrSum(%Arr2)
+
+    // Print the sum of the larger array
+    %Arr1Larger <- %Arr2Sum < %Arr1Sum
+    br %Arr1Larger :PrintArr1Sum
+    br :PrintArr2Sum
+
+    // Print Array 1 sum
+    :PrintArr1Sum
+    %Arr1PrintVal <- %Arr1Sum << 1
+    %Arr1PrintVal <- %Arr1PrintVal + 1
+    call print(%Arr1PrintVal)
+    return
+    
+    // Print array 2 sum
+    :PrintArr2Sum
+    %Arr2PrintVal <- %Arr2Sum << 1
+    %Arr2PrintVal <- %Arr2PrintVal + 1
+    call print(%Arr2PrintVal)
+    return 
+}
+
+define @CalcArrSum(%TargetArr) {
+    // Initialize loop and sum vars
+    %ArrLen <- load %TargetArr
+    %Count <- 0
+    %ArrSum <- 0
+    %CurrOffset <- %TargetArr
+
+    // Get offset and curr elm
+    :Loop
+    %CurrOffset <- %CurrOffset + 8
+    %CurrElm <- load %CurrOffset
+
+    // Increment count and add to sum
+    %Count <- %Count + 1
+    %ArrSum <- %ArrSum + %CurrElm
+
+    // Decide if we should continue looping or return
+    %ContLoop <- %Count < %ArrLen
+    br %ContLoop :Loop
+    br :Stop
+    :Stop
+
+    return %ArrSum
+}
+

@@ -1,0 +1,253 @@
+(@main
+(@main
+	0 10
+	mem rsp 40 <- rbx
+	mem rsp 32 <- rbp
+	mem rsp 24 <- r15
+	mem rsp 16 <- r14
+	mem rsp 8 <- r13
+	mem rsp 0 <- r12
+	:call_label0
+	rdi <- 11
+	rdi >>= 1
+	rsi <- 11
+	rsi >>= 1
+	rdi *= rsi
+	rdi <<= 1
+	rdi += 1
+	rdi += 6
+	rsi <- 1
+	call allocate 2
+	r12 <- rax
+	mem r12 8 <- 5
+	mem r12 16 <- 11
+	mem r12 24 <- 11
+	rdi <- 10
+	rdi >>= 1
+	rsi <- 10
+	rsi >>= 1
+	rdi *= rsi
+	rdi <<= 1
+	rdi += 1
+	rdi += 6
+	rsi <- 1
+	call allocate 2
+	r13 <- rax
+	mem r13 8 <- 5
+	mem r13 16 <- 10
+	mem r13 24 <- 10
+	rdi <- 20
+	rdi >>= 1
+	rsi <- 20
+	rsi >>= 1
+	rdi *= rsi
+	rdi <<= 1
+	rdi += 1
+	rdi += 6
+	rsi <- 1
+	call allocate 2
+	r14 <- rax
+	mem r14 8 <- 5
+	mem r14 16 <- 20
+	mem r14 24 <- 20
+	rdi <- 10
+	rdi >>= 1
+	rsi <- 40
+	rsi >>= 1
+	rdi *= rsi
+	rdi <<= 1
+	rdi += 1
+	rdi += 6
+	rsi <- 1
+	call allocate 2
+	r15 <- rax
+	mem r15 8 <- 5
+	mem r15 16 <- 10
+	mem r15 24 <- 40
+	rdi <- 3
+	rdi >>= 1
+	rsi <- 45
+	rsi >>= 1
+	rdi *= rsi
+	rdi <<= 1
+	rdi += 1
+	rdi += 6
+	rsi <- 1
+	call allocate 2
+	rbp <- rax
+	mem rbp 8 <- 5
+	mem rbp 16 <- 3
+	mem rbp 24 <- 45
+	rdi <- 3
+	rdi >>= 1
+	rsi <- 10
+	rsi >>= 1
+	rdi *= rsi
+	rdi <<= 1
+	rdi += 1
+	rdi += 6
+	rsi <- 1
+	call allocate 2
+	rbx <- rax
+	mem rbx 8 <- 5
+	mem rbx 16 <- 3
+	mem rbx 24 <- 10
+	rdi <- 3
+	rdi >>= 1
+	rsi <- rdi
+	rdi <- 10
+	rdi >>= 1
+	rsi *= rdi
+	rsi <<= 1
+	rsi += 1
+	rsi += 6
+	rdi <- rsi
+	rsi <- 1
+	call allocate 2
+	rdi <- rax
+	mem rsp 48 <- rdi
+	rdi <- mem rsp 48
+	mem rdi 8 <- 5
+	rdi <- mem rsp 48
+	mem rdi 16 <- 3
+	rdi <- mem rsp 48
+	mem rdi 24 <- 10
+	rdi <- 3
+	rdi >>= 1
+	rsi <- 10
+	rsi >>= 1
+	rdi *= rsi
+	rdi <<= 1
+	rdi += 1
+	rdi += 6
+	rsi <- 1
+	call allocate 2
+	rdi <- rax
+	mem rsp 56 <- rdi
+	rdi <- mem rsp 56
+	mem rdi 8 <- 5
+	rdi <- mem rsp 56
+	mem rdi 16 <- 3
+	rdi <- mem rsp 56
+	mem rdi 24 <- 10
+	rdi <- 3
+	rdi >>= 1
+	rsi <- 10
+	rsi >>= 1
+	rdi *= rsi
+	rdi <<= 1
+	rdi += 1
+	rdi += 6
+	rsi <- 1
+	call allocate 2
+	rdi <- rax
+	mem rsp 64 <- rdi
+	rdi <- mem rsp 64
+	mem rdi 8 <- 5
+	rdi <- mem rsp 64
+	mem rdi 16 <- 3
+	rdi <- mem rsp 64
+	mem rdi 24 <- 10
+	rdi <- 3
+	rdi >>= 1
+	rsi <- 10
+	rsi >>= 1
+	rdi *= rsi
+	rdi <<= 1
+	rdi += 1
+	rdi += 6
+	rsi <- 1
+	call allocate 2
+	rdi <- rax
+	mem rsp 72 <- rdi
+	rdi <- mem rsp 72
+	mem rdi 8 <- 5
+	rdi <- mem rsp 72
+	mem rdi 16 <- 3
+	rdi <- mem rsp 72
+	mem rdi 24 <- 10
+	rdi <- r12
+	mem rsp -8 <- :call_label1
+	call @sum 1
+	:call_label1
+	rdi <- r13
+	mem rsp -8 <- :call_label2
+	call @sum 1
+	:call_label2
+	rdi <- r14
+	mem rsp -8 <- :call_label3
+	call @sum 1
+	:call_label3
+	rdi <- r15
+	mem rsp -8 <- :call_label4
+	call @sum 1
+	:call_label4
+	rdi <- rbp
+	mem rsp -8 <- :call_label5
+	call @sum 1
+	:call_label5
+	rdi <- rbx
+	mem rsp -8 <- :call_label6
+	call @sum 1
+	:call_label6
+	rdi <- mem rsp 48
+	mem rsp -8 <- :call_label7
+	call @sum 1
+	:call_label7
+	rdi <- mem rsp 56
+	mem rsp -8 <- :call_label8
+	call @sum 1
+	:call_label8
+	rdi <- mem rsp 64
+	mem rsp -8 <- :call_label9
+	call @sum 1
+	:call_label9
+	rdi <- mem rsp 72
+	mem rsp -8 <- :call_label10
+	call @sum 1
+	:call_label10
+	r12 <- mem rsp 0
+	r13 <- mem rsp 8
+	r14 <- mem rsp 16
+	r15 <- mem rsp 24
+	rbp <- mem rsp 32
+	rbx <- mem rsp 40
+	return
+)
+
+(@sum
+	1 0
+	rcx <- rdi
+	:call_label_ciao_11
+	goto :call_label_ciao_12
+	:call_label_ciao_12
+	rdi <- 1
+	rdi *= 8
+	rsi <- rdi
+	rsi += 16
+	rdi <- rcx
+	rdi += rsi
+	rsi <- mem rdi 0
+	r9 <- 0
+	rdi <- mem rcx 24
+	r8 <- 1
+	rdi >>= 1
+	r8 *= rdi
+	rdi <- 0
+	rdi *= r8
+	r9 += rdi
+	rdi <- rsi
+	rdi -= 1
+	r9 += rdi
+	rdi <- r9
+	rdi *= 8
+	rdi += 32
+	rsi <- rcx
+	rsi += rdi
+	rdi <- mem rsi 0
+	rdx += rdi
+	rax <- rdx
+	return
+)
+
+)

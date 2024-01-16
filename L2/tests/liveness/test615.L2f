@@ -1,0 +1,20 @@
+(@main
+	0
+	%num_sides <- 25
+	rdi <- %num_sides
+	call print 1
+	rdi <- %num_sides
+	mem rsp -8 <- :call_label0
+	call @compute_num_diagonals_for_shape 1
+	:call_label0
+	rdi <- %num_sides
+	mem rsp -8 <- :call_label1
+	call @compute_many_diagonals 1
+	:call_label1
+	%lots_of_sides <- 103
+	rdi <- %lots_of_sides
+	mem rsp -8 <- :call_label2
+	call @compute_num_diagonals_for_shape 1
+	:call_label2
+	return
+)

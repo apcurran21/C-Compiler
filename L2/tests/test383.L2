@@ -1,0 +1,115 @@
+(@main
+  (@main
+    0
+    :call_label0
+    %a <- 1
+    %b <- 2
+    %c <- 3
+    %d <- 4
+    %e <- 5
+    %f <- 6
+    rdi <- %a
+    rsi <- %b
+    rdx <- %c
+    rcx <- %d
+    r8 <- %e
+    r9 <- %f
+
+mem rsp -8 <- :call_label1
+    call @foo 6
+
+:call_label1
+    %sum <- rax
+    rdi <- %sum
+
+mem rsp -8 <- :call_label2
+    call @PrintArg 1
+
+:call_label2
+    return
+  )
+  (@foo
+    6
+    %a <- rdi
+    %b <- rsi
+    %c <- rdx
+    %d <- rcx
+    %e <- r8
+    %f <- r9
+    :call_label_ciao_3
+    %sum <- 0
+    %sum <- %sum
+    %sum += %a
+    %sum <- %sum
+    %sum += %b
+    %sum <- %sum
+    %sum += %c
+    %sum <- %sum
+    %sum += %d
+    %sum <- %sum
+    %sum += %e
+    %sum <- %sum
+    %sum += %f
+    %g <- 2
+    %h <- 3
+    %i <- 4
+    %j <- 5
+    %k <- 6
+    %l <- 7
+    rdi <- %sum
+    rsi <- %g
+    rdx <- %h
+    rcx <- %i
+    r8 <- %j
+    r9 <- %k
+    mem rsp -16 <- %l
+
+mem rsp -8 <- :call_label_ciao_4
+    call @bar 7
+
+:call_label_ciao_4
+    %res <- rax
+    rax <- %res
+    return
+  )
+  (@bar
+    7
+    %a <- rdi
+    %b <- rsi
+    %c <- rdx
+    %d <- rcx
+    %e <- r8
+    %f <- r9
+    %g <- stack-arg 0
+    :call_label_ciao__ciao_5
+    %sum <- 0
+    %sum <- %sum
+    %sum += %a
+    %sum <- %sum
+    %sum += %b
+    %sum <- %sum
+    %sum += %c
+    %sum <- %sum
+    %sum += %d
+    %sum <- %sum
+    %sum += %e
+    %sum <- %sum
+    %sum += %f
+    %sum <- %sum
+    %sum += %g
+    rax <- %sum
+    return
+  )
+  (@PrintArg
+    1
+    %arg <- rdi
+    :call_label_ciao__ciao__ciao_6
+    %arg <- %arg
+    %arg <<= 1
+    %arg <- %arg
+    %arg += 1
+    rdi <- %arg
+    call print 1
+    return
+  )
+)

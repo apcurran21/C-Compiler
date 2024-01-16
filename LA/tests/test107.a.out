@@ -1,0 +1,2 @@
+{s:3, 2, 0, 0}
+ERROR: instruction at line 9 attempted to use position 2 in an array that only has 2 elements

@@ -1,0 +1,19 @@
+(@i_wish
+	2
+	%scaler <- rsi
+	%out_val <- %scaler
+	%out_val += 1
+	rdi <- %scaler
+	mem rsp -8 <- :call_label_ciao__ciao__ciao__ciao_23
+	call @even_nil 1
+	:call_label_ciao__ciao__ciao__ciao_23
+	%x <- rax
+	%result <- %x = 0
+	cjump %result = 1 :call_label_ciao__ciao__ciao__ciao_21
+	goto :call_label_ciao__ciao__ciao__ciao_22
+	:call_label_ciao__ciao__ciao__ciao_21
+	%out_val += 1
+	:call_label_ciao__ciao__ciao__ciao_22
+	rax <- %out_val
+	return
+)

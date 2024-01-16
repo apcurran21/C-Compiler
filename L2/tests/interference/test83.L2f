@@ -1,0 +1,6 @@
+(@divide
+	1
+	rdi >>= 2
+	rax <- rdi
+	return
+)

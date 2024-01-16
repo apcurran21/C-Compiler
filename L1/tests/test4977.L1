@@ -1,0 +1,41 @@
+(@main
+(@main
+  0 5
+  rdi <- 5
+  rsi <- 7
+  rdx <- 9
+  rcx <- 11
+  r8 <- 13
+  mem rsp 32 <- r8
+  mem rsp 24 <- rcx
+  mem rsp 16 <- rdx
+  mem rsp 8 <- rsi
+  mem rsp 0 <- rdi
+  mem rsp -8 <- :return_val
+  call @first_func 5
+  :return_val
+  rdi <- mem rsp 0
+  call print 1
+  rdi <- mem rsp 8
+  call print 1
+  return
+)
+(@first_func
+  5 0
+  rdi <- rdi
+  rsi <- rsi
+  rdx <- rdx
+  rcx <- rcx
+  r8 <- r8
+  rdi <- 31
+  rsi <- 33
+  rdx <- 35
+  rcx <- 37
+  r8 <- 39
+  :true
+  rdi <- 1
+  cjump rdi = 31 :true
+  call print 1
+  return
+)
+)

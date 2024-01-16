@@ -1,0 +1,24 @@
+define void @main(){
+	:entry
+	int64 %fac
+	int64 %var1
+	int64 %var2
+	int64 %check
+	int64 %printv
+	%fac <- 1
+	%var1 <- 15
+	%var2 <- 2
+	br :loop
+	:loop
+	%check <- %var2<=%var1
+	br %check :loop2 :return
+	:loop2
+	%fac <- %fac * %var2
+	%var2 <- %var2 + 1
+	%printv <- %fac << 1
+	%printv <- %printv + 1
+	call print (%printv)
+	br :loop
+	:return
+	return
+}

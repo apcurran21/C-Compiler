@@ -1,0 +1,47 @@
+(@main
+	0
+	%loop <- 222221
+	:call_label0
+	%cmp <- %loop < 1
+	cjump %cmp = 1 :call_label1
+	%my_var1 <- 3
+	rdi <- %my_var1
+	call print 1
+	%my_var2 <- 23
+	rdi <- %my_var2
+	call print 1
+	%my_var3 <- 223
+	rdi <- %my_var3
+	call print 1
+	%my_var4 <- 2223
+	rdi <- %my_var4
+	call print 1
+	%mult <- 3
+	%mult *= 11
+	%mult += 6
+	%my_var5 <- %my_var4
+	%my_var5 += 20000
+	rdi <- %my_var5
+	call print 1
+	%my_var4 <- 2223
+	rdi <- %my_var4
+	call print 1
+	%my_var3 <- 223
+	rdi <- %my_var3
+	call print 1
+	%my_var2 <- 23
+	rdi <- %my_var2
+	call print 1
+	%my_var1 <- 3
+	rdi <- %my_var1
+	call print 1
+	%loop -= 2
+	goto :call_label0
+	:call_label1
+	mem rsp -8 <- :call_label2
+	call @meh 0
+	:call_label2
+	rdi <- %mult
+	call print 1
+	return
+)

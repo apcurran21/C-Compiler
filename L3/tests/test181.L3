@@ -1,0 +1,69 @@
+define @main () {
+ 
+:NNNNNNNNN
+ br :entry
+ 
+:endIf
+ %v1 <- %local1
+ %v1 <- %v1 + %local2
+ %v1 <- %v1 - %local3
+ %v1 <- %v1 + %local5
+ %ret <- call %func (%v1)
+ %ret <- %ret << 1
+ %ret <- %ret + 1
+ %v1 <- %ret
+ call print (%v1)
+ return 
+ 
+:elseCase
+ %func <- @altRetFun
+ br :endIf
+ 
+:ifCase
+ %func <- @retFun
+ br :endIf
+ 
+:entry
+ %local1 <- 5
+ %local2 <- 10
+ %local3 <- 15
+ %v1 <- 5
+ %v2 <- 3
+ %local4 <- %v1
+ %local5 <- 20
+ %ret <- call @myTest3Helper (%v1, %v2)
+ %bool <- %ret = 0
+ br %bool :elseCase 
+ br :ifCase
+}
+
+define @myTest3Helper (%v1, %v2) {
+ 
+:NNNNNN
+ br :entry
+ 
+:entry
+ %ret <- %v1 < %v2
+ return %ret
+}
+
+define @retFun (%v1) {
+ 
+:NNNNNN
+ br :entry
+ 
+:entry
+ %v1 <- %v1 + 10
+ return %v1
+}
+
+define @altRetFun (%v1) {
+ 
+:NNNNNN
+ br :entry
+ 
+:entry
+ %v1 <- %v1 - 10
+ return %v1
+}
+

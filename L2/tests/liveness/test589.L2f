@@ -1,0 +1,38 @@
+(@push
+	2
+	%old_stack_ptr <- rdi
+	%val <- rsi
+	%old_size <- mem %old_stack_ptr 0
+	%new_size <- %old_size
+	%new_size += 1
+	rdi <- %new_size
+	mem rsp -8 <- :call_label_ciao_2
+	call @encode 1
+	:call_label_ciao_2
+	%encoded_new_size <- rax
+	%default <- 0
+	rdi <- %default
+	mem rsp -8 <- :call_label_ciao_3
+	call @encode 1
+	:call_label_ciao_3
+	%encoded_default <- rax
+	rdi <- %encoded_new_size
+	rsi <- %encoded_default
+	call allocate 2
+	%new_stack_ptr <- rax
+	rdi <- %val
+	mem rsp -8 <- :call_label_ciao_4
+	call @encode 1
+	:call_label_ciao_4
+	%encoded_val <- rax
+	mem %new_stack_ptr 8 <- %encoded_val
+	rdi <- %new_stack_ptr
+	rsi <- %old_stack_ptr
+	rdx <- %old_size
+	mem rsp -8 <- :call_label_ciao_5
+	call @refill_stack 3
+	:call_label_ciao_5
+	%final_stack_ptr <- rax
+	rax <- %final_stack_ptr
+	return
+)

@@ -1,0 +1,12 @@
+(@func1
+	1
+	%v1 <- rdi
+	%v1 += 10
+	rdi <- %v1
+	mem rsp -8 <- :call_label_ciao_1
+	call @func2 1
+	:call_label_ciao_1
+	%ret <- rax
+	rax <- %ret
+	return
+)

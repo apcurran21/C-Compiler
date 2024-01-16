@@ -1,0 +1,147 @@
+define @main () {
+ 
+:NNNNNN
+ br :entry
+ 
+:entry
+ %v <- 21
+ %newVar1 <- 21 >> 1
+ %newVar0 <- %newVar1
+ %newVar2 <- 21 >> 1
+ %newVar0 <- %newVar0 * %newVar2
+ %newVar3 <- 21 >> 1
+ %newVar0 <- %newVar0 * %newVar3
+ %newVar0 <- %newVar0 << 1
+ %newVar0 <- %newVar0 + 1
+ %newVar0 <- %newVar0 + 6
+ %m <- call allocate (%newVar0, 1)
+ %newVar4 <- %m + 8
+ store %newVar4 <- 21
+ %newVar5 <- %m + 16
+ store %newVar5 <- 21
+ %newVar6 <- %m + 24
+ store %newVar6 <- 21
+ %r <- call @search (%m, %v)
+ call print (%r)
+ %newVar8 <- 0
+ %newVar9 <- %m + 16
+ %newVar10 <- load %newVar9
+ %newVar11 <- %newVar10 >> 1
+ %newVar12 <- %m + 24
+ %newVar13 <- load %newVar12
+ %newVar14 <- %newVar13 >> 1
+ %newVar15 <- 1
+ %newVar15 <- %newVar14 * %newVar15
+ %newVar16 <- 0 * %newVar15
+ %newVar8 <- %newVar16 + %newVar8
+ %newVar15 <- %newVar11 * %newVar15
+ %newVar17 <- 0 * %newVar15
+ %newVar8 <- %newVar17 + %newVar8
+ %newVar8 <- %newVar8 + 0
+ %newVar7 <- %newVar8 * 8
+ %newVar7 <- %newVar7 + 32
+ %newVar18 <- %m + %newVar7
+ store %newVar18 <- %v
+ %r <- call @search (%m, %v)
+ call print (%r)
+ return 
+}
+
+define @search (%m, %v) {
+ 
+:NNNNNNNNNNNNN
+ br :entry
+ 
+:return
+ return %found
+ 
+:setFound
+ %found <- 3
+ br :return
+ 
+:outerFooter
+ %i <- %i + 1
+ br :outerHeader
+ 
+:outerHeader
+ %checki <- %i < %length1
+ br %checki :outerBody 
+ br :return
+ 
+:outerBody
+ %j <- 0
+ br :middleHeader
+ 
+:middleHeader
+ %checkj <- %j < %length2
+ br %checkj :middleBody 
+ br :outerFooter
+ 
+:middleBody
+ %k <- 0
+ br :innerHeader
+ 
+:innerHeader
+ %checkk <- %k < %length3
+ br %checkk :innerBody 
+ br :middleFooter
+ 
+:innerBody
+ %newVar1 <- 0
+ %newVar2 <- %m + 16
+ %newVar3 <- load %newVar2
+ %newVar4 <- %newVar3 >> 1
+ %newVar5 <- %m + 24
+ %newVar6 <- load %newVar5
+ %newVar7 <- %newVar6 >> 1
+ %newVar8 <- 1
+ %newVar8 <- %newVar7 * %newVar8
+ %newVar9 <- %j * %newVar8
+ %newVar1 <- %newVar9 + %newVar1
+ %newVar8 <- %newVar4 * %newVar8
+ %newVar10 <- %i * %newVar8
+ %newVar1 <- %newVar10 + %newVar1
+ %newVar1 <- %newVar1 + %k
+ %newVar0 <- %newVar1 * 8
+ %newVar0 <- %newVar0 + 32
+ %newVar11 <- %m + %newVar0
+ %e <- load %newVar11
+ %same <- %e = %v
+ br %same :setFound 
+ br :innerFooter
+ 
+:innerFooter
+ %k <- %k + 1
+ br :innerHeader
+ 
+:middleFooter
+ %j <- %j + 1
+ br :middleHeader
+ 
+:init
+ %found <- 1
+ %i <- 0
+ br :outerHeader
+ 
+:entry
+ %newVar12 <- 0 * 8
+ %newVar13 <- %newVar12 + 8
+ %newVar14 <- %m + %newVar13
+ %encLen <- load %newVar14
+ call print (%encLen)
+ %length1 <- %encLen >> 1
+ %newVar15 <- 1 * 8
+ %newVar16 <- %newVar15 + 8
+ %newVar17 <- %m + %newVar16
+ %encLen <- load %newVar17
+ call print (%encLen)
+ %length2 <- %encLen >> 1
+ %newVar18 <- 2 * 8
+ %newVar19 <- %newVar18 + 8
+ %newVar20 <- %m + %newVar19
+ %encLen <- load %newVar20
+ call print (%encLen)
+ %length3 <- %encLen >> 1
+ br :init
+}
+

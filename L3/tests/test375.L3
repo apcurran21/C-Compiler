@@ -1,0 +1,38 @@
+// fibonacci
+// iterative approach
+
+define @main() {
+    %res <- call @fibonacci(20)
+    %res <- %res << 1
+    %res <- %res + 1
+    call print(%res)
+    return 0
+}
+
+define @fibonacci(%k) {
+    %if <- %k = 1
+    br %if :initialCondition
+    %if <- %k = 2
+    br %if :initialCondition
+    %a <- 1
+    %b <- 1
+    %i <- 3
+    %res <- 0
+
+    :for
+        %if <- %i <= %k
+        br %if :forIntoLoop
+        return %res
+        
+        :forIntoLoop
+        %res <- %a
+        %res <- %res + %b
+        %a <- %b
+        %b <- %res
+        
+        %i <- %i + 1
+        br :for
+        
+    :initialCondition
+    return 1
+}

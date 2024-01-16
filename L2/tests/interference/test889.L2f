@@ -1,0 +1,176 @@
+(@print_A_and_B_oneline
+	0
+	rdi <- 1111111
+	mem rsp -8 <- :call_label_ciao__ciao__ciao_22
+	call @encode 1
+	:call_label_ciao__ciao__ciao_22
+	%one_line_1 <- rax
+	rdi <- 5
+	rsi <- %one_line_1
+	call allocate 2
+	%one_line_array <- rax
+	rdi <- 7
+	mem rsp -8 <- :call_label_ciao__ciao__ciao_23
+	call @encode 1
+	:call_label_ciao__ciao__ciao_23
+	%encode_severn <- rax
+	rdi <- %encode_severn
+	rsi <- %one_line_array
+	call allocate 2
+	%array_2x7 <- rax
+	%pointer <- %array_2x7
+	%pointer += 8
+	rdi <- 1100001
+	mem rsp -8 <- :call_label_ciao__ciao__ciao_24
+	call @encode 1
+	:call_label_ciao__ciao__ciao_24
+	%one_line_1 <- rax
+	rdi <- 5
+	rsi <- %one_line_1
+	call allocate 2
+	%new_array <- rax
+	rdi <- 1000001
+	mem rsp -8 <- :call_label_ciao__ciao__ciao_25
+	call @encode 1
+	:call_label_ciao__ciao__ciao_25
+	%one_line_1_B <- rax
+	%pointer_line <- %new_array
+	%pointer_line += 8
+	mem %pointer_line 0 <- %one_line_1_B
+	mem %pointer 0 <- %new_array
+	%pointer <- %array_2x7
+	%pointer += 16
+	rdi <- 1001100
+	mem rsp -8 <- :call_label_ciao__ciao__ciao_26
+	call @encode 1
+	:call_label_ciao__ciao__ciao_26
+	%one_line_2 <- rax
+	rdi <- 5
+	rsi <- %one_line_2
+	call allocate 2
+	%new_array <- rax
+	rdi <- 1001100
+	mem rsp -8 <- :call_label_ciao__ciao__ciao_27
+	call @encode 1
+	:call_label_ciao__ciao__ciao_27
+	%one_line_2_B <- rax
+	%pointer_line <- %new_array
+	%pointer_line += 8
+	mem %pointer_line 0 <- %one_line_2_B
+	mem %pointer 0 <- %new_array
+	%pointer <- %array_2x7
+	%pointer += 24
+	rdi <- 1001100
+	mem rsp -8 <- :call_label_ciao__ciao__ciao_28
+	call @encode 1
+	:call_label_ciao__ciao__ciao_28
+	%one_line_3 <- rax
+	rdi <- 5
+	rsi <- %one_line_3
+	call allocate 2
+	%new_array <- rax
+	rdi <- 1001100
+	mem rsp -8 <- :call_label_ciao__ciao__ciao_29
+	call @encode 1
+	:call_label_ciao__ciao__ciao_29
+	%one_line_3_B <- rax
+	%pointer_line <- %new_array
+	%pointer_line += 8
+	mem %pointer_line 0 <- %one_line_3_B
+	mem %pointer 0 <- %new_array
+	%pointer <- %array_2x7
+	%pointer += 32
+	rdi <- 1001100
+	mem rsp -8 <- :call_label_ciao__ciao__ciao_30
+	call @encode 1
+	:call_label_ciao__ciao__ciao_30
+	%one_line_4 <- rax
+	rdi <- 5
+	rsi <- %one_line_4
+	call allocate 2
+	%new_array <- rax
+	rdi <- 1000001
+	mem rsp -8 <- :call_label_ciao__ciao__ciao_31
+	call @encode 1
+	:call_label_ciao__ciao__ciao_31
+	%one_line_4_B <- rax
+	%pointer_line <- %new_array
+	%pointer_line += 8
+	mem %pointer_line 0 <- %one_line_4_B
+	mem %pointer 0 <- %new_array
+	%pointer <- %array_2x7
+	%pointer += 40
+	rdi <- 1000000
+	mem rsp -8 <- :call_label_ciao__ciao__ciao_32
+	call @encode 1
+	:call_label_ciao__ciao__ciao_32
+	%one_line_5 <- rax
+	rdi <- 5
+	rsi <- %one_line_5
+	call allocate 2
+	%new_array <- rax
+	rdi <- 1001100
+	mem rsp -8 <- :call_label_ciao__ciao__ciao_33
+	call @encode 1
+	:call_label_ciao__ciao__ciao_33
+	%one_line_5_B <- rax
+	%pointer_line <- %new_array
+	%pointer_line += 8
+	mem %pointer_line 0 <- %one_line_5_B
+	mem %pointer 0 <- %new_array
+	%pointer <- %array_2x7
+	%pointer += 48
+	rdi <- 1001100
+	mem rsp -8 <- :call_label_ciao__ciao__ciao_34
+	call @encode 1
+	:call_label_ciao__ciao__ciao_34
+	%one_line_6 <- rax
+	rdi <- 5
+	rsi <- %one_line_6
+	call allocate 2
+	%new_array <- rax
+	rdi <- 1001100
+	mem rsp -8 <- :call_label_ciao__ciao__ciao_35
+	call @encode 1
+	:call_label_ciao__ciao__ciao_35
+	%one_line_6_B <- rax
+	%pointer_line <- %new_array
+	%pointer_line += 8
+	mem %pointer_line 0 <- %one_line_6_B
+	mem %pointer 0 <- %new_array
+	%pointer <- %array_2x7
+	%pointer += 56
+	rdi <- 1001100
+	mem rsp -8 <- :call_label_ciao__ciao__ciao_36
+	call @encode 1
+	:call_label_ciao__ciao__ciao_36
+	%one_line_7 <- rax
+	rdi <- 5
+	rsi <- %one_line_7
+	call allocate 2
+	%new_array <- rax
+	rdi <- 1000001
+	mem rsp -8 <- :call_label_ciao__ciao__ciao_37
+	call @encode 1
+	:call_label_ciao__ciao__ciao_37
+	%one_line_7_B <- rax
+	%pointer_line <- %new_array
+	%pointer_line += 8
+	mem %pointer_line 0 <- %one_line_7_B
+	mem %pointer 0 <- %new_array
+	%offset <- 0
+	:call_label_ciao__ciao__ciao_19
+	%i <- 56 <= %offset
+	cjump %i = 1 :call_label_ciao__ciao__ciao_21
+	goto :call_label_ciao__ciao__ciao_20
+	:call_label_ciao__ciao__ciao_20
+	%offset += 8
+	%pointer <- %array_2x7
+	%pointer += %offset
+	%array_to_print <- mem %pointer 0
+	rdi <- %array_to_print
+	call print 1
+	goto :call_label_ciao__ciao__ciao_19
+	:call_label_ciao__ciao__ciao_21
+	return
+)

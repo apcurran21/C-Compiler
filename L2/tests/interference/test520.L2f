@@ -1,0 +1,21 @@
+(@main
+	0
+	%fac <- 1
+	%var1 <- 15
+	%var2 <- 2
+	:call_label0
+	%check <- %var2 <= %var1
+	cjump %check = 1 :call_label1
+	goto :call_label2
+	:call_label1
+	%fac *= %var2
+	%var2 += 1
+	%printv <- %fac
+	%printv <<= 1
+	%printv += 1
+	rdi <- %printv
+	call print 1
+	goto :call_label0
+	:call_label2
+	return
+)

@@ -1,0 +1,63 @@
+(@fib
+(@array
+	1 4
+	mem rsp 24 <- r15
+	mem rsp 16 <- r14
+	mem rsp 8 <- r13
+	mem rsp 0 <- r12
+	r15 <- rdi
+	r14 <- 0
+	r14 += 1
+	rdi <- 1
+	rdi <<= 1
+	rdi += 1
+	call print 1
+	cjump r15 < r14 :array_end
+	r14 += 1
+	rdi <- 1
+	rdi <<= 1
+	rdi += 1
+	call print 1
+	cjump r15 < r14 :array_end
+	r13 <- 1
+	r12 <- 1
+	:array_begin
+	r14 += 1
+	rdi <- r13
+	rsi <- r12
+	mem rsp -8 <- :calc_rtn
+	call @calculate 2
+	:calc_rtn
+	r13 <- r12
+	r12 <- rax
+	rdi <- r12
+	rdi <<= 1
+	rdi += 1
+	call print 1
+	cjump r15 < r14 :array_end
+	goto :array_begin
+	:array_end
+	r12 <- mem rsp 0
+	r13 <- mem rsp 8
+	r14 <- mem rsp 16
+	r15 <- mem rsp 24
+	return
+)
+
+(@calculate
+	2 0
+	rax <- rdi
+	rax += rsi
+	return
+)
+
+(@fib
+	0 0
+	rdi <- 10
+	mem rsp -8 <- :arr_rtn
+	call @array 1
+	:arr_rtn
+	return
+)
+
+)

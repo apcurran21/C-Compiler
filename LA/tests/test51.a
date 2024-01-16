@@ -1,0 +1,20 @@
+void main(){
+	int64 fac
+	int64 var1
+	int64 var2
+	int64 check
+	int64 printv
+	fac <- 1
+	var1 <- 15
+	var2 <- 2
+	:loop
+	check <- var2<=var1
+	br check :loop2 :return
+	:loop2
+	fac <- fac * var2
+	var2 <- var2 + 1
+	print (fac)
+	br :loop
+	:return
+	return
+}

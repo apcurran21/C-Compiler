@@ -1,0 +1,11 @@
+(@print_sep
+	0
+	rdi <- 1
+	mem rsp -8 <- :call_label_ciao__ciao__ciao__ciao__ciao_39
+	call @encode 1
+	:call_label_ciao__ciao__ciao__ciao__ciao_39
+	%sep_to_print <- rax
+	rdi <- %sep_to_print
+	call print 1
+	return
+)

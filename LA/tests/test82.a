@@ -1,0 +1,75 @@
+void main()
+{
+	:entry
+	int64 num_triangular_nums
+
+	num_triangular_nums <- 10
+	print(num_triangular_nums)
+
+	compute_triangular_num(num_triangular_nums)
+
+	compute_many_tns(num_triangular_nums)
+
+	return
+}
+
+void compute_triangular_num(int64 nums)
+{
+	:entry
+	int64 decoded_nums
+	int64 temp_1
+
+	// No real decoding necessary	
+	decoded_nums <- nums
+
+	// Formula = (n * (n - 1)) / 2	
+	// n - 1
+	temp_1 <- decoded_nums - 1
+	
+	// n * (n - 1)
+	temp_1 <- temp_1 * decoded_nums
+
+	// (n * (n - 1)) / 2	 
+	temp_1 <- temp_1 >> 1
+
+	print(temp_1)
+
+	return
+}
+
+void compute_many_tns(int64 nums)
+{
+	:entry
+	int64 decoded_nums
+	int64 nth_tn
+	int64 cond
+	int64 call_nth_tn
+	
+	// No real decoding necessary
+	decoded_nums <- nums
+
+	// Start at 1
+	nth_tn <- 1
+	
+	br :tn_preheader
+
+	:tn_preheader
+	// Condition
+	cond <- nth_tn > decoded_nums	
+	br cond :tn_exit :tn_body
+
+	:tn_body
+	// No encoding necessary for call
+	call_nth_tn <- nth_tn
+	compute_triangular_num(call_nth_tn)
+	br :tn_latch
+
+	:tn_latch
+	nth_tn <- nth_tn + 1
+	br :tn_preheader
+
+	:tn_exit
+	return
+}
+
+

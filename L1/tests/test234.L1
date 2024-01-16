@@ -1,0 +1,97 @@
+(@hwtest1
+(@d
+	0 0
+	rdi <- 201
+	call print 1
+	return
+)
+
+(@e
+	0 0
+	rdi <- 203
+	call print 1
+	return
+)
+
+(@h
+	0 0
+	rdi <- 209
+	call print 1
+	return
+)
+
+(@hwtest1
+	0 0
+	mem rsp -8 <- :ret1
+	call @h 0
+	:ret1
+	mem rsp -8 <- :ret2
+	call @e 0
+	:ret2
+	mem rsp -8 <- :ret3
+	call @l 0
+	:ret3
+	mem rsp -8 <- :ret4
+	call @l 0
+	:ret4
+	mem rsp -8 <- :ret5
+	call @o 0
+	:ret5
+	mem rsp -8 <- :ret6
+	call @space 0
+	:ret6
+	rdi <- 238
+	mem rsp -8 <- :ret7
+	call @w 0
+	:ret7
+	mem rsp -8 <- :ret8
+	call @o 0
+	:ret8
+	mem rsp -8 <- :ret9
+	call @r 0
+	:ret9
+	mem rsp -8 <- :ret10
+	call @l 0
+	:ret10
+	mem rsp -8 <- :ret11
+	call @d 0
+	:ret11
+	return
+)
+
+(@l
+	0 0
+	rdi <- 217
+	call print 1
+	return
+)
+
+(@o
+	0 0
+	rdi <- 223
+	call print 1
+	return
+)
+
+(@r
+	0 0
+	rdi <- 229
+	call print 1
+	return
+)
+
+(@space
+	0 0
+	rdi <- 65
+	call print 1
+	return
+)
+
+(@w
+	0 0
+	rdi <- 239
+	call print 1
+	return
+)
+
+)

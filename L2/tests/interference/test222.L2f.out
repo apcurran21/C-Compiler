@@ -1,0 +1,18 @@
+%dividend %divisor %i r12 r13 r14 r15 rbp rbx rsi
+%divisor %dividend %i r12 r13 r14 r15 rbp rbx
+%i %dividend %divisor r12 r13 r14 r15 rbp rbx
+r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx rsi
+r11 r10 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx rsi
+r12 %dividend %divisor %i r10 r11 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx rsi
+r13 %dividend %divisor %i r10 r11 r12 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx rsi
+r14 %dividend %divisor %i r10 r11 r12 r13 r15 r8 r9 rax rbp rbx rcx rdi rdx rsi
+r15 %dividend %divisor %i r10 r11 r12 r13 r14 r8 r9 rax rbp rbx rcx rdi rdx rsi
+r8 r10 r11 r12 r13 r14 r15 r9 rax rbp rbx rcx rdi rdx rsi
+r9 r10 r11 r12 r13 r14 r15 r8 rax rbp rbx rcx rdi rdx rsi
+rax r10 r11 r12 r13 r14 r15 r8 r9 rbp rbx rcx rdi rdx rsi
+rbp %dividend %divisor %i r10 r11 r12 r13 r14 r15 r8 r9 rax rbx rcx rdi rdx rsi
+rbx %dividend %divisor %i r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rcx rdi rdx rsi
+rcx r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rdi rdx rsi
+rdi r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdx rsi
+rdx r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rsi
+rsi %dividend r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx

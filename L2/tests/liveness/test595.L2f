@@ -1,0 +1,21 @@
+(@new_stack_or_queue
+	0
+	%size <- 0
+	rdi <- %size
+	mem rsp -8 <- :call_label0
+	call @encode 1
+	:call_label0
+	%encoded_size <- rax
+	%default <- 0
+	rdi <- %default
+	mem rsp -8 <- :call_label1
+	call @encode 1
+	:call_label1
+	%encoded_default <- rax
+	rdi <- %encoded_size
+	rsi <- %encoded_default
+	call allocate 2
+	%queue_ptr <- rax
+	rax <- %queue_ptr
+	return
+)

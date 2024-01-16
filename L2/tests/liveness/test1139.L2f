@@ -1,0 +1,30 @@
+(@compute_many_degrees
+	1
+	%sides <- rdi
+	:call_label_ciao__ciao_8
+	goto :call_label_ciao__ciao_13
+	:call_label_ciao__ciao_9
+	return
+	:call_label_ciao__ciao_10
+	%nth_side += 1
+	goto :call_label_ciao__ciao_11
+	:call_label_ciao__ciao_11
+	%cond <- %decoded_sides < %nth_side
+	cjump %cond = 1 :call_label_ciao__ciao_9
+	goto :call_label_ciao__ciao_12
+	:call_label_ciao__ciao_12
+	%call_nth_side <- %nth_side
+	%call_nth_side <<= 1
+	%call_nth_side += 1
+	rdi <- %call_nth_side
+	mem rsp -8 <- :call_label_ciao__ciao_14
+	call @compute_num_degrees_angle_for_shape 1
+	:call_label_ciao__ciao_14
+	goto :call_label_ciao__ciao_10
+	:call_label_ciao__ciao_13
+	%decoded_sides <- %sides
+	%decoded_sides >>= 1
+	%nth_side <- 7
+	%nth_side >>= 1
+	goto :call_label_ciao__ciao_11
+)

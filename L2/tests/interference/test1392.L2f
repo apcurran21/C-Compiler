@@ -1,0 +1,36 @@
+(@main
+	0
+	rdi <- 11
+	rsi <- 9
+	rdx <- 7
+	rcx <- 5
+	r8 <- 3
+	r9 <- 1
+	%variableQOYINHC10Z <- rdi
+	mem rsp -8 <- :f1_ret
+	mem rsp -16 <- 15
+	call @f1 7
+	:f1_ret
+	rdi <- %variableQOYINHC10Z
+	call print 1
+	mem rsp -8 <- :f2_ret
+	rdx <- 13
+	rdi <- 13
+	call @f2 1
+	:f2_ret
+	%length <- 3
+	rsi <- 0
+	cjump rsi = %length :endLoop
+	goto :loop
+	:loop
+	rsi++
+	cjump rsi < %length :loop
+	goto :endLoop
+	:endLoop
+	%variableF0RNXAYSRB <- rsi
+	rdi <- rsi
+	call print 1
+	rsi <- %variableF0RNXAYSRB
+	rsi++
+	return
+)

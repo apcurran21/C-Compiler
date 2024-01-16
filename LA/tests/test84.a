@@ -1,0 +1,148 @@
+void main()
+{
+	:entry
+	int64 num_sides
+	int64 lots_of_sides
+
+	num_sides <- 15
+
+	// Compute the number of degrees for 
+	// an angle in a regular polygon with 
+    // num_sides sides
+
+	print (num_sides)
+	compute_num_degrees_angle_for_shape(num_sides)
+	compute_many_degrees(num_sides)
+	
+
+	// Compute number of degrees of an angle 
+	// for regular polygon with 87 sides
+	lots_of_sides <- 87
+	compute_num_degrees_angle_for_shape(lots_of_sides)
+
+	
+	return
+}
+
+void compute_num_degrees_angle_for_shape(int64 sides)
+{
+	:entry
+	int64 decoded_sides
+	int64 temp_1
+	int64 division
+	
+	// No real decoding necessary 
+	decoded_sides <- sides 
+
+	// Formula = ((n - 2) * 180) / n	
+	// n - 2
+	temp_1 <- decoded_sides - 2
+	
+	// (n - 2) * 180
+	temp_1 <- temp_1 * 180 
+
+	// ((n - 2) * 180) / n	 
+	division <- divide(temp_1, decoded_sides)
+	temp_1 <- division
+
+	print(temp_1)
+
+	return
+}
+
+void compute_many_degrees(int64 sides)
+{
+	:entry
+	int64 decoded_sides
+	int64 nth_side
+	int64 cond
+	int64 call_nth_side
+	
+	// No real decoding necessary
+	decoded_sides <- sides
+
+	// Start at 3 --- triangle
+	nth_side <- 3
+	
+	br :deg_preheader
+
+	:deg_preheader
+	// Condition
+	cond <- nth_side > decoded_sides	
+	br cond :deg_exit :deg_body
+
+	:deg_body
+	call_nth_side <- nth_side
+	compute_num_degrees_angle_for_shape(call_nth_side)
+	br :deg_latch
+
+	:deg_latch
+	nth_side <- nth_side + 1
+	br :deg_preheader
+
+	:deg_exit
+	return
+}
+
+int64 divide(int64 numer, int64 denom)
+{
+	:entry
+	int64 temp
+	int64 quotient
+	int64 n
+	int64 d
+	int64 enc_temp
+	int64 enc_quotient
+	int64 cond_1
+	int64 cond_2
+	int64 cond_3
+
+	n <- numer
+	d <- denom
+
+	// Set temp and quotient
+	enc_temp <- 1
+	enc_quotient <- 0
+
+	// No real decoding necessary 
+	temp <- enc_temp
+	quotient <- enc_quotient
+
+	br :nd_loop_preheader
+	
+	:nd_loop_preheader
+	cond_1 <- d <= n
+	br cond_1 :nd_loop_body :nd_loop_exit
+	
+	:nd_loop_body
+	d <- d << 1
+	temp <- temp << 1
+	br :nd_loop_latch
+
+	:nd_loop_latch
+	br :nd_loop_preheader
+
+	:nd_loop_exit
+	br :t_loop_preheader
+
+	:t_loop_preheader
+	cond_2 <- temp > 1
+	br cond_2 :t_loop_body :t_loop_exit
+	
+	:t_loop_body
+	d <- d >> 1
+	temp <- temp >> 1
+	cond_3 <- n >= d
+	br cond_3 :quotient_calc :t_loop_latch
+
+	:quotient_calc
+	n <- n - d
+	quotient <- quotient + temp
+	br :t_loop_latch
+
+	:t_loop_latch
+	br :t_loop_preheader
+
+	:t_loop_exit
+	return quotient 
+}

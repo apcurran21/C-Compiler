@@ -1,0 +1,20 @@
+%first r12 r13 r14 r15 rbp rbx %second
+%is_prime r12 r13 r14 r15 rbp rbx
+%number r12 r13 r14 r15 rbp rbx
+r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx rsi
+r11 r10 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx rsi
+r12 %first %is_prime %number r10 r11 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx %remainder rsi %second
+r13 %first %is_prime %number r10 r11 r12 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx %remainder rsi %second
+r14 %first %is_prime %number r10 r11 r12 r13 r15 r8 r9 rax rbp rbx rcx rdi rdx %remainder rsi %second
+r15 %first %is_prime %number r10 r11 r12 r13 r14 r8 r9 rax rbp rbx rcx rdi rdx %remainder rsi %second
+r8 r10 r11 r12 r13 r14 r15 r9 rax rbp rbx rcx rdi rdx rsi
+r9 r10 r11 r12 r13 r14 r15 r8 rax rbp rbx rcx rdi rdx rsi
+rax r10 r11 r12 r13 r14 r15 r8 r9 rbp rbx rcx rdi rdx rsi
+rbp %first %is_prime %number r10 r11 r12 r13 r14 r15 r8 r9 rax rbx rcx rdi rdx %remainder rsi %second
+rbx %first %is_prime %number r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rcx rdi rdx %remainder rsi %second
+rcx r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rdi rdx rsi
+rdi r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdx rsi %second
+rdx r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rsi
+%remainder r12 r13 r14 r15 rbp rbx
+rsi r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx
+%second %first r12 r13 r14 r15 rbp rbx rdi

@@ -1,0 +1,75 @@
+(@concat_array
+	2
+	%ptr1 <- rdi
+	%ptr2 <- rsi
+	:call_label_ciao_4
+	%newVar1 <- -1
+	%newVar1 *= 8
+	%newVar0 <- %newVar1
+	%newVar0 += 8
+	%newVar2 <- %ptr1
+	%newVar2 += %newVar0
+	%len1 <- mem %newVar2 0
+	%newVar4 <- -1
+	%newVar4 *= 8
+	%newVar3 <- %newVar4
+	%newVar3 += 8
+	%newVar5 <- %ptr2
+	%newVar5 += %newVar3
+	%len2 <- mem %newVar5 0
+	%len3 <- %len1
+	%len3 += %len2
+	%len3 <<= 1
+	%len3 += 1
+	rdi <- %len3
+	rsi <- 1
+	call allocate 2
+	%ret <- rax
+	%index1 <- 0
+	%index2 <- 0
+	%index3 <- 0
+	goto :call_label_ciao_5
+	:call_label_ciao_5
+	%newVar7 <- %index1
+	%newVar7 *= 8
+	%newVar6 <- %newVar7
+	%newVar6 += 8
+	%newVar8 <- %ptr1
+	%newVar8 += %newVar6
+	%temp <- mem %newVar8 0
+	%newVar10 <- %index3
+	%newVar10 *= 8
+	%newVar9 <- %newVar10
+	%newVar9 += 8
+	%newVar11 <- %ret
+	%newVar11 += %newVar9
+	mem %newVar11 0 <- %temp
+	%index1 += 1
+	%index3 += 1
+	%if_done <- %index1 = %len1
+	cjump %if_done = 1 :call_label_ciao_6
+	goto :call_label_ciao_5
+	:call_label_ciao_6
+	%newVar13 <- %index2
+	%newVar13 *= 8
+	%newVar12 <- %newVar13
+	%newVar12 += 8
+	%newVar14 <- %ptr2
+	%newVar14 += %newVar12
+	%temp <- mem %newVar14 0
+	%newVar16 <- %index3
+	%newVar16 *= 8
+	%newVar15 <- %newVar16
+	%newVar15 += 8
+	%newVar17 <- %ret
+	%newVar17 += %newVar15
+	mem %newVar17 0 <- %temp
+	%index2 += 1
+	%index3 += 1
+	%if_done <- %index2 = %len2
+	cjump %if_done = 1 :call_label_ciao_7
+	goto :call_label_ciao_6
+	:call_label_ciao_7
+	rax <- %ret
+	return
+)

@@ -1,0 +1,42 @@
+
+	define @main(){
+		%var1 <- 5
+		%var2 <- 3
+		%my_V1 <- call allocate(%var1,%var2)
+		call print(%my_V1)
+        %my_V1 <- %my_V1 + 16
+		store %my_V1 <- 5
+        %my_V1 <- %my_V1 - 16
+		call print(%my_V1)
+		%my_V2 <- call allocate(5, 7)
+        %my_V2 <- %my_V2 + 16
+		store %my_V2 <- 9
+        %my_V2 <- %my_V2 - 16
+		%reg <- call allocate(5, %my_V1)
+        %reg <- %reg + 16
+		store %reg <- %my_V2
+        %reg <- %reg - 16
+		call print(%reg)
+		call @arrayprint(%reg)
+		return
+    }
+	define @arrayprint(%p1){ 
+        %p2 <- %p1 + 8
+		%el1 <- load %p2
+        %p3 <- %p1 + 16
+        %el2 <- load %p3 
+        %el1mod <- %el1 + 8
+        %el1_1 <- load %el1mod
+        %el1mod <- %el1 + 16
+        %el1_2 <- load %el1mod
+        %el2mod <- %el2 + 8
+        %el2_1 <- load %el2mod
+        %el2mod <- %el2 + 16
+        %el2_2 <- load %el2mod
+
+        call print(%el1_1)
+        call print(%el1_2)
+        call print(%el2_1)
+        call print(%el2_2)
+		return
+    }

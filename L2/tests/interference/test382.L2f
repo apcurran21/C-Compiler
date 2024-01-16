@@ -1,0 +1,25 @@
+(@acc
+	2
+	%s <- rdi
+	%n <- rsi
+	%a <- 0
+	%refcount <- %n
+	%refcount -= 2
+	%addr <- %s
+	%addr += 8
+	:call_label_ciao_6
+	%res <- %refcount <= 0
+	cjump %res = 1 :call_label_ciao_8
+	goto :call_label_ciao_7
+	:call_label_ciao_7
+	%val1 <- mem %addr 0
+	%a += %val1
+	%refcount -= 2
+	%addr += 8
+	goto :call_label_ciao_6
+	:call_label_ciao_8
+	%a -= 2
+	%a -= 2
+	rax <- %a
+	return
+)

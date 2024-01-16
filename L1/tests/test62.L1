@@ -1,0 +1,54 @@
+(@go
+(@go
+	0 1
+	rdi <- 1
+	rdi <- 31
+	mem rsp 0 <- rdi
+	rdi <- mem rsp 0
+	rdi <- rdi
+	call print 1
+	rdi <- mem rsp 0
+	rdi <- rdi
+	rdi <- mem rsp 0
+	rdi &= 3
+	mem rsp 0 <- rdi
+	rdi <- mem rsp 0
+	rdi <- rdi
+	cjump rdi = 3 :odd
+	goto :even
+	:even
+	rdi <- mem rsp 0
+	rdi <- rdi
+	call print 1
+	cjump 1 = 1 :next
+	goto :whatIsThisUniverse
+	:odd
+	rdi <- rdi
+	call print 1
+	cjump 1 = 1 :next
+	goto :nothingMakesSense
+	:next
+	rdi <- 21
+	rdi <- rdi
+	call print 1
+	rdi <- 21
+	cjump rdi < 0 :negative
+	goto :positive
+	:negative
+	rdi <- -1
+	rdi <- rdi
+	call print 1
+	cjump 1 = 1 :end
+	goto :worldIsExploding
+	:positive
+	rdi <- 3
+	rdi <- rdi
+	call print 1
+	:whatIsThisUniverse
+	:nothingMakesSense
+	:worldIsExploding
+	:end
+	return
+)
+
+)

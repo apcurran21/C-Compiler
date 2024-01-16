@@ -1,0 +1,7 @@
+(@decode
+	1
+	rdi <<= 1
+	rdi++
+	rax <- rdi
+	return
+)

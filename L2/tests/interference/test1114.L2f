@@ -1,0 +1,16 @@
+(@main
+	0
+	:call_label0
+	goto :call_label1
+	:call_label1
+	rdi <- 20
+	mem rsp -8 <- :call_label2
+	call @fibonacci 1
+	:call_label2
+	%res <- rax
+	%res <<= 1
+	%res += 1
+	rdi <- %res
+	call print 1
+	return
+)

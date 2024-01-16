@@ -1,0 +1,35 @@
+(@main
+	0
+	:call_label0
+	goto :call_label6
+	:call_label1
+	%res <<= 1
+	%res += 1
+	rdi <- %res
+	call print 1
+	return
+	:call_label2
+	%i += 1
+	goto :call_label3
+	:call_label3
+	%if <- %i <= %n
+	cjump %if = 1 :call_label4
+	goto :call_label1
+	:call_label4
+	rdi <- %i
+	mem rsp -8 <- :call_label7
+	call @isOdd 1
+	:call_label7
+	%if <- rax
+	%if <- %if = 1
+	cjump %if = 1 :call_label5
+	goto :call_label2
+	:call_label5
+	%res += 1
+	goto :call_label2
+	:call_label6
+	%n <- 120
+	%res <- 0
+	%i <- 0
+	goto :call_label3
+)

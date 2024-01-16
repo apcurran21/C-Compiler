@@ -1,0 +1,10 @@
+(@printResultArray
+	1
+	%arr <- rdi
+	:call_label_ciao__ciao__ciao__ciao_19
+	goto :call_label_ciao__ciao__ciao__ciao_20
+	:call_label_ciao__ciao__ciao__ciao_20
+	rdi <- %arr
+	call print 1
+	return
+)

@@ -1,0 +1,21 @@
+(@big_func
+	7
+	%v1 <- rdi
+	%v2 <- rsi
+	%v3 <- rdx
+	%v4 <- rcx
+	%v5 <- r8
+	%v6 <- r9
+	%v7 <- stack-arg 0
+	:call_label_ciao_2
+	%res <- 1
+	%res *= %v1
+	%res -= %v2
+	%res += %v3
+	%res *= %v4
+	%res &= %v5
+	%res += %v6
+	%res -= %v7
+	rax <- %res
+	return
+)

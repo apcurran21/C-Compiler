@@ -1,0 +1,23 @@
+%arg1 %arg1_encoded %arg2 %arg2_encoded r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx %result rsi
+%arg1_encoded %arg1 %arg2 %arg2_encoded r12 r13 r14 r15 rbp rbx
+%arg2 %arg1 %arg1_encoded %arg2_encoded r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx %result rsi
+%arg2_encoded %arg1 %arg1_encoded %arg2 r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx rsi
+%func_label r12 r13 r14 r15 r8 r9 rbp rbx rcx rdi rdx rsi
+%if_correct r12 r13 r14 r15 rax rbp rbx %ret_val
+r10 %arg1 %arg2 %arg2_encoded r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx rsi
+r11 %arg1 %arg2 %arg2_encoded r10 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx rsi
+r12 %arg1 %arg1_encoded %arg2 %arg2_encoded %func_label %if_correct r10 r11 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx %result %ret_val rsi
+r13 %arg1 %arg1_encoded %arg2 %arg2_encoded %func_label %if_correct r10 r11 r12 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx %result %ret_val rsi
+r14 %arg1 %arg1_encoded %arg2 %arg2_encoded %func_label %if_correct r10 r11 r12 r13 r15 r8 r9 rax rbp rbx rcx rdi rdx %result %ret_val rsi
+r15 %arg1 %arg1_encoded %arg2 %arg2_encoded %func_label %if_correct r10 r11 r12 r13 r14 r8 r9 rax rbp rbx rcx rdi rdx %result %ret_val rsi
+r8 %arg1 %arg2 %arg2_encoded %func_label r10 r11 r12 r13 r14 r15 r9 rax rbp rbx rcx rdi rdx rsi
+r9 %arg1 %arg2 %arg2_encoded %func_label r10 r11 r12 r13 r14 r15 r8 rax rbp rbx rcx rdi rdx rsi
+rax %arg1 %arg2 %arg2_encoded %if_correct r10 r11 r12 r13 r14 r15 r8 r9 rbp rbx rcx rdi rdx %ret_val rsi
+rbp %arg1 %arg1_encoded %arg2 %arg2_encoded %func_label %if_correct r10 r11 r12 r13 r14 r15 r8 r9 rax rbx rcx rdi rdx %result %ret_val rsi
+rbx %arg1 %arg1_encoded %arg2 %arg2_encoded %func_label %if_correct r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rcx rdi rdx %result %ret_val rsi
+rcx %arg1 %arg2 %arg2_encoded %func_label r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rdi rdx rsi
+rdi %arg1 %arg2 %arg2_encoded %func_label r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdx rsi
+rdx %arg1 %arg2 %arg2_encoded %func_label r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rsi
+%result %arg1 %arg2 r12 r13 r14 r15 rbp rbx
+%ret_val %if_correct r12 r13 r14 r15 rax rbp rbx
+rsi %arg1 %arg2 %arg2_encoded %func_label r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx

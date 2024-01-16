@@ -1,0 +1,29 @@
+(@print_array
+	8
+	%var1 <- rdi
+	%var2 <- rsi
+	%var3 <- rdx
+	%var4 <- rcx
+	%var5 <- r8
+	%var6 <- r9
+	%var7 <- stack-arg 0
+	%var8 <- stack-arg 8
+	rdi <- %var1
+	call print 1
+	rdi <- %var2
+	call print 1
+	rdi <- %var3
+	call print 1
+	rdi <- %var4
+	call print 1
+	rdi <- %var5
+	call print 1
+	rdi <- %var6
+	call print 1
+	rdi <- %var7
+	call print 1
+	rdi <- %var8
+	call print 1
+	rax <- 19
+	return
+)

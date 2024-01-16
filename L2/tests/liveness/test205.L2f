@@ -1,0 +1,27 @@
+(@main
+	0
+	%c <- 9
+	%c *= 4
+	%c += 1
+	%c <<= 3
+	%c -= 10
+	%x <- 1623
+	rdi <- %x
+	mem rsp -8 <- :call_label0
+	call @return_merge 1
+	:call_label0
+	%abc <- rax
+	%size <- %abc
+	%size <<= 1
+	%size += 1
+	rdi <- %size
+	rsi <- 0
+	call allocate 2
+	%ptr <- rax
+	rdi <- %ptr
+	mem rsp -8 <- :call_label1
+	call @aliasing_issues 1
+	:call_label1
+	rax <- %c
+	return
+)

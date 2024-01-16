@@ -1,0 +1,91 @@
+(@main
+(@sqrt_ceil
+	1 0
+	rsi <- rdi
+	rdx <- 1
+	:sqrt_start
+	r12 <- rdx
+	r12 *= r12
+	rdi <- rsi
+	cjump rdi < r12 :sqrt_end
+	rdx += 1
+	goto :sqrt_start
+	:sqrt_end
+	rax <- rdx
+	return
+)
+
+(@mod
+	2 0
+	:divloop
+	cjump rdi < rsi :divend
+	rdi -= rsi
+	goto :divloop
+	:divend
+	rax <- rdi
+	return
+)
+
+(@primetest
+	1 3
+	rdi <- rdi
+	mem rsp 0 <- rdi
+	rdi <- 2
+	mem rsp 8 <- rdi
+	rdi <- mem rsp 0
+	rdi <- rdi
+	mem rsp -8 <- :sqrt_ret2
+	call @sqrt_ceil 1
+	:sqrt_ret2
+	rdi <- rax
+	mem rsp 16 <- rdi
+	rdi <- mem rsp 8
+	rdi <- rdi
+	:primetest_loop
+	rdi <- mem rsp 0
+	rdi <- rdi
+	rsi <- mem rsp 8
+	rsi <- rsi
+	mem rsp -8 <- :mod_ret
+	call @mod 2
+	:mod_ret
+	cjump rax = 0 :iscomposite
+	rdi <- mem rsp 8
+	rdi += 1
+	mem rsp 8 <- rdi
+	rdi <- mem rsp 8
+	rsi <- rdi
+	rdi <- mem rsp 16
+	rdi <- rdi
+	cjump rdi < rsi :isprime
+	goto :primetest_loop
+	:isprime
+	rax <- 1
+	return
+	:iscomposite
+	rax <- 0
+	return
+)
+
+(@main
+	0 1
+	rdi <- 289
+	mem rsp 0 <- rdi
+	rdi <- mem rsp 0
+	rdi <- rdi
+	rdi <<= 1
+	rdi++
+	call print 1
+	rdi <- mem rsp 0
+	rdi <- rdi
+	mem rsp -8 <- :primetest_ret
+	call @primetest 1
+	:primetest_ret
+	rdi <- rax
+	rdi <<= 1
+	rdi++
+	call print 1
+	return
+)
+
+)

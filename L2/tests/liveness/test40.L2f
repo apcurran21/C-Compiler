@@ -1,0 +1,27 @@
+(@modsum
+	1
+	%original <- rdi
+	%sum <- 0
+	%processing <- 0
+	:sumloop
+	%processing += 1
+	cjump %original <= %processing :done
+	rdi <- %processing
+	rsi <- 3
+	mem rsp -8 <- :ret0
+	call @mod 2
+	:ret0
+	cjump rax = 1 :dosum
+	rdi <- %processing
+	rsi <- 5
+	mem rsp -8 <- :ret1
+	call @mod 2
+	:ret1
+	cjump rax = 0 :sumloop
+	:dosum
+	%sum += %processing
+	goto :sumloop
+	:done
+	rax <- %sum
+	return
+)

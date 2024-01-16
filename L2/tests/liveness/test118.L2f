@@ -1,0 +1,18 @@
+(@go
+	0
+	%a <- 21
+	rdi <- 1
+	rsi <- %a
+	mem rsp -8 <- :F1_ret0
+	call @F1 2
+	:F1_ret0
+	rsi <- %a
+	rdi <- rax
+	mem rsp -8 <- :F1_ret1
+	call @F1 2
+	:F1_ret1
+	rsi <- %a
+	rdi <- %a
+	call print 1
+	return
+)

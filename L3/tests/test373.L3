@@ -1,0 +1,22 @@
+// compute average of 4 numbers
+define @main() {
+    %res <- call @sum(1, 3, 5, 7)
+    %res <- call @divide(%res)
+    %res <- %res << 1
+    %res <- %res + 1
+    call print(%res)
+    return 0
+}
+
+define @sum(%a, %b, %c, %d) {
+    %res <- %a
+    %res <- %res + %b
+    %res <- %res + %c
+    %res <- %res + %d
+    return %res
+}
+
+define @divide(%a) {
+    %res <- %a >> 2
+    return %res
+}

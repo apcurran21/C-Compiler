@@ -1,0 +1,28 @@
+(@printArray
+	1
+	%check <- rdi
+	%check &= 1
+	cjump %check = 0 :isarray
+	goto :notarray
+	:notarray
+	rax <- 0
+	return
+	:isarray
+	%c <- 0
+	%arr <- rdi
+	%arrlength <- mem rdi 0
+	:forloop
+	cjump %c < %arrlength :continue
+	goto :done
+	:continue
+	rdi <- %arr
+	rsi <- %c
+	mem rsp -8 <- :ret
+	call @printArrayElement 2
+	:ret
+	%c++
+	goto :forloop
+	:done
+	rax <- 1
+	return
+)

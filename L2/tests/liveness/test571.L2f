@@ -1,0 +1,18 @@
+(@divide
+	2
+	%top <- rdi
+	%bot <- rsi
+	%quotient <- 0
+	%early_return <- %top < %bot
+	cjump %early_return = 1 :call_label_ciao_6
+	%early_return <- %bot <= 0
+	cjump %early_return = 1 :call_label_ciao_6
+	:call_label_ciao_5
+	%quotient += 1
+	%top -= %bot
+	%not_done <- %bot <= %top
+	cjump %not_done = 1 :call_label_ciao_5
+	:call_label_ciao_6
+	rax <- %quotient
+	return
+)

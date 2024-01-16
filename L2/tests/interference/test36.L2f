@@ -1,0 +1,6 @@
+(@retFun
+	1
+	rdi += 10
+	rax <- rdi
+	return
+)

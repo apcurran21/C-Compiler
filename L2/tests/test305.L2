@@ -1,0 +1,249 @@
+(@main
+  (@main
+    0
+    %periods <- 10
+    :call_label0
+    %line <- 0
+    %restart <- 31
+    :call_label1
+    rdi <- 18
+    rsi <- 30
+    rdx <- %line
+
+mem rsp -8 <- :call_label2
+    call @a_times_sine_bth_x_pi 3
+
+:call_label2
+    %x <- rax
+    rdi <- 10
+    rsi <- %x
+
+mem rsp -8 <- :call_label3
+    call @pow 2
+
+:call_label3
+    %out <- rax
+    rdi <- %out
+
+mem rsp -8 <- :call_label4
+    call @encode_and_print 1
+
+:call_label4
+    %line <- %line
+    %line += 1
+    %cont <- %line < %restart
+
+    cjump %cont = 1 :call_label1
+    %periods <- %periods
+    %periods -= 1
+    %cont <- 0 < %periods
+
+    cjump %cont = 1 :call_label0
+    return
+  )
+  (@encode_and_print
+    1
+    %v <- rdi
+    %v_shifted <- %v
+    %v_shifted <<= 1
+    %v_encoded <- %v_shifted
+    %v_encoded += 1
+    rdi <- %v_encoded
+    call print 1
+    return
+  )
+  (@divide
+    2
+    %top <- rdi
+    %bot <- rsi
+    %quotient <- 0
+    %early_return <- %top < %bot
+
+    cjump %early_return = 1 :call_label_ciao_6
+    %early_return <- %bot <= 0
+
+    cjump %early_return = 1 :call_label_ciao_6
+    :call_label_ciao_5
+    %quotient <- %quotient
+    %quotient += 1
+    %top <- %top
+    %top -= %bot
+    %not_done <- %bot <= %top
+
+    cjump %not_done = 1 :call_label_ciao_5
+    :call_label_ciao_6
+    rax <- %quotient
+    return
+  )
+  (@pow
+    2
+    %x <- rdi
+    %e <- rsi
+    %result <- 1
+    %early_return <- %e <= 0
+
+    cjump %early_return = 1 :call_label_ciao__ciao_8
+    :call_label_ciao__ciao_7
+    %result <- %result
+    %result *= %x
+    %e <- %e
+    %e -= 1
+    %not_done <- 0 < %e
+
+    cjump %not_done = 1 :call_label_ciao__ciao_7
+    :call_label_ciao__ciao_8
+    rax <- %result
+    return
+  )
+  (@factorial
+    1
+    %x <- rdi
+    %result <- 1
+    %early_return <- %x <= 1
+
+    cjump %early_return = 1 :call_label_ciao__ciao__ciao_10
+    :call_label_ciao__ciao__ciao_9
+    %result <- %result
+    %result *= %x
+    %x <- %x
+    %x -= 1
+    %not_done <- 1 <= %x
+
+    cjump %not_done = 1 :call_label_ciao__ciao__ciao_9
+    :call_label_ciao__ciao__ciao_10
+    rax <- %result
+    return
+  )
+  (@a_times_sine_bth_x_pi
+    3
+    %a <- rdi
+    %b <- rsi
+    %x <- rdx
+    %pi_x <- 3
+    %pi_x *= %x
+    %top <- %a
+    %top *= %pi_x
+    %bot <- %b
+    rdi <- %top
+    rsi <- %bot
+
+mem rsp -8 <- :call_label_ciao__ciao__ciao__ciao_11
+    call @divide 2
+
+:call_label_ciao__ciao__ciao__ciao_11
+    %result <- rax
+    rdi <- %pi_x
+    rsi <- 3
+
+mem rsp -8 <- :call_label_ciao__ciao__ciao__ciao_12
+    call @pow 2
+
+:call_label_ciao__ciao__ciao__ciao_12
+    %pi_x_cubed <- rax
+    %top <- %a
+    %top *= %pi_x_cubed
+    rdi <- 3
+
+mem rsp -8 <- :call_label_ciao__ciao__ciao__ciao_13
+    call @factorial 1
+
+:call_label_ciao__ciao__ciao__ciao_13
+    %three_fact <- rax
+    rdi <- %b
+    rsi <- 3
+
+mem rsp -8 <- :call_label_ciao__ciao__ciao__ciao_14
+    call @pow 2
+
+:call_label_ciao__ciao__ciao__ciao_14
+    %eight_cubed <- rax
+    %bot <- %three_fact
+    %bot *= %eight_cubed
+    rdi <- %top
+    rsi <- %bot
+
+mem rsp -8 <- :call_label_ciao__ciao__ciao__ciao_15
+    call @divide 2
+
+:call_label_ciao__ciao__ciao__ciao_15
+    %div <- rax
+    %result <- %result
+    %result -= %div
+    rdi <- %pi_x
+    rsi <- 5
+
+mem rsp -8 <- :call_label_ciao__ciao__ciao__ciao_16
+    call @pow 2
+
+:call_label_ciao__ciao__ciao__ciao_16
+    %pi_x_five <- rax
+    %top <- %a
+    %top *= %pi_x_five
+    rdi <- 5
+
+mem rsp -8 <- :call_label_ciao__ciao__ciao__ciao_17
+    call @factorial 1
+
+:call_label_ciao__ciao__ciao__ciao_17
+    %five_fact <- rax
+    rdi <- %b
+    rsi <- 5
+
+mem rsp -8 <- :call_label_ciao__ciao__ciao__ciao_18
+    call @pow 2
+
+:call_label_ciao__ciao__ciao__ciao_18
+    %eight_five <- rax
+    %bot <- %five_fact
+    %bot *= %eight_five
+    rdi <- %top
+    rsi <- %bot
+
+mem rsp -8 <- :call_label_ciao__ciao__ciao__ciao_19
+    call @divide 2
+
+:call_label_ciao__ciao__ciao__ciao_19
+    %div <- rax
+    %result <- %result
+    %result += %div
+    rdi <- %pi_x
+    rsi <- 7
+
+mem rsp -8 <- :call_label_ciao__ciao__ciao__ciao_20
+    call @pow 2
+
+:call_label_ciao__ciao__ciao__ciao_20
+    %pi_x_seven <- rax
+    %top <- %a
+    %top *= %pi_x_seven
+    rdi <- 7
+
+mem rsp -8 <- :call_label_ciao__ciao__ciao__ciao_21
+    call @factorial 1
+
+:call_label_ciao__ciao__ciao__ciao_21
+    %seven_fact <- rax
+    rdi <- %b
+    rsi <- 7
+
+mem rsp -8 <- :call_label_ciao__ciao__ciao__ciao_22
+    call @pow 2
+
+:call_label_ciao__ciao__ciao__ciao_22
+    %eight_seven <- rax
+    %bot <- %seven_fact
+    %bot *= %eight_seven
+    rdi <- %top
+    rsi <- %bot
+
+mem rsp -8 <- :call_label_ciao__ciao__ciao__ciao_23
+    call @divide 2
+
+:call_label_ciao__ciao__ciao__ciao_23
+    %div <- rax
+    %result <- %result
+    %result -= %div
+    rax <- %result
+    return
+  )
+)

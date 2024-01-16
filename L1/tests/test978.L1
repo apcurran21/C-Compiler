@@ -1,0 +1,57 @@
+(@main
+(@fib
+	1 2
+	mem rsp 8 <- r13
+	mem rsp 0 <- r12
+	rdx <- rdi
+	rsi <- rdx = 3
+	rdi <- rdx = 1
+	cjump rdi = 1 :call_label_ciao_1
+	cjump rsi = 1 :call_label_ciao_2
+	rdi <- rdx
+	rdi -= 4
+	r13 <- rdx
+	r13 -= 2
+	rdi <- rdi
+	mem rsp -8 <- :call_label_ciao_3
+	call @fib 1
+	:call_label_ciao_3
+	r12 <- rax
+	rdi <- r13
+	mem rsp -8 <- :call_label_ciao_4
+	call @fib 1
+	:call_label_ciao_4
+	rdi <- rax
+	rsi <- r12
+	rsi += rdi
+	rsi <- rsi
+	rsi -= 1
+	rax <- rsi
+	r12 <- mem rsp 0
+	r13 <- mem rsp 8
+	return
+	:call_label_ciao_1
+	rax <- 1
+	r12 <- mem rsp 0
+	r13 <- mem rsp 8
+	return
+	:call_label_ciao_2
+	rax <- 3
+	r12 <- mem rsp 0
+	r13 <- mem rsp 8
+	return
+)
+
+(@main
+	0 0
+	rdi <- 19
+	mem rsp -8 <- :call_label0
+	call @fib 1
+	:call_label0
+	rdi <- rax
+	rdi <- rdi
+	call print 1
+	return
+)
+
+)

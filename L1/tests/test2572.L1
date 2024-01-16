@@ -1,0 +1,59 @@
+(@entry
+(@entry
+	0 0
+	rdi <- 541
+	rsi <- 7919
+	mem rsp -8 <- :goCallsGcdReturn
+	call @gcd 2
+	:goCallsGcdReturn
+	rdi <- rax
+	rdi <<= 1
+	rdi += 1
+	call print 1
+	return
+)
+
+(@gcd
+	2 1
+	cjump rsi = 0 :gcdInitialCondition
+	rdi <- rdi
+	rsi <- rsi
+	mem rsp 0 <- rsi
+	rdi <- rdi
+	rsi <- mem rsp 0
+	rsi <- rsi
+	mem rsp -8 <- :gcdCallsModReturn
+	call @mod 2
+	:gcdCallsModReturn
+	rdi <- mem rsp 0
+	rdi <- rdi
+	rsi <- rax
+	mem rsp -8 <- :gcdCallsGcdReturn
+	call @gcd 2
+	:gcdCallsGcdReturn
+	return
+	:gcdInitialCondition
+	rax <- rdi
+	return
+)
+
+(@mod
+	2 0
+	rcx <- 0
+	rdi <- rdi
+	rdx <- rsi
+	rax <- rdi
+	:modWhile
+	rsi <- rdx
+	rsi *= rcx
+	cjump rsi <= rdi :modWhileInto
+	return
+	:modWhileInto
+	rax <- rdi
+	rax -= rsi
+	rcx += 1
+	cjump 1 = 1 :modWhile
+	return
+)
+
+)

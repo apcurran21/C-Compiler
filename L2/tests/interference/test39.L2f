@@ -1,0 +1,15 @@
+(@mod
+	2
+	cjump rdi = 0 :mgood
+	:misneg
+	cjump -1 < rdi :mloop
+	rax <- 0
+	return
+	:mloop
+	rdi -= rsi
+	cjump rdi = 0 :mgood
+	goto :misneg
+	:mgood
+	rax <- 1
+	return
+)

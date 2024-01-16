@@ -1,0 +1,84 @@
+define @newmat (%arg1, %arg2) {
+ 
+:NNNNNNN
+ br :entree
+ 
+:entree
+ %arg1 <- %arg1 + %arg1
+ %arg1 <- %arg1 + 1
+ %arg2 <- %arg2 + %arg2
+ %arg2 <- %arg2 + 1
+ %newVar1 <- %arg1 >> 1
+ %newVar0 <- %newVar1
+ %newVar2 <- %arg2 >> 1
+ %newVar0 <- %newVar0 * %newVar2
+ %newVar0 <- %newVar0 << 1
+ %newVar0 <- %newVar0 + 1
+ %newVar0 <- %newVar0 + 6
+ %arr <- call allocate (%newVar0, 1)
+ %newVar3 <- %arr + 8
+ store %newVar3 <- 5
+ %newVar4 <- %arr + 16
+ store %newVar4 <- %arg1
+ %newVar5 <- %arr + 24
+ store %newVar5 <- %arg2
+ return %arr
+}
+
+define @matset (%arg1, %arg2, %arg3, %arg4) {
+ 
+:NNNNNNN
+ br :entree
+ 
+:entree
+ %newVar1 <- 0
+ %newVar2 <- %arg1 + 24
+ %newVar3 <- load %newVar2
+ %newVar4 <- %newVar3 >> 1
+ %newVar5 <- 1
+ %newVar5 <- %newVar4 * %newVar5
+ %newVar6 <- %arg2 * %newVar5
+ %newVar1 <- %newVar6 + %newVar1
+ %newVar1 <- %newVar1 + %arg3
+ %newVar0 <- %newVar1 * 8
+ %newVar0 <- %newVar0 + 32
+ %newVar7 <- %arg1 + %newVar0
+ store %newVar7 <- %arg4
+ return 
+}
+
+define @main () {
+ 
+:NNNNNNN
+ br :entree
+ 
+:entree
+ %arg3 <- 2
+ %arg4 <- 5
+ %arr <- call @newmat (%arg3, %arg4)
+ %M <- %arr
+ call print (%M)
+ %arg2 <- 0
+ %arg3 <- 1
+ %arg4 <- 3
+ call @matset (%M, %arg2, %arg3, %arg4)
+ %arg2 <- 0
+ %arg3 <- 2
+ %arg4 <- 5
+ call @matset (%M, %arg2, %arg3, %arg4)
+ %arg2 <- 0
+ %arg3 <- 3
+ %arg4 <- 7
+ call @matset (%M, %arg2, %arg3, %arg4)
+ %arg2 <- 1
+ %arg3 <- 3
+ %arg4 <- 9
+ call @matset (%M, %arg2, %arg3, %arg4)
+ %arg2 <- 1
+ %arg3 <- 0
+ %arg4 <- -1
+ call @matset (%M, %arg2, %arg3, %arg4)
+ call print (%M)
+ return 
+}
+

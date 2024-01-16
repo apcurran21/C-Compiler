@@ -1,0 +1,30 @@
+(@myTest3
+	0
+	%local1 <- 5
+	%local2 <- 10
+	%local3 <- 15
+	rdi <- 5
+	rsi <- 3
+	%local5 <- 20
+	mem rsp -8 <- :retMyTest3
+	call @myTest3Helper 2
+	:retMyTest3
+	cjump rax = 0 :elseCase
+	rax <- @retFun
+	goto :endIf
+	:elseCase
+	rax <- @altRetFun
+	:endIf
+	rdi <- %local1
+	rdi += %local2
+	rdi -= %local3
+	rdi += %local5
+	mem rsp -8 <- :retPos
+	call rax 1
+	:retPos
+	rax <<= 1
+	rax += 1
+	rdi <- rax
+	call print 1
+	return
+)

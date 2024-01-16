@@ -1,0 +1,94 @@
+(@main
+(@main
+	0 5
+	rdi <- 0
+	mem rsp 16 <- rdi
+	rcx <- 2
+	rdi <- 1
+	mem rsp 32 <- rdi
+	:call_label0
+	rdi <- mem rsp 32
+	rdi <- 5 <= rdi
+	cjump rdi = 1 :call_label5
+	rdi <- 1
+	mem rsp 24 <- rdi
+	:call_label1
+	rdi <- mem rsp 24
+	rdi <- 5 <= rdi
+	cjump rdi = 1 :call_label4
+	rdi <- mem rsp 16
+	rsi <- rdi
+	rdi <- mem rsp 16
+	rsi -= rdi
+	rdi <- rsi
+	mem rsp 16 <- rdi
+	rdi <- mem rsp 16
+	rdi <- rdi
+	mem rsp 8 <- rdi
+	rdi <- mem rsp 8
+	rdi <- rdi
+	mem rsp 8 <- rdi
+	rdi <- mem rsp 8
+	rdi += 1
+	mem rsp 8 <- rdi
+	:call_label2
+	rdi <- mem rsp 8
+	rdi <- 1000 <= rdi
+	cjump rdi = 1 :call_label3
+	rdi <- rcx
+	mem rsp 0 <- rdi
+	rdi <- mem rsp 8
+	rsi <- rdi
+	rsi <- rsi
+	rsi <<= rcx
+	rsi <- rsi
+	rsi += 1
+	rdi <- rsi
+	call print 1
+	rdi <- mem rsp 32
+	rsi <- rdi
+	rsi <- rsi
+	rdi <- mem rsp 24
+	rsi *= rdi
+	rsi <- rsi
+	rdi <- mem rsp 8
+	rsi *= rdi
+	rsi <- rsi
+	rcx <- mem rsp 0
+	rsi <<= rcx
+	rsi <- rsi
+	rsi >>= 1
+	rsi <- rsi
+	rsi += 1
+	rdi <- rsi
+	call print 1
+	rdi <- mem rsp 0
+	rcx <- rdi
+	rdi <- mem rsp 8
+	rdi <- rdi
+	mem rsp 8 <- rdi
+	rdi <- mem rsp 8
+	rdi <<= rcx
+	mem rsp 8 <- rdi
+	goto :call_label2
+	:call_label3
+	rdi <- mem rsp 24
+	rdi <- rdi
+	mem rsp 24 <- rdi
+	rdi <- mem rsp 24
+	rdi += 1
+	mem rsp 24 <- rdi
+	goto :call_label1
+	:call_label4
+	rdi <- mem rsp 32
+	rdi <- rdi
+	mem rsp 32 <- rdi
+	rdi <- mem rsp 32
+	rdi += 1
+	mem rsp 32 <- rdi
+	goto :call_label0
+	:call_label5
+	return
+)
+
+)

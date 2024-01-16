@@ -1,0 +1,19 @@
+(@initialize_array
+	1
+	%p <- rdi
+	%index <- 0
+	%ptr <- %p
+	:call_label_ciao__ciao__ciao_8
+	%val <- %index
+	%val += 1
+	%val <<= 1
+	%val += 1
+	mem %ptr 0 <- %val
+	%check <- %index < 10
+	%index += 1
+	%ptr += 8
+	cjump %check = 1 :call_label_ciao__ciao__ciao_8
+	goto :call_label_ciao__ciao__ciao_9
+	:call_label_ciao__ciao__ciao_9
+	return
+)

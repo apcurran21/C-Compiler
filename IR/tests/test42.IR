@@ -1,0 +1,40 @@
+// This test deals with some calling convention stuff
+// prints 2
+define void @main () {
+    :entry
+    call @myF()
+    return
+}
+define void @myF() {
+    :entry
+    call @myF2(5)
+    return
+}
+define void @myF2(int64 %arg1) {
+    // Save some callee saved registers and do stuff with them
+    :entry
+    int64 %v1
+    int64 %v2
+    int64 %v3
+    int64 %ret
+    %v1 <- 0
+    %v2 <- %v1
+    %v1 <- 5
+    %v1 <- %v1 + 27
+    %v3 <- 6
+    %v1 <- %v1 + %v3
+
+    // Call myF3
+    %ret <- call @myF3()
+
+    call print(%arg1)
+    
+    return
+}
+define int64 @myF3() {
+    :entry
+    int64 %ret
+    %ret <- 4 <= 4
+    return %ret
+}
+

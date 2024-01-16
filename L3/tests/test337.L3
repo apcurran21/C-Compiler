@@ -1,0 +1,30 @@
+// This test deals with some calling convention stuff
+define @main () {
+    call @myF()
+    return
+}
+define @myF() {
+    call @myF2(5)
+    return
+}
+define @myF2(%arg1) {
+    // Save some callee saved registers and do stuff with them
+    %v1 <- 0
+    %v2 <- %v1
+    %v1 <- 5
+    %v1 <- %v1 + 27
+    %v3 <- 6
+    %v1 <- %v1 + %v3
+
+    // Call myF3
+    %ret <- call @myF3()
+
+    call print(%arg1)
+    
+    return
+}
+define @myF3() {
+    %ret <- 4 <= 4
+    return %ret
+}
+

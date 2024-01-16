@@ -1,0 +1,75 @@
+(@main
+  (@main
+    0
+    %local1 <- 5
+    %local2 <- 10
+    %local3 <- 15
+    %v1 <- 5
+    %v2 <- 3
+    %local4 <- %v1
+    %local5 <- 20
+    rdi <- %v1
+    rsi <- %v2
+
+mem rsp -8 <- :call_label2
+    call @myTest3Helper 2
+
+:call_label2
+    %ret <- rax
+    %bool <- %ret = 0
+
+    cjump %bool = 1 :call_label0
+    %func <- @retFun
+    goto :call_label1
+    :call_label0
+    %func <- @altRetFun
+    :call_label1
+    %v1 <- %local1
+    %v1 <- %v1
+    %v1 += %local2
+    %v1 <- %v1
+    %v1 -= %local3
+    %v1 <- %v1
+    %v1 += %local5
+    rdi <- %v1
+
+mem rsp -8 <- :call_label3
+    call %func 1
+
+:call_label3
+    %ret <- rax
+    %ret <- %ret
+    %ret <<= 1
+    %ret <- %ret
+    %ret += 1
+    %v1 <- %ret
+    rdi <- %v1
+    call print 1
+    return
+  )
+  (@myTest3Helper
+    2
+    %v1 <- rdi
+    %v2 <- rsi
+    %ret <- %v1 < %v2
+
+    rax <- %ret
+    return
+  )
+  (@retFun
+    1
+    %v1 <- rdi
+    %v1 <- %v1
+    %v1 += 10
+    rax <- %v1
+    return
+  )
+  (@altRetFun
+    1
+    %v1 <- rdi
+    %v1 <- %v1
+    %v1 -= 10
+    rax <- %v1
+    return
+  )
+)

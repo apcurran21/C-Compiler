@@ -1,0 +1,46 @@
+define @main() {
+    call @fib(20)
+    return
+}
+
+define @encode_and_print(%v) {
+    %v_shifted <- %v << 1
+    %v_encoded <- %v_shifted + 1
+    call print(%v_encoded)
+    return
+}
+
+define @fib(%num) {
+    %computes_remaining <- %num
+    %computes_started   <- 0
+
+    %fib_i     <- 0
+    %old_fib_i <- 0
+    %fib_im1   <- 0
+    
+    :print_then_compute_next
+    call @encode_and_print(%computes_started)
+    call @encode_and_print(%fib_i)
+    call @encode_and_print(888888888888888888)
+
+    :fib_loop
+    %done <- %computes_remaining = 0
+    br %done :fib_return
+    
+    :start_next_compute
+    %computes_remaining <- %computes_remaining - 1
+    %computes_started   <- %computes_started   + 1
+
+    %past_base_case <- %computes_started > 1
+    br %past_base_case :fib_main
+        %fib_i <- %fib_i + 1
+        br :print_then_compute_next
+    :fib_main
+    %old_fib_i <- %fib_i
+    %fib_i     <- %fib_i + %fib_im1
+    %fib_im1   <- %old_fib_i
+    br :print_then_compute_next
+
+    :fib_return
+    return
+}

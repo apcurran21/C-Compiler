@@ -1,0 +1,20 @@
+(@main
+	0
+	mem rsp -8 <- :call_label0
+	call @print_A 0
+	:call_label0
+	mem rsp -8 <- :call_label1
+	call @print_sep 0
+	:call_label1
+	mem rsp -8 <- :call_label2
+	call @print_B 0
+	:call_label2
+	mem rsp -8 <- :call_label3
+	call @print_sep 0
+	:call_label3
+	mem rsp -8 <- :call_label4
+	call @print_A_and_B_oneline 0
+	:call_label4
+	rax <- 1
+	return
+)

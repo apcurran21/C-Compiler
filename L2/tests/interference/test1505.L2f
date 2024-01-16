@@ -1,0 +1,39 @@
+(@main
+	0
+	:call_label0
+	goto :call_label1
+	:call_label1
+	%newVar1 <- 7
+	%newVar1 >>= 1
+	%newVar0 <- %newVar1
+	%newVar2 <- 7
+	%newVar2 >>= 1
+	%newVar0 *= %newVar2
+	%newVar3 <- 7
+	%newVar3 >>= 1
+	%newVar0 *= %newVar3
+	%newVar0 <<= 1
+	%newVar0 += 1
+	%newVar0 += 6
+	rdi <- %newVar0
+	rsi <- 1
+	call allocate 2
+	%a <- rax
+	%newVar4 <- %a
+	%newVar4 += 8
+	mem %newVar4 0 <- 7
+	%newVar5 <- %a
+	%newVar5 += 16
+	mem %newVar5 0 <- 7
+	%newVar6 <- %a
+	%newVar6 += 24
+	mem %newVar6 0 <- 7
+	rdi <- %a
+	rsi <- 1
+	rdx <- 2
+	rcx <- 3
+	mem rsp -8 <- :call_label2
+	call @storeV 4
+	:call_label2
+	return
+)

@@ -1,0 +1,18 @@
+(@initArray
+	1
+	%A <- rdi
+	:call_label2
+	%newVar2 <- %A
+	%newVar2 += 24
+	%newVar3 <- mem %newVar2 0
+	%newVar4 <- %newVar3
+	%newVar4 >>= 1
+	%newVar5 <- 1
+	%newVar5 *= %newVar4
+	%newVarX <- %newVar5
+	%newVarX <<= 1
+	%newVarX += 1
+	rdi <- %newVarX
+	call print 1
+	return
+)

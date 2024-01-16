@@ -1,0 +1,7 @@
+(@findLen
+	1
+	rax <- mem rdi 0
+	rax <<= 1
+	rax++
+	return
+)

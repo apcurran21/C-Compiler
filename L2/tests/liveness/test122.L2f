@@ -1,0 +1,31 @@
+(@main
+	0
+	rdi <- 11
+	rsi <- 3
+	call allocate 2
+	%addr1 <- rax
+	mem rax 16 <- 5
+	mem rax 24 <- 7
+	mem rax 32 <- 9
+	mem rax 40 <- 11
+	rdi <- rax
+	call print 1
+	rdi <- 11
+	rsi <- 13
+	call allocate 2
+	%addr2 <- rax
+	mem rax 16 <- 15
+	mem rax 24 <- 17
+	mem rax 32 <- 19
+	mem rax 40 <- 21
+	rdi <- rax
+	call print 1
+	rdi <- %addr1
+	rsi <- %addr2
+	mem rsp -8 <- :ret_1
+	call @concat_array 2
+	:ret_1
+	rdi <- rax
+	call print 1
+	return
+)

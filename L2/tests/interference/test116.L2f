@@ -1,0 +1,21 @@
+(@entrance
+	0
+	rdi <- 15
+	rsi <- 17
+	rdx <- 9
+	rcx <- 5
+	r8 <- 7
+	r9 <- 13
+	%my1stVar <- 1
+	mem rsp -8 <- :f1_ret
+	call @f1 6
+	:f1_ret
+	%my2ndVar <- rax
+	rdi <- %my1stVar
+	call print 1
+	rdi <- %my2ndVar
+	rdi++
+	call print 1
+	rax <- 1
+	return
+)

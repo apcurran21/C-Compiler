@@ -1,0 +1,38 @@
+%array_2x7 %array_to_print %i %new_array %offset %one_line_1 %one_line_1_B %one_line_2 %one_line_2_B %one_line_3 %one_line_3_B %one_line_4 %one_line_4_B %one_line_5 %one_line_5_B %one_line_6 %one_line_6_B %one_line_7 %one_line_7_B %pointer %pointer_line r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx rsi
+%array_to_print %array_2x7 %offset r12 r13 r14 r15 rbp rbx
+%encode_severn %one_line_array r12 r13 r14 r15 rbp rbx
+%i %array_2x7 %offset r12 r13 r14 r15 rax rbp rbx
+%new_array %array_2x7 %one_line_1_B %one_line_2_B %one_line_3_B %one_line_4_B %one_line_5_B %one_line_6_B %one_line_7_B %pointer %pointer_line r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx rsi
+%offset %array_2x7 %array_to_print %i %pointer r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx rsi
+%one_line_1 %array_2x7 %pointer r12 r13 r14 r15 rbp rbx rdi
+%one_line_1_B %array_2x7 %new_array %pointer %pointer_line r12 r13 r14 r15 rbp rbx
+%one_line_2 %array_2x7 %pointer r12 r13 r14 r15 rbp rbx rdi
+%one_line_2_B %array_2x7 %new_array %pointer %pointer_line r12 r13 r14 r15 rbp rbx
+%one_line_3 %array_2x7 %pointer r12 r13 r14 r15 rbp rbx rdi
+%one_line_3_B %array_2x7 %new_array %pointer %pointer_line r12 r13 r14 r15 rbp rbx
+%one_line_4 %array_2x7 %pointer r12 r13 r14 r15 rbp rbx rdi
+%one_line_4_B %array_2x7 %new_array %pointer %pointer_line r12 r13 r14 r15 rbp rbx
+%one_line_5 %array_2x7 %pointer r12 r13 r14 r15 rbp rbx rdi
+%one_line_5_B %array_2x7 %new_array %pointer %pointer_line r12 r13 r14 r15 rbp rbx
+%one_line_6 %array_2x7 %pointer r12 r13 r14 r15 rbp rbx rdi
+%one_line_6_B %array_2x7 %new_array %pointer %pointer_line r12 r13 r14 r15 rbp rbx
+%one_line_7 %array_2x7 %pointer r12 r13 r14 r15 rbp rbx rdi
+%one_line_7_B %array_2x7 %new_array %pointer %pointer_line r12 r13 r14 r15 rax rbp rbx
+%one_line_array %encode_severn r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx rsi
+%pointer %array_2x7 %new_array %offset %one_line_1 %one_line_1_B %one_line_2 %one_line_2_B %one_line_3 %one_line_3_B %one_line_4 %one_line_4_B %one_line_5 %one_line_5_B %one_line_6 %one_line_6_B %one_line_7 %one_line_7_B %pointer_line r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx rsi
+%pointer_line %array_2x7 %new_array %one_line_1_B %one_line_2_B %one_line_3_B %one_line_4_B %one_line_5_B %one_line_6_B %one_line_7_B %pointer r12 r13 r14 r15 rax rbp rbx
+r10 %array_2x7 %new_array %offset %one_line_array %pointer r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx rsi
+r11 %array_2x7 %new_array %offset %one_line_array %pointer r10 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx rsi
+r12 %array_2x7 %array_to_print %encode_severn %i %new_array %offset %one_line_1 %one_line_1_B %one_line_2 %one_line_2_B %one_line_3 %one_line_3_B %one_line_4 %one_line_4_B %one_line_5 %one_line_5_B %one_line_6 %one_line_6_B %one_line_7 %one_line_7_B %one_line_array %pointer %pointer_line r10 r11 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx rsi
+r13 %array_2x7 %array_to_print %encode_severn %i %new_array %offset %one_line_1 %one_line_1_B %one_line_2 %one_line_2_B %one_line_3 %one_line_3_B %one_line_4 %one_line_4_B %one_line_5 %one_line_5_B %one_line_6 %one_line_6_B %one_line_7 %one_line_7_B %one_line_array %pointer %pointer_line r10 r11 r12 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx rsi
+r14 %array_2x7 %array_to_print %encode_severn %i %new_array %offset %one_line_1 %one_line_1_B %one_line_2 %one_line_2_B %one_line_3 %one_line_3_B %one_line_4 %one_line_4_B %one_line_5 %one_line_5_B %one_line_6 %one_line_6_B %one_line_7 %one_line_7_B %one_line_array %pointer %pointer_line r10 r11 r12 r13 r15 r8 r9 rax rbp rbx rcx rdi rdx rsi
+r15 %array_2x7 %array_to_print %encode_severn %i %new_array %offset %one_line_1 %one_line_1_B %one_line_2 %one_line_2_B %one_line_3 %one_line_3_B %one_line_4 %one_line_4_B %one_line_5 %one_line_5_B %one_line_6 %one_line_6_B %one_line_7 %one_line_7_B %one_line_array %pointer %pointer_line r10 r11 r12 r13 r14 r8 r9 rax rbp rbx rcx rdi rdx rsi
+r8 %array_2x7 %new_array %offset %one_line_array %pointer r10 r11 r12 r13 r14 r15 r9 rax rbp rbx rcx rdi rdx rsi
+r9 %array_2x7 %new_array %offset %one_line_array %pointer r10 r11 r12 r13 r14 r15 r8 rax rbp rbx rcx rdi rdx rsi
+rax %array_2x7 %i %new_array %offset %one_line_7_B %one_line_array %pointer %pointer_line r10 r11 r12 r13 r14 r15 r8 r9 rbp rbx rcx rdi rdx rsi
+rbp %array_2x7 %array_to_print %encode_severn %i %new_array %offset %one_line_1 %one_line_1_B %one_line_2 %one_line_2_B %one_line_3 %one_line_3_B %one_line_4 %one_line_4_B %one_line_5 %one_line_5_B %one_line_6 %one_line_6_B %one_line_7 %one_line_7_B %one_line_array %pointer %pointer_line r10 r11 r12 r13 r14 r15 r8 r9 rax rbx rcx rdi rdx rsi
+rbx %array_2x7 %array_to_print %encode_severn %i %new_array %offset %one_line_1 %one_line_1_B %one_line_2 %one_line_2_B %one_line_3 %one_line_3_B %one_line_4 %one_line_4_B %one_line_5 %one_line_5_B %one_line_6 %one_line_6_B %one_line_7 %one_line_7_B %one_line_array %pointer %pointer_line r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rcx rdi rdx rsi
+rcx %array_2x7 %new_array %offset %one_line_array %pointer r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rdi rdx rsi
+rdi %array_2x7 %new_array %offset %one_line_1 %one_line_2 %one_line_3 %one_line_4 %one_line_5 %one_line_6 %one_line_7 %one_line_array %pointer r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdx rsi
+rdx %array_2x7 %new_array %offset %one_line_array %pointer r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rsi
+rsi %array_2x7 %new_array %offset %one_line_array %pointer r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx

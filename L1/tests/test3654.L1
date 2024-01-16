@@ -1,0 +1,139 @@
+(@main
+(@main
+	0 0
+	:call_label0
+	rdi <- 3
+	rsi <- 3
+	rdi <- rdi
+	rsi <- rsi
+	mem rsp -8 <- :call_label1
+	call @findGCD 2
+	:call_label1
+	rdi <- rax
+	rdi <- 30
+	rsi <- 50
+	rdi <- rdi
+	rsi <- rsi
+	mem rsp -8 <- :call_label2
+	call @findGCD 2
+	:call_label2
+	rdi <- rax
+	rdi <- 75
+	rsi <- 80
+	rdi <- rdi
+	rsi <- rsi
+	mem rsp -8 <- :call_label3
+	call @findGCD 2
+	:call_label3
+	rdi <- rax
+	return
+)
+
+(@findGCD
+	2 2
+	rdi <- rdi
+	mem rsp 8 <- rdi
+	rdi <- rsi
+	mem rsp 0 <- rdi
+	:call_label_ciao_4
+	rdi <- mem rsp 0
+	rsi <- mem rsp 8
+	rdi <- rsi < rdi
+	cjump rdi = 1 :call_label_ciao_7
+	goto :call_label_ciao_5
+	:call_label_ciao_5
+	rdi <- mem rsp 0
+	rsi <- mem rsp 8
+	rdi <- rsi = rdi
+	cjump rdi = 1 :call_label_ciao_8
+	goto :call_label_ciao_6
+	:call_label_ciao_6
+	rdi <- mem rsp 8
+	rdi <- rdi
+	mem rsp 8 <- rdi
+	rdi <- mem rsp 0
+	rsi <- mem rsp 8
+	rsi -= rdi
+	mem rsp 8 <- rsi
+	rdi <- mem rsp 8
+	rdi <- rdi
+	rsi <- mem rsp 0
+	rsi <- rsi
+	mem rsp -8 <- :call_label_ciao_10
+	call @printResult 2
+	:call_label_ciao_10
+	rdi <- mem rsp 8
+	rdi <- rdi
+	rsi <- mem rsp 0
+	rsi <- rsi
+	mem rsp -8 <- :call_label_ciao_11
+	call @findGCD 2
+	:call_label_ciao_11
+	goto :call_label_ciao_9
+	:call_label_ciao_7
+	rdi <- mem rsp 0
+	rdi <- rdi
+	mem rsp 0 <- rdi
+	rsi <- mem rsp 0
+	rdi <- mem rsp 8
+	rsi -= rdi
+	mem rsp 0 <- rsi
+	rdi <- mem rsp 8
+	rdi <- rdi
+	rsi <- mem rsp 0
+	rsi <- rsi
+	mem rsp -8 <- :call_label_ciao_12
+	call @printResult 2
+	:call_label_ciao_12
+	rdi <- mem rsp 8
+	rdi <- rdi
+	rsi <- mem rsp 0
+	rsi <- rsi
+	mem rsp -8 <- :call_label_ciao_13
+	call @findGCD 2
+	:call_label_ciao_13
+	goto :call_label_ciao_9
+	:call_label_ciao_8
+	rdi <- mem rsp 8
+	rdi <- rdi
+	rsi <- mem rsp 0
+	rsi <- rsi
+	mem rsp -8 <- :call_label_ciao_14
+	call @printResult 2
+	:call_label_ciao_14
+	goto :call_label_ciao_9
+	:call_label_ciao_9
+	return
+)
+
+(@printResult
+	2 1
+	rdi <- rdi
+	rsi <- rsi
+	mem rsp 0 <- rsi
+	:call_label_ciao__ciao_15
+	rdi <- rdi
+	rdi <<= 1
+	rdi <- rdi
+	rdi += 1
+	rdi <- rdi
+	call print 1
+	rdi <- mem rsp 0
+	rdi <- rdi
+	mem rsp 0 <- rdi
+	rdi <- mem rsp 0
+	rdi <<= 1
+	mem rsp 0 <- rdi
+	rdi <- mem rsp 0
+	rdi <- rdi
+	mem rsp 0 <- rdi
+	rdi <- mem rsp 0
+	rdi += 1
+	mem rsp 0 <- rdi
+	rdi <- mem rsp 0
+	rdi <- rdi
+	call print 1
+	return
+)
+
+)

@@ -1,0 +1,8 @@
+(@retFun
+	1
+	%v1 <- rdi
+	:call_label_ciao__ciao_7
+	%v1 += 10
+	rax <- %v1
+	return
+)

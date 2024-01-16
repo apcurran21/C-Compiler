@@ -1,0 +1,36 @@
+(@printArrayElement
+	2
+	%array <- rdi
+	%i <- rsi
+	rsi <<= 1
+	rsi++
+	rdi <- rsi
+	call print 1
+	%L1DataLayout <- %i
+	%L1DataLayout <<= 3
+	%L1DataLayout += 8
+	%L1DataLayout <<= 1
+	%L1DataLayout += 1
+	rdi <- %L1DataLayout
+	call print 1
+	rax <- %i
+	rax++
+	rax <<= 3
+	%arrayI <- %array
+	%arrayI += rax
+	rax <- %arrayI
+	%lowestBit <- mem rax 0
+	%lowestBit &= 1
+	cjump %lowestBit = 1 :notArray
+	goto :array
+	:notArray
+	rdi <- mem rax 0
+	call print 1
+	goto :r
+	:array
+	rdi <- mem rax 0
+	mem rsp -8 <- :r
+	call @printArray 1
+	:r
+	return
+)

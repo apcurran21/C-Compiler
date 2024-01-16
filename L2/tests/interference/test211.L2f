@@ -1,0 +1,8 @@
+(@encode
+	1
+	%num_to_encode <- rdi
+	%num_to_encode <<= 1
+	%num_to_encode += 1
+	rax <- %num_to_encode
+	return
+)

@@ -1,0 +1,158 @@
+(@main
+  (@main
+    0
+    %len <- 10
+    rdi <- %len
+
+mem rsp -8 <- :call_label0
+    call @GetArray 1
+
+:call_label0
+    %arr <- rax
+    rdi <- %arr
+    call print 1
+    rdi <- %arr
+    rsi <- %len
+
+mem rsp -8 <- :call_label1
+    call @FindPeak 2
+
+:call_label1
+    %res <- rax
+    rdi <- %res
+
+mem rsp -8 <- :call_label2
+    call @PrintResult 1
+
+:call_label2
+    return
+  )
+  (@GetArray
+    1
+    %len <- rdi
+    %len <- %len
+    %len <<= 1
+    %len <- %len
+    %len += 1
+    rdi <- %len
+    rsi <- 1
+    call allocate 2
+    %arr <- rax
+    %pos <- %arr
+    %pos += 8
+    %x <- 1
+    %x <- %x
+    %x <<= 1
+    %x <- %x
+    %x += 1
+    mem %pos 0 <- %x
+    %pos <- %pos
+    %pos += 8
+    %x <- 2
+    %x <- %x
+    %x <<= 1
+    %x <- %x
+    %x += 1
+    mem %pos 0 <- %x
+    %pos <- %pos
+    %pos += 8
+    %x <- 3
+    %x <- %x
+    %x <<= 1
+    %x <- %x
+    %x += 1
+    mem %pos 0 <- %x
+    %pos <- %pos
+    %pos += 8
+    %x <- 5
+    %x <- %x
+    %x <<= 1
+    %x <- %x
+    %x += 1
+    mem %pos 0 <- %x
+    %pos <- %pos
+    %pos += 8
+    %x <- 1
+    %x <- %x
+    %x <<= 1
+    %x <- %x
+    %x += 1
+    mem %pos 0 <- %x
+    %pos <- %pos
+    %pos += 8
+    %x <- 3
+    %x <- %x
+    %x <<= 1
+    %x <- %x
+    %x += 1
+    mem %pos 0 <- %x
+    %pos <- %pos
+    %pos += 8
+    %x <- 2
+    %x <- %x
+    %x <<= 1
+    %x <- %x
+    %x += 1
+    mem %pos 0 <- %x
+    %pos <- %pos
+    %pos += 8
+    %x <- 10
+    %x <- %x
+    %x <<= 1
+    %x <- %x
+    %x += 1
+    mem %pos 0 <- %x
+    %pos <- %pos
+    %pos += 8
+    %x <- 11
+    %x <- %x
+    %x <<= 1
+    %x <- %x
+    %x += 1
+    mem %pos 0 <- %x
+    %pos <- %pos
+    %pos += 8
+    %x <- 8
+    %x <- %x
+    %x <<= 1
+    %x <- %x
+    %x += 1
+    mem %pos 0 <- %x
+    rax <- %arr
+    return
+  )
+  (@FindPeak
+    2
+    %arr <- rdi
+    %len <- rsi
+    %max <- 0
+    %ind <- 0
+    %pos <- %arr
+    %pos += 8
+    :call_label_ciao_3
+    %loopEnded <- %len <= %ind
+
+    cjump %loopEnded = 1 :call_label_ciao_5
+    %cur <- mem %pos 0
+    %notMax <- %cur <= %max
+
+    cjump %notMax = 1 :call_label_ciao_4
+    %max <- %cur
+    :call_label_ciao_4
+    %ind <- %ind
+    %ind += 1
+    %pos <- %pos
+    %pos += 8
+    goto :call_label_ciao_3
+    :call_label_ciao_5
+    rax <- %max
+    return
+  )
+  (@PrintResult
+    1
+    %res <- rdi
+    rdi <- %res
+    call print 1
+    return
+  )
+)

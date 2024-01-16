@@ -1,0 +1,21 @@
+%i %isDone %max %newMax r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx %result rsi
+%isDone %i %max r12 r13 r14 r15 rbp rbx
+%max %i %isDone %newMax r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx %result rsi
+%newMax %i %max r12 r13 r14 r15 rbp rbx
+r10 %i %max r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx rsi
+r11 %i %max r10 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx rsi
+r12 %i %isDone %max %newMax %r r10 r11 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx %result rsi
+r13 %i %isDone %max %newMax %r r10 r11 r12 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx %result rsi
+r14 %i %isDone %max %newMax %r r10 r11 r12 r13 r15 r8 r9 rax rbp rbx rcx rdi rdx %result rsi
+r15 %i %isDone %max %newMax %r r10 r11 r12 r13 r14 r8 r9 rax rbp rbx rcx rdi rdx %result rsi
+r8 %i %max r10 r11 r12 r13 r14 r15 r9 rax rbp rbx rcx rdi rdx rsi
+r9 %i %max r10 r11 r12 r13 r14 r15 r8 rax rbp rbx rcx rdi rdx rsi
+rax %i %max r10 r11 r12 r13 r14 r15 r8 r9 rbp rbx rcx rdi rdx rsi
+rbp %i %isDone %max %newMax %r r10 r11 r12 r13 r14 r15 r8 r9 rax rbx rcx rdi rdx %result rsi
+rbx %i %isDone %max %newMax %r r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rcx rdi rdx %result rsi
+rcx %i %max r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rdi rdx rsi
+rdi %i %max r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdx rsi
+rdx %i %max r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rsi
+%result %i %max r12 r13 r14 r15 rbp rbx
+%r r12 r13 r14 r15 rbp rbx
+rsi %i %max r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx

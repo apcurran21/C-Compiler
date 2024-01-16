@@ -1,0 +1,23 @@
+(@arrayprint
+	1
+	%p1 <- rdi
+	%el1 <- mem %p1 8
+	%el2 <- mem %p1 16
+	%el1_1 <- mem %el1 8
+	%el1mod <- %el1
+	%el1mod += 16
+	%el1_2 <- mem %el1mod 0
+	%el2_1 <- mem %el2 8
+	%el2mod <- %el2
+	%el2mod += 16
+	%el2_2 <- mem %el2mod 0
+	rdi <- %el1_1
+	call print 1
+	rdi <- %el1_2
+	call print 1
+	rdi <- %el2_1
+	call print 1
+	rdi <- %el2_2
+	call print 1
+	return
+)

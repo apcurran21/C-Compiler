@@ -1,0 +1,49 @@
+// Calculates the factorial of a nonnegative integer
+
+define :main() {
+  %n <- call input()
+  %n <- %n >> 1 
+
+  %flag <- %n = 0
+  br %flag :ZERO
+  
+  %result <- call :itr_factorial(%n)
+  br :ENCODE
+
+  :ZERO
+  %result <- 1
+
+  :ENCODE
+  %result <- %result << 1
+  %result <- %result + 1
+  call print(%result)
+
+  %result <- call :rec_factorial(%n)
+  %result <- %result << 1
+  %result <- %result + 1
+  call print(%result)
+  return 0
+}
+
+define :itr_factorial(%n) {
+    %ret <- 1
+    :LOOP
+    %ret <- %ret * %n
+    %n <- %n - 1
+    %flag <- %n > 0
+    br %flag :LOOP
+    return %ret
+}
+
+define :rec_factorial(%n) {
+    %flag <- %n = 0
+    br %flag :DONE
+    
+    %n1 <- %n - 1
+    %ret <- call :rec_factorial(%n1)
+    %ret <- %ret * %n
+    return %ret
+    
+    :DONE
+    return 1
+}

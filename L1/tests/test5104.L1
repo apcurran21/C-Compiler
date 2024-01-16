@@ -1,0 +1,66 @@
+(@twoSum
+/// Setting up a multidimensional array correctly and changing one of the values
+// to confirm they are indeed different arrays
+
+    (@twoSum
+        0 0
+        mem rsp -8 <- :populate_ret
+        rdi <- 4
+        call @populateArray 1
+        :populate_ret
+        rdi <- rax
+        rsi <- mem rdi 16
+        mem rsi 16 <- 9
+        call print 1
+        return
+    )
+    (@constructList
+        //Creates an array of size rdi and with default
+        //values in rsi
+        //returns pointer
+        2 0
+        call allocate 2
+        return
+    )
+    (@populateArray
+        ///Creates multidimensional array
+        1 4
+        mem rsp 0 <- r12
+        mem rsp 8 <- r13
+        mem rsp 16 <- r14
+        mem rsp 24 <- r15
+        r12 <- rdi
+        mem rsp -8 <- :large_ret
+        rdi <- 5
+        rsi <- 7
+        call @constructList 2
+        :large_ret
+        rdi <- r12
+        rdi <<= 1
+        rdi++
+        rsi <- rax
+        call allocate 2
+        r12 --
+        r13 <- 1
+        r14 <- rax
+        :startloop
+        rdi <- 5
+        rsi <- 7
+        mem rsp -8 <- :loopcondition
+        call @constructList 2
+        :loopcondition
+        r13 ++
+        r15 <- r13
+        r15 *= 8
+        r15 += r14
+        mem r15 0 <- rax
+        cjump r12 <= 0 :startloop
+        rax <- r14
+        r12 <- mem rsp 0
+        r13 <- mem rsp 8
+        r14 <- mem rsp 16
+        r15 <- mem rsp 24
+        return
+    )
+
+)

@@ -1,0 +1,23 @@
+(@main
+	0
+	:call_label0
+	goto :call_label1
+	:call_label1
+	rdi <- 0
+	mem rsp -8 <- :call_label2
+	call @fib 1
+	:call_label2
+	rdi <- 1
+	mem rsp -8 <- :call_label3
+	call @fib 1
+	:call_label3
+	rdi <- 15
+	mem rsp -8 <- :call_label4
+	call @fib 1
+	:call_label4
+	rdi <- 40
+	mem rsp -8 <- :call_label5
+	call @fib 1
+	:call_label5
+	return
+)

@@ -1,0 +1,41 @@
+(@max
+	8
+	%v1 <- rdi
+	%v2 <- rsi
+	%v3 <- rdx
+	%v4 <- rcx
+	%v5 <- r8
+	%v6 <- r9
+	%v7 <- stack-arg 0
+	%v8 <- stack-arg 8
+	%test <- %v2 < %v1
+	cjump %test = 1 :call_label_ciao_2
+	%v1 <- %v2
+	:call_label_ciao_2
+	%test <- %v3 < %v1
+	cjump %test = 1 :call_label_ciao_3
+	%v1 <- %v3
+	:call_label_ciao_3
+	%test <- %v4 < %v1
+	cjump %test = 1 :call_label_ciao_4
+	%v1 <- %v4
+	:call_label_ciao_4
+	%test <- %v5 < %v1
+	cjump %test = 1 :call_label_ciao_5
+	%v1 <- %v5
+	:call_label_ciao_5
+	%test <- %v6 < %v1
+	cjump %test = 1 :call_label_ciao_6
+	%v1 <- %v6
+	:call_label_ciao_6
+	%test <- %v7 < %v1
+	cjump %test = 1 :call_label_ciao_7
+	%v1 <- %v7
+	:call_label_ciao_7
+	%test <- %v8 < %v1
+	cjump %test = 1 :call_label_ciao_8
+	%v1 <- %v8
+	:call_label_ciao_8
+	rax <- %v1
+	return
+)

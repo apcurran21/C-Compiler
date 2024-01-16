@@ -1,0 +1,77 @@
+(@go
+(@go
+	0 0
+	rdi <- 10
+	mem rsp -8 <- :GetArray_ret1
+	call @GetArray 1
+	:GetArray_ret1
+	rdi <- rax
+	rsi <- 10
+	mem rsp -8 <- :pop_array1
+	call @PopulateArray1 2
+	:pop_array1
+	r12 <- rdi
+	mem rsp -8 <- :print_ret1
+	call @printResultArray 1
+	:print_ret1
+	rdi <- 10
+	mem rsp -8 <- :GetArray_ret2
+	call @GetArray 1
+	:GetArray_ret2
+	rdi <- rax
+	rsi <- 10
+	mem rsp -8 <- :pop_array2
+	call @PopulateArray2 2
+	:pop_array2
+	r13 <- rdi
+	mem rsp -8 <- :print_ret2
+	call @printResultArray 1
+	:print_ret2
+	return
+)
+
+(@GetArray
+	1 0
+	rdi <<= 1
+	rdi += 1
+	rsi <- 1
+	call allocate 2
+	return
+)
+
+(@PopulateArray1
+	2 0
+	r10 <- rdi
+	r10 += 8
+	rdx <- 1
+	:loopStart1
+	cjump rsi <= rdx :loopEnd2
+	mem r10 0 <- rdx
+	r10 += 8
+	rdx += 2
+	goto :loopStart1
+	:loopEnd2
+	rax <- rdi
+	return
+)
+
+(@PopulateArray2
+	2 0
+	r10 <- rdi
+	r10 += 8
+	r11 <- 1
+	:loopStart2
+	mem r10 0 <- 11
+	r10 += 8
+	r11 += 1
+	cjump r11 < rsi :loopStart2
+	return
+)
+
+(@printResultArray
+	1 0
+	call print 1
+	return
+)
+
+)

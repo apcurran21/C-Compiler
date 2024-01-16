@@ -1,0 +1,13 @@
+(@SA
+	1
+	%r <- rdi
+	%pi <- 3
+	%r2 <- %r
+	%r2 *= %r
+	%r2times4 <- %r2
+	%r2times4 *= 4
+	%sa <- %r2times4
+	%sa *= %pi
+	rax <- %sa
+	return
+)

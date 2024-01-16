@@ -1,0 +1,44 @@
+(@findGCD
+	2
+	%a <- rdi
+	%b <- rsi
+	:call_label_ciao_3
+	%isLesser <- %a < %b
+	cjump %isLesser = 1 :call_label_ciao_5
+	%isEqual <- %a = %b
+	cjump %isEqual = 1 :call_label_ciao_6
+	:call_label_ciao_4
+	%a -= %b
+	rdi <- %a
+	rsi <- %b
+	mem rsp -8 <- :call_label_ciao_8
+	call @printResult 2
+	:call_label_ciao_8
+	rdi <- %a
+	rsi <- %b
+	mem rsp -8 <- :call_label_ciao_9
+	call @findGCD 2
+	:call_label_ciao_9
+	goto :call_label_ciao_7
+	:call_label_ciao_5
+	%b -= %a
+	rdi <- %a
+	rsi <- %b
+	mem rsp -8 <- :call_label_ciao_10
+	call @printResult 2
+	:call_label_ciao_10
+	rdi <- %a
+	rsi <- %b
+	mem rsp -8 <- :call_label_ciao_11
+	call @findGCD 2
+	:call_label_ciao_11
+	goto :call_label_ciao_7
+	:call_label_ciao_6
+	rdi <- %a
+	rsi <- %b
+	mem rsp -8 <- :call_label_ciao_12
+	call @printResult 2
+	:call_label_ciao_12
+	:call_label_ciao_7
+	return
+)

@@ -1,0 +1,34 @@
+(@concat_array
+	2
+	%ptr1 <- rdi
+	%ptr2 <- rsi
+	rdi <- mem %ptr1 0
+	rdi += mem %ptr2 0
+	rdi <<= 1
+	rdi++
+	rsi <- 3
+	call allocate 2
+	%ret <- rax
+	rdi <- mem %ptr1 0
+	:do_1
+	%ptr1 += 8
+	rax += 8
+	%tmp <- mem %ptr1 0
+	mem rax 0 <- %tmp
+	rdi--
+	cjump rdi = 0 :done_1
+	goto :do_1
+	:done_1
+	rdi <- mem %ptr2 0
+	:do_2
+	%ptr2 += 8
+	rax += 8
+	%tmp <- mem %ptr2 0
+	mem rax 0 <- %tmp
+	rdi--
+	cjump rdi = 0 :done_2
+	goto :do_2
+	:done_2
+	rax <- %ret
+	return
+)

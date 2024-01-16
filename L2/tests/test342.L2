@@ -1,0 +1,76 @@
+(@main
+  (@main
+    0
+    :call_label0
+    %num_triangular_nums <- 21
+    rdi <- %num_triangular_nums
+    call print 1
+    rdi <- %num_triangular_nums
+
+mem rsp -8 <- :call_label1
+    call @compute_triangular_num 1
+
+:call_label1
+    rdi <- %num_triangular_nums
+
+mem rsp -8 <- :call_label2
+    call @compute_many_tns 1
+
+:call_label2
+    return
+  )
+  (@compute_triangular_num
+    1
+    %nums <- rdi
+    :call_label_ciao_3
+    %decoded_nums <- %nums
+    %decoded_nums >>= 1
+    %temp_1 <- %decoded_nums
+    %temp_1 -= 1
+    %temp_1 <- %temp_1
+    %temp_1 *= %decoded_nums
+    %temp_1 <- %temp_1
+    %temp_1 >>= 1
+    %temp_1 <- %temp_1
+    %temp_1 <<= 1
+    %temp_1 <- %temp_1
+    %temp_1 += 1
+    rdi <- %temp_1
+    call print 1
+    return
+  )
+  (@compute_many_tns
+    1
+    %nums <- rdi
+    :call_label_ciao__ciao_4
+    %decoded_nums <- %nums
+    %decoded_nums >>= 1
+    %nth_tn <- 3
+    %nth_tn <- %nth_tn
+    %nth_tn >>= 1
+    goto :call_label_ciao__ciao_5
+    :call_label_ciao__ciao_5
+    %cond <- %decoded_nums < %nth_tn
+
+    cjump %cond = 1 :call_label_ciao__ciao_8
+    goto :call_label_ciao__ciao_6
+    :call_label_ciao__ciao_6
+    %call_nth_tn <- %nth_tn
+    %call_nth_tn <<= 1
+    %call_nth_tn <- %call_nth_tn
+    %call_nth_tn += 1
+    rdi <- %call_nth_tn
+
+mem rsp -8 <- :call_label_ciao__ciao_9
+    call @compute_triangular_num 1
+
+:call_label_ciao__ciao_9
+    goto :call_label_ciao__ciao_7
+    :call_label_ciao__ciao_7
+    %nth_tn <- %nth_tn
+    %nth_tn += 1
+    goto :call_label_ciao__ciao_5
+    :call_label_ciao__ciao_8
+    return
+  )
+)

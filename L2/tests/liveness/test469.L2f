@@ -1,0 +1,7 @@
+(@otherF2
+	1
+	%var <- rdi
+	%var *= %var
+	rax <- %var
+	return
+)

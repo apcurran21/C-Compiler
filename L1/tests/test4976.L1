@@ -1,0 +1,43 @@
+(@main
+(@main
+    0 1
+    rax <- 5
+    rax <<= 1
+    rax += 1
+    
+    :first
+    rdi <- rax <= 15
+    rdi <<= 1
+    rdi += 1
+    call print 1
+    cjump rax = 13 :first
+
+    rsi <- 11 
+    cjump rsi = 13 :second
+    rsi += 6
+    goto :second
+    :second    
+    rdi <- rsi
+    call print 1
+
+    mem rsp 0 <- r13 
+    r13 <- 13
+    mem rsp -8 <- :call_func_ret
+    call @call_func 0
+    :call_func_ret
+    rdi <- r13
+    call print 1
+    r13 <- mem rsp 0
+    return
+)
+(@call_func
+   0 1
+   mem rsp 0 <- r13
+   r13 *= 4
+   r13 += 8
+   r13 <<= 2
+   r13 -= 4
+   r13 <- mem rsp 0
+   return
+)
+)

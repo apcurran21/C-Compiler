@@ -1,0 +1,51 @@
+(@go
+    (@go
+        0 0
+		rdi <- 9001
+		rsi <- 31
+		
+		mem rsp -8 <- :gcf_return
+		call @gcf 2
+		:gcf_return
+		
+		rdi <- rax
+		call print 1
+        return
+    )
+	(@mod
+		2 0
+		:loop
+		cjump rdi < rsi :exit
+		rdi >>= 1
+		rsi >>= 1
+		rdi -= rsi
+		rdi <<= 1
+		rdi += 1
+		rsi <<= 1
+		rsi += 1
+		goto :loop
+		:exit
+		rax <- rdi
+		return
+	)
+	(@gcf
+		2 2
+		
+		:loop2
+		mem rsp 0 <- rsi
+		mem rsp 8 <- rdi
+		mem rsp -8 <- :mod_return
+		call @mod 2
+		:mod_return
+		
+		rdi <- mem rsp 8
+		rsi <- mem rsp 0
+		rdi <- rsi
+		rsi <- rax
+		cjump rsi <= 1 :exit2
+		goto :loop2
+		:exit2
+		rax <- rdi
+		return
+	)
+)

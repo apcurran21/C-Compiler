@@ -1,0 +1,69 @@
+define @collatz (%n, %acc) {
+ 
+:entry
+ %nIsOne <- %n = 1
+ br %nIsOne :terminal 
+ br :begin
+ 
+:begin
+ %nIsOdd <- %n & 1
+ br %nIsOdd :odd 
+ br :even
+ 
+:even
+ %n <- %n >> 1
+ br :rcheck
+ 
+:odd
+ %n <- %n * 3
+ %n <- %n + 1
+ br :rcheck
+ 
+:rcheck
+ %nIsOne <- %n = 1
+ %acc <- %acc + 1
+ br %nIsOne :terminal 
+ br :recurse
+ 
+:recurse
+ %ret <- call @collatz (%n, %acc)
+ return %ret
+ 
+:terminal
+ return %acc
+}
+
+define @main () {
+ 
+:entry
+ %r <- call @collatz (400, 1)
+ %r <- %r << 1
+ %r <- %r + 1
+ call print (%r)
+ %max <- 0
+ %i <- 0
+ br :loop
+ 
+:loop
+ %i <- %i + 1
+ %isDone <- %i >= 1000000
+ br %isDone :done 
+ br :notDone
+ 
+:notDone
+ %result <- call @collatz (%i, 1)
+ %newMax <- %result > %max
+ br %newMax :setMax 
+ br :loop
+ 
+:setMax
+ %max <- %i
+ br :loop
+ 
+:done
+ %max <- %max << 1
+ %max <- %max + 1
+ call print (%max)
+ return 
+}
+

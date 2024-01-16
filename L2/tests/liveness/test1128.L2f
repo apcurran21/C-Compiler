@@ -1,0 +1,50 @@
+(@Alloc1DArr
+	2
+	%ArrSize <- rdi
+	%InitElmVal <- rsi
+	:call_label_ciao__ciao_10
+	goto :call_label_ciao__ciao_13
+	:call_label_ciao__ciao_11
+	rax <- %NewArr
+	return
+	:call_label_ciao__ciao_12
+	%newVar1 <- 0
+	%newVar1 += %Count
+	%newVar0 <- %newVar1
+	%newVar0 *= 8
+	%newVar0 += 24
+	%newVar3 <- %NewArr
+	%newVar3 += %newVar0
+	mem %newVar3 0 <- %InitElmVal
+	%Count += 1
+	%ContLoop <- %Count < %ArrLen
+	cjump %ContLoop = 1 :call_label_ciao__ciao_12
+	goto :call_label_ciao__ciao_11
+	:call_label_ciao__ciao_13
+	%newVar5 <- %ArrSize
+	%newVar5 >>= 1
+	%newVar4 <- %newVar5
+	%newVar4 <<= 1
+	%newVar4 += 1
+	%newVar4 += 4
+	rdi <- %newVar4
+	rsi <- 1
+	call allocate 2
+	%NewArr <- rax
+	%newVar6 <- %NewArr
+	%newVar6 += 8
+	mem %newVar6 0 <- 3
+	%newVar7 <- %NewArr
+	%newVar7 += 16
+	mem %newVar7 0 <- %ArrSize
+	%newVar8 <- 0
+	%newVar8 *= 8
+	%newVar9 <- %newVar8
+	%newVar9 += 16
+	%newVar10 <- %NewArr
+	%newVar10 += %newVar9
+	%ArrLen <- mem %newVar10 0
+	%ArrLen >>= 1
+	%Count <- 0
+	goto :call_label_ciao__ciao_12
+)

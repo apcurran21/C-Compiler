@@ -1,0 +1,41 @@
+define @main() {
+    call @print_letter( 11001110011, 11001110011, 11000000011, 11001110011, 11001110011 )
+
+    call @print_letter( 11100000111, 11100111111, 11100000111, 11100111111, 11100000111 )
+
+    call @print_letter( 11100111111, 11100111111, 11100111111, 11100111111, 11100000011 )
+
+    call @print_letter( 11100111111, 11100111111, 11100111111, 11100111111, 11100000011 )
+
+    call @print_letter( 11100000111, 11001110011, 11001110011, 11001110011, 11100000111 )
+
+    call @print_letter( 10111111101, 11011111011, 11011011011, 11000100011, 11101110111 )
+
+    call @print_letter( 11100000111, 11001110011, 11001110011, 11001110011, 11100000111 )
+
+    call @print_letter( 11000001111, 11001110111, 11000011111, 11001001111, 11001110011 )
+
+    call @print_letter( 11100111111, 11100111111, 11100111111, 11100111111, 11100000011 )
+
+    call @print_letter( 11000000111, 11001110011, 11001110011, 11001110011, 11000000111 )
+
+    return
+}
+
+define @encode_and_print(%v) {
+    %v_shifted <- %v << 1
+    %v_encoded <- %v_shifted + 1
+    call print(%v_encoded)
+    return
+}
+
+define @print_letter(%line_1, %line_2, %line_3, %line_4, %line_5) {
+    call @encode_and_print(11111111111)
+    call @encode_and_print(%line_1)
+    call @encode_and_print(%line_2)
+    call @encode_and_print(%line_3)
+    call @encode_and_print(%line_4)
+    call @encode_and_print(%line_5)
+    call @encode_and_print(11111111111)
+    return
+}

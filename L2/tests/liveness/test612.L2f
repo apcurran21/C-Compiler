@@ -1,0 +1,15 @@
+(@main
+	0
+	%num_triangular_nums <- 21
+	rdi <- %num_triangular_nums
+	call print 1
+	rdi <- %num_triangular_nums
+	mem rsp -8 <- :call_label0
+	call @compute_triangular_num 1
+	:call_label0
+	rdi <- %num_triangular_nums
+	mem rsp -8 <- :call_label1
+	call @compute_many_tns 1
+	:call_label1
+	return
+)

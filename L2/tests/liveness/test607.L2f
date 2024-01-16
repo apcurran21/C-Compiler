@@ -1,0 +1,15 @@
+(@get_sum_up_to
+	1
+	%n <- rdi
+	%ret <- %n
+	%num <- %n
+	:call_label_ciao__ciao__ciao__ciao__ciao__ciao__ciao__ciao__ciao__ciao__ciao_36
+	%num -= 1
+	%ret += %num
+	%keep_going <- 1 < %num
+	cjump %keep_going = 1 :call_label_ciao__ciao__ciao__ciao__ciao__ciao__ciao__ciao__ciao__ciao__ciao_36
+	goto :call_label_ciao__ciao__ciao__ciao__ciao__ciao__ciao__ciao__ciao__ciao__ciao_37
+	:call_label_ciao__ciao__ciao__ciao__ciao__ciao__ciao__ciao__ciao__ciao__ciao_37
+	rax <- %ret
+	return
+)

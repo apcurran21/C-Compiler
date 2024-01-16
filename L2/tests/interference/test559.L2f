@@ -1,0 +1,13 @@
+(@main
+	0
+	rdi <- 77
+	rsi <- 42
+	rdx <- 13
+	rcx <- 16
+	r8 <- 774
+	r9 <- 209
+	mem rsp -8 <- :call_label0
+	call @Bubble_Sort 6
+	:call_label0
+	return
+)

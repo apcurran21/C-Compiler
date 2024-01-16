@@ -1,0 +1,26 @@
+%arr %count %lastElem %len %newArr %newVar r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx rsi %tempLen
+%cont %count %curr %len %newArr %newCurr r12 r13 r14 r15 rbp rbx
+%count %arr %cont %curr %lastElem %len %newArr %newCurr %newVar r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx rsi %temp %tempLen
+%curr %cont %count %len %newArr %newCurr r12 r13 r14 r15 rbp rbx %temp
+%lastElem %arr %count %len %newArr %newVar r12 r13 r14 r15 rbp rbx
+%len %arr %cont %count %curr %lastElem %newArr %newCurr %newVar r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx rsi %temp %tempLen
+%newArr %arr %cont %count %curr %lastElem %len %newCurr %newVar r12 r13 r14 r15 rbp rbx %temp %tempLen
+%newCurr %cont %count %curr %len %newArr r12 r13 r14 r15 rbp rbx %temp
+%newVar %arr %count %lastElem %len %newArr r12 r13 r14 r15 rbp rbx %tempLen
+r10 %arr %count %len r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx rsi
+r11 %arr %count %len r10 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx rsi
+r12 %arr %cont %count %curr %lastElem %len %newArr %newCurr %newVar r10 r11 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx rsi %temp %tempLen
+r13 %arr %cont %count %curr %lastElem %len %newArr %newCurr %newVar r10 r11 r12 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx rsi %temp %tempLen
+r14 %arr %cont %count %curr %lastElem %len %newArr %newCurr %newVar r10 r11 r12 r13 r15 r8 r9 rax rbp rbx rcx rdi rdx rsi %temp %tempLen
+r15 %arr %cont %count %curr %lastElem %len %newArr %newCurr %newVar r10 r11 r12 r13 r14 r8 r9 rax rbp rbx rcx rdi rdx rsi %temp %tempLen
+r8 %arr %count %len r10 r11 r12 r13 r14 r15 r9 rax rbp rbx rcx rdi rdx rsi
+r9 %arr %count %len r10 r11 r12 r13 r14 r15 r8 rax rbp rbx rcx rdi rdx rsi
+rax %arr %count %len r10 r11 r12 r13 r14 r15 r8 r9 rbp rbx rcx rdi rdx rsi
+rbp %arr %cont %count %curr %lastElem %len %newArr %newCurr %newVar r10 r11 r12 r13 r14 r15 r8 r9 rax rbx rcx rdi rdx rsi %temp %tempLen
+rbx %arr %cont %count %curr %lastElem %len %newArr %newCurr %newVar r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rcx rdi rdx rsi %temp %tempLen
+rcx %arr %count %len r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rdi rdx rsi
+rdi %arr %count %len r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdx rsi
+rdx %arr %count %len r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rsi
+rsi %arr %count %len r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx
+%temp %count %curr %len %newArr %newCurr r12 r13 r14 r15 rbp rbx
+%tempLen %arr %count %len %newArr %newVar r12 r13 r14 r15 rbp rbx

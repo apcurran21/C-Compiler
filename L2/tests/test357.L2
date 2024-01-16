@@ -1,0 +1,154 @@
+(@main
+  (@newmat
+    2
+    %arg1 <- rdi
+    %arg2 <- rsi
+    :call_label0
+    %arg1 <- %arg1
+    %arg1 += %arg1
+    %arg1 <- %arg1
+    %arg1 += 1
+    %arg2 <- %arg2
+    %arg2 += %arg2
+    %arg2 <- %arg2
+    %arg2 += 1
+    %newVar1 <- %arg1
+    %newVar1 >>= 1
+    %newVar0 <- %newVar1
+    %newVar2 <- %arg2
+    %newVar2 >>= 1
+    %newVar0 <- %newVar0
+    %newVar0 *= %newVar2
+    %newVar0 <- %newVar0
+    %newVar0 <<= 1
+    %newVar0 <- %newVar0
+    %newVar0 += 1
+    %newVar0 <- %newVar0
+    %newVar0 += 6
+    rdi <- %newVar0
+    rsi <- 1
+    call allocate 2
+    %rawptr <- rax
+    mem %rawptr 8 <- 5
+    mem %rawptr 16 <- %arg1
+    mem %rawptr 24 <- %arg2
+    rax <- %rawptr
+    return
+  )
+  (@matset
+    4
+    %arg1 <- rdi
+    %arg2 <- rsi
+    %arg3 <- rdx
+    %arg4 <- rcx
+    :call_label_ciao_1
+    %newVar1 <- 0
+    %newVar3 <- mem %arg1 24
+    %newVar5 <- 1
+    %newVar4 <- %newVar3
+    %newVar4 >>= 1
+    %newVar5 <- %newVar5
+    %newVar5 *= %newVar4
+    %newVar6 <- %arg2
+    %newVar6 *= %newVar5
+    %newVar1 <- %newVar1
+    %newVar1 += %newVar6
+    %newVar1 <- %newVar1
+    %newVar1 += %arg3
+    %newVar0 <- %newVar1
+    %newVar0 *= 8
+    %newVar0 <- %newVar0
+    %newVar0 += 32
+    %newVar7 <- %arg1
+    %newVar7 += %newVar0
+    mem %newVar7 0 <- %arg4
+    return
+  )
+  (@main
+    0
+    :call_label_ciao__ciao_2
+    %arg3 <- 2
+    %arg4 <- 5
+    rdi <- %arg3
+    rsi <- %arg4
+
+mem rsp -8 <- :call_label_ciao__ciao_3
+    call @newmat 2
+
+:call_label_ciao__ciao_3
+    %arr <- rax
+    %M <- %arr
+    %arg1 <- %M
+    rdi <- %arg1
+    call print 1
+    %arg1 <- %M
+    %arg2 <- 0
+    %arg3 <- 1
+    %arg4 <- 3
+    rdi <- %arg1
+    rsi <- %arg2
+    rdx <- %arg3
+    rcx <- %arg4
+
+mem rsp -8 <- :call_label_ciao__ciao_4
+    call @matset 4
+
+:call_label_ciao__ciao_4
+    %arg1 <- %M
+    %arg2 <- 0
+    %arg3 <- 2
+    %arg4 <- 5
+    rdi <- %arg1
+    rsi <- %arg2
+    rdx <- %arg3
+    rcx <- %arg4
+
+mem rsp -8 <- :call_label_ciao__ciao_5
+    call @matset 4
+
+:call_label_ciao__ciao_5
+    %arg1 <- %M
+    %arg2 <- 0
+    %arg3 <- 3
+    %arg4 <- 7
+    rdi <- %arg1
+    rsi <- %arg2
+    rdx <- %arg3
+    rcx <- %arg4
+
+mem rsp -8 <- :call_label_ciao__ciao_6
+    call @matset 4
+
+:call_label_ciao__ciao_6
+    %arg1 <- %M
+    %arg2 <- 1
+    %arg3 <- 3
+    %arg4 <- 9
+    rdi <- %arg1
+    rsi <- %arg2
+    rdx <- %arg3
+    rcx <- %arg4
+
+mem rsp -8 <- :call_label_ciao__ciao_7
+    call @matset 4
+
+:call_label_ciao__ciao_7
+    %arg1 <- %M
+    %arg2 <- 1
+    %arg3 <- 0
+    %arg4 <- -1
+    rdi <- %arg1
+    rsi <- %arg2
+    rdx <- %arg3
+    rcx <- %arg4
+
+mem rsp -8 <- :call_label_ciao__ciao_8
+    call @matset 4
+
+:call_label_ciao__ciao_8
+    %arg1 <- %M
+    rdi <- %arg1
+    call print 1
+    return
+  )
+)

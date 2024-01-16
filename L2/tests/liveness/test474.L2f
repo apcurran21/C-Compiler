@@ -1,0 +1,65 @@
+(@isArraySame
+	2
+	%A1 <- rdi
+	%A2 <- rsi
+	rdi <- %A1
+	mem rsp -8 <- :call_label_ciao__ciao__ciao__ciao__ciao__ciao__ciao__ciao__ciao_31
+	call @isAddress 1
+	:call_label_ciao__ciao__ciao__ciao__ciao__ciao__ciao__ciao__ciao_31
+	%is_A1_address <- rax
+	rdi <- %A2
+	mem rsp -8 <- :call_label_ciao__ciao__ciao__ciao__ciao__ciao__ciao__ciao__ciao_32
+	call @isAddress 1
+	:call_label_ciao__ciao__ciao__ciao__ciao__ciao__ciao__ciao__ciao_32
+	cjump %is_A1_address = 1 :call_label_ciao__ciao__ciao__ciao__ciao__ciao__ciao__ciao__ciao_25
+	goto :call_label_ciao__ciao__ciao__ciao__ciao__ciao__ciao__ciao__ciao_24
+	cjump %is_A2_address = 1 :call_label_ciao__ciao__ciao__ciao__ciao__ciao__ciao__ciao__ciao_25
+	goto :call_label_ciao__ciao__ciao__ciao__ciao__ciao__ciao__ciao__ciao_24
+	:call_label_ciao__ciao__ciao__ciao__ciao__ciao__ciao__ciao__ciao_24
+	rax <- 0
+	return
+	:call_label_ciao__ciao__ciao__ciao__ciao__ciao__ciao__ciao__ciao_25
+	%length_A1 <- mem %A1 0
+	%length_A2 <- mem %A2 0
+	rdi <- %length_A1
+	rsi <- %length_A2
+	mem rsp -8 <- :call_label_ciao__ciao__ciao__ciao__ciao__ciao__ciao__ciao__ciao_33
+	call @isEqual 2
+	:call_label_ciao__ciao__ciao__ciao__ciao__ciao__ciao__ciao__ciao_33
+	%sign <- rax
+	cjump %sign = 1 :call_label_ciao__ciao__ciao__ciao__ciao__ciao__ciao__ciao__ciao_26
+	goto :call_label_ciao__ciao__ciao__ciao__ciao__ciao__ciao__ciao__ciao_24
+	:call_label_ciao__ciao__ciao__ciao__ciao__ciao__ciao__ciao__ciao_26
+	%index <- 0
+	:call_label_ciao__ciao__ciao__ciao__ciao__ciao__ciao__ciao__ciao_27
+	%tmp <- %index < %length_A1
+	cjump %tmp = 1 :call_label_ciao__ciao__ciao__ciao__ciao__ciao__ciao__ciao__ciao_28
+	goto :call_label_ciao__ciao__ciao__ciao__ciao__ciao__ciao__ciao__ciao_30
+	:call_label_ciao__ciao__ciao__ciao__ciao__ciao__ciao__ciao__ciao_28
+	rdi <- %A1
+	rsi <- %index
+	mem rsp -8 <- :call_label_ciao__ciao__ciao__ciao__ciao__ciao__ciao__ciao__ciao_34
+	call @getArrayElementByIndex 2
+	:call_label_ciao__ciao__ciao__ciao__ciao__ciao__ciao__ciao__ciao_34
+	%element1 <- rax
+	rdi <- %A2
+	rsi <- %index
+	mem rsp -8 <- :call_label_ciao__ciao__ciao__ciao__ciao__ciao__ciao__ciao__ciao_35
+	call @getArrayElementByIndex 2
+	:call_label_ciao__ciao__ciao__ciao__ciao__ciao__ciao__ciao__ciao_35
+	%element2 <- rax
+	rdi <- %element1
+	rsi <- %element2
+	mem rsp -8 <- :call_label_ciao__ciao__ciao__ciao__ciao__ciao__ciao__ciao__ciao_36
+	call @isEqual 2
+	:call_label_ciao__ciao__ciao__ciao__ciao__ciao__ciao__ciao__ciao_36
+	%sign <- rax
+	cjump %sign = 1 :call_label_ciao__ciao__ciao__ciao__ciao__ciao__ciao__ciao__ciao_29
+	goto :call_label_ciao__ciao__ciao__ciao__ciao__ciao__ciao__ciao__ciao_24
+	:call_label_ciao__ciao__ciao__ciao__ciao__ciao__ciao__ciao__ciao_29
+	%index += 1
+	goto :call_label_ciao__ciao__ciao__ciao__ciao__ciao__ciao__ciao__ciao_27
+	:call_label_ciao__ciao__ciao__ciao__ciao__ciao__ciao__ciao__ciao_30
+	rax <- 1
+	return
+)

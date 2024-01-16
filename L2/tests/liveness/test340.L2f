@@ -1,0 +1,31 @@
+(@randomize
+	1
+	%x <- rdi
+	%x += 5
+	%x *= 2
+	%x -= 10
+	%x >>= 2
+	%greater10 <- 10 < %x
+	cjump %greater10 = 1 :call_label_ciao__ciao_7
+	goto :call_label_ciao__ciao_8
+	:call_label_ciao__ciao_7
+	%x *= 2
+	%x <<= 2
+	%x += 1
+	rdi <- %x
+	call print 1
+	%x -= 1
+	%x >>= 2
+	rax <- %x
+	return
+	:call_label_ciao__ciao_8
+	%x *= 3
+	%x <<= 2
+	%x += 1
+	rdi <- %x
+	call print 1
+	%x -= 1
+	%x >>= 2
+	rax <- %x
+	return
+)

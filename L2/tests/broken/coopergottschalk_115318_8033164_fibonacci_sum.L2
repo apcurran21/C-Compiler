@@ -1,0 +1,55 @@
+(@fibonacci_sum
+  // fibonacci_sum takes one argument, the number of fibonacci
+  // terms to compute, and returns the sum of those terms
+  (@fibonacci_sum
+   1
+
+   r8 <- rdi // saving the given number
+   rsi <- 1 // allocate the array with ones
+   
+   call allocate 2
+
+   rcx <- 1
+   r9 @ rax rcx 8 // array for storing fibonacci terms
+   
+
+
+   %newVariable10 <- 2 // number of fibonacci terms currently computed
+   :compute_test
+   cjump r8 <= %newVariable10 :end_compute
+
+   :compute_loop
+   rcx <- %newVariable10
+   rcx -= 2
+   rcx @ r9 rcx 8
+   rcx <- mem rcx 0
+
+   rdx <- %newVariable10
+   rdx -= 2
+   rdx @ r9 rdx 8
+   rdx <- mem rdx 0
+
+   rcx += rdx
+   rdx @ r9 %newVariable10 8
+   mem rdx 0 <- rcx
+   %newVariable10++
+   goto :compute_test
+
+   :end_compute
+
+   %newVariable10 <- 0 // sum loop counter
+   rax <- 0 // sum
+   :sum_test
+   cjump %newVariable10 = r8 :end_sum
+
+   :sum_loop
+   %newVariable11 @ r9 %newVariable10 8
+   %newVariable11 <- mem %newVariable11 0
+   rax += %newVariable11
+   %newVariable10++
+   goto :sum_test
+
+   :end_sum
+   return
+  )
+)

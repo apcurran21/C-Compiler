@@ -1,0 +1,42 @@
+(@go
+	(@go
+		0 0
+		rdi <- 19
+		mem rsp -8 <- :fibend
+		call @fib 1
+		:fibend
+		rdi <- rax
+		call print 1
+		return
+	)
+	(@fib
+		1 1
+		cjump rdi = 1 :ENDzero
+		cjump rdi = 3 :ENDone
+		rdi -= 2
+		mem rsp 0 <- rdi
+		mem rsp -8 <- :fib_ret1
+		call @fib 1
+		:fib_ret1
+		rdi <- mem rsp 0
+		mem rsp -8 <- :fib_ret2
+		mem rsp 0 <- rax
+		rdi -= 2
+		call @fib 1
+		:fib_ret2
+		rdi <- mem rsp 0
+		rdi >>= 1
+		rax >>= 1
+		rax += rdi
+		rax <<= 1
+		rax += 1
+		return
+		:ENDzero
+		rax <- 1
+		return
+		:ENDone
+		rax <- 3
+		return
+	
+	)
+)

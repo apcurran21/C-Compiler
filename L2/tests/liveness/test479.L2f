@@ -1,0 +1,19 @@
+(@getSamller
+	2
+	%p1 <- rdi
+	%p2 <- rsi
+	rdi <- %p1
+	rsi <- %p2
+	mem rsp -8 <- :call_label_ciao__ciao__ciao__ciao_10
+	call @isSmallerAndEqual 2
+	:call_label_ciao__ciao__ciao__ciao_10
+	%sign <- rax
+	cjump %sign = 1 :call_label_ciao__ciao__ciao__ciao_8
+	goto :call_label_ciao__ciao__ciao__ciao_9
+	:call_label_ciao__ciao__ciao__ciao_8
+	rax <- %p1
+	return
+	:call_label_ciao__ciao__ciao__ciao_9
+	rax <- %p2
+	return
+)

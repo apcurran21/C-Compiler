@@ -1,0 +1,24 @@
+r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx rsi
+r11 r10 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx rsi
+r12 r10 r11 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx rsi %sqDist %sqX %sqY %x1 %x2 %xDist %y1 %y2 %yDist
+r13 r10 r11 r12 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx rsi %sqDist %sqX %sqY %x1 %x2 %xDist %y1 %y2 %yDist
+r14 r10 r11 r12 r13 r15 r8 r9 rax rbp rbx rcx rdi rdx rsi %sqDist %sqX %sqY %x1 %x2 %xDist %y1 %y2 %yDist
+r15 r10 r11 r12 r13 r14 r8 r9 rax rbp rbx rcx rdi rdx rsi %sqDist %sqX %sqY %x1 %x2 %xDist %y1 %y2 %yDist
+r8 r10 r11 r12 r13 r14 r15 r9 rax rbp rbx rcx rdi rdx rsi
+r9 r10 r11 r12 r13 r14 r15 r8 rax rbp rbx rcx rdi rdx rsi
+rax r10 r11 r12 r13 r14 r15 r8 r9 rbp rbx rcx rdi rdx rsi
+rbp r10 r11 r12 r13 r14 r15 r8 r9 rax rbx rcx rdi rdx rsi %sqDist %sqX %sqY %x1 %x2 %xDist %y1 %y2 %yDist
+rbx r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rcx rdi rdx rsi %sqDist %sqX %sqY %x1 %x2 %xDist %y1 %y2 %yDist
+rcx r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rdi rdx rsi %x1 %x2 %y1
+rdi r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdx rsi
+rdx r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rsi %x1 %x2
+rsi r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx %x1
+%sqDist r12 r13 r14 r15 rbp rbx %sqY
+%sqX r12 r13 r14 r15 rbp rbx %sqY %xDist %y1 %y2 %yDist
+%sqY r12 r13 r14 r15 rbp rbx %sqDist %sqX %yDist
+%x1 r12 r13 r14 r15 rbp rbx rcx rdx rsi %x2 %xDist %y1 %y2
+%x2 r12 r13 r14 r15 rbp rbx rcx rdx %x1 %y1 %y2
+%xDist r12 r13 r14 r15 rbp rbx %sqX %x1 %y1 %y2
+%y1 r12 r13 r14 r15 rbp rbx rcx %sqX %x1 %x2 %xDist %y2 %yDist
+%y2 r12 r13 r14 r15 rbp rbx %sqX %x1 %x2 %xDist %y1
+%yDist r12 r13 r14 r15 rbp rbx %sqX %sqY %y1

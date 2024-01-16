@@ -1,0 +1,69 @@
+// This program generates two array of positive integers and then concatenate them
+// {s:5, 1,2,3,4,5}
+// {s:5, 6,7,8,9,10}
+// {s:10, 1,2,3,4,5,6,7,8,9,10}
+define @main(){
+  // initialize first array
+  %addr1 <- call allocate(11,3)
+  %pos <- %addr1 + 16
+  store %pos <- 5
+  %pos <- %pos + 8
+  store %pos <- 7
+  %pos <- %pos + 8
+  store %pos <- 9
+  %pos <- %pos + 8
+  store %pos <- 11
+  call print(%addr1)
+
+  //initialize second array
+  %addr2 <- call allocate(11, 13)
+  %pos <- %addr2 + 16
+  store %pos <- 15
+  %pos <- %pos + 8
+  store %pos <- 17
+  %pos <- %pos + 8
+  store %pos <- 19
+  %pos <- %pos + 8
+  store %pos <- 21
+  call print(%addr2)
+
+  // call concat_array function to concatenate the two arrays
+  %addr3 <- call @concat_array(%addr1, %addr2)
+  call print(%addr3)
+  return
+}
+
+define @concat_array(%ptr1, %ptr2){
+    // calculate the total array length and allocate it
+    %len1 <- load %ptr1
+    %len2 <- load %ptr2
+    %len3 <- %len1 + %len2
+    %len3 <- %len3 << 1
+    %len3 <- %len3 + 1
+    %ret <- call allocate(%len3, 3)
+    %ptr3 <- %ret
+
+    // copy the first array
+    :do_1
+    %ptr1 <- %ptr1 + 8
+    %ptr3 <- %ptr3 + 8
+    %tmp <- load %ptr1
+    store %ptr3 <- %tmp
+    %len1 <- %len1 - 1
+    %ifDone1 <- %len1 = 0
+    br %ifDone1 :done_1
+    br :do_1
+    :done_1
+    // copy the second array
+    :do_2
+    %ptr2 <- %ptr2 + 8
+    %ptr3 <- %ptr3 + 8
+    %tmp <- load %ptr2
+    store %ptr3 <- %tmp
+    %len2 <- %len2 - 1
+    %ifDone2 <- %len2 = 0
+    br %ifDone2 :done_2
+    br :do_2
+    :done_2
+    return %ret
+}

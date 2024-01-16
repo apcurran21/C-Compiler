@@ -1,0 +1,10 @@
+
+(@main
+ (@main
+  0 0
+  rdi <- 3
+  rsi <- 3
+  call allocate 2
+  rdi <- 1
+  call tensor-error 1
+  return))

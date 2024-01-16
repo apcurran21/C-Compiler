@@ -1,0 +1,68 @@
+(@myTest3
+    (@myTest3
+        0 5
+        
+        // Local Variables
+        mem rsp 0 <- 5
+        mem rsp 8 <- 10
+        mem rsp 16 <- 15
+        
+        rdi <- 5
+        rsi <- 3
+
+        // Storing in Memory
+        mem rsp 24 <- rdi
+        mem rsp 32 <- 20
+        mem rsp -8 <- :retMyTest3
+        call @myTest3Helper 2
+        :retMyTest3
+
+        // If Statements and Storing Labels
+        cjump rax = 0 :elseCase
+        rax <- :retFun
+        goto :endIf
+
+        :elseCase
+        rax <- @altRetFun
+        :endIf
+
+        // Add from Memory
+        rdi <- mem rsp 0
+        rdi += mem rsp 8
+        rdi -= mem rsp 16
+        rdi += mem rsp 32
+
+        mem rsp -8 <- :retPos
+        call rax 1
+        :retPos
+
+        // Adjust to match number representation 
+        rax <<= 1
+        rax += 1
+
+        rdi <- rax
+        call print 1
+        return
+    )
+
+    (@myTest3Helper
+        2 0
+
+        rax <- rdi < rsi
+        return
+    )
+
+    (@retFun
+        1 0
+        rdi += 10
+        rax <- rdi
+        return
+    )
+
+    (@altRetFun
+        1 0
+        rdi -= 10
+        rax <- rdi
+        return
+    )
+)

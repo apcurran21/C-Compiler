@@ -1,0 +1,15 @@
+(@compute_triangular_num
+	1
+	%nums <- rdi
+	%decoded_nums <- %nums
+	%decoded_nums >>= 1
+	%temp_1 <- %decoded_nums
+	%temp_1 -= 1
+	%temp_1 *= %decoded_nums
+	%temp_1 >>= 1
+	%temp_1 <<= 1
+	%temp_1 += 1
+	rdi <- %temp_1
+	call print 1
+	return
+)

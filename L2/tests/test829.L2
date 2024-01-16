@@ -1,0 +1,66 @@
+// computes fibonacci sequences of differing lengths and prints them
+(@go
+  (@go
+    0
+
+    rdi <- 0
+    mem rsp -8 <- :test1_ret
+    call @fib 1
+    :test1_ret
+
+    rdi <- 1
+    mem rsp -8 <- :test2_ret
+    call @fib 1
+    :test2_ret
+
+    rdi <- 15
+    mem rsp -8 <- :test3_ret
+    call @fib 1
+    :test3_ret
+
+    rdi <- 40
+    mem rsp -8 <- :test4_ret
+    call @fib 1
+    :test4_ret
+
+    return
+  )
+  (@fib // fib(n) where n = sequence length
+    1
+
+    %n <- rdi
+    %i <- 0
+    %n1 <- 0
+    %n2 <- 1
+
+    :loop
+    cjump %i = %n :end
+
+    rdi <- %n1
+    rdi <<= 1
+    rdi++
+    call print 1
+
+    rdi	<- %n1
+    rsi <- %n2
+    mem rsp -8 <- :next_ret
+    call @next 2
+    :next_ret
+
+	%n1 <- %n2
+	%n2 <- rax
+
+	%i++
+    goto :loop
+
+    :end
+    return
+  )
+  (@next
+    2
+
+    rsi += rdi
+    rax <- rsi
+    return
+  )
+)

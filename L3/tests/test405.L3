@@ -1,0 +1,7 @@
+define @main () {
+
+  // Call tensor-error
+  call tensor-error(5, 5, 3, 9)
+
+  return
+}

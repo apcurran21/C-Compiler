@@ -1,0 +1,32 @@
+(@FindElement
+	3
+	%target <- rdi
+	%arr <- rsi
+	%len <- rdx
+	:call_label_ciao__ciao_5
+	%ind <- 0
+	goto :call_label_ciao__ciao_6
+	:call_label_ciao__ciao_6
+	%isDone <- %ind = %len
+	cjump %isDone = 1 :call_label_ciao__ciao_9
+	goto :call_label_ciao__ciao_7
+	:call_label_ciao__ciao_7
+	%newVar1 <- 0
+	%newVar1 += %ind
+	%newVar0 <- %newVar1
+	%newVar0 *= 8
+	%newVar0 += 24
+	%newVar3 <- %arr
+	%newVar3 += %newVar0
+	%cur <- mem %newVar3 0
+	%cur >>= 1
+	%foundValue <- %cur = %target
+	cjump %foundValue = 1 :call_label_ciao__ciao_9
+	goto :call_label_ciao__ciao_8
+	:call_label_ciao__ciao_8
+	%ind += 1
+	goto :call_label_ciao__ciao_6
+	:call_label_ciao__ciao_9
+	rax <- %ind
+	return
+)

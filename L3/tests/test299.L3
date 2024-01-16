@@ -1,0 +1,17 @@
+define @main () {
+ 
+:NNNNNN
+ br :entry
+ 
+:entry
+ %newVar1 <- 3 >> 1
+ %newVar0 <- %newVar1
+ %newVar0 <- %newVar0 << 1
+ %newVar0 <- %newVar0 + 1
+ %newVar0 <- %newVar0 + 2
+ %ar <- call allocate (%newVar0, 1)
+ %newVar2 <- %ar + 8
+ store %newVar2 <- 3
+ return 
+}
+

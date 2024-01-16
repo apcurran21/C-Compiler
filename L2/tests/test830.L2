@@ -1,0 +1,69 @@
+(@go
+  (@go
+    0
+
+    mem rsp -8 <- :max_ret
+    mem rsp -16 <- 15
+    mem rsp -24 <- 5
+    rdi <- 0
+    rsi <- 10
+    rdx <- -25
+    rcx <- 90
+    r8 <- 2
+    r9 <- 1
+    call @max 8
+    :max_ret
+    rdi <- rax
+    rdi <<= 1
+    rdi++
+    call print 1
+
+    mem rsp -8 <- :max_ret_2
+    mem rsp -16 <- 90
+    mem rsp -24 <- 5
+    rdi <- 0
+    rsi <- 10
+    rdx <- 5
+    rcx <- -150
+    r8 <- 0
+    r9 <- 5
+    call @max 8
+    :max_ret_2
+    rdi <- rax
+    rdi <<= 1
+    rdi++
+    call print 1
+
+    return
+  )
+  (@max
+    8
+
+    cjump rsi < rdi :max2
+    rdi <- rsi
+    :max2
+    cjump rdx < rdi :max3
+    rdi <- rdx
+    :max3
+    cjump rcx < rdi :max4
+    rdi <- rcx
+    :max4
+    cjump r8 < rdi :max5
+    rdi <- r8
+    :max5
+    cjump r9 < rdi :max6
+    rdi <- r9
+    :max6
+    rsi <- stack-arg 0
+    cjump rsi < rdi :max7
+    rdi <- rsi
+    :max7
+    rsi <- stack-arg 8
+    cjump rsi < rdi :max8
+    rdi <- rsi
+    :max8
+
+    rax <- rdi
+    return
+  )
+)

@@ -1,0 +1,9 @@
+(@myF
+	1
+	%p1 <- rdi
+	%tempV <- %p1
+	%tempV += 2
+	rdi <- %tempV
+	call print 1
+	return
+)

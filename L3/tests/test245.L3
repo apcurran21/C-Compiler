@@ -1,0 +1,32 @@
+define @main () {
+ 
+:NNNNNN
+ br :entry
+ 
+:entry
+ %callerFP <- call @myF ()
+ %v <- call %callerFP (2)
+ call print (%v)
+ return 
+}
+
+define @myF () {
+ 
+:NNNNNN
+ br :entry
+ 
+:entry
+ %fp <- @myOtherF
+ return %fp
+}
+
+define @myOtherF (%p) {
+ 
+:NNNNNN
+ br :entry
+ 
+:entry
+ %r <- %p + 1
+ return %r
+}
+

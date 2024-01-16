@@ -1,0 +1,13 @@
+(@load
+	2
+	%addr <- rdi
+	%idx <- rsi
+	%offset <- %idx
+	%offset *= 8
+	%dest <- %offset
+	%dest += 8
+	%addr += %dest
+	%value <- mem %addr 0
+	rax <- %value
+	return
+)

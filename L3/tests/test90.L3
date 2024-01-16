@@ -1,0 +1,84 @@
+define @main () {
+ 
+:entry
+ %arrSize <- 50 << 1
+ %arrSize <- %arrSize + 1
+ %newVar1 <- %arrSize >> 1
+ %newVar0 <- %newVar1
+ %newVar0 <- %newVar0 << 1
+ %newVar0 <- %newVar0 + 1
+ %newVar0 <- %newVar0 + 4
+ %arr <- call allocate (%newVar0, 1)
+ %newVar2 <- %arr + 8
+ store %newVar2 <- 3
+ %newVar3 <- %arr + 16
+ store %newVar3 <- %arrSize
+ %newVar5 <- 0
+ %newVar6 <- 1
+ %newVar5 <- %newVar5 + 0
+ %newVar4 <- %newVar5 * 8
+ %newVar4 <- %newVar4 + 24
+ %newVar7 <- %arr + %newVar4
+ store %newVar7 <- 3
+ %newVar9 <- 0
+ %newVar10 <- 1
+ %newVar9 <- %newVar9 + 1
+ %newVar8 <- %newVar9 * 8
+ %newVar8 <- %newVar8 + 24
+ %newVar11 <- %arr + %newVar8
+ store %newVar11 <- 3
+ %back0 <- 1
+ %back1 <- 1
+ %i <- 2
+ br :loop
+ 
+:loop
+ %i <- %i + 1
+ %sum <- %back0 + %back1
+ %ssum <- %sum << 1
+ %ssum <- %ssum + 1
+ %offset <- %i - 1
+ %newVar13 <- 0
+ %newVar14 <- 1
+ %newVar13 <- %newVar13 + %offset
+ %newVar12 <- %newVar13 * 8
+ %newVar12 <- %newVar12 + 24
+ %newVar15 <- %arr + %newVar12
+ store %newVar15 <- %ssum
+ %back0 <- %back1
+ %back1 <- %sum
+ %continue <- %i < 50
+ br %continue :loop 
+ br :ncontinue
+ 
+:ncontinue
+ call print (%arr)
+ %arrsum <- 0
+ %i <- 0
+ br :loop2
+ 
+:loop2
+ %dcontinue <- %i >= 50
+ br %dcontinue :done 
+ br :ndone
+ 
+:ndone
+ %newVar17 <- 0
+ %newVar18 <- 1
+ %newVar17 <- %newVar17 + %i
+ %newVar16 <- %newVar17 * 8
+ %newVar16 <- %newVar16 + 24
+ %newVar19 <- %arr + %newVar16
+ %arrval <- load %newVar19
+ %arrval <- %arrval >> 1
+ %arrsum <- %arrsum + %arrval
+ %i <- %i + 1
+ br :loop2
+ 
+:done
+ %arrsum <- %arrsum << 1
+ %arrsum <- %arrsum + 1
+ call print (%arrsum)
+ return 
+}
+

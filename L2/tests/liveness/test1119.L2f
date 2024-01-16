@@ -1,0 +1,11 @@
+(@encode
+	1
+	%i <- rdi
+	:call_label0
+	goto :call_label1
+	:call_label1
+	%i <<= 1
+	%i += 1
+	rax <- %i
+	return
+)

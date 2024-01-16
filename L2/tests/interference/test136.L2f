@@ -1,0 +1,6 @@
+(@next
+	2
+	rsi += rdi
+	rax <- rsi
+	return
+)

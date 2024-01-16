@@ -1,0 +1,24 @@
+%curr_freq %curr_most %d %divisible_flag %ini_ret %most_freq %new_num %num %orig_num r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx rsi
+%curr_most %curr_freq %d %most_freq %num %orig_num r12 r13 r14 r15 rbp rbx
+%d %curr_freq %curr_most %divisible_flag %ini_ret %most_freq %new_num %num %orig_num r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx rsi
+%divisible_flag %curr_freq %d %most_freq %num %orig_num r12 r13 r14 r15 rbp rbx
+%ini_ret %curr_freq %d %most_freq %num %orig_num r12 r13 r14 r15 rbp rbx
+%most_freq %curr_freq %curr_most %d %divisible_flag %ini_ret %new_num %num %orig_num r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx rsi
+%new_num %curr_freq %d %most_freq %orig_num r12 r13 r14 r15 rbp rbx
+%num %curr_freq %curr_most %d %divisible_flag %ini_ret %most_freq %orig_num r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx rsi
+%orig_num %curr_freq %curr_most %d %divisible_flag %ini_ret %most_freq %new_num %num r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx rsi
+r10 %curr_freq %d %most_freq %num %orig_num r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx rsi
+r11 %curr_freq %d %most_freq %num %orig_num r10 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx rsi
+r12 %curr_freq %curr_most %d %divisible_flag %ini_ret %most_freq %new_num %num %orig_num r10 r11 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx rsi
+r13 %curr_freq %curr_most %d %divisible_flag %ini_ret %most_freq %new_num %num %orig_num r10 r11 r12 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx rsi
+r14 %curr_freq %curr_most %d %divisible_flag %ini_ret %most_freq %new_num %num %orig_num r10 r11 r12 r13 r15 r8 r9 rax rbp rbx rcx rdi rdx rsi
+r15 %curr_freq %curr_most %d %divisible_flag %ini_ret %most_freq %new_num %num %orig_num r10 r11 r12 r13 r14 r8 r9 rax rbp rbx rcx rdi rdx rsi
+r8 %curr_freq %d %most_freq %num %orig_num r10 r11 r12 r13 r14 r15 r9 rax rbp rbx rcx rdi rdx rsi
+r9 %curr_freq %d %most_freq %num %orig_num r10 r11 r12 r13 r14 r15 r8 rax rbp rbx rcx rdi rdx rsi
+rax %curr_freq %d %most_freq %num %orig_num r10 r11 r12 r13 r14 r15 r8 r9 rbp rbx rcx rdi rdx rsi
+rbp %curr_freq %curr_most %d %divisible_flag %ini_ret %most_freq %new_num %num %orig_num r10 r11 r12 r13 r14 r15 r8 r9 rax rbx rcx rdi rdx rsi
+rbx %curr_freq %curr_most %d %divisible_flag %ini_ret %most_freq %new_num %num %orig_num r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rcx rdi rdx rsi
+rcx %curr_freq %d %most_freq %num %orig_num r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rdi rdx rsi
+rdi %curr_freq %d %most_freq %num %orig_num r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdx rsi
+rdx %curr_freq %d %most_freq %num %orig_num r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rsi
+rsi %curr_freq %d %most_freq %num %orig_num r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx

@@ -1,0 +1,20 @@
+(@print_arr
+	2
+	%counter <- 0
+	%size <- rdi
+	%addr <- rsi
+	:print_val
+	%addr += 8
+	%newVariable13 <- %addr
+	rdi <- mem %newVariable13 0
+	rdi <<= 1
+	rdi += 1
+	call print 1
+	%counter += 1
+	goto :count
+	:count
+	cjump %counter <= %size :print_val
+	goto :get_out
+	:get_out
+	return
+)

@@ -1,0 +1,8 @@
+(@succ
+	10
+	%n <- stack-arg 0
+	%m <- %n
+	%m += 1
+	rax <- %m
+	return
+)

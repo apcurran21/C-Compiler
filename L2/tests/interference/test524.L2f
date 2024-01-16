@@ -1,0 +1,9 @@
+(@calculate
+	2
+	%f <- rdi
+	%s <- rsi
+	%next <- %f
+	%next += %s
+	rax <- %next
+	return
+)

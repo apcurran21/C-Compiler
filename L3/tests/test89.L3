@@ -1,0 +1,79 @@
+define @sqrt_ceil (%n) {
+ 
+:entry
+ %sqrt <- 1
+ br :sqrt_start
+ 
+:sqrt_start
+ %sqrt_tmp <- %sqrt * %sqrt
+ %end <- %n < %sqrt_tmp
+ br %end :done 
+ br :continue
+ 
+:continue
+ %sqrt <- %sqrt + 1
+ br :sqrt_start
+ 
+:done
+ return %sqrt
+}
+
+define @mod (%a, %b) {
+ 
+:entry
+ br :loop
+ 
+:loop
+ %end <- %a < %b
+ br %end :end 
+ br :continue
+ 
+:continue
+ %a <- %a - %b
+ br :loop
+ 
+:end
+ return %a
+}
+
+define @primetest (%n) {
+ 
+:entry
+ %div <- 2
+ %sqrt_n <- call @sqrt_ceil (%n)
+ br :testloop
+ 
+:testloop
+ %divisible <- call @mod (%n, %div)
+ %finished <- %divisible = 0
+ br %finished :iscomposite 
+ br :increment
+ 
+:increment
+ %div <- %div + 1
+ %finished <- %sqrt_n < %div
+ br %finished :isprime 
+ br :testloop
+ 
+:isprime
+ return 1
+ 
+:iscomposite
+ return 0
+}
+
+define @main () {
+ 
+:entry
+ %n <- 289
+ %n <- %n << 1
+ %n <- %n + 1
+ call print (%n)
+ %n <- %n >> 1
+ %n <- call @primetest (%n)
+ %n <- %n << 1
+ %n <- %n + 1
+ call print (%n)
+ return 
+}
+

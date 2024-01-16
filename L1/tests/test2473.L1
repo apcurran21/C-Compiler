@@ -1,0 +1,39 @@
+(@main
+(@main
+	0 1
+	mem rsp 0 <- r12
+	:call_label0
+	goto :call_label6
+	:call_label1
+	r12 <- mem rsp 0
+	return
+	:call_label2
+	r12 += 1
+	rdi <- r12 < 20
+	cjump rdi = 1 :call_label3
+	goto :call_label1
+	:call_label3
+	rdi <- r12
+	rdi <<= 1
+	rdi += 1
+	call print 1
+	rdi <- r12
+	rdi >>= 1
+	rdi <<= 1
+	rdi <- rdi = r12
+	cjump rdi = 1 :call_label5
+	goto :call_label4
+	:call_label4
+	rdi <- 3
+	call print 1
+	goto :call_label2
+	:call_label5
+	rdi <- 1
+	call print 1
+	goto :call_label2
+	:call_label6
+	r12 <- 0
+	goto :call_label3
+)
+
+)

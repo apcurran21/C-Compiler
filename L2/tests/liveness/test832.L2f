@@ -1,0 +1,19 @@
+(@sqrt_ceil
+	1
+	%n <- rdi
+	:call_label0
+	%sqrt <- 1
+	goto :call_label1
+	:call_label1
+	%sqrt_tmp <- %sqrt
+	%sqrt_tmp *= %sqrt
+	%end <- %n < %sqrt_tmp
+	cjump %end = 1 :call_label3
+	goto :call_label2
+	:call_label2
+	%sqrt += 1
+	goto :call_label1
+	:call_label3
+	rax <- %sqrt
+	return
+)

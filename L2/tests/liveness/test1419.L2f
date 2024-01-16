@@ -1,0 +1,40 @@
+(@collatz
+	2
+	%n <- rdi
+	%acc <- rsi
+	:call_label0
+	goto :call_label7
+	:call_label1
+	rax <- %acc
+	return
+	:call_label2
+	rdi <- %n
+	rsi <- %acc
+	mem rsp -8 <- :call_label8
+	call @collatz 2
+	:call_label8
+	%ret <- rax
+	rax <- %ret
+	return
+	:call_label3
+	%acc += 1
+	%nIsOne <- %n = 1
+	cjump %nIsOne = 1 :call_label1
+	goto :call_label2
+	:call_label4
+	%n *= 3
+	%n += 1
+	goto :call_label3
+	:call_label5
+	%n >>= 1
+	goto :call_label3
+	:call_label6
+	%nIsOdd <- %n
+	%nIsOdd &= 1
+	cjump %nIsOdd = 1 :call_label4
+	goto :call_label5
+	:call_label7
+	%nIsOne <- %n = 1
+	cjump %nIsOne = 1 :call_label1
+	goto :call_label6
+)

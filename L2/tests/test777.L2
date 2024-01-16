@@ -1,0 +1,41 @@
+// calculates (and prints) the 20th term of the fibonacci sequence
+// with fib(0) = fib(1) = 1
+
+(@go
+    (@go
+        0
+        rdi <- 20
+        mem rsp -8 <- :fib_ret
+        call @fib 1
+        :fib_ret
+	rdi <- rax
+        rdi <<= 1
+        rdi += 1
+        call print 1
+        return
+    )
+
+    (@fib
+        1
+        cjump 1 < rdi :recurse
+        rax <- 1
+        return
+
+        :recurse
+	%n <- rdi
+        rdi -= 1
+        mem rsp -8 <- :f_n1
+        call @fib 1
+        :f_n1
+        %fib_n_sub1 <- rax
+	rdi <- %n
+        rdi -= 2
+        mem rsp -8 <- :f_n2
+        call @fib 1
+        :f_n2
+        rax += %fib_n_sub1
+	rdi <-%n
+        return
+    )
+)
+

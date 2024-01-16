@@ -1,0 +1,24 @@
+(@fib
+	1
+	%n <- rdi
+	%i <- 0
+	%n1 <- 0
+	%n2 <- 1
+	:loop
+	cjump %i = %n :end
+	rdi <- %n1
+	rdi <<= 1
+	rdi++
+	call print 1
+	rdi <- %n1
+	rsi <- %n2
+	mem rsp -8 <- :next_ret
+	call @next 2
+	:next_ret
+	%n1 <- %n2
+	%n2 <- rax
+	%i++
+	goto :loop
+	:end
+	return
+)

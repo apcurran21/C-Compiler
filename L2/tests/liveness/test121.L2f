@@ -1,0 +1,7 @@
+(@encode
+	1
+	rax <- rdi
+	rax <<= 1
+	rax += 1
+	return
+)

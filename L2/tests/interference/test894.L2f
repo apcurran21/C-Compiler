@@ -1,0 +1,42 @@
+(@enqueue
+	2
+	%old_queue_ptr <- rdi
+	%val <- rsi
+	%old_size <- mem %old_queue_ptr 0
+	%new_size <- %old_size
+	%new_size += 1
+	rdi <- %new_size
+	mem rsp -8 <- :call_label_ciao_2
+	call @encode 1
+	:call_label_ciao_2
+	%encoded_new_size <- rax
+	%default <- 0
+	rdi <- %default
+	mem rsp -8 <- :call_label_ciao_3
+	call @encode 1
+	:call_label_ciao_3
+	%encoded_default <- rax
+	rdi <- %encoded_new_size
+	rsi <- %encoded_default
+	call allocate 2
+	%new_queue_ptr <- rax
+	rdi <- %new_queue_ptr
+	rsi <- %old_queue_ptr
+	rdx <- %old_size
+	mem rsp -8 <- :call_label_ciao_4
+	call @refill_queue 3
+	:call_label_ciao_4
+	%final_queue_ptr <- rax
+	rdi <- %val
+	mem rsp -8 <- :call_label_ciao_5
+	call @encode 1
+	:call_label_ciao_5
+	%encoded_val <- rax
+	%offset <- %new_size
+	%offset *= 8
+	%curr_idx <- %new_queue_ptr
+	%curr_idx += %offset
+	mem %curr_idx 0 <- %encoded_val
+	rax <- %final_queue_ptr
+	return
+)

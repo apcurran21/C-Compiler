@@ -1,0 +1,98 @@
+int64 mod(int64 x, int64 y) {
+    int64 r
+    r <- x = 0
+    br r :mgood :misneg
+    
+    :misneg
+    r <- x > -1
+    br r :mloop :ret_early
+
+    :ret_early
+    return 0
+
+    :mloop
+    x <- x - y
+    r <- x = 0
+    br r :mgood :misneg
+
+    :mgood
+    return 1
+}
+
+int64 prime(int64 arg) {
+    int64 inputIs2
+    int64 halfarg
+    int64 counter
+    int64 pstatus
+    int64 reloop
+
+    inputIs2 <- arg = 2
+    counter <- 1
+    br inputIs2 :is_prime :prime_loop
+
+    :prime_loop
+    halfarg <- arg >> 1
+    counter <- counter + 1
+    pstatus <- mod(arg, counter)
+    br pstatus :not_prime :maybe_prime
+
+    :maybe_prime
+    reloop <- counter <= halfarg
+    br reloop :prime_loop :is_prime
+
+    :is_prime
+    return 1
+
+    :not_prime
+    return 0
+}
+
+int64 gpf(int64 arg) {
+    int64 argIsPrime
+    int64 argNotPrime
+    int64 possiblePrime
+    int64 modulo
+    int64 notFactor
+    int64 cndIsPrime
+    int64 notPrime
+    int64 sad
+    
+    argIsPrime <- prime(arg)
+    argNotPrime <- argIsPrime = 0
+    br argNotPrime :not_itself :itself
+
+    :itself
+    return arg
+    
+    :not_itself
+    possiblePrime <- arg >> 1
+    possiblePrime <- possiblePrime + 1
+    br :gpf_loop
+
+    :gpf_loop
+    sad <- possiblePrime < 2
+    br sad :gpf_done_sad :not_sad
+
+    :not_sad
+    possiblePrime <- possiblePrime - 1
+    modulo <- mod(arg, possiblePrime)
+    notFactor <- modulo = 0
+    br notFactor :gpf_loop :nloop
+
+    :nloop
+    cndIsPrime <- prime(possiblePrime)
+    notPrime <- cndIsPrime = 0
+    br notPrime :gpf_loop :done
+
+    :done
+    return possiblePrime
+    :gpf_done_sad
+    return -1
+}
+
+void main() {
+    int64 result
+    result <- gpf(33030)
+    print(result)
+    return
+}

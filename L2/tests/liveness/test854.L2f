@@ -1,0 +1,45 @@
+(@printData
+	2
+	%array <- rdi
+	%indexToPrintEncoded <- rsi
+	rdi <- %indexToPrintEncoded
+	call print 1
+	%arrayLength <- mem %array 0
+	%arrayLengthEncoded <- %arrayLength
+	%arrayLengthEncoded <<= 1
+	%arrayLengthEncoded += 1
+	%isArrayBigEnough <- %indexToPrintEncoded < %arrayLengthEncoded
+	cjump %isArrayBigEnough = 1 :call_label_ciao__ciao_9
+	goto :call_label_ciao__ciao_8
+	:call_label_ciao__ciao_8
+	rdi <- 0
+	call tensor-error 1
+	:call_label_ciao__ciao_9
+	%offset <- %indexToPrintEncoded
+	%offset >>= 1
+	%offset *= 8
+	%offset += 8
+	%offsetEncoded <- %offset
+	%offsetEncoded <<= 1
+	%offsetEncoded += 1
+	rdi <- %offsetEncoded
+	call print 1
+	%arrayElementAddress <- %offset
+	%arrayElementAddress += %array
+	%arrayElement <- mem %arrayElementAddress 0
+	%isArrayElementAnInt <- %arrayElement
+	%isArrayElementAnInt &= 1
+	cjump %isArrayElementAnInt = 1 :call_label_ciao__ciao_10
+	goto :call_label_ciao__ciao_11
+	:call_label_ciao__ciao_10
+	rdi <- %arrayElement
+	call print 1
+	goto :call_label_ciao__ciao_12
+	:call_label_ciao__ciao_11
+	rdi <- %arrayElement
+	mem rsp -8 <- :call_label_ciao__ciao_13
+	call @printArray 1
+	:call_label_ciao__ciao_13
+	:call_label_ciao__ciao_12
+	return
+)

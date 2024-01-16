@@ -1,0 +1,41 @@
+// how many odd numbers there are in [0, n]?
+define @main() {
+    %n <- 120
+    %res <- 0
+    %i <- 0
+
+    :while
+        %if <- %i <= %n
+        br %if :whileInto
+        br :whileBreak
+        
+        :whileInto
+        %if <- call @isOdd(%i)
+        %if <- %if = 1
+        br %if :count
+        br :whileContinue
+
+        :count
+        %res <- %res + 1
+        
+        :whileContinue
+        %i <- %i + 1
+        br :while
+        
+    :whileBreak
+    %res <- %res << 1
+    %res <- %res + 1
+    call print(%res)
+    return 0
+}
+
+define @isOdd(%a) {
+    %a <- %a >> 1
+    %a <- %a & 1
+    %if <- %a = 1
+    br %if :yes
+    return 0
+
+    :yes
+    return 1
+}

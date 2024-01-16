@@ -1,0 +1,60 @@
+(@main
+(@encodeArraySize
+	1 0
+	rdi <<= 1
+	rdi += 1
+	rax <- rdi
+	return
+)
+
+(@generate3Darray
+	2 0
+	call allocate 2
+	rdi <- 5
+	rsi <- rax
+	call allocate 2
+	rdi <- 5
+	rsi <- rax
+	call allocate 2
+	rdi <- rax
+	call print 1
+	return
+)
+
+(@main
+	0 1
+	mem rsp 0 <- r12
+	rdi <- 5
+	rsi <- 5
+	cjump rdi = rsi :choice1
+	goto :choice2
+	:choice1
+	call allocate 2
+	r12 <- rax
+	r12 &= 1
+	cjump r12 = 0 :isArray
+	goto :isnotArray
+	:isArray
+	r12 <- rax
+	mem r12 8 <- 7
+	mem r12 16 <- 9
+	rdi <- r12
+	call print 1
+	rdi <- mem r12 0
+	mem rsp -8 <- :encodeArraySize_ret
+	call @encodeArraySize 1
+	:encodeArraySize_ret
+	rdi <- rax
+	call print 1
+	:choice2
+	rdi <- 5
+	rsi <- 7
+	mem rsp -8 <- :generate3Darray_ret
+	call @generate3Darray 2
+	:generate3Darray_ret
+	:isnotArray
+	r12 <- mem rsp 0
+	return
+)
+
+)

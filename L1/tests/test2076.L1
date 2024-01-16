@@ -1,0 +1,62 @@
+(@main
+(@main
+	0 0
+	:call_label0
+	rsi <- 843
+	rdi <- 55
+	rdi += rsi
+	rdi <<= 1
+	rdi += 1
+	call print 1
+	rsi <- 83
+	rdi <- 33
+	rdi += rsi
+	rdi <<= 1
+	rdi += 1
+	call print 1
+	rsi <- 5
+	rdi <- 3
+	rdi += rsi
+	rdi <<= 1
+	rdi += 1
+	call print 1
+	rsi <- 96
+	rdi <- 2
+	rdi += rsi
+	rdi <<= 1
+	rdi += 1
+	call print 1
+	rsi <- 34
+	rdi <- 6
+	rdi += rsi
+	rdi <<= 1
+	rdi += 1
+	call print 1
+	rdi <- 5
+	rsi <- 10
+	rdi += rsi
+	rdi <<= 1
+	rdi += 1
+	call print 1
+	rsi <- 66
+	rdi <- 63
+	rdi += rsi
+	rdi <<= 1
+	rdi += 1
+	call print 1
+	rsi <- 27
+	rdi <- 44
+	rdi += rsi
+	rdi <<= 1
+	rdi += 1
+	call print 1
+	rsi <- 17
+	rdi <- 37
+	rdi += rsi
+	rdi <<= 1
+	rdi += 1
+	call print 1
+	return
+)
+
+)

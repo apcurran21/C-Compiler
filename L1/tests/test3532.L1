@@ -1,0 +1,99 @@
+(@main
+(@main
+	0 3
+	mem rsp 16 <- r14
+	mem rsp 8 <- r13
+	mem rsp 0 <- r12
+	:call_label0
+	r13 <- 100
+	r14 <- 1
+	:call_label1
+	rdi <- r13 < r14
+	cjump rdi = 1 :call_label2
+	rdi <- r13
+	rdi <<= 1
+	rdi <- rdi
+	rdi += 1
+	r12 <- r14
+	r12 <<= 1
+	r12 <- r12
+	r12 += 1
+	rdi <- rdi
+	call print 1
+	rdi <- r12
+	call print 1
+	r13 <- r13
+	r13 += 1
+	r14 <- r14
+	r14 <<= 1
+	goto :call_label1
+	:call_label2
+	rax <- @print_array
+	rdi <- 3
+	rsi <- 5
+	rdx <- 7
+	rcx <- 9
+	r8 <- 11
+	r9 <- 13
+	mem rsp -24 <- 15
+	mem rsp -16 <- 17
+	mem rsp -8 <- :call_label4
+	call rax 8
+	:call_label4
+	rdi <- rax
+	rsi <- rdi < 19
+	cjump rsi = 1 :call_label3
+	rdi <- rdi
+	call print 1
+	:call_label3
+	r12 <- mem rsp 0
+	r13 <- mem rsp 8
+	r14 <- mem rsp 16
+	return
+)
+
+(@print_array
+	8 7
+	mem rsp 40 <- rbx
+	mem rsp 32 <- rbp
+	mem rsp 24 <- r15
+	mem rsp 16 <- r14
+	mem rsp 8 <- r13
+	mem rsp 0 <- r12
+	rax <- rdi
+	rdi <- rsi
+	mem rsp 48 <- rdi
+	rbx <- rdx
+	rbp <- rcx
+	r15 <- r8
+	r14 <- r9
+	r13 <- mem rsp 56
+	r12 <- mem rsp 64
+	rdi <- rax
+	call print 1
+	rdi <- mem rsp 48
+	rdi <- rdi
+	call print 1
+	rdi <- rbx
+	call print 1
+	rdi <- rbp
+	call print 1
+	rdi <- r15
+	call print 1
+	rdi <- r14
+	call print 1
+	rdi <- r13
+	call print 1
+	rdi <- r12
+	call print 1
+	rax <- 19
+	r12 <- mem rsp 0
+	r13 <- mem rsp 8
+	r14 <- mem rsp 16
+	r15 <- mem rsp 24
+	rbp <- mem rsp 32
+	rbx <- mem rsp 40
+	return
+)
+
+)

@@ -1,0 +1,190 @@
+(@main
+(@main
+	0 2
+	mem rsp 8 <- r13
+	mem rsp 0 <- r12
+	rdi <- 7
+	rsi <- 1
+	call allocate 2
+	r12 <- rax
+	r13 <- r12
+	rdi <- 8
+	mem rsp -8 <- :call_label0
+	call @Jenny 1
+	:call_label0
+	rdi <- rax
+	mem r13 0 <- rdi
+	r13 += 8
+	rdi <- 6
+	mem rsp -8 <- :call_label1
+	call @Jenny 1
+	:call_label1
+	rdi <- rax
+	mem r13 0 <- rdi
+	r13 += 8
+	rdi <- 7
+	mem rsp -8 <- :call_label2
+	call @whoCanI 1
+	:call_label2
+	rdi <- rax
+	mem r13 0 <- rdi
+	r13 += 8
+	rdi <- 5
+	mem rsp -8 <- :call_label3
+	call @TurnTo 1
+	:call_label3
+	rdi <- rax
+	mem r13 0 <- rdi
+	r13 += 8
+	rdi <- 3
+	mem rsp -8 <- :call_label4
+	call @youGiveMeSomething 1
+	:call_label4
+	rdi <- rax
+	mem r13 0 <- rdi
+	r13 += 8
+	rdi <- 0
+	mem rsp -8 <- :call_label5
+	call @iCanHold 1
+	:call_label5
+	rdi <- rax
+	mem r13 0 <- rdi
+	r13 += 8
+	rdi <- 9
+	mem rsp -8 <- :call_label6
+	call @onTo 1
+	:call_label6
+	rdi <- rax
+	mem r13 0 <- rdi
+	rdi <- r12
+	mem rsp -8 <- :call_label7
+	call @gimmeACall 1
+	:call_label7
+	r12 <- mem rsp 0
+	r13 <- mem rsp 8
+	return
+)
+
+(@Jenny
+	1 2
+	mem rsp 8 <- r13
+	mem rsp 0 <- r12
+	r13 <- rdi
+	rdi <- 3
+	rsi <- 1
+	call allocate 2
+	r12 <- rax
+	mem r12 0 <- r13
+	r13 <- r13 < 1
+	rdi <- 5
+	rsi <- 1
+	call allocate 2
+	r13 <- mem r12 0
+	rax <- r13
+	r12 <- mem rsp 0
+	r13 <- mem rsp 8
+	return
+)
+
+(@whoCanI
+	1 1
+	mem rsp 0 <- r12
+	r12 <- rdi
+	rdi <- 3
+	rsi <- 1
+	call allocate 2
+	rdi <- rax
+	mem rdi 0 <- r12
+	r12 <- r12 < 1
+	r12 <- mem rdi 0
+	rax <- r12
+	r12 <- mem rsp 0
+	return
+)
+
+(@TurnTo
+	1 1
+	mem rsp 0 <- r12
+	r12 <- rdi
+	rdi <- 3
+	rsi <- 1
+	call allocate 2
+	rdi <- rax
+	mem rdi 0 <- r12
+	rdi <- r12 < 1
+	rax <- r12
+	r12 <- mem rsp 0
+	return
+)
+
+(@youGiveMeSomething
+	1 1
+	mem rsp 0 <- r12
+	r12 <- rdi
+	rdi <- 3
+	rsi <- 1
+	call allocate 2
+	rdi <- rax
+	mem rdi 0 <- r12
+	rdi <- r12 < 1
+	rax <- r12
+	r12 <- mem rsp 0
+	return
+)
+
+(@iCanHold
+	1 1
+	mem rsp 0 <- r12
+	r12 <- rdi
+	rdi <- 3
+	rsi <- 1
+	call allocate 2
+	rdi <- rax
+	mem rdi 0 <- r12
+	r12 <- r12 < 1
+	r12 <- mem rdi 0
+	rax <- r12
+	r12 <- mem rsp 0
+	return
+)
+
+(@onTo
+	1 1
+	mem rsp 0 <- r12
+	r12 <- rdi
+	rdi <- 3
+	rsi <- 1
+	call allocate 2
+	rdi <- rax
+	mem rdi 0 <- r12
+	rdi <- r12 < 1
+	rax <- r12
+	r12 <- mem rsp 0
+	return
+)
+
+(@gimmeACall
+	1 2
+	mem rsp 8 <- r13
+	mem rsp 0 <- r12
+	r12 <- rdi
+	r13 <- 0
+	:call_label_ciao_8
+	rdi <- r13 = 7
+	cjump rdi = 1 :call_label_ciao_10
+	goto :call_label_ciao_9
+	:call_label_ciao_9
+	rdi <- mem r12 0
+	rdi <<= 1
+	rdi += 1
+	call print 1
+	r13 += 1
+	r12 += 8
+	goto :call_label_ciao_8
+	:call_label_ciao_10
+	r12 <- mem rsp 0
+	r13 <- mem rsp 8
+	return
+)
+
+)

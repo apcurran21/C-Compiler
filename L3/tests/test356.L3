@@ -1,0 +1,148 @@
+// Prime numbers: isPrime, modulo
+
+define @isPrime(%n) {
+    // decode %n
+    %n <- %n - 1
+    %n <- %n >> 1
+
+    %isNLessThan2 <- %n < 2
+    br %isNLessThan2 :false
+    br :check
+
+    :false
+        return 1
+
+    :check
+        %i <- 2
+        %end <- %n - 1
+
+        :loop
+            %isIteratorLessThanEnd <- %i < %end
+            br %isIteratorLessThanEnd :continue
+            br :true
+
+            :continue
+                %encodedI <- %i << 1
+                %encodedI <- %encodedI + 1
+                %encodedN <- %n << 1
+                %encodedN <- %encodedN + 1
+                %remainder <- call @modulo(%encodedN, %encodedI)
+                %i <- %i + 1
+                %isDivisible <- %remainder = 1
+                br %isDivisible :false
+                br :loop
+
+    :true
+        return 3
+}
+
+// %a % %b
+define @modulo(%a, %b) {
+    %result <- %a
+
+    %isBLessThanZero <- %b <= 1
+    br %isBLessThanZero :undefined
+    br :defined
+
+    :undefined
+        return -1
+
+    :defined
+        %isALessThanB <- %a < %b
+        br %isALessThanB :terminate
+        br :continue
+
+        :terminate
+            return %result
+
+        :continue
+            %result <- %result - 1
+            %result <- %result >> 1
+
+            %b <- %b - 1
+            %b <- %b >> 1
+
+            %result <- %result - %b
+
+            %result <- %result << 1
+            %result <- %result + 1
+
+            %b <- %b << 1
+            %b <- %b + 1
+
+            %isResultLessThanB <- %result < %b
+            br %isResultLessThanB :terminate
+            br :continue
+}
+
+define @main() {
+    // Module tests
+    // 12
+    %first <- 25
+    // 5
+    %second <- 11
+    %remainder <- call @modulo(%first, %second)
+    // expects 2
+    call print(%remainder)
+
+    // 12
+    %first <- 25
+    // 4
+    %second <- 9
+    %remainder <- call @modulo(%first, %second)
+    // expects 0
+    call print(%remainder)
+
+    // 12
+    %first <- 25
+    // 0
+    %second <- 1
+    %remainder <- call @modulo(%first, %second)
+    // expects -1
+    call print(%remainder)
+
+    %first <- 125
+    %second <- 35
+    %remainder <- call @modulo(%first, %second)
+    // expects 11
+    call print(%remainder)
+
+    // isPrime tests
+    // 0
+    %number <- 1
+    %is_prime <- call @isPrime(%number)
+    // expects 0
+    call print(%is_prime)
+
+    // 1
+    %number <- 3
+    %is_prime <- call @isPrime(%number)
+    // expects 0
+    call print(%is_prime)
+
+    // 25
+    %number <- 51
+    %is_prime <- call @isPrime(%number)
+    // expects 0
+    call print(%is_prime)
+
+    // 10
+    %number <- 21
+    %is_prime <- call @isPrime(%number)
+    // expects 0
+    call print(%is_prime)
+
+    // 17
+    %number <- 35
+    %is_prime <- call @isPrime(%number)
+    // expects 1
+    call print(%is_prime)
+
+    // 67
+    %number <- 135
+    %is_prime <- call @isPrime(%number)
+    // expects 1
+    call print(%is_prime)
+
+    return
+}

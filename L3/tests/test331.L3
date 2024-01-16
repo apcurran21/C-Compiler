@@ -1,0 +1,38 @@
+define @main(){
+    %loop <- 222221
+    :BEGIN
+    %cmp <- %loop < 1
+    br %cmp :END
+    %my_var1 <- 3
+    call print(%my_var1)
+    %my_var2 <- 23
+    call print(%my_var2)
+    %my_var3 <- 223
+    call print(%my_var3)
+    %my_var4 <- 2223
+    call print(%my_var4)
+    %mult <- 3 * 11
+    %mult <- %mult + 6
+    %my_var5 <- %my_var4 + 20000
+    call print(%my_var5)
+    %my_var4 <- 2223
+    call print(%my_var4)
+    %my_var3 <- 223
+    call print(%my_var3)
+    %my_var2 <- 23
+    call print(%my_var2)
+    %my_var1 <- 3
+    call print(%my_var1)
+    %loop <- %loop - 2
+    br :BEGIN
+    :END
+    call @meh()
+    call print(%mult)
+    return
+}
+define @meh(){
+    %memmy <- 69
+    %thing <- call allocate(%memmy,3)
+    call print(%thing)
+    return
+}

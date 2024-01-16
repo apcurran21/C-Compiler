@@ -1,0 +1,28 @@
+define @main () {
+ 
+:NNNNNNN
+ br :entry
+ 
+:return
+ return 
+ 
+:loop2
+ %fac <- %fac * %var2
+ %var2 <- %var2 + 1
+ %printv <- %fac << 1
+ %printv <- %printv + 1
+ call print (%printv)
+ br :loop
+ 
+:loop
+ %check <- %var2 <= %var1
+ br %check :loop2 
+ br :return
+ 
+:entry
+ %fac <- 1
+ %var1 <- 15
+ %var2 <- 2
+ br :loop
+}
+

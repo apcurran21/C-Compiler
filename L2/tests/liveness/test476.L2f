@@ -1,0 +1,15 @@
+(@isAddress
+	1
+	%p1 <- rdi
+	%p2 <- %p1
+	%p2 &= 1
+	%p2 <- %p2 = 0
+	cjump %p2 = 1 :call_label_ciao_3
+	goto :call_label_ciao_4
+	:call_label_ciao_3
+	rax <- 1
+	return
+	:call_label_ciao_4
+	rax <- 0
+	return
+)

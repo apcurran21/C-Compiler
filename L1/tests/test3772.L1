@@ -1,0 +1,268 @@
+(@main
+(@main
+	0 2
+	rdi <- 0
+	mem rsp 0 <- rdi
+	:call_label0
+	rdi <- mem rsp 0
+	rdi <- rdi
+	mem rsp -8 <- :call_label2
+	call @multiplyStuff 1
+	:call_label2
+	rdi <- rax
+	mem rsp 8 <- rdi
+	rdi <- mem rsp 8
+	rdi <- rdi
+	mem rsp -8 <- :call_label3
+	call @subtractStuff 1
+	:call_label3
+	rdi <- rax
+	rdi <- rdi
+	mem rsp -8 <- :call_label4
+	call @andStuff 1
+	:call_label4
+	rdi <- rax
+	rdi <- rdi
+	rsi <- mem rsp 8
+	rsi <- rsi
+	mem rsp -8 <- :call_label5
+	call @compareStuff 2
+	:call_label5
+	rdi <- rax
+	rdi <- rdi
+	mem rsp -8 <- :call_label6
+	call @leftShiftStuff 1
+	:call_label6
+	rdi <- rax
+	rdi <- rdi
+	mem rsp -8 <- :call_label7
+	call @addStuff 1
+	:call_label7
+	rdi <- rax
+	rdi <- rdi
+	mem rsp -8 <- :call_label8
+	call @rightShiftStuff 1
+	:call_label8
+	rsi <- rax
+	rdi <- rsi
+	rdi &= 1
+	rdi <- rdi = 1
+	cjump rdi = 1 :call_label1
+	rsi <- rsi
+	rsi += 1
+	:call_label1
+	rdi <- rsi
+	call print 1
+	rdi <- mem rsp 0
+	rdi <- rdi
+	mem rsp 0 <- rdi
+	rdi <- mem rsp 0
+	rdi += 1
+	mem rsp 0 <- rdi
+	rdi <- mem rsp 0
+	rdi <- rdi < 10
+	cjump rdi = 1 :call_label0
+	return
+)
+
+(@multiplyStuff
+	1 0
+	rdx <- rdi
+	rdx <- rdx
+	rdx *= 2
+	rdi <- 6
+	rdi *= 7
+	rsi <- rdx
+	rsi *= rdx
+	rsi <- rsi
+	rsi *= rdi
+	rdi <- rdi
+	rdi *= rdx
+	rdx <- rdi
+	rdx *= rsi
+	rdi <- rdi
+	rdi *= -1
+	rdi <- rdi
+	rdi *= rdx
+	rax <- rdi
+	return
+)
+
+(@subtractStuff
+	1 0
+	rdi <- rdi
+	rsi <- rdi
+	rsi -= 4
+	rdx <- rdi
+	rdx -= rsi
+	rsi <- 7
+	rsi -= rdi
+	rdi <- 29
+	rdi -= rsi
+	rdi <- 47
+	rdi -= rdx
+	rdi <- rdi
+	rdi -= rdx
+	rdi <- rdi
+	rdi -= 90
+	rsi <- 10000
+	rsi -= rdi
+	rax <- rsi
+	return
+)
+
+(@andStuff
+	1 0
+	rdx <- rdi
+	rcx <- rdx
+	rcx &= 4
+	rdi <- rcx
+	rdi &= 8228
+	rsi <- rdi
+	rsi &= 827
+	rdi <- rdi
+	rdi &= rsi
+	rdi <- rdi
+	rdi &= rdx
+	rdi <- rdi
+	rdi &= rcx
+	rdi <- rdi
+	rdi &= 120398
+	rax <- rdi
+	return
+)
+
+(@compareStuff
+	2 0
+	rcx <- rdi
+	rdi <- rsi
+	rsi <- rcx < rdi
+	rdx <- 1 < rsi
+	rdi <- rsi = rdi
+	rsi <- rdi < 8
+	rdi <- rdi <= rcx
+	rdi <- rdi <= rsi
+	rax <- rdi
+	return
+)
+
+(@leftShiftStuff
+	1 1
+	rdi <- rdi
+	rcx <- rdi
+	rcx <<= 2
+	rsi <- 3
+	rsi <<= 4
+	rdi <- rdi
+	mem rsp 0 <- rdi
+	rdi <- mem rsp 0
+	rdi <<= rcx
+	mem rsp 0 <- rdi
+	rdi <- 8
+	rcx <- mem rsp 0
+	rdi <<= rcx
+	rcx <- rsi
+	rcx <<= 9
+	rdi <- rdi
+	rdi <<= rcx
+	rdi <- rdi
+	rdi <<= 8
+	rax <- rdi
+	return
+)
+
+(@addStuff
+	1 0
+	rdx <- rdi
+	rdx <- rdx
+	rdx += 3
+	rdi <- rdx
+	rdi += rdx
+	rcx <- rdi
+	rcx += 9
+	rdi <- rdx
+	rdi += rcx
+	rdi <- rdi
+	rdi += 4
+	rsi <- rdi
+	rsi += rcx
+	rdi <- rdx
+	rdi += rsi
+	rdi <- rdi
+	rdi += rcx
+	rsi <- 1
+	rsi += rdi
+	rsi <- rsi
+	rsi += 12
+	rsi <- rsi
+	rsi += 13
+	rsi <- rsi
+	rsi += 14
+	rsi <- rsi
+	rsi += 15
+	rsi <- rsi
+	rsi += 16
+	rsi <- rsi
+	rsi += 1
+	rsi <- rsi
+	rsi += 17
+	rsi <- rsi
+	rsi += 1
+	rsi <- rsi
+	rsi += 81
+	rsi <- rsi
+	rsi += 91
+	rsi <- rsi
+	rsi += 11
+	rsi <- rsi
+	rsi += 1
+	rsi <- rsi
+	rsi += 1
+	rsi <- rsi
+	rsi += 1
+	rsi <- rsi
+	rsi += 12
+	rsi <- rsi
+	rsi += 1
+	rsi <- rsi
+	rsi += 12
+	rdi <- 13
+	rdi += rsi
+	rdi <- rdi
+	rdi += 14
+	rdi <- rdi
+	rdi += 1
+	rdi <- rdi
+	rdi += 11
+	rax <- rdi
+	return
+)
+
+(@rightShiftStuff
+	1 2
+	rcx <- rdi
+	rdi <- rcx
+	rdi >>= 3
+	rsi <- rdi
+	rsi >>= rcx
+	rdi <- rdi
+	mem rsp 8 <- rdi
+	rdi <- mem rsp 8
+	rdi >>= rcx
+	mem rsp 8 <- rdi
+	rdi <- 5
+	mem rsp 0 <- rdi
+	rdi <- mem rsp 0
+	rdi >>= 1
+	mem rsp 0 <- rdi
+	rdi <- rcx
+	rcx <- mem rsp 0
+	rdi >>= rcx
+	rdi <- rdi
+	rcx <- mem rsp 8
+	rdi >>= rcx
+	rax <- rdi
+	return
+)
+
+)

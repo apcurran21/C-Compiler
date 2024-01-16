@@ -1,0 +1,72 @@
+void main () {
+	int64 var1
+	int64 var2
+	int64 var3
+	int64 var4
+	int64 ret
+
+	var1 <- 3
+	var2 <- 6
+	var3 <- 8
+	var4 <- 90
+
+	ret <- odd (var1)
+	print(ret)
+	ret <- odd (var2)
+	print(ret)
+	ret <- odd (var3)
+	print(ret)
+	ret <- odd (var4)
+	print(ret)
+	ret <- even (var1)
+	print(ret)
+	ret <- even (var2)
+	print(ret)
+	ret <- even (var3)
+	print(ret)
+	ret <- even (var4)
+	print(ret)
+
+	return
+}
+
+
+
+int64 odd (int64 var1) {
+	:loop
+	int64 test
+	int64 ret
+	test <- var1 < 1
+	br test :wrong :ok
+	:ok
+	test <- var1 = 1
+	br test :correct :ok2
+	:ok2
+	var1 <- var1 - 2
+	br :loop
+	:wrong
+	ret <- 0
+	return ret
+	:correct
+	ret <- 1
+	return ret
+}
+int64 even (int64 var1) {
+	:loop1
+	int64 test
+	int64 ret
+	test <- var1 < 0
+	br test :odd1 :ok2
+	:ok2
+	test <- var1 = 0
+	br test :correct1 :ok3
+	:ok3
+	var1 <- var1 - 2
+	br :loop1
+	:odd1
+	ret <- 0
+	return ret
+	:correct1
+	ret <- 1
+	return ret
+}

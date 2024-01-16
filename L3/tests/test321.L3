@@ -1,0 +1,15 @@
+define @main () {
+ 
+:NNNNNN
+ br :entry
+ 
+:entry
+ %t <- call allocate (7, 1)
+ %newVar0 <- %t + 0
+ %l <- load %newVar0
+ %l <- %l << 1
+ %l <- %l + 1
+ call print (%l)
+ return 
+}
+

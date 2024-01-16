@@ -1,0 +1,81 @@
+define @main () {
+ 
+:EntryPoint
+ %len <- 10
+ %arr <- call @GetArray (%len)
+ call @PrintArray (%arr)
+ %res <- call @FindElement (100, %arr, %len)
+ %res <- %res << 1
+ %res <- %res + 1
+ call print (%res)
+ return 
+}
+
+define @GetArray (%len) {
+ 
+:EntryPoint
+ %len <- %len << 1
+ %len <- %len + 1
+ %newVar1 <- %len >> 1
+ %newVar0 <- %newVar1
+ %newVar0 <- %newVar0 << 1
+ %newVar0 <- %newVar0 + 1
+ %newVar0 <- %newVar0 + 4
+ %arr <- call allocate (%newVar0, 1)
+ %newVar2 <- %arr + 8
+ store %newVar2 <- 3
+ %newVar3 <- %arr + 16
+ store %newVar3 <- %len
+ %targetInd <- 2
+ %targetVal <- 100
+ %targetVal <- %targetVal << 1
+ %targetVal <- %targetVal + 1
+ %newVar5 <- 0
+ %newVar6 <- 1
+ %newVar5 <- %newVar5 + %targetInd
+ %newVar4 <- %newVar5 * 8
+ %newVar4 <- %newVar4 + 24
+ %newVar7 <- %arr + %newVar4
+ store %newVar7 <- %targetVal
+ return %arr
+}
+
+define @FindElement (%target, %arr, %len) {
+ 
+:EntryPoint
+ %ind <- 0
+ br :LoopStart
+ 
+:LoopStart
+ %isDone <- %ind = %len
+ br %isDone :ExitLoop 
+ br :EnterLoop
+ 
+:EnterLoop
+ %newVar1 <- 0
+ %newVar2 <- 1
+ %newVar1 <- %newVar1 + %ind
+ %newVar0 <- %newVar1 * 8
+ %newVar0 <- %newVar0 + 24
+ %newVar3 <- %arr + %newVar0
+ %cur <- load %newVar3
+ %cur <- %cur >> 1
+ %foundValue <- %cur = %target
+ br %foundValue :ExitLoop 
+ br :Continue
+ 
+:Continue
+ %ind <- %ind + 1
+ br :LoopStart
+ 
+:ExitLoop
+ return %ind
+}
+
+define @PrintArray (%arr) {
+ 
+:EntryPoint
+ call print (%arr)
+ return 
+}
+

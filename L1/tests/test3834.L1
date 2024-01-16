@@ -1,0 +1,119 @@
+(@main
+(@main
+	0 1
+	mem rsp 0 <- r12
+	rdi <- 2
+	rsi <- 5
+	mem rsp -8 <- :call_label_ciao_1
+	call @newmat 2
+	:call_label_ciao_1
+	rdi <- rax
+	r12 <- rdi
+	rdi <- r12
+	call print 1
+	rdi <- r12
+	rsi <- 0
+	rdx <- 1
+	rcx <- 3
+	mem rsp -8 <- :call_label_ciao_2
+	call @matset 4
+	:call_label_ciao_2
+	rdi <- r12
+	rsi <- 0
+	rdx <- 2
+	rcx <- 5
+	mem rsp -8 <- :call_label_ciao_3
+	call @matset 4
+	:call_label_ciao_3
+	rdi <- r12
+	rsi <- 0
+	rdx <- 3
+	rcx <- 7
+	mem rsp -8 <- :call_label_ciao_4
+	call @matset 4
+	:call_label_ciao_4
+	rdi <- r12
+	rsi <- 1
+	rdx <- 3
+	rcx <- 9
+	mem rsp -8 <- :call_label_ciao_5
+	call @matset 4
+	:call_label_ciao_5
+	rdi <- r12
+	rsi <- 1
+	rdx <- 0
+	rcx <- -1
+	mem rsp -8 <- :call_label_ciao_6
+	call @matset 4
+	:call_label_ciao_6
+	rdi <- r12
+	call print 1
+	r12 <- mem rsp 0
+	return
+)
+
+(@newmat
+	2 4
+	mem rsp 24 <- r15
+	mem rsp 16 <- r14
+	mem rsp 8 <- r13
+	mem rsp 0 <- r12
+	r12 <- rdi
+	rdi += rdi
+	rdi += 1
+	r14 <- rdi
+	rdi += 4
+	rsi += rsi
+	rsi += 1
+	r13 <- rsi
+	rsi <- 1
+	call allocate 2
+	rsi <- rax
+	rdi <- rsi
+	rdi += 8
+	mem rdi 0 <- r14
+	rdi <- rsi
+	rdi += 16
+	mem rdi 0 <- r13
+	r15 <- rsi
+	r14 <- 0
+	:call_label0
+	rdi <- r13
+	rsi <- 1
+	call allocate 2
+	rsi <- rax
+	rdi <- r14
+	rdi *= 8
+	rdi += r15
+	rdi += 24
+	mem rdi 0 <- rsi
+	r14 += 1
+	rdi <- r14 < r12
+	cjump rdi = 1 :call_label0
+	rax <- r15
+	r12 <- mem rsp 0
+	r13 <- mem rsp 8
+	r14 <- mem rsp 16
+	r15 <- mem rsp 24
+	return
+)
+
+(@matset
+	4 0
+	r8 <- rdi
+	rdi <- rsi
+	rsi <- rdx
+	rdx <- rcx
+	rdi *= 8
+	rdi += r8
+	rdi += 24
+	r8 <- mem rdi 0
+	rdi <- rsi
+	rdi *= 8
+	rdi += r8
+	rdi += 8
+	mem rdi 0 <- rdx
+	return
+)
+
+)

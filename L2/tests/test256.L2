@@ -1,0 +1,71 @@
+(@main
+  (@main
+    0
+    %y <- 1
+    %c <- 1
+    %x <- 1
+    :call_label0
+    %var21 <- 21 <= %x
+    
+    cjump %var21 = 1 :call_label4
+    %x <- %x
+    %x >>= 1
+    %y <- %y
+    %y >>= 1
+    %y <- %y
+    %y += %x
+    %y <- %y
+    %y <<= 1
+    %x <- %x
+    %x <<= 1
+    %y <- %y
+    %y += 1
+    %x <- %x
+    %x += 1
+    %var33 <- 21 <= %y
+    
+    cjump %var33 = 1 :call_label3
+    %z <- 21
+    :call_label1
+    %var45 <- %z < 1
+    
+    cjump %var45 = 1 :call_label2
+    %z <- %z
+    %z -= 2
+    goto :call_label1
+    :call_label2
+    %c <- %c
+    %c += 2
+    :call_label3
+    %x <- %x
+    %x += 2
+    goto :call_label0
+    :call_label4
+    rdi <- %y
+    call print 1
+    rdi <- %c
+    call print 1
+    rdi <- %x
+    call print 1
+    %y <- %y
+    %y >>= 1
+    %c <- %c
+    %c >>= 1
+    %x <- %x
+    %x >>= 1
+    %cheese <- %x
+    %cheese <- %cheese
+    %cheese += %c
+    %cheese <- %cheese
+    %cheese += %y
+    %cheese <- %cheese
+    %cheese <<= 1
+    %cheese <- %cheese
+    %cheese += 1
+    %cheese <- %cheese
+    %cheese += 20
+    rdi <- %cheese
+    call print 1
+    return
+  )
+)

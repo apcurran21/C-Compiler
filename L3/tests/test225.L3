@@ -1,0 +1,101 @@
+define @main () {
+ 
+:NNNNNN
+ br :entry
+ 
+:entry
+ %var1 <- 3
+ %var2 <- 6
+ %var3 <- 8
+ %var4 <- 90
+ %ret <- call @odd (%var1)
+ %ret <- %ret << 1
+ %ret <- %ret + 1
+ call print (%ret)
+ %ret <- call @odd (%var2)
+ %ret <- %ret << 1
+ %ret <- %ret + 1
+ call print (%ret)
+ %ret <- call @odd (%var3)
+ %ret <- %ret << 1
+ %ret <- %ret + 1
+ call print (%ret)
+ %ret <- call @odd (%var4)
+ %ret <- %ret << 1
+ %ret <- %ret + 1
+ call print (%ret)
+ %ret <- call @even (%var1)
+ %ret <- %ret << 1
+ %ret <- %ret + 1
+ call print (%ret)
+ %ret <- call @even (%var2)
+ %ret <- %ret << 1
+ %ret <- %ret + 1
+ call print (%ret)
+ %ret <- call @even (%var3)
+ %ret <- %ret << 1
+ %ret <- %ret + 1
+ call print (%ret)
+ %ret <- call @even (%var4)
+ %ret <- %ret << 1
+ %ret <- %ret + 1
+ call print (%ret)
+ return 
+}
+
+define @odd (%var1) {
+ 
+:NNNNNNNN
+ br :loop
+ 
+:correct
+ %ret <- 1
+ return %ret
+ 
+:wrong
+ %ret <- 0
+ return %ret
+ 
+:ok2
+ %var1 <- %var1 - 2
+ br :loop
+ 
+:loop
+ %test <- %var1 < 1
+ br %test :wrong 
+ br :ok
+ 
+:ok
+ %test <- %var1 = 1
+ br %test :correct 
+ br :ok2
+}
+
+define @even (%var1) {
+ 
+:NNNNNNNNN
+ br :loop1
+ 
+:correct1
+ %ret <- 1
+ return %ret
+ 
+:odd1
+ %ret <- 0
+ return %ret
+ 
+:ok3
+ %var1 <- %var1 - 2
+ br :loop1
+ 
+:loop1
+ %test <- %var1 < 0
+ br %test :odd1 
+ br :ok2
+ 
+:ok2
+ %test <- %var1 = 0
+ br %test :correct1 
+ br :ok3
+}
+

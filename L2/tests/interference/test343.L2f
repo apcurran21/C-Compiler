@@ -1,0 +1,53 @@
+(@fibSeq
+	1
+	%max <- rdi
+	%prev <- 1
+	%pprev <- 1
+	%max <<= 1
+	%max += 1
+	rdi <- %max
+	rsi <- 1
+	call allocate 2
+	%arr <- rax
+	%max -= 1
+	%max >>= 1
+	%ptr <- %arr
+	%ptr += 8
+	%pprev <<= 1
+	%pprev += 1
+	mem %ptr 0 <- %pprev
+	%pprev -= 1
+	%pprev >>= 1
+	%ptr += 8
+	%prev <<= 1
+	%prev += 1
+	mem %ptr 0 <- %prev
+	%prev -= 1
+	%prev >>= 1
+	%ptr += 8
+	%count <- 2
+	%tmpMax <- %max
+	%tmpMax -= 1
+	:call_label_ciao_1
+	%sum <- %pprev
+	%sum += %prev
+	%sum <<= 1
+	%sum += 1
+	mem %ptr 0 <- %sum
+	%sum -= 1
+	%sum >>= 1
+	%pprev <- %prev
+	%prev <- %sum
+	%checkCont <- %count < %tmpMax
+	cjump %checkCont = 1 :call_label_ciao_2
+	goto :call_label_ciao_3
+	:call_label_ciao_2
+	%ptr += 8
+	%count += 1
+	goto :call_label_ciao_1
+	:call_label_ciao_3
+	rdi <- %arr
+	call print 1
+	rax <- %arr
+	return
+)

@@ -1,0 +1,15 @@
+(@compute_num_diagonals_for_shape
+	1
+	%sides <- rdi
+	%decoded_sides <- %sides
+	%decoded_sides >>= 1
+	%temp_1 <- %decoded_sides
+	%temp_1 -= 3
+	%temp_1 *= %decoded_sides
+	%temp_1 >>= 1
+	%temp_1 <<= 1
+	%temp_1 += 1
+	rdi <- %temp_1
+	call print 1
+	return
+)

@@ -1,0 +1,22 @@
+(@main
+	0
+	%len <- 10
+	rdi <- %len
+	mem rsp -8 <- :call_label0
+	call @GetArray 1
+	:call_label0
+	%arr <- rax
+	rdi <- %arr
+	call print 1
+	rdi <- %arr
+	rsi <- %len
+	mem rsp -8 <- :call_label1
+	call @FindPeak 2
+	:call_label1
+	%res <- rax
+	rdi <- %res
+	mem rsp -8 <- :call_label2
+	call @PrintResult 1
+	:call_label2
+	return
+)

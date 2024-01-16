@@ -1,0 +1,19 @@
+(@go
+	0
+	%rcx <- 1
+	%r11 <- 6
+	%newVariable <- 1
+	%newVariable2 <- 1
+	:loop
+	cjump %newVariable <= %r11 :loop2
+	rdi <- %newVariable2
+	rdi <<= %rcx
+	rdi += 1
+	call print 1
+	return
+	:loop2
+	%newVariable2 *= %newVariable
+	%newVariable++
+	goto :loop
+	return
+)

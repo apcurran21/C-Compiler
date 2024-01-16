@@ -1,0 +1,91 @@
+(@main
+(@main
+	0 1
+	:call_label0
+	rdi <- 21
+	mem rsp 0 <- rdi
+	rdi <- mem rsp 0
+	rdi <- rdi
+	call print 1
+	rdi <- mem rsp 0
+	rdi <- rdi
+	mem rsp -8 <- :call_label1
+	call @compute_triangular_num 1
+	:call_label1
+	rdi <- mem rsp 0
+	rdi <- rdi
+	mem rsp -8 <- :call_label2
+	call @compute_many_tns 1
+	:call_label2
+	return
+)
+
+(@compute_triangular_num
+	1 0
+	rdi <- rdi
+	:call_label_ciao_3
+	rdi <- rdi
+	rdi >>= 1
+	rsi <- rdi
+	rsi -= 1
+	rsi <- rsi
+	rsi *= rdi
+	rsi <- rsi
+	rsi >>= 1
+	rsi <- rsi
+	rsi <<= 1
+	rsi <- rsi
+	rsi += 1
+	rdi <- rsi
+	call print 1
+	return
+)
+
+(@compute_many_tns
+	1 2
+	rdi <- rdi
+	:call_label_ciao__ciao_4
+	rdi <- rdi
+	mem rsp 0 <- rdi
+	rdi <- mem rsp 0
+	rdi >>= 1
+	mem rsp 0 <- rdi
+	rdi <- 3
+	mem rsp 8 <- rdi
+	rdi <- mem rsp 8
+	rdi <- rdi
+	mem rsp 8 <- rdi
+	rdi <- mem rsp 8
+	rdi >>= 1
+	mem rsp 8 <- rdi
+	goto :call_label_ciao__ciao_5
+	:call_label_ciao__ciao_5
+	rdi <- mem rsp 0
+	rsi <- mem rsp 8
+	rdi <- rdi < rsi
+	cjump rdi = 1 :call_label_ciao__ciao_8
+	goto :call_label_ciao__ciao_6
+	:call_label_ciao__ciao_6
+	rdi <- mem rsp 8
+	rdi <- rdi
+	rdi <<= 1
+	rdi <- rdi
+	rdi += 1
+	rdi <- rdi
+	mem rsp -8 <- :call_label_ciao__ciao_9
+	call @compute_triangular_num 1
+	:call_label_ciao__ciao_9
+	goto :call_label_ciao__ciao_7
+	:call_label_ciao__ciao_7
+	rdi <- mem rsp 8
+	rdi <- rdi
+	mem rsp 8 <- rdi
+	rdi <- mem rsp 8
+	rdi += 1
+	mem rsp 8 <- rdi
+	goto :call_label_ciao__ciao_5
+	:call_label_ciao__ciao_8
+	return
+)
+
+)

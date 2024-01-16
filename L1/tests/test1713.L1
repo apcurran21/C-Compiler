@@ -1,0 +1,130 @@
+(@main
+(@aliasing_issues
+	1 0
+	rdx <- rdi
+	:call_label_ciao__ciao_4
+	rsi <- 0
+	rdi <- 1
+	rsi <- rsi
+	rsi += 0
+	rdi <- rsi
+	rdi *= 8
+	rdi <- rdi
+	rdi += 24
+	rsi <- rdx
+	rsi += rdi
+	mem rsi 0 <- 5
+	rsi <- 0
+	rdi <- 1
+	rsi <- rsi
+	rsi += 0
+	rsi <- rsi
+	rsi *= 8
+	rsi <- rsi
+	rsi += 24
+	rdi <- rdx
+	rdi += rsi
+	rcx <- mem rdi 0
+	rdi <- 0
+	rsi <- 1
+	rdi <- rdi
+	rdi += 0
+	rsi <- rdi
+	rsi *= 8
+	rsi <- rsi
+	rsi += 24
+	rdi <- rdx
+	rdi <- rdi
+	rdi += rsi
+	mem rdi 0 <- 4
+	rdi <- rcx
+	call print 1
+	rax <- 0
+	return
+)
+
+(@main
+	0 2
+	:call_label0
+	rdi <- 9
+	mem rsp 8 <- rdi
+	rdi <- mem rsp 8
+	rdi <- rdi
+	mem rsp 8 <- rdi
+	rdi <- mem rsp 8
+	rdi *= 4
+	mem rsp 8 <- rdi
+	rdi <- mem rsp 8
+	rdi <- rdi
+	mem rsp 8 <- rdi
+	rdi <- mem rsp 8
+	rdi += 1
+	mem rsp 8 <- rdi
+	rdi <- mem rsp 8
+	rdi <- rdi
+	mem rsp 8 <- rdi
+	rdi <- mem rsp 8
+	rdi <<= 3
+	mem rsp 8 <- rdi
+	rdi <- mem rsp 8
+	rdi <- rdi
+	mem rsp 8 <- rdi
+	rdi <- mem rsp 8
+	rdi -= 10
+	mem rsp 8 <- rdi
+	rsi <- 1623
+	rdi <- mem rsp 8
+	rdi @ rsi rdi 4
+	rdi <- rsi
+	mem rsp -8 <- :call_label1
+	call @return_merge 1
+	:call_label1
+	rdi <- rax
+	rdi <- rdi
+	mem rsp 0 <- rdi
+	rdi <- mem rsp 0
+	rdi <<= 1
+	mem rsp 0 <- rdi
+	rdi <- mem rsp 0
+	rdi <- rdi
+	mem rsp 0 <- rdi
+	rdi <- mem rsp 0
+	rdi += 1
+	mem rsp 0 <- rdi
+	rdi <- mem rsp 0
+	rdi <- rdi
+	rdi >>= 1
+	rdi <- rdi
+	rdi <- rdi
+	rdi <<= 1
+	rdi <- rdi
+	rdi += 1
+	rdi <- rdi
+	rdi += 4
+	rdi <- rdi
+	rsi <- 1
+	call allocate 2
+	rdi <- rax
+	mem rdi 8 <- 3
+	rsi <- mem rsp 0
+	mem rdi 16 <- rsi
+	rdi <- rdi
+	mem rsp -8 <- :call_label2
+	call @aliasing_issues 1
+	:call_label2
+	rdi <- mem rsp 8
+	rax <- rdi
+	return
+)
+
+(@return_merge
+	1 0
+	rdi <- rdi
+	:call_label_ciao_3
+	rdi <- rdi
+	rdi += 1
+	rax <- rdi
+	return
+)
+
+)

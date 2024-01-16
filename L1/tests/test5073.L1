@@ -1,0 +1,33 @@
+// print all fibonacci numbers under 1 billion
+(@main
+  (@main
+    0 4
+    rdi <- 3
+    call print 1
+    r8 <- 1
+    r9 <- 1
+    r10 <- 0
+    rcx <- 1
+    r11 <- 1000000000
+    :LOOP
+    r10 <- r8
+    r10 += r9
+    r8 <- r9
+    r9 <- r10
+    rdi <- r8
+    rdi <<= rcx
+    rdi ++
+    mem rsp 0 <- r8
+    mem rsp 8 <- r9
+    mem rsp 16 <- r11
+    mem rsp 24 <- rcx
+    call print 1
+    r8 <- mem rsp 0
+    r9 <- mem rsp 8
+    r11 <- mem rsp 16
+    rcx <- mem rsp 24
+    cjump r9 < r11 :LOOP
+    return
+  )
+)
+

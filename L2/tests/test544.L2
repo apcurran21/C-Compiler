@@ -1,0 +1,101 @@
+(@main
+  (@mod
+    2
+    %x <- rdi
+    %y <- rsi
+    :call_label0
+    goto :call_label5
+    :call_label1
+    rax <- 1
+    return
+    :call_label2
+    %x <- %x
+    %x -= %y
+    %r <- %x = 0
+
+    cjump %r = 1 :call_label1
+    goto :call_label3
+    :call_label3
+    %r <- -1 < %x
+
+    cjump %r = 1 :call_label2
+    goto :call_label4
+    :call_label4
+    rax <- 0
+    return
+    :call_label5
+    %r <- %x = 0
+
+    cjump %r = 1 :call_label1
+    goto :call_label3
+  )
+  (@mod_sum
+    1
+    %x <- rdi
+    :call_label_ciao_6
+    goto :call_label_ciao_12
+    :call_label_ciao_7
+    rax <- %sum
+    return
+    :call_label_ciao_8
+    %sum <- %sum
+    %sum += %processing
+    goto :call_label_ciao_9
+    :call_label_ciao_9
+    %processing <- %processing
+    %processing += 1
+    %r <- %original <= %processing
+
+    cjump %r = 1 :call_label_ciao_7
+    goto :call_label_ciao_10
+    :call_label_ciao_10
+    rdi <- %processing
+    rsi <- 3
+
+mem rsp -8 <- :call_label_ciao_13
+    call @mod 2
+
+:call_label_ciao_13
+    %isMod <- rax
+    cjump %isMod = 1 :call_label_ciao_8
+    goto :call_label_ciao_11
+    :call_label_ciao_11
+    rdi <- %processing
+    rsi <- 5
+
+mem rsp -8 <- :call_label_ciao_14
+    call @mod 2
+
+:call_label_ciao_14
+    %isMod <- rax
+    %r <- %isMod = 0
+
+    cjump %r = 1 :call_label_ciao_9
+    goto :call_label_ciao_8
+    :call_label_ciao_12
+    %original <- %x
+    %sum <- 0
+    %processing <- 0
+    goto :call_label_ciao_9
+  )
+  (@main
+    0
+    :call_label_ciao__ciao_15
+    goto :call_label_ciao__ciao_16
+    :call_label_ciao__ciao_16
+    rdi <- 1000
+
+mem rsp -8 <- :call_label_ciao__ciao_17
+    call @mod_sum 1
+
+:call_label_ciao__ciao_17
+    %v <- rax
+    %v <- %v
+    %v <<= 1
+    %v <- %v
+    %v += 1
+    rdi <- %v
+    call print 1
+    return
+  )
+)

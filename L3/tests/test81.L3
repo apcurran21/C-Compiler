@@ -1,0 +1,152 @@
+define @main () {
+ 
+:entry
+ %newVar1 <- 7 >> 1
+ %newVar0 <- %newVar1
+ %newVar0 <- %newVar0 << 1
+ %newVar0 <- %newVar0 + 1
+ %newVar0 <- %newVar0 + 4
+ %ar <- call allocate (%newVar0, 1)
+ %newVar2 <- %ar + 8
+ store %newVar2 <- 3
+ %newVar3 <- %ar + 16
+ store %newVar3 <- 7
+ %newVar5 <- 0
+ %newVar6 <- 1
+ %newVar5 <- %newVar5 + 0
+ %newVar4 <- %newVar5 * 8
+ %newVar4 <- %newVar4 + 24
+ %newVar7 <- %ar + %newVar4
+ store %newVar7 <- 0
+ %newVar9 <- 0
+ %newVar10 <- 1
+ %newVar9 <- %newVar9 + 1
+ %newVar8 <- %newVar9 * 8
+ %newVar8 <- %newVar8 + 24
+ %newVar11 <- %ar + %newVar8
+ store %newVar11 <- 0
+ %newVar13 <- 0
+ %newVar14 <- 1
+ %newVar13 <- %newVar13 + 2
+ %newVar12 <- %newVar13 * 8
+ %newVar12 <- %newVar12 + 24
+ %newVar15 <- %ar + %newVar12
+ store %newVar15 <- 0
+ %ret <- call @func1 (%ar)
+ call print (%ret)
+ return 
+}
+
+define @func1 (%v1) {
+ 
+:entry
+ %newVar1 <- 0
+ %newVar2 <- 1
+ %newVar1 <- %newVar1 + 0
+ %newVar0 <- %newVar1 * 8
+ %newVar0 <- %newVar0 + 24
+ %newVar3 <- %v1 + %newVar0
+ %t1 <- load %newVar3
+ %newVar5 <- 0
+ %newVar6 <- 1
+ %newVar5 <- %newVar5 + 1
+ %newVar4 <- %newVar5 * 8
+ %newVar4 <- %newVar4 + 24
+ %newVar7 <- %v1 + %newVar4
+ %t2 <- load %newVar7
+ %newVar9 <- 0
+ %newVar10 <- 1
+ %newVar9 <- %newVar9 + 2
+ %newVar8 <- %newVar9 * 8
+ %newVar8 <- %newVar8 + 24
+ %newVar11 <- %v1 + %newVar8
+ %t3 <- load %newVar11
+ %t1 <- %t1 + 60
+ %newVar13 <- 0
+ %newVar14 <- 1
+ %newVar13 <- %newVar13 + 0
+ %newVar12 <- %newVar13 * 8
+ %newVar12 <- %newVar12 + 24
+ %newVar15 <- %v1 + %newVar12
+ store %newVar15 <- %t1
+ %t2 <- %t2 + 60
+ %newVar17 <- 0
+ %newVar18 <- 1
+ %newVar17 <- %newVar17 + 1
+ %newVar16 <- %newVar17 * 8
+ %newVar16 <- %newVar16 + 24
+ %newVar19 <- %v1 + %newVar16
+ store %newVar19 <- %t2
+ %t3 <- %t3 + 60
+ %newVar21 <- 0
+ %newVar22 <- 1
+ %newVar21 <- %newVar21 + 2
+ %newVar20 <- %newVar21 * 8
+ %newVar20 <- %newVar20 + 24
+ %newVar23 <- %v1 + %newVar20
+ store %newVar23 <- %t3
+ %ret <- call @recurse (%v1, 9)
+ return %ret
+}
+
+define @recurse (%v1, %num) {
+ 
+:entry
+ %newVar1 <- 0
+ %newVar2 <- 1
+ %newVar1 <- %newVar1 + 0
+ %newVar0 <- %newVar1 * 8
+ %newVar0 <- %newVar0 + 24
+ %newVar3 <- %v1 + %newVar0
+ %t1 <- load %newVar3
+ %newVar5 <- 0
+ %newVar6 <- 1
+ %newVar5 <- %newVar5 + 1
+ %newVar4 <- %newVar5 * 8
+ %newVar4 <- %newVar4 + 24
+ %newVar7 <- %v1 + %newVar4
+ %t2 <- load %newVar7
+ %newVar9 <- 0
+ %newVar10 <- 1
+ %newVar9 <- %newVar9 + 2
+ %newVar8 <- %newVar9 * 8
+ %newVar8 <- %newVar8 + 24
+ %newVar11 <- %v1 + %newVar8
+ %t3 <- load %newVar11
+ %t1 <- %t1 + 1
+ %newVar13 <- 0
+ %newVar14 <- 1
+ %newVar13 <- %newVar13 + 0
+ %newVar12 <- %newVar13 * 8
+ %newVar12 <- %newVar12 + 24
+ %newVar15 <- %v1 + %newVar12
+ store %newVar15 <- %t1
+ %t2 <- %t2 + 1
+ %newVar17 <- 0
+ %newVar18 <- 1
+ %newVar17 <- %newVar17 + 1
+ %newVar16 <- %newVar17 * 8
+ %newVar16 <- %newVar16 + 24
+ %newVar19 <- %v1 + %newVar16
+ store %newVar19 <- %t2
+ %t3 <- %t3 + 1
+ %newVar21 <- 0
+ %newVar22 <- 1
+ %newVar21 <- %newVar21 + 2
+ %newVar20 <- %newVar21 * 8
+ %newVar20 <- %newVar20 + 24
+ %newVar23 <- %v1 + %newVar20
+ store %newVar23 <- %t3
+ %num <- %num - 1
+ %done <- %num = 0
+ br %done :done 
+ br :notDone
+ 
+:notDone
+ %ret <- call @recurse (%v1, %num)
+ return %ret
+ 
+:done
+ return %v1
+}
+

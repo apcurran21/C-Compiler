@@ -1,0 +1,21 @@
+(@array
+	1
+	%n <- rdi
+	%index <- -1
+	:call_label_ciao_1
+	%check <- %index = %n
+	cjump %check = 1 :call_label_ciao_2
+	%index += 1
+	rdi <- %index
+	mem rsp -8 <- :call_label_ciao_3
+	call @calculate 1
+	:call_label_ciao_3
+	%value <- rax
+	%value <<= 1
+	%value += 1
+	rdi <- %value
+	call print 1
+	goto :call_label_ciao_1
+	:call_label_ciao_2
+	return
+)

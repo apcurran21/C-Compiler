@@ -1,0 +1,82 @@
+int64 mod(int64 x, int64 y) {
+    :entry
+    int64 r
+    r <- x = 0
+    br r :mgood :misneg
+    
+    :misneg
+    r <- x > -1
+    br r :mloop :ret_early
+
+    :ret_early
+    return 0
+
+    :mloop
+    x <- x - y
+    r <- x = 0
+    br r :mgood :misneg
+
+    :mgood
+    return 1
+}
+
+int64 prime(int64 arg) {
+    :entry
+    int64 inputIs2
+    int64 halfarg
+    int64 counter
+    int64 pstatus
+    int64 reloop
+
+    inputIs2 <- arg = 2
+    counter <- 1
+    br inputIs2 :is_prime :prime_loop
+
+    :prime_loop
+    halfarg <- arg >> 1
+    counter <- counter + 1
+    pstatus <- mod(arg, counter)
+    br pstatus :not_prime :maybe_prime
+
+    :maybe_prime
+    reloop <- counter <= halfarg
+    br reloop :prime_loop :is_prime
+
+    :is_prime
+    return 1
+
+    :not_prime
+    return 0
+}
+
+//this produces the correct result :D
+void main() {
+    int64 primeCounter
+    int64 searchCounter
+    int64 weDone
+    int64 result 
+    int64 nresult 
+    int64 pr
+
+    primeCounter <- 0
+    searchCounter <- 0
+    br :loop
+
+    :loop
+    weDone <- primeCounter >= 58
+    br weDone :done :nodone
+
+    :nodone
+    searchCounter <- searchCounter + 1
+    result <- prime(searchCounter)
+    nresult <- result = 0
+    br nresult :loop :nloop
+
+    :nloop
+    primeCounter <- primeCounter + 1
+    br :loop
+
+    :done
+    print(searchCounter)
+    return
+}

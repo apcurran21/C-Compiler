@@ -1,0 +1,18 @@
+(@main
+  (@main
+    0
+    %v <- 2
+    %cucu <- 1
+    %cucu -=%v
+    %v <- %cucu
+    
+    %w <- %v
+    %w <- %w
+    %w <<= 1
+    %w <- %w
+    %w += 1
+    rdi <- %w
+    call print 1
+    return
+  )
+)

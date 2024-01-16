@@ -1,0 +1,15 @@
+(@f1
+	0
+	%myVar <- 3
+	%myVar2 <- 2
+	%variableY5J43SA8YT <- 4
+	%sumF1 <- %myVar
+	%sumF1 += %myVar2
+	%localArg <- %variableY5J43SA8YT
+	%sumF1 += %localArg
+	%sumF1 <<= 1
+	%sumF1++
+	rdi <- %sumF1
+	call print 1
+	return
+)

@@ -1,0 +1,23 @@
+(@main
+	0
+	:call_label0
+	rdi <- 3
+	mem rsp -8 <- :call_label1
+	call @createMyClosure 1
+	:call_label1
+	%t <- rax
+	rdi <- %t
+	rsi <- 4
+	mem rsp -8 <- :call_label2
+	call @callMyClosure 2
+	:call_label2
+	%v <- rax
+	rdi <- %v
+	mem rsp -8 <- :call_label3
+	call @encodeValue 1
+	:call_label3
+	%x <- rax
+	rdi <- %x
+	call print 1
+	return
+)

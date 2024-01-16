@@ -1,0 +1,55 @@
+// Calculates the gcd of 2 numbers, prints the 2 numbers and the gcd
+// output: 18 24 6
+
+(@go 
+(@go 0
+	rdi <- 18
+	rsi <- 24
+	%firstNum <- rdi
+	%secondNum <- rsi
+	mem rsp -8 <- :go_ret
+    call @gcd 2
+    :go_ret
+	%denom <- rax
+
+	rdi <- %firstNum	
+	rdi <<= 1
+	rdi++
+	call print 1
+	
+	rdi <- %secondNum
+	rdi <<= 1 
+	rdi++
+	call print 1
+
+	rdi <- %denom
+	rdi <<= 1
+        rdi++
+	call print 1
+	return
+)
+(@gcd 2
+	cjump rdi = 1 :equal_zero
+        goto :continue
+
+	:equal_zero
+        rax <- rsi
+        return
+
+	:continue
+	cjump rsi = 0 :finish
+
+	cjump rdi <= rsi :else
+	rdi -= rsi
+	goto :continue
+
+	:else
+	rsi -= rdi
+
+	goto :continue
+
+	:finish
+	rax <- rdi
+	return
+)
+)	

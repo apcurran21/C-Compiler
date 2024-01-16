@@ -1,0 +1,14 @@
+(@go
+	0
+	rdi <- 5
+	rsi <- 5
+	call allocate 2
+	%newVariableBx <- 85
+	mem rax 8 <- %newVariableBx
+	%array <- rax
+	rdi <- %array
+	mem rsp -8 <- :ret
+	call @printArray 1
+	:ret
+	return
+)

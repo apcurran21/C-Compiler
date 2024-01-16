@@ -1,0 +1,133 @@
+(@main
+  (@main
+    0
+
+mem rsp -8 <- :call_label0
+    call @h 0
+
+:call_label0
+
+mem rsp -8 <- :call_label1
+    call @e 0
+
+:call_label1
+
+mem rsp -8 <- :call_label2
+    call @l 0
+
+:call_label2
+
+mem rsp -8 <- :call_label3
+    call @l 0
+
+:call_label3
+
+mem rsp -8 <- :call_label4
+    call @o 0
+
+:call_label4
+
+mem rsp -8 <- :call_label5
+    call @space 0
+
+:call_label5
+
+mem rsp -8 <- :call_label6
+    call @w 0
+
+:call_label6
+
+mem rsp -8 <- :call_label7
+    call @o 0
+
+:call_label7
+
+mem rsp -8 <- :call_label8
+    call @r 0
+
+:call_label8
+
+mem rsp -8 <- :call_label9
+    call @l 0
+
+:call_label9
+
+mem rsp -8 <- :call_label10
+    call @d 0
+
+:call_label10
+    return
+  )
+  (@h
+    0
+    %var <- 209
+    rdi <- %var
+    call print 1
+    %var <- rax
+    rax <- %var
+    return
+  )
+  (@e
+    0
+    %var <- 203
+    rdi <- %var
+    call print 1
+    %var <- rax
+    rax <- %var
+    return
+  )
+  (@l
+    0
+    %var <- 217
+    rdi <- %var
+    call print 1
+    %var <- rax
+    rax <- %var
+    return
+  )
+  (@o
+    0
+    %var <- 223
+    rdi <- %var
+    call print 1
+    %var <- rax
+    rax <- %var
+    return
+  )
+  (@w
+    0
+    %var <- 239
+    rdi <- %var
+    call print 1
+    %var <- rax
+    rax <- %var
+    return
+  )
+  (@space
+    0
+    %var <- 65
+    rdi <- %var
+    call print 1
+    %var <- rax
+    rax <- %var
+    return
+  )
+  (@r
+    0
+    %var <- 229
+    rdi <- %var
+    call print 1
+    %var <- rax
+    rax <- %var
+    return
+  )
+  (@d
+    0
+    %var <- 201
+    rdi <- %var
+    call print 1
+    %var <- rax
+    rax <- %var
+    return
+  )
+)

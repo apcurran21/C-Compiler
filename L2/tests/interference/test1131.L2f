@@ -1,0 +1,18 @@
+(@main
+	0
+	:call_label0
+	goto :call_label1
+	:call_label1
+	%num_triangular_nums <- 21
+	rdi <- %num_triangular_nums
+	call print 1
+	rdi <- %num_triangular_nums
+	mem rsp -8 <- :call_label2
+	call @compute_triangular_num 1
+	:call_label2
+	rdi <- %num_triangular_nums
+	mem rsp -8 <- :call_label3
+	call @compute_many_tns 1
+	:call_label3
+	return
+)

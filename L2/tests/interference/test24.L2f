@@ -1,0 +1,34 @@
+(@main
+	0
+	%var1 <- 5
+	%var3 <- 3
+	%var1 += %var3
+	cjump %var1 = 8 :my_label1
+	:my_label2
+	%var1 -= 4
+	%var1 *= 3
+	rdi <- %var1
+	rdi <<= 1
+	rdi++
+	call print 1
+	rdi <- 5
+	rsi <- 7
+	call allocate 2
+	%var5 <- rax
+	rdi <- %var3
+	rdi <<= 1
+	rdi++
+	call print 1
+	%var6 <- %var3 < 2
+	rdi <- %var6
+	rdi <<= 1
+	rdi++
+	call print 1
+	rdi <- %var5
+	call print 1
+	return
+	:my_label1
+	%var3++
+	goto :my_label2
+	return
+)

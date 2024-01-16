@@ -1,0 +1,103 @@
+(@a_times_sine_bth_x_pi
+	3
+	%a <- rdi
+	%b <- rsi
+	%x <- rdx
+	%pi_x <- 3
+	%pi_x *= %x
+	%top <- %a
+	%top *= %pi_x
+	%bot <- %b
+	rdi <- %top
+	rsi <- %bot
+	mem rsp -8 <- :call_label_ciao__ciao__ciao__ciao_11
+	call @divide 2
+	:call_label_ciao__ciao__ciao__ciao_11
+	%result <- rax
+	rdi <- %pi_x
+	rsi <- 3
+	mem rsp -8 <- :call_label_ciao__ciao__ciao__ciao_12
+	call @pow 2
+	:call_label_ciao__ciao__ciao__ciao_12
+	%pi_x_cubed <- rax
+	%top <- %a
+	%top *= %pi_x_cubed
+	rdi <- 3
+	mem rsp -8 <- :call_label_ciao__ciao__ciao__ciao_13
+	call @factorial 1
+	:call_label_ciao__ciao__ciao__ciao_13
+	%three_fact <- rax
+	rdi <- %b
+	rsi <- 3
+	mem rsp -8 <- :call_label_ciao__ciao__ciao__ciao_14
+	call @pow 2
+	:call_label_ciao__ciao__ciao__ciao_14
+	%eight_cubed <- rax
+	%bot <- %three_fact
+	%bot *= %eight_cubed
+	rdi <- %top
+	rsi <- %bot
+	mem rsp -8 <- :call_label_ciao__ciao__ciao__ciao_15
+	call @divide 2
+	:call_label_ciao__ciao__ciao__ciao_15
+	%div <- rax
+	%result -= %div
+	rdi <- %pi_x
+	rsi <- 5
+	mem rsp -8 <- :call_label_ciao__ciao__ciao__ciao_16
+	call @pow 2
+	:call_label_ciao__ciao__ciao__ciao_16
+	%pi_x_five <- rax
+	%top <- %a
+	%top *= %pi_x_five
+	rdi <- 5
+	mem rsp -8 <- :call_label_ciao__ciao__ciao__ciao_17
+	call @factorial 1
+	:call_label_ciao__ciao__ciao__ciao_17
+	%five_fact <- rax
+	rdi <- %b
+	rsi <- 5
+	mem rsp -8 <- :call_label_ciao__ciao__ciao__ciao_18
+	call @pow 2
+	:call_label_ciao__ciao__ciao__ciao_18
+	%eight_five <- rax
+	%bot <- %five_fact
+	%bot *= %eight_five
+	rdi <- %top
+	rsi <- %bot
+	mem rsp -8 <- :call_label_ciao__ciao__ciao__ciao_19
+	call @divide 2
+	:call_label_ciao__ciao__ciao__ciao_19
+	%div <- rax
+	%result += %div
+	rdi <- %pi_x
+	rsi <- 7
+	mem rsp -8 <- :call_label_ciao__ciao__ciao__ciao_20
+	call @pow 2
+	:call_label_ciao__ciao__ciao__ciao_20
+	%pi_x_seven <- rax
+	%top <- %a
+	%top *= %pi_x_seven
+	rdi <- 7
+	mem rsp -8 <- :call_label_ciao__ciao__ciao__ciao_21
+	call @factorial 1
+	:call_label_ciao__ciao__ciao__ciao_21
+	%seven_fact <- rax
+	rdi <- %b
+	rsi <- 7
+	mem rsp -8 <- :call_label_ciao__ciao__ciao__ciao_22
+	call @pow 2
+	:call_label_ciao__ciao__ciao__ciao_22
+	%eight_seven <- rax
+	%bot <- %seven_fact
+	%bot *= %eight_seven
+	rdi <- %top
+	rsi <- %bot
+	mem rsp -8 <- :call_label_ciao__ciao__ciao__ciao_23
+	call @divide 2
+	:call_label_ciao__ciao__ciao__ciao_23
+	%div <- rax
+	%result -= %div
+	rax <- %result
+	return
+)

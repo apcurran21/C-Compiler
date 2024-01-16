@@ -1,0 +1,60 @@
+(@main
+    (@main 0 0
+    	rdi <- 87
+	mem rsp -8 <- :prime_ret
+	call @prime 1
+	:prime_ret
+	rdi <- rax
+	call print 1
+	rdi <- 59
+	mem rsp -8 <- :prime_ret2
+	call @prime 1
+	:prime_ret2
+	rdi <- rax
+	call print 1
+    	return
+    )
+    (@prime 1 3
+	mem rsp 0 <- r12
+	mem rsp 8 <- r13
+	mem rsp 16 <- r14
+    	cjump rdi = 1 :prime_false
+	r14 <- rdi
+	r12 <- 2
+	r13 <- rdi
+	r13 >>= 1
+    	goto :prime_cond
+    	:prime_body
+	rdi <- r14
+	rsi <- r12
+	mem rsp -8 <- :mod_ret
+	call @mod 2
+	:mod_ret
+	cjump rax = 0 :prime_false
+	r12++
+	:prime_cond
+	cjump r12 <= r13 :prime_body
+	:prime_true
+	rax <- 3
+	goto :prime_end
+	:prime_false
+	rax <- 1
+    	:prime_end
+	r12 <- mem rsp 0
+	r13 <- mem rsp 8
+	r14 <- mem rsp 16
+	return
+    )
+    (@mod 2 0
+    	rdx <- rsi
+	goto :mod_cond
+	:mod_body
+	rdx += rsi
+	:mod_cond
+	cjump rdx <= rdi :mod_body
+	rdx -= rsi
+	rax <- rdi
+	rax -= rdx
+	return
+    )
+)

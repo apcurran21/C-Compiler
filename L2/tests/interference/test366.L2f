@@ -1,0 +1,16 @@
+(@rightShiftStuff
+	1
+	%v1 <- rdi
+	%v2 <- %v1
+	%v2 >>= 3
+	%v5 <- 5
+	%v5 >>= 1
+	%v6 <- %v1
+	%v6 >>= %v5
+	%v4 <- %v2
+	%v4 >>= %v1
+	%v7 <- %v6
+	%v7 >>= %v4
+	rax <- %v7
+	return
+)

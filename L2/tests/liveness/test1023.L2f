@@ -1,0 +1,9 @@
+(@turkeyChoice
+	0
+	:call_label_ciao__ciao__ciao__ciao__ciao_21
+	goto :call_label_ciao__ciao__ciao__ciao__ciao_22
+	:call_label_ciao__ciao__ciao__ciao__ciao_22
+	rdi <- 1
+	call print 1
+	return
+)

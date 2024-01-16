@@ -1,0 +1,30 @@
+(
+(in
+(r12 r13 r14 r15 rbp rbx)
+(r12 r13 r14 r15 rbp rbx rdi)
+(r12 r13 r14 r15 rbp rbx rdi)
+(r12 r13 r14 r15 rbp rbx rdi %variableICV41LQ26Q)
+(r12 r13 r14 r15 rax rbp rbx %variableICV41LQ26Q)
+(r12 r13 r14 r15 rax rbp rbx %variableICV41LQ26Q)
+(r12 r13 r14 r15 rax rbp rbx rdi)
+(r12 r13 r14 r15 rbp rbx rdi rsi)
+(r12 r13 r14 r15 rbp rbx rdi rsi)
+(r12 r13 r14 r15 rax rbp rbx)
+(r12 r13 r14 r15 rax rbp rbx)
+)
+
+(out
+(r12 r13 r14 r15 rbp rbx rdi)
+(r12 r13 r14 r15 rbp rbx rdi)
+(r12 r13 r14 r15 rbp rbx rdi %variableICV41LQ26Q)
+(r12 r13 r14 r15 rax rbp rbx %variableICV41LQ26Q)
+(r12 r13 r14 r15 rax rbp rbx %variableICV41LQ26Q)
+(r12 r13 r14 r15 rax rbp rbx rdi)
+(r12 r13 r14 r15 rbp rbx rdi rsi)
+(r12 r13 r14 r15 rbp rbx rdi rsi)
+(r12 r13 r14 r15 rax rbp rbx)
+(r12 r13 r14 r15 rax rbp rbx)
+()
+)
+
+)

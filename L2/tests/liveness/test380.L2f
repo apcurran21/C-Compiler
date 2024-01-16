@@ -1,0 +1,30 @@
+(@map
+	2
+	%s <- rdi
+	%n <- rsi
+	%refcount <- %n
+	%refcount -= 2
+	%addr <- %s
+	%addr += 8
+	:call_label_ciao__ciao__ciao_17
+	%res <- %refcount <= 0
+	cjump %res = 1 :call_label_ciao__ciao__ciao_19
+	goto :call_label_ciao__ciao__ciao_18
+	:call_label_ciao__ciao__ciao_18
+	%val1 <- mem %addr 0
+	rdi <- %val1
+	rsi <- %refcount
+	mem rsp -8 <- :call_label_ciao__ciao__ciao_20
+	call @i_wish 2
+	:call_label_ciao__ciao__ciao_20
+	%val2 <- rax
+	%val2 <<= 1
+	%val2 += 1
+	mem %addr 0 <- %val2
+	%refcount -= 2
+	%addr += 8
+	goto :call_label_ciao__ciao__ciao_17
+	:call_label_ciao__ciao__ciao_19
+	rax <- %s
+	return
+)

@@ -1,0 +1,8 @@
+define void @main ( ) {
+
+  :entry
+  int64 %v1
+  %v1 <- call input()
+  return
+
+}

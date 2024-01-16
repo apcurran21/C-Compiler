@@ -1,0 +1,76 @@
+(@loopTransform
+	1
+	%hello <- rdi
+	%count <- 0
+	%v1 <- %hello
+	:call_label_ciao_7
+	rdi <- %v1
+	mem rsp -8 <- :call_label_ciao_9
+	call @transform 1
+	:call_label_ciao_9
+	%v1 <- rax
+	rdi <- %v1
+	mem rsp -8 <- :call_label_ciao_10
+	call @transform 1
+	:call_label_ciao_10
+	%v1 <- rax
+	rdi <- %v1
+	mem rsp -8 <- :call_label_ciao_11
+	call @transform 1
+	:call_label_ciao_11
+	%v1 <- rax
+	rdi <- %v1
+	mem rsp -8 <- :call_label_ciao_12
+	call @transform 1
+	:call_label_ciao_12
+	%v1 <- rax
+	rdi <- %v1
+	mem rsp -8 <- :call_label_ciao_13
+	call @transform 1
+	:call_label_ciao_13
+	%v1 <- rax
+	rdi <- %v1
+	mem rsp -8 <- :call_label_ciao_14
+	call @transform 1
+	:call_label_ciao_14
+	%v1 <- rax
+	rdi <- %v1
+	mem rsp -8 <- :call_label_ciao_15
+	call @transform 1
+	:call_label_ciao_15
+	%v1 <- rax
+	rdi <- %v1
+	mem rsp -8 <- :call_label_ciao_16
+	call @transform 1
+	:call_label_ciao_16
+	%v1 <- rax
+	rdi <- %v1
+	mem rsp -8 <- :call_label_ciao_17
+	call @transform 1
+	:call_label_ciao_17
+	%v1 <- rax
+	rdi <- %v1
+	mem rsp -8 <- :call_label_ciao_18
+	call @transform 1
+	:call_label_ciao_18
+	%v1 <- rax
+	rdi <- %v1
+	mem rsp -8 <- :call_label_ciao_19
+	call @transform 1
+	:call_label_ciao_19
+	%v1 <- rax
+	rdi <- %v1
+	mem rsp -8 <- :call_label_ciao_20
+	call @encode 1
+	:call_label_ciao_20
+	%v1 <- rax
+	rdi <- %v1
+	call print 1
+	%v1 += 4
+	%count += 1
+	%isDone <- 7 <= %count
+	cjump %isDone = 1 :call_label_ciao_8
+	goto :call_label_ciao_7
+	:call_label_ciao_8
+	return
+)

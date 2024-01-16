@@ -1,0 +1,11 @@
+(@return_merge
+	1
+	%p <- rdi
+	:call_label_ciao_4
+	goto :call_label_ciao_5
+	:call_label_ciao_5
+	%r <- %p
+	%r += 1
+	rax <- %r
+	return
+)

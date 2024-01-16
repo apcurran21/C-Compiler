@@ -1,0 +1,24 @@
+(@go
+	0
+	rdi <- 18
+	rsi <- 24
+	%firstNum <- rdi
+	%secondNum <- rsi
+	mem rsp -8 <- :go_ret
+	call @gcd 2
+	:go_ret
+	%denom <- rax
+	rdi <- %firstNum
+	rdi <<= 1
+	rdi++
+	call print 1
+	rdi <- %secondNum
+	rdi <<= 1
+	rdi++
+	call print 1
+	rdi <- %denom
+	rdi <<= 1
+	rdi++
+	call print 1
+	return
+)

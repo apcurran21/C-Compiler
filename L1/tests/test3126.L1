@@ -1,0 +1,38 @@
+(@main
+(@main
+	0 0
+	rdi <- 1
+	rsi <- 3
+	rdx <- 5
+	rcx <- 7
+	r8 <- 9
+	r9 <- 11
+	mem rsp -8 <- :ret
+	mem rsp -16 <- 13
+	mem rsp -24 <- 12
+	call @printVars 8
+	:ret
+	rdi <- 12
+	rdi++
+	call print 1
+	rax <- 5
+	cjump rax = 1 :true
+	goto :false
+	:true
+	goto :false
+	:false
+	return
+)
+
+(@printVars
+	8 0
+	rsi <- mem rsp 0
+	rsi += rdi
+	rdi <- rsi
+	call print 1
+	rdi <- mem rsp 8
+	call print 1
+	return
+)
+
+)

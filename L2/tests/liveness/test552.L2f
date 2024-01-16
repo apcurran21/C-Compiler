@@ -1,0 +1,15 @@
+(@main
+	0
+	rdi <- 541
+	rsi <- 7919
+	mem rsp -8 <- :call_label0
+	call @gcd 2
+	:call_label0
+	%res <- rax
+	%res <<= 1
+	%res += 1
+	rdi <- %res
+	call print 1
+	rax <- 0
+	return
+)

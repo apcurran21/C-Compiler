@@ -1,0 +1,71 @@
+//This program prints hello world in integer (ASCII) form
+define @main(){
+ call @h()
+ call @e()
+ call @l()
+ call @l()
+ call @o()
+ call @space()
+ call @w()
+ call @o()
+ call @r()
+ call @l()
+ call @d()
+ return
+}
+
+define @h(){
+        //pass in first argument (h in ASCII) according to calling convention
+        %var <- 209
+    %var <- call print(%var)
+    return %var
+}
+
+define @e(){
+         //pass in first argument (h in ASCII) according to calling convention
+         %var <- 203
+    %var <- call print(%var)
+    return %var
+}
+
+define @l(){
+         //pass in first argument (h in ASCII) according to calling convention
+         %var <- 217
+    %var <- call print(%var)
+    return %var
+}
+
+define @o(){
+         //pass in first argument (h in ASCII) according to calling convention
+         %var <- 223
+    %var <- call print(%var)
+    return %var
+}
+
+define @w(){
+         //pass in first argument (h in ASCII) according to calling convention
+         %var <- 239
+    %var <- call print(%var)
+    return %var
+}
+
+define @space(){
+         //pass in first argument (h in ASCII) according to calling convention
+         %var <- 65
+    %var <- call print(%var)
+    return %var
+}
+
+define @r(){
+         //pass in first argument (h in ASCII) according to calling convention
+         %var <- 229
+    %var <- call print(%var)
+    return %var
+}
+
+define @d(){
+         //pass in first argument (h in ASCII) according to calling convention
+         %var <- 201
+    %var <- call print(%var)
+    return %var
+}

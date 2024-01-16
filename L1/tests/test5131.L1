@@ -1,0 +1,172 @@
+(@ourTest
+    (@ourTest
+      0 4
+        //call input to get inputs
+        call input 0
+        r8 <- rax
+        // un-encoded length
+        r8 >>= 1
+        //sanity check that they array is non-empty
+        cjump r8 = 0 :done
+        rdi <- rax
+        // un ecode
+        rdi >>= 1
+        // allocate a slightly bigger array to store its length in it
+        rdi += 1
+        // encoded length
+        rdi <<= 1
+        rdi += 1
+        rsi <- 0
+
+        // store caller save register 1
+        mem rsp 0 <- r8
+        call allocate 2
+        //heap address of array
+        r11 <- rax
+        // restore caller save register
+        r8 <- mem rsp 0
+        mem r11 0 <- r8
+
+        r10 <- r11
+        // store caller save register 4
+        mem rsp 24 <- r11
+        r10 += 8
+        rsi <- 1
+        :inputLoop
+            // store caller save register 1
+            mem rsp 0 <- r8
+            // store caller save register 2
+            mem rsp 8 <- r10
+            // store caller save register 3
+            mem rsp 16 <- rsi
+            call input 0
+            // restore caller save register
+            r10 <- mem rsp 8
+            mem r10 0 <- rax
+            // restore caller save register
+            rsi <- mem rsp 16
+            rsi += 1
+            r10 += 8
+            // restore caller save register
+            r8 <- mem rsp 0
+        cjump rsi <= r8 :inputLoop
+
+        // restore caller save register
+        r11 <- mem rsp 24
+        rdi <- r11
+        mem rsp -8 <- :done
+        call @oneLocal 1
+        :done
+        return
+    )
+
+    (@oneLocal
+        1 5
+        // rdi has the address of array
+        // first go through array and encode everything
+        // store callee save register 1
+        mem rsp 0 <- r12
+
+        //size of array
+        rsi <- mem rdi 0
+
+        // store caller save register 3
+        mem rsp 16 <- rdi
+        // store caller save register 4
+        mem rsp 24 <- rsi
+
+        mem rsp -8 <- :encodeDone
+        call @encodeArray 1
+        :encodeDone
+
+        // restore caller save register 3
+        rdi <- mem rsp 16
+        // restore caller save register 4
+        rsi <- mem rsp 24
+
+        r12 <- 0
+        :arrayOuterLoop
+            //current numbers address
+            r9 <- rdi
+            r9 += 8
+            //number of loops done
+            rcx <- 0
+            //keep track of min value
+            r8 <- 4611686018427387903
+            :arrayInnerLoop
+                // check if current number is valid
+                r10 <- mem r9 0
+                r10 &= 1
+                cjump r10 = 0 :notValid
+                r10 <- mem r9 0
+                r10 >>= 1
+                r11 <- r10 <= r8
+                cjump r11 = 0 :notValid
+                r8 <- r10
+                // address of smallest number
+                rax <- r9
+                :notValid
+                r9 += 8
+                rcx += 1
+            cjump rcx < rsi :arrayInnerLoop
+
+            // store caller save register 2
+            mem rsp 8 <- r9
+            // store caller save register 3
+            mem rsp 16 <- rdi
+            // store caller save register 4
+            mem rsp 24 <- rsi
+            // store caller save register 5
+            mem rsp 32 <- rax
+
+            rdi <- r8
+            call print 1
+
+            // restore caller save register 2
+            r9 <- mem rsp 8
+            // restore caller save register 3
+            rdi <- mem rsp 16
+            // restore caller save register 4
+            rsi <- mem rsp 24
+            // restore caller save register 5
+            rax <- mem rsp 32
+
+            // invalidate smallest number
+            r10 <- mem rax 0
+            r10 >>= 1
+            r10 <<= 1
+            mem rax 0 <- r10
+            r12 += 1
+        cjump r12 < rsi :arrayOuterLoop
+
+        // restore callee save register
+        r12 <- mem rsp 0
+        return
+    )
+
+    (@encodeArray
+        1 0
+        // rdi has the address of array
+        // size of array
+        r8 <- mem rdi 0
+        rsi <- mem rdi 0
+        rsi <<= 1
+        mem rdi 0 <- rsi
+        // r9 points to the current number in array
+        r9 <- rdi
+        r9 += 8
+        // number of loops done
+        r11 <- 0
+        :encodeLoopStart
+            r10 <- mem r9 0
+            r10 <<= 1
+            r10 += 1
+            mem r9 0 <- r10
+            r9 += 8
+            r11 += 1
+        cjump r11 < r8 :encodeLoopStart
+        rax <- rdi
+        return
+    )
+
+)

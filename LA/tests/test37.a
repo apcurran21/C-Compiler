@@ -1,0 +1,66 @@
+//returns the cirumference and area of a circle with the given radius
+//then returns the surface area and volume of a sphere with the given radius
+//note pi is approximated to 3 and 4/3 * pi is approximated to 4
+
+void main()
+{
+   int64 radius
+   int64 value
+   radius <- 7
+   value <- circ(radius)
+   print (value)
+   value <- area(radius)
+   print (value)
+   value <- SA(radius)
+   print (value)
+   value <- vol(radius)
+   print (value)
+   return
+}
+
+int64 circ(int64 r)
+{
+   int64 pi
+   int64 d
+   int64 c
+   pi <- 3
+   d <- 2 * r
+   c <- d * pi
+   return c
+}
+
+int64 area(int64 r)
+{
+   int64 pi
+   int64 r2
+   int64 a
+   pi <- 3
+   r2 <- r * r
+   a <- r2 * pi
+   return a
+}
+
+int64 SA(int64 r)
+{
+   int64 pi
+   int64 r2
+   int64 sa
+   pi <- 3
+   r2 <- r * r
+   r2 <- r2 * 4
+   sa <- r2 * pi
+   return sa
+}
+
+int64 vol(int64 r)
+{
+   int64 factor
+   int64 r2
+   int64 r3
+   int64 v
+   factor <- 4
+   r2 <- r * r
+   r3 <- r2 * r
+   v <- r3 * factor
+   return v
+}

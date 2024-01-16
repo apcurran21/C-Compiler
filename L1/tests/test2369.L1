@@ -1,0 +1,91 @@
+(@main
+(@aliasing_issues
+	1 0
+	rcx <- rdi
+	:call_label_ciao__ciao_6
+	goto :call_label_ciao__ciao_7
+	:call_label_ciao__ciao_7
+	rdx <- rcx
+	rdi <- 0
+	rsi <- rdi
+	rsi *= 8
+	rsi += 24
+	rdi <- rcx
+	rdi += rsi
+	mem rdi 0 <- 5
+	rdi <- 0
+	rdi *= 8
+	rdi += 24
+	rsi <- rcx
+	rsi += rdi
+	rcx <- mem rsi 0
+	rdi <- 0
+	rdi *= 8
+	rdi += 24
+	rsi <- rdx
+	rsi += rdi
+	mem rsi 0 <- 4
+	rdi <- rcx
+	call print 1
+	rax <- 0
+	return
+)
+
+(@main
+	0 2
+	mem rsp 8 <- r13
+	mem rsp 0 <- r12
+	:call_label0
+	goto :call_label1
+	:call_label1
+	r12 <- 9
+	r12 *= 4
+	r12 += 1
+	r12 <<= 3
+	r12 -= 10
+	rsi <- 1623
+	rdi <- r12
+	rdi *= 4
+	rdi <- rsi
+	mem rsp -8 <- :call_label2
+	call @return_merge 1
+	:call_label2
+	rdi <- rax
+	r13 <- rdi
+	r13 <<= 1
+	r13 += 1
+	rdi <- r13
+	rdi >>= 1
+	rdi <<= 1
+	rdi += 1
+	rdi += 4
+	rsi <- 1
+	call allocate 2
+	rsi <- rax
+	rdi <- rsi
+	rdi += 8
+	mem rdi 0 <- 3
+	rdi <- rsi
+	rdi += 16
+	mem rdi 0 <- r13
+	rdi <- rsi
+	mem rsp -8 <- :call_label3
+	call @aliasing_issues 1
+	:call_label3
+	rax <- r12
+	r12 <- mem rsp 0
+	r13 <- mem rsp 8
+	return
+)
+
+(@return_merge
+	1 0
+	:call_label_ciao_4
+	goto :call_label_ciao_5
+	:call_label_ciao_5
+	rdi += 1
+	rax <- rdi
+	return
+)
+
+)

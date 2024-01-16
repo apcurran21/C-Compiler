@@ -1,0 +1,12 @@
+(@onTo
+	1
+	%number <- rdi
+	rdi <- 3
+	rsi <- 1
+	call allocate 2
+	%tempSpot <- rax
+	mem %tempSpot 0 <- %number
+	%numbr <- %number < 1
+	rax <- %number
+	return
+)

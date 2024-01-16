@@ -1,0 +1,118 @@
+(@main
+(@isdiv
+	2 0
+	rdx <- rdi
+	rdi <- rsi
+	:call_label_ciao_9
+	goto :call_label_ciao_24
+	:call_label_ciao_10
+	rax <- -1
+	return
+	:call_label_ciao_11
+	rax <- 0
+	return
+	:call_label_ciao_12
+	rax <- 1
+	return
+	:call_label_ciao_13
+	goto :call_label_ciao_14
+	:call_label_ciao_14
+	rsi <- rsi
+	rsi += rdi
+	rcx <- rdx = rsi
+	cjump rcx = 1 :call_label_ciao_12
+	goto :call_label_ciao_15
+	:call_label_ciao_15
+	rcx <- rdx < rsi
+	cjump rcx = 1 :call_label_ciao_11
+	goto :call_label_ciao_13
+	:call_label_ciao_16
+	rdi <- rsi
+	goto :call_label_ciao_14
+	:call_label_ciao_17
+	rsi <- rdi
+	rsi *= -1
+	goto :call_label_ciao_16
+	:call_label_ciao_18
+	rsi <- rdi
+	goto :call_label_ciao_16
+	:call_label_ciao_19
+	rdx <- rdx
+	rdx *= -1
+	rcx <- rdi < 0
+	cjump rcx = 1 :call_label_ciao_17
+	goto :call_label_ciao_18
+	:call_label_ciao_20
+	rsi <- rdi
+	rsi *= -1
+	goto :call_label_ciao_16
+	:call_label_ciao_21
+	rsi <- rdi
+	goto :call_label_ciao_16
+	:call_label_ciao_22
+	rcx <- rdi < 0
+	cjump rcx = 1 :call_label_ciao_20
+	goto :call_label_ciao_21
+	:call_label_ciao_23
+	rcx <- rdx < 0
+	cjump rcx = 1 :call_label_ciao_19
+	goto :call_label_ciao_22
+	:call_label_ciao_24
+	rcx <- rdi = 0
+	cjump rcx = 1 :call_label_ciao_10
+	goto :call_label_ciao_23
+)
+
+(@main
+	0 2
+	:call_label0
+	goto :call_label7
+	:call_label1
+	rdi <- rdi
+	rdi <<= 1
+	rdi <- rdi
+	rdi += 1
+	rdi <- rdi
+	call print 1
+	return
+	:call_label2
+	rdi <- 0
+	goto :call_label1
+	:call_label3
+	rdi <- 1
+	goto :call_label1
+	:call_label4
+	goto :call_label5
+	:call_label5
+	rdi <- mem rsp 0
+	rdi <- rdi
+	rsi <- mem rsp 8
+	rsi <- rsi
+	mem rsp -8 <- :call_label8
+	call @isdiv 2
+	:call_label8
+	rdi <- rax
+	rdi <- rdi = 1
+	cjump rdi = 1 :call_label2
+	goto :call_label6
+	:call_label6
+	rdi <- mem rsp 8
+	rdi <- rdi
+	mem rsp 8 <- rdi
+	rdi <- mem rsp 8
+	rdi += 1
+	mem rsp 8 <- rdi
+	rdi <- mem rsp 0
+	rsi <- mem rsp 8
+	rdi <- rsi = rdi
+	cjump rdi = 1 :call_label3
+	goto :call_label4
+	:call_label7
+	rdi <- 7
+	mem rsp 0 <- rdi
+	rdi <- 2
+	mem rsp 8 <- rdi
+	goto :call_label5
+)
+
+)

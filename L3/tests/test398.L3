@@ -1,0 +1,42 @@
+// 6+arg test
+// expected output:
+// "\n".join(str(x) for x in [
+//   100, 1, 101, 2, 102, 4, 103, 8, 104, 16, 105, 32, 106, 64,
+//   1, 2, 3, 4, 5, 6, 7, 8, 9])
+
+define @print_array(%var1, %var2, %var3, %var4, %var5, %var6, %var7, %var8){
+  call print (%var1)
+  call print (%var2)
+  call print (%var3)
+  call print (%var4)
+  call print (%var5)
+  call print (%var6)
+  call print (%var7)
+  call print (%var8)
+  return 19
+}
+define @main(){
+  :entry
+  %arg1 <- 100
+  %arg2 <- 1
+  :restart
+  %result <- %arg1 < %arg2
+  br %result :start
+  %arg1_encoded <- %arg1 << 1
+  %arg1_encoded <- %arg1_encoded + 1
+  %arg2_encoded <- %arg2 << 1
+  %arg2_encoded <- %arg2_encoded + 1
+  call print (%arg1_encoded)
+  call print (%arg2_encoded)
+  %arg1 <- %arg1 + 1
+  %arg2 <- %arg2 << 1
+  br :restart
+  :start
+  %func_label <- @print_array
+  %ret_val <- call %func_label (3, 5, 7, 9, 11, 13, 15, 17)
+  %if_correct <- %ret_val < 19
+  br %if_correct :end
+  call print (%ret_val)
+  :end
+  return
+}

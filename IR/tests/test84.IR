@@ -1,0 +1,49 @@
+// This program tests the IR's "code" type feature
+// expected output:
+// 1
+// 2
+// 12
+
+define int64 @double (int64 %v) {
+  :entry
+  %v <- %v * 2
+  return %v
+}
+
+define int64 @plus_10 (int64 %v) {
+  :entry
+  %v <- %v + 10
+  return %v
+}
+
+define void @main () {
+  :defs
+  int64 %v
+  int64 %v_encoded
+  code %func
+  br :entry
+
+  :entry
+  %v <- 1
+  %v_encoded <- call @int_encode(%v)
+  call print(%v_encoded)
+
+  %func <- @double
+  %v <- call %func(%v)
+  %v_encoded <- call @int_encode(%v)
+  call print(%v_encoded)
+
+  %func <- @plus_10
+  %v <- call %func(%v)
+  %v_encoded <- call @int_encode(%v)
+  call print(%v_encoded)
+
+  return
+}
+
+define int64 @int_encode (int64 %v) {
+  :entry
+  %v <- %v << 1
+  %v <- %v + 1
+  return %v
+}

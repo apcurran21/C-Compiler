@@ -1,0 +1,33 @@
+(@identity
+	0
+	rdi <- 7
+	rsi <- 1
+	call allocate 2
+	%firstRow <- rax
+	r9 <- mem %firstRow 8
+	r9 += 2
+	mem %firstRow 8 <- r9
+	rdi <- 7
+	rsi <- 1
+	call allocate 2
+	%secondRow <- rax
+	r9 <- mem %secondRow 16
+	r9 += 2
+	mem %secondRow 16 <- r9
+	rdi <- 7
+	rsi <- 1
+	call allocate 2
+	%thirdRow <- rax
+	r9 <- mem %thirdRow 24
+	r9 += 2
+	mem %thirdRow 24 <- r9
+	rdi <- 7
+	rsi <- 1
+	call allocate 2
+	rdi <- rax
+	mem rdi 8 <- %firstRow
+	mem rdi 16 <- %secondRow
+	mem rdi 24 <- %thirdRow
+	call print 1
+	return
+)

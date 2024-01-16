@@ -1,0 +1,29 @@
+(@array
+	2
+	%n <- rdi
+	%e <- rsi
+	:call_label_ciao_3
+	goto :call_label_ciao_7
+	:call_label_ciao_4
+	return
+	:call_label_ciao_5
+	%index += 1
+	rdi <- %n
+	rsi <- %index
+	mem rsp -8 <- :call_label_ciao_8
+	call @calculate 2
+	:call_label_ciao_8
+	%value <- rax
+	%value <<= 1
+	%value += 1
+	rdi <- %value
+	call print 1
+	goto :call_label_ciao_6
+	:call_label_ciao_6
+	%check <- %index = %e
+	cjump %check = 1 :call_label_ciao_4
+	goto :call_label_ciao_5
+	:call_label_ciao_7
+	%index <- -1
+	goto :call_label_ciao_6
+)

@@ -1,0 +1,68 @@
+define @main()
+{
+	%num_triangular_nums <- 21
+	call print (%num_triangular_nums)
+
+	call @compute_triangular_num(%num_triangular_nums)
+
+	call @compute_many_tns(%num_triangular_nums)
+
+	return
+}
+
+define @compute_triangular_num(%nums)
+{
+	// Decode nums to multiply
+	%decoded_nums <- %nums >> 1 
+
+	// Formula = (n * (n - 1)) / 2	
+	// n - 1
+	%temp_1 <- %decoded_nums - 1
+	
+	// n * (n - 1)
+	%temp_1 <- %temp_1 * %decoded_nums
+
+	// (n * (n - 1)) / 2	 
+	%temp_1 <- %temp_1 >> 1
+
+	// Encode for print
+	%temp_1 <- %temp_1 << 1
+	%temp_1 <- %temp_1 + 1
+
+	call print(%temp_1)
+
+	return
+}
+
+define @compute_many_tns(%nums)
+{
+	// Decode %nums to use
+	%decoded_nums <- %nums >> 1
+
+	// Start at 1
+	%nth_tn <- 3
+	
+	// Decode to operate on
+	%nth_tn <- %nth_tn >> 1
+
+	:tn_preheader
+	// Condition
+	%cond <- %nth_tn > %decoded_nums	
+	br %cond :tn_exit
+
+	:tn_body
+	// Encode for call
+	%call_nth_tn <- %nth_tn << 1
+	%call_nth_tn <- %call_nth_tn + 1
+	call @compute_triangular_num(%call_nth_tn)
+	br :tn_latch
+
+	:tn_latch
+	%nth_tn <- %nth_tn + 1
+	br :tn_preheader
+
+	:tn_exit
+	return
+}
+
+

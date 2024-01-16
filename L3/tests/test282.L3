@@ -1,0 +1,256 @@
+define @main () {
+ 
+:NNNNNN
+ br :entry
+ 
+:entry
+ %test1 <- 7
+ %test2 <- 11
+ %test3 <- 3
+ %test4 <- 9
+ %test5 <- 5
+ %test6 <- 1
+ %newVar1 <- 11 >> 1
+ %newVar0 <- %newVar1
+ %newVar2 <- 9 >> 1
+ %newVar0 <- %newVar0 * %newVar2
+ %newVar3 <- 7 >> 1
+ %newVar0 <- %newVar0 * %newVar3
+ %newVar0 <- %newVar0 << 1
+ %newVar0 <- %newVar0 + 1
+ %newVar0 <- %newVar0 + 6
+ %A <- call allocate (%newVar0, 1)
+ %newVar4 <- %A + 8
+ store %newVar4 <- 11
+ %newVar5 <- %A + 16
+ store %newVar5 <- 9
+ %newVar6 <- %A + 24
+ store %newVar6 <- 7
+ %newVar8 <- 0
+ %newVar9 <- %A + 16
+ %newVar10 <- load %newVar9
+ %newVar11 <- %newVar10 >> 1
+ %newVar12 <- %A + 24
+ %newVar13 <- load %newVar12
+ %newVar14 <- %newVar13 >> 1
+ %newVar15 <- 1
+ %newVar15 <- %newVar14 * %newVar15
+ %newVar16 <- 0 * %newVar15
+ %newVar8 <- %newVar16 + %newVar8
+ %newVar15 <- %newVar11 * %newVar15
+ %newVar17 <- 0 * %newVar15
+ %newVar8 <- %newVar17 + %newVar8
+ %newVar8 <- %newVar8 + 1
+ %newVar7 <- %newVar8 * 8
+ %newVar7 <- %newVar7 + 32
+ %newVar18 <- %A + %newVar7
+ store %newVar18 <- %test1
+ %newVar20 <- 0
+ %newVar21 <- %A + 16
+ %newVar22 <- load %newVar21
+ %newVar23 <- %newVar22 >> 1
+ %newVar24 <- %A + 24
+ %newVar25 <- load %newVar24
+ %newVar26 <- %newVar25 >> 1
+ %newVar27 <- 1
+ %newVar27 <- %newVar26 * %newVar27
+ %newVar28 <- 0 * %newVar27
+ %newVar20 <- %newVar28 + %newVar20
+ %newVar27 <- %newVar23 * %newVar27
+ %newVar29 <- 0 * %newVar27
+ %newVar20 <- %newVar29 + %newVar20
+ %newVar20 <- %newVar20 + 2
+ %newVar19 <- %newVar20 * 8
+ %newVar19 <- %newVar19 + 32
+ %newVar30 <- %A + %newVar19
+ store %newVar30 <- %test2
+ %newVar32 <- 0
+ %newVar33 <- %A + 16
+ %newVar34 <- load %newVar33
+ %newVar35 <- %newVar34 >> 1
+ %newVar36 <- %A + 24
+ %newVar37 <- load %newVar36
+ %newVar38 <- %newVar37 >> 1
+ %newVar39 <- 1
+ %newVar39 <- %newVar38 * %newVar39
+ %newVar40 <- 1 * %newVar39
+ %newVar32 <- %newVar40 + %newVar32
+ %newVar39 <- %newVar35 * %newVar39
+ %newVar41 <- 0 * %newVar39
+ %newVar32 <- %newVar41 + %newVar32
+ %newVar32 <- %newVar32 + 0
+ %newVar31 <- %newVar32 * 8
+ %newVar31 <- %newVar31 + 32
+ %newVar42 <- %A + %newVar31
+ store %newVar42 <- %test3
+ %newVar44 <- 0
+ %newVar45 <- %A + 16
+ %newVar46 <- load %newVar45
+ %newVar47 <- %newVar46 >> 1
+ %newVar48 <- %A + 24
+ %newVar49 <- load %newVar48
+ %newVar50 <- %newVar49 >> 1
+ %newVar51 <- 1
+ %newVar51 <- %newVar50 * %newVar51
+ %newVar52 <- 2 * %newVar51
+ %newVar44 <- %newVar52 + %newVar44
+ %newVar51 <- %newVar47 * %newVar51
+ %newVar53 <- 0 * %newVar51
+ %newVar44 <- %newVar53 + %newVar44
+ %newVar44 <- %newVar44 + 2
+ %newVar43 <- %newVar44 * 8
+ %newVar43 <- %newVar43 + 32
+ %newVar54 <- %A + %newVar43
+ store %newVar54 <- %test4
+ %newVar56 <- 0
+ %newVar57 <- %A + 16
+ %newVar58 <- load %newVar57
+ %newVar59 <- %newVar58 >> 1
+ %newVar60 <- %A + 24
+ %newVar61 <- load %newVar60
+ %newVar62 <- %newVar61 >> 1
+ %newVar63 <- 1
+ %newVar63 <- %newVar62 * %newVar63
+ %newVar64 <- 0 * %newVar63
+ %newVar56 <- %newVar64 + %newVar56
+ %newVar63 <- %newVar59 * %newVar63
+ %newVar65 <- 1 * %newVar63
+ %newVar56 <- %newVar65 + %newVar56
+ %newVar56 <- %newVar56 + 1
+ %newVar55 <- %newVar56 * 8
+ %newVar55 <- %newVar55 + 32
+ %newVar66 <- %A + %newVar55
+ store %newVar66 <- %test5
+ %newVar68 <- 0
+ %newVar69 <- %A + 16
+ %newVar70 <- load %newVar69
+ %newVar71 <- %newVar70 >> 1
+ %newVar72 <- %A + 24
+ %newVar73 <- load %newVar72
+ %newVar74 <- %newVar73 >> 1
+ %newVar75 <- 1
+ %newVar75 <- %newVar74 * %newVar75
+ %newVar76 <- 1 * %newVar75
+ %newVar68 <- %newVar76 + %newVar68
+ %newVar75 <- %newVar71 * %newVar75
+ %newVar77 <- 2 * %newVar75
+ %newVar68 <- %newVar77 + %newVar68
+ %newVar68 <- %newVar68 + 0
+ %newVar67 <- %newVar68 * 8
+ %newVar67 <- %newVar67 + 32
+ %newVar78 <- %A + %newVar67
+ store %newVar78 <- %test6
+ %test <- call @findArrayValue (%A, %test1)
+ call print (%test)
+ %test <- call @findArrayValue (%A, %test2)
+ call print (%test)
+ %test <- call @findArrayValue (%A, 13)
+ call print (%test)
+ %test <- call @findArrayValue (%A, %test3)
+ call print (%test)
+ %test <- call @findArrayValue (%A, %test4)
+ call print (%test)
+ %test <- call @findArrayValue (%A, %test5)
+ call print (%test)
+ %test <- call @findArrayValue (%A, 17)
+ call print (%test)
+ %test <- call @findArrayValue (%A, 21)
+ call print (%test)
+ %test <- call @findArrayValue (%A, %test6)
+ call print (%test)
+ return 
+}
+
+define @findArrayValue (%A, %v) {
+ 
+:NNNNNNNNNNNNNNNNNNNNN
+ br :get_dimension_length
+ 
+:return_true
+ return 3
+ 
+:exit_loop1
+ return 1
+ 
+:exit_loop2
+ %i <- %i + 1
+ br :check_loop_1
+ 
+:check_loop_1
+ %check_loop_1 <- %i < %first_dimension_length
+ br %check_loop_1 :loop_1_body 
+ br :exit_loop1
+ 
+:loop_1_body
+ %j <- 0
+ br :check_loop_2
+ 
+:check_loop_2
+ %check_loop_2 <- %j < %second_dimension_length
+ br %check_loop_2 :loop_2_body 
+ br :exit_loop2
+ 
+:loop_2_body
+ %k <- 0
+ br :check_loop_3
+ 
+:check_loop_3
+ %check_loop_3 <- %k < %third_dimension_length
+ br %check_loop_3 :loop_3_body 
+ br :exit_loop3
+ 
+:loop_3_body
+ %newVar1 <- 0
+ %newVar2 <- %A + 16
+ %newVar3 <- load %newVar2
+ %newVar4 <- %newVar3 >> 1
+ %newVar5 <- %A + 24
+ %newVar6 <- load %newVar5
+ %newVar7 <- %newVar6 >> 1
+ %newVar8 <- 1
+ %newVar8 <- %newVar7 * %newVar8
+ %newVar9 <- %j * %newVar8
+ %newVar1 <- %newVar9 + %newVar1
+ %newVar8 <- %newVar4 * %newVar8
+ %newVar10 <- %i * %newVar8
+ %newVar1 <- %newVar10 + %newVar1
+ %newVar1 <- %newVar1 + %k
+ %newVar0 <- %newVar1 * 8
+ %newVar0 <- %newVar0 + 32
+ %newVar11 <- %A + %newVar0
+ %current_value <- load %newVar11
+ %check_value_equality <- %current_value = %v
+ br %check_value_equality :return_true 
+ br :continue
+ 
+:continue
+ %k <- %k + 1
+ br :check_loop_3
+ 
+:exit_loop3
+ %j <- %j + 1
+ br :check_loop_2
+ 
+:nested_for_loops
+ %i <- 0
+ br :check_loop_1
+ 
+:get_dimension_length
+ %newVar12 <- 0 * 8
+ %newVar13 <- %newVar12 + 8
+ %newVar14 <- %A + %newVar13
+ %first_dimension_length <- load %newVar14
+ %newVar15 <- 1 * 8
+ %newVar16 <- %newVar15 + 8
+ %newVar17 <- %A + %newVar16
+ %second_dimension_length <- load %newVar17
+ %newVar18 <- 2 * 8
+ %newVar19 <- %newVar18 + 8
+ %newVar20 <- %A + %newVar19
+ %third_dimension_length <- load %newVar20
+ %first_dimension_length <- %first_dimension_length >> 1
+ %second_dimension_length <- %second_dimension_length >> 1
+ %third_dimension_length <- %third_dimension_length >> 1
+ br :nested_for_loops
+}
+

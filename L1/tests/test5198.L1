@@ -1,0 +1,14 @@
+
+// name of main function
+  (@go
+ // define :go
+   (@go
+  // no args, no stack space
+  0 0
+  // rdi is first arg to ...
+  rdi <- 5
+  // ... a runtime call
+  call print 1
+  return
+)
+)

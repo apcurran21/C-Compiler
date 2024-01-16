@@ -1,0 +1,83 @@
+(@main
+(@main
+	0 0
+	:call_label0
+	rdi <- 1
+	rsi <- 0
+	mem rsp -8 <- :call_label1
+	call @buildASandwich 2
+	:call_label1
+	return
+)
+
+(@buildASandwich
+	2 1
+	rdi <- rdi
+	rsi <- rsi
+	mem rsp 0 <- rsi
+	:call_label_ciao_2
+	rdi <- rdi = 1
+	cjump rdi = 1 :call_label_ciao_4
+	goto :call_label_ciao_3
+	:call_label_ciao_3
+	mem rsp -8 <- :call_label_ciao_9
+	call @swissChoice 0
+	:call_label_ciao_9
+	goto :call_label_ciao_5
+	:call_label_ciao_4
+	mem rsp -8 <- :call_label_ciao_10
+	call @havartiChoice 0
+	:call_label_ciao_10
+	goto :call_label_ciao_5
+	:call_label_ciao_5
+	rdi <- mem rsp 0
+	rdi <- rdi = 1
+	cjump rdi = 1 :call_label_ciao_7
+	goto :call_label_ciao_6
+	:call_label_ciao_6
+	mem rsp -8 <- :call_label_ciao_11
+	call @turkeyChoice 0
+	:call_label_ciao_11
+	goto :call_label_ciao_8
+	:call_label_ciao_7
+	mem rsp -8 <- :call_label_ciao_12
+	call @salamiChoice 0
+	:call_label_ciao_12
+	goto :call_label_ciao_8
+	:call_label_ciao_8
+	return
+)
+
+(@swissChoice
+	0 0
+	:call_label_ciao__ciao__ciao_14
+	rdi <- 1
+	call print 1
+	return
+)
+
+(@havartiChoice
+	0 0
+	:call_label_ciao__ciao_13
+	rdi <- 3
+	call print 1
+	return
+)
+
+(@turkeyChoice
+	0 0
+	:call_label_ciao__ciao__ciao__ciao__ciao_16
+	rdi <- 1
+	call print 1
+	return
+)
+
+(@salamiChoice
+	0 0
+	:call_label_ciao__ciao__ciao__ciao_15
+	rdi <- 3
+	call print 1
+	return
+)
+
+)

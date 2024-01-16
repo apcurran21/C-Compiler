@@ -1,0 +1,88 @@
+void main() {
+    int64[][] m1
+    m1 <- new Array(3,3)
+    m1[0][0] <- 3
+    m1[0][1] <- 2
+    m1[0][2] <- 9
+    m1[1][0] <- -3
+    m1[1][1] <- 1
+    m1[1][2] <- 0
+    int64[][] m2
+    m2 <- new Array(3,3)
+    m2[0][0] <- 9
+    m2[0][1] <- -12
+    m2[0][2] <- 0
+    m2[1][0] <- 3
+    m2[1][1] <- 1
+    m2[1][2] <- 1
+
+    code operator
+    operator <- add
+
+    int64[][] res
+    res <- elementwise_op(m1, m2, operator)
+    print(res)
+    return
+}
+
+int64[][] elementwise_op(int64[][] m1, int64[][] m2, code op) {
+    int64 m1_l0
+    m1_l0 <- length m1 0
+    int64 m1_l1
+    m1_l1 <- length m1 1
+    int64 m2_l0
+    m2_l0 <- length m2 0
+    int64 m2_l1
+    m2_l1 <- length m2 1
+
+    int64[][] res
+    int64 l0_match
+    l0_match <- m1_l0 = m2_l0
+    int64 l1_match
+    l1_match <- m1_l1 = m2_l1
+    int64 dim_match
+    dim_match <- l0_match & l1_match
+    br dim_match :ok :exit
+
+    :ok
+    res <- new Array(m1_l0, m1_l1)
+    int64 i
+    i <- 0
+    :outer_start
+    int64 outer_cond
+    outer_cond <- i < m1_l0
+    br outer_cond :outer_body :exit
+
+    :outer_body
+    int64 j
+    j <- 0
+    :inner_start
+    int64 inner_cond
+    inner_cond <- j < m1_l1
+    br inner_cond :inner_body :inner_exit
+
+    :inner_body
+    int64 e1
+    int64 e2
+    int64 tmp
+    e1 <- m1[i][j]
+    e2 <- m2[i][j]
+    tmp <- op(e1, e2)
+    res[i][j] <- tmp
+
+    j <- j + 1
+    br :inner_start
+
+    :inner_exit
+    i <- i + 1
+    br :outer_start
+
+    :exit
+    return res
+}
+
+int64 add(int64 e1, int64 e2) {
+    int64 res
+    res <- e1 + e2
+    return res
+}

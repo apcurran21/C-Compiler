@@ -1,0 +1,41 @@
+(@main
+  (@main
+    0
+    :call_label0
+    %loopvar <- 0
+    goto :call_label1
+    :call_label1
+    %printvar <- %loopvar
+    %printvar <<= 1
+    %printvar <- %printvar
+    %printvar += 1
+    rdi <- %printvar
+    call print 1
+    %s <- %loopvar
+    %s <- %s
+    %s >>= 1
+    %s <- %s
+    %s <<= 1
+    %d <- %s = %loopvar
+    
+    cjump %d = 1 :call_label3
+    goto :call_label2
+    :call_label2
+    rdi <- 3
+    call print 1
+    goto :call_label4
+    :call_label3
+    rdi <- 1
+    call print 1
+    goto :call_label4
+    :call_label4
+    %loopvar <- %loopvar
+    %loopvar += 1
+    %check <- %loopvar < 20
+    
+    cjump %check = 1 :call_label1
+    goto :call_label5
+    :call_label5
+    return
+  )
+)

@@ -1,0 +1,36 @@
+(@curry_arg1
+	2
+	%self <- rdi
+	%x <- rsi
+	rdi <- 7
+	rsi <- 1
+	call allocate 2
+	%cF1 <- rax
+	%func <- @curry_arg2
+	rdi <- %self
+	rsi <- 1
+	mem rsp -8 <- :call_label_ciao__ciao_19
+	call @load 2
+	:call_label_ciao__ciao_19
+	%F <- rax
+	rdi <- %cF1
+	rsi <- 0
+	rdx <- %func
+	mem rsp -8 <- :call_label_ciao__ciao_20
+	call @store 3
+	:call_label_ciao__ciao_20
+	rdi <- %cF1
+	rsi <- 1
+	rdx <- %F
+	mem rsp -8 <- :call_label_ciao__ciao_21
+	call @store 3
+	:call_label_ciao__ciao_21
+	rdi <- %cF1
+	rsi <- 2
+	rdx <- %x
+	mem rsp -8 <- :call_label_ciao__ciao_22
+	call @store 3
+	:call_label_ciao__ciao_22
+	rax <- %cF1
+	return
+)

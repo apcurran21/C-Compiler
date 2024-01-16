@@ -1,0 +1,130 @@
+(@main
+(@main
+	0 0
+	:call_label0
+	mem rsp -8 <- :call_label1
+	rdi <- 3
+	call @createTuple 1
+	:call_label1
+	rdi <- rax
+	mem rsp -8 <- :call_label2
+	rsi <- 4
+	call @myF 2
+	:call_label2
+	rdi <- rax
+	mem rsp -8 <- :call_label3
+	call @encodeValue 1
+	:call_label3
+	rdi <- rax
+	call print 1
+	return
+)
+
+(@createTuple
+	1 2
+	mem rsp 8 <- r13
+	mem rsp 0 <- r12
+	r13 <- rdi
+	:call_label4
+	r12 <- 21
+	rdi <- 9
+	rsi <- 1
+	call allocate 2
+	rdx <- rax
+	rdi <- 0
+	rdi *= 8
+	rdi += 8
+	rsi <- rdx
+	rsi += rdi
+	mem rsi 0 <- 0
+	rdi <- 1
+	rdi *= 8
+	rsi <- rdi
+	rsi += 8
+	rdi <- rdx
+	rdi += rsi
+	mem rdi 0 <- 1
+	rdi <- 2
+	rdi *= 8
+	rdi += 8
+	rsi <- rdx
+	rsi += rdi
+	mem rsi 0 <- r13
+	rdi <- 3
+	rdi *= 8
+	rdi += 8
+	rsi <- rdx
+	rsi += rdi
+	mem rsi 0 <- r12
+	rax <- rdx
+	r12 <- mem rsp 0
+	r13 <- mem rsp 8
+	return
+)
+
+(@myF
+	2 3
+	mem rsp 16 <- r14
+	mem rsp 8 <- r13
+	mem rsp 0 <- r12
+	rdx <- rdi
+	r13 <- rsi
+	:call_label5
+	rdi <- 2
+	rdi *= 8
+	rsi <- rdi
+	rsi += 8
+	rdi <- rdx
+	rdi += rsi
+	r14 <- mem rdi 0
+	rdi <- 3
+	rdi *= 8
+	rsi <- rdi
+	rsi += 8
+	rdi <- rdx
+	rdi += rsi
+	r12 <- mem rdi 0
+	mem rsp -8 <- :call_label6
+	rdi <- r14
+	call @encodeValue 1
+	:call_label6
+	rdi <- rax
+	call print 1
+	mem rsp -8 <- :call_label7
+	rdi <- r12
+	call @encodeValue 1
+	:call_label7
+	rdi <- rax
+	call print 1
+	mem rsp -8 <- :call_label8
+	rdi <- r13
+	call @encodeValue 1
+	:call_label8
+	rdi <- rax
+	call print 1
+	r14 += r12
+	mem rsp -8 <- :call_label9
+	rdi <- r14
+	call @encodeValue 1
+	:call_label9
+	rdi <- rax
+	call print 1
+	rdi <- r14
+	rdi += r13
+	rax <- rdi
+	r12 <- mem rsp 0
+	r13 <- mem rsp 8
+	r14 <- mem rsp 16
+	return
+)
+
+(@encodeValue
+	1 0
+	:call_label10
+	rdi <<= 1
+	rdi += 1
+	rax <- rdi
+	return
+)
+
+)

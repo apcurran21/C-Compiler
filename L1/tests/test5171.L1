@@ -1,0 +1,57 @@
+// fibonacci
+// iterative approach
+(@go
+    (@go
+        0 0
+        mem rsp -8 <- :goCallsFibonacciReturn
+        // compute fibonacci 20th term
+        rdi <- 20
+        call @fibonacci 1
+        :goCallsFibonacciReturn
+        rdi <- rax
+        rdi <<= 1
+        // encode return value
+        rdi += 1
+        // and print, should be 6765
+        call print 1
+        return
+    )
+    // def fibonacci(n: int) -> int
+      (@fibonacci
+        1 0
+        // if n == 1: return 1
+        cjump rdi = 1 :fibonacciInitialCondition
+        // if n == 2: return 1
+        cjump rdi = 2 :fibonacciInitialCondition
+        // else
+        // a = 1
+        r9 <- 1
+        // b = 1
+        rax <- 1
+
+        // i = 3
+        r8 <- 3
+        // for i in range(3, 21)
+        :fibonacciFor
+            // if i < 21
+            cjump r8 <= rdi :fibonacciForIntoLoop
+            // if i >= 21: return
+            return
+
+            :fibonacciForIntoLoop
+            // c = b
+            r11 <- rax
+            // b = a + b
+            rax += r9
+            // a = c
+            r9 <- r11
+
+            r8 ++
+            cjump 1 = 1 :fibonacciFor
+
+        :fibonacciInitialCondition
+        // return 1
+        rax <- 1
+        return
+    )
+)

@@ -1,0 +1,28 @@
+(@main
+	0
+	rdi <- 5
+	rsi <- 5
+	call allocate 2
+	%array1 <- rax
+	%el1Address <- %array1
+	%el1Address += 8
+	mem %el1Address 0 <- 85
+	rdi <- %array1
+	call print 1
+	rdi <- %array1
+	mem rsp -8 <- :call_label0
+	call @printArray 1
+	:call_label0
+	rdi <- 5
+	rsi <- 5
+	call allocate 2
+	%array2 <- rax
+	mem %el1Address 0 <- %array2
+	rdi <- %array1
+	call print 1
+	rdi <- %array1
+	mem rsp -8 <- :call_label1
+	call @printArray 1
+	:call_label1
+	return
+)

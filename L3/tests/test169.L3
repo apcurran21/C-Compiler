@@ -1,0 +1,73 @@
+define @main () {
+ 
+:NNNNNN
+ br :entry
+ 
+:entry
+ %c <- 9
+ %c <- %c * 4
+ %c <- %c + 1
+ %c <- %c << 3
+ %c <- %c - 10
+ %x <- 1623
+ %should_lea <- %c * 4
+ %should_lea <- %should_lea + %x
+ %abc <- call @return_merge (%x)
+ %size <- %abc << 1
+ %size <- %size + 1
+ %newVar1 <- %size >> 1
+ %newVar0 <- %newVar1
+ %newVar0 <- %newVar0 << 1
+ %newVar0 <- %newVar0 + 1
+ %newVar0 <- %newVar0 + 4
+ %ptr <- call allocate (%newVar0, 1)
+ %newVar2 <- %ptr + 8
+ store %newVar2 <- 3
+ %newVar3 <- %ptr + 16
+ store %newVar3 <- %size
+ call @aliasing_issues (%ptr)
+ return %c
+}
+
+define @return_merge (%p) {
+ 
+:NNNNNN
+ br :entry
+ 
+:entry
+ %r <- %p + 1
+ return %r
+}
+
+define @aliasing_issues (%p) {
+ 
+:NNNNNN
+ br :entry
+ 
+:entry
+ %v <- %p
+ %newVar1 <- 0
+ %newVar2 <- 1
+ %newVar1 <- %newVar1 + 0
+ %newVar0 <- %newVar1 * 8
+ %newVar0 <- %newVar0 + 24
+ %newVar3 <- %p + %newVar0
+ store %newVar3 <- 5
+ %newVar5 <- 0
+ %newVar6 <- 1
+ %newVar5 <- %newVar5 + 0
+ %newVar4 <- %newVar5 * 8
+ %newVar4 <- %newVar4 + 24
+ %newVar7 <- %p + %newVar4
+ %x <- load %newVar7
+ %newVar9 <- 0
+ %newVar10 <- 1
+ %newVar9 <- %newVar9 + 0
+ %newVar8 <- %newVar9 * 8
+ %newVar8 <- %newVar8 + 24
+ %newVar11 <- %v + %newVar8
+ store %newVar11 <- 4
+ call print (%x)
+ return 0
+}
+

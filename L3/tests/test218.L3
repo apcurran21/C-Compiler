@@ -1,0 +1,65 @@
+define @main () {
+ 
+:NNNNNNNNNN
+ br :begin
+ 
+:end_for_i
+ return 
+ 
+:end_for_j
+ %i <- 1 + %i
+ br :for_i
+ 
+:for_i
+ %icmpi <- 5 <= %i
+ br %icmpi :end_for_i 
+ br :K1
+ 
+:K1
+ %j <- 1
+ br :for_j
+ 
+:for_j
+ %icmpj <- 5 <= %j
+ br %icmpj :end_for_j 
+ br :K2
+ 
+:K2
+ %tmp_rax <- 1
+ %tmp_rax <- %tmp_rax - %tmp_rax
+ %k <- %tmp_rax
+ %k <- 1 + %k
+ br :for_k
+ 
+:for_k
+ %icmpk <- 1000 <= %k
+ br %icmpk :end_for_k 
+ br :K3
+ 
+:K3
+ %old_rcx <- %tmp_rcx
+ %tmp_rdi <- %k
+ %tmp_rdi <- %tmp_rdi << %tmp_rcx
+ %tmp_rdi <- 1 + %tmp_rdi
+ call print (%tmp_rdi)
+ %tmp_rdi <- %i
+ %tmp_rdi <- %tmp_rdi * %j
+ %tmp_rdi <- %tmp_rdi * %k
+ %tmp_rdi <- %tmp_rdi << %old_rcx
+ %tmp_rdi <- %tmp_rdi >> 1
+ %tmp_rdi <- %tmp_rdi + 1
+ call print (%tmp_rdi)
+ %tmp_rcx <- %old_rcx
+ %k <- %k << %tmp_rcx
+ br :for_k
+ 
+:end_for_k
+ %j <- 1 + %j
+ br :for_j
+ 
+:begin
+ %tmp_rcx <- 2
+ %i <- 1
+ br :for_i
+}
+

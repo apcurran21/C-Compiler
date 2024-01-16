@@ -1,0 +1,8 @@
+(@myTest3Helper
+	2
+	%v1 <- rdi
+	%v2 <- rsi
+	%ret <- %v1 < %v2
+	rax <- %ret
+	return
+)

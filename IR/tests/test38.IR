@@ -1,0 +1,33 @@
+define void @main(){
+    :entry
+    int64 %var1
+    int64 %var2
+    int64[][] %my_V1
+    %var1 <- 5
+    %var2 <- 5
+    %my_V1 <- new Array(%var1, %var2)
+    call print(%my_V1)
+    %my_V1[0][0] <- 3
+    %my_V1[0][1] <- 5
+    call print(%my_V1)
+    %my_V1[1][0] <- 7
+    %my_V1[1][1] <- 9
+    call print(%my_V1)
+    call @arrayprint(%my_V1)
+    return
+
+}
+
+define void @arrayprint( int64[][] %p1){
+    :entry
+    int64 %element
+    %element <- %p1[0][0]
+    call print(%element)
+    %element <- %p1[0][1]
+    call print(%element)
+    %element <- %p1[1][0]
+    call print(%element)
+    %element <- %p1[1][1]
+    call print(%element)
+    return
+}

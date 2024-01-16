@@ -1,0 +1,18 @@
+(@go
+	0
+	goto :begin_work
+	:ret
+	return
+	:begin_work
+	rdi <- 13
+	rsi <- 13
+	rcx <- 13
+	rdx <- 13
+	r8 <- 13
+	r9 <- 13
+	mem rsp -8 <- :ret
+	mem rsp -16 <- 13
+	mem rsp -24 <- 13
+	call @printValues 8
+	goto :ret
+)

@@ -1,0 +1,8 @@
+(@main
+	0
+	rdi <- 5
+	rsi <- 3
+	rdx <- 9
+	call tensor-error 3
+	return
+)

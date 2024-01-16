@@ -1,0 +1,55 @@
+define @main () {
+ 
+:NNNNNN
+ br :entry
+ 
+:entry
+ %res <- call @fibonacci (20)
+ %res <- %res << 1
+ %res <- %res + 1
+ call print (%res)
+ return 
+}
+
+define @fibonacci (%k) {
+ 
+:NNNNNNNNNNNNNNNNNNNNNNN
+ br :entry
+ 
+:initialConditionTrue
+ return 1
+ 
+:forIntoLoop
+ %res <- %a
+ %res <- %res + %b
+ %a <- %b
+ %b <- %res
+ %i <- %i + 1
+ br :for
+ 
+:for
+ %if <- %i <= %k
+ br %if :forIntoLoop 
+ br :forBreak
+ 
+:forBreak
+ return %res
+ 
+:initialConditionFalse2
+ %a <- 1
+ %b <- 1
+ %i <- 3
+ %res <- 0
+ br :for
+ 
+:initialConditionFalse
+ %if <- %k = 2
+ br %if :initialConditionTrue 
+ br :initialConditionFalse2
+ 
+:entry
+ %if <- %k = 1
+ br %if :initialConditionTrue 
+ br :initialConditionFalse
+}
+

@@ -1,0 +1,34 @@
+(@gpf
+	1
+	%arg <- rdi
+	mem rsp -8 <- :gpf_ret0
+	call @prime 1
+	:gpf_ret0
+	cjump rax = 0 :not_itself
+	rax <- %arg
+	goto :gpf_done
+	:not_itself
+	%possibleprime <- %arg
+	%possibleprime >>= 1
+	%possibleprime += 1
+	:gpf_loop
+	cjump %possibleprime < 2 :gpf_done_sad
+	%possibleprime -= 1
+	rdi <- %arg
+	rsi <- %possibleprime
+	mem rsp -8 <- :gpf_ret1
+	call @mod 2
+	:gpf_ret1
+	cjump rax = 0 :gpf_loop
+	rdi <- %possibleprime
+	mem rsp -8 <- :gpf_ret2
+	call @prime 1
+	:gpf_ret2
+	cjump rax = 0 :gpf_loop
+	rax <- %possibleprime
+	goto :gpf_done
+	:gpf_done_sad
+	rax <- -1
+	:gpf_done
+	return
+)

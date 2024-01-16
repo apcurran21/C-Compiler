@@ -1,0 +1,62 @@
+define @main () {
+ 
+:NNNNNNNNN
+ br :entrance
+ 
+:entrance
+ %newVar1 <- 100 >> 1
+ %newVar0 <- %newVar1
+ %newVar0 <- %newVar0 << 1
+ %newVar0 <- %newVar0 + 1
+ %newVar0 <- %newVar0 + 2
+ %arr <- call allocate (%newVar0, 1)
+ %newVar2 <- %arr + 8
+ store %newVar2 <- 100
+ %ret_val <- call @max (%arr)
+ return 
+}
+
+define @max (%array) {
+ 
+:NNNNNNNNNNNN
+ br :entrance
+ 
+:return_here
+ %max <- 1
+ return %max
+ 
+:setNewMax
+ %max <- %temp
+ br :return_here
+ 
+:cont
+ %newVar0 <- 0 * 8
+ %newVar1 <- %newVar0 + 8
+ %newVar2 <- %array + %newVar1
+ %size <- load %newVar2
+ %continue <- %size - %index
+ br %continue :loop 
+ br :setNewMax
+ 
+:loop
+ %currMultFactor <- %index * 8
+ %newVar4 <- 0
+ %newVar5 <- 1
+ %newVar4 <- %newVar4 + %currMultFactor
+ %newVar3 <- %newVar4 * 8
+ %newVar3 <- %newVar3 + 16
+ %newVar6 <- %array + %newVar3
+ %temp <- load %newVar6
+ %newMax <- %temp - %max
+ br %newMax :setNewMax 
+ br :cont
+ 
+:entrance
+ %newVar7 <- 0 * 8
+ %newVar8 <- %newVar7 + 8
+ %newVar9 <- %array + %newVar8
+ %sizeOfArray <- load %newVar9
+ %index <- 1
+ br :loop
+}
+

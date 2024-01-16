@@ -1,0 +1,22 @@
+(@calculate
+	2
+	%n <- rdi
+	%e <- rsi
+	:call_label_ciao__ciao_9
+	goto :call_label_ciao__ciao_13
+	:call_label_ciao__ciao_10
+	rax <- %output
+	return
+	:call_label_ciao__ciao_11
+	%output *= %n
+	%index += 1
+	goto :call_label_ciao__ciao_12
+	:call_label_ciao__ciao_12
+	%check <- %index = %e
+	cjump %check = 1 :call_label_ciao__ciao_10
+	goto :call_label_ciao__ciao_11
+	:call_label_ciao__ciao_13
+	%output <- 1
+	%index <- 0
+	goto :call_label_ciao__ciao_12
+)

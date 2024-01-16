@@ -1,0 +1,15 @@
+(@sum4
+	4
+	%p1 <- rdi
+	%p2 <- rsi
+	%p3 <- rdx
+	%p4 <- rcx
+	%p5 <- %p1
+	%p5 += %p2
+	%p6 <- %p5
+	%p6 += %p3
+	%p7 <- %p6
+	%p7 += %p4
+	rax <- %p7
+	return
+)

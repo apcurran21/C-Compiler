@@ -1,0 +1,27 @@
+(@main
+	0
+	%len <- 11
+	%init_v <- 5
+	rdi <- %len
+	rsi <- %init_v
+	call allocate 2
+	%ptr <- rax
+	%vec_ptr <- %ptr
+	%ptr += 8
+	mem %ptr 0 <- 3
+	%ptr += 8
+	mem %ptr 0 <- 5
+	%ptr += 8
+	mem %ptr 0 <- 7
+	%ptr += 8
+	mem %ptr 0 <- 9
+	%ptr += 8
+	mem %ptr 0 <- 11
+	rdi <- %vec_ptr
+	mem rsp -8 <- :call_label0
+	call @print_array 1
+	:call_label0
+	rdi <- %vec_ptr
+	call print 1
+	return
+)

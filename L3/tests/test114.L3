@@ -1,0 +1,52 @@
+define @main () {
+ 
+:entry
+ %num_sides <- 25
+ call print (%num_sides)
+ call @compute_num_diagonals_for_shape (%num_sides)
+ call @compute_many_diagonals (%num_sides)
+ %lots_of_sides <- 103
+ call @compute_num_diagonals_for_shape (%lots_of_sides)
+ return 
+}
+
+define @compute_num_diagonals_for_shape (%sides) {
+ 
+:entry
+ %decoded_sides <- %sides >> 1
+ %temp_1 <- %decoded_sides - 3
+ %temp_1 <- %temp_1 * %decoded_sides
+ %temp_1 <- %temp_1 >> 1
+ %temp_1 <- %temp_1 << 1
+ %temp_1 <- %temp_1 + 1
+ call print (%temp_1)
+ return 
+}
+
+define @compute_many_diagonals (%sides) {
+ 
+:entry
+ %decoded_sides <- %sides >> 1
+ %nth_side <- 7
+ %nth_side <- %nth_side >> 1
+ br :diag_preheader
+ 
+:diag_preheader
+ %cond <- %nth_side > %decoded_sides
+ br %cond :diag_exit 
+ br :diag_body
+ 
+:diag_body
+ %call_nth_side <- %nth_side << 1
+ %call_nth_side <- %call_nth_side + 1
+ call @compute_num_diagonals_for_shape (%call_nth_side)
+ br :diag_latch
+ 
+:diag_latch
+ %nth_side <- %nth_side + 1
+ br :diag_preheader
+ 
+:diag_exit
+ return 
+}
+

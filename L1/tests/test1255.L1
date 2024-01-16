@@ -1,0 +1,40 @@
+(@entrance
+(@entrance
+	0 2
+	mem rsp 8 <- r13
+	mem rsp 0 <- r12
+	rdi <- 15
+	rsi <- 17
+	rdx <- 9
+	rcx <- 5
+	r8 <- 7
+	r9 <- 13
+	r12 <- 1
+	mem rsp -8 <- :f1_ret
+	call @f1 6
+	:f1_ret
+	r13 <- rax
+	rdi <- r12
+	call print 1
+	rdi <- r13
+	rdi++
+	call print 1
+	rax <- 1
+	r12 <- mem rsp 0
+	r13 <- mem rsp 8
+	return
+)
+
+(@f1
+	6 0
+	r10 <- rdi
+	r10 += rsi
+	r10 += rdx
+	r10 += rcx
+	r10 += r8
+	r10 += r9
+	rax <- r10
+	return
+)
+
+)

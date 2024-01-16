@@ -1,0 +1,20 @@
+(@main
+	0
+	mem rsp -8 <- :call_label0
+	call @createArray1 0
+	:call_label0
+	%arr1 <- rax
+	mem rsp -8 <- :call_label1
+	call @createArray2 0
+	:call_label1
+	%arr2 <- rax
+	rdi <- %arr1
+	rsi <- %arr2
+	mem rsp -8 <- :call_label2
+	call @zip 2
+	:call_label2
+	%zipped <- rax
+	rdi <- %zipped
+	call print 1
+	return
+)

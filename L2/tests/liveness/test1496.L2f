@@ -1,0 +1,57 @@
+(@rand
+	2
+	%array <- rdi
+	%ret <- rsi
+	:call_label_ciao_4
+	goto :call_label_ciao_11
+	:call_label_ciao_5
+	rax <- 0
+	return
+	:call_label_ciao_6
+	goto :call_label_ciao_5
+	:call_label_ciao_7
+	%newVar1 <- 0
+	%newVar0 <- %newVar1
+	%newVar0 *= 8
+	%newVar0 += 16
+	%newVar3 <- %array
+	%newVar3 += %newVar0
+	%ans <- mem %newVar3 0
+	%newVar5 <- 0
+	%newVar5 += 1
+	%newVar4 <- %newVar5
+	%newVar4 *= 8
+	%newVar4 += 16
+	%newVar7 <- %array
+	%newVar7 += %newVar4
+	%test <- mem %newVar7 0
+	%newVar9 <- 0
+	%newVar9 += 2
+	%newVar8 <- %newVar9
+	%newVar8 *= 8
+	%newVar8 += 16
+	%newVar11 <- %array
+	%newVar11 += %newVar8
+	%len <- mem %newVar11 0
+	%ans += %test
+	%ans += %len
+	rax <- %ans
+	return
+	:call_label_ciao_8
+	rax <- 1
+	return
+	:call_label_ciao_9
+	%newVar12 <- 0
+	%newVar12 *= 8
+	%newVar13 <- %newVar12
+	%newVar13 += 8
+	%newVar14 <- %array
+	%newVar14 += %newVar13
+	%len <- mem %newVar14 0
+	%test <- %len = %ret
+	goto :call_label_ciao_7
+	:call_label_ciao_10
+	goto :call_label_ciao_9
+	:call_label_ciao_11
+	goto :call_label_ciao_10
+)

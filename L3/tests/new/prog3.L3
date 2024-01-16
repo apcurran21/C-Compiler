@@ -1,0 +1,60 @@
+define :main () {
+  %test1 <- -41
+  %test2 <- 234
+  %test3 <- 0 
+  %test4 <- -310
+
+  %ans1 <- call :mod3(%test1)
+  %ans2 <- call :mod3(%test2)
+  %ans3 <- call :mod3(%test3)
+  %ans4 <- call :mod3(%test4)
+
+  call print(%ans1)
+  call print(%ans2)
+  call print(%ans3)
+  call print(%ans4)
+  
+  return 1
+}
+
+define :encode (%raw) {
+  %res <- %raw
+  %res <- %res << 1
+  %res <- %res + 1
+  return %res
+}
+
+define :normalize (%n) {
+  %pos_flag <- 0 < %n
+  br %pos_flag :positive
+  %n <- %n * -2
+  :positive
+  return %n
+}
+
+define :mod3 (%n) { 
+  %n <- call :normalize(%n)
+  
+  :loop
+
+  %done <- %n < 3
+  br %done :return
+
+  %bitmasked <- %n 
+  %bitmasked <- %bitmasked & 3
+
+  %flag1 <- %bitmasked = 3
+  %flag2 <- %bitmasked = 0
+  %shift_flag <- %flag1 + %flag2
+  br %shift_flag :shift
+  %n <- %n - 3
+  br :loop
+
+  :shift 
+  %n <- %n >> 2
+  br :loop
+
+  :return
+  %encoded_ans <- call :encode(%n)
+  return %encoded_ans
+}

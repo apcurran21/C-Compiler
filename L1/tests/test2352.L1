@@ -1,0 +1,143 @@
+(@main
+(@FindElement
+	3 0
+	rcx <- rdi
+	r8 <- rsi
+	rdx <- rdx
+	:call_label_ciao__ciao_5
+	rsi <- 0
+	goto :call_label_ciao__ciao_6
+	:call_label_ciao__ciao_6
+	rdi <- rsi = rdx
+	cjump rdi = 1 :call_label_ciao__ciao_9
+	goto :call_label_ciao__ciao_7
+	:call_label_ciao__ciao_7
+	r9 <- 0
+	rdi <- 1
+	r9 <- r9
+	r9 += rsi
+	rdi <- r9
+	rdi *= 8
+	rdi <- rdi
+	rdi += 24
+	r9 <- r8
+	r9 += rdi
+	rdi <- mem r9 0
+	rdi <- rdi
+	rdi >>= 1
+	rdi <- rdi = rcx
+	cjump rdi = 1 :call_label_ciao__ciao_9
+	goto :call_label_ciao__ciao_8
+	:call_label_ciao__ciao_8
+	rsi <- rsi
+	rsi += 1
+	goto :call_label_ciao__ciao_6
+	:call_label_ciao__ciao_9
+	rax <- rsi
+	return
+)
+
+(@GetArray
+	1 1
+	rdi <- rdi
+	mem rsp 0 <- rdi
+	:call_label_ciao_4
+	rdi <- mem rsp 0
+	rdi <- rdi
+	mem rsp 0 <- rdi
+	rdi <- mem rsp 0
+	rdi <<= 1
+	mem rsp 0 <- rdi
+	rdi <- mem rsp 0
+	rdi <- rdi
+	mem rsp 0 <- rdi
+	rdi <- mem rsp 0
+	rdi += 1
+	mem rsp 0 <- rdi
+	rdi <- mem rsp 0
+	rdi <- rdi
+	rdi >>= 1
+	rdi <- rdi
+	rdi <- rdi
+	rdi <<= 1
+	rdi <- rdi
+	rdi += 1
+	rdi <- rdi
+	rdi += 4
+	rdi <- rdi
+	rsi <- 1
+	call allocate 2
+	rcx <- rax
+	rdi <- rcx
+	rdi += 8
+	mem rdi 0 <- 3
+	rdi <- rcx
+	rdi += 16
+	rsi <- mem rsp 0
+	mem rdi 0 <- rsi
+	rdi <- 2
+	r8 <- 100
+	r8 <- r8
+	r8 <<= 1
+	r8 <- r8
+	r8 += 1
+	rsi <- 0
+	rdx <- 1
+	rsi <- rsi
+	rsi += rdi
+	rsi <- rsi
+	rsi *= 8
+	rsi <- rsi
+	rsi += 24
+	rdi <- rcx
+	rdi += rsi
+	mem rdi 0 <- r8
+	rax <- rcx
+	return
+)
+
+(@PrintArray
+	1 0
+	rdi <- rdi
+	:call_label_ciao__ciao__ciao_10
+	rdi <- rdi
+	call print 1
+	return
+)
+
+(@main
+	0 2
+	:call_label0
+	rdi <- 10
+	mem rsp 8 <- rdi
+	rdi <- mem rsp 8
+	rdi <- rdi
+	mem rsp -8 <- :call_label1
+	call @GetArray 1
+	:call_label1
+	rdi <- rax
+	mem rsp 0 <- rdi
+	rdi <- mem rsp 0
+	rdi <- rdi
+	mem rsp -8 <- :call_label2
+	call @PrintArray 1
+	:call_label2
+	rdi <- 100
+	rsi <- mem rsp 0
+	rsi <- rsi
+	rdx <- mem rsp 8
+	rdx <- rdx
+	mem rsp -8 <- :call_label3
+	call @FindElement 3
+	:call_label3
+	rdi <- rax
+	rdi <- rdi
+	rdi <<= 1
+	rdi <- rdi
+	rdi += 1
+	rdi <- rdi
+	call print 1
+	return
+)
+
+)

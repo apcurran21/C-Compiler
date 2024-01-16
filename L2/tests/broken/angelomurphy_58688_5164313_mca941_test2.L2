@@ -1,0 +1,66 @@
+(@entry
+  (@entry
+0
+    %newVariable12 <- 1
+    %newVariable13 <- 2
+    %newVariable14 <- 3
+    %newVariable <- 4
+    %newVariableBp <- 5
+    %newVariableBx <- 6
+    %my_var_1 <- 7
+    %my_var_2 <- 8
+    %my_var_3 <- 9
+    mem rsp -8 <- :tlfc_ret
+    mem rsp -16 <- -1
+    call @test_large_fun_call 7
+    :tlfc_ret
+    rdi <- rax
+    rdi <<= 1
+    rdi += 1
+    call print 1
+    rdi <- %newVariable12
+    rdi <<= 1
+    rdi += 1
+    call print 1
+    rdi <- %newVariable13
+    rdi <<= 1
+    rdi += 1
+    call print 1
+    rdi <- %newVariable14
+    rdi <<= 1
+    rdi += 1
+    call print 1
+    rdi <- %newVariable
+    rdi <<= 1
+    rdi += 1
+    call print 1
+    rdi <- %newVariableBp
+    rdi <<= 1
+    rdi += 1
+    call print 1
+    rdi <- %newVariableBx
+    rdi <<= 1
+    rdi += 1
+    call print 1
+    rdi <- %my_var_1
+    rdi <<= 1
+    rdi += 1
+    call print 1
+    rdi <- %my_var_2
+    rdi <<= 1
+    rdi += 1
+    call print 1
+    rdi <- %my_var_3
+    rdi <<= 1
+    rdi += 1
+    call print 1
+    return
+  )
+  (@test_large_fun_call
+7
+    %stack_val <- stack-arg 0
+    rax <- %stack_val
+    rax += 1
+    return
+  )
+)

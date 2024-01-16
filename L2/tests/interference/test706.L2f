@@ -1,0 +1,37 @@
+(@main
+	0
+	:call_label0
+	%cprime <- 7
+	%n <- 2
+	goto :call_label1
+	:call_label1
+	rdi <- %cprime
+	rsi <- %n
+	mem rsp -8 <- :call_label7
+	call @isdiv 2
+	:call_label7
+	%v <- rax
+	%check <- %v = 1
+	cjump %check = 1 :call_label5
+	goto :call_label2
+	:call_label2
+	%n += 1
+	%check <- %n = %cprime
+	cjump %check = 1 :call_label4
+	goto :call_label3
+	:call_label3
+	goto :call_label1
+	:call_label4
+	%v <- 1
+	goto :call_label6
+	:call_label5
+	%v <- 0
+	goto :call_label6
+	:call_label6
+	%p <- %v
+	%p <<= 1
+	%p += 1
+	rdi <- %p
+	call print 1
+	return
+)

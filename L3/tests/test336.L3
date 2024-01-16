@@ -1,0 +1,16 @@
+define @main(){
+  %v <- 3
+  %v <- %v - 1
+  %w <- %v + %v
+  call @myF(%w)
+  return
+}
+
+define @myF(%n) {
+
+  %n <- %n << 1
+  %n <- %n + 1
+  call print(%n)
+
+  return
+}

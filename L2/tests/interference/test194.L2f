@@ -1,0 +1,14 @@
+(@encode
+	1
+	%v1 <- rdi
+	%isEncoded <- %v1
+	%isEncoded &= 1
+	%isEncoded <- %isEncoded = 1
+	cjump %isEncoded = 1 :call_label_ciao__ciao__ciao_34
+	goto :call_label_ciao__ciao__ciao_33
+	:call_label_ciao__ciao__ciao_33
+	%v1 += 1
+	:call_label_ciao__ciao__ciao_34
+	rax <- %v1
+	return
+)

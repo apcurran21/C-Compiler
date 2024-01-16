@@ -1,0 +1,33 @@
+(@main
+// Prints the first 20 Fibonacci numbers (set on line 9)
+        (@main
+                0 1
+                mem rsp 0 <- 1
+                :mainloop
+                mem rsp -8 <- :ret1
+                rdi <- mem rsp 0
+                cjump 21 < rdi :end
+                call @fib 1
+                :ret1
+                rdi <- rax
+                rdi <<= 1
+                rdi += 1
+                call print 1
+                mem rsp 0 += 1
+                goto :mainloop
+                :end
+            return
+         )
+         (@fib
+           1 1
+           rax <- 1
+           mem rsp 0 <- 0
+           :fibloop
+           r8 <- rax
+           rax += mem rsp 0
+           mem rsp 0 <- r8
+           rdi--
+           cjump 0 < rdi :fibloop
+           return
+           )
+ )

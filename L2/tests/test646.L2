@@ -1,0 +1,27 @@
+(@main
+  (@main
+    0
+    :call_label0
+    goto :call_label4
+    :call_label1
+    %i <- %i
+    %i <<= 1
+    %i <- %i
+    %i += 1
+    rdi <- %i
+    call print 1
+    return
+    :call_label2
+    %i <- %i
+    %i += 1
+    goto :call_label3
+    :call_label3
+    %c <- %i = 10
+    
+    cjump %c = 1 :call_label1
+    goto :call_label2
+    :call_label4
+    %i <- 0
+    goto :call_label3
+  )
+)

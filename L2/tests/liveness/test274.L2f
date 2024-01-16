@@ -1,0 +1,13 @@
+(@fib
+	1
+	%count <- rdi
+	rdi <- 3
+	rsi <- 3
+	rdx <- %count
+	mem rsp -8 <- :call_label_ciao_4
+	call @fib_impl 3
+	:call_label_ciao_4
+	%res <- rax
+	rax <- %res
+	return
+)

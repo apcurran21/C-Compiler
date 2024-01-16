@@ -1,0 +1,24 @@
+(@fib_impl
+	3
+	%a <- rdi
+	%b <- rsi
+	%count <- rdx
+	:call_label0
+	%count_lt_5 <- %count < 5
+	cjump %count_lt_5 = 1 :call_label1
+	goto :call_label2
+	:call_label1
+	rax <- %b
+	return
+	:call_label2
+	rdi <- %a
+	rsi <- %b
+	mem rsp -8 <- :call_label3
+	call @encoded_add 2
+	:call_label3
+	%new_b <- rax
+	%a <- %b
+	%b <- %new_b
+	%count -= 2
+	goto :call_label0
+)

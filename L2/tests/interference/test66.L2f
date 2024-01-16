@@ -1,0 +1,13 @@
+(@create_array
+	2
+	%size_of_array <- rsi
+	%size_of_array -= rdi
+	%size_of_array >>= 2
+	%size_of_array++
+	%size_of_array <<= 1
+	%size_of_array++
+	rdi <- %size_of_array
+	rsi <- 1
+	call allocate 2
+	return
+)

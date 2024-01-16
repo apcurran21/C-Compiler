@@ -1,0 +1,54 @@
+(@main
+(@main
+	0 0
+	:call_label0
+	rdi <- 3
+	mem rsp -8 <- :call_label1
+	call @createTuple 1
+	:call_label1
+	return
+)
+
+(@createTuple
+	1 2
+	mem rsp 8 <- r13
+	mem rsp 0 <- r12
+	r13 <- rdi
+	:call_label2
+	r12 <- 21
+	rdi <- 5
+	rsi <- 1
+	call allocate 2
+	rdx <- rax
+	rdi <- 0
+	rdi *= 8
+	rdi += 8
+	rsi <- rdx
+	rsi += rdi
+	mem rsi 0 <- 0
+	rdi <- 1
+	rdi *= 8
+	rsi <- rdi
+	rsi += 8
+	rdi <- rdx
+	rdi += rsi
+	mem rdi 0 <- 1
+	rdi <- 2
+	rdi *= 8
+	rdi += 8
+	rsi <- rdx
+	rsi += rdi
+	mem rsi 0 <- r13
+	rdi <- 3
+	rdi *= 8
+	rdi += 8
+	rsi <- rdx
+	rsi += rdi
+	mem rsi 0 <- r12
+	rax <- rdx
+	r12 <- mem rsp 0
+	r13 <- mem rsp 8
+	return
+)
+
+)

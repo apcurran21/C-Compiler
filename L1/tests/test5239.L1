@@ -1,0 +1,42 @@
+// calculates (and prints) the first 20 terms of the fibonacci sequence
+// with fib(0) = fib(1) = 1
+
+(@go
+    (@go
+        0 2
+        // 21 << 1 + 1
+        rdi <- 43
+        rsi <- 0
+        call allocate 2
+        // f(0) = 1
+        mem rax 8 <- 1
+        // f(1) = 1
+        mem rax 16 <- 1
+        mem rsp 0 <- rax
+        rdi <- 3
+        call print 1
+        rdi <- 3
+        call print 1
+        rax <- mem rsp 0
+        rax += 24
+        rsi <- 2
+        :loop_start
+        cjump 21 <= rsi :loop_end
+        rdi <- mem rax -16
+        rdi += mem rax -8
+        mem rax 0 <- rdi
+        rdi <<= 1
+        rdi ++
+        mem rsp 0 <- rax
+        mem rsp 8 <- rsi
+        call print 1
+        rax <- mem rsp 0
+        rsi <- mem rsp 8
+        rax += 8
+        rsi ++
+        goto :loop_start
+        :loop_end
+        return
+    )
+)
+

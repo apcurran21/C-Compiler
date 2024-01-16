@@ -1,0 +1,23 @@
+(@prime
+	1
+	cjump rdi = 2 :is_prime
+	%halfarg <- rdi
+	%arg <- rdi
+	%halfarg >>= 1
+	%counter <- 1
+	:prime_loop
+	%counter += 1
+	rdi <- %arg
+	rsi <- %counter
+	mem rsp -8 <- :prime_ret0
+	call @mod 2
+	:prime_ret0
+	cjump rax = 1 :not_prime
+	cjump %counter <= %halfarg :prime_loop
+	:is_prime
+	rax <- 1
+	return
+	:not_prime
+	rax <- 0
+	return
+)

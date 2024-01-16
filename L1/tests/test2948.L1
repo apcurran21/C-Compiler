@@ -1,0 +1,56 @@
+(@go
+(@go
+	0 0
+	rdi <- -41
+	mem rsp -8 <- :test1
+	call @mod3 1
+	:test1
+	rdi <- 234
+	mem rsp -8 <- :test2
+	call @mod3 1
+	:test2
+	rdi <- 0
+	mem rsp -8 <- :test3
+	call @mod3 1
+	:test3
+	rdi <- -310
+	mem rsp -8 <- :test4
+	call @mod3 1
+	:test4
+	return
+)
+
+(@mod3
+	1 0
+	cjump 0 < rdi :positive
+	rdi *= -2
+	:positive
+	:loop
+	cjump rdi < 3 :return
+	rsi <- rdi
+	rsi &= 3
+	cjump rsi = 3 :shift
+	cjump rsi = 0 :shift
+	rdi -= 3
+	goto :loop
+	:shift
+	rdi >>= 2
+	goto :loop
+	:return
+	mem rsp -8 <- :encode_ret
+	call @encode 1
+	:encode_ret
+	rdi <- rax
+	call print 1
+	return
+)
+
+(@encode
+	1 0
+	rdi <<= 1
+	rdi += 1
+	rax <- rdi
+	return
+)
+
+)

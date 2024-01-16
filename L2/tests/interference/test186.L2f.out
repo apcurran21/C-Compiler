@@ -1,0 +1,27 @@
+%arrayLength %arrayPointer %currValue %currValueAddress %i %isCurrValueLessThanPrevValue %iteratorHasExhaustedAllPairs %j %prevValue %prevValueAddress r12 r13 r14 r15 rbp rbx %shouldOuterLoopTerminate
+%arrayPointer %arrayLength %currValue %currValueAddress %i %isCurrValueLessThanPrevValue %iteratorHasExhaustedAllPairs %j %prevValue %prevValueAddress r12 r13 r14 r15 rbp rbx %shouldOuterLoopTerminate
+%array r12 r13 r14 r15 rbp rbx
+%currValueAddress %arrayLength %arrayPointer %currValue %i %isCurrValueLessThanPrevValue %j %prevValue %prevValueAddress r12 r13 r14 r15 rbp rbx
+%currValue %arrayLength %arrayPointer %currValueAddress %i %isCurrValueLessThanPrevValue %j %prevValue %prevValueAddress r12 r13 r14 r15 rbp rbx
+%i %arrayLength %arrayPointer %currValue %currValueAddress %isCurrValueLessThanPrevValue %iteratorHasExhaustedAllPairs %j %prevValue %prevValueAddress r12 r13 r14 r15 rbp rbx %shouldOuterLoopTerminate
+%isCurrValueLessThanPrevValue %arrayLength %arrayPointer %currValue %currValueAddress %i %j %prevValue %prevValueAddress r12 r13 r14 r15 rbp rbx
+%iteratorHasExhaustedAllPairs %arrayLength %arrayPointer %i %j r12 r13 r14 r15 rbp rbx
+%j %arrayLength %arrayPointer %currValue %currValueAddress %i %isCurrValueLessThanPrevValue %iteratorHasExhaustedAllPairs %prevValue %prevValueAddress r12 r13 r14 r15 rbp rbx
+%prevValueAddress %arrayLength %arrayPointer %currValue %currValueAddress %i %isCurrValueLessThanPrevValue %j %prevValue r12 r13 r14 r15 rbp rbx
+%prevValue %arrayLength %arrayPointer %currValue %currValueAddress %i %isCurrValueLessThanPrevValue %j %prevValueAddress r12 r13 r14 r15 rbp rbx
+r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx rsi
+r11 r10 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx rsi
+r12 %array %arrayLength %arrayPointer %currValue %currValueAddress %i %isCurrValueLessThanPrevValue %iteratorHasExhaustedAllPairs %j %prevValue %prevValueAddress r10 r11 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx rsi %shouldOuterLoopTerminate
+r13 %array %arrayLength %arrayPointer %currValue %currValueAddress %i %isCurrValueLessThanPrevValue %iteratorHasExhaustedAllPairs %j %prevValue %prevValueAddress r10 r11 r12 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx rsi %shouldOuterLoopTerminate
+r14 %array %arrayLength %arrayPointer %currValue %currValueAddress %i %isCurrValueLessThanPrevValue %iteratorHasExhaustedAllPairs %j %prevValue %prevValueAddress r10 r11 r12 r13 r15 r8 r9 rax rbp rbx rcx rdi rdx rsi %shouldOuterLoopTerminate
+r15 %array %arrayLength %arrayPointer %currValue %currValueAddress %i %isCurrValueLessThanPrevValue %iteratorHasExhaustedAllPairs %j %prevValue %prevValueAddress r10 r11 r12 r13 r14 r8 r9 rax rbp rbx rcx rdi rdx rsi %shouldOuterLoopTerminate
+r8 r10 r11 r12 r13 r14 r15 r9 rax rbp rbx rcx rdi rdx rsi
+r9 r10 r11 r12 r13 r14 r15 r8 rax rbp rbx rcx rdi rdx rsi
+rax r10 r11 r12 r13 r14 r15 r8 r9 rbp rbx rcx rdi rdx rsi
+rbp %array %arrayLength %arrayPointer %currValue %currValueAddress %i %isCurrValueLessThanPrevValue %iteratorHasExhaustedAllPairs %j %prevValue %prevValueAddress r10 r11 r12 r13 r14 r15 r8 r9 rax rbx rcx rdi rdx rsi %shouldOuterLoopTerminate
+rbx %array %arrayLength %arrayPointer %currValue %currValueAddress %i %isCurrValueLessThanPrevValue %iteratorHasExhaustedAllPairs %j %prevValue %prevValueAddress r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rcx rdi rdx rsi %shouldOuterLoopTerminate
+rcx r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rdi rdx rsi
+rdi r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdx rsi
+rdx r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rsi
+rsi r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx
+%shouldOuterLoopTerminate %arrayLength %arrayPointer %i r12 r13 r14 r15 rbp rbx

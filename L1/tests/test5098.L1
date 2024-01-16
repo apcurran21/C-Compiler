@@ -1,0 +1,73 @@
+// Makes and prints an array of the first N = 10 numbers in collatz
+// conjecture with a starting value M = 7
+
+(@collatz
+  (@collatz
+    0 1
+    // Set size of array (N = 5)
+    rdi <- 10
+    // Array has at least 1 element
+    cjump rdi < 1 :abort
+    rdi <<= 1
+    rdi ++
+    // Initialize array elements to 0
+    rsi <- 0
+    rsi <<= 1
+    rsi ++
+    mem rsp 0 <- rdi
+    call allocate 2
+    rdi <- mem rsp 0
+
+    // Starting number (M = 7)
+    r8 <- 7
+    r8 <<= 1
+    r8 ++
+    mem rax 8 <- r8
+
+    // Index of current element
+    r9 <- 1
+
+    :control
+    // Address of current element
+    r10 @ rax r9 8
+    // Value of current element
+    r11 <- mem r10 0
+    r11 >>= 1
+    rcx <- r11
+    // Determine if current element is even or odd
+    rcx &= 1
+    cjump rcx = 0 :evencase
+    cjump rcx = 1 :oddcase
+
+    :evencase
+    // Divide by 2
+    r11 >>= 1
+    goto :populate
+
+    :oddcase
+    // Multiply by 3, add 1
+    r11 *= 3
+    r11 ++
+    goto :populate
+
+    :populate
+    // Increments current element index
+    r9 ++
+    r10 @ rax r9 8
+    r11 <<= 1
+    r11 ++
+    // Adds to the array (after encoding it)
+    mem r10 0 <- r11
+    cjump rdi <= r9 :finish
+    goto :control
+
+    :abort
+    return
+
+    :finish
+    rdi <- rax
+    // Print the array
+    call print 1
+    return
+  )
+)

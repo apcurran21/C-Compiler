@@ -1,0 +1,17 @@
+(@main
+	0
+	%n <- 289
+	rdi <- %n
+	rdi <<= 1
+	rdi++
+	call print 1
+	rdi <- %n
+	mem rsp -8 <- :primetest_ret
+	call @primetest 1
+	:primetest_ret
+	rdi <- rax
+	rdi <<= 1
+	rdi++
+	call print 1
+	return
+)

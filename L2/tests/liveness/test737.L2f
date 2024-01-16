@@ -1,0 +1,36 @@
+(@foo
+	6
+	%a <- rdi
+	%b <- rsi
+	%c <- rdx
+	%d <- rcx
+	%e <- r8
+	%f <- r9
+	:call_label_ciao_3
+	%sum <- 0
+	%sum += %a
+	%sum += %b
+	%sum += %c
+	%sum += %d
+	%sum += %e
+	%sum += %f
+	%g <- 2
+	%h <- 3
+	%i <- 4
+	%j <- 5
+	%k <- 6
+	%l <- 7
+	rdi <- %sum
+	rsi <- %g
+	rdx <- %h
+	rcx <- %i
+	r8 <- %j
+	r9 <- %k
+	mem rsp -16 <- %l
+	mem rsp -8 <- :call_label_ciao_4
+	call @bar 7
+	:call_label_ciao_4
+	%res <- rax
+	rax <- %res
+	return
+)

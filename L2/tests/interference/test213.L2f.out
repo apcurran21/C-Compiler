@@ -1,0 +1,18 @@
+%flag %i r12 r13 r14 r15 rbp rbx %year
+%i %flag r12 r13 r14 r15 rbp rbx %year
+r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx rsi
+r11 r10 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx rsi
+r12 %flag %i r10 r11 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx rsi %year
+r13 %flag %i r10 r11 r12 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx rsi %year
+r14 %flag %i r10 r11 r12 r13 r15 r8 r9 rax rbp rbx rcx rdi rdx rsi %year
+r15 %flag %i r10 r11 r12 r13 r14 r8 r9 rax rbp rbx rcx rdi rdx rsi %year
+r8 r10 r11 r12 r13 r14 r15 r9 rax rbp rbx rcx rdi rdx rsi
+r9 r10 r11 r12 r13 r14 r15 r8 rax rbp rbx rcx rdi rdx rsi
+rax r10 r11 r12 r13 r14 r15 r8 r9 rbp rbx rcx rdi rdx rsi
+rbp %flag %i r10 r11 r12 r13 r14 r15 r8 r9 rax rbx rcx rdi rdx rsi %year
+rbx %flag %i r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rcx rdi rdx rsi %year
+rcx r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rdi rdx rsi
+rdi r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdx rsi
+rdx r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rsi
+rsi r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx
+%year %flag %i r12 r13 r14 r15 rbp rbx

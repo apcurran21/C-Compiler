@@ -1,0 +1,47 @@
+// Calculates the gcd of 2 numbers, prints the 2 numbers and the gcd
+// output: 18 24 6
+
+define :main() {
+	%firstNum <- 18
+	%secondNum <- 24
+	%denom <- call :gcd(%firstNum, %secondNum)
+
+	%firstNum <- %firstNum * 2
+	%firstNum <- %firstNum + 1
+	call print(%firstNum)
+
+	%secondNum <- %secondNum * 2
+	%secondNum <- %secondNum + 1
+	call print(%secondNum)
+
+	%denom <- %denom * 2
+	%denom <- %denom + 1
+	call print(%denom)
+	return
+}
+
+define :gcd(%a, %b) {
+	%a_equal_zero <- %a = 0
+	br %a_equal_zero :equal_zero
+	br :continue
+
+	:equal_zero
+	return %b
+
+	:continue
+	%b_equal_zero <- %b = 0
+	br %b_equal_zero :finish
+
+	%a_less_b <- %a <= %b 
+	br %a_less_b :else
+	%a <- %a - %b 
+	br :continue 
+
+	:else
+	%b <- %b - %a 
+
+	br :continue
+
+	:finish
+	return %a
+}

@@ -1,0 +1,54 @@
+(@myF
+	2
+	%c <- rdi
+	%p1 <- rsi
+	:call_label_ciao__ciao_5
+	%newVar1 <- 2
+	%newVar1 *= 8
+	%newVar0 <- %newVar1
+	%newVar0 += 8
+	%newVar2 <- %c
+	%newVar2 += %newVar0
+	%x1 <- mem %newVar2 0
+	%newVar4 <- 3
+	%newVar4 *= 8
+	%newVar3 <- %newVar4
+	%newVar3 += 8
+	%newVar5 <- %c
+	%newVar5 += %newVar3
+	%x2 <- mem %newVar5 0
+	rdi <- %x1
+	mem rsp -8 <- :call_label_ciao__ciao_6
+	call @encodeValue 1
+	:call_label_ciao__ciao_6
+	%encodedX1 <- rax
+	rdi <- %encodedX1
+	call print 1
+	rdi <- %x2
+	mem rsp -8 <- :call_label_ciao__ciao_7
+	call @encodeValue 1
+	:call_label_ciao__ciao_7
+	%encodedX2 <- rax
+	rdi <- %encodedX2
+	call print 1
+	rdi <- %p1
+	mem rsp -8 <- :call_label_ciao__ciao_8
+	call @encodeValue 1
+	:call_label_ciao__ciao_8
+	%encodedP1 <- rax
+	rdi <- %encodedP1
+	call print 1
+	%r1 <- %x1
+	%r1 += %x2
+	rdi <- %r1
+	mem rsp -8 <- :call_label_ciao__ciao_9
+	call @encodeValue 1
+	:call_label_ciao__ciao_9
+	%encodedR1 <- rax
+	rdi <- %encodedR1
+	call print 1
+	%r2 <- %r1
+	%r2 += %p1
+	rax <- %r2
+	return
+)

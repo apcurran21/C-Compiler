@@ -1,0 +1,9 @@
+(@myF
+	1
+	%n <- rdi
+	%n <<= 1
+	%n += 1
+	rdi <- %n
+	call print 1
+	return
+)

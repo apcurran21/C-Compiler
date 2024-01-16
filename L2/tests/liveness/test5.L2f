@@ -1,0 +1,12 @@
+(@divisible_by_four
+	1
+	%ret <- 0
+	rdi &= 3
+	cjump rdi = 0 :is_dbf
+	goto :not_dbf
+	:is_dbf
+	%ret <- 4
+	:not_dbf
+	rax <- %ret
+	return
+)

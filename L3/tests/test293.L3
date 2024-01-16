@@ -1,0 +1,103 @@
+define @main () {
+ 
+:NNNNNNNNNN
+ br :MainEntry
+ 
+:MainEntry
+ %ArrSize <- 10
+ %ArrSizeEncoded <- %ArrSize << 1
+ %ArrSizeEncoded <- %ArrSizeEncoded + 1
+ %Arr1 <- call @Alloc1DArr (%ArrSizeEncoded, 2)
+ %Arr2 <- call @Alloc1DArr (%ArrSizeEncoded, 4)
+ %Arr1Sum <- call @CalcArrSum (%Arr1)
+ %Arr2Sum <- call @CalcArrSum (%Arr2)
+ %SumOfArr <- %Arr1Sum + %Arr2Sum
+ %ProdOfArr <- %Arr1Sum * %Arr2Sum
+ %Arr1PrintVal <- %Arr1Sum << 1
+ %Arr1PrintVal <- %Arr1PrintVal + 1
+ call print (%Arr1PrintVal)
+ %Arr2PrintVal <- %Arr2Sum << 1
+ %Arr2PrintVal <- %Arr2PrintVal + 1
+ call print (%Arr2PrintVal)
+ %ArrSumPrintVal <- %SumOfArr << 1
+ %ArrSumPrintVal <- %ArrSumPrintVal + 1
+ %ArrProdPrintVal <- %ProdOfArr << 1
+ %ArrProdPrintVal <- %ArrProdPrintVal + 1
+ call print (%ArrSumPrintVal)
+ call print (%ArrProdPrintVal)
+ return 
+}
+
+define @CalcArrSum (%TargetArr) {
+ 
+:NNNNNNNNNNNNN
+ br :CalcArrEntry
+ 
+:Stop
+ return %ArrSum
+ 
+:Loop
+ %newVar1 <- 0
+ %newVar2 <- 1
+ %newVar1 <- %newVar1 + %Count
+ %newVar0 <- %newVar1 * 8
+ %newVar0 <- %newVar0 + 16
+ %newVar3 <- %TargetArr + %newVar0
+ %CurrElm <- load %newVar3
+ %Count <- %Count + 1
+ %ArrSum <- %ArrSum + %CurrElm
+ %ContLoop <- %Count < %ArrLen
+ br %ContLoop :Loop 
+ br :Stop
+ 
+:CalcArrEntry
+ %newVar4 <- 0 * 8
+ %newVar5 <- %newVar4 + 8
+ %newVar6 <- %TargetArr + %newVar5
+ %ArrLen <- load %newVar6
+ %ArrLen <- %ArrLen >> 1
+ %Count <- 0
+ %ArrSum <- 0
+ br :Loop
+}
+
+define @Alloc1DArr (%ArrSize, %InitElmVal) {
+ 
+:NNNNNNNNNNNNN
+ br :Alloc1DEntry
+ 
+:Stop
+ return %NewArr
+ 
+:Loop
+ %newVar1 <- 0
+ %newVar2 <- 1
+ %newVar1 <- %newVar1 + %Count
+ %newVar0 <- %newVar1 * 8
+ %newVar0 <- %newVar0 + 16
+ %newVar3 <- %NewArr + %newVar0
+ store %newVar3 <- %InitElmVal
+ %Count <- %Count + 1
+ %ContLoop <- %Count < %ArrLen
+ br %ContLoop :Loop 
+ br :Stop
+ 
+:Alloc1DEntry
+ %newVar5 <- %ArrSize >> 1
+ %newVar4 <- %newVar5
+ %newVar4 <- %newVar4 << 1
+ %newVar4 <- %newVar4 + 1
+ %newVar4 <- %newVar4 + 2
+ %NewArr <- call allocate (%newVar4, 1)
+ %newVar6 <- %NewArr + 8
+ store %newVar6 <- %ArrSize
+ %newVar7 <- 0 * 8
+ %newVar8 <- %newVar7 + 8
+ %newVar9 <- %NewArr + %newVar8
+ %ArrLen <- load %newVar9
+ %ArrLen <- %ArrLen >> 1
+ %Count <- 0
+ %ArrSum <- 0
+ br :Loop
+}
+

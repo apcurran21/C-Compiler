@@ -1,0 +1,108 @@
+define @main () {
+ 
+:NNNNNNNNN
+ br :entrance
+ 
+:entrance
+ call @h ()
+ call @e ()
+ call @l ()
+ call @l ()
+ call @o ()
+ call @space ()
+ call @w ()
+ call @o ()
+ call @r ()
+ call @l ()
+ call @d ()
+ return 
+}
+
+define @h () {
+ 
+:NNNNNNNNN
+ br :entrance
+ 
+:entrance
+ %var <- 209
+ call print (%var)
+ return 
+}
+
+define @e () {
+ 
+:NNNNNNNNN
+ br :entrance
+ 
+:entrance
+ %var <- 203
+ call print (%var)
+ return 
+}
+
+define @l () {
+ 
+:NNNNNNNNN
+ br :entrance
+ 
+:entrance
+ %var <- 217
+ call print (%var)
+ return 
+}
+
+define @o () {
+ 
+:NNNNNNNNN
+ br :entrance
+ 
+:entrance
+ %var <- 223
+ call print (%var)
+ return 
+}
+
+define @w () {
+ 
+:NNNNNNNNN
+ br :entrance
+ 
+:entrance
+ %var <- 239
+ call print (%var)
+ return 
+}
+
+define @space () {
+ 
+:NNNNNNNNN
+ br :entrance
+ 
+:entrance
+ %var <- 65
+ call print (%var)
+ return 
+}
+
+define @r () {
+ 
+:NNNNNNNNN
+ br :entrance
+ 
+:entrance
+ %var <- 229
+ call print (%var)
+ return 
+}
+
+define @d () {
+ 
+:NNNNNNNNN
+ br :entrance
+ 
+:entrance
+ %var <- 201
+ call print (%var)
+ return 
+}
+

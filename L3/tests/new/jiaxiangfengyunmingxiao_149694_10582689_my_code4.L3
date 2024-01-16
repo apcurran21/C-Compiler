@@ -1,0 +1,80 @@
+define :main(){                     //Sort 7 number array
+    %arr <- call allocate(15, 1)
+    %arr_index <- %arr + 8
+    %arr_val <- call input()
+    store %arr_index <- %arr_val  
+
+    %arr_index <- %arr_index + 8
+    %arr_val <- call input()
+    store %arr_index <- %arr_val  
+
+    %arr_index <- %arr_index + 8
+    %arr_val <- call input()
+    store %arr_index <- %arr_val  
+
+    %arr_index <- %arr_index + 8
+    %arr_val <- call input()
+    store %arr_index <- %arr_val  
+
+    %arr_index <- %arr_index + 8
+    %arr_val <- call input()
+    store %arr_index <- %arr_val  
+
+    %arr_index <- %arr_index + 8
+    %arr_val <- call input()
+    store %arr_index <- %arr_val  
+
+    %arr_index <- %arr_index + 8
+    %arr_val <- call input()
+    store %arr_index <- %arr_val  
+
+    call print(%arr)
+
+    %arr <- call :sort(%arr)
+
+    call print(%arr)
+
+    return
+}
+
+define :sort(%arr){
+
+    %is_changed <- 3
+
+    :LOOP2
+    %arr_index <- 1
+    %arr_addr1 <- %arr
+    %arr_addr2 <- %arr + 8
+    %cmp_res <- %is_changed = 1
+    br %cmp_res :RET
+    %is_changed <- 1
+
+    :LOOP1          
+    %arr_index <- %arr_index + 2
+    %cmp_res <- %arr_index > 15
+    br %cmp_res :LOOP2
+
+
+    %arr_addr1 <- %arr_addr1 + 8
+    %arr_addr2 <- %arr_addr2 + 8
+    %arr_val1 <- load %arr_addr1
+    %arr_val2 <- load %arr_addr2
+
+    %cmp_res <- %arr_val1 >= %arr_val2
+    br %cmp_res :LOOP1
+
+    %temp <- %arr_val1
+    %arr_val1 <- %arr_val2
+    %arr_val2 <- %temp
+    store %arr_addr1 <- %arr_val1 
+    store %arr_addr2 <- %arr_val2 
+    %is_changed <- 3
+    br :LOOP1
+
+    :RET
+    return %arr
+}
+
+
+
+

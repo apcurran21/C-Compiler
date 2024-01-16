@@ -1,0 +1,11 @@
+(@go
+(@go
+	0 0
+	rdi <- 1
+	mem rsp -8 <- :ret
+	call print 1
+	:ret
+	return
+)
+
+)

@@ -1,0 +1,20 @@
+(@array_encode
+	1
+	%arrayAddr <- rdi
+	%arrayLen <- mem %arrayAddr 0
+	%count <- 1
+	%pos <- %arrayAddr
+	%pos += 8
+	:call_label_ciao_4
+	%ifDone <- %arrayLen < %count
+	cjump %ifDone = 1 :call_label_ciao_5
+	%val <- mem %pos 0
+	%val <<= 1
+	%val += 1
+	mem %pos 0 <- %val
+	%count += 1
+	%pos += 8
+	goto :call_label_ciao_4
+	:call_label_ciao_5
+	return
+)

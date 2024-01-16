@@ -1,0 +1,21 @@
+(@array
+	2
+	%newVariable <- -1
+	%newVariable4 <- rsi
+	%newVariable2 <- rdi
+	:array_begin
+	cjump %newVariable4 <= %newVariable :array_end
+	%newVariable += 1
+	rsi <- %newVariable
+	rdi <- %newVariable2
+	mem rsp -8 <- :rtn2
+	call @calculate 2
+	:rtn2
+	rdi <- rax
+	rdi <<= 1
+	rdi += 1
+	call print 1
+	goto :array_begin
+	:array_end
+	return
+)

@@ -1,0 +1,36 @@
+(@main
+(@main
+	0 4
+	mem rsp 24 <- r15
+	mem rsp 16 <- r14
+	mem rsp 8 <- r13
+	mem rsp 0 <- r12
+	:call_label0
+	r15 <- 1
+	r14 <- 1
+	r13 <- 10
+	r12 <- 0
+	goto :call_label1
+	:call_label1
+	rdi <- r12 = r13
+	cjump rdi = 1 :call_label3
+	goto :call_label2
+	:call_label2
+	rdi <- r14
+	rdi <<= 1
+	rdi += 1
+	call print 1
+	rdi <- r14
+	r14 += r15
+	r15 <- rdi
+	r12 += 1
+	goto :call_label1
+	:call_label3
+	r12 <- mem rsp 0
+	r13 <- mem rsp 8
+	r14 <- mem rsp 16
+	r15 <- mem rsp 24
+	return
+)
+
+)

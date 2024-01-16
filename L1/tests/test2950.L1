@@ -1,0 +1,39 @@
+(@go
+(@go
+	0 0
+	rdi <- 1
+	rsi <- 2
+	rdx <- 3
+	rcx <- 4
+	r8 <- 5
+	r9 <- 6
+	mem rsp -8 <- :ret
+	mem rsp -16 <- 100
+	call @manyArgsFunction 7
+	:ret
+	return
+)
+
+(@manyArgsFunction
+	7 1
+	mem rsp 0 <- r12
+	rax <- rcx
+	rcx <- r9
+	r9 <- mem rsp 8
+	rdi *= rax
+	rsi *= rdx
+	rdi <- rcx
+	rdi -= r8
+	r12 <- 1
+	r12 *= r9
+	r12 -= rdi
+	r12 <<= 1
+	r12 += 1
+	rdi <- r12
+	call print 1
+	rax <- r12
+	r12 <- mem rsp 0
+	return
+)
+
+)

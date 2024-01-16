@@ -1,0 +1,18 @@
+(@init_array
+	1
+	rsi <- 3
+	call allocate 2
+	%my_array <- rax
+	r9 <- 0
+	%newVariable10 <- mem rax 0
+	%newVariable11 <- 1
+	:INIT
+	rax += 8
+	mem rax 0 <- %newVariable11
+	r9 += 1
+	%newVariable11 += 2
+	cjump r9 < %newVariable10 :INIT
+	rdi <- %my_array
+	call print 1
+	return
+)

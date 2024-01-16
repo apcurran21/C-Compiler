@@ -1,0 +1,53 @@
+(@main
+	0
+	%count <- 0
+	:call_label0
+	rdi <- %count
+	mem rsp -8 <- :call_label2
+	call @multiplyStuff 1
+	:call_label2
+	%v2 <- rax
+	rdi <- %v2
+	mem rsp -8 <- :call_label3
+	call @subtractStuff 1
+	:call_label3
+	%v3 <- rax
+	rdi <- %v3
+	mem rsp -8 <- :call_label4
+	call @andStuff 1
+	:call_label4
+	%v4 <- rax
+	rdi <- %v4
+	rsi <- %v2
+	mem rsp -8 <- :call_label5
+	call @compareStuff 2
+	:call_label5
+	%v5 <- rax
+	rdi <- %v5
+	mem rsp -8 <- :call_label6
+	call @leftShiftStuff 1
+	:call_label6
+	%v6 <- rax
+	rdi <- %v6
+	mem rsp -8 <- :call_label7
+	call @addStuff 1
+	:call_label7
+	%v7 <- rax
+	rdi <- %v7
+	mem rsp -8 <- :call_label8
+	call @rightShiftStuff 1
+	:call_label8
+	%v8 <- rax
+	%isEncoded <- %v8
+	%isEncoded &= 1
+	%isEncoded <- %isEncoded = 1
+	cjump %isEncoded = 1 :call_label1
+	%v8 += 1
+	:call_label1
+	rdi <- %v8
+	call print 1
+	%count += 1
+	%cmp <- %count < 10
+	cjump %cmp = 1 :call_label0
+	return
+)

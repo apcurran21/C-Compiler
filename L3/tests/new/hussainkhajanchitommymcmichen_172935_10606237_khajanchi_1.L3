@@ -1,0 +1,63 @@
+// L3 Euclid's Algorithm 
+// Authors: Hussain Khajanchi and Tommy McMichen
+// Description: An L3 implementation of Euclid's 
+//              Algorithm to find the GCD between
+                two numbers
+// Northwestern University EECS 322
+
+// Gets the remainder from %x / %y 
+define :getRemainder(%x, %y) {
+
+  :start
+    %b <- %y < %x 
+    br %b :lt_handler
+    br :main
+
+  :main
+    %diff <- %x - %y 
+    %b <- %diff < %x
+    br %b :main_lt_handler 
+    br :main
+
+
+  :y_lt_handler
+    return %y
+
+  :main_lt_handler
+    return %diff
+
+
+
+  return %d
+}
+
+define :getGCD(%x, %y) {
+
+  :entry 
+  %remainder <- call :getRemainder(%x, %y)
+  %b <- %remainder > 0 
+  br %b :exit 
+  br :main
+
+  :main
+    %remainder <- call :getRemainder(%y, %remainder)
+    %b <- %remainder > 0 
+    br %b :exit 
+    br :main
+
+  :exit
+    return %remainder
+
+}
+
+define :main() {
+
+  %x <- 10
+  %y <- 2 
+
+  %ans <- call :getGCD(%x, %y)
+
+  return %ans
+
+
+}

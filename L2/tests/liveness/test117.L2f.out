@@ -1,0 +1,24 @@
+(
+(in
+(r12 r13 r14 r15 r8 r9 rbp rbx rcx rdi rdx rsi)
+(%newVariable10 r12 r13 r14 r15 r8 r9 rbp rbx rcx rdx rsi)
+(%newVariable10 r12 r13 r14 r15 r8 r9 rbp rbx rcx rdx)
+(%newVariable10 r12 r13 r14 r15 r8 r9 rbp rbx rcx)
+(%newVariable10 r12 r13 r14 r15 r8 r9 rbp rbx)
+(%newVariable10 r12 r13 r14 r15 r9 rbp rbx)
+(%newVariable10 r12 r13 r14 r15 rbp rbx)
+(r12 r13 r14 r15 rax rbp rbx)
+)
+
+(out
+(%newVariable10 r12 r13 r14 r15 r8 r9 rbp rbx rcx rdx rsi)
+(%newVariable10 r12 r13 r14 r15 r8 r9 rbp rbx rcx rdx)
+(%newVariable10 r12 r13 r14 r15 r8 r9 rbp rbx rcx)
+(%newVariable10 r12 r13 r14 r15 r8 r9 rbp rbx)
+(%newVariable10 r12 r13 r14 r15 r9 rbp rbx)
+(%newVariable10 r12 r13 r14 r15 rbp rbx)
+(r12 r13 r14 r15 rax rbp rbx)
+()
+)
+
+)

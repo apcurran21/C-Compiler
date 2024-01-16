@@ -1,0 +1,80 @@
+// This program generates two array of positive integers
+// in fact, two **tuples**
+// and then concatenate them
+// {s:5, 1,2,3,4,5}
+// {s:5, 6,7,8,9,10}
+// {s:10, 1,2,3,4,5,6,7,8,9,10}
+
+define void @main () {
+  :init_first
+  tuple %addr1
+  tuple %addr2
+  tuple %addr3
+  %addr1 <- new Tuple(11)
+  %addr1[0] <- 3
+  %addr1[1] <- 5
+  %addr1[2] <- 7
+  %addr1[3] <- 9
+  %addr1[4] <- 11
+  call print(%addr1)
+  br :init_second
+
+  :init_second
+  %addr2 <- new Tuple(11)
+  %addr2[0] <- 13
+  %addr2[1] <- 15
+  %addr2[2] <- 17
+  %addr2[3] <- 19
+  %addr2[4] <- 21
+  call print(%addr2)
+  br :concatenate
+
+  :concatenate
+  %addr3 <- call @concat_array(%addr1, %addr2)
+  call print(%addr3)
+  return
+}
+
+define tuple @concat_array (tuple %ptr1, tuple %ptr2) {
+  :init
+  int64 %len1
+  int64 %len2
+  int64 %len3
+  tuple %ret
+  %len1 <- %ptr1[-1]
+  %len2 <- %ptr2[-1]
+  %len3 <- %len1 + %len2
+  %len3 <- %len3 << 1
+  %len3 <- %len3 + 1
+  %ret <- new Tuple(%len3)
+  int64 %index1
+  int64 %index2
+  int64 %index3
+  %index1 <- 0
+  %index2 <- 0
+  %index3 <- 0
+  int64 %temp
+  int64 %if_done
+  br :do_1
+
+  // copy the first array
+  :do_1
+  %temp <- %ptr1[%index1]
+  %ret[%index3] <- %temp
+  %index1 <- %index1 + 1
+  %index3 <- %index3 + 1
+  %if_done <- %index1 = %len1
+  br %if_done :do_2 :do_1
+
+  // copy the second array
+  :do_2
+  %temp <- %ptr2[%index2]
+  %ret[%index3] <- %temp
+  %index2 <- %index2 + 1
+  %index3 <- %index3 + 1
+  %if_done <- %index2 = %len2
+  br %if_done :done :do_2
+
+  :done
+  return %ret
+}

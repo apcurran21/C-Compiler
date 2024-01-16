@@ -1,0 +1,80 @@
+(@go
+(@go
+	0 0
+	rdi <- 21
+	call allocate 2
+	rdi <- 0
+	mem rax 8 <- 43
+	mem rax 16 <- 55
+	mem rax 24 <- 32
+	mem rax 32 <- 74
+	mem rax 40 <- 67
+	mem rax 48 <- 83
+	mem rax 56 <- 39
+	mem rax 64 <- 45
+	mem rax 72 <- 22
+	mem rax 80 <- 41
+	rdi <- rax
+	mem rsp -8 <- :max_ret
+	call @max 1
+	:max_ret
+	rdi <<= 1
+	rdi += 1
+	call print 1
+	return
+)
+
+(@max
+	1 0
+	rax <- rdi
+	rdx <- mem rax 8
+	rdi <- mem rax 16
+	rsi <- rdi <= rdx
+	cjump rsi = 1 :skip1
+	rdx <- rdi
+	:skip1
+	rdi <- mem rax 24
+	rsi <- rdi <= rdx
+	cjump rsi = 1 :skip2
+	rdx <- rdi
+	:skip2
+	rdi <- mem rax 32
+	rsi <- rdi <= rdx
+	cjump rsi = 1 :skip3
+	rdx <- rdi
+	:skip3
+	rdi <- mem rax 40
+	rsi <- rdi <= rdx
+	cjump rsi = 1 :skip4
+	rdx <- rdi
+	:skip4
+	rdi <- mem rax 48
+	rsi <- rdi <= rdx
+	cjump rsi = 1 :skip5
+	rdx <- rdi
+	:skip5
+	rdi <- mem rax 56
+	rsi <- rdi <= rdx
+	cjump rsi = 1 :skip6
+	rdx <- rdi
+	:skip6
+	rdi <- mem rax 64
+	rsi <- rdi <= rdx
+	cjump rsi = 1 :skip7
+	rdx <- rdi
+	:skip7
+	rdi <- mem rax 72
+	rsi <- rdi <= rdx
+	cjump rsi = 1 :skip8
+	rdx <- rdi
+	:skip8
+	rdi <- mem rax 80
+	rsi <- rdi <= rdx
+	cjump rsi = 1 :skip9
+	rdx <- rdi
+	:skip9
+	rdi <- rdx
+	return
+)
+
+)

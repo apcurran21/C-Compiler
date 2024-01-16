@@ -1,0 +1,134 @@
+(@main
+(@main
+	0 2
+	rdi <- 11
+	rsi <- 3
+	call allocate 2
+	rdi <- rax
+	mem rsp 0 <- rdi
+	rdi <- mem rsp 0
+	rdi <- rdi
+	rdi += 16
+	mem rdi 0 <- 5
+	rdi <- rdi
+	rdi += 8
+	mem rdi 0 <- 7
+	rdi <- rdi
+	rdi += 8
+	mem rdi 0 <- 9
+	rdi <- rdi
+	rdi += 8
+	mem rdi 0 <- 11
+	rdi <- mem rsp 0
+	rdi <- rdi
+	call print 1
+	rdi <- 11
+	rsi <- 13
+	call allocate 2
+	rdi <- rax
+	mem rsp 8 <- rdi
+	rdi <- mem rsp 8
+	rdi <- rdi
+	rdi += 16
+	mem rdi 0 <- 15
+	rdi <- rdi
+	rdi += 8
+	mem rdi 0 <- 17
+	rdi <- rdi
+	rdi += 8
+	mem rdi 0 <- 19
+	rdi <- rdi
+	rdi += 8
+	mem rdi 0 <- 21
+	rdi <- mem rsp 8
+	rdi <- rdi
+	call print 1
+	rdi <- mem rsp 0
+	rdi <- rdi
+	rsi <- mem rsp 8
+	rsi <- rsi
+	mem rsp -8 <- :call_label0
+	call @concat_array 2
+	:call_label0
+	rdi <- rax
+	rdi <- rdi
+	call print 1
+	return
+)
+
+(@concat_array
+	2 4
+	rdi <- rdi
+	mem rsp 24 <- rdi
+	rdi <- rsi
+	mem rsp 8 <- rdi
+	rdi <- mem rsp 24
+	rdi <- mem rdi 0
+	mem rsp 0 <- rdi
+	rdi <- mem rsp 8
+	rdi <- mem rdi 0
+	mem rsp 16 <- rdi
+	rdi <- mem rsp 0
+	rsi <- rdi
+	rdi <- mem rsp 16
+	rsi += rdi
+	rsi <- rsi
+	rsi <<= 1
+	rsi <- rsi
+	rsi += 1
+	rdi <- rsi
+	rsi <- 3
+	call allocate 2
+	rsi <- rax
+	rdx <- rsi
+	:call_label_ciao_1
+	rdi <- mem rsp 24
+	rdi <- rdi
+	mem rsp 24 <- rdi
+	rdi <- mem rsp 24
+	rdi += 8
+	mem rsp 24 <- rdi
+	rdx <- rdx
+	rdx += 8
+	rdi <- mem rsp 24
+	rdi <- mem rdi 0
+	mem rdx 0 <- rdi
+	rdi <- mem rsp 0
+	rdi <- rdi
+	mem rsp 0 <- rdi
+	rdi <- mem rsp 0
+	rdi -= 1
+	mem rsp 0 <- rdi
+	rdi <- mem rsp 0
+	rdi <- rdi = 0
+	cjump rdi = 1 :call_label_ciao_2
+	goto :call_label_ciao_1
+	:call_label_ciao_2
+	:call_label_ciao_3
+	rdi <- mem rsp 8
+	rdi <- rdi
+	mem rsp 8 <- rdi
+	rdi <- mem rsp 8
+	rdi += 8
+	mem rsp 8 <- rdi
+	rdx <- rdx
+	rdx += 8
+	rdi <- mem rsp 8
+	rdi <- mem rdi 0
+	mem rdx 0 <- rdi
+	rdi <- mem rsp 16
+	rdi <- rdi
+	mem rsp 16 <- rdi
+	rdi <- mem rsp 16
+	rdi -= 1
+	mem rsp 16 <- rdi
+	rdi <- mem rsp 16
+	rdi <- rdi = 0
+	cjump rdi = 1 :call_label_ciao_4
+	goto :call_label_ciao_3
+	:call_label_ciao_4
+	rax <- rsi
+	return
+)
+
+)

@@ -1,0 +1,35 @@
+(@fill_array
+	3
+	%array <- rdi
+	%current_year <- rsi
+	%fill_end_year <- rdx
+	%array_index <- %array
+	:call_label_ciao__ciao__ciao_4
+	%i <- %current_year <= %fill_end_year
+	cjump %i = 1 :call_label_ciao__ciao__ciao_5
+	goto :call_label_ciao__ciao__ciao_9
+	:call_label_ciao__ciao__ciao_5
+	rdi <- %current_year
+	mem rsp -8 <- :call_label_ciao__ciao__ciao_10
+	call @is_leap_year 1
+	:call_label_ciao__ciao__ciao_10
+	%is_leap <- rax
+	cjump %is_leap = 1 :call_label_ciao__ciao__ciao_7
+	goto :call_label_ciao__ciao__ciao_6
+	:call_label_ciao__ciao__ciao_6
+	goto :call_label_ciao__ciao__ciao_8
+	:call_label_ciao__ciao__ciao_7
+	%array_index += 8
+	rdi <- %current_year
+	mem rsp -8 <- :call_label_ciao__ciao__ciao_11
+	call @encode 1
+	:call_label_ciao__ciao__ciao_11
+	%encode_current_year <- rax
+	mem %array_index 0 <- %encode_current_year
+	:call_label_ciao__ciao__ciao_8
+	%current_year += 1
+	goto :call_label_ciao__ciao__ciao_4
+	:call_label_ciao__ciao__ciao_9
+	rax <- %array
+	return
+)

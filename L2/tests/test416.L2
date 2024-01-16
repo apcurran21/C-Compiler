@@ -1,0 +1,147 @@
+(@main
+  (@mod
+    2
+    %x <- rdi
+    %y <- rsi
+    :call_label0
+    %r <- %x = 0
+
+    cjump %r = 1 :call_label4
+    goto :call_label1
+    :call_label1
+    %r <- -1 < %x
+
+    cjump %r = 1 :call_label3
+    goto :call_label2
+    :call_label2
+    rax <- 0
+    return
+    :call_label3
+    %x <- %x
+    %x -= %y
+    %r <- %x = 0
+
+    cjump %r = 1 :call_label4
+    goto :call_label1
+    :call_label4
+    rax <- 1
+    return
+  )
+  (@prime
+    1
+    %arg <- rdi
+    :call_label_ciao_5
+    %counter <- 1
+    %inputIs2 <- %arg = 2
+
+    cjump %inputIs2 = 1 :call_label_ciao_8
+    goto :call_label_ciao_6
+    :call_label_ciao_6
+    %halfarg <- %arg
+    %halfarg >>= 1
+    %counter <- %counter
+    %counter += 1
+    rdi <- %arg
+    rsi <- %counter
+
+mem rsp -8 <- :call_label_ciao_10
+    call @mod 2
+
+:call_label_ciao_10
+    %pstatus <- rax
+    cjump %pstatus = 1 :call_label_ciao_9
+    goto :call_label_ciao_7
+    :call_label_ciao_7
+    %reloop <- %counter <= %halfarg
+
+    cjump %reloop = 1 :call_label_ciao_6
+    goto :call_label_ciao_8
+    :call_label_ciao_8
+    rax <- 1
+    return
+    :call_label_ciao_9
+    rax <- 0
+    return
+  )
+  (@gpf
+    1
+    %arg <- rdi
+    :call_label_ciao__ciao_11
+    rdi <- %arg
+
+mem rsp -8 <- :call_label_ciao__ciao_19
+    call @prime 1
+
+:call_label_ciao__ciao_19
+    %argIsPrime <- rax
+    %argNotPrime <- %argIsPrime = 0
+
+    cjump %argNotPrime = 1 :call_label_ciao__ciao_13
+    goto :call_label_ciao__ciao_12
+    :call_label_ciao__ciao_12
+    rax <- %arg
+    return
+    :call_label_ciao__ciao_13
+    %possiblePrime <- %arg
+    %possiblePrime >>= 1
+    %possiblePrime <- %possiblePrime
+    %possiblePrime += 1
+    goto :call_label_ciao__ciao_14
+    :call_label_ciao__ciao_14
+    %sad <- %possiblePrime < 2
+
+    cjump %sad = 1 :call_label_ciao__ciao_18
+    goto :call_label_ciao__ciao_15
+    :call_label_ciao__ciao_15
+    %possiblePrime <- %possiblePrime
+    %possiblePrime -= 1
+    rdi <- %arg
+    rsi <- %possiblePrime
+
+mem rsp -8 <- :call_label_ciao__ciao_20
+    call @mod 2
+
+:call_label_ciao__ciao_20
+    %modulo <- rax
+    %notFactor <- %modulo = 0
+
+    cjump %notFactor = 1 :call_label_ciao__ciao_14
+    goto :call_label_ciao__ciao_16
+    :call_label_ciao__ciao_16
+    rdi <- %possiblePrime
+
+mem rsp -8 <- :call_label_ciao__ciao_21
+    call @prime 1
+
+:call_label_ciao__ciao_21
+    %cndIsPrime <- rax
+    %notPrime <- %cndIsPrime = 0
+
+    cjump %notPrime = 1 :call_label_ciao__ciao_14
+    goto :call_label_ciao__ciao_17
+    :call_label_ciao__ciao_17
+    rax <- %possiblePrime
+    return
+    :call_label_ciao__ciao_18
+    rax <- -1
+    return
+  )
+  (@main
+    0
+    :call_label_ciao__ciao__ciao_22
+    rdi <- 33030
+
+mem rsp -8 <- :call_label_ciao__ciao__ciao_23
+    call @gpf 1
+
+:call_label_ciao__ciao__ciao_23
+    %result <- rax
+    %result <- %result
+    %result <<= 1
+    %result <- %result
+    %result += 1
+    rdi <- %result
+    call print 1
+    return
+  )
+)

@@ -1,0 +1,62 @@
+ define :main() {
+    %end <- call input()
+    %end <- %end >> 1
+    %i <- 0
+
+    :loop
+    %i <- %i + 1
+
+    // is_divisible
+    %res <- call :is_divisible(%end, %i)
+    %ts <- %res = 0
+    br %ts :no_print
+
+    %j <- 0
+    :ps_loop
+    %sq <- %j * %j
+    %ts <- %sq = %i
+    br %ts :print_sq
+    br :after_print_sq
+
+    :print_sq
+    %psq <- %sq << 1
+    %psq <- %psq + 1
+    call print(%psq)
+    :after_print_sq
+
+    %j <- %j + 1
+    %ts <- %j < %i
+    br %ts :ps_loop
+
+    %pi <- %i << 1
+    %pi <- %pi + 1
+    call print(%pi)
+    
+    :no_print
+    
+    %ts <- %i < %end
+    br %ts :loop
+
+    return
+ }
+ 
+ define :is_divisible(%dividend, %divisor) {
+	%cur_divisor <- %divisor
+
+	:test
+	%lp <- %cur_divisor < %dividend
+	%ee <- %cur_divisor = %dividend
+	br %lp :loop
+	br %ee :d
+	br :nd
+
+	:loop
+	%cur_divisor <- %divisor + %cur_divisor
+	br :test
+
+	:d
+	return 1
+
+	:nd
+	return 0
+}

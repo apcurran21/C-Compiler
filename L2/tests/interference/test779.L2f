@@ -1,0 +1,10 @@
+(@diFF
+	0
+	:call_label_ciao_2
+	%duh <- 7
+	%muh <- 9
+	%val_to_return <- %duh
+	%val_to_return *= %muh
+	rax <- %val_to_return
+	return
+)

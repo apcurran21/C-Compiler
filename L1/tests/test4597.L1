@@ -1,0 +1,143 @@
+(@main
+(@main
+	0 2
+	mem rsp 8 <- r13
+	mem rsp 0 <- r12
+	:call_label0
+	goto :call_label3
+	:call_label1
+	rdi <<= 1
+	rdi += 1
+	call print 1
+	r12 <- mem rsp 0
+	r13 <- mem rsp 8
+	return
+	:call_label2
+	rdi <- r12
+	rdi <<= 1
+	rdi += 1
+	call print 1
+	r12 <- mem rsp 0
+	r13 <- mem rsp 8
+	return
+	:call_label3
+	rdi <- 10
+	rsi <- rdi
+	rsi <<= 1
+	rsi += 1
+	rdi <- 20
+	r13 <- rdi
+	r13 <<= 1
+	r13 += 1
+	rdi <- rsi
+	rsi <- 11
+	mem rsp -8 <- :call_label4
+	call @Alloc1DArr 2
+	:call_label4
+	r12 <- rax
+	rdi <- r13
+	rsi <- 11
+	mem rsp -8 <- :call_label5
+	call @Alloc1DArr 2
+	:call_label5
+	r13 <- rax
+	rdi <- r12
+	mem rsp -8 <- :call_label6
+	call @CalcArrSum 1
+	:call_label6
+	r12 <- rax
+	rdi <- r13
+	mem rsp -8 <- :call_label7
+	call @CalcArrSum 1
+	:call_label7
+	rdi <- rax
+	rsi <- rdi < r12
+	cjump rsi = 1 :call_label2
+	goto :call_label1
+)
+
+(@Alloc1DArr
+	2 2
+	mem rsp 8 <- r13
+	mem rsp 0 <- r12
+	r13 <- rdi
+	r12 <- rsi
+	:call_label_ciao__ciao_12
+	goto :call_label_ciao__ciao_15
+	:call_label_ciao__ciao_13
+	rax <- rcx
+	r12 <- mem rsp 0
+	r13 <- mem rsp 8
+	return
+	:call_label_ciao__ciao_14
+	rdi <- 0
+	rdi += rdx
+	rdi *= 8
+	rdi += 16
+	rsi <- rcx
+	rsi += rdi
+	mem rsi 0 <- r12
+	rdx += 1
+	rdi <- rdx < r8
+	cjump rdi = 1 :call_label_ciao__ciao_14
+	goto :call_label_ciao__ciao_13
+	:call_label_ciao__ciao_15
+	rdi <- r13
+	rdi >>= 1
+	rdi <<= 1
+	rdi += 1
+	rdi += 2
+	rsi <- 1
+	call allocate 2
+	rcx <- rax
+	rdi <- rcx
+	rdi += 8
+	mem rdi 0 <- r13
+	rdi <- 0
+	rdi *= 8
+	rdi += 8
+	rsi <- rcx
+	rsi += rdi
+	r8 <- mem rsi 0
+	r8 >>= 1
+	rdx <- 0
+	goto :call_label_ciao__ciao_14
+)
+
+(@CalcArrSum
+	1 0
+	rdx <- rdi
+	:call_label_ciao_8
+	goto :call_label_ciao_11
+	:call_label_ciao_9
+	rax <- rcx
+	return
+	:call_label_ciao_10
+	rdi <- 0
+	rdi += r8
+	rsi <- rdi
+	rsi *= 8
+	rsi += 16
+	rdi <- rdx
+	rdi += rsi
+	rdi <- mem rdi 0
+	r8 += 1
+	rcx += rdi
+	rdi <- r8 < r9
+	cjump rdi = 1 :call_label_ciao_10
+	goto :call_label_ciao_9
+	:call_label_ciao_11
+	rdi <- 0
+	rdi *= 8
+	rsi <- rdi
+	rsi += 8
+	rdi <- rdx
+	rdi += rsi
+	r9 <- mem rdi 0
+	r9 >>= 1
+	r8 <- 0
+	rcx <- 0
+	goto :call_label_ciao_10
+)
+
+)

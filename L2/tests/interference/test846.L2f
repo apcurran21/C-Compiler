@@ -1,0 +1,8 @@
+(@space
+	0
+	:call_label_ciao__ciao__ciao__ciao__ciao__ciao_17
+	%var <- 65
+	rdi <- %var
+	call print 1
+	return
+)

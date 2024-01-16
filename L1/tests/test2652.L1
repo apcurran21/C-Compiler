@@ -1,0 +1,77 @@
+(@go
+(@go
+	0 0
+	mem rsp -8 <- :fibonacci_ret
+	rdi <- 13
+	call @fibonacci 1
+	:fibonacci_ret
+	rdi <- rax
+	rdi <<= 1
+	rdi++
+	call print 1
+	return
+)
+
+(@fibonacci
+	1 2
+	mem rsp 8 <- r13
+	mem rsp 0 <- r12
+	cjump rdi = 0 :zero
+	goto :general
+	:zero
+	rax <- 0
+	r12 <- mem rsp 0
+	r13 <- mem rsp 8
+	return
+	:one
+	rdi <- rsi
+	call print 1
+	rax <- 1
+	r12 <- mem rsp 0
+	r13 <- mem rsp 8
+	return
+	:general
+	r13 <- rdi
+	r13 += 1
+	rdi <- r13
+	rdi <<= 1
+	rdi++
+	rsi <- 1
+	call allocate 2
+	mem rax 16 <- 3
+	r12 <- rax
+	rsi <- rax
+	r8 <- 24
+	rdx <- r13
+	rdx <<= 3
+	rdx += 8
+	cjump r13 = 2 :one
+	goto :loop
+	:loop
+	r12 <- rsi
+	r12 += r8
+	rdi <- mem r12 -8
+	rdi--
+	rdi >>= 1
+	rcx <- mem r12 -16
+	rcx--
+	rcx >>= 1
+	rdi += rcx
+	rdi <<= 1
+	rdi++
+	mem r12 0 <- rdi
+	r8 += 8
+	cjump r8 < rdx :loop
+	goto :after
+	:after
+	rdi <- rsi
+	call print 1
+	rax <- mem r12 0
+	rax--
+	rax >>= 1
+	r12 <- mem rsp 0
+	r13 <- mem rsp 8
+	return
+)
+
+)

@@ -1,0 +1,154 @@
+
+
+
+(@HelloWorld
+
+    (@print_encoded
+    1 0
+    rdi <<= 1
+    rdi += 1
+    call print 1
+    return)
+
+    (@print_letter
+     5 0
+     r12 <- rdi
+     r13 <- rsi
+     r14 <- rdx
+     r15 <- rcx
+     rbp <- r8
+ 
+     :print_line 
+     mem rsp -8 <- :print_line_2
+     rdi <- 11111111111
+     call @print_encoded 1
+
+     :print_line_2
+     mem rsp -8 <- :print_line_3
+     rdi <- r12
+     call @print_encoded 1
+
+     :print_line_3
+     mem rsp -8 <- :print_line_4
+     rdi <- r13
+     call @print_encoded 1
+
+     :print_line_4
+     mem rsp -8 <- :print_line_5
+     rdi <- r14
+     call @print_encoded 1
+
+     :print_line_5
+     mem rsp -8 <- :print_line_6
+     rdi <- r15
+     call @print_encoded 1
+
+     :print_line_6
+     mem rsp -8 <- :print_line_7
+     rdi <- rbp
+     call @print_encoded 1
+
+     :print_line_7
+     mem rsp -8 <- :done_printing_lines
+     rdi <- 11111111111
+     call @print_encoded 1
+
+     :done_printing_lines
+     return)
+
+    (@HelloWorld
+     0 0
+
+     :print_H
+     mem rsp -8 <- :print_E
+     rdi <- 11001110011
+     rsi <- 11001110011
+     rdx <- 11000000011
+     rcx <- 11001110011
+     r8  <- 11001110011
+     call @print_letter 5
+
+     :print_E
+     mem rsp -8 <- :print_L1
+     rdi <- 11100000111
+     rsi <- 11100111111
+     rdx <- 11100000111
+     rcx <- 11100111111
+     r8  <- 11100000111
+     call @print_letter 5
+
+     :print_L1
+     mem rsp -8 <- :print_L2
+     rdi <- 11100111111
+     rsi <- 11100111111
+     rdx <- 11100111111
+     rcx <- 11100111111
+     r8  <- 11100000011
+     call @print_letter 5
+
+     :print_L2
+     mem rsp -8 <- :print_O1
+     rdi <- 11100111111
+     rsi <- 11100111111
+     rdx <- 11100111111
+     rcx <- 11100111111
+     r8  <- 11100000011
+     call @print_letter 5
+
+     :print_O1
+     mem rsp -8 <- :print_W
+     rdi <- 11100000111
+     rsi <- 11001110011
+     rdx <- 11001110011
+     rcx <- 11001110011
+     r8  <- 11100000111
+     call @print_letter 5
+
+     :print_W
+     mem rsp -8 <- :print_O2
+     rdi <- 10111111101
+     rsi <- 11011111011
+     rdx <- 11011011011
+     rcx <- 11000100011
+     r8  <- 11101110111
+     call @print_letter 5
+
+     :print_O2
+     mem rsp -8 <- :print_R
+     rdi <- 11100000111
+     rsi <- 11001110011
+     rdx <- 11001110011
+     rcx <- 11001110011
+     r8  <- 11100000111
+     call @print_letter 5
+
+     :print_R
+     mem rsp -8 <- :print_L3
+     rdi <- 11000001111
+     rsi <- 11001110111
+     rdx <- 11000011111
+     rcx <- 11001001111
+     r8  <- 11001110011
+     call @print_letter 5
+
+     :print_L3
+     mem rsp -8 <- :print_D
+     rdi <- 11100111111
+     rsi <- 11100111111
+     rdx <- 11100111111
+     rcx <- 11100111111
+     r8  <- 11100000011
+     call @print_letter 5
+
+     :print_D
+     mem rsp -8 <- :HelloWorld_return
+     rdi <- 11000000111
+     rsi <- 11001110011
+     rdx <- 11001110011
+     rcx <- 11001110011
+     r8  <- 11000000111
+     call @print_letter 5
+
+     :HelloWorld_return
+     return)
+)

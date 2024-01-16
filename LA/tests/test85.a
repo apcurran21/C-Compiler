@@ -1,0 +1,50 @@
+void main()
+{
+  int64 tmp_rax
+  int64 tmp_rcx
+  int64 tmp_rdi
+  int64 i
+  int64 j
+  int64 k
+  int64 icmpi
+  int64 icmpj
+  int64 icmpk
+  int64 old_rcx
+  tmp_rcx <- 2
+  i <- 1
+:for_i
+  icmpi <- 5 <= i
+  br icmpi :end_for_i :K1
+:K1
+  j <- 1
+:for_j
+  icmpj <- 5 <= j
+  br icmpj :end_for_j :K2
+:K2
+  tmp_rax <- tmp_rax - tmp_rax
+  k <- tmp_rax
+  k <- 1 + k
+:for_k
+  icmpk <- 1000 <= k
+  br icmpk :end_for_k :K3
+:K3
+  old_rcx <- tmp_rcx
+  tmp_rdi <- k
+  tmp_rdi <- tmp_rdi << 1
+  print(tmp_rdi)
+  tmp_rdi <- i
+  tmp_rdi <- tmp_rdi * j
+  tmp_rdi <- tmp_rdi * k
+  print(tmp_rdi)
+  tmp_rcx <- old_rcx
+  k <- k << tmp_rcx
+  br :for_k
+:end_for_k
+  j <- 1 + j
+  br :for_j
+:end_for_j
+  i <- 1 + i
+  br :for_i
+  :end_for_i
+  return
+}

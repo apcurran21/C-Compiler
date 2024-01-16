@@ -1,0 +1,31 @@
+define @main () {
+ 
+:NNNNNN
+ br :entry
+ 
+:entry
+ call @myF (7, 7)
+ return 
+}
+
+define @myF (%p1, %p2) {
+ 
+:NNNNNN
+ br :entry
+ 
+:entry
+ %newVar1 <- %p1 >> 1
+ %newVar0 <- %newVar1
+ %newVar2 <- %p2 >> 1
+ %newVar0 <- %newVar0 * %newVar2
+ %newVar0 <- %newVar0 << 1
+ %newVar0 <- %newVar0 + 1
+ %newVar0 <- %newVar0 + 4
+ %ar <- call allocate (%newVar0, 1)
+ %newVar3 <- %ar + 8
+ store %newVar3 <- %p1
+ %newVar4 <- %ar + 16
+ store %newVar4 <- %p2
+ return %ar
+}
+

@@ -1,0 +1,14 @@
+(@go
+ (@go
+  0 0
+  // rdi is first arg,
+  rdi <- 301
+  // rsi is the second arg,
+  rsi <- 101
+  call allocate 2
+  // rax is the result
+  rdi <- rax
+  call print 1
+  return
+)
+)

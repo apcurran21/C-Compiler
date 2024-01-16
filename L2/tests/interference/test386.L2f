@@ -1,0 +1,31 @@
+(@main
+	0
+	rdi <- 43
+	rsi <- 0
+	call allocate 2
+	%fib_arr <- rax
+	mem %fib_arr 8 <- 1
+	mem %fib_arr 16 <- 1
+	rdi <- 3
+	call print 1
+	rdi <- 3
+	call print 1
+	%fib_arr += 24
+	%i <- 2
+	:call_label0
+	%loop_done <- 21 <= %i
+	cjump %loop_done = 1 :call_label1
+	%fib_i <- mem %fib_arr -16
+	%tmp <- mem %fib_arr -8
+	%fib_i += %tmp
+	mem %fib_arr 0 <- %fib_i
+	%fib_i <<= 1
+	%fib_i += 1
+	rdi <- %fib_i
+	call print 1
+	%fib_arr += 8
+	%i += 1
+	goto :call_label0
+	:call_label1
+	return
+)

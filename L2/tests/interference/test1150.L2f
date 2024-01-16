@@ -1,0 +1,10 @@
+(@plus_10
+	1
+	%v <- rdi
+	:call_label_ciao_2
+	goto :call_label_ciao_3
+	:call_label_ciao_3
+	%v += 10
+	rax <- %v
+	return
+)

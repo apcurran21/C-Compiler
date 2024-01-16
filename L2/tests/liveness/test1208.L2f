@@ -1,0 +1,11 @@
+(@myOtherF
+	1
+	%p <- rdi
+	:call_label_ciao__ciao_6
+	goto :call_label_ciao__ciao_7
+	:call_label_ciao__ciao_7
+	%r <- %p
+	%r += 1
+	rax <- %r
+	return
+)

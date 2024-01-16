@@ -1,0 +1,70 @@
+define int64 @sqrt_ceil(int64 %n){
+    :entry
+    int64 %sqrt
+    int64 %sqrt_tmp
+    int64 %end
+    %sqrt <-1
+    br :sqrt_start
+    :sqrt_start
+    %sqrt_tmp <- %sqrt * %sqrt
+    %end <- %n < %sqrt_tmp
+    br %end :done :continue
+    :continue
+    %sqrt <- %sqrt + 1
+    br :sqrt_start
+    :done
+    return %sqrt
+}
+
+define int64 @mod (int64 %a, int64 %b){
+    :entry
+    int64 %end
+    br :loop
+    :loop
+    %end <- %a < %b
+    br %end :end :continue
+    :continue
+    %a <- %a - %b
+    br :loop
+    :end
+    return %a
+}
+
+define int64 @primetest (int64 %n){
+    :entry
+    int64 %div
+    int64 %sqrt_n
+    int64 %divisible
+    int64 %finished
+    %div <- 2
+    %sqrt_n <- call @sqrt_ceil(%n)
+    br :testloop
+    :testloop
+    %divisible <- call @mod(%n, %div)
+    %finished <- %divisible = 0
+    br %finished :iscomposite :increment
+    :increment
+    %div <- %div + 1
+    %finished <- %sqrt_n < %div
+    br %finished :isprime :testloop
+    :isprime
+    return 1
+    :iscomposite
+    return 0
+}
+
+define void @main( ){
+    :entry
+    int64 %n
+
+    %n <- 289
+    %n <- %n << 1
+    %n <- %n + 1
+    call print (%n)
+    %n <- %n >> 1
+    %n <- call @primetest (%n)
+    %n <- %n << 1
+    %n <- %n +1
+    call print (%n)
+    return
+}

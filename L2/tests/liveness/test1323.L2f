@@ -1,0 +1,11 @@
+(@myF2
+	1
+	%arg1 <- rdi
+	:call_label_ciao__ciao_4
+	mem rsp -8 <- :call_label_ciao__ciao_5
+	call @myF3 0
+	:call_label_ciao__ciao_5
+	rdi <- %arg1
+	call print 1
+	return
+)

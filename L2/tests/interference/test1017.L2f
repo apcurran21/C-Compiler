@@ -1,0 +1,27 @@
+(@curry
+	1
+	%F <- rdi
+	:call_label_ciao__ciao__ciao__ciao_18
+	goto :call_label_ciao__ciao__ciao__ciao_19
+	:call_label_ciao__ciao__ciao__ciao_19
+	rdi <- 5
+	rsi <- 1
+	call allocate 2
+	%cF <- rax
+	%newVar1 <- 0
+	%newVar1 *= 8
+	%newVar0 <- %newVar1
+	%newVar0 += 8
+	%newVar2 <- %cF
+	%newVar2 += %newVar0
+	mem %newVar2 0 <- @curry_arg1
+	%newVar4 <- 1
+	%newVar4 *= 8
+	%newVar3 <- %newVar4
+	%newVar3 += 8
+	%newVar5 <- %cF
+	%newVar5 += %newVar3
+	mem %newVar5 0 <- %F
+	rax <- %cF
+	return
+)

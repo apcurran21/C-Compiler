@@ -1,0 +1,208 @@
+(@main
+	0
+	:call_label_ciao__ciao_4
+	goto :call_label_ciao__ciao_5
+	:call_label_ciao__ciao_5
+	%newVar1 <- 5
+	%newVar1 >>= 1
+	%newVar0 <- %newVar1
+	%newVar2 <- 5
+	%newVar2 >>= 1
+	%newVar0 *= %newVar2
+	%newVar0 <<= 1
+	%newVar0 += 1
+	%newVar0 += 4
+	rdi <- %newVar0
+	rsi <- 1
+	call allocate 2
+	%m1 <- rax
+	%newVar3 <- %m1
+	%newVar3 += 8
+	mem %newVar3 0 <- 5
+	%newVar4 <- %m1
+	%newVar4 += 16
+	mem %newVar4 0 <- 5
+	%newVar6 <- 0
+	%newVar7 <- %m1
+	%newVar7 += 16
+	%newVar8 <- mem %newVar7 0
+	%newVar9 <- %newVar8
+	%newVar9 >>= 1
+	%newVar10 <- 1
+	%newVar10 *= %newVar9
+	%newVar11 <- 0
+	%newVar11 *= %newVar10
+	%newVar6 += %newVar11
+	%newVar5 <- %newVar6
+	%newVar5 *= 8
+	%newVar5 += 24
+	%newVar12 <- %m1
+	%newVar12 += %newVar5
+	mem %newVar12 0 <- 3
+	%newVar14 <- 0
+	%newVar15 <- %m1
+	%newVar15 += 16
+	%newVar16 <- mem %newVar15 0
+	%newVar17 <- %newVar16
+	%newVar17 >>= 1
+	%newVar18 <- 1
+	%newVar18 *= %newVar17
+	%newVar19 <- 0
+	%newVar19 *= %newVar18
+	%newVar14 += %newVar19
+	%newVar14 += 1
+	%newVar13 <- %newVar14
+	%newVar13 *= 8
+	%newVar13 += 24
+	%newVar20 <- %m1
+	%newVar20 += %newVar13
+	mem %newVar20 0 <- 1
+	%newVar22 <- 0
+	%newVar23 <- %m1
+	%newVar23 += 16
+	%newVar24 <- mem %newVar23 0
+	%newVar25 <- %newVar24
+	%newVar25 >>= 1
+	%newVar26 <- 1
+	%newVar26 *= %newVar25
+	%newVar27 <- 1
+	%newVar27 *= %newVar26
+	%newVar22 += %newVar27
+	%newVar21 <- %newVar22
+	%newVar21 *= 8
+	%newVar21 += 24
+	%newVar28 <- %m1
+	%newVar28 += %newVar21
+	mem %newVar28 0 <- 1
+	%newVar30 <- 0
+	%newVar31 <- %m1
+	%newVar31 += 16
+	%newVar32 <- mem %newVar31 0
+	%newVar33 <- %newVar32
+	%newVar33 >>= 1
+	%newVar34 <- 1
+	%newVar34 *= %newVar33
+	%newVar35 <- 1
+	%newVar35 *= %newVar34
+	%newVar30 += %newVar35
+	%newVar30 += 1
+	%newVar29 <- %newVar30
+	%newVar29 *= 8
+	%newVar29 += 24
+	%newVar36 <- %m1
+	%newVar36 += %newVar29
+	mem %newVar36 0 <- 3
+	rdi <- %m1
+	call print 1
+	%newVar38 <- 5
+	%newVar38 >>= 1
+	%newVar37 <- %newVar38
+	%newVar39 <- 5
+	%newVar39 >>= 1
+	%newVar37 *= %newVar39
+	%newVar37 <<= 1
+	%newVar37 += 1
+	%newVar37 += 4
+	rdi <- %newVar37
+	rsi <- 1
+	call allocate 2
+	%m2 <- rax
+	%newVar40 <- %m2
+	%newVar40 += 8
+	mem %newVar40 0 <- 5
+	%newVar41 <- %m2
+	%newVar41 += 16
+	mem %newVar41 0 <- 5
+	%newVar43 <- 0
+	%newVar44 <- %m2
+	%newVar44 += 16
+	%newVar45 <- mem %newVar44 0
+	%newVar46 <- %newVar45
+	%newVar46 >>= 1
+	%newVar47 <- 1
+	%newVar47 *= %newVar46
+	%newVar48 <- 0
+	%newVar48 *= %newVar47
+	%newVar43 += %newVar48
+	%newVar42 <- %newVar43
+	%newVar42 *= 8
+	%newVar42 += 24
+	%newVar49 <- %m2
+	%newVar49 += %newVar42
+	mem %newVar49 0 <- 3
+	%newVar51 <- 0
+	%newVar52 <- %m2
+	%newVar52 += 16
+	%newVar53 <- mem %newVar52 0
+	%newVar54 <- %newVar53
+	%newVar54 >>= 1
+	%newVar55 <- 1
+	%newVar55 *= %newVar54
+	%newVar56 <- 0
+	%newVar56 *= %newVar55
+	%newVar51 += %newVar56
+	%newVar51 += 1
+	%newVar50 <- %newVar51
+	%newVar50 *= 8
+	%newVar50 += 24
+	%newVar57 <- %m2
+	%newVar57 += %newVar50
+	mem %newVar57 0 <- 3
+	rdi <- 7
+	mem rsp -8 <- :call_label_ciao__ciao_6
+	call @encode 1
+	:call_label_ciao__ciao_6
+	%i <- rax
+	%newVar59 <- 0
+	%newVar60 <- %m2
+	%newVar60 += 16
+	%newVar61 <- mem %newVar60 0
+	%newVar62 <- %newVar61
+	%newVar62 >>= 1
+	%newVar63 <- 1
+	%newVar63 *= %newVar62
+	%newVar64 <- 1
+	%newVar64 *= %newVar63
+	%newVar59 += %newVar64
+	%newVar58 <- %newVar59
+	%newVar58 *= 8
+	%newVar58 += 24
+	%newVar65 <- %m2
+	%newVar65 += %newVar58
+	mem %newVar65 0 <- %i
+	rdi <- -2
+	mem rsp -8 <- :call_label_ciao__ciao_7
+	call @encode 1
+	:call_label_ciao__ciao_7
+	%i <- rax
+	%newVar67 <- 0
+	%newVar68 <- %m2
+	%newVar68 += 16
+	%newVar69 <- mem %newVar68 0
+	%newVar70 <- %newVar69
+	%newVar70 >>= 1
+	%newVar71 <- 1
+	%newVar71 *= %newVar70
+	%newVar72 <- 1
+	%newVar72 *= %newVar71
+	%newVar67 += %newVar72
+	%newVar67 += 1
+	%newVar66 <- %newVar67
+	%newVar66 *= 8
+	%newVar66 += 24
+	%newVar73 <- %m2
+	%newVar73 += %newVar66
+	mem %newVar73 0 <- %i
+	rdi <- %m2
+	call print 1
+	rdi <- 2
+	rsi <- %m1
+	rdx <- %m2
+	mem rsp -8 <- :call_label_ciao__ciao_8
+	call @multiply 3
+	:call_label_ciao__ciao_8
+	%out <- rax
+	rdi <- %out
+	call print 1
+	return
+)

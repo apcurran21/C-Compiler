@@ -1,0 +1,89 @@
+define @main () {
+ 
+:NNNNNNNNNNNNNNNNN
+ br :var_declarations
+ 
+:start
+ %len <- 5
+ %len <- call @int_encode (%len)
+ %ptr <- call allocate (%len, 1)
+ %newVar1 <- 0 * 8
+ %newVar0 <- %newVar1 + 8
+ %newVar2 <- %ptr + %newVar0
+ store %newVar2 <- 3
+ %newVar4 <- 1 * 8
+ %newVar3 <- %newVar4 + 8
+ %newVar5 <- %ptr + %newVar3
+ store %newVar5 <- 9
+ %newVar7 <- 2 * 8
+ %newVar6 <- %newVar7 + 8
+ %newVar8 <- %ptr + %newVar6
+ store %newVar8 <- 19
+ %newVar10 <- 3 * 8
+ %newVar9 <- %newVar10 + 8
+ %newVar11 <- %ptr + %newVar9
+ store %newVar11 <- 33
+ %newVar13 <- 4 * 8
+ %newVar12 <- %newVar13 + 8
+ %newVar14 <- %ptr + %newVar12
+ store %newVar14 <- 51
+ call print (%ptr)
+ %ptr2 <- call allocate (%len, 1)
+ %newVar16 <- 4 * 8
+ %newVar15 <- %newVar16 + 8
+ %newVar17 <- %ptr + %newVar15
+ %vv <- load %newVar17
+ %newVar19 <- 0 * 8
+ %newVar18 <- %newVar19 + 8
+ %newVar20 <- %ptr2 + %newVar18
+ store %newVar20 <- %vv
+ %newVar22 <- 3 * 8
+ %newVar21 <- %newVar22 + 8
+ %newVar23 <- %ptr + %newVar21
+ %vv <- load %newVar23
+ %newVar25 <- 1 * 8
+ %newVar24 <- %newVar25 + 8
+ %newVar26 <- %ptr2 + %newVar24
+ store %newVar26 <- %vv
+ %newVar28 <- 2 * 8
+ %newVar27 <- %newVar28 + 8
+ %newVar29 <- %ptr + %newVar27
+ %vv <- load %newVar29
+ %newVar31 <- 2 * 8
+ %newVar30 <- %newVar31 + 8
+ %newVar32 <- %ptr2 + %newVar30
+ store %newVar32 <- %vv
+ %newVar34 <- 1 * 8
+ %newVar33 <- %newVar34 + 8
+ %newVar35 <- %ptr + %newVar33
+ %vv <- load %newVar35
+ %newVar37 <- 3 * 8
+ %newVar36 <- %newVar37 + 8
+ %newVar38 <- %ptr2 + %newVar36
+ store %newVar38 <- %vv
+ %newVar40 <- 0 * 8
+ %newVar39 <- %newVar40 + 8
+ %newVar41 <- %ptr + %newVar39
+ %vv <- load %newVar41
+ %newVar43 <- 4 * 8
+ %newVar42 <- %newVar43 + 8
+ %newVar44 <- %ptr2 + %newVar42
+ store %newVar44 <- %vv
+ call print (%ptr2)
+ return 
+ 
+:var_declarations
+ br :start
+}
+
+define @int_encode (%v) {
+ 
+:NNNNNN
+ br :entry
+ 
+:entry
+ %v <- %v << 1
+ %v <- %v + 1
+ return %v
+}
+

@@ -1,0 +1,121 @@
+(@main
+(@PrintArg
+	1 0
+	rdi <- rdi
+	:call_label_ciao__ciao__ciao_9
+	goto :call_label_ciao__ciao__ciao_10
+	:call_label_ciao__ciao__ciao_10
+	rdi <- rdi
+	rdi <<= 1
+	rdi <- rdi
+	rdi += 1
+	rdi <- rdi
+	call print 1
+	return
+)
+
+(@bar
+	7 0
+	r10 <- rdi
+	rax <- rsi
+	rdx <- rdx
+	r11 <- rcx
+	r8 <- r8
+	rsi <- r9
+	rdi <- mem rsp 0
+	:call_label_ciao__ciao_7
+	goto :call_label_ciao__ciao_8
+	:call_label_ciao__ciao_8
+	rcx <- 0
+	rcx <- rcx
+	rcx += r10
+	rcx <- rcx
+	rcx += rax
+	rcx <- rcx
+	rcx += rdx
+	rcx <- rcx
+	rcx += r11
+	rcx <- rcx
+	rcx += r8
+	rcx <- rcx
+	rcx += rsi
+	rcx <- rcx
+	rcx += rdi
+	rax <- rcx
+	return
+)
+
+(@foo
+	6 0
+	rax <- rdi
+	r11 <- rsi
+	rdx <- rdx
+	rcx <- rcx
+	rdi <- r8
+	rsi <- r9
+	:call_label_ciao_4
+	goto :call_label_ciao_5
+	:call_label_ciao_5
+	r10 <- 0
+	r10 <- r10
+	r10 += rax
+	r10 <- r10
+	r10 += r11
+	r10 <- r10
+	r10 += rdx
+	r10 <- r10
+	r10 += rcx
+	r10 <- r10
+	r10 += rdi
+	r10 <- r10
+	r10 += rsi
+	rsi <- 2
+	rdx <- 3
+	rcx <- 4
+	r8 <- 5
+	r9 <- 6
+	rax <- 7
+	rdi <- r10
+	rsi <- rsi
+	rdx <- rdx
+	rcx <- rcx
+	r8 <- r8
+	r9 <- r9
+	mem rsp -16 <- rax
+	mem rsp -8 <- :call_label_ciao_6
+	call @bar 7
+	:call_label_ciao_6
+	rdi <- rax
+	rax <- rdi
+	return
+)
+
+(@main
+	0 0
+	:call_label0
+	goto :call_label1
+	:call_label1
+	rdi <- 1
+	rsi <- 2
+	rdx <- 3
+	rcx <- 4
+	r8 <- 5
+	r9 <- 6
+	rdi <- rdi
+	rsi <- rsi
+	rdx <- rdx
+	rcx <- rcx
+	r8 <- r8
+	r9 <- r9
+	mem rsp -8 <- :call_label2
+	call @foo 6
+	:call_label2
+	rdi <- rax
+	rdi <- rdi
+	mem rsp -8 <- :call_label3
+	call @PrintArg 1
+	:call_label3
+	return
+)
+
+)

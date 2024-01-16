@@ -1,0 +1,46 @@
+(@main
+(@big_func
+	7 0
+	rax <- rdi
+	r10 <- rsi
+	r11 <- rdx
+	rsi <- r9
+	rdi <- mem rsp 0
+	:call_label_ciao_3
+	goto :call_label_ciao_4
+	:call_label_ciao_4
+	rdx <- 1
+	rdx *= rax
+	rdx -= r10
+	rdx += r11
+	rdx *= rcx
+	rdx &= r8
+	rdx += rsi
+	rdx -= rdi
+	rax <- rdx
+	return
+)
+
+(@main
+	0 0
+	:call_label0
+	goto :call_label1
+	:call_label1
+	rdi <- 7
+	rsi <- 13
+	rdx <- 41
+	rcx <- -4
+	r8 <- 123
+	r9 <- -134
+	mem rsp -16 <- 2
+	mem rsp -8 <- :call_label2
+	call @big_func 7
+	:call_label2
+	rdi <- rax
+	rdi <<= 1
+	rdi += 1
+	call print 1
+	return
+)
+
+)

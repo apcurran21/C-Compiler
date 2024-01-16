@@ -1,0 +1,55 @@
+define void @main(){
+    :entry
+    int64[][][] %bigArr
+    %bigArr <- new Array(7,7,7)
+    %bigArr[0][0][0] <- 1
+    %bigArr[0][0][1] <- 3
+    %bigArr[0][0][2] <- 5
+    %bigArr[0][1][0] <- 7
+    %bigArr[0][1][1] <- 9
+    %bigArr[0][1][2] <- 11
+    %bigArr[0][2][0] <- 13
+    %bigArr[0][2][1] <- 15
+    %bigArr[0][2][2] <- 17
+    %bigArr[1][0][0] <- 19
+    %bigArr[1][0][1] <- 21
+    %bigArr[1][0][2] <- 23
+    %bigArr[1][1][0] <- 25
+    %bigArr[1][1][1] <- 27
+    %bigArr[1][1][2] <- 29
+    %bigArr[1][2][0] <- 31
+    %bigArr[1][2][1] <- 33
+    %bigArr[1][2][2] <- 35
+    %bigArr[2][0][0] <- 37
+    %bigArr[2][0][1] <- 39
+    %bigArr[2][0][2] <- 41
+    %bigArr[2][1][0] <- 43
+    %bigArr[2][1][1] <- 45
+    %bigArr[2][1][2] <- 47
+    %bigArr[2][2][0] <- 49
+    %bigArr[2][2][1] <- 51
+    %bigArr[2][2][2] <- 53
+    call print(%bigArr)
+    code %fp
+    %fp <- @diFF
+    int64 %r_val
+    %r_val <- call %fp()
+    call print(1)
+    call print(%r_val)
+    return
+
+}
+
+define int64 @diFF(){
+    :entry
+    int64 %duh
+    int64 %muh
+    int64 %val_to_return
+    %duh <- 7
+    %muh <- 9
+    %val_to_return <- %duh * %muh
+    
+    return %val_to_return
+
+    
+}

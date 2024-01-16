@@ -1,0 +1,27 @@
+(@test2
+	0
+	%newVariable12 <- 0
+	%newVariable13 <- 2
+	%newVariable14 <- 2
+	%print_val <- 1
+	rdi <- %print_val
+	call print 1
+	rdi <- 3
+	%newV <- %print_val
+	%print_val <- %newV
+	:fibonacci
+	rdi <- %print_val
+	call print 1
+	%print_val <- %newVariable12
+	%print_val += %newVariable13
+	%print_val += 1
+	%print_val -= 1
+	%print_val += 1
+	%newVariable12 <- %newVariable13
+	%newVariable13 <- %print_val
+	%newVariable13 -= 1
+	%newVariable14 += 2
+	rdi <- %print_val
+	cjump %newVariable14 <= 22 :fibonacci
+	return
+)

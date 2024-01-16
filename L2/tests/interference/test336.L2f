@@ -1,0 +1,19 @@
+(@pos_or_neg
+	1
+	%n <- rdi
+	%check <- %n < 0
+	cjump %check = 1 :call_label_ciao__ciao_4
+	goto :call_label_ciao__ciao_5
+	:call_label_ciao__ciao_4
+	rdi <- %n
+	mem rsp -8 <- :call_label_ciao__ciao_6
+	call @make_pos 1
+	:call_label_ciao__ciao_6
+	return
+	:call_label_ciao__ciao_5
+	rdi <- %n
+	mem rsp -8 <- :call_label_ciao__ciao_7
+	call @make_neg 1
+	:call_label_ciao__ciao_7
+	return
+)

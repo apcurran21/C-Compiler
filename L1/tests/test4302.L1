@@ -1,0 +1,51 @@
+(@main
+(@main
+	0 0
+	:call_label0
+	goto :call_label1
+	:call_label1
+	rdi <- 3
+	rdi >>= 1
+	rsi <- 5
+	rsi >>= 1
+	rdi *= rsi
+	rdi <<= 1
+	rdi += 1
+	rdi += 6
+	rsi <- 1
+	call allocate 2
+	rsi <- rax
+	rdi <- rsi
+	rdi += 8
+	mem rdi 0 <- 5
+	rdi <- rsi
+	rdi += 16
+	mem rdi 0 <- 3
+	rdi <- rsi
+	rdi += 24
+	mem rdi 0 <- 5
+	rdi <- rsi
+	mem rsp -8 <- :call_label2
+	call @myF 1
+	:call_label2
+	rdi <- rax
+	call print 1
+	return
+)
+
+(@myF
+	1 0
+	rsi <- rdi
+	:call_label_ciao_3
+	goto :call_label_ciao_4
+	:call_label_ciao_4
+	rdi <- 1
+	rdi *= 8
+	rdi += 16
+	rsi += rdi
+	rdi <- mem rsi 0
+	rax <- rdi
+	return
+)
+
+)

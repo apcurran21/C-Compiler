@@ -1,0 +1,35 @@
+(@main
+(@main
+	0 0
+	:call_label0
+	goto :call_label1
+	:call_label1
+	rsi <- 0
+	rdi <- 43
+	rsi += rdi
+	rdi <- 55
+	rsi += rdi
+	rdi <- 32
+	rsi += rdi
+	rdi <- 74
+	rsi += rdi
+	rdi <- 67
+	rsi += rdi
+	rdi <- 83
+	rsi += rdi
+	rdi <- 39
+	rsi += rdi
+	rdi <- 45
+	rsi += rdi
+	rdi <- 22
+	rsi += rdi
+	rdi <- 41
+	rsi += rdi
+	rsi <<= 1
+	rsi += 1
+	rdi <- rsi
+	call print 1
+	return
+)
+
+)

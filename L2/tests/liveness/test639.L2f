@@ -1,0 +1,16 @@
+(@matset
+	4
+	%arg1 <- rdi
+	%arg2 <- rsi
+	%arg3 <- rdx
+	%arg4 <- rcx
+	%off <- %arg2
+	%off *= 8
+	%off += %arg1
+	%arg1 <- mem %off 24
+	%set <- %arg3
+	%set *= 8
+	%set += %arg1
+	mem %set 8 <- %arg4
+	return
+)

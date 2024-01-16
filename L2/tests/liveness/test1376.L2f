@@ -1,0 +1,17 @@
+(@go
+	0
+	rdi <- 1
+	rsi <- 2
+	rdx <- 3
+	rcx <- 4
+	r8 <- 5
+	r9 <- 6
+	mem rsp -8 <- :fooRet
+	call @foo 6
+	:fooRet
+	rdi <- rax
+	mem rsp -8 <- :printRet
+	call @PrintArg 1
+	:printRet
+	return
+)

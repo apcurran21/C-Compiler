@@ -1,0 +1,87 @@
+(@start
+ (@newmat 2
+          %row <- rdi
+          rdi += rdi
+          rdi++
+          %row_enc <- rdi
+          rdi += 4
+          rsi += rsi
+          rsi++
+          %col_enc <- rsi
+          rsi <- 1
+          call allocate 2
+          mem rax 8 <- %row_enc
+          mem rax 16 <- %col_enc
+          %rowptr <- rax
+          %i <- 0
+          :nextcol
+          rdi <- %col_enc
+          rsi <- 1
+          call allocate 2
+          rdi @ %rowptr %i 8
+          mem rdi 24 <- rax
+          %i++
+          cjump %i < %row :nextcol
+          rax <- %rowptr
+          return)
+ // matset(a,i,j,v) = (a[i][j] := v)
+ (@matset 4
+          %off @ rdi rsi 8
+          rdi <- mem %off 24
+          %set @ rdi rdx 8
+          mem %set 8 <- rcx
+          return)
+ (@start 0
+         mem rsp -8 <- :k1
+         rdi <- 2
+         rsi <- 5
+         call @newmat 2
+         :k1
+         %M <- rax
+
+         rdi <- %M
+         call print 1
+
+         mem rsp -8 <- :s1
+         rdi <- %M
+         rsi <- 0
+         rdx <- 1
+         rcx <- 3
+         call @matset 4
+         :s1
+
+         mem rsp -8 <- :s2
+         rdi <- %M
+         rsi <- 0
+         rdx <- 2
+         rcx <- 5
+         call @matset 4
+         :s2
+
+         mem rsp -8 <- :s3
+         rdi <- %M
+         rsi <- 0
+         rdx <- 3
+         rcx <- 7
+         call @matset 4
+         :s3
+
+         mem rsp -8 <- :s4
+         rdi <- %M
+         rsi <- 1
+         rdx <- 3
+         rcx <- 9
+         call @matset 4
+         :s4
+
+         mem rsp -8 <- :s5
+         rdi <- %M
+         rsi <- 1
+         rdx <- 0
+         rcx <- -1
+         call @matset 4
+         :s5
+
+         rdi <- %M
+         call print 1
+         return))

@@ -1,0 +1,28 @@
+%from %icmp r12 r13 r14 r15 rbp rbx %sum %tmp_rdx %to %uu1 %uu2 %uu3 %uu4 %uu5 %uu6
+%icmp %from r12 r13 r14 r15 rbp rbx %sum %to %uu1 %uu2 %uu3 %uu4 %uu5 %uu6
+r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx rsi %sum %to %uu1 %uu2 %uu3 %uu4 %uu5 %uu6
+r11 r10 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx rsi %sum %to %uu1 %uu2 %uu3 %uu4 %uu5 %uu6
+r12 %from %icmp r10 r11 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx rsi %rsp_16 %sum %tmp_rax %tmp_rdx %to %uu1 %uu2 %uu3 %uu4 %uu5 %uu6
+r13 %from %icmp r10 r11 r12 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx rsi %rsp_16 %sum %tmp_rax %tmp_rdx %to %uu1 %uu2 %uu3 %uu4 %uu5 %uu6
+r14 %from %icmp r10 r11 r12 r13 r15 r8 r9 rax rbp rbx rcx rdi rdx rsi %rsp_16 %sum %tmp_rax %tmp_rdx %to %uu1 %uu2 %uu3 %uu4 %uu5 %uu6
+r15 %from %icmp r10 r11 r12 r13 r14 r8 r9 rax rbp rbx rcx rdi rdx rsi %rsp_16 %sum %tmp_rax %tmp_rdx %to %uu1 %uu2 %uu3 %uu4 %uu5 %uu6
+r8 r10 r11 r12 r13 r14 r15 r9 rax rbp rbx rcx rdi rdx rsi %rsp_16 %sum %to %uu1 %uu2 %uu3 %uu4 %uu5 %uu6
+r9 r10 r11 r12 r13 r14 r15 r8 rax rbp rbx rcx rdi rdx rsi %rsp_16 %sum %to %uu1 %uu2 %uu3 %uu4 %uu5 %uu6
+rax r10 r11 r12 r13 r14 r15 r8 r9 rbp rbx rcx rdi rdx rsi %sum %to %uu1 %uu2 %uu3 %uu4 %uu5 %uu6
+rbp %from %icmp r10 r11 r12 r13 r14 r15 r8 r9 rax rbx rcx rdi rdx rsi %rsp_16 %sum %tmp_rax %tmp_rdx %to %uu1 %uu2 %uu3 %uu4 %uu5 %uu6
+rbx %from %icmp r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rcx rdi rdx rsi %rsp_16 %sum %tmp_rax %tmp_rdx %to %uu1 %uu2 %uu3 %uu4 %uu5 %uu6
+rcx r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rdi rdx rsi %rsp_16 %sum %to %uu1 %uu2 %uu3 %uu4 %uu5 %uu6
+rdi r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdx rsi %rsp_16 %sum %to %uu1 %uu2 %uu3 %uu4 %uu5 %uu6
+rdx r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rsi %rsp_16 %sum %to %uu1 %uu2 %uu3 %uu4 %uu5 %uu6
+rsi r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx %rsp_16 %sum %to %uu1 %uu2 %uu3 %uu4 %uu5 %uu6
+%rsp_16 r12 r13 r14 r15 r8 r9 rbp rbx rcx rdi rdx rsi %sum %to %uu1 %uu2 %uu3 %uu4 %uu5 %uu6
+%sum %from %icmp r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx rsi %rsp_16 %tmp_rax %tmp_rdx %to %uu1 %uu2 %uu3 %uu4 %uu5 %uu6
+%tmp_rax r12 r13 r14 r15 rbp rbx %sum %to %uu1 %uu2 %uu3 %uu4 %uu5 %uu6
+%tmp_rdx %from r12 r13 r14 r15 rbp rbx %sum %to %uu1 %uu2 %uu3 %uu4 %uu5 %uu6
+%to %from %icmp r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx rsi %rsp_16 %sum %tmp_rax %tmp_rdx %uu1 %uu2 %uu3 %uu4 %uu5 %uu6
+%uu1 %from %icmp r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx rsi %rsp_16 %sum %tmp_rax %tmp_rdx %to %uu2 %uu3 %uu4 %uu5 %uu6
+%uu2 %from %icmp r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx rsi %rsp_16 %sum %tmp_rax %tmp_rdx %to %uu1 %uu3 %uu4 %uu5 %uu6
+%uu3 %from %icmp r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx rsi %rsp_16 %sum %tmp_rax %tmp_rdx %to %uu1 %uu2 %uu4 %uu5 %uu6
+%uu4 %from %icmp r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx rsi %rsp_16 %sum %tmp_rax %tmp_rdx %to %uu1 %uu2 %uu3 %uu5 %uu6
+%uu5 %from %icmp r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx rsi %rsp_16 %sum %tmp_rax %tmp_rdx %to %uu1 %uu2 %uu3 %uu4 %uu6
+%uu6 %from %icmp r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx rsi %rsp_16 %sum %tmp_rax %tmp_rdx %to %uu1 %uu2 %uu3 %uu4 %uu5

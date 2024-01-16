@@ -1,0 +1,73 @@
+define @main () {
+ 
+:NNNNNNNNNNN
+ br :entry
+ 
+:loop_end
+ return 
+ 
+:loop_body
+ %i_sub_2 <- %i - 2
+ %newVar1 <- 0
+ %newVar2 <- 1
+ %newVar1 <- %newVar1 + %i_sub_2
+ %newVar0 <- %newVar1 * 8
+ %newVar0 <- %newVar0 + 16
+ %newVar3 <- %fib_arr + %newVar0
+ %fib_sub_2 <- load %newVar3
+ %i_sub_1 <- %i - 1
+ %newVar5 <- 0
+ %newVar6 <- 1
+ %newVar5 <- %newVar5 + %i_sub_1
+ %newVar4 <- %newVar5 * 8
+ %newVar4 <- %newVar4 + 16
+ %newVar7 <- %fib_arr + %newVar4
+ %fib_sub_1 <- load %newVar7
+ %fib_i <- %fib_sub_2 + %fib_sub_1
+ %newVar9 <- 0
+ %newVar10 <- 1
+ %newVar9 <- %newVar9 + %i
+ %newVar8 <- %newVar9 * 8
+ %newVar8 <- %newVar8 + 16
+ %newVar11 <- %fib_arr + %newVar8
+ store %newVar11 <- %fib_i
+ %fib_i <- %fib_i << 1
+ %fib_i <- %fib_i + 1
+ call print (%fib_i)
+ %i <- %i + 1
+ br :loop_start
+ 
+:loop_start
+ %loop_done <- %i >= 21
+ br %loop_done :loop_end 
+ br :loop_body
+ 
+:entry
+ %newVar13 <- 43 >> 1
+ %newVar12 <- %newVar13
+ %newVar12 <- %newVar12 << 1
+ %newVar12 <- %newVar12 + 1
+ %newVar12 <- %newVar12 + 2
+ %fib_arr <- call allocate (%newVar12, 1)
+ %newVar14 <- %fib_arr + 8
+ store %newVar14 <- 43
+ %newVar16 <- 0
+ %newVar17 <- 1
+ %newVar16 <- %newVar16 + 0
+ %newVar15 <- %newVar16 * 8
+ %newVar15 <- %newVar15 + 16
+ %newVar18 <- %fib_arr + %newVar15
+ store %newVar18 <- 1
+ %newVar20 <- 0
+ %newVar21 <- 1
+ %newVar20 <- %newVar20 + 1
+ %newVar19 <- %newVar20 * 8
+ %newVar19 <- %newVar19 + 16
+ %newVar22 <- %fib_arr + %newVar19
+ store %newVar22 <- 1
+ call print (3)
+ call print (3)
+ %i <- 2
+ br :loop_start
+}
+

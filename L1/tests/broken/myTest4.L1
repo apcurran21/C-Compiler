@@ -1,0 +1,64 @@
+// This test deals with some calling convention stuff
+(@go
+    (@go
+        0 0 
+        mem rsp -8 <- :myF_ret
+        call @myF 0
+        :myF_ret
+        return
+    )
+    (@myF 
+        0 0
+        rdi <- 5
+        mem rsp -8 <- :myF2_ret
+        call @myF2 1
+        :myF2_ret
+        return
+    )
+    (@myF2 
+        1 3
+
+        mem rsp 8 <- r12
+        mem rsp 16 <- r13
+
+        // Save some callee saved registers and do stuff with them
+        r10 <- r12
+        mem rsp -16 <- r13
+        r12 <- 5
+        r12 += 27
+        r13 <- 6
+        r12 += r13
+
+        // Save rdi before we call myF3
+        mem rsp 0 <- rdi
+
+        // Call myF3
+        mem rsp -8 <- :myF3_ret
+        call @myF3 0
+        :myF3_ret
+
+        // Restore rdi
+        rdi <- mem rsp 0
+
+        // Print what's in rdi, should be unchanged by myF3 because we saved it
+        call print 1
+
+        r12 <- mem rsp 8
+        r13 <- mem rsp 16
+        
+        return
+    )
+    (@myF3 
+        0 0
+        rdi <- 4
+        r10 += 5
+        r11 -= 6
+        r8 *= 7
+        r9 &= 8
+        rsi <<= 4
+        rdx >>= 4
+        rcx <- 4 < 10
+        rax <- 4 <= 4
+        return
+    )
+)

@@ -1,0 +1,10 @@
+(@square
+	1
+	%n <- 0
+	rax <- 0
+	:loop2
+	rax += rdi
+	%n += 1
+	cjump %n < rdi :loop2
+	return
+)

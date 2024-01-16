@@ -1,0 +1,32 @@
+(
+(in
+(r12 r13 r14 r15 rbp rbx rdi)
+(%my_V1 r12 r13 r14 r15 rbp rbx)
+(%my_V1 %my_V2 r12 r13 r14 r15 rbp rbx)
+(%my_V1 %my_V2 r12 r13 r14 r15 rbp rbx rdi)
+(%my_V1 %my_V2 r12 r13 r14 r15 rbp rbx)
+(%my_V1 r12 r13 r14 r15 rbp rbx rdi)
+(%my_V1 r12 r13 r14 r15 rbp rbx)
+(%my_V2 r12 r13 r14 r15 rbp rbx)
+(%my_V2 r12 r13 r14 r15 rbp rbx rdi)
+(%my_V2 r12 r13 r14 r15 rbp rbx)
+(r12 r13 r14 r15 rbp rbx rdi)
+(r12 r13 r14 r15 rax rbp rbx)
+)
+
+(out
+(%my_V1 r12 r13 r14 r15 rbp rbx)
+(%my_V1 %my_V2 r12 r13 r14 r15 rbp rbx)
+(%my_V1 %my_V2 r12 r13 r14 r15 rbp rbx rdi)
+(%my_V1 %my_V2 r12 r13 r14 r15 rbp rbx)
+(%my_V1 r12 r13 r14 r15 rbp rbx rdi)
+(%my_V1 r12 r13 r14 r15 rbp rbx)
+(%my_V2 r12 r13 r14 r15 rbp rbx)
+(%my_V2 r12 r13 r14 r15 rbp rbx rdi)
+(%my_V2 r12 r13 r14 r15 rbp rbx)
+(r12 r13 r14 r15 rbp rbx rdi)
+(r12 r13 r14 r15 rax rbp rbx)
+()
+)
+
+)

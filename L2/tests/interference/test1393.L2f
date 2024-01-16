@@ -1,0 +1,9 @@
+(@f1
+	7
+	%temp <- 2
+	%passedOn <- stack-arg 0
+	%passedOn -= %temp
+	rdi <- %passedOn
+	call print 1
+	return
+)

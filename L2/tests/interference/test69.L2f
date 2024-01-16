@@ -1,0 +1,31 @@
+(@is_leap_year
+	1
+	%current_year <- rdi
+	%flag <- %current_year
+	%flag &= 15
+	cjump 0 = %flag :yes
+	goto :may_not_leap
+	:may_not_leap
+	%flag <- %current_year
+	%flag >>= 2
+	:loop_mod_25
+	cjump 25 = %flag :no
+	goto :minus_25
+	:minus_25
+	cjump 25 < %flag :loop_minus_25
+	goto :may_leap
+	:loop_minus_25
+	%flag -= 25
+	goto :loop_mod_25
+	:may_leap
+	%flag <- %current_year
+	%flag &= 3
+	cjump 0 = %flag :yes
+	goto :no
+	:yes
+	rax <- 1
+	return
+	:no
+	rax <- 0
+	return
+)

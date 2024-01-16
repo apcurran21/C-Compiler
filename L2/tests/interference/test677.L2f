@@ -1,0 +1,28 @@
+(@compute_many_diagonals
+	1
+	%sides <- rdi
+	:call_label_ciao__ciao_5
+	%decoded_sides <- %sides
+	%decoded_sides >>= 1
+	%nth_side <- 7
+	%nth_side >>= 1
+	goto :call_label_ciao__ciao_6
+	:call_label_ciao__ciao_6
+	%cond <- %decoded_sides < %nth_side
+	cjump %cond = 1 :call_label_ciao__ciao_9
+	goto :call_label_ciao__ciao_7
+	:call_label_ciao__ciao_7
+	%call_nth_side <- %nth_side
+	%call_nth_side <<= 1
+	%call_nth_side += 1
+	rdi <- %call_nth_side
+	mem rsp -8 <- :call_label_ciao__ciao_10
+	call @compute_num_diagonals_for_shape 1
+	:call_label_ciao__ciao_10
+	goto :call_label_ciao__ciao_8
+	:call_label_ciao__ciao_8
+	%nth_side += 1
+	goto :call_label_ciao__ciao_6
+	:call_label_ciao__ciao_9
+	return
+)

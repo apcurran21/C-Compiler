@@ -1,0 +1,137 @@
+(@main
+(@GetArray
+	1 1
+	mem rsp 0 <- r12
+	r12 <- rdi
+	:call_label_ciao_8
+	goto :call_label_ciao_9
+	:call_label_ciao_9
+	r12 <<= 1
+	r12 += 1
+	rdi <- r12
+	rdi >>= 1
+	rdi <<= 1
+	rdi += 1
+	rdi += 4
+	rsi <- 1
+	call allocate 2
+	rsi <- rax
+	rdi <- rsi
+	rdi += 8
+	mem rdi 0 <- 3
+	rdi <- rsi
+	rdi += 16
+	mem rdi 0 <- r12
+	rax <- rsi
+	r12 <- mem rsp 0
+	return
+)
+
+(@PopulateArray1
+	2 0
+	r8 <- rdi
+	r9 <- rsi
+	:call_label_ciao__ciao_10
+	goto :call_label_ciao__ciao_14
+	:call_label_ciao__ciao_11
+	return
+	:call_label_ciao__ciao_12
+	rdx <- rcx
+	rdx *= 8
+	rdx <<= 1
+	rdx += 1
+	rdi <- 0
+	rdi += rcx
+	rdi *= 8
+	rdi += 24
+	rsi <- r8
+	rsi += rdi
+	mem rsi 0 <- rdx
+	rcx += 1
+	goto :call_label_ciao__ciao_13
+	:call_label_ciao__ciao_13
+	rdi <- r9 <= rcx
+	cjump rdi = 1 :call_label_ciao__ciao_11
+	goto :call_label_ciao__ciao_12
+	:call_label_ciao__ciao_14
+	rcx <- 0
+	goto :call_label_ciao__ciao_13
+)
+
+(@PopulateArray2
+	2 0
+	rdx <- rdi
+	r8 <- rsi
+	:call_label_ciao__ciao__ciao_15
+	goto :call_label_ciao__ciao__ciao_18
+	:call_label_ciao__ciao__ciao_16
+	return
+	:call_label_ciao__ciao__ciao_17
+	rdi <- 0
+	rdi += rcx
+	rsi <- rdi
+	rsi *= 8
+	rsi += 24
+	rdi <- rdx
+	rdi += rsi
+	mem rdi 0 <- 5
+	rcx += 1
+	rdi <- rcx <= r8
+	cjump rdi = 1 :call_label_ciao__ciao__ciao_17
+	goto :call_label_ciao__ciao__ciao_16
+	:call_label_ciao__ciao__ciao_18
+	rcx <- 0
+	goto :call_label_ciao__ciao__ciao_17
+)
+
+(@main
+	0 2
+	mem rsp 8 <- r13
+	mem rsp 0 <- r12
+	:call_label0
+	goto :call_label1
+	:call_label1
+	r12 <- 10
+	rdi <- r12
+	mem rsp -8 <- :call_label2
+	call @GetArray 1
+	:call_label2
+	r13 <- rax
+	rdi <- r13
+	rsi <- r12
+	mem rsp -8 <- :call_label3
+	call @PopulateArray1 2
+	:call_label3
+	rdi <- r13
+	mem rsp -8 <- :call_label4
+	call @printResultArray 1
+	:call_label4
+	rdi <- r12
+	mem rsp -8 <- :call_label5
+	call @GetArray 1
+	:call_label5
+	r13 <- rax
+	rdi <- r13
+	rsi <- r12
+	mem rsp -8 <- :call_label6
+	call @PopulateArray2 2
+	:call_label6
+	rdi <- r13
+	mem rsp -8 <- :call_label7
+	call @printResultArray 1
+	:call_label7
+	r12 <- mem rsp 0
+	r13 <- mem rsp 8
+	return
+)
+
+(@printResultArray
+	1 0
+	:call_label_ciao__ciao__ciao__ciao_19
+	goto :call_label_ciao__ciao__ciao__ciao_20
+	:call_label_ciao__ciao__ciao__ciao_20
+	call print 1
+	return
+)
+
+)

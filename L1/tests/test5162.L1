@@ -1,0 +1,65 @@
+// print the Fibonacci sequence (10 elems)
+// {s:10, 0,1,1,2,3,5,8,13,21,34}
+(@main
+  (@main
+    0 0
+    // the number of elems, 2 at least
+    rdi <- 10
+    cjump rdi < 2 :bad_input
+
+    // array init:
+    rdi <<= 1
+    rdi ++
+    rsi <- 1
+    call allocate 2
+    mem rax 8 <- 0
+    mem rax 16 <- 1
+
+    // iteration:
+    rdi <- mem rax 0
+    rsi <- 3
+    :loop
+    cjump rdi < rsi :end_loop
+    rdx @ rax rsi 8
+    rcx <- mem rdx -16
+    rcx += mem rdx -8
+    mem rdx 0 <- rcx
+    rsi ++
+    goto :loop
+
+    // encode and print array:
+    :end_loop
+    mem rsp -8 <- :array_encode_ret
+    rdi <- rax
+    call @array_encode 1
+
+    :array_encode_ret
+    rdi <- rax
+    call print 1
+
+    :bad_input
+    return
+  )
+
+  // encode elements in an array as numbers in-place,
+  // return the array address:
+  (@array_encode
+    1 0
+    rax <- rdi
+    rdi <- mem rax 0
+    rsi <- 1
+
+    :loop_1
+    cjump rdi < rsi :end_loop_1
+    rdx @ rax rsi 8
+    rcx <- mem rdx 0
+    rcx <<= 1
+    rcx ++
+    mem rdx 0 <- rcx
+    rsi ++
+    goto :loop_1
+
+    :end_loop_1
+    return
+  )
+)

@@ -1,0 +1,68 @@
+
+define :eight(%a, %b, %c, %d, %e, %f, %g, %h){
+
+    %ab_cmp <- %a >= %b
+    br %ab_cmp :a_leq
+    %a <- %b
+    :a_leq
+
+    %cd_cmp <- %c >= %d
+    br %cd_cmp :c_leq
+    %c <- %d
+    :c_leq
+
+    %ef_cmp <- %e >= %f
+    br %ef_cmp :e_leq
+    %e <- %f
+    :e_leq
+
+    %gh_cmp <- %g >= %h
+    br %gh_cmp :g_leq
+    %g <- %h
+    :g_leq
+
+    // Second level comparison
+
+    %ac_cmp <- %a >= %c
+    br %ac_cmp :AC_comp_a_leq
+    %a <- %c
+
+    :AC_comp_a_leq
+
+    %eg_cmp <- %e >= %g
+    br %eg_cmp :EG_comp_e_leq
+    %e <- %g
+
+    :EG_comp_e_leq
+
+    // Last level comparison
+
+    %ae_cmp <- %a >= %e
+    br %ae_cmp :AE_comp_a_leq
+    %a <- %e
+
+    :AE_comp_a_leq
+
+   
+    return %a   
+}
+
+define :main(){
+    
+    %myRes <- call :eight(
+        1,
+        3,
+        74233,
+        65366,
+        42,
+        13,
+        -2,
+        141080
+    )
+    
+    %toPrint <- %myRes << 1
+    %toPrint <- %toPrint +  1
+    call print(%toPrint)
+    
+    return %myRes
+}

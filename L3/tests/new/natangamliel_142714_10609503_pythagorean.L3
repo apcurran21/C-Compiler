@@ -1,0 +1,63 @@
+// finds pythagorean distance rounded down to nearest integer
+
+define :abs (%num) {
+	%check <- %num < 0
+	br %check :negative
+	return %num
+	:negative
+	%neg <- %num * -1
+	return %neg
+}
+
+// if test^2 < num, store and inc, else return root
+
+define :sqrt (%num) {
+	%root <- 0
+	%test <- 0
+
+	:testing
+	%testsq <- %test * %test
+	%check <- %testsq > %num
+	br %check :done
+	%root <- %test
+	%test <- %test + 1
+	br :testing
+
+	:done
+	return %root
+
+}
+
+define :dist (%x0, %y0, %x1, %y1) {
+	%a <- %x0 - %x1
+	%b <- %y0 - %y1
+	%a <- call :abs (%a)
+	%b <- call :abs (%b)
+
+	%a_square <- %a * %a
+	%b_square <- %b * %b
+	%c_square <- %a_square + %b_square
+
+	%c <- call :sqrt (%c_square)
+
+	return %c
+}
+
+define :int_print (%num) {
+	%to_print <- %num << 1
+	%to_print <- %to_print + 1
+	call print (%to_print)
+	return
+}
+
+define :main () {
+	%var1 <- 6
+	%var2 <- 1
+	%var3 <- 3
+	%var4 <- 5
+
+	%distance <- call :dist (%var1, %var2, %var3, %var4)
+	call :int_print (%distance)
+
+	return
+}

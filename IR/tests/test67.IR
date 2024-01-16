@@ -1,0 +1,46 @@
+//return max of array that is of at least size 2
+define void @main() {
+ :entrance
+ int64[] %arr
+ %arr <- new Array(100)
+ int64 %ret_val
+ %ret_val <- call @max(%arr)
+ return
+}
+
+define int64 @max(int64[] %array) {
+    :entrance
+    int64 %sizeOfArray
+    int64 %first
+    int64 %max2
+    int64 %index
+    int64 %currMultFactor
+    int64 %curr
+    int64 %temp
+    int64 %newMax
+    int64 %continue
+    int64 %max
+    int64 %size
+    %sizeOfArray <- length %array 0
+    %index <- 1
+    br :loop
+
+    :loop
+    %currMultFactor <- %index * 8
+    %temp <- %array[%currMultFactor]
+    %newMax <- %temp - %max
+    br %newMax :setNewMax :cont
+    
+    :cont
+    %size <- length %array 0
+    %continue <- %size - %index
+  br %continue :loop :setNewMax
+
+  :setNewMax
+  %max <- %temp
+  br :return_here
+
+  :return_here
+  %max <- 1 
+  return %max
+}

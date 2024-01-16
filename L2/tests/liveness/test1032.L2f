@@ -1,0 +1,24 @@
+(@printArrayGT
+	1
+	:call_label5
+	%i <- 6
+	goto :call_label6
+	:call_label6
+	%keepExecuting <- 0 < %i
+	cjump %keepExecuting = 1 :call_label7
+	goto :call_label9
+	:call_label7
+	mem rsp -8 <- :call_label10
+	rdi <- %i
+	call @encodedValue 1
+	:call_label10
+	%encodedI <- rax
+	rdi <- %encodedI
+	call print 1
+	goto :call_label8
+	:call_label8
+	%i -= 1
+	goto :call_label6
+	:call_label9
+	return
+)

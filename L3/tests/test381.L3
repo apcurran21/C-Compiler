@@ -1,0 +1,78 @@
+define @main() {
+    //call @Bubble_Sort(100, 30, 80, 7, 60, 19)
+    call @Bubble_Sort(77, 42, 13, 16, 774, 209)
+    //call @Bubble_Sort(3, 0, 0, 0, 0, 1)
+    return
+}
+
+define @encode(%unencoded) {
+    %shifted <- %unencoded << 1
+    %encoded <- %shifted + 1
+    return %encoded
+}
+
+define @decode(%encoded) {
+    %decoded <- %encoded >> 1
+    return %decoded
+}
+
+define @Bubble_Sort (%arg1, %arg2, %arg3, %arg4, %arg5, %arg6) {
+    // Copy input into memory
+    %len  <- call @encode(6)
+    %init <- call @encode(0)
+    %arr  <- call allocate(%len, %init)
+    %ptr  <- %arr + 8
+    // Record array[0] address
+    %arr_start <- %ptr
+    store %ptr <- %arg1
+    %ptr       <- %ptr + 8
+    store %ptr <- %arg2
+    %ptr       <- %ptr + 8
+    store %ptr <- %arg3
+    %ptr       <- %ptr + 8
+    store %ptr <- %arg4
+    %ptr       <- %ptr + 8
+    store %ptr <- %arg5
+    %ptr       <- %ptr + 8
+    store %ptr <- %arg6
+    // Record array[-1] address
+    %arr_end   <- %ptr
+
+    %loop_end <- %arr_end
+    :comparison_end_point_decrement_loop
+
+        %i <- %arr_start
+        :print_loop
+            %arr_i    <- load %i
+            %enc_arr_i <- call @encode(%arr_i)
+            call print(%enc_arr_i)
+            
+            %i <- %i + 8
+            %not_at_end <- %i <= %arr_end
+        br %not_at_end :print_loop
+        %big_num     <- 888888888888888888
+        %enc_big_num <- call @encode(%big_num)
+        call print(%enc_big_num)
+
+        %i   <- %arr_start
+        %ip1 <- %arr_start + 8
+        :comparison_loop
+            %arr_i   <- load %i
+            %arr_ip1 <- load %ip1
+            %arr_i_lte_ip1 <- %arr_i <= %arr_ip1
+            br %arr_i_lte_ip1 :dont_swap
+            :swap
+                store %i <- %arr_ip1
+                store %ip1 <- %arr_i
+            :dont_swap
+            %i   <- %ip1
+            %ip1 <- %ip1 + 8
+            %not_at_end <- %i < %loop_end
+        br %not_at_end :comparison_loop
+
+        %loop_end   <- %loop_end - 8
+        %not_at_end <- %arr_start <= %loop_end
+    br %not_at_end :comparison_end_point_decrement_loop
+
+    return
+ } 

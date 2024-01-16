@@ -1,0 +1,16 @@
+(@pow
+	2
+	%x <- rdi
+	%e <- rsi
+	%result <- 1
+	%early_return <- %e <= 0
+	cjump %early_return = 1 :call_label_ciao__ciao_8
+	:call_label_ciao__ciao_7
+	%result *= %x
+	%e -= 1
+	%not_done <- 0 < %e
+	cjump %not_done = 1 :call_label_ciao__ciao_7
+	:call_label_ciao__ciao_8
+	rax <- %result
+	return
+)

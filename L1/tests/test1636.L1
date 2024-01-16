@@ -1,0 +1,75 @@
+(@main
+(@main
+	0 3
+	mem rsp 16 <- r14
+	mem rsp 8 <- r13
+	mem rsp 0 <- r12
+	r12 <- 1
+	r13 <- 1
+	r14 <- 1
+	:call_label0
+	rdi <- 21 <= r14
+	cjump rdi = 1 :call_label4
+	r14 <- r14
+	r14 >>= 1
+	r12 <- r12
+	r12 >>= 1
+	r12 <- r12
+	r12 += r14
+	r12 <- r12
+	r12 <<= 1
+	r14 <- r14
+	r14 <<= 1
+	r12 <- r12
+	r12 += 1
+	r14 <- r14
+	r14 += 1
+	rdi <- 21 <= r12
+	cjump rdi = 1 :call_label3
+	rdi <- 21
+	:call_label1
+	rsi <- rdi < 1
+	cjump rsi = 1 :call_label2
+	rdi <- rdi
+	rdi -= 2
+	goto :call_label1
+	:call_label2
+	r13 <- r13
+	r13 += 2
+	:call_label3
+	r14 <- r14
+	r14 += 2
+	goto :call_label0
+	:call_label4
+	rdi <- r12
+	call print 1
+	rdi <- r13
+	call print 1
+	rdi <- r14
+	call print 1
+	r12 <- r12
+	r12 >>= 1
+	r13 <- r13
+	r13 >>= 1
+	r14 <- r14
+	r14 >>= 1
+	rdi <- r14
+	rdi <- rdi
+	rdi += r13
+	rdi <- rdi
+	rdi += r12
+	rdi <- rdi
+	rdi <<= 1
+	rdi <- rdi
+	rdi += 1
+	rdi <- rdi
+	rdi += 20
+	rdi <- rdi
+	call print 1
+	r12 <- mem rsp 0
+	r13 <- mem rsp 8
+	r14 <- mem rsp 16
+	return
+)
+
+)

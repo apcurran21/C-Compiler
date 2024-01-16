@@ -1,0 +1,28 @@
+(@max
+	8
+	cjump rsi < rdi :max2
+	rdi <- rsi
+	:max2
+	cjump rdx < rdi :max3
+	rdi <- rdx
+	:max3
+	cjump rcx < rdi :max4
+	rdi <- rcx
+	:max4
+	cjump r8 < rdi :max5
+	rdi <- r8
+	:max5
+	cjump r9 < rdi :max6
+	rdi <- r9
+	:max6
+	rsi <- stack-arg 0
+	cjump rsi < rdi :max7
+	rdi <- rsi
+	:max7
+	rsi <- stack-arg 8
+	cjump rsi < rdi :max8
+	rdi <- rsi
+	:max8
+	rax <- rdi
+	return
+)

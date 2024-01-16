@@ -1,0 +1,117 @@
+(@main
+  (@sqrt_ceil
+    1
+    %n <- rdi
+    :call_label0
+    goto :call_label4
+    :call_label1
+    rax <- %sqrt
+    return
+    :call_label2
+    %sqrt <- %sqrt
+    %sqrt += 1
+    goto :call_label3
+    :call_label3
+    %sqrt_tmp <- %sqrt
+    %sqrt_tmp *= %sqrt
+    %end <- %n < %sqrt_tmp
+
+    cjump %end = 1 :call_label1
+    goto :call_label2
+    :call_label4
+    %sqrt <- 1
+    goto :call_label3
+  )
+  (@mod
+    2
+    %a <- rdi
+    %b <- rsi
+    :call_label_ciao_5
+    goto :call_label_ciao_9
+    :call_label_ciao_6
+    rax <- %a
+    return
+    :call_label_ciao_7
+    %a <- %a
+    %a -= %b
+    goto :call_label_ciao_8
+    :call_label_ciao_8
+    %end <- %a < %b
+
+    cjump %end = 1 :call_label_ciao_6
+    goto :call_label_ciao_7
+    :call_label_ciao_9
+    goto :call_label_ciao_8
+  )
+  (@primetest
+    1
+    %n <- rdi
+    :call_label_ciao__ciao_10
+    goto :call_label_ciao__ciao_15
+    :call_label_ciao__ciao_11
+    rax <- 0
+    return
+    :call_label_ciao__ciao_12
+    rax <- 1
+    return
+    :call_label_ciao__ciao_13
+    %div <- %div
+    %div += 1
+    %finished <- %sqrt_n < %div
+
+    cjump %finished = 1 :call_label_ciao__ciao_12
+    goto :call_label_ciao__ciao_14
+    :call_label_ciao__ciao_14
+    rdi <- %n
+    rsi <- %div
+
+mem rsp -8 <- :call_label_ciao__ciao_16
+    call @mod 2
+
+:call_label_ciao__ciao_16
+    %divisible <- rax
+    %finished <- %divisible = 0
+
+    cjump %finished = 1 :call_label_ciao__ciao_11
+    goto :call_label_ciao__ciao_13
+    :call_label_ciao__ciao_15
+    %div <- 2
+    rdi <- %n
+
+mem rsp -8 <- :call_label_ciao__ciao_17
+    call @sqrt_ceil 1
+
+:call_label_ciao__ciao_17
+    %sqrt_n <- rax
+    goto :call_label_ciao__ciao_14
+  )
+  (@main
+    0
+    :call_label_ciao__ciao__ciao_18
+    goto :call_label_ciao__ciao__ciao_19
+    :call_label_ciao__ciao__ciao_19
+    %n <- 289
+    %n <- %n
+    %n <<= 1
+    %n <- %n
+    %n += 1
+    rdi <- %n
+    call print 1
+    %n <- %n
+    %n >>= 1
+    rdi <- %n
+
+mem rsp -8 <- :call_label_ciao__ciao__ciao_20
+    call @primetest 1
+
+:call_label_ciao__ciao__ciao_20
+    %n <- rax
+    %n <- %n
+    %n <<= 1
+    %n <- %n
+    %n += 1
+    rdi <- %n
+    call print 1
+    return
+  )
+)

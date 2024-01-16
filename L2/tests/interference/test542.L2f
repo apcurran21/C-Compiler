@@ -1,0 +1,9 @@
+(@space
+	0
+	%var <- 65
+	rdi <- %var
+	call print 1
+	%var <- rax
+	rax <- %var
+	return
+)

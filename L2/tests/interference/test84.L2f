@@ -1,0 +1,13 @@
+(@entry
+	0
+	rdi <- 541
+	rsi <- 7919
+	mem rsp -8 <- :goCallsGcdReturn
+	call @gcd 2
+	:goCallsGcdReturn
+	rdi <- rax
+	rdi <<= 1
+	rdi += 1
+	call print 1
+	return
+)

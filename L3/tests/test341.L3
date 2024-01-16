@@ -1,0 +1,48 @@
+define @mod(%x, %y) {
+    %r <- %x = 0
+    br %r :mgood
+    
+    :misneg
+    %r <- %x > -1
+    br %r :mloop
+    return 0
+
+    :mloop
+    %x <- %x - %y
+    %r <- %x = 0
+    br %r :mgood
+    br :misneg
+
+    :mgood
+    return 1
+}
+
+define @mod_sum(%x) {
+    %original <- %x
+    %sum <- 0
+    %processing <- 0
+
+    :sumloop
+    %processing <- %processing + 1
+    %r <- %original <= %processing
+    br %r :done
+    %isMod <- call @mod(%processing, 3)
+    br %isMod :dosum
+    %isMod <- call @mod(%processing, 5)
+    %r <- %isMod = 0
+    br %r :sumloop
+    :dosum
+    %sum <- %sum + %processing
+    br :sumloop
+
+    :done
+    return %sum
+}
+
+define @main() {
+    %v <- call @mod_sum(1000)
+    %v <- %v << 1
+    %v <- %v + 1
+    call print(%v)
+    return
+}

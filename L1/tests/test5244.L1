@@ -1,0 +1,50 @@
+(@main
+
+ (@main 0 1
+        mem rsp 0 <- rbx
+
+        rdi <- 7
+        rsi <- 1
+        call allocate 2
+        rbx <- rax
+
+        rdi <- 1
+        :outer
+
+        rdi += rdi
+        rdi++
+        mem rbx 8 <- rdi
+
+        rsi <- 1
+        :inner
+
+        rax <- mem rbx 8
+        rax *= rsi
+        rax -= rsi
+
+        rsi += rsi
+        rsi++
+        mem rbx 16 <- rsi
+
+        rax++
+        mem rbx 24 <- rax
+
+        rdi <- rbx
+        call print 1
+
+        rsi <- mem rbx 16
+        rsi >>= 1
+
+        rsi++
+        cjump rsi < 10 :inner
+
+        rdi <- mem rbx 8
+        rdi >>= 1
+
+        rdi++
+        cjump rdi < 10 :outer
+
+        rbx <- mem rsp 0
+
+        rax -= rax
+        return))

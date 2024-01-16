@@ -1,0 +1,17 @@
+(@do_math
+	7
+	rax <- rdi
+	rax += rsi
+	rax += rdx
+	rax += rcx
+	rax += r8
+	rax += r9
+	rdi <- stack-arg 0
+	rax += rdi
+	rax <<= 1
+	rdi <- rax
+	mem rsp -8 <- :math_ret
+	call @decode 1
+	:math_ret
+	return
+)

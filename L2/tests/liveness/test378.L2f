@@ -1,0 +1,13 @@
+(@vol
+	1
+	%r <- rdi
+	%r2 <- %r
+	%r2 *= %r
+	%r3 <- %r2
+	%r3 *= %r
+	%factor <- 4
+	%v <- %r3
+	%v *= %factor
+	rax <- %v
+	return
+)

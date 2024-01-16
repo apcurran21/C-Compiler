@@ -1,0 +1,26 @@
+void main(){
+    int64 seconds
+    int64 minutes
+    int64 cmp1
+    int64 cmp2
+    seconds <- 0
+    minutes <- 0
+    :begin
+    print(minutes)
+    print(seconds)
+    cmp2 <- minutes > 2
+    br cmp2 :end :cont
+    :cont
+    cmp1 <- seconds >= 60
+    br cmp1 :tock :tick
+    :tock
+    minutes <- minutes + 1
+    seconds <- 0
+    br :begin
+    :tick
+    seconds <- seconds + 1
+    br :begin
+    :end
+    return
+
+}

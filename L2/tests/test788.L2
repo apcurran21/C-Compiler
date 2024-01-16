@@ -1,0 +1,46 @@
+(@go
+	(@go
+		0 
+		rdi <- 5
+		rsi <- 3
+		call allocate 2
+		%my_V1 <- rax
+		rdi <- %my_V1
+		call print 1
+		mem %my_V1 16 <- 5
+		rdi <- %my_V1
+		call print 1
+		rdi <- 5
+		rsi <- 7
+		call allocate 2
+		%my_V2 <- rax
+		mem %my_V2 16 <- 9
+		rdi <- 5
+		rsi <- %my_V1
+		call allocate 2
+		%newVariable14 <- rax
+		mem %newVariable14 16 <- %my_V2
+		rdi <- %newVariable14
+		call print 1
+		rdi <- %newVariable14
+		mem rsp -8 <- :arrayprint_ret
+		call @arrayprint 1
+		:arrayprint_ret
+		return
+	)
+	(@arrayprint
+		1 
+		%my_V1 <- rdi
+		%my_V2 <- mem %my_V1 8
+		rdi <- mem %my_V2 8
+		call print 1
+		rdi <- mem %my_V2 16
+		call print 1
+		%my_V2 <- mem %my_V1 16
+		rdi <- mem %my_V2 8
+		call print 1
+		rdi <- mem %my_V2 16
+		call print 1
+		return
+	)
+)

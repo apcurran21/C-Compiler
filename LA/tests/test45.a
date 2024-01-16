@@ -1,0 +1,61 @@
+int64 mod(int64 x, int64 y) {
+    int64 r
+    r <- x = 0
+    br r :mgood :misneg
+    
+    :misneg
+    r <- x > -1
+    br r :mloop :ret_early
+    :ret_early
+    return 0
+
+    :mloop
+    x <- x - y
+    r <- x = 0
+    br r :mgood :misneg
+
+    :mgood
+    return 1
+}
+
+int64 mod_sum(int64 x) {
+    int64 original
+    int64 sum
+    int64 processing
+    int64 r
+    int64 isMod
+
+    original <- x
+    sum <- 0
+    processing <- 0
+    br :sumloop
+
+    :sumloop
+    processing <- processing + 1
+    r <- original <= processing
+    br r :done :notdone0
+
+    :notdone0
+    isMod <- mod(processing, 3)
+    br isMod :dosum :notdone1
+
+    :notdone1
+    isMod <- mod(processing, 5)
+    r <- isMod = 0
+    br r :sumloop :dosum
+
+    :dosum
+    sum <- sum + processing
+    br :sumloop
+
+    :done
+    return sum
+}
+
+void main() {
+    :entry
+    int64 v
+    v <- mod_sum(1000)
+    print(v)
+    return
+}

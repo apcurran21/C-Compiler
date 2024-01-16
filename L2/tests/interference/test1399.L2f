@@ -1,0 +1,53 @@
+(@main
+	0
+	rdi <- 11
+	mem rsp -8 <- :call_label_ciao__ciao__ciao_18
+	call @firstNPrimes 1
+	:call_label_ciao__ciao__ciao_18
+	%primes <- rax
+	rdi <- %primes
+	call print 1
+	rdi <- 41
+	mem rsp -8 <- :call_label_ciao__ciao__ciao_19
+	call @firstNPrimes 1
+	:call_label_ciao__ciao__ciao_19
+	%primes <- rax
+	rdi <- %primes
+	call print 1
+	rdi <- 103
+	mem rsp -8 <- :call_label_ciao__ciao__ciao_20
+	call @firstNPrimes 1
+	:call_label_ciao__ciao__ciao_20
+	%primes <- rax
+	rdi <- %primes
+	call print 1
+	rdi <- 129
+	mem rsp -8 <- :call_label_ciao__ciao__ciao_21
+	call @firstNPrimes 1
+	:call_label_ciao__ciao__ciao_21
+	%primes <- rax
+	rdi <- %primes
+	call print 1
+	rdi <- 1
+	mem rsp -8 <- :call_label_ciao__ciao__ciao_22
+	call @firstNPrimes 1
+	:call_label_ciao__ciao__ciao_22
+	%primes <- rax
+	rdi <- %primes
+	call print 1
+	rdi <- -5
+	mem rsp -8 <- :call_label_ciao__ciao__ciao_23
+	call @firstNPrimes 1
+	:call_label_ciao__ciao__ciao_23
+	%primes <- rax
+	rdi <- %primes
+	call print 1
+	rdi <- 3
+	mem rsp -8 <- :call_label_ciao__ciao__ciao_24
+	call @firstNPrimes 1
+	:call_label_ciao__ciao__ciao_24
+	%primes <- rax
+	rdi <- %primes
+	call print 1
+	return
+)

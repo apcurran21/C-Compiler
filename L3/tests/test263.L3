@@ -1,0 +1,25 @@
+define @main () {
+ 
+:NNNNNNNNNNN
+ br :entry
+ 
+:exit
+ %i <- %i << 1
+ %i <- %i + 1
+ call print (%i)
+ return 
+ 
+:loopBody
+ %i <- %i + 1
+ br :loopHeader
+ 
+:loopHeader
+ %c <- %i = 10
+ br %c :exit 
+ br :loopBody
+ 
+:entry
+ %i <- 0
+ br :loopHeader
+}
+

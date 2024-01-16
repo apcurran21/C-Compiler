@@ -1,0 +1,8 @@
+define @main () {
+ 
+:entry
+ %p <- call allocate (5, 1)
+ call print (%p)
+ return 
+}
+

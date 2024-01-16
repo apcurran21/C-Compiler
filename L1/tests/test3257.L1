@@ -1,0 +1,117 @@
+(@main
+(@main
+	0 1
+	mem rsp 0 <- r12
+	:call_label0
+	rdi <- 5
+	rdi >>= 1
+	rsi <- rdi
+	rdi <- 5
+	rdi >>= 1
+	rsi <- rsi
+	rsi *= rdi
+	rsi <- rsi
+	rsi <<= 1
+	rsi <- rsi
+	rsi += 1
+	rsi <- rsi
+	rsi += 6
+	rdi <- rsi
+	rsi <- 1
+	call allocate 2
+	r12 <- rax
+	mem r12 8 <- 5
+	mem r12 16 <- 5
+	mem r12 24 <- 5
+	rdi <- r12
+	call print 1
+	rdi <- r12
+	mem rsp -8 <- :call_label1
+	call @initArray 1
+	:call_label1
+	rdi <- r12
+	call print 1
+	rdi <- r12
+	rsi <- 0
+	rdx <- 0
+	mem rsp -8 <- :call_label2
+	call @printE 3
+	:call_label2
+	rdi <- r12
+	rsi <- 0
+	rdx <- 1
+	mem rsp -8 <- :call_label3
+	call @printE 3
+	:call_label3
+	rdi <- r12
+	rsi <- 1
+	rdx <- 0
+	mem rsp -8 <- :call_label4
+	call @printE 3
+	:call_label4
+	rdi <- r12
+	rsi <- 1
+	rdx <- 1
+	mem rsp -8 <- :call_label5
+	call @printE 3
+	:call_label5
+	r12 <- mem rsp 0
+	return
+)
+
+(@initArray
+	1 0
+	rcx <- rdi
+	:call_label_ciao_6
+	rdx <- 0
+	rdi <- mem rcx 24
+	rsi <- 1
+	rdi <- rdi
+	rdi >>= 1
+	rsi <- rsi
+	rsi *= rdi
+	rdx @ rdx rsi 1
+	rdx <- rdx
+	rdx += 0
+	rdi <- rdx
+	rdi *= 8
+	rdi <- rdi
+	rdi += 32
+	rsi <- rcx
+	rsi += rdi
+	mem rsi 0 <- 9
+	return
+)
+
+(@printE
+	3 0
+	r9 <- rdi
+	rsi <- rsi
+	rdx <- rdx
+	:call_label_ciao__ciao_7
+	r8 <- 0
+	rdi <- mem r9 24
+	rcx <- 1
+	rdi <- rdi
+	rdi >>= 1
+	rcx <- rcx
+	rcx *= rdi
+	rdi <- rsi
+	rdi *= rcx
+	r8 <- r8
+	r8 += rdi
+	r8 <- r8
+	r8 += rdx
+	rdi <- r8
+	rdi *= 8
+	rdi <- rdi
+	rdi += 32
+	rsi <- r9
+	rsi += rdi
+	rdi <- mem rsi 0
+	rdi <- rdi
+	call print 1
+	return
+)
+
+)

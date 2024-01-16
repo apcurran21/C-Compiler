@@ -1,0 +1,20 @@
+%more_to_pop r12 r13 r14 r15 rax rbp rbx %stack_ptr
+%pop_package %popped_val r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx rsi
+%popped_val %pop_package r12 r13 r14 r15 rbp rbx
+r10 %pop_package r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx rsi %stack_ptr
+r11 %pop_package r10 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx rsi %stack_ptr
+r12 %more_to_pop %pop_package %popped_val r10 r11 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx rsi %stack_ptr %stack_size
+r13 %more_to_pop %pop_package %popped_val r10 r11 r12 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx rsi %stack_ptr %stack_size
+r14 %more_to_pop %pop_package %popped_val r10 r11 r12 r13 r15 r8 r9 rax rbp rbx rcx rdi rdx rsi %stack_ptr %stack_size
+r15 %more_to_pop %pop_package %popped_val r10 r11 r12 r13 r14 r8 r9 rax rbp rbx rcx rdi rdx rsi %stack_ptr %stack_size
+r8 %pop_package r10 r11 r12 r13 r14 r15 r9 rax rbp rbx rcx rdi rdx rsi %stack_ptr
+r9 %pop_package r10 r11 r12 r13 r14 r15 r8 rax rbp rbx rcx rdi rdx rsi %stack_ptr
+rax %more_to_pop %pop_package r10 r11 r12 r13 r14 r15 r8 r9 rbp rbx rcx rdi rdx rsi %stack_ptr %stack_size
+rbp %more_to_pop %pop_package %popped_val r10 r11 r12 r13 r14 r15 r8 r9 rax rbx rcx rdi rdx rsi %stack_ptr %stack_size
+rbx %more_to_pop %pop_package %popped_val r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rcx rdi rdx rsi %stack_ptr %stack_size
+rcx %pop_package r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rdi rdx rsi %stack_ptr
+rdi %pop_package r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdx rsi %stack_ptr
+rdx %pop_package r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rsi %stack_ptr
+rsi %pop_package r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx %stack_ptr
+%stack_ptr %more_to_pop r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx rsi %stack_size
+%stack_size r12 r13 r14 r15 rax rbp rbx %stack_ptr

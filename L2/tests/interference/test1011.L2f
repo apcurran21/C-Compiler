@@ -1,0 +1,15 @@
+(@SA
+	1
+	%r <- rdi
+	:call_label_ciao__ciao__ciao_10
+	goto :call_label_ciao__ciao__ciao_11
+	:call_label_ciao__ciao__ciao_11
+	%r2 <- %r
+	%r2 *= %r
+	%r2 *= 4
+	%pi <- 3
+	%sa <- %r2
+	%sa *= %pi
+	rax <- %sa
+	return
+)

@@ -1,0 +1,20 @@
+(@create_array
+	2
+	%create_start <- rdi
+	%create_end <- rsi
+	%size_of_array <- %create_end
+	%size_of_array -= %create_start
+	%size_of_array >>= 2
+	%size_of_array += 1
+	rdi <- %size_of_array
+	mem rsp -8 <- :call_label_ciao_2
+	call @encode 1
+	:call_label_ciao_2
+	%size_of_array <- rax
+	rdi <- %size_of_array
+	rsi <- 1
+	call allocate 2
+	%created_array <- rax
+	rax <- %created_array
+	return
+)

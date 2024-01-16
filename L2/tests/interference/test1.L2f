@@ -1,0 +1,14 @@
+(@testing
+	0
+	rdi <- 5
+	rsi <- 85
+	mem rsp -8 <- :myfunc_ret
+	call allocate 2
+	:myfunc_ret
+	mem rax 16 <- 5
+	rdi <- rax
+	mem rsp -8 <- :rett
+	call @printArray 1
+	:rett
+	return
+)

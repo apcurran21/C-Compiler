@@ -1,0 +1,37 @@
+
+define :main(){
+    %right_num <- 66 // the number to be guessed
+
+    // loop if guess the wrong number
+    :too_large_ret  
+    :too_small_ret
+    %num_in <- call input()
+
+    // input convert
+    %num_in <- %num_in >> 1
+    %eq_res <- %num_in = %right_num
+    %ls_res <- %num_in < %right_num
+    br %eq_res :correct_guess // if correct then end
+    br %ls_res :is_smaller
+    call :too_large()
+    :is_smaller
+    call :too_small()
+
+    :correct_guess
+    // output convert
+    %num_in <- %num_in << 1
+    %num_in <- %num_in + 1
+    call print(%num_in)
+    return
+}
+
+define :too_large(){
+    call print(3)       // print 1
+    return
+}
+
+define :too_small(){
+    call print(1)       // print 0
+    return
+}
+

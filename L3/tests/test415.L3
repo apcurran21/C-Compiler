@@ -1,0 +1,55 @@
+define @main() {
+	%a <- 1
+	%b <- 2
+	%c <- 3
+	%d <- 4
+	%e <- 5
+	%f <- 6
+
+	%sum <- call @foo(%a, %b, %c, %d, %e, %f)
+
+	call @PrintArg(%sum)
+
+	return
+}
+
+define @foo(%a, %b, %c, %d, %e, %f) {
+	%sum <- 0
+	%sum <- %sum + %a
+	%sum <- %sum + %b
+	%sum <- %sum + %c
+	%sum <- %sum + %d
+	%sum <- %sum + %e
+	%sum <- %sum + %f
+
+	%g <- 2
+	%h <- 3
+	%i <- 4
+	%j <- 5
+	%k <- 6
+	%l <- 7
+
+	%res <- call @bar(%sum, %g, %h, %i, %j, %k, %l)
+
+	return %res
+}
+
+define @bar(%a, %b, %c, %d, %e, %f, %g) {
+	%sum <- 0
+	%sum <- %sum + %a
+	%sum <- %sum + %b
+	%sum <- %sum + %c
+	%sum <- %sum + %d
+	%sum <- %sum + %e
+	%sum <- %sum + %f
+	%sum <- %sum + %g
+
+	return %sum
+}
+
+define @PrintArg(%arg) {
+	%arg <- %arg << 1
+	%arg <- %arg + 1
+	call print(%arg)
+	return
+}

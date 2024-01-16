@@ -1,0 +1,12 @@
+(@main
+	0
+	:call_label0
+	%number <- 4
+	%exp <- 6
+	rdi <- %number
+	rsi <- %exp
+	mem rsp -8 <- :call_label1
+	call @array 2
+	:call_label1
+	return
+)

@@ -1,0 +1,11 @@
+(@divide
+	1
+	%a <- rdi
+	:call_label_ciao__ciao_6
+	goto :call_label_ciao__ciao_7
+	:call_label_ciao__ciao_7
+	%res <- %a
+	%res >>= 2
+	rax <- %res
+	return
+)

@@ -1,0 +1,14 @@
+(@loop3
+	1
+	%arg <- rdi
+	%value <- 0
+	:call_label_ciao__ciao__ciao_20
+	%arg >>= 1
+	%value += 1
+	%isDone <- %arg = 0
+	cjump %isDone = 1 :call_label_ciao__ciao__ciao_21
+	goto :call_label_ciao__ciao__ciao_20
+	:call_label_ciao__ciao__ciao_21
+	rax <- %value
+	return
+)

@@ -1,0 +1,31 @@
+define :main() {
+  %input <- call input()
+  %out <- call :fib(%input)
+  call print(%out)
+  %out <- call :fib(%out)
+  call print(%out)
+  return
+}
+
+define :fib(%num) {
+  %answer <- 3
+  %c <- %num <= 3
+  br %c :end
+  %answer <- 1
+  %num <- %num >> 1
+  %counter <- 1
+  %lastNum <- 1
+  br :condition
+  :body
+  %temp <- %answer
+  %answer <- %answer + %lastNum
+  %lastNum <- %temp
+  %counter <- %counter + 1
+  :condition
+  %c <- %counter < %num
+  br %c :body
+  %answer <- %answer << 1
+  %answer <- %answer + 1
+  :end
+  return %answer
+}

@@ -1,0 +1,20 @@
+%default %encoded_size r12 r13 r14 r15 rbp rbx
+%encoded_default %encoded_size r12 r13 r14 r15 rbp rbx rdi
+%encoded_size %default %encoded_default r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx rsi
+r10 %encoded_size r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx rsi
+r11 %encoded_size r10 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx rsi
+r12 %default %encoded_default %encoded_size r10 r11 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx rsi %size %stack_ptr
+r13 %default %encoded_default %encoded_size r10 r11 r12 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx rsi %size %stack_ptr
+r14 %default %encoded_default %encoded_size r10 r11 r12 r13 r15 r8 r9 rax rbp rbx rcx rdi rdx rsi %size %stack_ptr
+r15 %default %encoded_default %encoded_size r10 r11 r12 r13 r14 r8 r9 rax rbp rbx rcx rdi rdx rsi %size %stack_ptr
+r8 %encoded_size r10 r11 r12 r13 r14 r15 r9 rax rbp rbx rcx rdi rdx rsi
+r9 %encoded_size r10 r11 r12 r13 r14 r15 r8 rax rbp rbx rcx rdi rdx rsi
+rax %encoded_size r10 r11 r12 r13 r14 r15 r8 r9 rbp rbx rcx rdi rdx rsi
+rbp %default %encoded_default %encoded_size r10 r11 r12 r13 r14 r15 r8 r9 rax rbx rcx rdi rdx rsi %size %stack_ptr
+rbx %default %encoded_default %encoded_size r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rcx rdi rdx rsi %size %stack_ptr
+rcx %encoded_size r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rdi rdx rsi
+rdi %encoded_default %encoded_size r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdx rsi
+rdx %encoded_size r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rsi
+rsi %encoded_size r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx
+%size r12 r13 r14 r15 rbp rbx
+%stack_ptr r12 r13 r14 r15 rbp rbx

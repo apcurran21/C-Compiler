@@ -1,0 +1,13 @@
+void main ( ){
+
+  :entry
+  int64[] a
+  int64 i
+
+  a <- new Array(10)
+  i <- -1
+  a[i] <- 21
+
+  return 
+
+}

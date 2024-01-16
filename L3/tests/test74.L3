@@ -1,0 +1,61 @@
+define @main () {
+ 
+:function0
+ %radius <- 5
+ %value <- call @circ (%radius)
+ %value <- %value << 1
+ %value <- %value + 1
+ call print (%value)
+ %value <- call @area (%radius)
+ %value <- %value << 1
+ %value <- %value + 1
+ call print (%value)
+ %value <- call @SA (%radius)
+ %value <- %value << 1
+ %value <- %value + 1
+ call print (%value)
+ %value <- call @vol (%radius)
+ %value <- %value << 1
+ %value <- %value + 1
+ call print (%value)
+ return 
+}
+
+define @circ (%r) {
+ 
+:function1
+ %pi <- 3
+ %d <- 2 * %r
+ %c <- %d * %pi
+ return %c
+}
+
+define @area (%r) {
+ 
+:function2
+ %pi <- 3
+ %r2 <- %r * %r
+ %a <- %r2 * %pi
+ return %a
+}
+
+define @SA (%r) {
+ 
+:function3
+ %pi <- 3
+ %r2 <- %r * %r
+ %r2 <- %r2 * 4
+ %sa <- %r2 * %pi
+ return %sa
+}
+
+define @vol (%r) {
+ 
+:function4
+ %factor <- 4
+ %r2 <- %r * %r
+ %r3 <- %r2 * %r
+ %v <- %r3 * %factor
+ return %v
+}
+

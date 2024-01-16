@@ -1,0 +1,143 @@
+define int64 @plus(tuple %self, int64 %x, int64 %y)  {
+:_self
+  int64 %ans
+  %ans <- %x+%y
+  return %ans
+}
+
+define int64 @minus(tuple %self, int64%x, int64 %y) {
+:_self
+  int64 %ans
+  %ans <- %x-%y
+  return %ans
+}
+
+define int64 @times(tuple %self, int64 %x, int64 %y) {
+:_self
+  int64 %ans
+  %ans <- %x*%y
+  return %ans
+}
+
+define void @main()
+{
+:_start
+  code %plus
+  code %minus
+  code %times
+  tuple %ops
+  int64 %ans
+  tuple %cGs
+  tuple %cF
+  tuple %cG
+  tuple %cH
+  code %g
+  code %h
+
+  %ops <- new Tuple(7)
+  %plus <- @plus
+  %minus <- @minus
+  %times <- @times
+  %ops[0] <- %plus
+  %ops[1] <- %minus
+  %ops[2] <- %times
+
+  int64 %X
+  int64 %Y
+  %X <- 7
+  %Y <- 2
+
+  int64 %i
+  int64 %fin
+  int64 %num
+  code %f
+  %i <- 0
+  br :L1
+
+:L1
+  %f <- %ops[%i]
+  %ans <- call %f(%ops, %X, %Y)
+  %num <- %ans*2
+  %num <- %num+1
+  call print(%num)
+  %i <- %i+1
+  %fin <- %i < 3
+  br %fin :L1 :L2b
+
+:L2b
+  %cGs <- new Tuple(7)
+
+  %i <- 0
+  br :L2
+:L2
+  %f <- %ops[%i]
+  %cF <- new Tuple(3)
+  %cF[0] <- %f
+  %cG <- call @curry(%cF)
+  %cGs[%i] <- %cG
+  %i <- %i+1
+  %fin <- %i < 3
+  br %fin :L2 :L3b
+
+:L3b
+  %i <- 0
+  br :L3
+:L3
+  %cG <- %cGs[%i]
+
+  %g <- %cG[0]
+  %cH <- call %g(%cG, %X)
+
+  %h <- %cH[0]
+  %ans <- call %h(%cH, %Y)
+
+  %num <- %ans*2
+  %num <- %num+1
+  call print(%num)
+
+  %i <- %i+1
+  %fin <- %i < 3
+  br %fin :L3 :exit
+
+:exit
+  return
+}
+
+define tuple @curry(tuple %F)
+{
+:start
+    tuple %cF
+
+    %cF <- new Tuple(5)
+    %cF[0] <- @curry_arg1
+    %cF[1] <- %F
+    return %cF
+}
+
+define tuple @curry_arg1(tuple %self, int64 %x)
+{
+:start
+    tuple %cF1
+    tuple %F
+    %cF1 <- new Tuple(7)
+    %F <- %self[1]
+    %cF1[0] <- @curry_arg2
+    %cF1[1] <- %F
+    %cF1[2] <- %x
+    return %cF1
+}
+
+define int64 @curry_arg2(tuple %self, int64 %y)
+{
+:start
+    tuple %F
+    int64 %x
+    code %func
+    int64 %ans
+
+    %F <- %self[1]
+    %x <- %self[2]
+    %func <- %F[0]
+    %ans <- call %func(%F, %x, %y)
+    return %ans
+}

@@ -1,0 +1,44 @@
+(@meh
+	0
+	:call_label_ciao_6
+	goto :call_label_ciao_10
+	:call_label_ciao_7
+	rdi <- %thing
+	call print 1
+	return
+	:call_label_ciao_8
+	%newVar1 <- 0
+	%newVar1 += %i
+	%newVar0 <- %newVar1
+	%newVar0 *= 8
+	%newVar0 += 24
+	%newVar3 <- %thing
+	%newVar3 += %newVar0
+	mem %newVar3 0 <- 3
+	%i += 1
+	goto :call_label_ciao_9
+	:call_label_ciao_9
+	%cond <- %i < 34
+	cjump %cond = 1 :call_label_ciao_8
+	goto :call_label_ciao_7
+	:call_label_ciao_10
+	%memmy <- 69
+	%newVar5 <- %memmy
+	%newVar5 >>= 1
+	%newVar4 <- %newVar5
+	%newVar4 <<= 1
+	%newVar4 += 1
+	%newVar4 += 4
+	rdi <- %newVar4
+	rsi <- 1
+	call allocate 2
+	%thing <- rax
+	%newVar6 <- %thing
+	%newVar6 += 8
+	mem %newVar6 0 <- 3
+	%newVar7 <- %thing
+	%newVar7 += 16
+	mem %newVar7 0 <- %memmy
+	%i <- 0
+	goto :call_label_ciao_9
+)

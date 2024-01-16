@@ -1,0 +1,33 @@
+%newVar0 %number r12 r13 r14 r15 rbp rbx
+%newVar12 %newVar15 r12 r13 r14 r15 rbp rbx %temp_spot
+%newVar13 r12 r13 r14 r15 rbp rbx %temp_spot
+%newVar15 %newVar12 r12 r13 r14 r15 rbp rbx
+%newVar16 %newVar18 %newVar19 %number r12 r13 r14 r15 rbp rbx
+%newVar17 %number r12 r13 r14 r15 rbp rbx
+%newVar18 %newVar16 %number r12 r13 r14 r15 rbp rbx
+%newVar19 %newVar16 %number r12 r13 r14 r15 rbp rbx
+%newVar1 %number r12 r13 r14 r15 rbp rbx
+%newVar4 %newVar7 %number r12 r13 r14 r15 rbp rbx %temp_spot
+%newVar5 %number r12 r13 r14 r15 rbp rbx %temp_spot
+%newVar7 %newVar4 %number r12 r13 r14 r15 rbp rbx %temp_spot
+%newVar8 r12 r13 r14 r15 rbp rbx %temp_spot
+%newVar9 r12 r13 r14 r15 rbp rbx %temp_spot
+%num_array r12 r13 r14 r15 rbp rbx %temp_spot
+%number %newVar0 %newVar1 %newVar16 %newVar17 %newVar18 %newVar19 %newVar4 %newVar5 %newVar7 r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx rsi %temp_spot %threeD
+r10 %number r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx rsi %temp_spot
+r11 %number r10 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx rsi %temp_spot
+r12 %newVar0 %newVar1 %newVar12 %newVar13 %newVar15 %newVar16 %newVar17 %newVar18 %newVar19 %newVar4 %newVar5 %newVar7 %newVar8 %newVar9 %num_array %number r10 r11 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx rsi %temp_spot %threeD
+r13 %newVar0 %newVar1 %newVar12 %newVar13 %newVar15 %newVar16 %newVar17 %newVar18 %newVar19 %newVar4 %newVar5 %newVar7 %newVar8 %newVar9 %num_array %number r10 r11 r12 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx rsi %temp_spot %threeD
+r14 %newVar0 %newVar1 %newVar12 %newVar13 %newVar15 %newVar16 %newVar17 %newVar18 %newVar19 %newVar4 %newVar5 %newVar7 %newVar8 %newVar9 %num_array %number r10 r11 r12 r13 r15 r8 r9 rax rbp rbx rcx rdi rdx rsi %temp_spot %threeD
+r15 %newVar0 %newVar1 %newVar12 %newVar13 %newVar15 %newVar16 %newVar17 %newVar18 %newVar19 %newVar4 %newVar5 %newVar7 %newVar8 %newVar9 %num_array %number r10 r11 r12 r13 r14 r8 r9 rax rbp rbx rcx rdi rdx rsi %temp_spot %threeD
+r8 %number r10 r11 r12 r13 r14 r15 r9 rax rbp rbx rcx rdi rdx rsi %temp_spot
+r9 %number r10 r11 r12 r13 r14 r15 r8 rax rbp rbx rcx rdi rdx rsi %temp_spot
+rax %number r10 r11 r12 r13 r14 r15 r8 r9 rbp rbx rcx rdi rdx rsi %temp_spot
+rbp %newVar0 %newVar1 %newVar12 %newVar13 %newVar15 %newVar16 %newVar17 %newVar18 %newVar19 %newVar4 %newVar5 %newVar7 %newVar8 %newVar9 %num_array %number r10 r11 r12 r13 r14 r15 r8 r9 rax rbx rcx rdi rdx rsi %temp_spot %threeD
+rbx %newVar0 %newVar1 %newVar12 %newVar13 %newVar15 %newVar16 %newVar17 %newVar18 %newVar19 %newVar4 %newVar5 %newVar7 %newVar8 %newVar9 %num_array %number r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rcx rdi rdx rsi %temp_spot %threeD
+rcx %number r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rdi rdx rsi %temp_spot
+rdi %number r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdx rsi %temp_spot
+rdx %number r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rsi %temp_spot
+rsi %number r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx %temp_spot
+%temp_spot %newVar12 %newVar13 %newVar4 %newVar5 %newVar7 %newVar8 %newVar9 %num_array %number r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx rsi
+%threeD %number r12 r13 r14 r15 rbp rbx

@@ -1,0 +1,51 @@
+(@main
+(@main
+	0 0
+	r8 <- 10
+	cjump r8 < 2 :bad_input
+	r8 <<= 1
+	r8++
+	rdi <- r8
+	call allocate 2
+	mem rax 8 <- 0
+	mem rax 16 <- 1
+	r8 <- mem rax 0
+	rdi <- 3
+	:loop
+	cjump r8 < rdi :end_loop
+	rdx @ rax rdi 8
+	rcx <- mem rdx -16
+	rcx += mem rdx -8
+	mem rdx 0 <- rcx
+	rdi++
+	goto :loop
+	:end_loop
+	mem rsp -8 <- :array_encode_ret
+	rdi <- rax
+	call @array_encode 1
+	:array_encode_ret
+	rdi <- rax
+	call print 1
+	:bad_input
+	return
+)
+
+(@array_encode
+	1 0
+	rax <- rdi
+	rdi <- mem rax 0
+	rsi <- 1
+	:loop_1
+	cjump rdi < rsi :end_loop_1
+	rdx @ rax rsi 8
+	rcx <- mem rdx 0
+	rcx <<= 1
+	rcx++
+	mem rdx 0 <- rcx
+	rsi++
+	goto :loop_1
+	:end_loop_1
+	return
+)
+
+)

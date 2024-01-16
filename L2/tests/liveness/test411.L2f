@@ -1,0 +1,5 @@
+(@main
+	0
+	rax <- 0
+	return
+)

@@ -1,0 +1,133 @@
+(@GetArray
+	1
+	%len <- rdi
+	:call_label_ciao_5
+	goto :call_label_ciao_6
+	:call_label_ciao_6
+	%len <<= 1
+	%len += 1
+	%newVar1 <- %len
+	%newVar1 >>= 1
+	%newVar0 <- %newVar1
+	%newVar0 <<= 1
+	%newVar0 += 1
+	%newVar0 += 2
+	rdi <- %newVar0
+	rsi <- 1
+	call allocate 2
+	%arr <- rax
+	%newVar2 <- %arr
+	%newVar2 += 8
+	mem %newVar2 0 <- %len
+	%x <- 1
+	%x <<= 1
+	%x += 1
+	%newVar4 <- 0
+	%newVar3 <- %newVar4
+	%newVar3 *= 8
+	%newVar3 += 16
+	%newVar6 <- %arr
+	%newVar6 += %newVar3
+	mem %newVar6 0 <- %x
+	%x <- 2
+	%x <<= 1
+	%x += 1
+	%newVar8 <- 0
+	%newVar8 += 1
+	%newVar7 <- %newVar8
+	%newVar7 *= 8
+	%newVar7 += 16
+	%newVar10 <- %arr
+	%newVar10 += %newVar7
+	mem %newVar10 0 <- %x
+	%x <- 3
+	%x <<= 1
+	%x += 1
+	%newVar12 <- 0
+	%newVar12 += 2
+	%newVar11 <- %newVar12
+	%newVar11 *= 8
+	%newVar11 += 16
+	%newVar14 <- %arr
+	%newVar14 += %newVar11
+	mem %newVar14 0 <- %x
+	%x <- 5
+	%x <<= 1
+	%x += 1
+	%newVar16 <- 0
+	%newVar16 += 3
+	%newVar15 <- %newVar16
+	%newVar15 *= 8
+	%newVar15 += 16
+	%newVar18 <- %arr
+	%newVar18 += %newVar15
+	mem %newVar18 0 <- %x
+	%x <- 1
+	%x <<= 1
+	%x += 1
+	%newVar20 <- 0
+	%newVar20 += 4
+	%newVar19 <- %newVar20
+	%newVar19 *= 8
+	%newVar19 += 16
+	%newVar22 <- %arr
+	%newVar22 += %newVar19
+	mem %newVar22 0 <- %x
+	%x <- 3
+	%x <<= 1
+	%x += 1
+	%newVar24 <- 0
+	%newVar24 += 5
+	%newVar23 <- %newVar24
+	%newVar23 *= 8
+	%newVar23 += 16
+	%newVar26 <- %arr
+	%newVar26 += %newVar23
+	mem %newVar26 0 <- %x
+	%x <- 2
+	%x <<= 1
+	%x += 1
+	%newVar28 <- 0
+	%newVar28 += 6
+	%newVar27 <- %newVar28
+	%newVar27 *= 8
+	%newVar27 += 16
+	%newVar30 <- %arr
+	%newVar30 += %newVar27
+	mem %newVar30 0 <- %x
+	%x <- 10
+	%x <<= 1
+	%x += 1
+	%newVar32 <- 0
+	%newVar32 += 7
+	%newVar31 <- %newVar32
+	%newVar31 *= 8
+	%newVar31 += 16
+	%newVar34 <- %arr
+	%newVar34 += %newVar31
+	mem %newVar34 0 <- %x
+	%x <- 11
+	%x <<= 1
+	%x += 1
+	%newVar36 <- 0
+	%newVar36 += 8
+	%newVar35 <- %newVar36
+	%newVar35 *= 8
+	%newVar35 += 16
+	%newVar38 <- %arr
+	%newVar38 += %newVar35
+	mem %newVar38 0 <- %x
+	%x <- 8
+	%x <<= 1
+	%x += 1
+	%newVar40 <- 0
+	%newVar40 += 9
+	%newVar39 <- %newVar40
+	%newVar39 *= 8
+	%newVar39 += 16
+	%newVar42 <- %arr
+	%newVar42 += %newVar39
+	mem %newVar42 0 <- %x
+	rax <- %arr
+	return
+)

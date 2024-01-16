@@ -1,0 +1,57 @@
+(@go
+    (@go
+        0
+        //begin by allocating the array
+        rdi <- 50
+        rdi <<= 1
+        rdi += 1
+        //actually integer 0
+        rsi <- 1
+        call allocate 2
+        //arr become the array pointer to print later
+        %arr <- rax
+
+        //set the first two in the sequence to one
+        %back0 <- 1
+        %back1 <- 1
+        mem %arr 8 <- 3
+        mem %arr 16 <- 3
+
+        //inc counter
+        %i <- 2
+        :loop
+        %i += 1
+        %sum <- %back0
+        %sum += %back1
+        %addr @ %arr %i 8
+        %s_sum <- %sum
+        %s_sum <<= 1
+        %s_sum += 1
+        mem %addr 0 <- %s_sum
+        %back0 <- %back1
+        %back1 <- %sum
+        cjump %i < 50 :loop
+
+        rdi <- %arr
+        call print 1
+
+        //now we will find sum using differnet loop syntax
+
+        %arrsum <- 0
+        %i <- 0
+        :loop2
+        cjump 50 <= %i :done
+        %addr @ %arr %i 8
+        %arrval <- mem %addr 0
+        %arrval >>= 1
+        %arrsum += %arrval
+        %i++
+        goto :loop2
+        :done
+        rdi <- %arrsum
+        rdi <<= 1
+        rdi += 1
+        call print 1
+        return
+    )
+)

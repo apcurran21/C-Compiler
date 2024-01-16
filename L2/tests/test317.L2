@@ -1,0 +1,82 @@
+(@main
+  (@main
+    0
+    %arg1 <- 10
+    %invalid <- %arg1 < 2
+
+    cjump %invalid = 1 :call_label2
+    %arg1 <- %arg1
+    %arg1 <<= 1
+    %arg1 <- %arg1
+    %arg1 += 1
+    %count <- 1
+    rdi <- %arg1
+    rsi <- 3
+    call allocate 2
+    %arrayAddr <- rax
+    %pos0 <- %arrayAddr
+    %pos0 += 8
+    %pos1 <- %arrayAddr
+    %pos1 += 16
+    %pos2 <- %arrayAddr
+    %pos2 += 24
+    mem %pos0 0 <- 0
+    mem %pos1 0 <- 1
+    %arrayLen <- mem %arrayAddr 0
+    %count <- 3
+    :call_label0
+    %ifDone <- %arrayLen < %count
+
+    cjump %ifDone = 1 :call_label1
+    %val0 <- mem %pos0 0
+    %val1 <- mem %pos1 0
+    %val2 <- %val0
+    %val2 += %val1
+    mem %pos2 0 <- %val2
+    %count <- %count
+    %count += 1
+    %pos0 <- %pos0
+    %pos0 += 8
+    %pos1 <- %pos1
+    %pos1 += 8
+    %pos2 <- %pos2
+    %pos2 += 8
+    goto :call_label0
+    :call_label1
+    rdi <- %arrayAddr
+
+mem rsp -8 <- :call_label3
+    call @array_encode 1
+
+:call_label3
+    rdi <- %arrayAddr
+    call print 1
+    :call_label2
+    return
+  )
+  (@array_encode
+    1
+    %arrayAddr <- rdi
+    %arrayLen <- mem %arrayAddr 0
+    %count <- 1
+    %pos <- %arrayAddr
+    %pos += 8
+    :call_label_ciao_4
+    %ifDone <- %arrayLen < %count
+
+    cjump %ifDone = 1 :call_label_ciao_5
+    %val <- mem %pos 0
+    %val <- %val
+    %val <<= 1
+    %val <- %val
+    %val += 1
+    mem %pos 0 <- %val
+    %count <- %count
+    %count += 1
+    %pos <- %pos
+    %pos += 8
+    goto :call_label_ciao_4
+    :call_label_ciao_5
+    return
+  )
+)

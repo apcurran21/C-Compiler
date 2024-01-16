@@ -1,0 +1,28 @@
+(
+(in
+(r12 r13 r14 r15 rbp rbx rdi rsi)
+(%addr r12 r13 r14 r15 rbp rbx rsi)
+(%addr %idx r12 r13 r14 r15 rbp rbx)
+(%addr %offset r12 r13 r14 r15 rbp rbx)
+(%addr %offset r12 r13 r14 r15 rbp rbx)
+(%addr %dest r12 r13 r14 r15 rbp rbx)
+(%addr %dest r12 r13 r14 r15 rbp rbx)
+(%addr r12 r13 r14 r15 rbp rbx)
+(r12 r13 r14 r15 rbp rbx %value)
+(r12 r13 r14 r15 rax rbp rbx)
+)
+
+(out
+(%addr r12 r13 r14 r15 rbp rbx rsi)
+(%addr %idx r12 r13 r14 r15 rbp rbx)
+(%addr %offset r12 r13 r14 r15 rbp rbx)
+(%addr %offset r12 r13 r14 r15 rbp rbx)
+(%addr %dest r12 r13 r14 r15 rbp rbx)
+(%addr %dest r12 r13 r14 r15 rbp rbx)
+(%addr r12 r13 r14 r15 rbp rbx)
+(r12 r13 r14 r15 rbp rbx %value)
+(r12 r13 r14 r15 rax rbp rbx)
+()
+)
+
+)

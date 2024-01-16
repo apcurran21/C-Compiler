@@ -1,0 +1,39 @@
+(@main
+(@fib
+	1 0
+	rax <- 1
+	rdx <- 0
+	rsi <- rdi
+	:fibloop
+	rdi <- rax
+	rax += rdx
+	rdx <- rdi
+	rsi--
+	cjump 0 < rsi :fibloop
+	return
+)
+
+(@main
+	0 1
+	rdi <- 1
+	mem rsp 0 <- rdi
+	:mainloop
+	mem rsp -8 <- :ret1
+	rdi <- mem rsp 0
+	rdi <- rdi
+	cjump 21 < rdi :end
+	call @fib 1
+	:ret1
+	rdi <- rax
+	rdi <<= 1
+	rdi += 1
+	call print 1
+	rdi <- mem rsp 0
+	rdi += 1
+	mem rsp 0 <- rdi
+	goto :mainloop
+	:end
+	return
+)
+
+)

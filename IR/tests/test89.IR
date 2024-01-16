@@ -1,0 +1,64 @@
+define void @main() {
+	:entry
+	int64 %ret
+	int64[] %array
+
+	%array <- new Array(7)
+	%ret <- length %array 0
+
+	%ret <- call @rand(%array, %ret)
+	%ret <- %ret << 1
+	%ret <- %ret + 1
+
+	call print (%ret)
+
+	%array <- new Array(9)
+	%ret <- length %array 0
+
+	%ret <- call @rand(%array, %ret)
+	%ret <- %ret << 1
+	%ret <- %ret + 1
+
+	call print (%ret)
+
+	return
+}
+
+define int64 @rand(int64[] %array, int64 %ret) {
+	:entry1
+	int64 %ans
+	int64 %test
+	int64 %len
+	br :startCalcs
+
+	:startCalcs
+	%ans <- 0 
+	%len <- 0
+	%test <- 0
+	br :keepGoing
+
+	:keepGoing
+	%len <- length %array 0
+	%test <- %len = %ret
+	br :good
+
+	:cantreach
+	%ans <- 1
+	%test <- 0
+	return 1
+
+	:good
+	%ans <- %array[0]
+	%test <- %array[1]
+	%len <- %array[2]
+	%ans <- %ans + %test
+	%ans <- %ans + %len
+	return %ans
+
+  :newLabel
+	br :end
+
+	:end
+	return 0
+}
+

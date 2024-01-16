@@ -1,0 +1,12 @@
+(@area
+	1
+	%r <- rdi
+	:call_label_ciao__ciao_6
+	%pi <- 3
+	%r2 <- %r
+	%r2 *= %r
+	%a <- %r2
+	%a *= %pi
+	rax <- %a
+	return
+)

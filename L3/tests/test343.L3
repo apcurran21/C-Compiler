@@ -1,0 +1,60 @@
+define @mod(%x, %y) {
+    %r <- %x = 0
+    br %r :mgood
+    
+    :misneg
+    %r <- %x > -1
+    br %r :mloop
+    return 0
+
+    :mloop
+    %x <- %x - %y
+    %r <- %x = 0
+    br %r :mgood
+    br :misneg
+
+    :mgood
+    return 1
+}
+
+define @prime(%arg) {
+    %inputIs1 <- %arg = 1
+    br %inputIs1 :not_prime
+    %inputIs2 <- %arg = 2
+    br %inputIs2 :is_prime
+
+    %halfarg <- %arg >> 1
+    %counter <- 1
+    :prime_loop
+    %counter <- %counter + 1
+    %pstatus <- call @mod(%arg, %counter)
+    br %pstatus :not_prime
+    %reloop <- %counter <= %halfarg
+    br %reloop :prime_loop
+
+    :is_prime
+    return 1
+
+    :not_prime
+    return 0
+}
+
+//this produces the correct result :D
+define @main() {
+    %primeCounter <- 0
+    %searchCounter <- 0
+    :loop
+    %weDone <- %primeCounter >= 58
+    br %weDone :done
+    %searchCounter <- %searchCounter + 1
+    %result <- call @prime(%searchCounter)
+    %nresult <- %result = 0
+    br %nresult :loop
+    %primeCounter <- %primeCounter + 1
+    br :loop
+    :done
+    %pr <- %searchCounter << 1
+    %pr <- %pr + 1
+    call print(%pr)
+    return
+}

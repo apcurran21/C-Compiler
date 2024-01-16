@@ -1,0 +1,14 @@
+(@main
+  (@main
+    0
+    :call_label0
+    goto :call_label1
+    :call_label1
+    rdi <- 5
+    rsi <- 3
+    rdx <- 3
+    rcx <- 9
+    call tensor-error 4
+    return
+  )
+)

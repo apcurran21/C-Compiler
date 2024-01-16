@@ -1,0 +1,12 @@
+(@store
+	3
+	%addr <- rdi
+	%idx <- rsi
+	%value <- rdx
+	%idx += 1
+	%offset <- %idx
+	%offset *= 8
+	%addr += %offset
+	mem %addr 0 <- %value
+	return
+)

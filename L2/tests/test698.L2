@@ -1,0 +1,8 @@
+(@main
+  (@main
+    0
+    call input 0
+    %v1 <- rax
+    return
+  )
+)

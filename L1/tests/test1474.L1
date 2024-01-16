@@ -1,0 +1,162 @@
+(@main
+(@int_encode
+	1 0
+	rdi <- rdi
+	:call_label_ciao_3
+	rdi <- rdi
+	rdi <<= 1
+	rdi <- rdi
+	rdi += 1
+	rax <- rdi
+	return
+)
+
+(@main
+	0 2
+	:call_label0
+	goto :call_label1
+	:call_label1
+	rdi <- 5
+	mem rsp 8 <- rdi
+	rdi <- mem rsp 8
+	rdi <- rdi
+	mem rsp -8 <- :call_label2
+	call @int_encode 1
+	:call_label2
+	rdi <- rax
+	mem rsp 8 <- rdi
+	rdi <- mem rsp 8
+	rdi <- rdi
+	rsi <- 1
+	call allocate 2
+	rdi <- rax
+	mem rsp 0 <- rdi
+	rdi <- 0
+	rdi *= 8
+	rsi <- rdi
+	rsi += 8
+	rdi <- mem rsp 0
+	rdi <- rdi
+	rdi += rsi
+	mem rdi 0 <- 3
+	rdi <- 1
+	rdi *= 8
+	rsi <- rdi
+	rsi += 8
+	rdi <- mem rsp 0
+	rdi <- rdi
+	rdi += rsi
+	mem rdi 0 <- 9
+	rdi <- 2
+	rdi *= 8
+	rsi <- rdi
+	rsi += 8
+	rdi <- mem rsp 0
+	rdi <- rdi
+	rdi += rsi
+	mem rdi 0 <- 19
+	rdi <- 3
+	rdi *= 8
+	rsi <- rdi
+	rsi += 8
+	rdi <- mem rsp 0
+	rdi <- rdi
+	rdi += rsi
+	mem rdi 0 <- 33
+	rdi <- 4
+	rdi *= 8
+	rsi <- rdi
+	rsi += 8
+	rdi <- mem rsp 0
+	rdi <- rdi
+	rdi += rsi
+	mem rdi 0 <- 51
+	rdi <- mem rsp 0
+	rdi <- rdi
+	call print 1
+	rdi <- mem rsp 8
+	rdi <- rdi
+	rsi <- 1
+	call allocate 2
+	rsi <- rax
+	rdi <- 4
+	rdi *= 8
+	rdx <- rdi
+	rdx += 8
+	rdi <- mem rsp 0
+	rdi <- rdi
+	rdi += rdx
+	rdx <- mem rdi 0
+	rdi <- 0
+	rdi *= 8
+	rdi <- rdi
+	rdi += 8
+	rcx <- rsi
+	rcx += rdi
+	mem rcx 0 <- rdx
+	rdi <- 3
+	rdi *= 8
+	rdx <- rdi
+	rdx += 8
+	rdi <- mem rsp 0
+	rdi <- rdi
+	rdi += rdx
+	rdx <- mem rdi 0
+	rdi <- 1
+	rdi *= 8
+	rdi <- rdi
+	rdi += 8
+	rcx <- rsi
+	rcx += rdi
+	mem rcx 0 <- rdx
+	rdi <- 2
+	rdi *= 8
+	rdx <- rdi
+	rdx += 8
+	rdi <- mem rsp 0
+	rdi <- rdi
+	rdi += rdx
+	rdx <- mem rdi 0
+	rdi <- 2
+	rdi *= 8
+	rdi <- rdi
+	rdi += 8
+	rcx <- rsi
+	rcx += rdi
+	mem rcx 0 <- rdx
+	rdi <- 1
+	rdi *= 8
+	rdx <- rdi
+	rdx += 8
+	rdi <- mem rsp 0
+	rdi <- rdi
+	rdi += rdx
+	rdx <- mem rdi 0
+	rdi <- 3
+	rdi *= 8
+	rdi <- rdi
+	rdi += 8
+	rcx <- rsi
+	rcx += rdi
+	mem rcx 0 <- rdx
+	rdi <- 0
+	rdi *= 8
+	rdx <- rdi
+	rdx += 8
+	rdi <- mem rsp 0
+	rdi <- rdi
+	rdi += rdx
+	rdx <- mem rdi 0
+	rdi <- 4
+	rdi *= 8
+	rcx <- rdi
+	rcx += 8
+	rdi <- rsi
+	rdi += rcx
+	mem rdi 0 <- rdx
+	rdi <- rsi
+	call print 1
+	return
+)
+
+)

@@ -1,0 +1,6 @@
+(@myF
+	1
+	%newVar <- 3
+	rax <- %newVar
+	return
+)

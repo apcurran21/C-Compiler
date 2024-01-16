@@ -1,0 +1,11 @@
+(@circ
+	1
+	%r <- rdi
+	%d <- 2
+	%d *= %r
+	%pi <- 3
+	%c <- %d
+	%c *= %pi
+	rax <- %c
+	return
+)

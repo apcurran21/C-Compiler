@@ -1,0 +1,8 @@
+(@run_tests
+	0
+	mem rsp -8 <- :ret_from_fib
+	rdi <- 20
+	call @fib 1
+	:ret_from_fib
+	return
+)

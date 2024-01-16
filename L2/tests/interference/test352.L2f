@@ -1,0 +1,24 @@
+(@getNthFibonacciNumber
+	1
+	%n <- rdi
+	rdi <- %n
+	mem rsp -8 <- :call_label_ciao_7
+	call @generateFibonacciSequence 1
+	:call_label_ciao_7
+	%fibonacciSequence <- rax
+	%isIntOrArray <- %fibonacciSequence
+	%isIntOrArray &= 1
+	cjump %isIntOrArray = 1 :call_label_ciao_5
+	goto :call_label_ciao_6
+	:call_label_ciao_5
+	rax <- 3
+	return
+	:call_label_ciao_6
+	%nthAddress <- %n
+	%nthAddress += 1
+	%nthAddress *= 8
+	%nthAddress += %fibonacciSequence
+	%nthFibonacciNumber <- mem %nthAddress 0
+	rax <- %nthFibonacciNumber
+	return
+)

@@ -1,0 +1,11 @@
+(@main
+(@main
+	0 0
+	rdi <- 2
+	rsi <- 1
+	rdi <- rsi < rdi
+	rax <- rdi
+	return
+)
+
+)

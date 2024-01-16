@@ -1,0 +1,50 @@
+// Initialize an array, each following value is increment by one from the previous value
+
+(@go
+  (@go
+    0
+
+    rdi <- 11
+
+    mem rsp -8 <- :init_array_ret
+    call @init_array 1
+    :init_array_ret
+
+    return
+  )
+
+  (@init_array
+    1
+
+    rsi <- 3
+    call allocate 2
+
+    // memory location pointer
+    %my_array <- rax
+    
+    // index (not encoded)
+    r9 <- 0
+
+    // get length of the array (not encoded)
+    %newVariable10 <- mem rax 0
+
+    // current number to save
+    %newVariable11 <- 1
+
+    :INIT
+
+    rax += 8
+
+    mem rax 0 <- %newVariable11
+
+    r9 += 1
+    %newVariable11 += 2
+
+    cjump r9 < %newVariable10 :INIT
+
+    rdi <- %my_array
+    call print 1
+
+    return
+  )
+)

@@ -1,0 +1,86 @@
+(@main
+  (@main
+    0
+    :call_label0
+    rdi <- 0
+
+mem rsp -8 <- :call_label1
+    call @fib 1
+
+:call_label1
+    rdi <- 1
+
+mem rsp -8 <- :call_label2
+    call @fib 1
+
+:call_label2
+    rdi <- 15
+
+mem rsp -8 <- :call_label3
+    call @fib 1
+
+:call_label3
+    rdi <- 40
+
+mem rsp -8 <- :call_label4
+    call @fib 1
+
+:call_label4
+    return
+  )
+  (@next
+    2
+    %v1 <- rdi
+    %v2 <- rsi
+    :call_label_ciao_5
+    %ret <- %v1
+    %ret += %v2
+    rax <- %ret
+    return
+  )
+  (@fib
+    1
+    %v1 <- rdi
+    :call_label_ciao__ciao_6
+    %var1 <- %v1
+    %var2 <- 0
+    %var3 <- 0
+    %var4 <- 1
+    goto :call_label_ciao__ciao_7
+    :call_label_ciao__ciao_7
+    %var6 <- %var1
+    %var5 <- %var2
+    %test <- %var6 = %var5
+
+    cjump %test = 1 :call_label_ciao__ciao_9
+    goto :call_label_ciao__ciao_8
+    :call_label_ciao__ciao_8
+    %var6 <- %var3
+    %var6 <- %var6
+    %var6 <<= 1
+    %var6 <- %var6
+    %var6 += 1
+    rdi <- %var6
+    call print 1
+    %var6 <- %var3
+    %var5 <- %var4
+    rdi <- %var6
+    rsi <- %var5
+
+mem rsp -8 <- :call_label_ciao__ciao_10
+    call @next 2
+
+:call_label_ciao__ciao_10
+    %ret <- rax
+    %var6 <- %var4
+    %var3 <- %var6
+    %var4 <- %ret
+    %var6 <- %var2
+    %var6 <- %var6
+    %var6 += 1
+    %var2 <- %var6
+    goto :call_label_ciao__ciao_7
+    :call_label_ciao__ciao_9
+    return
+  )
+)

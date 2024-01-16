@@ -1,0 +1,18 @@
+define @main () {
+ 
+:NNNNNN
+ br :entry
+ 
+:FALSE
+ call print (5)
+ return 
+ 
+:TRUE
+ call print (3)
+ return 
+ 
+:entry
+ br 0 :TRUE 
+ br :FALSE
+}
+

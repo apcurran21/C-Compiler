@@ -1,0 +1,10 @@
+(@prod
+	6
+	rdi *= rsi
+	rdx *= rcx
+	r8 *= r9
+	rdi *= rdx
+	rdi *= r8
+	rax <- rdi
+	return
+)

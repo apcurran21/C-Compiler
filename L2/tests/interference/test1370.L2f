@@ -1,0 +1,31 @@
+(@printArray
+	1
+	%array <- rdi
+	%index <- 0
+	%arrayLength <- mem %array 0
+	%tempArrayPointer <- %array
+	%tempArrayPointer &= 1
+	cjump %tempArrayPointer = 0 :isAnArray
+	goto :isAnInt
+	:isAnInt
+	rax <- 0
+	return
+	:isAnArray
+	:check
+	cjump %index < %arrayLength :true
+	goto :false
+	:true
+	%encodedIndex <- %index
+	%encodedIndex <<= 1
+	%encodedIndex++
+	rdi <- %array
+	rsi <- %encodedIndex
+	mem rsp -8 <- :printData_ret
+	call @printData 2
+	:printData_ret
+	%index++
+	goto :check
+	:false
+	rax <- 1
+	return
+)

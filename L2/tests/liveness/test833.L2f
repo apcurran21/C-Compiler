@@ -1,0 +1,17 @@
+(@mod
+	2
+	%a <- rdi
+	%b <- rsi
+	:call_label_ciao_4
+	goto :call_label_ciao_5
+	:call_label_ciao_5
+	%end <- %a < %b
+	cjump %end = 1 :call_label_ciao_7
+	goto :call_label_ciao_6
+	:call_label_ciao_6
+	%a -= %b
+	goto :call_label_ciao_5
+	:call_label_ciao_7
+	rax <- %a
+	return
+)

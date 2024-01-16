@@ -1,0 +1,115 @@
+define @mod (%x, %y) {
+ 
+:NNNNNNNNNN
+ br :entry
+ 
+:mgood
+ return 1
+ 
+:mloop
+ %x <- %x - %y
+ %r <- %x = 0
+ br %r :mgood 
+ br :misneg
+ 
+:misneg
+ %r <- %x > -1
+ br %r :mloop 
+ br :ret_early
+ 
+:ret_early
+ return 0
+ 
+:entry
+ %r <- %x = 0
+ br %r :mgood 
+ br :misneg
+}
+
+define @prime (%arg) {
+ 
+:NNNNNNNNNNNN
+ br :entry
+ 
+:not_prime
+ return 0
+ 
+:is_prime
+ return 1
+ 
+:maybe_prime
+ %reloop <- %counter <= %halfarg
+ br %reloop :prime_loop 
+ br :is_prime
+ 
+:prime_loop
+ %halfarg <- %arg >> 1
+ %counter <- %counter + 1
+ %pstatus <- call @mod (%arg, %counter)
+ br %pstatus :not_prime 
+ br :maybe_prime
+ 
+:entry
+ %inputIs2 <- %arg = 2
+ %counter <- 1
+ br %inputIs2 :is_prime 
+ br :prime_loop
+}
+
+define @gpf (%arg) {
+ 
+:NNNNNNNNNNNNN
+ br :entry
+ 
+:gpf_done_sad
+ return -1
+ 
+:done
+ return %possiblePrime
+ 
+:nloop
+ %cndIsPrime <- call @prime (%possiblePrime)
+ %notPrime <- %cndIsPrime = 0
+ br %notPrime :gpf_loop 
+ br :done
+ 
+:gpf_loop
+ %sad <- %possiblePrime < 2
+ br %sad :gpf_done_sad 
+ br :not_sad
+ 
+:not_sad
+ %possiblePrime <- %possiblePrime - 1
+ %modulo <- call @mod (%arg, %possiblePrime)
+ %notFactor <- %modulo = 0
+ br %notFactor :gpf_loop 
+ br :nloop
+ 
+:not_itself
+ %possiblePrime <- %arg >> 1
+ %possiblePrime <- %possiblePrime + 1
+ br :gpf_loop
+ 
+:itself
+ return %arg
+ 
+:entry
+ %argIsPrime <- call @prime (%arg)
+ %argNotPrime <- %argIsPrime = 0
+ br %argNotPrime :not_itself 
+ br :itself
+}
+
+define @main () {
+ 
+:NNNNNN
+ br :entry
+ 
+:entry
+ %result <- call @gpf (33030)
+ %result <- %result << 1
+ %result <- %result + 1
+ call print (%result)
+ return 
+}
+

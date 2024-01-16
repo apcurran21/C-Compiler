@@ -1,0 +1,6 @@
+(@main
+	0
+	:call_label0
+	rax <- 1
+	return
+)

@@ -1,0 +1,26 @@
+(@mod3
+	1
+	%num <- rdi
+	cjump 0 < %num :positive
+	%num *= -2
+	:positive
+	:loop
+	cjump %num < 3 :return
+	%bitmasked <- %num
+	%bitmasked &= 3
+	cjump %bitmasked = 3 :shift
+	cjump %bitmasked = 0 :shift
+	%num -= 3
+	goto :loop
+	:shift
+	%num >>= 2
+	goto :loop
+	:return
+	rdi <- %num
+	mem rsp -8 <- :encode_ret
+	call @encode 1
+	:encode_ret
+	rdi <- rax
+	call print 1
+	return
+)

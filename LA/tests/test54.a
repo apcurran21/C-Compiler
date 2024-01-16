@@ -1,0 +1,27 @@
+void main(){
+	int64 f
+	int64 s
+	int64 n
+	int64 l
+	int64 p
+	int64 check
+	int64 t
+	f <- 1
+	s <- 1
+	n <- 10
+	l <- 0
+	:loop
+	check <- l = n
+	br check :return :false
+	:false
+	p <- s
+	print (p)
+	t <- s
+	s <- s + f
+	f <- t
+	l <- l + 1
+	br :loop
+	:return
+	return
+}
+

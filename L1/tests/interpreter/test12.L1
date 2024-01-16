@@ -1,0 +1,41 @@
+(:entry
+  (:entry
+    0 6
+    mem rsp 0 <- r12
+    mem rsp 8 <- r13
+    mem rsp 16 <- r14
+    mem rsp 24 <- r15
+    mem rsp 32 <- rbp
+    mem rsp 40 <- rbx
+
+    rdi <- 1
+    rsi <- 1
+    rdx <- 1
+    rcx <- 1
+    r8 <- 1
+    r9 <- 1
+    r12 <- 1
+    r13 <- 2
+    r14 <- 3
+    r15 <- 4
+    rbp <- 5
+    rbx <- 6
+    mem rsp -8 <- :tlfc_ret
+    mem rsp -16 <- -1
+    call :test_large_fun_call 6
+    :tlfc_ret
+
+    r12 <- mem rsp 0
+    r13 <- mem rsp 8
+    r14 <- mem rsp 16
+    r15 <- mem rsp 24
+    rbp <- mem rsp 32
+    rbx <- mem rsp 40
+    return
+  )
+  (:test_large_fun_call
+    6 0
+    rax <- 1
+    return
+  )
+)

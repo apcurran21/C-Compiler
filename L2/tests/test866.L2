@@ -1,0 +1,62 @@
+// Computes the <input>th entry of the Fibonacci sequence
+(@go
+    (@fibo
+        1
+
+        %res <- 0
+        %n <- rdi
+        // rdi arg <= 2
+        cjump %n <= 2 :leq_2
+
+        // fibo (n - 2)
+        rdi -= 2
+        mem rsp -8 <- :callfibo_1_finish
+        call @fibo 1
+        :callfibo_1_finish
+        %res <- rax
+
+        // fibo (n - 1)
+        rdi <- %n
+        rdi -= 1
+        mem rsp -8 <- :callfibo_2_finish
+        call @fibo 1
+        :callfibo_2_finish
+
+        // ans = fibo (n - 1) + fibo (n - 2)
+        %res += rax
+
+        goto :done
+
+        :leq_2
+        cjump %n <= 0 :less_0
+        // %n == 1, 2
+        %res <- 1
+        goto :done
+
+        // %res <= 0
+        :less_0
+        %res <- 0
+
+        :done
+        rax <- %res
+        return
+    )
+    (@go
+        0
+        rdi <- 9
+        mem rsp -8 <- :fibo_ret
+        call @fibo 1
+        :fibo_ret
+
+        rdi <- rax
+        rdi <<= 1
+        rdi += 1
+        call print 1
+
+        rax <- 0
+        return
+    )
+)
+
+// What is the second number of a function?
+// how does addition work?

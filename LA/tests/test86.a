@@ -1,0 +1,48 @@
+// print the Fibonacci sequence (10 elems)
+// stored in an array, so the first two are #dim and #len of dim[0]
+// expected output:
+// {s:12, 1, 10, 0, 1, 1, 2, 3, 5, 8, 13, 21, 34} 
+
+void main () {
+  int64[] array_addr
+  int64 invalid
+  int64 input
+  int64 cursor
+  int64 cursor_p
+  int64 cursor_pp
+  int64 done
+  int64 temp
+  int64 sum
+
+  input <- 10
+  invalid <- input < 2
+  br invalid :bad_input :good_input
+
+  :good_input
+  array_addr <- new Array(input)
+  array_addr[0] <- 0
+  array_addr[1] <- 1
+  cursor <- 2
+
+  :check_done
+  done <- cursor = input
+  br done :end :loop
+
+  :loop
+  cursor_pp <- cursor - 2
+  cursor_p <- cursor - 1
+  temp <- array_addr[cursor_pp]
+  sum <- temp
+  temp <- array_addr[cursor_p]
+  sum <- sum + temp
+  array_addr[cursor] <- sum
+  cursor <- cursor + 1
+  br :check_done
+
+  :end
+  print(array_addr)
+  return
+
+  :bad_input
+  return
+}

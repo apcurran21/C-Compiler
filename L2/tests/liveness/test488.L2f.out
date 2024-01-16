@@ -1,0 +1,22 @@
+(
+(in
+(r12 r13 r14 r15 rax rbp rbx rdi rdx rsi)
+(%addr r12 r13 r14 r15 rax rbp rbx rdx rsi)
+(%addr %idx r12 r13 r14 r15 rax rbp rbx rdx)
+(%addr %idx r12 r13 r14 r15 rax rbp rbx %value)
+(%addr %idx r12 r13 r14 r15 rax rbp rbx %value)
+(%addr r12 r13 r14 r15 rax rbp rbx %value)
+(r12 r13 r14 r15 rax rbp rbx)
+)
+
+(out
+(%addr r12 r13 r14 r15 rax rbp rbx rdx rsi)
+(%addr %idx r12 r13 r14 r15 rax rbp rbx rdx)
+(%addr %idx r12 r13 r14 r15 rax rbp rbx %value)
+(%addr %idx r12 r13 r14 r15 rax rbp rbx %value)
+(%addr r12 r13 r14 r15 rax rbp rbx %value)
+(r12 r13 r14 r15 rax rbp rbx)
+()
+)
+
+)

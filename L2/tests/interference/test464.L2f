@@ -1,0 +1,12 @@
+(@product3
+	3
+	%p1 <- rdi
+	%p2 <- rsi
+	%p3 <- rdx
+	%p4 <- %p1
+	%p4 *= %p2
+	%p5 <- %p4
+	%p5 *= %p3
+	rax <- %p5
+	return
+)

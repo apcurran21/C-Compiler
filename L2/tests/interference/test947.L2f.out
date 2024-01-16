@@ -1,0 +1,24 @@
+%ar %newVar3 %newVar4 %newVar5 %p1 %p2 r12 r13 r14 r15 rbp rbx
+%newVar0 %newVar2 %p1 %p2 r12 r13 r14 r15 rbp rbx
+%newVar1 %p1 %p2 r12 r13 r14 r15 rbp rbx
+%newVar2 %newVar0 %p1 %p2 r12 r13 r14 r15 rbp rbx
+%newVar3 %ar %p1 %p2 r12 r13 r14 r15 rbp rbx
+%newVar4 %ar %p1 %p2 r12 r13 r14 r15 rbp rbx
+%newVar5 %ar %p2 r12 r13 r14 r15 rbp rbx
+%p1 %ar %newVar0 %newVar1 %newVar2 %newVar3 %newVar4 %p2 r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx rsi
+%p2 %ar %newVar0 %newVar1 %newVar2 %newVar3 %newVar4 %newVar5 %p1 r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx rsi
+r10 %p1 %p2 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx rsi
+r11 %p1 %p2 r10 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx rsi
+r12 %ar %newVar0 %newVar1 %newVar2 %newVar3 %newVar4 %newVar5 %p1 %p2 r10 r11 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx rsi
+r13 %ar %newVar0 %newVar1 %newVar2 %newVar3 %newVar4 %newVar5 %p1 %p2 r10 r11 r12 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx rsi
+r14 %ar %newVar0 %newVar1 %newVar2 %newVar3 %newVar4 %newVar5 %p1 %p2 r10 r11 r12 r13 r15 r8 r9 rax rbp rbx rcx rdi rdx rsi
+r15 %ar %newVar0 %newVar1 %newVar2 %newVar3 %newVar4 %newVar5 %p1 %p2 r10 r11 r12 r13 r14 r8 r9 rax rbp rbx rcx rdi rdx rsi
+r8 %p1 %p2 r10 r11 r12 r13 r14 r15 r9 rax rbp rbx rcx rdi rdx rsi
+r9 %p1 %p2 r10 r11 r12 r13 r14 r15 r8 rax rbp rbx rcx rdi rdx rsi
+rax %p1 %p2 r10 r11 r12 r13 r14 r15 r8 r9 rbp rbx rcx rdi rdx rsi
+rbp %ar %newVar0 %newVar1 %newVar2 %newVar3 %newVar4 %newVar5 %p1 %p2 r10 r11 r12 r13 r14 r15 r8 r9 rax rbx rcx rdi rdx rsi
+rbx %ar %newVar0 %newVar1 %newVar2 %newVar3 %newVar4 %newVar5 %p1 %p2 r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rcx rdi rdx rsi
+rcx %p1 %p2 r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rdi rdx rsi
+rdi %p1 %p2 r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdx rsi
+rdx %p1 %p2 r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rsi
+rsi %p1 %p2 r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx

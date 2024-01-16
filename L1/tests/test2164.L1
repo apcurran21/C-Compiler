@@ -1,0 +1,13 @@
+(@go
+(@go
+	0 0
+	rcx <- 3
+	rdi <- 5
+	rdi <<= rcx
+	rdi++
+	call print 1
+	rax <- 0
+	return
+)
+
+)

@@ -1,0 +1,10 @@
+(@go
+  0
+  %var2 <- 1
+  mem %var2 8 += %var2
+  return
+)
+
+%var2
+
+%S

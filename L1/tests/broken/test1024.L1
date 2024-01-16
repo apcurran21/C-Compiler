@@ -1,0 +1,39 @@
+(@factorial
+(@factorial
+	0 0
+	rdi <- 5
+	mem rsp -8 <- :fact_rtn
+	call @calc 1
+	:fact_rtn
+	return
+)
+
+(@calc
+	1 0
+	r12 <- 0
+	r13 <- rdi
+	r14 <- r13
+	r14 <<= 1
+	r14 += 1
+	rdi <- r14
+	rsi <- 1
+	call allocate 2
+	r14 <- rax
+	r14 += 8
+	:loop_bgn
+	cjump r13 < r12 :loop_end
+	rdi <- mem r14 0
+	rdi <<= 1
+	rdi += 1
+	call print 1
+	r12 += 1
+	r15 <- mem r14 0
+	r15 *= r12
+	mem r14 8 <- r15
+	r14 += 8
+	goto :loop_bgn
+	:loop_end
+	return
+)
+
+)

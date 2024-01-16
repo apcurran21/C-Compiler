@@ -1,0 +1,14 @@
+define void @main ( ){
+
+  :entry
+  br 0 :TRUE :FALSE
+
+  :TRUE
+  call print(3)
+  return
+
+  :FALSE
+  call print(5)
+  return
+
+}

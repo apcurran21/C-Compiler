@@ -1,0 +1,14 @@
+(@greater
+	2
+	%foo <- rdi
+	%bar <- rsi
+	%flag <- %bar <= %foo
+	cjump %flag = 1 :call_label_ciao__ciao_50
+	goto :call_label_ciao__ciao_49
+	:call_label_ciao__ciao_49
+	rax <- %bar
+	return
+	:call_label_ciao__ciao_50
+	rax <- %foo
+	return
+)

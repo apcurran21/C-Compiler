@@ -1,0 +1,7 @@
+(@PrintResult
+	1
+	%res <- rdi
+	rdi <- %res
+	call print 1
+	return
+)

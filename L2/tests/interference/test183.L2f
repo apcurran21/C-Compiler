@@ -1,0 +1,24 @@
+(@getMin
+	1
+	%array <- rdi
+	%i <- 0
+	%minValue <- 999999
+	%currPointer <- %array
+	%arrayLength <- mem %currPointer 0
+	:call_label_ciao_4
+	%currPointer += 8
+	%currValue <- mem %currPointer 0
+	%isLessThanMinValue <- %currValue < %minValue
+	cjump %isLessThanMinValue = 1 :call_label_ciao_5
+	goto :call_label_ciao_6
+	:call_label_ciao_5
+	%minValue <- %currValue
+	:call_label_ciao_6
+	%i += 1
+	%isIteratorLessThanArrayLength <- %i < %arrayLength
+	cjump %isIteratorLessThanArrayLength = 1 :call_label_ciao_4
+	goto :call_label_ciao_7
+	:call_label_ciao_7
+	rax <- %minValue
+	return
+)

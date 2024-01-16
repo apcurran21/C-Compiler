@@ -1,0 +1,84 @@
+(@main
+(@double
+	1 0
+	rdi <- rdi
+	:call_label0
+	rdi <- rdi
+	rdi *= 2
+	rax <- rdi
+	return
+)
+
+(@int_encode
+	1 0
+	rdi <- rdi
+	:call_label_ciao__ciao__ciao_9
+	rdi <- rdi
+	rdi <<= 1
+	rdi <- rdi
+	rdi += 1
+	rax <- rdi
+	return
+)
+
+(@main
+	0 1
+	:call_label_ciao__ciao_2
+	goto :call_label_ciao__ciao_3
+	:call_label_ciao__ciao_3
+	rdi <- 1
+	mem rsp 0 <- rdi
+	rdi <- mem rsp 0
+	rdi <- rdi
+	mem rsp -8 <- :call_label_ciao__ciao_4
+	call @int_encode 1
+	:call_label_ciao__ciao_4
+	rdi <- rax
+	rdi <- rdi
+	call print 1
+	rsi <- @double
+	rdi <- mem rsp 0
+	rdi <- rdi
+	mem rsp -8 <- :call_label_ciao__ciao_5
+	call rsi 1
+	:call_label_ciao__ciao_5
+	rdi <- rax
+	mem rsp 0 <- rdi
+	rdi <- mem rsp 0
+	rdi <- rdi
+	mem rsp -8 <- :call_label_ciao__ciao_6
+	call @int_encode 1
+	:call_label_ciao__ciao_6
+	rdi <- rax
+	rdi <- rdi
+	call print 1
+	rsi <- @plus_10
+	rdi <- mem rsp 0
+	rdi <- rdi
+	mem rsp -8 <- :call_label_ciao__ciao_7
+	call rsi 1
+	:call_label_ciao__ciao_7
+	rdi <- rax
+	mem rsp 0 <- rdi
+	rdi <- mem rsp 0
+	rdi <- rdi
+	mem rsp -8 <- :call_label_ciao__ciao_8
+	call @int_encode 1
+	:call_label_ciao__ciao_8
+	rdi <- rax
+	rdi <- rdi
+	call print 1
+	return
+)
+
+(@plus_10
+	1 0
+	rdi <- rdi
+	:call_label_ciao_1
+	rdi <- rdi
+	rdi += 10
+	rax <- rdi
+	return
+)
+
+)

@@ -1,0 +1,107 @@
+(@main
+  (@main
+    0
+    %radius <- 4
+    rdi <- %radius
+
+mem rsp -8 <- :call_label0
+    call @circ 1
+
+:call_label0
+    %value <- rax
+    %value <- %value
+    %value <<= 1
+    %value <- %value
+    %value += 1
+    rdi <- %value
+    call print 1
+    rdi <- %radius
+
+mem rsp -8 <- :call_label1
+    call @area 1
+
+:call_label1
+    %value <- rax
+    %value <- %value
+    %value <<= 1
+    %value <- %value
+    %value += 1
+    rdi <- %value
+    call print 1
+    rdi <- %radius
+
+mem rsp -8 <- :call_label2
+    call @SA 1
+
+:call_label2
+    %value <- rax
+    %value <- %value
+    %value <<= 1
+    %value <- %value
+    %value += 1
+    rdi <- %value
+    call print 1
+    rdi <- %radius
+
+mem rsp -8 <- :call_label3
+    call @vol 1
+
+:call_label3
+    %value <- rax
+    %value <- %value
+    %value <<= 1
+    %value <- %value
+    %value += 1
+    rdi <- %value
+    call print 1
+    return
+  )
+  (@circ
+    1
+    %r <- rdi
+    %pi <- 3
+    %d <- 2
+    %d *= %r
+    %c <- %d
+    %c *= %pi
+    rax <- %c
+    return
+  )
+  (@area
+    1
+    %r <- rdi
+    %pi <- 3
+    %r2 <- %r
+    %r2 *= %r
+    %a <- %r2
+    %a *= %pi
+    rax <- %a
+    return
+  )
+  (@SA
+    1
+    %r <- rdi
+    %pi <- 3
+    %r2 <- %r
+    %r2 *= %r
+    %r2times4 <- %r2
+    %r2times4 *= 4
+    %sa <- %r2times4
+    %sa *= %pi
+    rax <- %sa
+    return
+  )
+  (@vol
+    1
+    %r <- rdi
+    %factor <- 4
+    %r2 <- %r
+    %r2 *= %r
+    %r3 <- %r2
+    %r3 *= %r
+    %v <- %r3
+    %v *= %factor
+    rax <- %v
+    return
+  )
+)

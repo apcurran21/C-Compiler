@@ -1,0 +1,132 @@
+// Array operations: Max, Min, Sum
+
+define @getMax(%array) {
+    %i <- 0
+    %maxValue <- -1
+    %currPointer <- %array
+    %arrayLength <- load %currPointer
+
+    :loop
+        %currPointer <- %currPointer + 8
+        %currValue <- load %currPointer
+        %isGreaterThanMaxValue <- %maxValue < %currValue
+        br %isGreaterThanMaxValue :assign
+        br :continue
+
+    :assign
+        %maxValue <- %currValue
+
+    :continue
+        %i <- %i + 1
+        %isIteratorLessThanArrayLength <- %i < %arrayLength
+        br %isIteratorLessThanArrayLength :loop
+        br :terminate
+
+    :terminate
+        return %maxValue
+}
+
+define @getMin(%array) {
+    %i <- 0
+    %minValue <- 999999
+    %currPointer <- %array
+    %arrayLength <- load %currPointer
+
+    :loop
+        %currPointer <- %currPointer + 8
+        %currValue <- load %currPointer
+        %isLessThanMinValue <- %currValue < %minValue
+        br %isLessThanMinValue :assign
+        br :continue
+
+    :assign
+        %minValue <- %currValue
+
+    :continue
+        %i <- %i + 1
+        %isIteratorLessThanArrayLength <- %i < %arrayLength
+        br %isIteratorLessThanArrayLength :loop
+        br :terminate
+
+    :terminate
+        return %minValue
+}
+
+define @getSum(%array) {
+    %i <- 0
+    %sum <- 1
+    %currPointer <- %array
+    %arrayLength <- load %currPointer
+
+    :loop
+        %currPointer <- %currPointer + 8
+        %currValue <- load %currPointer
+
+        %sum <- %sum - 1
+        %sum <- %sum >> 1
+        %currValue <- %currValue - 1
+        %currValue <- %currValue >> 1
+
+        %sum <- %sum + %currValue
+        %sum <- %sum << 1
+        %sum <- %sum + 1
+
+    :continue
+        %i <- %i + 1
+        %isIteratorLessThanArrayLength <- %i < %arrayLength
+        br %isIteratorLessThanArrayLength :loop
+        br :terminate
+
+    :terminate
+        return %sum
+}
+
+define @main() {
+    %arr <- call allocate(21, 1)
+    %element1Address <- %arr + 8
+    %element2Address <- %arr + 16
+    %element3Address <- %arr + 24
+    %element4Address <- %arr + 32
+    %element5Address <- %arr + 40
+    %element6Address <- %arr + 48
+    %element7Address <- %arr + 56
+    %element8Address <- %arr + 64
+    %element9Address <- %arr + 72
+    %element10Address <- %arr + 80
+
+    // 12
+    store %element1Address <- 25
+    // 20
+    store %element2Address <- 41
+    // 18
+    store %element3Address <- 37
+    // 53
+    store %element4Address <- 107
+    // 13
+    store %element5Address <- 27
+    // 24
+    store %element6Address <- 49
+    // 60
+    store %element7Address <- 121
+    // 40
+    store %element8Address <- 81
+    // 36
+    store %element9Address <- 73
+    // 3
+    store %element10Address <- 7
+
+    call print(%arr)
+    %max <- call @getMax(%arr)
+    // expects 60
+    call print(%max)
+
+    %min <- call @getMin(%arr)
+    // expects 3
+    call print(%min)
+
+    %total <- call @getSum(%arr)
+    // expects 279
+    call print(%total)
+
+    return
+}

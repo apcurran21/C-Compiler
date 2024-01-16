@@ -1,0 +1,44 @@
+(@main
+(@main
+	0 0
+	rdi <- 20
+	mem rsp -8 <- :call_label0
+	call @fibonacci 1
+	:call_label0
+	rdi <- rax
+	rdi <<= 1
+	rdi += 1
+	call print 1
+	rax <- 0
+	return
+)
+
+(@fibonacci
+	1 0
+	r8 <- rdi
+	r9 <- r8 = 1
+	cjump r9 = 1 :call_label_ciao_3
+	r9 <- r8 = 2
+	cjump r9 = 1 :call_label_ciao_3
+	rdx <- 1
+	rcx <- 1
+	rdi <- 3
+	rsi <- 0
+	:call_label_ciao_1
+	r9 <- rdi <= r8
+	cjump r9 = 1 :call_label_ciao_2
+	rax <- rsi
+	return
+	:call_label_ciao_2
+	rsi <- rdx
+	rsi += rcx
+	rdx <- rcx
+	rcx <- rsi
+	rdi += 1
+	goto :call_label_ciao_1
+	:call_label_ciao_3
+	rax <- 1
+	return
+)
+
+)

@@ -1,0 +1,61 @@
+define @main () {
+ 
+:NNNNNN
+ br :entry
+ 
+:entry
+ %res <- call @gcd (541, 7919)
+ %res <- %res << 1
+ %res <- %res + 1
+ call print (%res)
+ return 
+}
+
+define @gcd (%a, %b) {
+ 
+:NNNNNNNNNNNNNNNNNNNNNN
+ br :entry
+ 
+:initialConditionTrue
+ return %a
+ 
+:initialConditionFalse
+ %aModB <- call @mod (%a, %b)
+ %res <- call @gcd (%b, %aModB)
+ return %res
+ 
+:entry
+ %if <- %b = 0
+ br %if :initialConditionTrue 
+ br :initialConditionFalse
+}
+
+define @mod (%a, %b) {
+ 
+:NNNNNNNNNNNNNNN
+ br :entry
+ 
+:whileIncrement
+ %i <- %i + 1
+ br :while
+ 
+:while
+ %bi <- %b * %i
+ %if <- %bi <= %a
+ br %if :whileInto 
+ br :whileBreak
+ 
+:whileBreak
+ return %res
+ 
+:whileInto
+ %res <- %a
+ %res <- %res - %bi
+ br :whileIncrement
+ 
+:entry
+ %i <- 0
+ %res <- %a
+ br :while
+}
+

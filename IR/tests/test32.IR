@@ -1,0 +1,42 @@
+define int64 @main() {
+    :entry
+    int64 %c
+    %c <- 9
+    %c <- %c * 4
+    %c <- %c + 1
+    %c <- %c << 3
+    %c <- %c - 10
+    int64 %x
+    %x <- 1623
+    int64 %should_lea
+    %should_lea <- %c * 4
+    %should_lea <- %should_lea + %x
+    int64 %abc
+    int64 %size
+    %abc <- call @return_merge(%x)
+    %size <- %abc << 1
+    %size <- %size + 1
+    int64[] %ptr
+    %ptr <- new Array(%size)
+    call @aliasing_issues(%ptr)
+    return %c
+}
+
+define int64 @return_merge (int64 %p) {
+ :entry
+ int64 %r
+ %r <- %p + 1
+ return %r
+}
+
+define int64 @aliasing_issues (int64[] %p) {
+ :entry
+ int64[] %v
+ %v <- %p
+ %p[0] <- 5
+ int64 %x
+ %x <- %p[0]
+ %v[0] <- 4
+ call print(%x)
+ return 0
+}

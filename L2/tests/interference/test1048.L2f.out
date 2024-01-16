@@ -1,0 +1,24 @@
+%arg %argIsPrime %argNotPrime %cndIsPrime %modulo %notFactor %notPrime %possiblePrime r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx rsi %sad
+%argIsPrime %arg r12 r13 r14 r15 rbp rbx
+%argNotPrime %arg r12 r13 r14 r15 rbp rbx
+%cndIsPrime %arg %possiblePrime r12 r13 r14 r15 rbp rbx
+%modulo %arg %possiblePrime r12 r13 r14 r15 rbp rbx
+%notFactor %arg %possiblePrime r12 r13 r14 r15 rbp rbx
+%notPrime %arg %possiblePrime r12 r13 r14 r15 rbp rbx
+%possiblePrime %arg %cndIsPrime %modulo %notFactor %notPrime r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx rsi %sad
+r10 %arg %possiblePrime r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx rsi
+r11 %arg %possiblePrime r10 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx rsi
+r12 %arg %argIsPrime %argNotPrime %cndIsPrime %modulo %notFactor %notPrime %possiblePrime r10 r11 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx rsi %sad
+r13 %arg %argIsPrime %argNotPrime %cndIsPrime %modulo %notFactor %notPrime %possiblePrime r10 r11 r12 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx rsi %sad
+r14 %arg %argIsPrime %argNotPrime %cndIsPrime %modulo %notFactor %notPrime %possiblePrime r10 r11 r12 r13 r15 r8 r9 rax rbp rbx rcx rdi rdx rsi %sad
+r15 %arg %argIsPrime %argNotPrime %cndIsPrime %modulo %notFactor %notPrime %possiblePrime r10 r11 r12 r13 r14 r8 r9 rax rbp rbx rcx rdi rdx rsi %sad
+r8 %arg %possiblePrime r10 r11 r12 r13 r14 r15 r9 rax rbp rbx rcx rdi rdx rsi
+r9 %arg %possiblePrime r10 r11 r12 r13 r14 r15 r8 rax rbp rbx rcx rdi rdx rsi
+rax %arg %possiblePrime r10 r11 r12 r13 r14 r15 r8 r9 rbp rbx rcx rdi rdx rsi
+rbp %arg %argIsPrime %argNotPrime %cndIsPrime %modulo %notFactor %notPrime %possiblePrime r10 r11 r12 r13 r14 r15 r8 r9 rax rbx rcx rdi rdx rsi %sad
+rbx %arg %argIsPrime %argNotPrime %cndIsPrime %modulo %notFactor %notPrime %possiblePrime r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rcx rdi rdx rsi %sad
+rcx %arg %possiblePrime r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rdi rdx rsi
+rdi %arg %possiblePrime r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdx rsi
+rdx %arg %possiblePrime r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rsi
+rsi %arg %possiblePrime r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx
+%sad %arg %possiblePrime r12 r13 r14 r15 rbp rbx

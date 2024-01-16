@@ -1,0 +1,11 @@
+(@myF
+	0 1
+	%variable06VM9JWQHG <- 3
+	%S0 <- 0
+	mem rsp 0 <- %S0
+	%S1 <- mem rsp 0
+	%variableMFJTB2OEFU <- %S1
+	%S2 <- %variable06VM9JWQHG
+	mem rsp 0 <- %S2
+	return
+)

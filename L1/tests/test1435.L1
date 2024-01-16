@@ -1,0 +1,75 @@
+(@main
+(@encode
+	1 0
+	rdi <<= 1
+	rdi += 1
+	rax <- rdi
+	return
+)
+
+(@encoded_add
+	2 0
+	rdi += rsi
+	rdi -= 1
+	rax <- rdi
+	return
+)
+
+(@fib_impl
+	3 2
+	mem rsp 8 <- r13
+	mem rsp 0 <- r12
+	rcx <- rdi
+	r12 <- rsi
+	r13 <- rdx
+	:call_label0
+	rdi <- r13 < 5
+	cjump rdi = 1 :call_label1
+	goto :call_label2
+	:call_label1
+	rax <- r12
+	r12 <- mem rsp 0
+	r13 <- mem rsp 8
+	return
+	:call_label2
+	rdi <- rcx
+	rsi <- r12
+	mem rsp -8 <- :call_label3
+	call @encoded_add 2
+	:call_label3
+	rdi <- rax
+	rcx <- r12
+	r12 <- rdi
+	r13 -= 2
+	goto :call_label0
+)
+
+(@fib
+	1 0
+	rdx <- rdi
+	rdi <- 3
+	rsi <- 3
+	mem rsp -8 <- :call_label_ciao_4
+	call @fib_impl 3
+	:call_label_ciao_4
+	rdi <- rax
+	rax <- rdi
+	return
+)
+
+(@main
+	0 0
+	rdi <- 4
+	mem rsp -8 <- :call_label_ciao__ciao_5
+	call @encode 1
+	:call_label_ciao__ciao_5
+	rdi <- rax
+	mem rsp -8 <- :call_label_ciao__ciao_6
+	call @fib 1
+	:call_label_ciao__ciao_6
+	rdi <- rax
+	call print 1
+	return
+)
+
+)

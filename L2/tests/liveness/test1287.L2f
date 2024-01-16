@@ -1,0 +1,76 @@
+(@main
+	0
+	:call_label0
+	%test_value <- 1234
+	%newVar1 <- 9
+	%newVar1 >>= 1
+	%newVar0 <- %newVar1
+	%newVar2 <- 9
+	%newVar2 >>= 1
+	%newVar0 *= %newVar2
+	%newVar3 <- 9
+	%newVar3 >>= 1
+	%newVar0 *= %newVar3
+	%newVar0 <<= 1
+	%newVar0 += 1
+	%newVar0 += 8
+	rdi <- %newVar0
+	rsi <- 1
+	call allocate 2
+	%matrix <- rax
+	%newVar4 <- %matrix
+	%newVar4 += 8
+	mem %newVar4 0 <- 7
+	%newVar5 <- %matrix
+	%newVar5 += 16
+	mem %newVar5 0 <- 9
+	%newVar6 <- %matrix
+	%newVar6 += 24
+	mem %newVar6 0 <- 9
+	%newVar7 <- %matrix
+	%newVar7 += 32
+	mem %newVar7 0 <- 9
+	rdi <- %matrix
+	rsi <- %test_value
+	mem rsp -8 <- :call_label1
+	call @find 2
+	:call_label1
+	%result <- rax
+	rdi <- %result
+	call print 1
+	%newVar9 <- 0
+	%newVar10 <- %matrix
+	%newVar10 += 24
+	%newVar11 <- mem %newVar10 0
+	%newVar12 <- %newVar11
+	%newVar12 >>= 1
+	%newVar13 <- %matrix
+	%newVar13 += 32
+	%newVar14 <- mem %newVar13 0
+	%newVar15 <- %newVar14
+	%newVar15 >>= 1
+	%newVar16 <- 1
+	%newVar16 *= %newVar15
+	%newVar17 <- 1
+	%newVar17 *= %newVar16
+	%newVar9 += %newVar17
+	%newVar16 *= %newVar12
+	%newVar18 <- 2
+	%newVar18 *= %newVar16
+	%newVar9 += %newVar18
+	%newVar8 <- %newVar9
+	%newVar8 *= 8
+	%newVar8 += 40
+	%newVar19 <- %matrix
+	%newVar19 += %newVar8
+	mem %newVar19 0 <- %test_value
+	rdi <- %matrix
+	rsi <- %test_value
+	mem rsp -8 <- :call_label2
+	call @find 2
+	:call_label2
+	%result <- rax
+	rdi <- %result
+	call print 1
+	return
+)

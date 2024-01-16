@@ -1,0 +1,53 @@
+(@main
+(@main
+	0 0
+	rdi <- 1
+	rsi <- 3
+	rdx <- 5
+	rcx <- 7
+	mem rsp -8 <- :call_label0
+	call @sum 4
+	:call_label0
+	rdi <- rax
+	rdi <- rdi
+	mem rsp -8 <- :call_label1
+	call @divide 1
+	:call_label1
+	rdi <- rax
+	rdi <- rdi
+	rdi <<= 1
+	rdi <- rdi
+	rdi += 1
+	rdi <- rdi
+	call print 1
+	rax <- 0
+	return
+)
+
+(@sum
+	4 0
+	rdi <- rdi
+	r8 <- rsi
+	rdx <- rdx
+	rsi <- rcx
+	rdi <- rdi
+	rdi <- rdi
+	rdi += r8
+	rdi <- rdi
+	rdi += rdx
+	rdi <- rdi
+	rdi += rsi
+	rax <- rdi
+	return
+)
+
+(@divide
+	1 0
+	rdi <- rdi
+	rdi <- rdi
+	rdi >>= 2
+	rax <- rdi
+	return
+)
+
+)

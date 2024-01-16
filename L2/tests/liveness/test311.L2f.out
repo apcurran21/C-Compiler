@@ -1,0 +1,18 @@
+(
+(in
+(r12 r13 r14 r15 rbp rbx rdi)
+(%data r12 r13 r14 r15 rbp rbx)
+(%data r12 r13 r14 r15 rbp rbx)
+(%data r12 r13 r14 r15 rbp rbx)
+(r12 r13 r14 r15 rax rbp rbx)
+)
+
+(out
+(%data r12 r13 r14 r15 rbp rbx)
+(%data r12 r13 r14 r15 rbp rbx)
+(%data r12 r13 r14 r15 rbp rbx)
+(r12 r13 r14 r15 rax rbp rbx)
+()
+)
+
+)

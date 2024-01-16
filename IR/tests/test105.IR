@@ -1,0 +1,81 @@
+define void @main() {
+	:EntryPoint
+
+
+	int64 %len
+	%len <- 10
+
+	int64[] %arr
+
+	%arr <- call @GetArray(%len)
+	call @PrintArray(%arr)
+
+
+	int64 %res
+	%res <- call @FindElement(100, %arr, %len)
+
+	%res <- %res << 1
+	%res <- %res + 1
+	call print(%res)
+
+	return
+}
+
+
+define int64[] @GetArray(int64 %len) {
+	:EntryPoint
+	int64[] %arr
+
+	%len <- %len << 1
+	%len <- %len + 1
+
+	%arr <- new Array(%len)
+
+	int64 %targetInd
+	int64 %targetVal
+
+	%targetInd <- 2
+	%targetVal <- 100
+	%targetVal <- %targetVal << 1
+	%targetVal <- %targetVal + 1
+	%arr[%targetInd] <- %targetVal
+
+	return %arr
+}
+
+
+
+
+define int64 @FindElement(int64 %target, int64[] %arr, int64 %len) {
+	:EntryPoint
+	int64 %ind
+	int64 %isDone
+	int64 %foundValue
+	int64 %cur
+	%ind <- 0
+	br :LoopStart
+
+	:LoopStart
+	%isDone <- %ind = %len
+	br %isDone :ExitLoop :EnterLoop
+
+	:EnterLoop
+	%cur <- %arr[%ind]
+	%cur <- %cur >> 1
+	%foundValue <- %cur = %target
+	br %foundValue :ExitLoop :Continue
+
+	:Continue
+	%ind <- %ind + 1
+	br :LoopStart
+
+	:ExitLoop
+	return %ind
+}
+
+
+define void @PrintArray(int64[] %arr) {
+	:EntryPoint
+	call print(%arr)
+	return
+}

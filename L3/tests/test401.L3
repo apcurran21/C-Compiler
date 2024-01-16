@@ -1,0 +1,64 @@
+define @main(){
+	%cprime <- 104
+	%n <- 2
+	:loop
+	%v <- call @isdiv(%cprime,%n)
+	%check <- %v = 1
+	br %check :returnfalsemain
+	%n <- %n + 1
+	%check <- %n = %cprime
+	br %check :returntruemain
+	br :loop
+	:returntruemain
+	%v <- 1
+	br :returnmain
+	:returnfalsemain
+	%v <- 0
+	:returnmain
+	%p <- %v << 1
+	%p <- %p + 1
+	call print (%p)
+	return 0
+}
+
+define @isdiv (%d,%s){
+	%check <- %s = 0
+	br %check :error
+	%check <- %d < 0
+	br %check :negd
+	:posd
+	%check <- %s < 0
+	br %check :posdnegs
+	:posdposs
+	%sub <- %s
+	br :start
+	:posdnegs
+	%sub <- %s * -1
+	br :start
+	:negd
+	%d <- %d * -1
+	%check <- %s < 0
+	br %check :negdnegs
+	:negdposs
+	%sub <- %s
+	br :start
+	:negdnegs
+	%sub <- %s * -1
+	:start
+	%sub2 <- %sub
+	:loop
+	%sub <- %sub + %sub2
+	%check <- %d = %sub
+	br %check :returntrue
+	%check <- %sub > %d
+	br %check :returnfalse
+	br :loop
+	:returntrue
+	return 1
+	:returnfalse
+	return 0
+	:error
+	return -1
+}
+
+

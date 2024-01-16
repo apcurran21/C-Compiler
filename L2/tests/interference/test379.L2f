@@ -1,0 +1,98 @@
+(@main
+	0
+	%size <- 1
+	%var3 <- %size
+	%var3 <<= 3
+	%var4 <- %size
+	%var4 <<= 4
+	%var5 <- %size
+	%var5 <<= 5
+	%var6 <- %size
+	%var6 <<= 6
+	%var2 <- %size
+	%var2 <<= 2
+	%var1 <- %size
+	%var1 <<= 1
+	%size <- %var2
+	%size -= %var1
+	%size += %var4
+	%size -= %var3
+	%size += %var6
+	%size -= %var5
+	%size >>= 2
+	%size += 1
+	%init <- 1
+	rdi <- 3
+	rsi <- 1
+	call allocate 2
+	%x_1 <- rax
+	rdi <- 3
+	rsi <- %x_1
+	call allocate 2
+	%x_1 <- rax
+	rdi <- 3
+	rsi <- %x_1
+	call allocate 2
+	%x_1 <- rax
+	rdi <- 3
+	rsi <- %x_1
+	call allocate 2
+	%x_1 <- rax
+	rdi <- %x_1
+	call print 1
+	rdi <- %size
+	rsi <- %init
+	call allocate 2
+	%start <- rax
+	rdi <- %start
+	rsi <- %size
+	mem rsp -8 <- :call_label0
+	call @map 2
+	:call_label0
+	%mapped <- rax
+	rdi <- %mapped
+	call print 1
+	%which <- 0
+	rdi <- %mapped
+	rsi <- %size
+	rdx <- %which
+	mem rsp -8 <- :call_label1
+	call @filter 3
+	:call_label1
+	%fin <- rax
+	rdi <- %fin
+	call print 1
+	rdi <- %fin
+	rsi <- %size
+	mem rsp -8 <- :call_label2
+	call @map 2
+	:call_label2
+	%mapped <- rax
+	rdi <- %mapped
+	call print 1
+	%which <- 1
+	rdi <- %mapped
+	rsi <- %size
+	rdx <- %which
+	mem rsp -8 <- :call_label3
+	call @filter 3
+	:call_label3
+	%fin <- rax
+	rdi <- %fin
+	call print 1
+	rdi <- %fin
+	rsi <- %size
+	mem rsp -8 <- :call_label4
+	call @map 2
+	:call_label4
+	%mapped <- rax
+	rdi <- %mapped
+	rsi <- %size
+	mem rsp -8 <- :call_label5
+	call @acc 2
+	:call_label5
+	%do <- rax
+	rdi <- %do
+	call print 1
+	return
+)

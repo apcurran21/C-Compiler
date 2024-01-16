@@ -1,0 +1,96 @@
+(@main
+(@altRetFun
+	1 0
+	rdi <- rdi
+	:call_label_ciao__ciao__ciao_11
+	goto :call_label_ciao__ciao__ciao_12
+	:call_label_ciao__ciao__ciao_12
+	rdi <- rdi
+	rdi -= 10
+	rax <- rdi
+	return
+)
+
+(@main
+	0 4
+	:call_label0
+	goto :call_label4
+	:call_label1
+	rdi <- mem rsp 8
+	rdx <- rdi
+	rdx <- rdx
+	rdi <- mem rsp 0
+	rdx += rdi
+	rdx <- rdx
+	rdi <- mem rsp 24
+	rdx -= rdi
+	rdx <- rdx
+	rdi <- mem rsp 16
+	rdx += rdi
+	rdi <- rdx
+	mem rsp -8 <- :call_label5
+	call rsi 1
+	:call_label5
+	rdi <- rax
+	rdi <- rdi
+	rdi <<= 1
+	rdi <- rdi
+	rdi += 1
+	rdx <- rdi
+	rdi <- rdx
+	call print 1
+	return
+	:call_label2
+	rsi <- @altRetFun
+	goto :call_label1
+	:call_label3
+	rsi <- @retFun
+	goto :call_label1
+	:call_label4
+	rdi <- 5
+	mem rsp 8 <- rdi
+	rdi <- 10
+	mem rsp 0 <- rdi
+	rdi <- 15
+	mem rsp 24 <- rdi
+	rdx <- 5
+	rsi <- 3
+	rdi <- rdx
+	rdi <- 20
+	mem rsp 16 <- rdi
+	rdi <- rdx
+	rsi <- rsi
+	mem rsp -8 <- :call_label6
+	call @myTest3Helper 2
+	:call_label6
+	rdi <- rax
+	rdi <- rdi = 0
+	cjump rdi = 1 :call_label2
+	goto :call_label3
+)
+
+(@myTest3Helper
+	2 0
+	rdi <- rdi
+	rsi <- rsi
+	:call_label_ciao_7
+	goto :call_label_ciao_8
+	:call_label_ciao_8
+	rdi <- rdi < rsi
+	rax <- rdi
+	return
+)
+
+(@retFun
+	1 0
+	rdi <- rdi
+	:call_label_ciao__ciao_9
+	goto :call_label_ciao__ciao_10
+	:call_label_ciao__ciao_10
+	rdi <- rdi
+	rdi += 10
+	rax <- rdi
+	return
+)
+
+)

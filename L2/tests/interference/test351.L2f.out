@@ -1,0 +1,27 @@
+%isIteratorLessThanLength %offset %originalTablePointer r12 r13 r14 r15 rbp rbx %tableLength
+%isNZero %n r12 r13 r14 r15 rbp rbx
+%n %isNZero %offset %originalTablePointer r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx rsi %size %table %tableLength
+%nIsOne %offset %originalTablePointer r12 r13 r14 r15 rbp rbx %tableLength
+%offset %isIteratorLessThanLength %n %nIsOne %originalTablePointer %prevPrevValue %prevValue r12 r13 r14 r15 rbp rbx %tableLength %tablePointer
+%originalTablePointer %isIteratorLessThanLength %n %nIsOne %offset %prevPrevValue %prevValue r12 r13 r14 r15 rbp rbx %tableLength %tablePointer
+%prevPrevValue %offset %originalTablePointer %prevValue r12 r13 r14 r15 rbp rbx %tableLength %tablePointer
+%prevValue %offset %originalTablePointer %prevPrevValue r12 r13 r14 r15 rbp rbx %tableLength %tablePointer
+r10 %n r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx rsi
+r11 %n r10 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx rsi
+r12 %isIteratorLessThanLength %isNZero %n %nIsOne %offset %originalTablePointer %prevPrevValue %prevValue r10 r11 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx rsi %size %table %tableLength %tablePointer
+r13 %isIteratorLessThanLength %isNZero %n %nIsOne %offset %originalTablePointer %prevPrevValue %prevValue r10 r11 r12 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx rsi %size %table %tableLength %tablePointer
+r14 %isIteratorLessThanLength %isNZero %n %nIsOne %offset %originalTablePointer %prevPrevValue %prevValue r10 r11 r12 r13 r15 r8 r9 rax rbp rbx rcx rdi rdx rsi %size %table %tableLength %tablePointer
+r15 %isIteratorLessThanLength %isNZero %n %nIsOne %offset %originalTablePointer %prevPrevValue %prevValue r10 r11 r12 r13 r14 r8 r9 rax rbp rbx rcx rdi rdx rsi %size %table %tableLength %tablePointer
+r8 %n r10 r11 r12 r13 r14 r15 r9 rax rbp rbx rcx rdi rdx rsi
+r9 %n r10 r11 r12 r13 r14 r15 r8 rax rbp rbx rcx rdi rdx rsi
+rax %n r10 r11 r12 r13 r14 r15 r8 r9 rbp rbx rcx rdi rdx rsi
+rbp %isIteratorLessThanLength %isNZero %n %nIsOne %offset %originalTablePointer %prevPrevValue %prevValue r10 r11 r12 r13 r14 r15 r8 r9 rax rbx rcx rdi rdx rsi %size %table %tableLength %tablePointer
+rbx %isIteratorLessThanLength %isNZero %n %nIsOne %offset %originalTablePointer %prevPrevValue %prevValue r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rcx rdi rdx rsi %size %table %tableLength %tablePointer
+rcx %n r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rdi rdx rsi
+rdi %n r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdx rsi
+rdx %n r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rsi
+rsi %n r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx
+%size %n r12 r13 r14 r15 rbp rbx
+%tableLength %isIteratorLessThanLength %n %nIsOne %offset %originalTablePointer %prevPrevValue %prevValue r12 r13 r14 r15 rbp rbx %tablePointer
+%table %n r12 r13 r14 r15 rbp rbx
+%tablePointer %offset %originalTablePointer %prevPrevValue %prevValue r12 r13 r14 r15 rbp rbx %tableLength

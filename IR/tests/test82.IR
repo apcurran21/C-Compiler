@@ -1,0 +1,106 @@
+// print the Fibonacci sequence (10 elems)
+// stored in an array, so the first two are #dim and #len of dim[0]
+// expected output:
+// {s:12, 1, 10, 0, 1, 1, 2, 3, 5, 8, 13, 21, 34} 
+
+define void @main () {
+  :var_declarations
+  int64 %arg1
+  int64 %invalid
+  int64 %count
+  int64 %pos0
+  int64 %pos1
+  int64 %pos2
+  int64[] %arrayAddr
+  int64 %ifDone
+  int64 %val0
+  int64 %val1
+  int64 %val2
+  int64 %arrayLen
+  br :check_input
+
+  :check_input
+  %arg1 <- 10
+  %invalid <- %arg1 < 2
+  br %invalid :bad_input :good_input
+
+  :good_input
+  // array init:
+  %arg1 <- call @int_encode(%arg1)
+  %arrayAddr <- new Array(%arg1)
+  %pos0 <- 0
+  %pos1 <- 1
+  %pos2 <- 2 
+  %arrayAddr[%pos0] <- 0
+  %arrayAddr[%pos1] <- 1
+  // iteration:
+  %arrayLen <- length %arrayAddr 0
+  %arrayLen <- call @int_decode(%arrayLen)
+  %count <- 3
+  br :loop
+
+  :loop
+  %ifDone <- %arrayLen < %count
+  br %ifDone :end_loop :loopbody
+
+  :loopbody
+  %val0 <- %arrayAddr[%pos0]
+  %val1 <- %arrayAddr[%pos1]
+  %val2 <- %val0 + %val1
+  %arrayAddr[%pos2] <- %val2
+  %count <- %count + 1
+  %pos0 <- %pos0 + 1
+  %pos1 <- %pos1 + 1
+  %pos2 <- %pos2 + 1
+  br :loop
+
+  :end_loop
+  // encode and print array:
+  call @array_encode(%arrayAddr)
+  call print(%arrayAddr)
+  return
+
+  :bad_input
+  return
+}
+
+// encode elements in an array as numbers in-place.
+define void @array_encode (int64[] %arrayAddr) {
+  :entry
+  int64 %arrayLen
+  int64 %pos
+  int64 %ifDone
+  int64 %val
+
+  %arrayLen <- length %arrayAddr 0
+  %arrayLen <- call @int_decode(%arrayLen)
+  %pos <- 0
+  br :loop_1
+
+  :loop_1
+  %ifDone <- %pos = %arrayLen
+  br %ifDone :end_loop_1 :loop_body
+
+  :loop_body
+  %val <- %arrayAddr[%pos]
+  %val <- call @int_encode(%val)
+  %arrayAddr[%pos] <- %val
+  %pos <- %pos + 1
+  br :loop_1
+
+  :end_loop_1
+  return
+}
+
+define int64 @int_encode (int64 %v) {
+  :entry
+  %v <- %v << 1
+  %v <- %v + 1
+  return %v
+}
+
+define int64 @int_decode (int64 %v) {
+  :entry
+  %v <- %v >> 1
+  return %v
+}

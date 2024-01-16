@@ -1,0 +1,26 @@
+(@go
+	0
+	rdi <- 5
+	rsi <- 5
+	call allocate 2
+	%array1 <- rax
+	mem %array1 8 <- 85
+	rdi <- %array1
+	call print 1
+	rdi <- %array1
+	mem rsp -8 <- :printArray_ret
+	call @printArray 1
+	:printArray_ret
+	rdi <- 5
+	rsi <- 5
+	call allocate 2
+	%array2 <- rax
+	mem %array1 8 <- %array2
+	rdi <- %array1
+	call print 1
+	rdi <- %array1
+	mem rsp -8 <- :printArray_ret2
+	call @printArray 1
+	:printArray_ret2
+	return
+)

@@ -1,0 +1,22 @@
+(@main
+	0
+	mem rsp -8 <- :call_label0
+	call @createArray 0
+	:call_label0
+	%v1 <- rax
+	mem rsp -8 <- :call_label1
+	call @createArray 0
+	:call_label1
+	%v2 <- rax
+	rdi <- %v1
+	rsi <- %v2
+	mem rsp -8 <- :call_label2
+	call @dotProduct 2
+	:call_label2
+	%result <- rax
+	%result <<= 1
+	%result += 1
+	rdi <- %result
+	call print 1
+	return
+)

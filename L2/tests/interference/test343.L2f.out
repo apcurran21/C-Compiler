@@ -1,0 +1,24 @@
+%arr %checkCont %count %max %pprev %prev %ptr r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx rsi %sum %tmpMax
+%checkCont %arr %count %pprev %prev %ptr r12 r13 r14 r15 rbp rbx %tmpMax
+%count %arr %checkCont %max %pprev %prev %ptr r12 r13 r14 r15 rbp rbx %sum %tmpMax
+%max %arr %count %pprev %prev %ptr r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx rsi
+%pprev %arr %checkCont %count %max %prev %ptr r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx rsi %sum %tmpMax
+%prev %arr %checkCont %count %max %pprev %ptr r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx rsi %sum %tmpMax
+%ptr %arr %checkCont %count %max %pprev %prev r12 r13 r14 r15 rbp rbx %sum %tmpMax
+r10 %arr %max %pprev %prev r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx rsi
+r11 %arr %max %pprev %prev r10 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx rsi
+r12 %arr %checkCont %count %max %pprev %prev %ptr r10 r11 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx rsi %sum %tmpMax
+r13 %arr %checkCont %count %max %pprev %prev %ptr r10 r11 r12 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx rsi %sum %tmpMax
+r14 %arr %checkCont %count %max %pprev %prev %ptr r10 r11 r12 r13 r15 r8 r9 rax rbp rbx rcx rdi rdx rsi %sum %tmpMax
+r15 %arr %checkCont %count %max %pprev %prev %ptr r10 r11 r12 r13 r14 r8 r9 rax rbp rbx rcx rdi rdx rsi %sum %tmpMax
+r8 %arr %max %pprev %prev r10 r11 r12 r13 r14 r15 r9 rax rbp rbx rcx rdi rdx rsi
+r9 %arr %max %pprev %prev r10 r11 r12 r13 r14 r15 r8 rax rbp rbx rcx rdi rdx rsi
+rax %arr %max %pprev %prev r10 r11 r12 r13 r14 r15 r8 r9 rbp rbx rcx rdi rdx rsi
+rbp %arr %checkCont %count %max %pprev %prev %ptr r10 r11 r12 r13 r14 r15 r8 r9 rax rbx rcx rdi rdx rsi %sum %tmpMax
+rbx %arr %checkCont %count %max %pprev %prev %ptr r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rcx rdi rdx rsi %sum %tmpMax
+rcx %arr %max %pprev %prev r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rdi rdx rsi
+rdi %arr %max %pprev %prev r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdx rsi
+rdx %arr %max %pprev %prev r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rsi
+rsi %arr %max %pprev %prev r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx
+%sum %arr %count %pprev %prev %ptr r12 r13 r14 r15 rbp rbx %tmpMax
+%tmpMax %arr %checkCont %count %pprev %prev %ptr r12 r13 r14 r15 rbp rbx %sum

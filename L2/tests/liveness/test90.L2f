@@ -1,0 +1,37 @@
+(@sort
+	1
+	%arr_ptr <- rdi
+	%arr_len <- mem %arr_ptr 0
+	%i <- 2
+	:outer_loop
+	cjump %arr_len < %i :after
+	goto :outer_step
+	:outer_step
+	%j <- %i
+	:inner_loop
+	cjump %j <= 1 :after_inner_step
+	goto :inner_step
+	:inner_step
+	%prev_value_ptr <- %j
+	%prev_value_ptr--
+	%prev_value_ptr <<= 3
+	%prev_value_ptr += %arr_ptr
+	%curr_value_ptr <- %j
+	%curr_value_ptr <<= 3
+	%curr_value_ptr += %arr_ptr
+	%prev_value <- mem %prev_value_ptr 0
+	%curr_value <- mem %curr_value_ptr 0
+	cjump %curr_value < %prev_value :swap
+	goto :after_inner_step
+	:swap
+	mem %curr_value_ptr 0 <- %prev_value
+	mem %prev_value_ptr 0 <- %curr_value
+	%j--
+	goto :inner_loop
+	:after_inner_step
+	%i++
+	goto :outer_loop
+	:after
+	rax <- %arr_ptr
+	return
+)

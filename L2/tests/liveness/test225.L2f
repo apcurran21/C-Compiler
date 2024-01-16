@@ -1,0 +1,59 @@
+(@main
+	0
+	%v1 <- 64
+	%v2 <- 72
+	%v3 <- 27
+	%v4 <- 54
+	%v5 <- 37
+	%v6 <- 53
+	rdi <- %v1
+	mem rsp -8 <- :call_label0
+	call @encode_print 1
+	:call_label0
+	rdi <- %v1
+	mem rsp -8 <- :call_label1
+	call @print_primes 1
+	:call_label1
+	rdi <- %v2
+	mem rsp -8 <- :call_label2
+	call @encode_print 1
+	:call_label2
+	rdi <- %v2
+	mem rsp -8 <- :call_label3
+	call @print_primes 1
+	:call_label3
+	rdi <- %v3
+	mem rsp -8 <- :call_label4
+	call @encode_print 1
+	:call_label4
+	rdi <- %v3
+	mem rsp -8 <- :call_label5
+	call @print_primes 1
+	:call_label5
+	rdi <- %v4
+	mem rsp -8 <- :call_label6
+	call @encode_print 1
+	:call_label6
+	rdi <- %v4
+	mem rsp -8 <- :call_label7
+	call @print_primes 1
+	:call_label7
+	rdi <- %v5
+	mem rsp -8 <- :call_label8
+	call @encode_print 1
+	:call_label8
+	rdi <- %v5
+	mem rsp -8 <- :call_label9
+	call @print_primes 1
+	:call_label9
+	rdi <- %v6
+	mem rsp -8 <- :call_label10
+	call @encode_print 1
+	:call_label10
+	rdi <- %v6
+	mem rsp -8 <- :call_label11
+	call @print_primes 1
+	:call_label11
+	rax <- 0
+	return
+)

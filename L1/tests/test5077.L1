@@ -1,0 +1,67 @@
+(@go
+    (@go
+        0 0
+		rdi <- 2027
+		
+		mem rsp -8 <- :prime_return
+		call @is_prime 1
+		:prime_return
+		
+		rdi <- rax
+		
+		//prints 1 if the number is prime, 0 otherwise
+        call print 1
+
+        return
+    )
+	(@mod
+		2 0
+		:loop
+		cjump rdi < rsi :exit
+		rdi >>= 1
+		rsi >>= 1
+		rdi -= rsi
+		rdi <<= 1
+		rdi += 1
+		rsi <<= 1
+		rsi += 1
+		goto :loop
+		:exit
+		rax <- rdi
+		return
+	)
+	(@is_prime
+		1 2
+		cjump rdi <= 3 :not_prime
+		rsi <- 5
+		:loop2
+		mem rsp 0 <- rdi
+		mem rsp 8 <- rsi
+		mem rsp -8 <- :mod_return
+		call @mod 2
+		:mod_return
+		
+		rdi <- mem rsp 0
+		rsi <- mem rsp 8
+		cjump rax < 3 :not_prime
+		
+		rax >>= 1
+		rax *= rax
+		rax <<=1
+		rax += 1
+		cjump rdi < rax :prime
+		rsi >>= 1
+		rsi++
+		rsi <<=1
+		rsi+=1
+		goto :loop2
+		
+		:not_prime
+		rax <- 1
+		return
+		
+		:prime
+		rax <- 3
+		return
+	)
+)

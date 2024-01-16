@@ -1,0 +1,9 @@
+(@myF3
+	0
+	:call_label_ciao__ciao__ciao_9
+	goto :call_label_ciao__ciao__ciao_10
+	:call_label_ciao__ciao__ciao_10
+	%ret <- 4 <= 4
+	rax <- %ret
+	return
+)

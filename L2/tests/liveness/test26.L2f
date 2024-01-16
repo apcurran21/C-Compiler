@@ -1,0 +1,34 @@
+(@printArray
+	1
+	%ifArray <- rdi
+	%ifArray &= 1
+	cjump %ifArray = 0 :isArray
+	goto :notArray
+	:notArray
+	rax <- -1
+	return
+	:isArray
+	%i <- 0
+	%array <- rdi
+	%arrayLen <- mem rdi 0
+	rdi <- %arrayLen
+	rdi <<= 1
+	rdi += 1
+	:loop
+	cjump %i < %arrayLen :continue
+	goto :exit
+	:continue
+	rdi <- %i
+	rdi <<= 1
+	rdi += 1
+	call print 1
+	%array += 8
+	%arrayElement <- mem %array 0
+	rdi <- %arrayElement
+	call print 1
+	%i++
+	goto :loop
+	:exit
+	rax <- 1
+	return
+)

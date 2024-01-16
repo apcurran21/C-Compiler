@@ -1,0 +1,381 @@
+(@main
+(@curry
+	1 2
+	rdi <- rdi
+	mem rsp 8 <- rdi
+	rdi <- 5
+	rsi <- 1
+	call allocate 2
+	rdi <- rax
+	mem rsp 0 <- rdi
+	rdx <- @curry_arg1
+	rdi <- mem rsp 0
+	rdi <- rdi
+	rsi <- 0
+	rdx <- rdx
+	mem rsp -8 <- :call_label_ciao_17
+	call @store 3
+	:call_label_ciao_17
+	rdi <- mem rsp 0
+	rdi <- rdi
+	rsi <- 1
+	rdx <- mem rsp 8
+	rdx <- rdx
+	mem rsp -8 <- :call_label_ciao_18
+	call @store 3
+	:call_label_ciao_18
+	rdi <- mem rsp 0
+	rax <- rdi
+	return
+)
+
+(@curry_arg1
+	2 5
+	rdi <- rdi
+	mem rsp 0 <- rdi
+	rdi <- rsi
+	mem rsp 8 <- rdi
+	rdi <- 7
+	rsi <- 1
+	call allocate 2
+	rdi <- rax
+	mem rsp 16 <- rdi
+	rdi <- @curry_arg2
+	mem rsp 32 <- rdi
+	rdi <- mem rsp 0
+	rdi <- rdi
+	rsi <- 1
+	mem rsp -8 <- :call_label_ciao__ciao_19
+	call @load 2
+	:call_label_ciao__ciao_19
+	rdi <- rax
+	mem rsp 24 <- rdi
+	rdi <- mem rsp 16
+	rdi <- rdi
+	rsi <- 0
+	rdx <- mem rsp 32
+	rdx <- rdx
+	mem rsp -8 <- :call_label_ciao__ciao_20
+	call @store 3
+	:call_label_ciao__ciao_20
+	rdi <- mem rsp 16
+	rdi <- rdi
+	rsi <- 1
+	rdx <- mem rsp 24
+	rdx <- rdx
+	mem rsp -8 <- :call_label_ciao__ciao_21
+	call @store 3
+	:call_label_ciao__ciao_21
+	rdi <- mem rsp 16
+	rdi <- rdi
+	rsi <- 2
+	rdx <- mem rsp 8
+	rdx <- rdx
+	mem rsp -8 <- :call_label_ciao__ciao_22
+	call @store 3
+	:call_label_ciao__ciao_22
+	rdi <- mem rsp 16
+	rax <- rdi
+	return
+)
+
+(@curry_arg2
+	2 4
+	rdi <- rdi
+	mem rsp 0 <- rdi
+	rdi <- rsi
+	mem rsp 8 <- rdi
+	rdi <- mem rsp 0
+	rdi <- rdi
+	rsi <- 1
+	mem rsp -8 <- :call_label_ciao__ciao__ciao_23
+	call @load 2
+	:call_label_ciao__ciao__ciao_23
+	rdi <- rax
+	mem rsp 16 <- rdi
+	rdi <- mem rsp 0
+	rdi <- rdi
+	rsi <- 2
+	mem rsp -8 <- :call_label_ciao__ciao__ciao_24
+	call @load 2
+	:call_label_ciao__ciao__ciao_24
+	rdi <- rax
+	mem rsp 24 <- rdi
+	rdi <- mem rsp 16
+	rdi <- rdi
+	rsi <- 0
+	mem rsp -8 <- :call_label_ciao__ciao__ciao_25
+	call @load 2
+	:call_label_ciao__ciao__ciao_25
+	rcx <- rax
+	rdi <- mem rsp 16
+	rdi <- rdi
+	rsi <- mem rsp 24
+	rsi <- rsi
+	rdx <- mem rsp 8
+	rdx <- rdx
+	mem rsp -8 <- :call_label_ciao__ciao__ciao_26
+	call rcx 3
+	:call_label_ciao__ciao__ciao_26
+	rdi <- rax
+	rax <- rdi
+	return
+)
+
+(@load
+	2 0
+	rdx <- rdi
+	rdi <- rsi
+	rdi <- rdi
+	rdi *= 8
+	rdi <- rdi
+	rdi += 8
+	rdx <- rdx
+	rdx += rdi
+	rdi <- mem rdx 0
+	rax <- rdi
+	return
+)
+
+(@main
+	0 11
+	rdi <- 7
+	rsi <- 1
+	call allocate 2
+	rdi <- rax
+	mem rsp 32 <- rdi
+	rdx <- @plus
+	rdi <- @minus
+	mem rsp 16 <- rdi
+	rdi <- @times
+	mem rsp 8 <- rdi
+	rdi <- mem rsp 32
+	rdi <- rdi
+	rsi <- 0
+	rdx <- rdx
+	mem rsp -8 <- :call_label3
+	call @store 3
+	:call_label3
+	rdi <- mem rsp 32
+	rdi <- rdi
+	rsi <- 1
+	rdx <- mem rsp 16
+	rdx <- rdx
+	mem rsp -8 <- :call_label4
+	call @store 3
+	:call_label4
+	rdi <- mem rsp 32
+	rdi <- rdi
+	rsi <- 2
+	rdx <- mem rsp 8
+	rdx <- rdx
+	mem rsp -8 <- :call_label5
+	call @store 3
+	:call_label5
+	rdi <- 7
+	mem rsp 56 <- rdi
+	rdi <- 2
+	mem rsp 72 <- rdi
+	rdi <- 0
+	mem rsp 80 <- rdi
+	:call_label0
+	rdi <- mem rsp 32
+	rdi <- rdi
+	rsi <- mem rsp 80
+	rsi <- rsi
+	mem rsp -8 <- :call_label6
+	call @load 2
+	:call_label6
+	rdi <- rax
+	mem rsp 0 <- rdi
+	rdi <- mem rsp 32
+	rdi <- rdi
+	rsi <- mem rsp 56
+	rsi <- rsi
+	rdx <- mem rsp 72
+	rdx <- rdx
+	mem rsp -8 <- :call_label7
+	rcx <- mem rsp 0
+	call rcx 3
+	:call_label7
+	rdi <- rax
+	rdi <- rdi
+	rdi *= 2
+	rdi <- rdi
+	rdi += 1
+	rdi <- rdi
+	call print 1
+	rdi <- mem rsp 80
+	rdi <- rdi
+	mem rsp 80 <- rdi
+	rdi <- mem rsp 80
+	rdi += 1
+	mem rsp 80 <- rdi
+	rdi <- mem rsp 80
+	rdi <- rdi < 3
+	cjump rdi = 1 :call_label0
+	rdi <- 7
+	rsi <- 1
+	call allocate 2
+	rdi <- rax
+	mem rsp 64 <- rdi
+	rdi <- 0
+	mem rsp 80 <- rdi
+	:call_label1
+	rdi <- mem rsp 32
+	rdi <- rdi
+	rsi <- mem rsp 80
+	rsi <- rsi
+	mem rsp -8 <- :call_label8
+	call @load 2
+	:call_label8
+	rdi <- rax
+	mem rsp 0 <- rdi
+	rdi <- 3
+	rsi <- 1
+	call allocate 2
+	rdi <- rax
+	mem rsp 24 <- rdi
+	rdi <- mem rsp 24
+	rdi <- rdi
+	rsi <- 0
+	rdx <- mem rsp 0
+	rdx <- rdx
+	mem rsp -8 <- :call_label9
+	call @store 3
+	:call_label9
+	rdi <- mem rsp 24
+	rdi <- rdi
+	mem rsp -8 <- :call_label10
+	call @curry 1
+	:call_label10
+	rdi <- rax
+	mem rsp 48 <- rdi
+	rdi <- mem rsp 64
+	rdi <- rdi
+	rsi <- mem rsp 80
+	rsi <- rsi
+	rdx <- mem rsp 48
+	rdx <- rdx
+	mem rsp -8 <- :call_label11
+	call @store 3
+	:call_label11
+	rdi <- mem rsp 80
+	rdi <- rdi
+	mem rsp 80 <- rdi
+	rdi <- mem rsp 80
+	rdi += 1
+	mem rsp 80 <- rdi
+	rdi <- mem rsp 80
+	rdi <- rdi < 3
+	cjump rdi = 1 :call_label1
+	rdi <- 0
+	mem rsp 80 <- rdi
+	:call_label2
+	rdi <- mem rsp 64
+	rdi <- rdi
+	rsi <- mem rsp 80
+	rsi <- rsi
+	mem rsp -8 <- :call_label12
+	call @load 2
+	:call_label12
+	rdi <- rax
+	mem rsp 48 <- rdi
+	rdi <- mem rsp 48
+	rdi <- rdi
+	rsi <- 0
+	mem rsp -8 <- :call_label13
+	call @load 2
+	:call_label13
+	rdx <- rax
+	rdi <- mem rsp 48
+	rdi <- rdi
+	rsi <- mem rsp 56
+	rsi <- rsi
+	mem rsp -8 <- :call_label14
+	call rdx 2
+	:call_label14
+	rdi <- rax
+	mem rsp 40 <- rdi
+	rdi <- mem rsp 40
+	rdi <- rdi
+	rsi <- 0
+	mem rsp -8 <- :call_label15
+	call @load 2
+	:call_label15
+	rdx <- rax
+	rdi <- mem rsp 40
+	rdi <- rdi
+	rsi <- mem rsp 72
+	rsi <- rsi
+	mem rsp -8 <- :call_label16
+	call rdx 2
+	:call_label16
+	rdi <- rax
+	rdi <- rdi
+	rdi *= 2
+	rdi <- rdi
+	rdi += 1
+	rdi <- rdi
+	call print 1
+	rdi <- mem rsp 80
+	rdi <- rdi
+	mem rsp 80 <- rdi
+	rdi <- mem rsp 80
+	rdi += 1
+	mem rsp 80 <- rdi
+	rdi <- mem rsp 80
+	rdi <- rdi < 3
+	cjump rdi = 1 :call_label2
+	return
+)
+
+(@minus
+	3 0
+	rdi <- rdi
+	rdi <- rsi
+	rsi <- rdx
+	rdi <- rdi
+	rdi -= rsi
+	rax <- rdi
+	return
+)
+
+(@plus
+	3 0
+	rdi <- rdi
+	rdi <- rsi
+	rsi <- rdx
+	rdi <- rdi
+	rdi += rsi
+	rax <- rdi
+	return
+)
+
+(@store
+	3 0
+	rcx <- rdi
+	rdi <- rsi
+	rsi <- rdx
+	rdi <- rdi
+	rdi += 1
+	rdi <- rdi
+	rdi *= 8
+	rcx <- rcx
+	rcx += rdi
+	mem rcx 0 <- rsi
+	return
+)
+
+(@times
+	3 0
+	rdi <- rdi
+	rdi <- rsi
+	rsi <- rdx
+	rdi <- rdi
+	rdi *= rsi
+	rax <- rdi
+	return
+)
+
+)

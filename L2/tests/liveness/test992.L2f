@@ -1,0 +1,30 @@
+(@printArr
+	1
+	%num_array <- rdi
+	:call_label_ciao__ciao__ciao__ciao__ciao__ciao__ciao_22
+	goto :call_label_ciao__ciao__ciao__ciao__ciao__ciao__ciao_26
+	:call_label_ciao__ciao__ciao__ciao__ciao__ciao__ciao_23
+	return
+	:call_label_ciao__ciao__ciao__ciao__ciao__ciao__ciao_24
+	%newVar1 <- 0
+	%newVar1 += %count
+	%newVar0 <- %newVar1
+	%newVar0 *= 8
+	%newVar0 += 24
+	%newVar3 <- %num_array
+	%newVar3 += %newVar0
+	%number <- mem %newVar3 0
+	%number <<= 1
+	%number += 1
+	rdi <- %number
+	call print 1
+	%count += 1
+	goto :call_label_ciao__ciao__ciao__ciao__ciao__ciao__ciao_25
+	:call_label_ciao__ciao__ciao__ciao__ciao__ciao__ciao_25
+	%comp <- %count = 7
+	cjump %comp = 1 :call_label_ciao__ciao__ciao__ciao__ciao__ciao__ciao_23
+	goto :call_label_ciao__ciao__ciao__ciao__ciao__ciao__ciao_24
+	:call_label_ciao__ciao__ciao__ciao__ciao__ciao__ciao_26
+	%count <- 0
+	goto :call_label_ciao__ciao__ciao__ciao__ciao__ciao__ciao_25
+)

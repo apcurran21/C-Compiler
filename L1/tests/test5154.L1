@@ -1,0 +1,54 @@
+//This program performs an operation depending on the two inputs,
+//I checked for rdi > rsi, rdi = rsi and rdi < rsi, and the printed
+//results are 8, 2 and then 1
+(@prog2
+  (@prog2
+    0 0
+    rdi <- 10
+    //should output 8, since 10 << 2 = 20 - 3 = 17 , then (17 -1)/2 = 8
+    rsi <- 3
+    mem rsp -8 <- :func1_ret1
+    call @func1 2
+   :func1_ret1
+    rdi <- rax
+    call print 1
+    rdi <- 0
+    //should output 2 since rax <- 5 + 0 = 5, then (5-1)/2 = 2
+    rsi <- 5
+    mem rsp -8 <- :func1_ret2
+    call @func1 2
+   :func1_ret2
+    rdi <- rax
+    call print 1
+    // should output 1, since 9 << 2 = 18, and 18 == 18, which makes rax = 3, then (3-1)/2 = 1
+    rdi <- 9
+    rsi <- 18
+    mem rsp -8 <- :func1_ret3
+    call @func1 2
+   :func1_ret3
+    rdi <- rax
+    call print 1
+   return
+   )
+  (@func1
+    2 0
+    rax <- 0
+    rdi <<= 1
+    cjump rdi < rsi :case1
+    cjump rdi = rsi :case2
+    //this means rdi is larger than rsi
+    rdi -= rsi
+    rax += rdi
+    goto :END
+   //this case happens when rdi is less than rsi
+   :case1
+    rdi += rsi
+    rax += rdi
+    goto :END
+   //this happens when rdi is rsi
+   :case2
+    rax <- 3
+   :END
+    return
+  )
+)

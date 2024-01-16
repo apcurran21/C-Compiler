@@ -1,0 +1,25 @@
+(@go
+	0
+	rdi <- 11
+	rsi <- 5
+	call allocate 2
+	%variableUK817GJX3X <- rax
+	%pointer <- rax
+	%pointer += 8
+	mem %pointer 0 <- 3
+	%pointer += 8
+	mem %pointer 0 <- 5
+	%pointer += 8
+	mem %pointer 0 <- 7
+	%pointer += 8
+	mem %pointer 0 <- 9
+	%pointer += 8
+	mem %pointer 0 <- 11
+	rdi <- %variableUK817GJX3X
+	mem rsp -8 <- :f_ret
+	call @print_array 1
+	:f_ret
+	rdi <- %variableUK817GJX3X
+	call print 1
+	return
+)

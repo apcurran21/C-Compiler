@@ -1,0 +1,24 @@
+(@gcd
+	2
+	%a <- rdi
+	%b <- rsi
+	%if <- %b = 0
+	cjump %if = 1 :call_label_ciao_1
+	rdi <- %a
+	rsi <- %b
+	mem rsp -8 <- :call_label_ciao_2
+	call @mod 2
+	:call_label_ciao_2
+	%aModB <- rax
+	rdi <- %b
+	rsi <- %aModB
+	mem rsp -8 <- :call_label_ciao_3
+	call @gcd 2
+	:call_label_ciao_3
+	%res <- rax
+	rax <- %res
+	return
+	:call_label_ciao_1
+	rax <- %a
+	return
+)

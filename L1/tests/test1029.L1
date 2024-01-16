@@ -1,0 +1,49 @@
+(@go
+(@go
+	0 1
+	mem rsp 0 <- r12
+	rdi <- 50
+	rdi <<= 1
+	rdi += 1
+	rsi <- 1
+	call allocate 2
+	r12 <- rax
+	rdi <- 1
+	rdx <- 1
+	mem r12 8 <- 3
+	mem r12 16 <- 3
+	r8 <- 2
+	:loop
+	r8 += 1
+	rcx <- rdi
+	rcx += rdx
+	rsi @ r12 r8 8
+	rdi <- rcx
+	rdi <<= 1
+	rdi += 1
+	mem rsi 0 <- rdi
+	rdi <- rdx
+	rdx <- rcx
+	cjump r8 < 50 :loop
+	rdi <- r12
+	call print 1
+	rdi <- 0
+	r8 <- 0
+	:loop2
+	cjump 50 <= r8 :done
+	rsi @ r12 r8 8
+	rsi <- mem rsi 0
+	rsi >>= 1
+	rdi += rsi
+	r8++
+	goto :loop2
+	:done
+	rdi <- rdi
+	rdi <<= 1
+	rdi += 1
+	call print 1
+	r12 <- mem rsp 0
+	return
+)
+
+)

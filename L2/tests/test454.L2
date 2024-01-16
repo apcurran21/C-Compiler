@@ -1,0 +1,163 @@
+(@main
+  (@insertionSort
+    1
+    %array <- rdi
+    %arrayPointer <- %array
+    %arrayLength <- mem %arrayPointer 0
+    %i <- 2
+    :call_label0
+    %shouldOuterLoopTerminate <- %arrayLength < %i
+
+    cjump %shouldOuterLoopTerminate = 1 :call_label6
+    goto :call_label1
+    :call_label1
+    %j <- %i
+    :call_label2
+    %iteratorHasExhaustedAllPairs <- %j <= 1
+
+    cjump %iteratorHasExhaustedAllPairs = 1 :call_label5
+    goto :call_label3
+    :call_label3
+    %prevValueAddress <- %j
+    %prevValueAddress <- %prevValueAddress
+    %prevValueAddress -= 1
+    %prevValueAddress <- %prevValueAddress
+    %prevValueAddress <<= 3
+    %prevValueAddress <- %prevValueAddress
+    %prevValueAddress += %arrayPointer
+    %currValueAddress <- %j
+    %currValueAddress <- %currValueAddress
+    %currValueAddress <<= 3
+    %currValueAddress <- %currValueAddress
+    %currValueAddress += %arrayPointer
+    %currValue <- mem %currValueAddress 0
+    %prevValue <- mem %prevValueAddress 0
+    %isCurrValueLessThanPrevValue <- %currValue < %prevValue
+
+    cjump %isCurrValueLessThanPrevValue = 1 :call_label4
+    goto :call_label5
+    :call_label4
+    mem %currValueAddress 0 <- %prevValue
+    mem %prevValueAddress 0 <- %currValue
+    %j <- %j
+    %j -= 1
+    goto :call_label2
+    :call_label5
+    %i <- %i
+    %i += 1
+    goto :call_label0
+    :call_label6
+    rax <- %arrayPointer
+    return
+  )
+  (@main
+    0
+    rdi <- 11
+    rsi <- 1
+    call allocate 2
+    %smallArr <- rax
+    %element1Addr <- %smallArr
+    %element1Addr += 8
+    mem %element1Addr 0 <- 35
+    %element2Addr <- %smallArr
+    %element2Addr += 16
+    mem %element2Addr 0 <- 15
+    %element3Addr <- %smallArr
+    %element3Addr += 24
+    mem %element3Addr 0 <- 13
+    %element4Addr <- %smallArr
+    %element4Addr += 32
+    mem %element4Addr 0 <- 19
+    %element5Addr <- %smallArr
+    %element5Addr += 40
+    mem %element5Addr 0 <- 51
+    rdi <- %smallArr
+    call print 1
+    rdi <- %smallArr
+
+mem rsp -8 <- :call_label_ciao_7
+    call @insertionSort 1
+
+:call_label_ciao_7
+    %sortedArraySmall <- rax
+    rdi <- %sortedArraySmall
+    call print 1
+    %size <- 41
+    rdi <- %size
+    rsi <- 1
+    call allocate 2
+    %array <- rax
+    %element1Address <- %array
+    %element1Address += 8
+    %element2Address <- %array
+    %element2Address += 16
+    %element3Address <- %array
+    %element3Address += 24
+    %element4Address <- %array
+    %element4Address += 32
+    %element5Address <- %array
+    %element5Address += 40
+    %element6Address <- %array
+    %element6Address += 48
+    %element7Address <- %array
+    %element7Address += 56
+    %element8Address <- %array
+    %element8Address += 64
+    %element9Address <- %array
+    %element9Address += 72
+    %element10Address <- %array
+    %element10Address += 80
+    %element11Address <- %array
+    %element11Address += 88
+    %element12Address <- %array
+    %element12Address += 96
+    %element13Address <- %array
+    %element13Address += 104
+    %element14Address <- %array
+    %element14Address += 112
+    %element15Address <- %array
+    %element15Address += 120
+    %element16Address <- %array
+    %element16Address += 128
+    %element17Address <- %array
+    %element17Address += 136
+    %element18Address <- %array
+    %element18Address += 144
+    %element19Address <- %array
+    %element19Address += 152
+    %element20Address <- %array
+    %element20Address += 160
+    mem %element1Address 0 <- 35
+    mem %element2Address 0 <- 15
+    mem %element3Address 0 <- 13
+    mem %element4Address 0 <- 19
+    mem %element5Address 0 <- 51
+    mem %element6Address 0 <- 27
+    mem %element7Address 0 <- 49
+    mem %element8Address 0 <- 57
+    mem %element9Address 0 <- 9
+    mem %element10Address 0 <- 63
+    mem %element11Address 0 <- 81
+    mem %element12Address 0 <- 97
+    mem %element13Address 0 <- 11
+    mem %element14Address 0 <- 11
+    mem %element15Address 0 <- 13
+    mem %element16Address 0 <- 7
+    mem %element17Address 0 <- 33
+    mem %element18Address 0 <- 37
+    mem %element19Address 0 <- 27
+    mem %element20Address 0 <- 51
+    rdi <- %array
+    call print 1
+    rdi <- %array
+
+mem rsp -8 <- :call_label_ciao_8
+    call @insertionSort 1
+
+:call_label_ciao_8
+    %sortedArray <- rax
+    rdi <- %sortedArray
+    call print 1
+    return
+  )
+)

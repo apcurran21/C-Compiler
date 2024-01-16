@@ -1,0 +1,182 @@
+define @main () {
+ 
+:NNNNNNNNNNN
+ br :EntryPoint
+ 
+:EntryPoint
+ %len <- 10
+ %arr <- call @GetArray (%len)
+ call print (%arr)
+ %res <- call @FindPeak (%arr, %len)
+ call @PrintResult (%res)
+ return 
+}
+
+define @GetArray (%len) {
+ 
+:NNNNNNNNNNN
+ br :EntryPoint
+ 
+:EntryPoint
+ %len <- %len << 1
+ %len <- %len + 1
+ %newVar1 <- %len >> 1
+ %newVar0 <- %newVar1
+ %newVar0 <- %newVar0 << 1
+ %newVar0 <- %newVar0 + 1
+ %newVar0 <- %newVar0 + 2
+ %arr <- call allocate (%newVar0, 1)
+ %newVar2 <- %arr + 8
+ store %newVar2 <- %len
+ %x <- 1
+ %x <- %x << 1
+ %x <- %x + 1
+ %newVar4 <- 0
+ %newVar5 <- 1
+ %newVar4 <- %newVar4 + 0
+ %newVar3 <- %newVar4 * 8
+ %newVar3 <- %newVar3 + 16
+ %newVar6 <- %arr + %newVar3
+ store %newVar6 <- %x
+ %x <- 2
+ %x <- %x << 1
+ %x <- %x + 1
+ %newVar8 <- 0
+ %newVar9 <- 1
+ %newVar8 <- %newVar8 + 1
+ %newVar7 <- %newVar8 * 8
+ %newVar7 <- %newVar7 + 16
+ %newVar10 <- %arr + %newVar7
+ store %newVar10 <- %x
+ %x <- 3
+ %x <- %x << 1
+ %x <- %x + 1
+ %newVar12 <- 0
+ %newVar13 <- 1
+ %newVar12 <- %newVar12 + 2
+ %newVar11 <- %newVar12 * 8
+ %newVar11 <- %newVar11 + 16
+ %newVar14 <- %arr + %newVar11
+ store %newVar14 <- %x
+ %x <- 5
+ %x <- %x << 1
+ %x <- %x + 1
+ %newVar16 <- 0
+ %newVar17 <- 1
+ %newVar16 <- %newVar16 + 3
+ %newVar15 <- %newVar16 * 8
+ %newVar15 <- %newVar15 + 16
+ %newVar18 <- %arr + %newVar15
+ store %newVar18 <- %x
+ %x <- 1
+ %x <- %x << 1
+ %x <- %x + 1
+ %newVar20 <- 0
+ %newVar21 <- 1
+ %newVar20 <- %newVar20 + 4
+ %newVar19 <- %newVar20 * 8
+ %newVar19 <- %newVar19 + 16
+ %newVar22 <- %arr + %newVar19
+ store %newVar22 <- %x
+ %x <- 3
+ %x <- %x << 1
+ %x <- %x + 1
+ %newVar24 <- 0
+ %newVar25 <- 1
+ %newVar24 <- %newVar24 + 5
+ %newVar23 <- %newVar24 * 8
+ %newVar23 <- %newVar23 + 16
+ %newVar26 <- %arr + %newVar23
+ store %newVar26 <- %x
+ %x <- 2
+ %x <- %x << 1
+ %x <- %x + 1
+ %newVar28 <- 0
+ %newVar29 <- 1
+ %newVar28 <- %newVar28 + 6
+ %newVar27 <- %newVar28 * 8
+ %newVar27 <- %newVar27 + 16
+ %newVar30 <- %arr + %newVar27
+ store %newVar30 <- %x
+ %x <- 10
+ %x <- %x << 1
+ %x <- %x + 1
+ %newVar32 <- 0
+ %newVar33 <- 1
+ %newVar32 <- %newVar32 + 7
+ %newVar31 <- %newVar32 * 8
+ %newVar31 <- %newVar31 + 16
+ %newVar34 <- %arr + %newVar31
+ store %newVar34 <- %x
+ %x <- 11
+ %x <- %x << 1
+ %x <- %x + 1
+ %newVar36 <- 0
+ %newVar37 <- 1
+ %newVar36 <- %newVar36 + 8
+ %newVar35 <- %newVar36 * 8
+ %newVar35 <- %newVar35 + 16
+ %newVar38 <- %arr + %newVar35
+ store %newVar38 <- %x
+ %x <- 8
+ %x <- %x << 1
+ %x <- %x + 1
+ %newVar40 <- 0
+ %newVar41 <- 1
+ %newVar40 <- %newVar40 + 9
+ %newVar39 <- %newVar40 * 8
+ %newVar39 <- %newVar39 + 16
+ %newVar42 <- %arr + %newVar39
+ store %newVar42 <- %x
+ return %arr
+}
+
+define @FindPeak (%arr, %len) {
+ 
+:NNNNNNNNNNNNN
+ br :EntryPoint
+ 
+:LoopEnd
+ return %max
+ 
+:Continue
+ %ind <- %ind + 1
+ br :LoopStart
+ 
+:LoopStart
+ %loopEnded <- %ind >= %len
+ br %loopEnded :LoopEnd 
+ br :LoopContinue
+ 
+:LoopContinue
+ %newVar1 <- 0
+ %newVar2 <- 1
+ %newVar1 <- %newVar1 + %ind
+ %newVar0 <- %newVar1 * 8
+ %newVar0 <- %newVar0 + 16
+ %newVar3 <- %arr + %newVar0
+ %cur <- load %newVar3
+ %notMax <- %max >= %cur
+ br %notMax :Continue 
+ br :SetMax
+ 
+:SetMax
+ %max <- %cur
+ br :Continue
+ 
+:EntryPoint
+ %max <- 0
+ %ind <- 0
+ br :LoopStart
+}
+
+define @PrintResult (%res) {
+ 
+:NNNNNNNNNNN
+ br :EntryPoint
+ 
+:EntryPoint
+ call print (%res)
+ return 
+}
+

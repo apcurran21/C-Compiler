@@ -1,0 +1,5 @@
+(@myTest3Helper
+	2
+	rax <- rdi < rsi
+	return
+)

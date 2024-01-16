@@ -1,0 +1,27 @@
+(@fibonacci
+	1
+	%k <- rdi
+	%if <- %k = 1
+	cjump %if = 1 :call_label_ciao_3
+	%if <- %k = 2
+	cjump %if = 1 :call_label_ciao_3
+	%a <- 1
+	%b <- 1
+	%i <- 3
+	%res <- 0
+	:call_label_ciao_1
+	%if <- %i <= %k
+	cjump %if = 1 :call_label_ciao_2
+	rax <- %res
+	return
+	:call_label_ciao_2
+	%res <- %a
+	%res += %b
+	%a <- %b
+	%b <- %res
+	%i += 1
+	goto :call_label_ciao_1
+	:call_label_ciao_3
+	rax <- 1
+	return
+)

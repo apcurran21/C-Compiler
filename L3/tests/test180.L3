@@ -1,0 +1,85 @@
+define @main () {
+ 
+:NNNNNN
+ br :entry
+ 
+:entry
+ call @buildASandwich (1, 0)
+ return 
+}
+
+define @buildASandwich (%cheese, %meat) {
+ 
+:NNNNNNNNNNN
+ br :entry
+ 
+:meat_ret
+ return 
+ 
+:salami
+ call @salamiChoice ()
+ br :meat_ret
+ 
+:turkey
+ call @turkeyChoice ()
+ br :meat_ret
+ 
+:cheese_ret
+ %isSalami <- %meat = 1
+ br %isSalami :salami 
+ br :turkey
+ 
+:havarti
+ call @havartiChoice ()
+ br :cheese_ret
+ 
+:swiss
+ call @swissChoice ()
+ br :cheese_ret
+ 
+:entry
+ %isHavarti <- %cheese = 1
+ br %isHavarti :havarti 
+ br :swiss
+}
+
+define @havartiChoice () {
+ 
+:NNNNNN
+ br :entry
+ 
+:entry
+ call print (3)
+ return 
+}
+
+define @swissChoice () {
+ 
+:NNNNNN
+ br :entry
+ 
+:entry
+ call print (1)
+ return 
+}
+
+define @salamiChoice () {
+ 
+:NNNNNN
+ br :entry
+ 
+:entry
+ call print (3)
+ return 
+}
+
+define @turkeyChoice () {
+ 
+:NNNNNN
+ br :entry
+ 
+:entry
+ call print (1)
+ return 
+}
+

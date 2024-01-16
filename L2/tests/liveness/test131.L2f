@@ -1,0 +1,21 @@
+(@go
+	0
+	rdi <- 5
+	rsi <- 7
+	call allocate 2
+	%mem <- rax
+	rdi <- %mem
+	mem rsp -8 <- :funct_ret
+	call @findLen 1
+	:funct_ret
+	%var1 <- rax
+	rdi <- %mem
+	mem rsp -8 <- :funct_ret1
+	call @findSum 1
+	:funct_ret1
+	rdi <- rax
+	call print 1
+	rdi <- %var1
+	call print 1
+	return
+)

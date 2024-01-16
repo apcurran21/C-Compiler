@@ -1,0 +1,134 @@
+// print all primes from 0 to 100
+void main () {
+    int64 limit
+
+    limit <- 100
+    sieve (limit)
+
+    return
+}
+
+void sieve (int64 limit) {
+    int64 argCheck
+    int64 currentNum
+    int64 cond
+    int64 limit_plus_one
+
+    limit_plus_one <- limit + 1
+    currentNum <- 0
+
+    argCheck <- limit > 1
+    br argCheck :start :end
+    :start
+        cond <- isPrime(currentNum)
+        br cond :prime :continue
+        :prime
+            printVal(currentNum)
+
+        :continue
+            currentNum <- currentNum + 1
+
+        cond <- currentNum < limit_plus_one
+        br cond :start :end
+    :end
+
+    return
+}
+
+int64 isPrime (int64 val) {
+    int64 cond
+    int64 true
+    int64 false
+    int64 inc
+    int64 inc_plus_two
+    int64 inc_squared
+    int64 val_plus_1
+
+    val_plus_1 <- val + 1
+    true <- 1 = 1
+    false <- 1 = 0
+
+    cond <- val < 4
+    br cond :if1 :else1
+    :if1
+        cond <- val > 1
+        br cond :if3 :else3
+        :if3
+            return true
+        :else3
+            return false
+
+    :else1
+        cond <- mod(val, 2)
+        cond <- cond = 0
+        br cond :or1_found :or1_next
+
+        :or1_next
+
+        cond <- mod(val, 3)
+        cond <- cond = 0
+        br cond :or1_found :or1_no
+
+        :or1_found
+            return false
+
+        :or1_no
+
+    :out1
+
+    inc <- 5
+    inc_squared <- inc * inc
+
+    cond <- inc_squared < val_plus_1
+    br cond :while1_start :while1_end
+    :while1_start
+
+        :if2
+            cond <- mod(val, inc)
+            cond <- cond = 0
+            br cond :or_true :or_false
+
+            inc_plus_two <- inc + 2
+            cond <- mod(val, inc_plus_two)
+            cond <- cond = 0
+            br cond :or_true :or_false
+
+            :or_true
+            return false
+
+            :or_false
+        :out2
+
+        inc <- inc + 6
+        inc_squared <- inc * inc
+
+    cond <- inc_squared < val_plus_1
+    br cond :while1_start :while1_end
+    :while1_end
+
+    return true
+}
+
+int64 mod (int64 val, int64 divisor) {
+    int64 remainder
+    int64 cond
+
+    remainder <- val
+
+    cond <- remainder >= divisor
+    br cond :start :end
+
+    :start
+    remainder <- remainder - divisor
+
+    cond <- remainder >= divisor
+    br cond :start :end
+
+    :end
+    return remainder
+}
+
+void printVal (int64 val) {
+    print (val)
+    return
+}

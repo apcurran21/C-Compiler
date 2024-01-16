@@ -1,0 +1,51 @@
+(@main
+(@main
+	0 0
+	:call_label0
+	goto :call_label1
+	:call_label1
+	mem rsp -8 <- :call_label2
+	call @myF 0
+	:call_label2
+	return
+)
+
+(@myF
+	0 0
+	:call_label_ciao_3
+	goto :call_label_ciao_4
+	:call_label_ciao_4
+	rdi <- 5
+	mem rsp -8 <- :call_label_ciao_5
+	call @myF2 1
+	:call_label_ciao_5
+	return
+)
+
+(@myF2
+	1 1
+	mem rsp 0 <- r12
+	r12 <- rdi
+	:call_label_ciao__ciao_6
+	goto :call_label_ciao__ciao_7
+	:call_label_ciao__ciao_7
+	mem rsp -8 <- :call_label_ciao__ciao_8
+	call @myF3 0
+	:call_label_ciao__ciao_8
+	rdi <- r12
+	call print 1
+	r12 <- mem rsp 0
+	return
+)
+
+(@myF3
+	0 0
+	:call_label_ciao__ciao__ciao_9
+	goto :call_label_ciao__ciao__ciao_10
+	:call_label_ciao__ciao__ciao_10
+	rdi <- 4 <= 4
+	rax <- rdi
+	return
+)
+
+)

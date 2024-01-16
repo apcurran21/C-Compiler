@@ -1,0 +1,23 @@
+(@main
+	0
+	:call_label0
+	mem rsp -8 <- :call_label1
+	rdi <- 3
+	call @createTuple 1
+	:call_label1
+	%t <- rax
+	mem rsp -8 <- :call_label2
+	rdi <- %t
+	rsi <- 4
+	call @myF 2
+	:call_label2
+	%v <- rax
+	mem rsp -8 <- :call_label3
+	rdi <- %v
+	call @encodeValue 1
+	:call_label3
+	%v <- rax
+	rdi <- %v
+	call print 1
+	return
+)

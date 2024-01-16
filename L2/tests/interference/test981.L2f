@@ -1,0 +1,33 @@
+(@aliasing_issues
+	1
+	%p <- rdi
+	:call_label_ciao__ciao_6
+	goto :call_label_ciao__ciao_7
+	:call_label_ciao__ciao_7
+	%v <- %p
+	%newVar1 <- 0
+	%newVar0 <- %newVar1
+	%newVar0 *= 8
+	%newVar0 += 24
+	%newVar3 <- %p
+	%newVar3 += %newVar0
+	mem %newVar3 0 <- 5
+	%newVar5 <- 0
+	%newVar4 <- %newVar5
+	%newVar4 *= 8
+	%newVar4 += 24
+	%newVar7 <- %p
+	%newVar7 += %newVar4
+	%x <- mem %newVar7 0
+	%newVar9 <- 0
+	%newVar8 <- %newVar9
+	%newVar8 *= 8
+	%newVar8 += 24
+	%newVar11 <- %v
+	%newVar11 += %newVar8
+	mem %newVar11 0 <- 4
+	rdi <- %x
+	call print 1
+	rax <- 0
+	return
+)

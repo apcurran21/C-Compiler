@@ -1,0 +1,101 @@
+(@main
+(@main
+	0 0
+	:call_label0
+	goto :call_label3
+	:call_label1
+	rsi <- rsi
+	rsi *= 2
+	rdi <- rsi
+	rdi += 1
+	mem rsp -8 <- :call_label4
+	call @make_array2 0
+	:call_label4
+	rdi <- rax
+	rdi <- rdi
+	call print 1
+	return
+	:call_label2
+	rdi <- 7
+	rsi <- rsi
+	rsi += rdi
+	rdx <- rdx
+	rdx += 2
+	rdi <- 0
+	rdi <- rdi
+	rdi -= rdx
+	cjump rdi = 1 :call_label2
+	goto :call_label1
+	:call_label3
+	mem rsp -8 <- :call_label5
+	call @make_array 0
+	:call_label5
+	rdi <- rax
+	rdx <- 2
+	rsi <- 1
+	rdi <- rdx
+	rdi *= 4
+	goto :call_label2
+)
+
+(@make_array2
+	0 1
+	:call_label_ciao__ciao_8
+	goto :call_label_ciao__ciao_9
+	:call_label_ciao__ciao_9
+	rdi <- 21
+	mem rsp 0 <- rdi
+	rdi <- 9
+	rdi <- mem rsp 0
+	rdi <- rdi
+	rdi >>= 1
+	rdi <- rdi
+	rdi <- rdi
+	rdi <<= 1
+	rdi <- rdi
+	rdi += 1
+	rdi <- rdi
+	rdi += 2
+	rdi <- rdi
+	rsi <- 1
+	call allocate 2
+	rdi <- rax
+	rdx <- rdi
+	rdx += 8
+	rsi <- mem rsp 0
+	mem rdx 0 <- rsi
+	rax <- rdi
+	return
+)
+
+(@make_array
+	0 1
+	:call_label_ciao_6
+	goto :call_label_ciao_7
+	:call_label_ciao_7
+	rdi <- 201
+	mem rsp 0 <- rdi
+	rdi <- mem rsp 0
+	rdi <- rdi
+	rdi >>= 1
+	rdi <- rdi
+	rdi <- rdi
+	rdi <<= 1
+	rdi <- rdi
+	rdi += 1
+	rdi <- rdi
+	rdi += 2
+	rdi <- rdi
+	rsi <- 1
+	call allocate 2
+	rdx <- rax
+	rsi <- rdx
+	rsi += 8
+	rdi <- mem rsp 0
+	mem rsi 0 <- rdi
+	rdi <- 17
+	rax <- rdx
+	return
+)
+
+)

@@ -1,0 +1,11 @@
+define void @main ( ){
+
+  :entry
+  int64 %l
+  tuple %t
+  %t <- new Tuple(7)
+  %l <- length %t
+  call print(%l)
+  return
+
+}

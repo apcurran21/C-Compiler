@@ -1,0 +1,47 @@
+(@computeAndPrint
+	5
+	%m1 <- rdi
+	%m2 <- rsi
+	%m3 <- rdx
+	%v1 <- rcx
+	%v2 <- r8
+	:call_label_ciao_8
+	rdi <- %m1
+	rsi <- %v1
+	mem rsp -8 <- :call_label_ciao_9
+	call @initMatrix 2
+	:call_label_ciao_9
+	rdi <- %m2
+	rsi <- %v2
+	mem rsp -8 <- :call_label_ciao_10
+	call @initMatrix 2
+	:call_label_ciao_10
+	rdi <- %m1
+	rsi <- %m2
+	rdx <- %m3
+	mem rsp -8 <- :call_label_ciao_11
+	call @matrixMultiplication 3
+	:call_label_ciao_11
+	rdi <- %m1
+	mem rsp -8 <- :call_label_ciao_12
+	call @totalSum 1
+	:call_label_ciao_12
+	%newVar0t <- rax
+	rdi <- %newVar0t
+	call print 1
+	rdi <- %m2
+	mem rsp -8 <- :call_label_ciao_13
+	call @totalSum 1
+	:call_label_ciao_13
+	%newVar0t <- rax
+	rdi <- %newVar0t
+	call print 1
+	rdi <- %m3
+	mem rsp -8 <- :call_label_ciao_14
+	call @totalSum 1
+	:call_label_ciao_14
+	%newVar0t <- rax
+	rdi <- %newVar0t
+	call print 1
+	return
+)

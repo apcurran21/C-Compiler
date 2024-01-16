@@ -1,0 +1,12 @@
+(@aliasing_issues
+	1
+	%p <- rdi
+	mem %p 0 <- 5
+	%x <- mem %p 0
+	%v <- %p
+	mem %v 0 <- 4
+	rdi <- %x
+	call print 1
+	rax <- 0
+	return
+)

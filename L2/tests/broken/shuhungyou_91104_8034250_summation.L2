@@ -1,0 +1,43 @@
+(@main
+ (@succ 10
+        rax <- stack-arg 24
+        rax++
+        return)
+ (@sum_to 7
+          %sum <- 0
+          %from <- 0
+          :sum
+          rdx <- stack-arg 0
+          cjump rdx < %from :end_sum
+          %sum += %from
+          mem rsp -8 <- :succed
+          mem rsp -16 <- %from
+          call @succ 10
+          :succed
+          %from <- rax
+          goto :sum
+          :end_sum
+          rax <- %sum
+          return)
+ (@main 0
+        %i <- 0
+        %sft <- 1
+        :for_go
+        cjump %i <= 20 :next_go
+        goto :end_go
+        :next_go
+        %newVariable12 <- %i
+        mem rsp -8 <- :total
+        mem rsp -16 <- %newVariable12
+        %newVariable12++
+        call @sum_to 7
+        :total
+        rcx <- 1
+        rax <<= %sft
+        rax += %sft
+        rdi <- rax
+        call print 1
+        %i <- %newVariable12
+        goto :for_go
+        :end_go
+        return))

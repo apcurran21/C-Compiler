@@ -1,0 +1,23 @@
+(@recurse
+	2
+	%v1 <- rdi
+	%num <- rsi
+	:call_label_ciao__ciao__ciao__ciao_8
+	%v1 += 1
+	%num -= 1
+	%done <- %num = 0
+	cjump %done = 1 :call_label_ciao__ciao__ciao__ciao_10
+	goto :call_label_ciao__ciao__ciao__ciao_9
+	:call_label_ciao__ciao__ciao__ciao_9
+	rdi <- %v1
+	rsi <- %num
+	mem rsp -8 <- :call_label_ciao__ciao__ciao__ciao_11
+	call @recurse 2
+	:call_label_ciao__ciao__ciao__ciao_11
+	%ret <- rax
+	rax <- %ret
+	return
+	:call_label_ciao__ciao__ciao__ciao_10
+	rax <- %v1
+	return
+)

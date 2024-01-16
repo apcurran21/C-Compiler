@@ -1,0 +1,324 @@
+(@main
+  (@encode
+    1
+    %val <- rdi
+    %almost_encoded <- %val
+    %almost_encoded <<= 1
+    %encoded <- %almost_encoded
+    %encoded += 1
+    rax <- %encoded
+    return
+  )
+  (@decode
+    1
+    %val <- rdi
+    %decoded <- %val
+    %decoded >>= 1
+    rax <- %decoded
+    return
+  )
+  (@new_stack
+    0
+    %size <- 0
+    rdi <- %size
+
+mem rsp -8 <- :call_label0
+    call @encode 1
+
+:call_label0
+    %encoded_size <- rax
+    %default <- 0
+    rdi <- %default
+
+mem rsp -8 <- :call_label1
+    call @encode 1
+
+:call_label1
+    %encoded_default <- rax
+    rdi <- %encoded_size
+    rsi <- %encoded_default
+    call allocate 2
+    %stack_ptr <- rax
+    rax <- %stack_ptr
+    return
+  )
+  (@push
+    2
+    %old_stack_ptr <- rdi
+    %val <- rsi
+    %old_size <- mem %old_stack_ptr 0
+    %new_size <- %old_size
+    %new_size += 1
+    rdi <- %new_size
+
+mem rsp -8 <- :call_label_ciao_2
+    call @encode 1
+
+:call_label_ciao_2
+    %encoded_new_size <- rax
+    %default <- 0
+    rdi <- %default
+
+mem rsp -8 <- :call_label_ciao_3
+    call @encode 1
+
+:call_label_ciao_3
+    %encoded_default <- rax
+    rdi <- %encoded_new_size
+    rsi <- %encoded_default
+    call allocate 2
+    %new_stack_ptr <- rax
+    rdi <- %val
+
+mem rsp -8 <- :call_label_ciao_4
+    call @encode 1
+
+:call_label_ciao_4
+    %encoded_val <- rax
+    %curr_idx <- %new_stack_ptr
+    %curr_idx += 8
+    mem %curr_idx 0 <- %encoded_val
+    rdi <- %new_stack_ptr
+    rsi <- %old_stack_ptr
+    rdx <- %old_size
+
+mem rsp -8 <- :call_label_ciao_5
+    call @refill_stack 3
+
+:call_label_ciao_5
+    %final_stack_ptr <- rax
+    rax <- %final_stack_ptr
+    return
+  )
+  (@refill_stack
+    3
+    %new_stack_ptr <- rdi
+    %old_stack_ptr <- rsi
+    %num_remaining <- rdx
+    %more_to_write <- 0 < %num_remaining
+
+    cjump %more_to_write = 1 :call_label_ciao__ciao_7
+    goto :call_label_ciao__ciao_6
+    :call_label_ciao__ciao_6
+    rax <- %new_stack_ptr
+    return
+    :call_label_ciao__ciao_7
+    %old_size <- mem %old_stack_ptr 0
+    %old_stack_loc <- %old_stack_ptr
+    %old_stack_loc += 8
+    %num_elem_offset <- %old_size
+    %num_elem_offset -= %num_remaining
+    %offset <- %num_elem_offset
+    %offset *= 8
+    %old_stack_loc <- %old_stack_loc
+    %old_stack_loc += %offset
+    %val_to_write <- mem %old_stack_loc 0
+    %new_stack_loc <- %new_stack_ptr
+    %new_stack_loc += 16
+    %new_stack_loc <- %new_stack_loc
+    %new_stack_loc += %offset
+    mem %new_stack_loc 0 <- %val_to_write
+    %new_num_remaining <- %num_remaining
+    %new_num_remaining -= 1
+    rdi <- %new_stack_ptr
+    rsi <- %old_stack_ptr
+    rdx <- %new_num_remaining
+
+mem rsp -8 <- :call_label_ciao__ciao_8
+    call @refill_stack 3
+
+:call_label_ciao__ciao_8
+    %new_stack_ptr <- rax
+    rax <- %new_stack_ptr
+    return
+  )
+  (@pop
+    1
+    %stack_ptr <- rdi
+    %old_size <- mem %stack_ptr 0
+    %not_empty <- 0 < %old_size
+
+    cjump %not_empty = 1 :call_label_ciao__ciao__ciao_10
+    goto :call_label_ciao__ciao__ciao_9
+    :call_label_ciao__ciao__ciao_9
+    rdi <- 1
+    call tensor-error 1
+    rax <- %stack_ptr
+    return
+    :call_label_ciao__ciao__ciao_10
+    %pop_loc <- %stack_ptr
+    %pop_loc += 8
+    %val <- mem %pop_loc 0
+    rdi <- %stack_ptr
+
+mem rsp -8 <- :call_label_ciao__ciao__ciao_11
+    call @shrink_stack 1
+
+:call_label_ciao__ciao__ciao_11
+    %stack_ptr <- rax
+    %ret_size <- 2
+    rdi <- %ret_size
+
+mem rsp -8 <- :call_label_ciao__ciao__ciao_12
+    call @encode 1
+
+:call_label_ciao__ciao__ciao_12
+    %encoded_ret_size <- rax
+    rdi <- %encoded_ret_size
+    rsi <- %val
+    call allocate 2
+    %ret <- rax
+    %ret_back <- %ret
+    %ret_back += 16
+    mem %ret_back 0 <- %stack_ptr
+    rax <- %ret
+    return
+  )
+  (@shrink_stack
+    1
+    %old_stack_ptr <- rdi
+    %old_size <- mem %old_stack_ptr 0
+    %new_size <- %old_size
+    %new_size -= 1
+    rdi <- %new_size
+
+mem rsp -8 <- :call_label_ciao__ciao__ciao__ciao_13
+    call @encode 1
+
+:call_label_ciao__ciao__ciao__ciao_13
+    %encoded_new_size <- rax
+    %default <- 0
+    rdi <- %default
+
+mem rsp -8 <- :call_label_ciao__ciao__ciao__ciao_14
+    call @encode 1
+
+:call_label_ciao__ciao__ciao__ciao_14
+    %encoded_default <- rax
+    rdi <- %encoded_new_size
+    rsi <- %encoded_default
+    call allocate 2
+    %new_stack_ptr <- rax
+    rdi <- %new_stack_ptr
+    rsi <- %old_stack_ptr
+    rdx <- %new_size
+
+mem rsp -8 <- :call_label_ciao__ciao__ciao__ciao_15
+    call @do_shrink_stack 3
+
+:call_label_ciao__ciao__ciao__ciao_15
+    %new_stack_ptr <- rax
+    rax <- %new_stack_ptr
+    return
+  )
+  (@do_shrink_stack
+    3
+    %new_stack_ptr <- rdi
+    %old_stack_ptr <- rsi
+    %num_remaining <- rdx
+    %more_to_write <- 0 < %num_remaining
+
+    cjump %more_to_write = 1 :call_label_ciao__ciao__ciao__ciao__ciao_17
+    goto :call_label_ciao__ciao__ciao__ciao__ciao_16
+    :call_label_ciao__ciao__ciao__ciao__ciao_16
+    rax <- %new_stack_ptr
+    return
+    :call_label_ciao__ciao__ciao__ciao__ciao_17
+    %old_size <- mem %new_stack_ptr 0
+    %num_elem_offset <- %old_size
+    %num_elem_offset -= %num_remaining
+    %offset <- %num_elem_offset
+    %offset *= 8
+    %old_stack_loc <- %old_stack_ptr
+    %old_stack_loc += 16
+    %old_stack_loc <- %old_stack_loc
+    %old_stack_loc += %offset
+    %val_to_write <- mem %old_stack_loc 0
+    %new_stack_loc <- %new_stack_ptr
+    %new_stack_loc += 8
+    %new_stack_loc <- %new_stack_loc
+    %new_stack_loc += %offset
+    mem %new_stack_loc 0 <- %val_to_write
+    %new_num_remaining <- %num_remaining
+    %new_num_remaining -= 1
+    rdi <- %new_stack_ptr
+    rsi <- %old_stack_ptr
+    rdx <- %new_num_remaining
+
+mem rsp -8 <- :call_label_ciao__ciao__ciao__ciao__ciao_18
+    call @do_shrink_stack 3
+
+:call_label_ciao__ciao__ciao__ciao__ciao_18
+    %new_stack_ptr <- rax
+    rax <- %new_stack_ptr
+    return
+  )
+  (@main
+    0
+
+mem rsp -8 <- :call_label_ciao__ciao__ciao__ciao__ciao__ciao_21
+    call @new_stack 0
+
+:call_label_ciao__ciao__ciao__ciao__ciao__ciao_21
+    %stack_ptr <- rax
+    rdi <- %stack_ptr
+    rsi <- 0
+
+mem rsp -8 <- :call_label_ciao__ciao__ciao__ciao__ciao__ciao_22
+    call @push 2
+
+:call_label_ciao__ciao__ciao__ciao__ciao__ciao_22
+    %stack_ptr <- rax
+    rdi <- %stack_ptr
+    rsi <- 1
+
+mem rsp -8 <- :call_label_ciao__ciao__ciao__ciao__ciao__ciao_23
+    call @push 2
+
+:call_label_ciao__ciao__ciao__ciao__ciao__ciao_23
+    %stack_ptr <- rax
+    rdi <- %stack_ptr
+    rsi <- 2
+
+mem rsp -8 <- :call_label_ciao__ciao__ciao__ciao__ciao__ciao_24
+    call @push 2
+
+:call_label_ciao__ciao__ciao__ciao__ciao__ciao_24
+    %stack_ptr <- rax
+    rdi <- %stack_ptr
+    rsi <- 3
+
+mem rsp -8 <- :call_label_ciao__ciao__ciao__ciao__ciao__ciao_25
+    call @push 2
+
+:call_label_ciao__ciao__ciao__ciao__ciao__ciao_25
+    %stack_ptr <- rax
+    rdi <- %stack_ptr
+    call print 1
+    :call_label_ciao__ciao__ciao__ciao__ciao__ciao_19
+    rdi <- %stack_ptr
+
+mem rsp -8 <- :call_label_ciao__ciao__ciao__ciao__ciao__ciao_26
+    call @pop 1
+
+:call_label_ciao__ciao__ciao__ciao__ciao__ciao_26
+    %pop_package <- rax
+    %popped_loc <- %pop_package
+    %popped_loc += 8
+    %popped_val <- mem %popped_loc 0
+    rdi <- %popped_val
+    call print 1
+    %popped_stack_ptr_ptr <- %pop_package
+    %popped_stack_ptr_ptr += 16
+    %stack_ptr <- mem %popped_stack_ptr_ptr 0
+    rdi <- %stack_ptr
+    call print 1
+    %stack_size <- mem %stack_ptr 0
+    %more_to_pop <- 0 < %stack_size
+
+    cjump %more_to_pop = 1 :call_label_ciao__ciao__ciao__ciao__ciao__ciao_19
+    goto :call_label_ciao__ciao__ciao__ciao__ciao__ciao_20
+    :call_label_ciao__ciao__ciao__ciao__ciao__ciao_20
+    return
+  )
+)

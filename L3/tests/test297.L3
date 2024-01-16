@@ -1,0 +1,101 @@
+define @main () {
+ 
+:NNNNNN
+ br :entry
+ 
+:entry
+ %newVar1 <- 7 >> 1
+ %newVar0 <- %newVar1
+ %newVar0 <- %newVar0 << 1
+ %newVar0 <- %newVar0 + 1
+ %newVar0 <- %newVar0 + 2
+ %array <- call allocate (%newVar0, 1)
+ %newVar2 <- %array + 8
+ store %newVar2 <- 7
+ %newVar3 <- 0 * 8
+ %newVar4 <- %newVar3 + 8
+ %newVar5 <- %array + %newVar4
+ %ret <- load %newVar5
+ %ret <- call @rand (%array, %ret)
+ %ret <- %ret << 1
+ %ret <- %ret + 1
+ call print (%ret)
+ %newVar7 <- 9 >> 1
+ %newVar6 <- %newVar7
+ %newVar6 <- %newVar6 << 1
+ %newVar6 <- %newVar6 + 1
+ %newVar6 <- %newVar6 + 2
+ %array <- call allocate (%newVar6, 1)
+ %newVar8 <- %array + 8
+ store %newVar8 <- 9
+ %newVar9 <- 0 * 8
+ %newVar10 <- %newVar9 + 8
+ %newVar11 <- %array + %newVar10
+ %ret <- load %newVar11
+ %ret <- call @rand (%array, %ret)
+ %ret <- %ret << 1
+ %ret <- %ret + 1
+ call print (%ret)
+ return 
+}
+
+define @rand (%array, %ret) {
+ 
+:NNNNNNNNNNN
+ br :entry1
+ 
+:end
+ return 0
+ 
+:newLabel
+ br :end
+ 
+:good
+ %newVar1 <- 0
+ %newVar2 <- 1
+ %newVar1 <- %newVar1 + 0
+ %newVar0 <- %newVar1 * 8
+ %newVar0 <- %newVar0 + 16
+ %newVar3 <- %array + %newVar0
+ %ans <- load %newVar3
+ %newVar5 <- 0
+ %newVar6 <- 1
+ %newVar5 <- %newVar5 + 1
+ %newVar4 <- %newVar5 * 8
+ %newVar4 <- %newVar4 + 16
+ %newVar7 <- %array + %newVar4
+ %test <- load %newVar7
+ %newVar9 <- 0
+ %newVar10 <- 1
+ %newVar9 <- %newVar9 + 2
+ %newVar8 <- %newVar9 * 8
+ %newVar8 <- %newVar8 + 16
+ %newVar11 <- %array + %newVar8
+ %len <- load %newVar11
+ %ans <- %ans + %test
+ %ans <- %ans + %len
+ return %ans
+ 
+:cantreach
+ %ans <- 1
+ %test <- 0
+ return 1
+ 
+:keepGoing
+ %newVar12 <- 0 * 8
+ %newVar13 <- %newVar12 + 8
+ %newVar14 <- %array + %newVar13
+ %len <- load %newVar14
+ %test <- %len = %ret
+ br :good
+ 
+:startCalcs
+ %ans <- 0
+ %len <- 0
+ %test <- 0
+ br :keepGoing
+ 
+:entry1
+ br :startCalcs
+}
+

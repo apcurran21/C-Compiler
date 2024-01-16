@@ -1,0 +1,74 @@
+define :aspillingnightmare() {
+%v1<-1
+%v2 <-2
+%v3 <-3
+%v4<-4
+%v5<-5
+%v6<-6
+%v7<-7
+%v8<-8
+%v9 <-9
+%v10 <-10
+%v11 <-11
+%v12 <-12
+%v13 <-13
+%v14 <-14
+%v15 <-15
+%v16 <-16
+%v1 <- %v1 +%v2
+%v1 <- %v1 +%v3
+%v1 <- %v1 + %v4
+%v1 <-  %v1 + %v5
+%v1 <-  %v1 + %v6
+%v1 <-  %v1 + %v7
+%v1 <-  %v1 + %v8
+%v1 <-  %v1 + %v9
+%v1 <-  %v1 + %v10
+%v1 <-  %v1 + %v11
+%v1 <-  %v1 + %v12
+%v1 <-  %v1 + %v13
+%v1 <-  %v1 + %v14
+%v1 <-  %v1 + %v15
+%v1 <-  %v1 + %v16
+return %v1
+}
+
+define :main() {
+  %res <- call :add_all_args(1,2,3,4,5,6,7,8,9)
+  %res <- %res * 2
+  %res <- %res + 1
+  call print(%res)
+  %res <- call :mult(45,3,0)
+  %res <- %res * 2
+  %res <- %res + 1
+  call print(%res)
+%res <- call :aspillingnightmare()
+  %res <- %res * 2
+  %res <- %res + 1
+ call print(%res)
+  return 0
+}
+
+
+define :add_all_args(%a1,%a2,%a3,%a4,%a5,%a6,%a7,%a8,%a9){
+  %rdi <- %a1 + %a2
+  %rsi <- %rdi + %a3
+  %rdx <- %rsi + %a4
+  %rcx <- %rdx + %a5
+  %r8  <- %rcx + %a6
+  %a1 <- %r8 + %a7
+  %r8 <- %a1 + %a8
+  %r8 <- %r8 + %a9
+  return %r8
+}
+
+define :mult(%x, %y, %acc){
+  %yis1 <- %y  = 1
+  br %yis1 :yisone
+  %acc <- %acc + %x
+  %y_new <-  %y - 1
+  %res <- call :mult(%x, %y_new,%acc)
+  return %res
+  :yisone
+  return %acc
+}

@@ -1,0 +1,51 @@
+(@main
+	0
+	mem rsp -8 <- :call_label_ciao__ciao__ciao__ciao__ciao__ciao_21
+	call @new_queue 0
+	:call_label_ciao__ciao__ciao__ciao__ciao__ciao_21
+	%queue_ptr <- rax
+	rdi <- %queue_ptr
+	rsi <- 0
+	mem rsp -8 <- :call_label_ciao__ciao__ciao__ciao__ciao__ciao_22
+	call @enqueue 2
+	:call_label_ciao__ciao__ciao__ciao__ciao__ciao_22
+	%queue_ptr <- rax
+	rdi <- %queue_ptr
+	rsi <- 1
+	mem rsp -8 <- :call_label_ciao__ciao__ciao__ciao__ciao__ciao_23
+	call @enqueue 2
+	:call_label_ciao__ciao__ciao__ciao__ciao__ciao_23
+	%queue_ptr <- rax
+	rdi <- %queue_ptr
+	rsi <- 2
+	mem rsp -8 <- :call_label_ciao__ciao__ciao__ciao__ciao__ciao_24
+	call @enqueue 2
+	:call_label_ciao__ciao__ciao__ciao__ciao__ciao_24
+	%queue_ptr <- rax
+	rdi <- %queue_ptr
+	rsi <- 3
+	mem rsp -8 <- :call_label_ciao__ciao__ciao__ciao__ciao__ciao_25
+	call @enqueue 2
+	:call_label_ciao__ciao__ciao__ciao__ciao__ciao_25
+	%queue_ptr <- rax
+	rdi <- %queue_ptr
+	call print 1
+	:call_label_ciao__ciao__ciao__ciao__ciao__ciao_19
+	rdi <- %queue_ptr
+	mem rsp -8 <- :call_label_ciao__ciao__ciao__ciao__ciao__ciao_26
+	call @dequeue 1
+	:call_label_ciao__ciao__ciao__ciao__ciao__ciao_26
+	%dequeue_package <- rax
+	%dequeueped_val <- mem %dequeue_package 8
+	rdi <- %dequeueped_val
+	call print 1
+	%queue_ptr <- mem %dequeue_package 16
+	rdi <- %queue_ptr
+	call print 1
+	%queue_size <- mem %queue_ptr 0
+	%more_to_dequeue <- 0 < %queue_size
+	cjump %more_to_dequeue = 1 :call_label_ciao__ciao__ciao__ciao__ciao__ciao_19
+	goto :call_label_ciao__ciao__ciao__ciao__ciao__ciao_20
+	:call_label_ciao__ciao__ciao__ciao__ciao__ciao_20
+	return
+)

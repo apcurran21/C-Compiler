@@ -1,0 +1,117 @@
+(@main
+(@main
+	0 1
+	mem rsp 0 <- r12
+	rdi <- 21
+	rsi <- 1
+	call allocate 2
+	r12 <- rax
+	mem r12 8 <- 25
+	mem r12 16 <- 41
+	mem r12 24 <- 37
+	mem r12 32 <- 107
+	mem r12 40 <- 27
+	mem r12 48 <- 49
+	mem r12 56 <- 121
+	mem r12 64 <- 81
+	mem r12 72 <- 73
+	mem r12 80 <- 7
+	rdi <- r12
+	call print 1
+	rdi <- r12
+	mem rsp -8 <- :call_label_ciao__ciao__ciao_11
+	call @getMax 1
+	:call_label_ciao__ciao__ciao_11
+	rdi <- rax
+	call print 1
+	rdi <- r12
+	mem rsp -8 <- :call_label_ciao__ciao__ciao_12
+	call @getMin 1
+	:call_label_ciao__ciao__ciao_12
+	rdi <- rax
+	call print 1
+	rdi <- r12
+	mem rsp -8 <- :call_label_ciao__ciao__ciao_13
+	call @getSum 1
+	:call_label_ciao__ciao__ciao_13
+	rdi <- rax
+	call print 1
+	r12 <- mem rsp 0
+	return
+)
+
+(@getMax
+	1 0
+	r8 <- 0
+	r9 <- -1
+	rcx <- rdi
+	rdx <- mem rcx 0
+	:call_label0
+	rcx += 8
+	rsi <- mem rcx 0
+	rdi <- r9 < rsi
+	cjump rdi = 1 :call_label1
+	goto :call_label2
+	:call_label1
+	r9 <- rsi
+	:call_label2
+	r8 += 1
+	rdi <- r8 < rdx
+	cjump rdi = 1 :call_label0
+	goto :call_label3
+	:call_label3
+	rax <- r9
+	return
+)
+
+(@getMin
+	1 0
+	r9 <- 0
+	r8 <- 999999
+	rdx <- rdi
+	rcx <- mem rdx 0
+	:call_label_ciao_4
+	rdx += 8
+	rsi <- mem rdx 0
+	rdi <- rsi < r8
+	cjump rdi = 1 :call_label_ciao_5
+	goto :call_label_ciao_6
+	:call_label_ciao_5
+	r8 <- rsi
+	:call_label_ciao_6
+	r9 += 1
+	rdi <- r9 < rcx
+	cjump rdi = 1 :call_label_ciao_4
+	goto :call_label_ciao_7
+	:call_label_ciao_7
+	rax <- r8
+	return
+)
+
+(@getSum
+	1 0
+	rcx <- 0
+	r8 <- 1
+	rdx <- rdi
+	rsi <- mem rdx 0
+	:call_label_ciao__ciao_8
+	rdx += 8
+	rdi <- mem rdx 0
+	r8 -= 1
+	r8 >>= 1
+	rdi -= 1
+	rdi >>= 1
+	r8 += rdi
+	r8 <<= 1
+	r8 += 1
+	:call_label_ciao__ciao_9
+	rcx += 1
+	rdi <- rcx < rsi
+	cjump rdi = 1 :call_label_ciao__ciao_8
+	goto :call_label_ciao__ciao_10
+	:call_label_ciao__ciao_10
+	rax <- r8
+	return
+)
+
+)

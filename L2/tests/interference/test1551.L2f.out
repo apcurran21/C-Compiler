@@ -1,0 +1,99 @@
+%buf %idx %n %newVar0 %newVar1 %newVar10 %newVar11 %newVar12 %newVar13 %newVar14 %newVar15 %newVar16 %newVar17 %newVar18 %newVar19 %newVar2 %newVar20 %newVar21 %newVar22 %newVar23 %newVar24 %newVar25 %newVar26 %newVar27 %newVar28 %newVar29 %newVar3 %newVar30 %newVar31 %newVar32 %newVar33 %newVar34 %newVar35 %newVar36 %newVar37 %newVar38 %newVar39 %newVar4 %newVar40 %newVar41 %newVar42 %newVar43 %newVar44 %newVar45 %newVar46 %newVar47 %newVar48 %newVar49 %newVar5 %newVar50 %newVar51 %newVar52 %newVar53 %newVar54 %newVar55 %newVar56 %newVar57 %newVar58 %newVar59 %newVar6 %newVar60 %newVar61 %newVar62 %newVar63 %newVar64 %newVar65 %newVar66 %newVar7 %newVar8 %newVar9 %qtr r12 r13 r14 r15 rax rbp rbx rdx rsi
+%idx %buf %n %newVar0 %newVar1 %newVar10 %newVar11 %newVar12 %newVar13 %newVar14 %newVar15 %newVar16 %newVar17 %newVar18 %newVar19 %newVar2 %newVar20 %newVar21 %newVar22 %newVar23 %newVar24 %newVar25 %newVar26 %newVar27 %newVar28 %newVar29 %newVar3 %newVar30 %newVar31 %newVar32 %newVar33 %newVar34 %newVar35 %newVar36 %newVar37 %newVar38 %newVar39 %newVar4 %newVar40 %newVar41 %newVar42 %newVar43 %newVar44 %newVar45 %newVar46 %newVar47 %newVar48 %newVar49 %newVar5 %newVar50 %newVar51 %newVar52 %newVar53 %newVar54 %newVar55 %newVar56 %newVar57 %newVar58 %newVar59 %newVar6 %newVar60 %newVar61 %newVar62 %newVar63 %newVar64 %newVar65 %newVar66 %newVar67 %newVar69 %newVar7 %newVar70 %newVar71 %newVar72 %newVar73 %newVar74 %newVar75 %newVar76 %newVar77 %newVar8 %newVar9 %qtr r12 r13 r14 r15 rax rbp rbx
+%n %buf %idx %newVar10 %newVar11 %newVar12 %newVar13 %newVar14 %newVar15 %newVar16 %newVar17 %newVar18 %newVar19 %newVar28 %newVar29 %newVar30 %newVar31 %newVar32 %newVar33 %newVar34 %newVar35 %newVar36 %newVar37 %newVar38 %newVar39 %newVar48 %newVar49 %newVar50 %newVar51 %newVar52 %newVar53 %newVar54 %newVar55 %newVar56 %newVar57 %newVar58 %newVar59 %newVar68 %newVar69 %newVar70 %newVar71 %newVar72 %newVar73 %newVar74 %newVar75 %newVar76 %newVar77 %newVar78 %newVar79 %newVar8 %newVar9 %qtr r12 r13 r14 r15 rax rbp rbx
+%newVar0 %buf %idx %newVar7 %qtr r12 r13 r14 r15 rax rbp rbx
+%newVar10 %buf %idx %n %newVar9 %qtr r12 r13 r14 r15 rax rbp rbx
+%newVar11 %buf %idx %n %newVar13 %newVar14 %newVar15 %newVar16 %newVar17 %newVar9 %qtr r12 r13 r14 r15 rax rbp rbx
+%newVar12 %buf %idx %n %newVar16 %newVar9 %qtr r12 r13 r14 r15 rax rbp rbx
+%newVar13 %buf %idx %n %newVar11 %newVar9 %qtr r12 r13 r14 r15 rax rbp rbx
+%newVar14 %buf %idx %n %newVar11 %newVar16 %newVar9 %qtr r12 r13 r14 r15 rax rbp rbx
+%newVar15 %buf %idx %n %newVar11 %newVar16 %newVar9 %qtr r12 r13 r14 r15 rax rbp rbx
+%newVar16 %buf %idx %n %newVar11 %newVar12 %newVar14 %newVar15 %newVar17 %newVar18 %newVar9 %qtr r12 r13 r14 r15 rax rbp rbx
+%newVar17 %buf %idx %n %newVar11 %newVar16 %newVar9 %qtr r12 r13 r14 r15 rax rbp rbx
+%newVar18 %buf %idx %n %newVar16 %newVar9 %qtr r12 r13 r14 r15 rax rbp rbx
+%newVar19 %buf %idx %n %newVar8 %qtr r12 r13 r14 r15 rax rbp rbx
+%newVar1 %buf %idx %newVar2 %newVar3 %newVar4 %newVar5 %newVar6 %qtr r12 r13 r14 r15 rax rbp rbx
+%newVar20 %buf %idx %newVar27 %qtr r12 r13 r14 r15 rax rbp rbx
+%newVar21 %buf %idx %newVar22 %newVar23 %newVar24 %newVar25 %newVar26 %qtr r12 r13 r14 r15 rax rbp rbx
+%newVar22 %buf %idx %newVar21 %qtr r12 r13 r14 r15 rax rbp rbx
+%newVar23 %buf %idx %newVar21 %newVar25 %qtr r12 r13 r14 r15 rax rbp rbx
+%newVar24 %buf %idx %newVar21 %newVar25 %qtr r12 r13 r14 r15 rax rbp rbx
+%newVar25 %buf %idx %newVar21 %newVar23 %newVar24 %newVar26 %qtr r12 r13 r14 r15 rax rbp rbx
+%newVar26 %buf %idx %newVar21 %newVar25 %qtr r12 r13 r14 r15 rax rbp rbx
+%newVar27 %buf %idx %newVar20 %qtr r12 r13 r14 r15 rax rbp rbx
+%newVar28 %buf %idx %n %newVar39 %qtr r12 r13 r14 r15 rax rbp rbx
+%newVar29 %buf %idx %n %newVar30 %newVar31 %newVar32 %newVar33 %newVar34 %newVar35 %newVar36 %newVar37 %newVar38 %qtr r12 r13 r14 r15 rax rbp rbx
+%newVar2 %buf %idx %newVar1 %qtr r12 r13 r14 r15 rax rbp rbx
+%newVar30 %buf %idx %n %newVar29 %qtr r12 r13 r14 r15 rax rbp rbx
+%newVar31 %buf %idx %n %newVar29 %newVar33 %newVar34 %newVar35 %newVar36 %newVar37 %qtr r12 r13 r14 r15 rax rbp rbx
+%newVar32 %buf %idx %n %newVar29 %newVar36 %qtr r12 r13 r14 r15 rax rbp rbx
+%newVar33 %buf %idx %n %newVar29 %newVar31 %qtr r12 r13 r14 r15 rax rbp rbx
+%newVar34 %buf %idx %n %newVar29 %newVar31 %newVar36 %qtr r12 r13 r14 r15 rax rbp rbx
+%newVar35 %buf %idx %n %newVar29 %newVar31 %newVar36 %qtr r12 r13 r14 r15 rax rbp rbx
+%newVar36 %buf %idx %n %newVar29 %newVar31 %newVar32 %newVar34 %newVar35 %newVar37 %newVar38 %qtr r12 r13 r14 r15 rax rbp rbx
+%newVar37 %buf %idx %n %newVar29 %newVar31 %newVar36 %qtr r12 r13 r14 r15 rax rbp rbx
+%newVar38 %buf %idx %n %newVar29 %newVar36 %qtr r12 r13 r14 r15 rax rbp rbx
+%newVar39 %buf %idx %n %newVar28 %qtr r12 r13 r14 r15 rax rbp rbx
+%newVar3 %buf %idx %newVar1 %newVar5 %qtr r12 r13 r14 r15 rax rbp rbx
+%newVar40 %buf %idx %newVar47 %qtr r12 r13 r14 r15 rax rbp rbx
+%newVar41 %buf %idx %newVar42 %newVar43 %newVar44 %newVar45 %newVar46 %qtr r12 r13 r14 r15 rax rbp rbx
+%newVar42 %buf %idx %newVar41 %qtr r12 r13 r14 r15 rax rbp rbx
+%newVar43 %buf %idx %newVar41 %newVar45 %qtr r12 r13 r14 r15 rax rbp rbx
+%newVar44 %buf %idx %newVar41 %newVar45 %qtr r12 r13 r14 r15 rax rbp rbx
+%newVar45 %buf %idx %newVar41 %newVar43 %newVar44 %newVar46 %qtr r12 r13 r14 r15 rax rbp rbx
+%newVar46 %buf %idx %newVar41 %newVar45 %qtr r12 r13 r14 r15 rax rbp rbx
+%newVar47 %buf %idx %newVar40 %qtr r12 r13 r14 r15 rax rbp rbx
+%newVar48 %buf %idx %n %newVar59 %qtr r12 r13 r14 r15 rax rbp rbx
+%newVar49 %buf %idx %n %newVar50 %newVar51 %newVar52 %newVar53 %newVar54 %newVar55 %newVar56 %newVar57 %newVar58 %qtr r12 r13 r14 r15 rax rbp rbx
+%newVar4 %buf %idx %newVar1 %newVar5 %qtr r12 r13 r14 r15 rax rbp rbx
+%newVar50 %buf %idx %n %newVar49 %qtr r12 r13 r14 r15 rax rbp rbx
+%newVar51 %buf %idx %n %newVar49 %newVar53 %newVar54 %newVar55 %newVar56 %newVar57 %qtr r12 r13 r14 r15 rax rbp rbx
+%newVar52 %buf %idx %n %newVar49 %newVar56 %qtr r12 r13 r14 r15 rax rbp rbx
+%newVar53 %buf %idx %n %newVar49 %newVar51 %qtr r12 r13 r14 r15 rax rbp rbx
+%newVar54 %buf %idx %n %newVar49 %newVar51 %newVar56 %qtr r12 r13 r14 r15 rax rbp rbx
+%newVar55 %buf %idx %n %newVar49 %newVar51 %newVar56 %qtr r12 r13 r14 r15 rax rbp rbx
+%newVar56 %buf %idx %n %newVar49 %newVar51 %newVar52 %newVar54 %newVar55 %newVar57 %newVar58 %qtr r12 r13 r14 r15 rax rbp rbx
+%newVar57 %buf %idx %n %newVar49 %newVar51 %newVar56 %qtr r12 r13 r14 r15 rax rbp rbx
+%newVar58 %buf %idx %n %newVar49 %newVar56 %qtr r12 r13 r14 r15 rax rbp rbx
+%newVar59 %buf %idx %n %newVar48 %qtr r12 r13 r14 r15 rax rbp rbx
+%newVar5 %buf %idx %newVar1 %newVar3 %newVar4 %newVar6 %qtr r12 r13 r14 r15 rax rbp rbx
+%newVar60 %buf %idx %newVar67 %qtr r12 r13 r14 r15 rax rbp rbx
+%newVar61 %buf %idx %newVar62 %newVar63 %newVar64 %newVar65 %newVar66 %qtr r12 r13 r14 r15 rax rbp rbx
+%newVar62 %buf %idx %newVar61 %qtr r12 r13 r14 r15 rax rbp rbx
+%newVar63 %buf %idx %newVar61 %newVar65 %qtr r12 r13 r14 r15 rax rbp rbx
+%newVar64 %buf %idx %newVar61 %newVar65 %qtr r12 r13 r14 r15 rax rbp rbx
+%newVar65 %buf %idx %newVar61 %newVar63 %newVar64 %newVar66 %qtr r12 r13 r14 r15 rax rbp rbx
+%newVar66 %buf %idx %newVar61 %newVar65 %qtr r12 r13 r14 r15 rax rbp rbx
+%newVar67 %idx %newVar60 %qtr r12 r13 r14 r15 rax rbp rbx
+%newVar68 %n %newVar79 %qtr r12 r13 r14 r15 rax rbp rbx
+%newVar69 %idx %n %newVar70 %newVar71 %newVar72 %newVar73 %newVar74 %newVar75 %newVar76 %newVar77 %newVar78 %qtr r12 r13 r14 r15 rax rbp rbx
+%newVar6 %buf %idx %newVar1 %newVar5 %qtr r12 r13 r14 r15 rax rbp rbx
+%newVar70 %idx %n %newVar69 %qtr r12 r13 r14 r15 rax rbp rbx
+%newVar71 %idx %n %newVar69 %newVar73 %newVar74 %newVar75 %newVar76 %newVar77 %qtr r12 r13 r14 r15 rax rbp rbx
+%newVar72 %idx %n %newVar69 %newVar76 %qtr r12 r13 r14 r15 rax rbp rbx
+%newVar73 %idx %n %newVar69 %newVar71 %qtr r12 r13 r14 r15 rax rbp rbx
+%newVar74 %idx %n %newVar69 %newVar71 %newVar76 %qtr r12 r13 r14 r15 rax rbp rbx
+%newVar75 %idx %n %newVar69 %newVar71 %newVar76 %qtr r12 r13 r14 r15 rax rbp rbx
+%newVar76 %idx %n %newVar69 %newVar71 %newVar72 %newVar74 %newVar75 %newVar77 %newVar78 %qtr r12 r13 r14 r15 rax rbp rbx
+%newVar77 %idx %n %newVar69 %newVar71 %newVar76 %qtr r12 r13 r14 r15 rax rbp rbx
+%newVar78 %n %newVar69 %newVar76 %qtr r12 r13 r14 r15 rax rbp rbx
+%newVar79 %n %newVar68 r12 r13 r14 r15 rax rbp rbx
+%newVar7 %buf %idx %newVar0 %qtr r12 r13 r14 r15 rax rbp rbx
+%newVar8 %buf %idx %n %newVar19 %qtr r12 r13 r14 r15 rax rbp rbx
+%newVar9 %buf %idx %n %newVar10 %newVar11 %newVar12 %newVar13 %newVar14 %newVar15 %newVar16 %newVar17 %newVar18 %qtr r12 r13 r14 r15 rax rbp rbx
+%qtr %buf %idx %n %newVar0 %newVar1 %newVar10 %newVar11 %newVar12 %newVar13 %newVar14 %newVar15 %newVar16 %newVar17 %newVar18 %newVar19 %newVar2 %newVar20 %newVar21 %newVar22 %newVar23 %newVar24 %newVar25 %newVar26 %newVar27 %newVar28 %newVar29 %newVar3 %newVar30 %newVar31 %newVar32 %newVar33 %newVar34 %newVar35 %newVar36 %newVar37 %newVar38 %newVar39 %newVar4 %newVar40 %newVar41 %newVar42 %newVar43 %newVar44 %newVar45 %newVar46 %newVar47 %newVar48 %newVar49 %newVar5 %newVar50 %newVar51 %newVar52 %newVar53 %newVar54 %newVar55 %newVar56 %newVar57 %newVar58 %newVar59 %newVar6 %newVar60 %newVar61 %newVar62 %newVar63 %newVar64 %newVar65 %newVar66 %newVar67 %newVar68 %newVar69 %newVar7 %newVar70 %newVar71 %newVar72 %newVar73 %newVar74 %newVar75 %newVar76 %newVar77 %newVar78 %newVar8 %newVar9 r12 r13 r14 r15 rax rbp rbx rdx
+r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx rsi
+r11 r10 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx rsi
+r12 %buf %idx %n %newVar0 %newVar1 %newVar10 %newVar11 %newVar12 %newVar13 %newVar14 %newVar15 %newVar16 %newVar17 %newVar18 %newVar19 %newVar2 %newVar20 %newVar21 %newVar22 %newVar23 %newVar24 %newVar25 %newVar26 %newVar27 %newVar28 %newVar29 %newVar3 %newVar30 %newVar31 %newVar32 %newVar33 %newVar34 %newVar35 %newVar36 %newVar37 %newVar38 %newVar39 %newVar4 %newVar40 %newVar41 %newVar42 %newVar43 %newVar44 %newVar45 %newVar46 %newVar47 %newVar48 %newVar49 %newVar5 %newVar50 %newVar51 %newVar52 %newVar53 %newVar54 %newVar55 %newVar56 %newVar57 %newVar58 %newVar59 %newVar6 %newVar60 %newVar61 %newVar62 %newVar63 %newVar64 %newVar65 %newVar66 %newVar67 %newVar68 %newVar69 %newVar7 %newVar70 %newVar71 %newVar72 %newVar73 %newVar74 %newVar75 %newVar76 %newVar77 %newVar78 %newVar79 %newVar8 %newVar9 %qtr r10 r11 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx rsi
+r13 %buf %idx %n %newVar0 %newVar1 %newVar10 %newVar11 %newVar12 %newVar13 %newVar14 %newVar15 %newVar16 %newVar17 %newVar18 %newVar19 %newVar2 %newVar20 %newVar21 %newVar22 %newVar23 %newVar24 %newVar25 %newVar26 %newVar27 %newVar28 %newVar29 %newVar3 %newVar30 %newVar31 %newVar32 %newVar33 %newVar34 %newVar35 %newVar36 %newVar37 %newVar38 %newVar39 %newVar4 %newVar40 %newVar41 %newVar42 %newVar43 %newVar44 %newVar45 %newVar46 %newVar47 %newVar48 %newVar49 %newVar5 %newVar50 %newVar51 %newVar52 %newVar53 %newVar54 %newVar55 %newVar56 %newVar57 %newVar58 %newVar59 %newVar6 %newVar60 %newVar61 %newVar62 %newVar63 %newVar64 %newVar65 %newVar66 %newVar67 %newVar68 %newVar69 %newVar7 %newVar70 %newVar71 %newVar72 %newVar73 %newVar74 %newVar75 %newVar76 %newVar77 %newVar78 %newVar79 %newVar8 %newVar9 %qtr r10 r11 r12 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx rsi
+r14 %buf %idx %n %newVar0 %newVar1 %newVar10 %newVar11 %newVar12 %newVar13 %newVar14 %newVar15 %newVar16 %newVar17 %newVar18 %newVar19 %newVar2 %newVar20 %newVar21 %newVar22 %newVar23 %newVar24 %newVar25 %newVar26 %newVar27 %newVar28 %newVar29 %newVar3 %newVar30 %newVar31 %newVar32 %newVar33 %newVar34 %newVar35 %newVar36 %newVar37 %newVar38 %newVar39 %newVar4 %newVar40 %newVar41 %newVar42 %newVar43 %newVar44 %newVar45 %newVar46 %newVar47 %newVar48 %newVar49 %newVar5 %newVar50 %newVar51 %newVar52 %newVar53 %newVar54 %newVar55 %newVar56 %newVar57 %newVar58 %newVar59 %newVar6 %newVar60 %newVar61 %newVar62 %newVar63 %newVar64 %newVar65 %newVar66 %newVar67 %newVar68 %newVar69 %newVar7 %newVar70 %newVar71 %newVar72 %newVar73 %newVar74 %newVar75 %newVar76 %newVar77 %newVar78 %newVar79 %newVar8 %newVar9 %qtr r10 r11 r12 r13 r15 r8 r9 rax rbp rbx rcx rdi rdx rsi
+r15 %buf %idx %n %newVar0 %newVar1 %newVar10 %newVar11 %newVar12 %newVar13 %newVar14 %newVar15 %newVar16 %newVar17 %newVar18 %newVar19 %newVar2 %newVar20 %newVar21 %newVar22 %newVar23 %newVar24 %newVar25 %newVar26 %newVar27 %newVar28 %newVar29 %newVar3 %newVar30 %newVar31 %newVar32 %newVar33 %newVar34 %newVar35 %newVar36 %newVar37 %newVar38 %newVar39 %newVar4 %newVar40 %newVar41 %newVar42 %newVar43 %newVar44 %newVar45 %newVar46 %newVar47 %newVar48 %newVar49 %newVar5 %newVar50 %newVar51 %newVar52 %newVar53 %newVar54 %newVar55 %newVar56 %newVar57 %newVar58 %newVar59 %newVar6 %newVar60 %newVar61 %newVar62 %newVar63 %newVar64 %newVar65 %newVar66 %newVar67 %newVar68 %newVar69 %newVar7 %newVar70 %newVar71 %newVar72 %newVar73 %newVar74 %newVar75 %newVar76 %newVar77 %newVar78 %newVar79 %newVar8 %newVar9 %qtr r10 r11 r12 r13 r14 r8 r9 rax rbp rbx rcx rdi rdx rsi
+r8 r10 r11 r12 r13 r14 r15 r9 rax rbp rbx rcx rdi rdx rsi
+r9 r10 r11 r12 r13 r14 r15 r8 rax rbp rbx rcx rdi rdx rsi
+rax %buf %idx %n %newVar0 %newVar1 %newVar10 %newVar11 %newVar12 %newVar13 %newVar14 %newVar15 %newVar16 %newVar17 %newVar18 %newVar19 %newVar2 %newVar20 %newVar21 %newVar22 %newVar23 %newVar24 %newVar25 %newVar26 %newVar27 %newVar28 %newVar29 %newVar3 %newVar30 %newVar31 %newVar32 %newVar33 %newVar34 %newVar35 %newVar36 %newVar37 %newVar38 %newVar39 %newVar4 %newVar40 %newVar41 %newVar42 %newVar43 %newVar44 %newVar45 %newVar46 %newVar47 %newVar48 %newVar49 %newVar5 %newVar50 %newVar51 %newVar52 %newVar53 %newVar54 %newVar55 %newVar56 %newVar57 %newVar58 %newVar59 %newVar6 %newVar60 %newVar61 %newVar62 %newVar63 %newVar64 %newVar65 %newVar66 %newVar67 %newVar68 %newVar69 %newVar7 %newVar70 %newVar71 %newVar72 %newVar73 %newVar74 %newVar75 %newVar76 %newVar77 %newVar78 %newVar79 %newVar8 %newVar9 %qtr r10 r11 r12 r13 r14 r15 r8 r9 rbp rbx rcx rdi rdx rsi
+rbp %buf %idx %n %newVar0 %newVar1 %newVar10 %newVar11 %newVar12 %newVar13 %newVar14 %newVar15 %newVar16 %newVar17 %newVar18 %newVar19 %newVar2 %newVar20 %newVar21 %newVar22 %newVar23 %newVar24 %newVar25 %newVar26 %newVar27 %newVar28 %newVar29 %newVar3 %newVar30 %newVar31 %newVar32 %newVar33 %newVar34 %newVar35 %newVar36 %newVar37 %newVar38 %newVar39 %newVar4 %newVar40 %newVar41 %newVar42 %newVar43 %newVar44 %newVar45 %newVar46 %newVar47 %newVar48 %newVar49 %newVar5 %newVar50 %newVar51 %newVar52 %newVar53 %newVar54 %newVar55 %newVar56 %newVar57 %newVar58 %newVar59 %newVar6 %newVar60 %newVar61 %newVar62 %newVar63 %newVar64 %newVar65 %newVar66 %newVar67 %newVar68 %newVar69 %newVar7 %newVar70 %newVar71 %newVar72 %newVar73 %newVar74 %newVar75 %newVar76 %newVar77 %newVar78 %newVar79 %newVar8 %newVar9 %qtr r10 r11 r12 r13 r14 r15 r8 r9 rax rbx rcx rdi rdx rsi
+rbx %buf %idx %n %newVar0 %newVar1 %newVar10 %newVar11 %newVar12 %newVar13 %newVar14 %newVar15 %newVar16 %newVar17 %newVar18 %newVar19 %newVar2 %newVar20 %newVar21 %newVar22 %newVar23 %newVar24 %newVar25 %newVar26 %newVar27 %newVar28 %newVar29 %newVar3 %newVar30 %newVar31 %newVar32 %newVar33 %newVar34 %newVar35 %newVar36 %newVar37 %newVar38 %newVar39 %newVar4 %newVar40 %newVar41 %newVar42 %newVar43 %newVar44 %newVar45 %newVar46 %newVar47 %newVar48 %newVar49 %newVar5 %newVar50 %newVar51 %newVar52 %newVar53 %newVar54 %newVar55 %newVar56 %newVar57 %newVar58 %newVar59 %newVar6 %newVar60 %newVar61 %newVar62 %newVar63 %newVar64 %newVar65 %newVar66 %newVar67 %newVar68 %newVar69 %newVar7 %newVar70 %newVar71 %newVar72 %newVar73 %newVar74 %newVar75 %newVar76 %newVar77 %newVar78 %newVar79 %newVar8 %newVar9 %qtr r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rcx rdi rdx rsi
+rcx r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rdi rdx rsi
+rdi r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdx rsi
+rdx %buf %qtr r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rsi
+rsi %buf r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx

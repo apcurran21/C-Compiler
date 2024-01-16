@@ -1,0 +1,14 @@
+(@myF
+	1
+	%a <- rdi
+	:call_label2
+	%newVar0 <- 1
+	%newVar0 *= 8
+	%newVar1 <- %newVar0
+	%newVar1 += 16
+	%newVar2 <- %a
+	%newVar2 += %newVar1
+	%l <- mem %newVar2 0
+	rax <- %l
+	return
+)

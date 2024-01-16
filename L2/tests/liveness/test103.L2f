@@ -1,0 +1,31 @@
+(@printArray
+	1
+	%array <- rdi
+	%lowestBit <- %array
+	%lowestBit &= 1
+	cjump %lowestBit = 1 :retFalse
+	goto :continue
+	:continue
+	%i <- 0
+	goto :loopCheck
+	:loop
+	rdi <- %array
+	rsi <- %i
+	mem rsp -8 <- :printArRet
+	call @printArrayElement 2
+	:printArRet
+	rdi <- %array
+	%i += 1
+	:loopCheck
+	rax <- mem rdi 0
+	rax >>= 1
+	%newVariableBx <- %i
+	cjump rax < %newVariableBx :retTrue
+	goto :loop
+	:retFalse
+	rax <- 0
+	return
+	:retTrue
+	rax <- 1
+	return
+)

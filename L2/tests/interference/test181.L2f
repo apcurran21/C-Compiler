@@ -1,0 +1,41 @@
+(@main
+	0
+	rdi <- 21
+	rsi <- 1
+	call allocate 2
+	%arr <- rax
+	mem %arr 8 <- 25
+	mem %arr 16 <- 41
+	mem %arr 24 <- 37
+	mem %arr 32 <- 107
+	mem %arr 40 <- 27
+	mem %arr 48 <- 49
+	mem %arr 56 <- 121
+	mem %arr 64 <- 81
+	mem %arr 72 <- 73
+	mem %arr 80 <- 7
+	rdi <- %arr
+	call print 1
+	rdi <- %arr
+	mem rsp -8 <- :call_label_ciao__ciao__ciao_11
+	call @getMax 1
+	:call_label_ciao__ciao__ciao_11
+	%max <- rax
+	rdi <- %max
+	call print 1
+	rdi <- %arr
+	mem rsp -8 <- :call_label_ciao__ciao__ciao_12
+	call @getMin 1
+	:call_label_ciao__ciao__ciao_12
+	%min <- rax
+	rdi <- %min
+	call print 1
+	rdi <- %arr
+	mem rsp -8 <- :call_label_ciao__ciao__ciao_13
+	call @getSum 1
+	:call_label_ciao__ciao__ciao_13
+	%total <- rax
+	rdi <- %total
+	call print 1
+	return
+)

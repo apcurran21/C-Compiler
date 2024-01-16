@@ -1,0 +1,10 @@
+(@mod
+	2
+	:divloop
+	cjump rdi < rsi :divend
+	rdi -= rsi
+	goto :divloop
+	:divend
+	rax <- rdi
+	return
+)

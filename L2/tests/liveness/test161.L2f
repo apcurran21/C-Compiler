@@ -1,0 +1,12 @@
+(@inc
+	1
+	rax <- rdi
+	:LOOP_INC
+	%rax_backup <- rax
+	rdi <- rax
+	call print 1
+	rax <- %rax_backup
+	rax += 2
+	cjump rax <= 11 :LOOP_INC
+	return
+)

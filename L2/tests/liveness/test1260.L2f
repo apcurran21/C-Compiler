@@ -1,0 +1,28 @@
+(@main
+	0
+	:call_label0
+	goto :call_label1
+	:call_label1
+	%x <- 3
+	%y <- 3
+	rdi <- %x
+	rsi <- %y
+	mem rsp -8 <- :call_label2
+	call @findGCD 2
+	:call_label2
+	%x2 <- 30
+	%y2 <- 50
+	rdi <- %x2
+	rsi <- %y2
+	mem rsp -8 <- :call_label3
+	call @findGCD 2
+	:call_label3
+	%x3 <- 75
+	%y3 <- 80
+	rdi <- %x3
+	rsi <- %y3
+	mem rsp -8 <- :call_label4
+	call @findGCD 2
+	:call_label4
+	return
+)

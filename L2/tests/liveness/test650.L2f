@@ -1,0 +1,14 @@
+(@sum
+	4
+	%a <- rdi
+	%b <- rsi
+	%c <- rdx
+	%d <- rcx
+	:call_label_ciao_3
+	%res <- %a
+	%res += %b
+	%res += %c
+	%res += %d
+	rax <- %res
+	return
+)

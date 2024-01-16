@@ -1,0 +1,53 @@
+(@go
+(@go
+	0 2
+	rdi <- 1
+	mem rsp 8 <- rdi
+	rdi <- 0
+	mem rsp 0 <- rdi
+	r12 <- 1
+	r13 <- 2
+	:loop
+	rdi <- mem rsp 0
+	rdi <- rdi
+	rcx <- mem rsp 8
+	rdi <<= rcx
+	rdi += 1
+	call print 1
+	rdi <- mem rsp 0
+	r14 <- rdi
+	rcx <- mem rsp 8
+	r14 >>= rcx
+	rcx <- mem rsp 8
+	r14 <<= rcx
+	rdi <- mem rsp 0
+	cjump rdi = r14 :e
+	rdi <- r12
+	rcx <- mem rsp 8
+	rdi <<= rcx
+	rdi += 1
+	call print 1
+	rdi <- mem rsp 0
+	rdi++
+	mem rsp 0 <- rdi
+	rdi <- mem rsp 0
+	rax <- rdi <= 20
+	cjump rax = 1 :loop
+	:e
+	rdi <- r13
+	rcx <- mem rsp 8
+	rdi <<= rcx
+	rdi += 1
+	call print 1
+	rdi <- mem rsp 0
+	rdi++
+	mem rsp 0 <- rdi
+	rdi <- mem rsp 0
+	rax <- rdi <= 20
+	cjump rax = 1 :loop
+	rdi <- 5
+	call print 1
+	return
+)
+
+)

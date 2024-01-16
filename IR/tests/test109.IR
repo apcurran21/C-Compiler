@@ -1,0 +1,69 @@
+define void @main ( ) {
+
+ :entry
+ int64 %newVar9
+ int64 %newVar8
+ int64 %newVar7
+ int64 %newVar6
+ int64 %newVar5
+ int64 %newVar4
+ int64 %newVar3
+ int64 %newVar2
+ int64 %newVar1
+ int64 %newVar0
+ tuple %p
+ %p <- 0
+ %p <- new Tuple (7)
+ %newVar0 <- 1
+ %newVar1 <- 1
+ %newVar1 <- 25
+ %newVar1 <- %newVar1 >> 1
+ %newVar2 <- 13
+ %newVar3 <- 1
+ %newVar4 <- 1
+ %newVar5 <- 1
+ %newVar6 <- %p = 0
+ br %newVar6 :new_label0 :new_label4 
+
+ :new_label4
+ %newVar7 <- length %p
+ %newVar3 <- %newVar7
+ %newVar7 <- %newVar7 >> 1
+ %newVar5 <- %newVar1
+ %newVar5 <- %newVar5 << 1
+ %newVar5 <- %newVar5 + 1
+ %newVar8 <- %newVar1 >= 0
+ br %newVar8 :new_label5 :new_label3 
+
+ :new_label5
+ %newVar9 <- %newVar1 < %newVar7
+ br %newVar9 :new_label6 :new_label3 
+
+ :new_label6
+ br :new_label7
+
+ :new_label0
+  call tensor-error (%newVar2)
+ br :new_label1
+
+ :new_label1
+  call tensor-error (%newVar2, %newVar3, %newVar5)
+ br :new_label3
+
+ :new_label3
+  call tuple-error (%newVar2, %newVar3, %newVar5)
+ br :new_label2
+
+ :new_label2
+  call tensor-error (%newVar2, %newVar4, %newVar3, %newVar5)
+ br :new_label7
+
+ :new_label7
+ %p[%newVar1] <- 43
+ return 
+
+ :new_label8
+ return 
+
+}
+

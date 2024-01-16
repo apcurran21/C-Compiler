@@ -1,0 +1,147 @@
+(@main
+(@encode_and_print
+	1 0
+	rdi <- rdi
+	rdi <- rdi
+	rdi <<= 1
+	rdi <- rdi
+	rdi += 1
+	rdi <- rdi
+	call print 1
+	return
+)
+
+(@main
+	0 0
+	rdi <- 11001110011
+	rsi <- 11001110011
+	rdx <- 11000000011
+	rcx <- 11001110011
+	r8 <- 11001110011
+	mem rsp -8 <- :call_label0
+	call @print_letter 5
+	:call_label0
+	rdi <- 11100000111
+	rsi <- 11100111111
+	rdx <- 11100000111
+	rcx <- 11100111111
+	r8 <- 11100000111
+	mem rsp -8 <- :call_label1
+	call @print_letter 5
+	:call_label1
+	rdi <- 11100111111
+	rsi <- 11100111111
+	rdx <- 11100111111
+	rcx <- 11100111111
+	r8 <- 11100000011
+	mem rsp -8 <- :call_label2
+	call @print_letter 5
+	:call_label2
+	rdi <- 11100111111
+	rsi <- 11100111111
+	rdx <- 11100111111
+	rcx <- 11100111111
+	r8 <- 11100000011
+	mem rsp -8 <- :call_label3
+	call @print_letter 5
+	:call_label3
+	rdi <- 11100000111
+	rsi <- 11001110011
+	rdx <- 11001110011
+	rcx <- 11001110011
+	r8 <- 11100000111
+	mem rsp -8 <- :call_label4
+	call @print_letter 5
+	:call_label4
+	rdi <- 10111111101
+	rsi <- 11011111011
+	rdx <- 11011011011
+	rcx <- 11000100011
+	r8 <- 11101110111
+	mem rsp -8 <- :call_label5
+	call @print_letter 5
+	:call_label5
+	rdi <- 11100000111
+	rsi <- 11001110011
+	rdx <- 11001110011
+	rcx <- 11001110011
+	r8 <- 11100000111
+	mem rsp -8 <- :call_label6
+	call @print_letter 5
+	:call_label6
+	rdi <- 11000001111
+	rsi <- 11001110111
+	rdx <- 11000011111
+	rcx <- 11001001111
+	r8 <- 11001110011
+	mem rsp -8 <- :call_label7
+	call @print_letter 5
+	:call_label7
+	rdi <- 11100111111
+	rsi <- 11100111111
+	rdx <- 11100111111
+	rcx <- 11100111111
+	r8 <- 11100000011
+	mem rsp -8 <- :call_label8
+	call @print_letter 5
+	:call_label8
+	rdi <- 11000000111
+	rsi <- 11001110011
+	rdx <- 11001110011
+	rcx <- 11001110011
+	r8 <- 11000000111
+	mem rsp -8 <- :call_label9
+	call @print_letter 5
+	:call_label9
+	return
+)
+
+(@print_letter
+	5 5
+	mem rsp 32 <- rbp
+	mem rsp 24 <- r15
+	mem rsp 16 <- r14
+	mem rsp 8 <- r13
+	mem rsp 0 <- r12
+	rbp <- rdi
+	r14 <- rsi
+	r13 <- rdx
+	r12 <- rcx
+	r15 <- r8
+	rdi <- 11111111111
+	mem rsp -8 <- :call_label_ciao_10
+	call @encode_and_print 1
+	:call_label_ciao_10
+	rdi <- rbp
+	mem rsp -8 <- :call_label_ciao_11
+	call @encode_and_print 1
+	:call_label_ciao_11
+	rdi <- r14
+	mem rsp -8 <- :call_label_ciao_12
+	call @encode_and_print 1
+	:call_label_ciao_12
+	rdi <- r13
+	mem rsp -8 <- :call_label_ciao_13
+	call @encode_and_print 1
+	:call_label_ciao_13
+	rdi <- r12
+	mem rsp -8 <- :call_label_ciao_14
+	call @encode_and_print 1
+	:call_label_ciao_14
+	rdi <- r15
+	mem rsp -8 <- :call_label_ciao_15
+	call @encode_and_print 1
+	:call_label_ciao_15
+	rdi <- 11111111111
+	mem rsp -8 <- :call_label_ciao_16
+	call @encode_and_print 1
+	:call_label_ciao_16
+	r12 <- mem rsp 0
+	r13 <- mem rsp 8
+	r14 <- mem rsp 16
+	r15 <- mem rsp 24
+	rbp <- mem rsp 32
+	return
+)
+
+)

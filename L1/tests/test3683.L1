@@ -1,0 +1,54 @@
+(@main
+(@main
+	0 0
+	:call_label0
+	rdi <- 7
+	rsi <- 13
+	rdx <- 41
+	rcx <- -4
+	r8 <- 123
+	r9 <- -134
+	mem rsp -16 <- 2
+	mem rsp -8 <- :call_label1
+	call @big_func 7
+	:call_label1
+	rdi <- rax
+	rdi <- rdi
+	rdi <<= 1
+	rdi <- rdi
+	rdi += 1
+	rdi <- rdi
+	call print 1
+	return
+)
+
+(@big_func
+	7 0
+	rax <- rdi
+	r10 <- rsi
+	r11 <- rdx
+	rcx <- rcx
+	r8 <- r8
+	rdi <- r9
+	rdx <- mem rsp 0
+	:call_label_ciao_2
+	rsi <- 1
+	rsi <- rsi
+	rsi *= rax
+	rsi <- rsi
+	rsi -= r10
+	rsi <- rsi
+	rsi += r11
+	rsi <- rsi
+	rsi *= rcx
+	rsi <- rsi
+	rsi &= r8
+	rsi <- rsi
+	rsi += rdi
+	rsi <- rsi
+	rsi -= rdx
+	rax <- rsi
+	return
+)
+
+)

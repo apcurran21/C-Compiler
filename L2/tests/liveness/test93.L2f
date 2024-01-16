@@ -1,0 +1,12 @@
+(@go
+	0
+	mem rsp -8 <- :fibonacci_ret
+	rdi <- 13
+	call @fibonacci 1
+	:fibonacci_ret
+	rdi <- rax
+	rdi <<= 1
+	rdi++
+	call print 1
+	return
+)

@@ -1,0 +1,12 @@
+(@next
+	2
+	%v1 <- rdi
+	%v2 <- rsi
+	:call_label_ciao_6
+	goto :call_label_ciao_7
+	:call_label_ciao_7
+	%ret <- %v1
+	%ret += %v2
+	rax <- %ret
+	return
+)

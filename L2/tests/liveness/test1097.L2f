@@ -1,0 +1,10 @@
+(@d
+	0
+	:call_label_ciao__ciao__ciao__ciao__ciao__ciao__ciao__ciao_27
+	goto :call_label_ciao__ciao__ciao__ciao__ciao__ciao__ciao__ciao_28
+	:call_label_ciao__ciao__ciao__ciao__ciao__ciao__ciao__ciao_28
+	%var <- 201
+	rdi <- %var
+	call print 1
+	return
+)

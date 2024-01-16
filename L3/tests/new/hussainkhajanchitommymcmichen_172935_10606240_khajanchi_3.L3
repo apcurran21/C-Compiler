@@ -1,0 +1,51 @@
+// L3 Vector Summation
+// Authors: Hussain Khajanchi and Tommy McMichen
+// Description: A simple vector addition program
+//              written in the L3 language for EECS 322
+// Northwestern University
+
+
+// n -> size of array, 
+// n_val -> value in first array, 
+// n_val_2  -> value in second array
+
+define :vector_sum(%n, %n_val, %n_val_2) {
+
+  %base_addr <- call allocate(%n)
+  %ctr <- 0 
+  br :loop
+    
+  :loop
+    
+    %val <- %n_val + %n_val_2
+    store %base_addr <- %val
+    
+    %b <- %ctr >= %n
+    %ctr++
+    br %b :exit  
+    br :loop
+
+  :exit
+    return %base_addr
+}
+
+define :main() {
+
+  %n <- 10
+  %n << 1
+  %n_val <- 11
+  %n_val_2 <- 22
+
+  %ret_addr <- call vector_sum(%n, %n_val, %n_val_2)
+
+  return %ret_addr
+
+}
+  
+
+
+
+
+
+
+

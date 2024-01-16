@@ -1,0 +1,37 @@
+(@print_letter
+	5
+	%line_1 <- rdi
+	%line_2 <- rsi
+	%line_3 <- rdx
+	%line_4 <- rcx
+	%line_5 <- r8
+	rdi <- 11111111111
+	mem rsp -8 <- :call_label_ciao_10
+	call @encode_and_print 1
+	:call_label_ciao_10
+	rdi <- %line_1
+	mem rsp -8 <- :call_label_ciao_11
+	call @encode_and_print 1
+	:call_label_ciao_11
+	rdi <- %line_2
+	mem rsp -8 <- :call_label_ciao_12
+	call @encode_and_print 1
+	:call_label_ciao_12
+	rdi <- %line_3
+	mem rsp -8 <- :call_label_ciao_13
+	call @encode_and_print 1
+	:call_label_ciao_13
+	rdi <- %line_4
+	mem rsp -8 <- :call_label_ciao_14
+	call @encode_and_print 1
+	:call_label_ciao_14
+	rdi <- %line_5
+	mem rsp -8 <- :call_label_ciao_15
+	call @encode_and_print 1
+	:call_label_ciao_15
+	rdi <- 11111111111
+	mem rsp -8 <- :call_label_ciao_16
+	call @encode_and_print 1
+	:call_label_ciao_16
+	return
+)

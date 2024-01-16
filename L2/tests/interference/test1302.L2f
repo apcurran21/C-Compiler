@@ -1,0 +1,115 @@
+(@main
+	0
+	:call_label0
+	%newVar1 <- 7
+	%newVar1 >>= 1
+	%newVar0 <- %newVar1
+	%newVar0 <<= 1
+	%newVar0 += 1
+	%newVar0 += 4
+	rdi <- %newVar0
+	rsi <- 1
+	call allocate 2
+	%number <- rax
+	%newVar2 <- %number
+	%newVar2 += 8
+	mem %newVar2 0 <- 3
+	%newVar3 <- %number
+	%newVar3 += 16
+	mem %newVar3 0 <- 7
+	rdi <- 1
+	mem rsp -8 <- :call_label1
+	call @op1 1
+	:call_label1
+	%retVal <- rax
+	%newVar8 <- 0
+	%newVar7 <- %newVar8
+	%newVar7 *= 8
+	%newVar7 += 24
+	%newVar10 <- %number
+	%newVar10 += %newVar7
+	mem %newVar10 0 <- %retVal
+	rdi <- 2
+	mem rsp -8 <- :call_label2
+	call @op1 1
+	:call_label2
+	%retVal <- rax
+	%newVar12 <- 0
+	%newVar12 += 1
+	%newVar11 <- %newVar12
+	%newVar11 *= 8
+	%newVar11 += 24
+	%newVar14 <- %number
+	%newVar14 += %newVar11
+	mem %newVar14 0 <- %retVal
+	rdi <- 3
+	mem rsp -8 <- :call_label3
+	call @op2 1
+	:call_label3
+	%retVal <- rax
+	%newVar16 <- 0
+	%newVar16 += 2
+	%newVar15 <- %newVar16
+	%newVar15 *= 8
+	%newVar15 += 24
+	%newVar18 <- %number
+	%newVar18 += %newVar15
+	mem %newVar18 0 <- %retVal
+	rdi <- 4
+	mem rsp -8 <- :call_label4
+	call @op3 1
+	:call_label4
+	%retVal <- rax
+	%newVar20 <- 0
+	%newVar20 += 3
+	%newVar19 <- %newVar20
+	%newVar19 *= 8
+	%newVar19 += 24
+	%newVar22 <- %number
+	%newVar22 += %newVar19
+	mem %newVar22 0 <- %retVal
+	rdi <- 5
+	mem rsp -8 <- :call_label5
+	call @op4 1
+	:call_label5
+	%retVal <- rax
+	%newVar24 <- 0
+	%newVar24 += 4
+	%newVar23 <- %newVar24
+	%newVar23 *= 8
+	%newVar23 += 24
+	%newVar26 <- %number
+	%newVar26 += %newVar23
+	mem %newVar26 0 <- %retVal
+	rdi <- 6
+	mem rsp -8 <- :call_label6
+	call @op5 1
+	:call_label6
+	%retVal <- rax
+	%newVar28 <- 0
+	%newVar28 += 5
+	%newVar27 <- %newVar28
+	%newVar27 *= 8
+	%newVar27 += 24
+	%newVar30 <- %number
+	%newVar30 += %newVar27
+	mem %newVar30 0 <- %retVal
+	rdi <- 7
+	mem rsp -8 <- :call_label7
+	call @op6 1
+	:call_label7
+	%retVal <- rax
+	%newVar32 <- 0
+	%newVar32 += 6
+	%newVar31 <- %newVar32
+	%newVar31 *= 8
+	%newVar31 += 24
+	%newVar34 <- %number
+	%newVar34 += %newVar31
+	mem %newVar34 0 <- %retVal
+	rdi <- %number
+	mem rsp -8 <- :call_label8
+	call @printArr 1
+	:call_label8
+	return
+)

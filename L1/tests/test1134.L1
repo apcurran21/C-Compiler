@@ -1,0 +1,123 @@
+(@main
+(@Bubble_Sort
+	6 7
+	mem rsp 40 <- rbx
+	mem rsp 32 <- rbp
+	mem rsp 24 <- r15
+	mem rsp 16 <- r14
+	mem rsp 8 <- r13
+	mem rsp 0 <- r12
+	rbp <- rdi
+	r15 <- rsi
+	r12 <- rdx
+	rbx <- rcx
+	r13 <- r8
+	rdi <- r9
+	mem rsp 48 <- rdi
+	rdi <- 6
+	mem rsp -8 <- :call_label_ciao_6
+	call @encode 1
+	:call_label_ciao_6
+	r14 <- rax
+	rdi <- 0
+	mem rsp -8 <- :call_label_ciao_7
+	call @encode 1
+	:call_label_ciao_7
+	rsi <- rax
+	rdi <- r14
+	call allocate 2
+	rdi <- rax
+	rsi <- rdi
+	rsi += 8
+	r14 <- rsi
+	mem rsi 0 <- rbp
+	rsi += 8
+	mem rsi 0 <- r15
+	rsi += 8
+	mem rsi 0 <- r12
+	rsi += 8
+	mem rsi 0 <- rbx
+	rsi += 8
+	mem rsi 0 <- r13
+	rsi += 8
+	rdi <- mem rsp 48
+	mem rsi 0 <- rdi
+	r13 <- rsi
+	r12 <- r13
+	:call_label_ciao_1
+	r15 <- r14
+	:call_label_ciao_2
+	rsi <- mem r15 0
+	rdi <- rsi
+	mem rsp -8 <- :call_label_ciao_8
+	call @encode 1
+	:call_label_ciao_8
+	rdi <- rax
+	call print 1
+	r15 += 8
+	rdi <- r15 <= r13
+	cjump rdi = 1 :call_label_ciao_2
+	rdi <- 888888888888888888
+	mem rsp -8 <- :call_label_ciao_9
+	call @encode 1
+	:call_label_ciao_9
+	rdi <- rax
+	call print 1
+	r15 <- r14
+	rcx <- r14
+	rcx += 8
+	:call_label_ciao_3
+	rsi <- mem r15 0
+	rdx <- mem rcx 0
+	rdi <- rsi <= rdx
+	cjump rdi = 1 :call_label_ciao_5
+	:call_label_ciao_4
+	mem r15 0 <- rdx
+	mem rcx 0 <- rsi
+	:call_label_ciao_5
+	r15 <- rcx
+	rcx += 8
+	rdi <- r15 < r12
+	cjump rdi = 1 :call_label_ciao_3
+	r12 -= 8
+	rdi <- r14 <= r12
+	cjump rdi = 1 :call_label_ciao_1
+	r12 <- mem rsp 0
+	r13 <- mem rsp 8
+	r14 <- mem rsp 16
+	r15 <- mem rsp 24
+	rbp <- mem rsp 32
+	rbx <- mem rsp 40
+	return
+)
+
+(@decode
+	1 0
+	rdi >>= 1
+	rax <- rdi
+	return
+)
+
+(@encode
+	1 0
+	rdi <<= 1
+	rdi += 1
+	rax <- rdi
+	return
+)
+
+(@main
+	0 0
+	rdi <- 77
+	rsi <- 42
+	rdx <- 13
+	rcx <- 16
+	r8 <- 774
+	r9 <- 209
+	mem rsp -8 <- :call_label0
+	call @Bubble_Sort 6
+	:call_label0
+	return
+)
+
+)

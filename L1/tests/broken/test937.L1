@@ -1,0 +1,57 @@
+(@go
+(@go
+	0 0
+	rdi <- 1
+	rsi <- 0
+	mem rsp -8 <- :buildASandwich_ret
+	call @buildASandwich 2
+	:buildASandwich_ret
+	return
+)
+
+(@buildASandwich
+	2 0
+	mem rsp -8 <- :cheese_ret
+	cjump rdi = 1 :havarti
+	call @swissChoice 0
+	:havarti
+	call @havartiChoice 0
+	:cheese_ret
+	mem rsp -8 <- :meat_ret
+	cjump rsi = 1 :salami
+	call @turkeyChoice 0
+	:salami
+	call @salamiChoice 0
+	:meat_ret
+	return
+)
+
+(@havartiChoice
+	0 0
+	rdi <- 3
+	call print 1
+	return
+)
+
+(@swissChoice
+	0 0
+	rdi <- 1
+	call print 1
+	return
+)
+
+(@salamiChoice
+	0 0
+	rdi <- 3
+	call print 1
+	return
+)
+
+(@turkeyChoice
+	0 0
+	rdi <- 1
+	call print 1
+	return
+)
+
+)

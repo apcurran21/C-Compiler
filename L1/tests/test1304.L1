@@ -1,0 +1,34 @@
+(@main
+(@main
+	0 1
+	mem rsp 0 <- r12
+	r12 <- 0
+	:loop
+	rdi <- r12
+	mem rsp -8 <- :ret1
+	call @square 1
+	:ret1
+	cjump 11 < r12 :return
+	r12 += 1
+	rdi <- rax
+	rdi <<= 1
+	rdi += 1
+	call print 1
+	goto :loop
+	:return
+	r12 <- mem rsp 0
+	return
+)
+
+(@square
+	1 0
+	rsi <- 0
+	rax <- 0
+	:loop2
+	rax += rdi
+	rsi += 1
+	cjump rsi < rdi :loop2
+	return
+)
+
+)

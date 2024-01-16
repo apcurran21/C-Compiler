@@ -1,0 +1,13 @@
+(@whoCanI
+	1
+	%number <- rdi
+	rdi <- 3
+	rsi <- 1
+	call allocate 2
+	%tempSpot <- rax
+	mem %tempSpot 0 <- %number
+	%number <- %number < 1
+	%number <- mem %tempSpot 0
+	rax <- %number
+	return
+)

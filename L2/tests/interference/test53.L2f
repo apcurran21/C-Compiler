@@ -1,0 +1,13 @@
+(@fib
+	1
+	rax <- 1
+	%x <- 0
+	%n <- rdi
+	:fibloop
+	%tmp <- rax
+	rax += %x
+	%x <- %tmp
+	%n--
+	cjump 0 < %n :fibloop
+	return
+)

@@ -1,0 +1,11 @@
+(@go
+	0
+	%v1 <- 5
+	%v2 <- -3
+	%v3 <- %v1
+	%v3++
+	%v3 += %v2
+	rdi <- %v3
+	call print 1
+	return
+)

@@ -1,0 +1,65 @@
+(@run_tests
+  (@run_tests
+    0
+
+    mem rsp -8 <- :ret_from_fib
+    rdi <- 20
+    call @fib 1
+    :ret_from_fib
+
+    return
+  )
+
+  (@print_encoded
+    1
+    rdi <<= 1
+    rdi += 1
+    call print 1
+    return
+  )
+
+  (@fib
+    1
+    // rbp iters left
+    %iters_left <- rdi
+
+    // iters started
+    %iters_started <- 0
+    // fib[n]
+    %fib_n <- 0
+    // fib[n-1]
+    %fib_prev <- 0
+    // spare
+    %temp <- 0
+
+    :print_result
+    mem rsp -8 <- :fib_main_loop
+    rdi <- %fib_n
+    call @print_encoded 1
+
+    //mem rsp -8 <- :fib_main_loop
+    //rdi <- mem rsp 0
+    //call @print_encoded 1
+
+    :fib_main_loop
+    cjump %iters_left = 0 :fib_return
+    %iters_left -= 1
+    %iters_started += 1
+
+    cjump %iters_started = 1 :fib_1
+    goto :fib_else
+
+    :fib_1
+    %fib_n += 1
+    goto :print_result
+
+    :fib_else
+    %temp <- %fib_n
+    %fib_n += %fib_prev
+    %fib_prev <- %temp
+    goto :print_result
+
+    :fib_return
+    return
+  )
+)

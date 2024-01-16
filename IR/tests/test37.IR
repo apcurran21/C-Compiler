@@ -1,0 +1,68 @@
+define void @main(){
+    :entry
+    int64 %loop
+    int64 %cmp
+    int64 %my_var1
+    int64 %my_var2
+    int64 %my_var3
+    int64 %my_var4
+    int64 %my_var5
+    int64 %mult
+    %loop <- 222221
+    br :BEGIN
+    :BEGIN
+    %cmp <- %loop < 1
+    br %cmp :END :START
+    :START
+    %my_var1 <- 3
+    call print(%my_var1)
+    %my_var2 <- 23
+    call print(%my_var2)
+    %my_var3 <- 2223
+    call print(%my_var3)
+    %my_var4 <- 2223
+    call print(%my_var4)
+    %my_var5 <- 22223
+    call print(%my_var5)
+    %my_var4 <- 2223
+    call print(%my_var4)
+    %my_var3 <- 223
+    call print(%my_var3)
+    %my_var2 <- 23
+    call print(%my_var2)
+    %my_var1 <- 3
+    call print(%my_var1)
+    %loop <- %loop - 2
+    br:BEGIN
+    :END
+    %mult <- 3 * 11
+    %mult <- %mult + 6
+    call @meh()
+    call print(%mult)
+    return
+
+}
+
+define void @meh(){
+    :NEW
+    int64 %memmy
+    int64[] %thing
+    %memmy <- 69
+    %thing <- new Array(%memmy)
+    int64 %i
+    int64 %cond
+    int64 %lengtharr
+    %lengtharr <- 34
+    %i <- 0
+    br :ENTER
+    :ENTER
+    %cond <- %i < 34
+    br %cond :LOOP :END
+    :LOOP
+    %thing[%i] <- 3
+    %i <- %i + 1
+    br :ENTER
+    :END
+    call print(%thing)
+    return
+}

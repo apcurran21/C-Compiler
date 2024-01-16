@@ -1,0 +1,45 @@
+define :main() {
+	%size <- call input()
+       %array <- call :create_array(%size)
+
+       %temp <- load %array
+       %array_size <- call :encode_int(%temp)
+       %array_size <- %array_size >> 1
+
+       %counter <- 0
+
+       %temp <- %array_size = 0
+       br %temp :print_array
+
+       :input_loop
+       %counter <- %counter + 1
+       %temp1 <- call input()
+       %temp2 <- %counter * 8
+       %temp2 <- %array + %temp2
+       store %temp2 <- %temp1
+
+       %temp <- %counter < %array_size
+       br %temp :input_loop
+
+       :print_array
+       call print(%array)
+       return
+}
+
+define :create_array(%size) {
+       %fill <- call :encode_int(0)
+       %array_new <- call allocate(%size, %fill)
+
+       return %array_new
+}
+
+define :encode_int(%decoded) {
+       %decoded <- %decoded << 1
+       %decoded <- %decoded + 1
+       return %decoded
+}
+
+define :decode_int(%encoded) {
+       %encoded <- %encoded >> 1
+       return %encoded
+}

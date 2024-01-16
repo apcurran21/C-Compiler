@@ -1,0 +1,26 @@
+(@main
+	0
+	:call_label0
+	%len <- 10
+	rdi <- %len
+	mem rsp -8 <- :call_label1
+	call @GetArray 1
+	:call_label1
+	%arr <- rax
+	rdi <- %arr
+	mem rsp -8 <- :call_label2
+	call @PrintArray 1
+	:call_label2
+	rdi <- 100
+	rsi <- %arr
+	rdx <- %len
+	mem rsp -8 <- :call_label3
+	call @FindElement 3
+	:call_label3
+	%res <- rax
+	%res <<= 1
+	%res += 1
+	rdi <- %res
+	call print 1
+	return
+)

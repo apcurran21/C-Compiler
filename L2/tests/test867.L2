@@ -1,0 +1,52 @@
+(@main
+	(@main
+0
+		rdi <- 1
+		rsi <- 3
+		rdx <- 5
+		rcx <- 7
+		r8 <- 9
+		r9 <- 11
+		mem rsp -8 <- :ret	
+		mem rsp -16 <- 13	
+		mem rsp -24 <- 12
+		call @printVars 8
+		:ret
+		%newVariableBx <- rax
+		%newVariableBp <- 2
+		%newVariable10 <- 4
+		%newVariable11 <- 6
+		%newVariable12 <- 8
+		%newVariable13 <- 10
+		%newVariable14 <- 12
+		%newVariable <- %newVariable14
+		%newVariable++
+%variable6DJ4M87ZC8 <- %newVariable
+		rdi <- %newVariable
+		call print 1
+%newVariable <- %variable6DJ4M87ZC8
+		%newVariableBp -= 1
+		%newVariable10 += 2
+		%newVariable11 *= 3
+		%newVariable12 &= 4
+		rax <- 5
+		cjump rax = 1 :true 
+goto :false
+
+		:true
+		goto :false
+		:false
+		%newVariable14 >>= 5				
+		return)
+  (@printVars
+8
+    %var1 <- stack-arg 0
+    %var1 += rdi
+    rdi <- %var1
+    call print 1
+    %var2 <- stack-arg 8
+    rdi <- %var2
+    call print 1
+    return
+  )
+)

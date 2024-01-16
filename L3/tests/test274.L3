@@ -1,0 +1,370 @@
+define @main () {
+ 
+:NNNNNNNNNNN
+ br :begin_main
+ 
+:begin_main
+ %newVar1 <- 7 >> 1
+ %newVar0 <- %newVar1
+ %newVar0 <- %newVar0 << 1
+ %newVar0 <- %newVar0 + 1
+ %newVar0 <- %newVar0 + 2
+ %number <- call allocate (%newVar0, 1)
+ %newVar2 <- %number + 8
+ store %newVar2 <- 7
+ %newVar3 <- 0 * 8
+ %newVar4 <- %newVar3 + 8
+ %newVar5 <- %number + %newVar4
+ %tempNumber <- load %newVar5
+ %retVal <- call @op1 (1)
+ %newVar7 <- 0
+ %newVar8 <- 1
+ %newVar7 <- %newVar7 + 0
+ %newVar6 <- %newVar7 * 8
+ %newVar6 <- %newVar6 + 16
+ %newVar9 <- %number + %newVar6
+ store %newVar9 <- %retVal
+ %tempNumber <- %tempNumber + 8
+ %retVal <- call @op1 (2)
+ %newVar11 <- 0
+ %newVar12 <- 1
+ %newVar11 <- %newVar11 + 1
+ %newVar10 <- %newVar11 * 8
+ %newVar10 <- %newVar10 + 16
+ %newVar13 <- %number + %newVar10
+ store %newVar13 <- %retVal
+ %tempNumber <- %tempNumber + 8
+ %retVal <- call @op2 (3)
+ %newVar15 <- 0
+ %newVar16 <- 1
+ %newVar15 <- %newVar15 + 2
+ %newVar14 <- %newVar15 * 8
+ %newVar14 <- %newVar14 + 16
+ %newVar17 <- %number + %newVar14
+ store %newVar17 <- %retVal
+ %tempNumber <- %tempNumber + 8
+ %retVal <- call @op3 (4)
+ %newVar19 <- 0
+ %newVar20 <- 1
+ %newVar19 <- %newVar19 + 3
+ %newVar18 <- %newVar19 * 8
+ %newVar18 <- %newVar18 + 16
+ %newVar21 <- %number + %newVar18
+ store %newVar21 <- %retVal
+ %tempNumber <- %tempNumber + 8
+ %retVal <- call @op4 (5)
+ %newVar23 <- 0
+ %newVar24 <- 1
+ %newVar23 <- %newVar23 + 4
+ %newVar22 <- %newVar23 * 8
+ %newVar22 <- %newVar22 + 16
+ %newVar25 <- %number + %newVar22
+ store %newVar25 <- %retVal
+ %tempNumber <- %tempNumber + 8
+ %retVal <- call @op5 (6)
+ %newVar27 <- 0
+ %newVar28 <- 1
+ %newVar27 <- %newVar27 + 5
+ %newVar26 <- %newVar27 * 8
+ %newVar26 <- %newVar26 + 16
+ %newVar29 <- %number + %newVar26
+ store %newVar29 <- %retVal
+ %tempNumber <- %tempNumber + 8
+ %retVal <- call @op6 (7)
+ %newVar31 <- 0
+ %newVar32 <- 1
+ %newVar31 <- %newVar31 + 6
+ %newVar30 <- %newVar31 * 8
+ %newVar30 <- %newVar30 + 16
+ %newVar33 <- %number + %newVar30
+ store %newVar33 <- %retVal
+ %tempNumber <- %tempNumber + 8
+ call @printArr (%number)
+ return 
+}
+
+define @op1 (%number) {
+ 
+:NNNNNNN
+ br :begin1
+ 
+:begin1
+ %newVar1 <- 3 >> 1
+ %newVar0 <- %newVar1
+ %newVar0 <- %newVar0 << 1
+ %newVar0 <- %newVar0 + 1
+ %newVar0 <- %newVar0 + 2
+ %temp_spot <- call allocate (%newVar0, 1)
+ %newVar2 <- %temp_spot + 8
+ store %newVar2 <- 3
+ %newVar4 <- 0
+ %newVar5 <- 1
+ %newVar4 <- %newVar4 + 0
+ %newVar3 <- %newVar4 * 8
+ %newVar3 <- %newVar3 + 16
+ %newVar6 <- %temp_spot + %newVar3
+ store %newVar6 <- %number
+ %number <- %number < 1
+ %newVar8 <- 5 >> 1
+ %newVar7 <- %newVar8
+ %newVar7 <- %newVar7 << 1
+ %newVar7 <- %newVar7 + 1
+ %newVar7 <- %newVar7 + 2
+ %num_array <- call allocate (%newVar7, 1)
+ %newVar9 <- %num_array + 8
+ store %newVar9 <- 5
+ %newVar11 <- 3 >> 1
+ %newVar10 <- %newVar11
+ %newVar10 <- %newVar10 << 1
+ %newVar10 <- %newVar10 + 1
+ %newVar10 <- %newVar10 + 2
+ %arr <- call allocate (%newVar10, 1)
+ %newVar12 <- %arr + 8
+ store %newVar12 <- 3
+ %newVar14 <- 0
+ %newVar15 <- 1
+ %newVar14 <- %newVar14 + 0
+ %newVar13 <- %newVar14 * 8
+ %newVar13 <- %newVar13 + 16
+ %newVar16 <- %arr + %newVar13
+ %arr_elem <- load %newVar16
+ %newVar18 <- 0
+ %newVar19 <- 1
+ %newVar18 <- %newVar18 + 0
+ %newVar17 <- %newVar18 * 8
+ %newVar17 <- %newVar17 + 16
+ %newVar20 <- %temp_spot + %newVar17
+ %number <- load %newVar20
+ return %number
+}
+
+define @op2 (%number) {
+ 
+:NNNNNNN
+ br :begin2
+ 
+:begin2
+ %newVar1 <- 3 >> 1
+ %newVar0 <- %newVar1
+ %newVar0 <- %newVar0 << 1
+ %newVar0 <- %newVar0 + 1
+ %newVar0 <- %newVar0 + 2
+ %temp_spot <- call allocate (%newVar0, 1)
+ %newVar2 <- %temp_spot + 8
+ store %newVar2 <- 3
+ %newVar4 <- 0
+ %newVar5 <- 1
+ %newVar4 <- %newVar4 + 0
+ %newVar3 <- %newVar4 * 8
+ %newVar3 <- %newVar3 + 16
+ %newVar6 <- %temp_spot + %newVar3
+ store %newVar6 <- %number
+ %number <- %number < 1
+ %newVar8 <- 5 >> 1
+ %newVar7 <- %newVar8
+ %newVar7 <- %newVar7 << 1
+ %newVar7 <- %newVar7 + 1
+ %newVar7 <- %newVar7 + 2
+ %num_array <- call allocate (%newVar7, 1)
+ %newVar9 <- %num_array + 8
+ store %newVar9 <- 5
+ %newVar11 <- 0
+ %newVar12 <- 1
+ %newVar11 <- %newVar11 + 0
+ %newVar10 <- %newVar11 * 8
+ %newVar10 <- %newVar10 + 16
+ %newVar13 <- %temp_spot + %newVar10
+ %number <- load %newVar13
+ return %number
+}
+
+define @op3 (%number) {
+ 
+:NNNNNNN
+ br :begin3
+ 
+:begin3
+ %newVar1 <- 3 >> 1
+ %newVar0 <- %newVar1
+ %newVar0 <- %newVar0 << 1
+ %newVar0 <- %newVar0 + 1
+ %newVar0 <- %newVar0 + 2
+ %temp_spot <- call allocate (%newVar0, 1)
+ %newVar2 <- %temp_spot + 8
+ store %newVar2 <- 3
+ %newVar4 <- 0
+ %newVar5 <- 1
+ %newVar4 <- %newVar4 + 0
+ %newVar3 <- %newVar4 * 8
+ %newVar3 <- %newVar3 + 16
+ %newVar6 <- %temp_spot + %newVar3
+ store %newVar6 <- %number
+ %number <- %number < 1
+ %newVar8 <- 5 >> 1
+ %newVar7 <- %newVar8
+ %newVar7 <- %newVar7 << 1
+ %newVar7 <- %newVar7 + 1
+ %newVar7 <- %newVar7 + 2
+ %num_array <- call allocate (%newVar7, 1)
+ %newVar9 <- %num_array + 8
+ store %newVar9 <- 5
+ %number <- %number * 200000
+ %newVar11 <- 0
+ %newVar12 <- 1
+ %newVar11 <- %newVar11 + 0
+ %newVar10 <- %newVar11 * 8
+ %newVar10 <- %newVar10 + 16
+ %newVar13 <- %temp_spot + %newVar10
+ %number <- load %newVar13
+ return %number
+}
+
+define @op4 (%number) {
+ 
+:NNNNNNN
+ br :begin4
+ 
+:begin4
+ %newVar1 <- 3 >> 1
+ %newVar0 <- %newVar1
+ %newVar0 <- %newVar0 << 1
+ %newVar0 <- %newVar0 + 1
+ %newVar0 <- %newVar0 + 2
+ %temp_spot <- call allocate (%newVar0, 1)
+ %newVar2 <- %temp_spot + 8
+ store %newVar2 <- 3
+ %newVar4 <- 0
+ %newVar5 <- 1
+ %newVar4 <- %newVar4 + 0
+ %newVar3 <- %newVar4 * 8
+ %newVar3 <- %newVar3 + 16
+ %newVar6 <- %temp_spot + %newVar3
+ store %newVar6 <- %number
+ %number <- %number < 1
+ %newVar8 <- 5 >> 1
+ %newVar7 <- %newVar8
+ %newVar7 <- %newVar7 << 1
+ %newVar7 <- %newVar7 + 1
+ %newVar7 <- %newVar7 + 2
+ %num_array <- call allocate (%newVar7, 1)
+ %newVar9 <- %num_array + 8
+ store %newVar9 <- 5
+ %newVar11 <- 0
+ %newVar12 <- 1
+ %newVar11 <- %newVar11 + 0
+ %newVar10 <- %newVar11 * 8
+ %newVar10 <- %newVar10 + 16
+ %newVar13 <- %temp_spot + %newVar10
+ %number <- load %newVar13
+ %newVar15 <- 6 >> 1
+ %newVar14 <- %newVar15
+ %newVar16 <- 6 >> 1
+ %newVar14 <- %newVar14 * %newVar16
+ %newVar17 <- 6 >> 1
+ %newVar14 <- %newVar14 * %newVar17
+ %newVar14 <- %newVar14 << 1
+ %newVar14 <- %newVar14 + 1
+ %newVar14 <- %newVar14 + 6
+ %threeD <- call allocate (%newVar14, 1)
+ %newVar18 <- %threeD + 8
+ store %newVar18 <- 6
+ %newVar19 <- %threeD + 16
+ store %newVar19 <- 6
+ %newVar20 <- %threeD + 24
+ store %newVar20 <- 6
+ %newVar21 <- 0 * 8
+ %newVar22 <- %newVar21 + 8
+ %newVar23 <- %threeD + %newVar22
+ %first_dimension_length <- load %newVar23
+ %newVar24 <- 1 * 8
+ %newVar25 <- %newVar24 + 8
+ %newVar26 <- %threeD + %newVar25
+ %second_dimension_length <- load %newVar26
+ %newVar27 <- 2 * 8
+ %newVar28 <- %newVar27 + 8
+ %newVar29 <- %threeD + %newVar28
+ %third_dimension_length <- load %newVar29
+ return %number
+}
+
+define @op5 (%number) {
+ 
+:NNNNNNN
+ br :begin5
+ 
+:begin5
+ return %number
+}
+
+define @op6 (%number) {
+ 
+:NNNNNNN
+ br :begin6
+ 
+:begin6
+ %newVar1 <- 3 >> 1
+ %newVar0 <- %newVar1
+ %newVar0 <- %newVar0 << 1
+ %newVar0 <- %newVar0 + 1
+ %newVar0 <- %newVar0 + 2
+ %temp_spot <- call allocate (%newVar0, 1)
+ %newVar2 <- %temp_spot + 8
+ store %newVar2 <- 3
+ %newVar4 <- 0
+ %newVar5 <- 1
+ %newVar4 <- %newVar4 + 0
+ %newVar3 <- %newVar4 * 8
+ %newVar3 <- %newVar3 + 16
+ %newVar6 <- %temp_spot + %newVar3
+ store %newVar6 <- %number
+ %number <- %number < 1
+ %newVar8 <- 5 >> 1
+ %newVar7 <- %newVar8
+ %newVar7 <- %newVar7 << 1
+ %newVar7 <- %newVar7 + 1
+ %newVar7 <- %newVar7 + 2
+ %num_array <- call allocate (%newVar7, 1)
+ %newVar9 <- %num_array + 8
+ store %newVar9 <- 5
+ %newVar11 <- 0
+ %newVar12 <- 1
+ %newVar11 <- %newVar11 + 0
+ %newVar10 <- %newVar11 * 8
+ %newVar10 <- %newVar10 + 16
+ %newVar13 <- %temp_spot + %newVar10
+ %number <- load %newVar13
+ return %number
+}
+
+define @printArr (%num_array) {
+ 
+:NNNNNNNNNNNN
+ br :begin_print
+ 
+:end
+ return 
+ 
+:print_num
+ %newVar1 <- 0
+ %newVar2 <- 1
+ %newVar1 <- %newVar1 + %count
+ %newVar0 <- %newVar1 * 8
+ %newVar0 <- %newVar0 + 16
+ %newVar3 <- %num_array + %newVar0
+ %number <- load %newVar3
+ %number <- %number << 1
+ %number <- %number + 1
+ call print (%number)
+ %count <- %count + 1
+ br :top
+ 
+:top
+ %comp <- %count = 7
+ br %comp :end 
+ br :print_num
+ 
+:begin_print
+ %count <- 0
+ br :top
+}
+

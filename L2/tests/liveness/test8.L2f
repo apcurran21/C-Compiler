@@ -1,0 +1,12 @@
+(@loop_inc_gen
+	1
+	%inc_amount <- 1
+	rdi &= 1
+	cjump rdi = 0 :is_dbt
+	goto :not_dbt
+	:is_dbt
+	%inc_amount <- 3
+	:not_dbt
+	rax <- %inc_amount
+	return
+)

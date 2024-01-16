@@ -1,0 +1,12 @@
+(@go
+(@go
+	0 0
+	rdi <- 5
+	rsi <- -3
+	rdi++
+	rdi += rsi
+	call print 1
+	return
+)
+
+)

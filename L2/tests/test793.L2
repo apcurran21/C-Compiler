@@ -1,0 +1,46 @@
+//Exponent Calculator
+//Takes two inputs x and y and returns x^n for n:[0,y]
+(@power
+  (@power
+    0
+    rdi <- 2
+    rsi <- 6
+    mem rsp -8 <- :rtn1
+    call @array 2
+    :rtn1
+    return
+  )
+  (@array
+    2
+    %newVariable <- -1
+    %newVariable4 <- rsi
+    %newVariable2 <- rdi
+    :array_begin
+    cjump %newVariable4 <= %newVariable :array_end
+    %newVariable += 1
+    rsi <- %newVariable
+    rdi <- %newVariable2
+    mem rsp -8 <- :rtn2
+    call @calculate 2
+    :rtn2
+    rdi <- rax
+    rdi <<= 1
+    rdi += 1
+    call print 1
+    goto :array_begin
+    :array_end
+    return
+  )
+  (@calculate
+    2
+    rax <- 1
+    %newVariable <- 0
+    :loop_begin
+    cjump rsi <= %newVariable :loop_end
+    rax *= rdi
+    %newVariable += 1
+    goto :loop_begin
+    :loop_end
+    return
+  )
+)

@@ -1,0 +1,112 @@
+(@main
+  (@main
+    0
+    :call_label0
+    %cprime <- 7
+    %n <- 2
+    goto :call_label1
+    :call_label1
+    rdi <- %cprime
+    rsi <- %n
+
+mem rsp -8 <- :call_label7
+    call @isdiv 2
+
+:call_label7
+    %v <- rax
+    %check <- %v = 1
+
+    cjump %check = 1 :call_label5
+    goto :call_label2
+    :call_label2
+    %n <- %n
+    %n += 1
+    %check <- %n = %cprime
+
+    cjump %check = 1 :call_label4
+    goto :call_label3
+    :call_label3
+    goto :call_label1
+    :call_label4
+    %v <- 1
+    goto :call_label6
+    :call_label5
+    %v <- 0
+    goto :call_label6
+    :call_label6
+    %p <- %v
+    %p <<= 1
+    %p <- %p
+    %p += 1
+    rdi <- %p
+    call print 1
+    return
+  )
+  (@isdiv
+    2
+    %d <- rdi
+    %s <- rsi
+    :call_label_ciao_8
+    %check <- %s = 0
+
+    cjump %check = 1 :call_label_ciao_22
+    goto :call_label_ciao_9
+    :call_label_ciao_9
+    %check <- %d < 0
+
+    cjump %check = 1 :call_label_ciao_13
+    goto :call_label_ciao_10
+    :call_label_ciao_10
+    %check <- %s < 0
+
+    cjump %check = 1 :call_label_ciao_12
+    goto :call_label_ciao_11
+    :call_label_ciao_11
+    %sub <- %s
+    goto :call_label_ciao_16
+    :call_label_ciao_12
+    %sub <- %s
+    %sub *= -1
+    goto :call_label_ciao_16
+    :call_label_ciao_13
+    %d <- %d
+    %d *= -1
+    %check <- %s < 0
+
+    cjump %check = 1 :call_label_ciao_15
+    goto :call_label_ciao_14
+    :call_label_ciao_14
+    %sub <- %s
+    goto :call_label_ciao_16
+    :call_label_ciao_15
+    %sub <- %s
+    %sub *= -1
+    goto :call_label_ciao_16
+    :call_label_ciao_16
+    %sub2 <- %sub
+    goto :call_label_ciao_17
+    :call_label_ciao_17
+    %sub <- %sub
+    %sub += %sub2
+    %check <- %d = %sub
+
+    cjump %check = 1 :call_label_ciao_20
+    goto :call_label_ciao_18
+    :call_label_ciao_18
+    %check <- %d < %sub
+
+    cjump %check = 1 :call_label_ciao_21
+    goto :call_label_ciao_19
+    :call_label_ciao_19
+    goto :call_label_ciao_17
+    :call_label_ciao_20
+    rax <- 1
+    return
+    :call_label_ciao_21
+    rax <- 0
+    return
+    :call_label_ciao_22
+    rax <- -1
+    return
+  )
+)

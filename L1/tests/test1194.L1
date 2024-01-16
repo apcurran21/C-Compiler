@@ -1,0 +1,83 @@
+(@go
+(@go
+	0 0
+	mem rsp -8 <- :ret
+	call @myF 0
+	:ret
+	return
+)
+
+(@myF
+	0 6
+	rdi <- 1
+	mem rsp 0 <- rdi
+	rdi <- 1
+	mem rsp 8 <- rdi
+	rdi <- 1
+	mem rsp 16 <- rdi
+	rdi <- 1
+	mem rsp 24 <- rdi
+	rdi <- 1
+	mem rsp 32 <- rdi
+	rdi <- 1
+	mem rsp 40 <- rdi
+	rdi <- mem rsp 0
+	rdi += 1
+	mem rsp 0 <- rdi
+	rdi <- mem rsp 8
+	rdi += 1
+	mem rsp 8 <- rdi
+	rdi <- mem rsp 16
+	rdi += 1
+	mem rsp 16 <- rdi
+	rdi <- mem rsp 24
+	rdi += 1
+	mem rsp 24 <- rdi
+	rdi <- mem rsp 32
+	rdi += 1
+	mem rsp 32 <- rdi
+	rdi <- mem rsp 40
+	rdi += 1
+	mem rsp 40 <- rdi
+	mem rsp -8 <- :retMyF
+	call @myF2 0
+	:retMyF
+	rdi <- mem rsp 0
+	rdi += 1
+	mem rsp 0 <- rdi
+	rdi <- mem rsp 8
+	rdi += 1
+	mem rsp 8 <- rdi
+	rdi <- mem rsp 16
+	rdi += 1
+	mem rsp 16 <- rdi
+	rdi <- mem rsp 24
+	rdi += 1
+	mem rsp 24 <- rdi
+	rdi <- mem rsp 32
+	rdi += 1
+	mem rsp 32 <- rdi
+	rdi <- mem rsp 40
+	rdi += 1
+	mem rsp 40 <- rdi
+	rdi <- mem rsp 0
+	rdi <- rdi
+	rdi <- mem rsp 8
+	rdi <- rdi
+	rdi <- mem rsp 16
+	rdi <- rdi
+	rdi <- mem rsp 24
+	rdi <- rdi
+	rdi <- mem rsp 32
+	rdi <- rdi
+	rdi <- mem rsp 40
+	rdi <- rdi
+	return
+)
+
+(@myF2
+	0 0
+	return
+)
+
+)

@@ -1,0 +1,9 @@
+(@swissChoice
+	0
+	:call_label_ciao__ciao__ciao_17
+	goto :call_label_ciao__ciao__ciao_18
+	:call_label_ciao__ciao__ciao_18
+	rdi <- 1
+	call print 1
+	return
+)

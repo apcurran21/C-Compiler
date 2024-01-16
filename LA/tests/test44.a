@@ -1,0 +1,69 @@
+int64 collatz(int64 n, int64 acc) {
+ :entry
+ int64 nIsOdd
+ int64 nIsOne
+ nIsOne <- n = 1
+ br nIsOne :terminal :begin
+
+ :begin
+ nIsOdd <- n & 1
+ br nIsOdd :odd :even
+
+ :even
+ n <- n >> 1
+ br :rcheck
+
+ :odd
+ n <- n * 3
+ n <- n + 1
+ br :rcheck
+
+ :rcheck
+ nIsOne <- n = 1
+ acc <- acc + 1
+ br nIsOne :terminal :recurse
+
+ :recurse
+ int64 ret
+ ret <- collatz (n, acc)
+ return ret
+
+ :terminal
+ return acc
+}
+
+void main() {
+ :entry
+ int64 r
+ int64 i
+ r <- collatz(400, 1)
+ r <- r << 1
+ r <- r + 1
+ print (r)
+ int64 max
+ max <- 0
+ i <- 0
+ br :loop
+
+ :loop
+ int64 isDone
+ i <- i + 1
+ isDone <- i >= 1000000
+ br isDone :done :notDone
+
+ :notDone
+ int64 result
+ int64 newMax
+ result <- collatz (i, 1)
+ newMax <- result > max
+ br newMax :setMax :loop
+
+ :setMax
+ max <- i
+ br :loop
+
+ :done
+ print (max)
+ return 
+}
+

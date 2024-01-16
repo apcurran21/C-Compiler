@@ -1,0 +1,22 @@
+(@fill_array
+	2
+	%a <- rdi
+	%m <- rsi
+	%counter <- %a
+	%index <- 0
+	%val <- 0
+	:call_label0
+	%val <<= 1
+	%val += 1
+	mem %counter 0 <- %val
+	%val -= 1
+	%val >>= 1
+	%val += 2
+	%counter += 8
+	%check <- %index < %m
+	%index += 1
+	cjump %check = 1 :call_label0
+	goto :call_label1
+	:call_label1
+	return
+)

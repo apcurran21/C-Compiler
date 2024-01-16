@@ -1,0 +1,13 @@
+(@isSmaller
+	2
+	%p1 <- rdi
+	%p3 <- %p1 < 1
+	cjump %p3 = 1 :call_label_ciao__ciao__ciao_26
+	goto :call_label_ciao__ciao__ciao_27
+	:call_label_ciao__ciao__ciao_26
+	rax <- 1
+	return
+	:call_label_ciao__ciao__ciao_27
+	rax <- 0
+	return
+)

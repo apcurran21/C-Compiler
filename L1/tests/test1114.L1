@@ -1,0 +1,71 @@
+(@main
+(@gcd
+	2 1
+	rdx <- rdi
+	rdi <- rsi
+	mem rsp 0 <- rdi
+	rdi <- mem rsp 0
+	rdi <- rdi = 0
+	cjump rdi = 1 :call_label_ciao_1
+	rdi <- rdx
+	rsi <- mem rsp 0
+	rsi <- rsi
+	mem rsp -8 <- :call_label_ciao_2
+	call @mod 2
+	:call_label_ciao_2
+	rsi <- rax
+	rdi <- mem rsp 0
+	rdi <- rdi
+	rsi <- rsi
+	mem rsp -8 <- :call_label_ciao_3
+	call @gcd 2
+	:call_label_ciao_3
+	rdi <- rax
+	rax <- rdi
+	return
+	:call_label_ciao_1
+	rax <- rdx
+	return
+)
+
+(@main
+	0 0
+	rdi <- 541
+	rsi <- 7919
+	mem rsp -8 <- :call_label0
+	call @gcd 2
+	:call_label0
+	rdi <- rax
+	rdi <- rdi
+	rdi <<= 1
+	rdi <- rdi
+	rdi += 1
+	rdi <- rdi
+	call print 1
+	rax <- 0
+	return
+)
+
+(@mod
+	2 0
+	rdx <- rdi
+	r9 <- rsi
+	r8 <- 0
+	rcx <- rdx
+	:call_label_ciao__ciao_4
+	rsi <- r9
+	rsi *= r8
+	rdi <- rsi <= rdx
+	cjump rdi = 1 :call_label_ciao__ciao_5
+	rax <- rcx
+	return
+	:call_label_ciao__ciao_5
+	rcx <- rdx
+	rcx <- rcx
+	rcx -= rsi
+	r8 <- r8
+	r8 += 1
+	goto :call_label_ciao__ciao_4
+)
+
+)

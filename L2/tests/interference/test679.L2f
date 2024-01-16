@@ -1,0 +1,22 @@
+(@compute_num_degrees_angle_for_shape
+	1
+	%sides <- rdi
+	:call_label_ciao_4
+	%decoded_sides <- %sides
+	%decoded_sides >>= 1
+	%temp_1 <- %decoded_sides
+	%temp_1 -= 2
+	%temp_1 *= 180
+	rdi <- %temp_1
+	rsi <- %decoded_sides
+	mem rsp -8 <- :call_label_ciao_5
+	call @divide 2
+	:call_label_ciao_5
+	%division <- rax
+	%temp_1 <- %division
+	%temp_1 <<= 1
+	%temp_1 += 1
+	rdi <- %temp_1
+	call print 1
+	return
+)

@@ -1,0 +1,42 @@
+(@callMyClosure
+	2
+	%c <- rdi
+	%argClosure <- rsi
+	:call_label_ciao__ciao_5
+	%newVar1 <- 0
+	%newVar1 *= 8
+	%newVar0 <- %newVar1
+	%newVar0 += 8
+	%newVar2 <- %c
+	%newVar2 += %newVar0
+	%fp <- mem %newVar2 0
+	%newVar4 <- 1
+	%newVar4 *= 8
+	%newVar3 <- %newVar4
+	%newVar3 += 8
+	%newVar5 <- %c
+	%newVar5 += %newVar3
+	%arityOfC <- mem %newVar5 0
+	%checkArgs <- %arityOfC = 1
+	cjump %checkArgs = 1 :call_label_ciao__ciao_6
+	goto :call_label_ciao__ciao_7
+	:call_label_ciao__ciao_6
+	rdi <- %c
+	rsi <- %argClosure
+	mem rsp -8 <- :call_label_ciao__ciao_8
+	call %fp 2
+	:call_label_ciao__ciao_8
+	%finalResult <- rax
+	rdi <- %finalResult
+	mem rsp -8 <- :call_label_ciao__ciao_9
+	call @encodeValue 1
+	:call_label_ciao__ciao_9
+	%finalResultEncoded <- rax
+	rdi <- %finalResultEncoded
+	call print 1
+	rax <- %finalResult
+	return
+	:call_label_ciao__ciao_7
+	rax <- 0
+	return
+)

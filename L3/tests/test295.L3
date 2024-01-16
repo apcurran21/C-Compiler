@@ -1,0 +1,155 @@
+define @main () {
+ 
+:NNNNNNNNNNNNNNNNN
+ br :var_declarations
+ 
+:bad_input
+ return 
+ 
+:end_loop
+ call @array_encode (%arrayAddr)
+ call print (%arrayAddr)
+ return 
+ 
+:loopbody
+ %newVar1 <- 0
+ %newVar2 <- 1
+ %newVar1 <- %newVar1 + %pos0
+ %newVar0 <- %newVar1 * 8
+ %newVar0 <- %newVar0 + 16
+ %newVar3 <- %arrayAddr + %newVar0
+ %val0 <- load %newVar3
+ %newVar5 <- 0
+ %newVar6 <- 1
+ %newVar5 <- %newVar5 + %pos1
+ %newVar4 <- %newVar5 * 8
+ %newVar4 <- %newVar4 + 16
+ %newVar7 <- %arrayAddr + %newVar4
+ %val1 <- load %newVar7
+ %val2 <- %val0 + %val1
+ %newVar9 <- 0
+ %newVar10 <- 1
+ %newVar9 <- %newVar9 + %pos2
+ %newVar8 <- %newVar9 * 8
+ %newVar8 <- %newVar8 + 16
+ %newVar11 <- %arrayAddr + %newVar8
+ store %newVar11 <- %val2
+ %count <- %count + 1
+ %pos0 <- %pos0 + 1
+ %pos1 <- %pos1 + 1
+ %pos2 <- %pos2 + 1
+ br :loop
+ 
+:loop
+ %ifDone <- %arrayLen < %count
+ br %ifDone :end_loop 
+ br :loopbody
+ 
+:good_input
+ %arg1 <- call @int_encode (%arg1)
+ %newVar13 <- %arg1 >> 1
+ %newVar12 <- %newVar13
+ %newVar12 <- %newVar12 << 1
+ %newVar12 <- %newVar12 + 1
+ %newVar12 <- %newVar12 + 2
+ %arrayAddr <- call allocate (%newVar12, 1)
+ %newVar14 <- %arrayAddr + 8
+ store %newVar14 <- %arg1
+ %pos0 <- 0
+ %pos1 <- 1
+ %pos2 <- 2
+ %newVar16 <- 0
+ %newVar17 <- 1
+ %newVar16 <- %newVar16 + %pos0
+ %newVar15 <- %newVar16 * 8
+ %newVar15 <- %newVar15 + 16
+ %newVar18 <- %arrayAddr + %newVar15
+ store %newVar18 <- 0
+ %newVar20 <- 0
+ %newVar21 <- 1
+ %newVar20 <- %newVar20 + %pos1
+ %newVar19 <- %newVar20 * 8
+ %newVar19 <- %newVar19 + 16
+ %newVar22 <- %arrayAddr + %newVar19
+ store %newVar22 <- 1
+ %newVar23 <- 0 * 8
+ %newVar24 <- %newVar23 + 8
+ %newVar25 <- %arrayAddr + %newVar24
+ %arrayLen <- load %newVar25
+ %arrayLen <- call @int_decode (%arrayLen)
+ %count <- 3
+ br :loop
+ 
+:check_input
+ %arg1 <- 10
+ %invalid <- %arg1 < 2
+ br %invalid :bad_input 
+ br :good_input
+ 
+:var_declarations
+ br :check_input
+}
+
+define @array_encode (%arrayAddr) {
+ 
+:NNNNNNNNNNN
+ br :entry
+ 
+:end_loop_1
+ return 
+ 
+:loop_body
+ %newVar1 <- 0
+ %newVar2 <- 1
+ %newVar1 <- %newVar1 + %pos
+ %newVar0 <- %newVar1 * 8
+ %newVar0 <- %newVar0 + 16
+ %newVar3 <- %arrayAddr + %newVar0
+ %val <- load %newVar3
+ %val <- call @int_encode (%val)
+ %newVar5 <- 0
+ %newVar6 <- 1
+ %newVar5 <- %newVar5 + %pos
+ %newVar4 <- %newVar5 * 8
+ %newVar4 <- %newVar4 + 16
+ %newVar7 <- %arrayAddr + %newVar4
+ store %newVar7 <- %val
+ %pos <- %pos + 1
+ br :loop_1
+ 
+:loop_1
+ %ifDone <- %pos = %arrayLen
+ br %ifDone :end_loop_1 
+ br :loop_body
+ 
+:entry
+ %newVar8 <- 0 * 8
+ %newVar9 <- %newVar8 + 8
+ %newVar10 <- %arrayAddr + %newVar9
+ %arrayLen <- load %newVar10
+ %arrayLen <- call @int_decode (%arrayLen)
+ %pos <- 0
+ br :loop_1
+}
+
+define @int_encode (%v) {
+ 
+:NNNNNN
+ br :entry
+ 
+:entry
+ %v <- %v << 1
+ %v <- %v + 1
+ return %v
+}
+
+define @int_decode (%v) {
+ 
+:NNNNNN
+ br :entry
+ 
+:entry
+ %v <- %v >> 1
+ return %v
+}
+

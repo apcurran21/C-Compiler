@@ -1,0 +1,268 @@
+(@main
+(@addOne
+	1 0
+	rdi += 1
+	rax <- rdi
+	return
+)
+
+(@left_shift
+	2 0
+	rcx <- rsi
+	rdi <<= rcx
+	rax <- rdi
+	return
+)
+
+(@main
+	0 12
+	mem rsp 40 <- rbx
+	mem rsp 32 <- rbp
+	mem rsp 24 <- r15
+	mem rsp 16 <- r14
+	mem rsp 8 <- r13
+	mem rsp 0 <- r12
+	:call_label0
+	r12 <- 1
+	rdi <- 2
+	mem rsp 88 <- rdi
+	rdi <- mem rsp 88
+	rdi <- r12 = rdi
+	mem rsp 48 <- rdi
+	rdi <- mem rsp 88
+	rdi <- r12 < rdi
+	rdi <- r12
+	mem rsp 56 <- rdi
+	rdi <- mem rsp 56
+	rsi <- mem rsp 88
+	rdi += rsi
+	mem rsp 56 <- rdi
+	r13 <- r12
+	rcx <- mem rsp 88
+	r13 <<= rcx
+	rdi <- r13
+	mem rsp -8 <- :call_label2
+	call @addOne 1
+	:call_label2
+	r14 <- rax
+	rdi <- r13
+	rsi <- r14
+	mem rsp -8 <- :call_label3
+	call @sum2 2
+	:call_label3
+	rdi <- rax
+	mem rsp 64 <- rdi
+	rdi <- mem rsp 64
+	r15 <- rdi
+	r15 *= 3
+	r15 += 2
+	rdi <- r14
+	rsi <- mem rsp 64
+	rdx <- r15
+	mem rsp -8 <- :call_label4
+	call @sum3 3
+	:call_label4
+	rbp <- rax
+	r13 <- 7
+	r13 <<= 1
+	r13 += 1
+	rdi <- r13
+	call print 1
+	rdi <- r13
+	rsi <- 3
+	call allocate 2
+	r13 <- rax
+	mem r13 8 <- 5
+	rdi <- r13
+	rdi += 16
+	mem rdi 0 <- 7
+	mem r13 24 <- 9
+	rbx <- mem rdi 0
+	rdi <- rbx < rbp
+	mem rsp 80 <- rdi
+	rdi <- r15
+	rsi <- rbp
+	rdx <- rbx
+	rcx <- mem rsp 80
+	mem rsp -8 <- :call_label5
+	call @sum4 4
+	:call_label5
+	rdi <- rax
+	mem rsp 72 <- rdi
+	rdi <- mem rsp 80
+	rsi <- mem rsp 72
+	mem rsp -8 <- :call_label6
+	call @substract 2
+	:call_label6
+	rdx <- rax
+	rdi <- r12
+	rsi <- mem rsp 72
+	mem rsp -8 <- :call_label7
+	call @substract3 3
+	:call_label7
+	rdi <- rbx
+	rsi <- mem rsp 80
+	rdx <- mem rsp 72
+	rcx <- r15
+	mem rsp -8 <- :call_label8
+	call @substract4 4
+	:call_label8
+	rdi <- r15
+	rsi <- rbp
+	rdx <- rbx
+	rcx <- mem rsp 80
+	mem rsp -8 <- :call_label9
+	call @sum4 4
+	:call_label9
+	rdi <- mem rsp 88
+	rsi <- mem rsp 72
+	mem rsp -8 <- :call_label10
+	call @product 2
+	:call_label10
+	rdi <- r12
+	rsi <- mem rsp 88
+	rdx <- r14
+	mem rsp -8 <- :call_label11
+	call @product3 3
+	:call_label11
+	rdi <- rbx
+	rsi <- mem rsp 64
+	rdx <- mem rsp 56
+	rcx <- r15
+	mem rsp -8 <- :call_label12
+	call @product4 4
+	:call_label12
+	r14 <- rax
+	rdi <- r14
+	rsi <- r12
+	mem rsp -8 <- :call_label13
+	call @left_shift 2
+	:call_label13
+	rdi <- r14
+	rsi <- mem rsp 88
+	mem rsp -8 <- :call_label14
+	call @right_shift 2
+	:call_label14
+	rdi <- r13
+	r12 <- @otherF
+	mem rsp -8 <- :call_label15
+	call @otherF 0
+	:call_label15
+	mem rsp -8 <- :call_label16
+	call r12 0
+	:call_label16
+	rsi <- @otherF2
+	rdi <- 2
+	mem rsp -8 <- :call_label17
+	call rsi 1
+	:call_label17
+	rdi <- mem rsp 48
+	mem rsp -8 <- :call_label18
+	call @otherF2 1
+	:call_label18
+	rdi <- rax
+	rdi -= 1
+	call print 1
+	:call_label1
+	r12 <- mem rsp 0
+	r13 <- mem rsp 8
+	r14 <- mem rsp 16
+	r15 <- mem rsp 24
+	rbp <- mem rsp 32
+	rbx <- mem rsp 40
+	return
+)
+
+(@otherF
+	0 0
+	return
+)
+
+(@otherF2
+	1 0
+	rdi *= rdi
+	rax <- rdi
+	return
+)
+
+(@product
+	2 0
+	rdi *= rsi
+	rax <- rdi
+	return
+)
+
+(@product3
+	3 0
+	rdi *= rsi
+	rdi *= rdx
+	rax <- rdi
+	return
+)
+
+(@product4
+	4 0
+	rdi *= rsi
+	rdi *= rdx
+	rdi *= rcx
+	rax <- rdi
+	return
+)
+
+(@right_shift
+	2 0
+	rcx <- rsi
+	rdi >>= rcx
+	rax <- rdi
+	return
+)
+
+(@substract
+	2 0
+	rdi -= rsi
+	rax <- rdi
+	return
+)
+
+(@substract3
+	3 0
+	rdi -= rsi
+	rdi -= rdx
+	rax <- rdi
+	return
+)
+
+(@substract4
+	4 0
+	rdi -= rsi
+	rdi -= rdx
+	rdi -= rcx
+	rax <- rdi
+	return
+)
+
+(@sum2
+	2 0
+	rdi += rsi
+	rax <- rdi
+	return
+)
+
+(@sum3
+	3 0
+	rdi += rsi
+	rdi += rdx
+	rax <- rdi
+	return
+)
+
+(@sum4
+	4 0
+	rdi += rsi
+	rdi += rdx
+	rdi += rcx
+	rax <- rdi
+	return
+)
+
+)

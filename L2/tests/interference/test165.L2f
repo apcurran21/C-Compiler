@@ -1,0 +1,8 @@
+(@go
+	0
+	rdi <- 11
+	mem rsp -8 <- :init_array_ret
+	call @init_array 1
+	:init_array_ret
+	return
+)

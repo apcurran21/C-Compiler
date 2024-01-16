@@ -1,0 +1,61 @@
+(@main
+	0
+	rdi <- 7
+	rsi <- 1
+	call allocate 2
+	%jennysNumber <- rax
+	%tempJenny <- %jennysNumber
+	rdi <- 8
+	mem rsp -8 <- :call_label0
+	call @Jenny 1
+	:call_label0
+	%retVal <- rax
+	mem %tempJenny 0 <- %retVal
+	%tempJenny += 8
+	rdi <- 6
+	mem rsp -8 <- :call_label1
+	call @Jenny 1
+	:call_label1
+	%retVal <- rax
+	mem %tempJenny 0 <- %retVal
+	%tempJenny += 8
+	rdi <- 7
+	mem rsp -8 <- :call_label2
+	call @whoCanI 1
+	:call_label2
+	%retVal <- rax
+	mem %tempJenny 0 <- %retVal
+	%tempJenny += 8
+	rdi <- 5
+	mem rsp -8 <- :call_label3
+	call @TurnTo 1
+	:call_label3
+	%retVal <- rax
+	mem %tempJenny 0 <- %retVal
+	%tempJenny += 8
+	rdi <- 3
+	mem rsp -8 <- :call_label4
+	call @youGiveMeSomething 1
+	:call_label4
+	%retVal <- rax
+	mem %tempJenny 0 <- %retVal
+	%tempJenny += 8
+	rdi <- 0
+	mem rsp -8 <- :call_label5
+	call @iCanHold 1
+	:call_label5
+	%retVal <- rax
+	mem %tempJenny 0 <- %retVal
+	%tempJenny += 8
+	rdi <- 9
+	mem rsp -8 <- :call_label6
+	call @onTo 1
+	:call_label6
+	%retVal <- rax
+	mem %tempJenny 0 <- %retVal
+	rdi <- %jennysNumber
+	mem rsp -8 <- :call_label7
+	call @gimmeACall 1
+	:call_label7
+	return
+)

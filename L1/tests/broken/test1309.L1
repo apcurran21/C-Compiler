@@ -1,0 +1,106 @@
+(@Jenny
+(@Jenny
+	0 7
+	rdi <- 17
+	mem rsp 8 <- rdi
+	rdi <- 13
+	mem rsp 16 <- rdi
+	rdi <- 15
+	mem rsp 24 <- rdi
+	rdi <- 11
+	mem rsp 32 <- rdi
+	rdi <- 7
+	mem rsp 40 <- rdi
+	rdi <- 1
+	mem rsp 48 <- rdi
+	rdi <- 19
+	mem rsp 0 <- rdi
+	rdi <- mem rsp 8
+	rdi <- rdi
+	rsi <- mem rsp 16
+	rsi <- rsi
+	rsi <- mem rsp 24
+	rdx <- rsi
+	rsi <- mem rsp 32
+	rcx <- rsi
+	rsi <- mem rsp 40
+	r8 <- rsi
+	rsi <- mem rsp 48
+	r9 <- rsi
+	rsi <- mem rsp 0
+	mem rsp -16 <- rsi
+	rsi <- mem rsp 8
+	rsi <- rsi
+	rsi <- mem rsp 16
+	rsi <- rsi
+	rsi <- mem rsp 24
+	rsi <- rsi
+	rsi <- mem rsp 32
+	rsi <- rsi
+	rsi <- mem rsp 40
+	rsi <- rsi
+	rsi <- mem rsp 48
+	rsi <- rsi
+	rsi <- mem rsp 0
+	rsi <- rsi
+	call print 1
+	rdi <- mem rsp 16
+	rdi <- rdi
+	call print 1
+	rdi <- mem rsp 24
+	rdi <- rdi
+	call print 1
+	rdi <- mem rsp 32
+	rdi <- rdi
+	call print 1
+	rdi <- mem rsp 40
+	rdi <- rdi
+	call print 1
+	rdi <- mem rsp 48
+	rdi <- rdi
+	call print 1
+	rdi <- mem rsp 0
+	rdi <- rdi
+	call print 1
+	mem rsp -8 <- :GimmeACall
+	call @IGotIt 7
+	:GimmeACall
+	rdi <- mem rsp 8
+	rdi <- rdi
+	call print 1
+	rdi <- mem rsp 16
+	rdi <- rdi
+	call print 1
+	rdi <- mem rsp 24
+	rdi <- rdi
+	call print 1
+	rdi <- mem rsp 32
+	rdi <- rdi
+	call print 1
+	rdi <- mem rsp 40
+	rdi <- rdi
+	call print 1
+	rdi <- mem rsp 48
+	rdi <- rdi
+	call print 1
+	rdi <- mem rsp 0
+	rdi <- rdi
+	call print 1
+	return
+)
+
+(@IGotIt
+	7 0
+	r10 <- r12
+	r12 <- mem rsp 0
+	rdi <- rsi
+	rdi <- rdx
+	rdi <- rcx
+	rdi <- r8
+	rdi <- r9
+	rdi <- r12
+	r12 <- r10
+	return
+)
+
+)

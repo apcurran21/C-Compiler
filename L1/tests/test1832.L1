@@ -1,0 +1,36 @@
+(@main
+(@main
+	0 2
+	mem rsp 8 <- r13
+	mem rsp 0 <- r12
+	r11 <- 0
+	r12 <- 43
+	rdi <- 55
+	rax <- 32
+	r10 <- 74
+	rdx <- 67
+	rcx <- 83
+	r13 <- 39
+	rsi <- 45
+	r8 <- 22
+	r9 <- 41
+	r11 += r12
+	r11 += rdi
+	r11 += rax
+	r11 += r10
+	r11 += rdx
+	r11 += rcx
+	r11 += r13
+	r11 += rsi
+	r11 += r8
+	r11 += r9
+	r11 <<= 1
+	r11 += 1
+	rdi <- r11
+	call print 1
+	r12 <- mem rsp 0
+	r13 <- mem rsp 8
+	return
+)
+
+)

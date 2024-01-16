@@ -1,0 +1,34 @@
+(@FindPeak
+	2
+	%arr <- rdi
+	%len <- rsi
+	:call_label_ciao__ciao_5
+	%max <- 0
+	%ind <- 0
+	goto :call_label_ciao__ciao_6
+	:call_label_ciao__ciao_6
+	%loopEnded <- %len <= %ind
+	cjump %loopEnded = 1 :call_label_ciao__ciao_10
+	goto :call_label_ciao__ciao_7
+	:call_label_ciao__ciao_7
+	%newVar1 <- 0
+	%newVar1 += %ind
+	%newVar0 <- %newVar1
+	%newVar0 *= 8
+	%newVar0 += 24
+	%newVar3 <- %arr
+	%newVar3 += %newVar0
+	%cur <- mem %newVar3 0
+	%notMax <- %cur <= %max
+	cjump %notMax = 1 :call_label_ciao__ciao_9
+	goto :call_label_ciao__ciao_8
+	:call_label_ciao__ciao_8
+	%max <- %cur
+	goto :call_label_ciao__ciao_9
+	:call_label_ciao__ciao_9
+	%ind += 1
+	goto :call_label_ciao__ciao_6
+	:call_label_ciao__ciao_10
+	rax <- %max
+	return
+)

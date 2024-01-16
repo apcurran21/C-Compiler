@@ -1,0 +1,16 @@
+(@myF
+0
+
+  %variable06VM9JWQHG <- 3
+
+  %myVar <- 0
+  %variableMFJTB2OEFU <- %myVar
+
+  %myVar <- %variable06VM9JWQHG
+
+  return
+)
+
+%myVar
+
+%S

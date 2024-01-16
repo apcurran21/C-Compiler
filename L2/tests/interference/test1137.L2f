@@ -1,0 +1,23 @@
+(@main
+	0
+	:call_label0
+	goto :call_label1
+	:call_label1
+	%num_sides <- 31
+	rdi <- %num_sides
+	call print 1
+	rdi <- %num_sides
+	mem rsp -8 <- :call_label2
+	call @compute_num_degrees_angle_for_shape 1
+	:call_label2
+	rdi <- %num_sides
+	mem rsp -8 <- :call_label3
+	call @compute_many_degrees 1
+	:call_label3
+	%lots_of_sides <- 175
+	rdi <- %lots_of_sides
+	mem rsp -8 <- :call_label4
+	call @compute_num_degrees_angle_for_shape 1
+	:call_label4
+	return
+)

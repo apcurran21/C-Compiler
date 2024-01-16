@@ -1,0 +1,64 @@
+(@main
+	0
+	:call_label0
+	%v <- 21
+	%newVar1 <- 21
+	%newVar1 >>= 1
+	%newVar0 <- %newVar1
+	%newVar2 <- 21
+	%newVar2 >>= 1
+	%newVar0 *= %newVar2
+	%newVar3 <- 21
+	%newVar3 >>= 1
+	%newVar0 *= %newVar3
+	%newVar0 <<= 1
+	%newVar0 += 1
+	%newVar0 += 8
+	rdi <- %newVar0
+	rsi <- 1
+	call allocate 2
+	%m <- rax
+	mem %m 8 <- 7
+	mem %m 16 <- 21
+	mem %m 24 <- 21
+	mem %m 32 <- 21
+	rdi <- %m
+	rsi <- %v
+	mem rsp -8 <- :call_label1
+	call @search 2
+	:call_label1
+	%r <- rax
+	rdi <- %r
+	call print 1
+	%newVar9 <- 0
+	%newVar11 <- mem %m 24
+	%newVar14 <- mem %m 32
+	%newVar16 <- 1
+	%newVar15 <- %newVar14
+	%newVar15 >>= 1
+	%newVar16 *= %newVar15
+	%newVar17 <- 0
+	%newVar17 *= %newVar16
+	%newVar9 += %newVar17
+	%newVar12 <- %newVar11
+	%newVar12 >>= 1
+	%newVar16 *= %newVar12
+	%newVar18 <- 0
+	%newVar18 *= %newVar16
+	%newVar9 += %newVar18
+	%newVar8 <- %newVar9
+	%newVar8 *= 8
+	%newVar8 += 40
+	%newVar19 <- %m
+	%newVar19 += %newVar8
+	mem %newVar19 0 <- %v
+	rdi <- %m
+	rsi <- %v
+	mem rsp -8 <- :call_label2
+	call @search 2
+	:call_label2
+	%r <- rax
+	rdi <- %r
+	call print 1
+	return
+)

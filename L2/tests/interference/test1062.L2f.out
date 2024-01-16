@@ -1,0 +1,22 @@
+%check %f %l %n r12 r13 r14 r15 rax rbp rbx %s
+%f %check %l %n %p r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx rsi %s %t
+%l %check %f %n %p r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx rsi %s %t
+%n %check %f %l %p r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx rsi %s %t
+%p %f %l %n r12 r13 r14 r15 rbp rbx %s
+r10 %f %l %n r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx rsi %s
+r11 %f %l %n r10 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx rsi %s
+r12 %check %f %l %n %p r10 r11 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx rsi %s %t
+r13 %check %f %l %n %p r10 r11 r12 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx rsi %s %t
+r14 %check %f %l %n %p r10 r11 r12 r13 r15 r8 r9 rax rbp rbx rcx rdi rdx rsi %s %t
+r15 %check %f %l %n %p r10 r11 r12 r13 r14 r8 r9 rax rbp rbx rcx rdi rdx rsi %s %t
+r8 %f %l %n r10 r11 r12 r13 r14 r15 r9 rax rbp rbx rcx rdi rdx rsi %s
+r9 %f %l %n r10 r11 r12 r13 r14 r15 r8 rax rbp rbx rcx rdi rdx rsi %s
+rax %check %f %l %n r10 r11 r12 r13 r14 r15 r8 r9 rbp rbx rcx rdi rdx rsi %s %t
+rbp %check %f %l %n %p r10 r11 r12 r13 r14 r15 r8 r9 rax rbx rcx rdi rdx rsi %s %t
+rbx %check %f %l %n %p r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rcx rdi rdx rsi %s %t
+rcx %f %l %n r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rdi rdx rsi %s
+rdi %f %l %n r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdx rsi %s
+rdx %f %l %n r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rsi %s
+rsi %f %l %n r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx %s
+%s %check %f %l %n %p r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx rsi %t
+%t %f %l %n r12 r13 r14 r15 rax rbp rbx %s

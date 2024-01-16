@@ -1,0 +1,14 @@
+(@main
+	0
+	:call_label0
+	cjump 0 = 1 :call_label1
+	goto :call_label2
+	:call_label1
+	rdi <- 3
+	call print 1
+	return
+	:call_label2
+	rdi <- 5
+	call print 1
+	return
+)

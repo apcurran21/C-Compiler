@@ -1,0 +1,113 @@
+(@main
+(@main
+	0 0
+	:call_label0
+	mem rsp -8 <- :call_label1
+	call @h 0
+	:call_label1
+	mem rsp -8 <- :call_label2
+	call @e 0
+	:call_label2
+	mem rsp -8 <- :call_label3
+	call @l 0
+	:call_label3
+	mem rsp -8 <- :call_label4
+	call @l 0
+	:call_label4
+	mem rsp -8 <- :call_label5
+	call @o 0
+	:call_label5
+	mem rsp -8 <- :call_label6
+	call @space 0
+	:call_label6
+	mem rsp -8 <- :call_label7
+	call @w 0
+	:call_label7
+	mem rsp -8 <- :call_label8
+	call @o 0
+	:call_label8
+	mem rsp -8 <- :call_label9
+	call @r 0
+	:call_label9
+	mem rsp -8 <- :call_label10
+	call @l 0
+	:call_label10
+	mem rsp -8 <- :call_label11
+	call @d 0
+	:call_label11
+	return
+)
+
+(@h
+	0 0
+	:call_label_ciao_12
+	rdi <- 209
+	rdi <- rdi
+	call print 1
+	return
+)
+
+(@e
+	0 0
+	:call_label_ciao__ciao_13
+	rdi <- 203
+	rdi <- rdi
+	call print 1
+	return
+)
+
+(@l
+	0 0
+	:call_label_ciao__ciao__ciao_14
+	rdi <- 217
+	rdi <- rdi
+	call print 1
+	return
+)
+
+(@o
+	0 0
+	:call_label_ciao__ciao__ciao__ciao_15
+	rdi <- 223
+	rdi <- rdi
+	call print 1
+	return
+)
+
+(@w
+	0 0
+	:call_label_ciao__ciao__ciao__ciao__ciao_16
+	rdi <- 239
+	rdi <- rdi
+	call print 1
+	return
+)
+
+(@space
+	0 0
+	:call_label_ciao__ciao__ciao__ciao__ciao__ciao_17
+	rdi <- 65
+	rdi <- rdi
+	call print 1
+	return
+)
+
+(@r
+	0 0
+	:call_label_ciao__ciao__ciao__ciao__ciao__ciao__ciao_18
+	rdi <- 229
+	rdi <- rdi
+	call print 1
+	return
+)
+
+(@d
+	0 0
+	:call_label_ciao__ciao__ciao__ciao__ciao__ciao__ciao__ciao_19
+	rdi <- 201
+	rdi <- rdi
+	call print 1
+	return
+)
+
+)

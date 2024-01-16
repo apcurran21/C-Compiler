@@ -1,0 +1,24 @@
+(@main
+	0
+	:entry
+	%arg1 <- 100
+	%arg2 <- 1
+	:restart
+	cjump %arg1 < %arg2 :start
+	%arg1 += 1
+	%arg2 <<= 1
+	goto :restart
+	:start
+	rdi <- 1
+	rsi <- 3
+	rdx <- 5
+	rcx <- 7
+	r8 <- 9
+	r9 <- 13
+	mem rsp -16 <- 15
+	%func_label <- @print_array
+	mem rsp -8 <- :func_ret
+	call %func_label 7
+	:func_ret
+	return
+)

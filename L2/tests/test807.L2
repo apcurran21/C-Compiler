@@ -1,0 +1,43 @@
+(@test2
+    (@test2
+      0
+      // 00 = 0 B
+      %newVariable12 <- 0
+      // 10 = 1 A
+      %newVariable13 <- 2
+      // 10 = 1 This is a counter
+      %newVariable14 <- 2
+      // print value
+      %print_val <- 1
+      rdi <- %print_val
+      call print 1
+      rdi <- 3
+
+      // memory access for funsies
+      %newV <- %print_val
+      %print_val <- 900099
+      %print_val >>= 5
+      %print_val -= 78
+      %print_val *= 8
+      %print_val <- %newV
+
+      :fibonacci
+      rdi <- %print_val
+      call print 1
+
+      %print_val <- %newVariable12
+      %print_val += %newVariable13
+      %print_val += 1
+      %print_val -= 1
+      %print_val += 1
+
+      %newVariable12 <- %newVariable13
+      %newVariable13 <- %print_val
+      %newVariable13 -= 1
+      %newVariable14 += 2
+      rdi <- %print_val
+
+      cjump %newVariable14 <= 22 :fibonacci
+      return
+    )
+)

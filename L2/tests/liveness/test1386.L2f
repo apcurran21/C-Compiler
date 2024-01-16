@@ -1,0 +1,21 @@
+(@go
+	0
+	%myVar <- 5
+	%myVar2 <- 8
+	%sum <- %myVar
+	%sum += %myVar2
+	%sum <<= 1
+	%sum++
+	rdi <- %sum
+	call print 1
+	mem rsp -8 <- :f_ret
+	call @f1 0
+	:f_ret
+	%sum2 <- %myVar
+	%sum2 += %myVar2
+	%sum2 <<= 1
+	%sum2++
+	rdi <- %sum2
+	call print 1
+	return
+)

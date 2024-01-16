@@ -1,0 +1,17 @@
+(@main
+	0
+	mem rsp -8 <- :call_label0
+	call @createArray 0
+	:call_label0
+	%arr <- rax
+	rdi <- %arr
+	mem rsp -8 <- :call_label1
+	call @rotateOnce 1
+	:call_label1
+	%rotArr <- rax
+	rdi <- %rotArr
+	mem rsp -8 <- :call_label2
+	call @printArr 1
+	:call_label2
+	return
+)

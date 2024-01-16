@@ -1,0 +1,21 @@
+%nresult %primeCounter r12 r13 r14 r15 rbp rbx %searchCounter
+%primeCounter %nresult r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx %result rsi %searchCounter %weDone
+%pr r12 r13 r14 r15 rbp rbx
+r10 %primeCounter r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx rsi %searchCounter
+r11 %primeCounter r10 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx rsi %searchCounter
+r12 %nresult %pr %primeCounter r10 r11 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx %result rsi %searchCounter %weDone
+r13 %nresult %pr %primeCounter r10 r11 r12 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx %result rsi %searchCounter %weDone
+r14 %nresult %pr %primeCounter r10 r11 r12 r13 r15 r8 r9 rax rbp rbx rcx rdi rdx %result rsi %searchCounter %weDone
+r15 %nresult %pr %primeCounter r10 r11 r12 r13 r14 r8 r9 rax rbp rbx rcx rdi rdx %result rsi %searchCounter %weDone
+r8 %primeCounter r10 r11 r12 r13 r14 r15 r9 rax rbp rbx rcx rdi rdx rsi %searchCounter
+r9 %primeCounter r10 r11 r12 r13 r14 r15 r8 rax rbp rbx rcx rdi rdx rsi %searchCounter
+rax %primeCounter r10 r11 r12 r13 r14 r15 r8 r9 rbp rbx rcx rdi rdx rsi %searchCounter
+rbp %nresult %pr %primeCounter r10 r11 r12 r13 r14 r15 r8 r9 rax rbx rcx rdi rdx %result rsi %searchCounter %weDone
+rbx %nresult %pr %primeCounter r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rcx rdi rdx %result rsi %searchCounter %weDone
+rcx %primeCounter r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rdi rdx rsi %searchCounter
+rdi %primeCounter r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdx rsi %searchCounter
+rdx %primeCounter r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rsi %searchCounter
+%result %primeCounter r12 r13 r14 r15 rbp rbx %searchCounter
+rsi %primeCounter r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx %searchCounter
+%searchCounter %nresult %primeCounter r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx %result rsi %weDone
+%weDone %primeCounter r12 r13 r14 r15 rbp rbx %searchCounter

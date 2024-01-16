@@ -1,0 +1,32 @@
+(@printValues
+	9
+	%p0 <- rdi
+	%p1 <- rsi
+	%p2 <- rdx
+	%p3 <- rcx
+	%p4 <- r8
+	%p5 <- r9
+	%p6 <- stack-arg 0
+	%p7 <- stack-arg 8
+	%p8 <- stack-arg 16
+	:call_label_ciao_2
+	rdi <- %p0
+	call print 1
+	rdi <- %p1
+	call print 1
+	rdi <- %p2
+	call print 1
+	rdi <- %p3
+	call print 1
+	rdi <- %p4
+	call print 1
+	rdi <- %p5
+	call print 1
+	rdi <- %p6
+	call print 1
+	rdi <- %p7
+	call print 1
+	rdi <- %p8
+	call print 1
+	return
+)

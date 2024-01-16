@@ -1,0 +1,10 @@
+void main ( ){
+  br 0 :true :false
+  :true
+  print(1)
+
+  :false
+  print(3)
+
+  return
+}

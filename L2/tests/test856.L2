@@ -1,0 +1,51 @@
+(@go
+
+  (@go
+0
+
+    mem rsp -8 <- :ret
+    call @myF 0
+    :ret
+
+    return 
+  )
+
+  (@myF
+0
+
+    %myV1 <- 1
+    %myV2 <- 1
+    %myV3 <- 1
+    %myV4 <- 1
+    %myV5 <- 1
+    %myV6 <- 1
+
+    %myV1 += 1
+    %myV2 += 1
+    %myV3 += 1
+    %myV4 += 1
+    %myV5 += 1
+    %myV6 += 1
+
+    %myV1 += 1
+    %myV2 += 1
+    %myV3 += 1
+    %myV4 += 1
+    %myV5 += 1
+    %myV6 += 1
+
+%variableD2P17PWW1C <- %myV1
+%variableEYXE95CIQT <- %myV2
+%variable3916O39KB5 <- %myV3
+%variableQUYX9B1YP8 <- %myV4
+%variable0Y3702RYZ9 <- %myV5
+%variableD4E7RH3JVD <- %myV6
+
+    return
+  )
+
+  (@myF2
+0
+    return 
+  )
+)

@@ -1,0 +1,11 @@
+(@myF
+	3
+	%p1 <- rdi
+	%p2 <- rsi
+	%p3 <- rdx
+	%tempV <- %p1
+	%tempV += %p2
+	%tempV += %p3
+	rax <- %tempV
+	return
+)

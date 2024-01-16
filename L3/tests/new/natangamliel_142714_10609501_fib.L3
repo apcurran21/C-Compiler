@@ -1,0 +1,55 @@
+// prints the first n numbers in the fibonacci sequence
+// note: does not check for overflow, so large numbers in the sequence will be incorrect
+
+define :int_print (%num) {
+	%to_print <- %num << 1
+	%to_print <- %to_print + 1
+	call print (%to_print)
+	return
+}
+
+define :fib (%userInput) {
+	%signCheck <- %userInput
+	%signCheck <- %signCheck >> 31
+	%sign <- %signCheck = 1
+	br %sign :end
+
+	%count <- %userInput
+	%count <- %count >> 1
+	%old <- 0
+	%new <- 1
+
+	%check <- %count <= 0
+	br %check :end
+	call :int_print(%old)
+	%count <- %count - 1
+
+	%check <- %count <= 0
+	br %check :end
+	call :int_print(%new)
+	%count <- %count - 1
+
+	:start
+	%check <- %count <= 0
+	br %check :end
+
+	%temp <- %new
+	%new <- %new + %old
+	%old <- %temp
+
+	call :int_print(%new)
+	%count <- %count - 1
+	br :start
+
+
+	:end
+	return
+}
+
+define :main () {
+	// could ask for user input here
+	//%inp <- call input ()
+	%inp <- 111
+	call :fib (%inp)
+	return
+}

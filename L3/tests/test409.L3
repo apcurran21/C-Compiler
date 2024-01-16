@@ -1,0 +1,4 @@
+define @main ( ) {
+  %v1 <- call input()
+  return
+}

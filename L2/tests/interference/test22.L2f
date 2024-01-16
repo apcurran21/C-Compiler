@@ -1,0 +1,8 @@
+(@power
+	2
+	%base <- rdi
+	%power_of_two <- rsi
+	%base <<= %power_of_two
+	rax <- %base
+	return
+)

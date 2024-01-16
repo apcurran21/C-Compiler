@@ -1,0 +1,35 @@
+define :main() {
+  :top
+  %input <- call input()
+  %c <- %input = 1
+  br %c :ret
+  %ans <- call :perf_sqr(%input)
+  call print(%ans)
+  br :top
+  :ret
+  return
+}
+
+define :perf_sqr(%num) {
+  %c <- %num < 1
+  br %c :end
+  %num <- %num >> 1
+  %counter <- 1
+  %squared <- 1
+  %ans <- 3
+  %c <- %num = 1
+  br %c :end
+  br :condition
+  :body
+  %squared <- %counter
+  %squared <- %squared * %squared
+  %c <- %squared = %num
+  br %c :end
+  %counter <- %counter + 1
+  :condition
+  %c <- %squared < %num
+  br %c :body
+  %ans <- 1
+  :end
+  return %ans  
+}

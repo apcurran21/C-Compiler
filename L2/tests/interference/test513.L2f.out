@@ -1,0 +1,20 @@
+%check %loopvar r12 r13 r14 r15 rbp rbx
+%d %loopvar r12 r13 r14 r15 rbp rbx
+%loopvar %check %d %printvar r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx rsi %s
+%printvar %loopvar r12 r13 r14 r15 rbp rbx
+r10 %loopvar r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx rsi
+r11 %loopvar r10 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx rsi
+r12 %check %d %loopvar %printvar r10 r11 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx rsi %s
+r13 %check %d %loopvar %printvar r10 r11 r12 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx rsi %s
+r14 %check %d %loopvar %printvar r10 r11 r12 r13 r15 r8 r9 rax rbp rbx rcx rdi rdx rsi %s
+r15 %check %d %loopvar %printvar r10 r11 r12 r13 r14 r8 r9 rax rbp rbx rcx rdi rdx rsi %s
+r8 %loopvar r10 r11 r12 r13 r14 r15 r9 rax rbp rbx rcx rdi rdx rsi
+r9 %loopvar r10 r11 r12 r13 r14 r15 r8 rax rbp rbx rcx rdi rdx rsi
+rax %loopvar r10 r11 r12 r13 r14 r15 r8 r9 rbp rbx rcx rdi rdx rsi
+rbp %check %d %loopvar %printvar r10 r11 r12 r13 r14 r15 r8 r9 rax rbx rcx rdi rdx rsi %s
+rbx %check %d %loopvar %printvar r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rcx rdi rdx rsi %s
+rcx %loopvar r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rdi rdx rsi
+rdi %loopvar r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdx rsi
+rdx %loopvar r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rsi
+rsi %loopvar r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx
+%s %loopvar r12 r13 r14 r15 rbp rbx

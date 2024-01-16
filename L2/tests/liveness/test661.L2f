@@ -1,0 +1,8 @@
+(@decode
+	1
+	%i <- rdi
+	:call_label_ciao_1
+	%i >>= 1
+	rax <- %i
+	return
+)

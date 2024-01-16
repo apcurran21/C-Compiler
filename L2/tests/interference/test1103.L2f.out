@@ -1,0 +1,24 @@
+%array %i %if %len %newVar0 %newVar1 %newVar3 r12 r13 r14 r15 rbp rbx %res rsi %v
+%i %array %if %len %newVar0 %newVar1 %newVar3 r12 r13 r14 r15 rbp rbx %res %v
+%if %array %i %len r12 r13 r14 r15 rbp rbx %res
+%len %array %i %if %newVar0 %newVar1 %newVar3 r12 r13 r14 r15 rbp rbx %res %v
+%newVar0 %array %i %len %newVar3 r12 r13 r14 r15 rbp rbx %res
+%newVar1 %array %i %len r12 r13 r14 r15 rbp rbx %res
+%newVar3 %array %i %len %newVar0 r12 r13 r14 r15 rbp rbx %res
+r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx rsi
+r11 r10 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx rsi
+r12 %array %i %if %len %newVar0 %newVar1 %newVar3 r10 r11 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx %res rsi %v
+r13 %array %i %if %len %newVar0 %newVar1 %newVar3 r10 r11 r12 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx %res rsi %v
+r14 %array %i %if %len %newVar0 %newVar1 %newVar3 r10 r11 r12 r13 r15 r8 r9 rax rbp rbx rcx rdi rdx %res rsi %v
+r15 %array %i %if %len %newVar0 %newVar1 %newVar3 r10 r11 r12 r13 r14 r8 r9 rax rbp rbx rcx rdi rdx %res rsi %v
+r8 r10 r11 r12 r13 r14 r15 r9 rax rbp rbx rcx rdi rdx rsi
+r9 r10 r11 r12 r13 r14 r15 r8 rax rbp rbx rcx rdi rdx rsi
+rax r10 r11 r12 r13 r14 r15 r8 r9 rbp rbx rcx rdi rdx rsi
+rbp %array %i %if %len %newVar0 %newVar1 %newVar3 r10 r11 r12 r13 r14 r15 r8 r9 rax rbx rcx rdi rdx %res rsi %v
+rbx %array %i %if %len %newVar0 %newVar1 %newVar3 r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rcx rdi rdx %res rsi %v
+rcx r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rdi rdx rsi
+rdi r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdx rsi
+rdx r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rsi
+%res %array %i %if %len %newVar0 %newVar1 %newVar3 r12 r13 r14 r15 rbp rbx %v
+rsi %array r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx
+%v %array %i %len r12 r13 r14 r15 rbp rbx %res

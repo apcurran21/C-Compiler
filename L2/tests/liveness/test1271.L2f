@@ -1,0 +1,23 @@
+(@bar
+	7
+	%a <- rdi
+	%b <- rsi
+	%c <- rdx
+	%d <- rcx
+	%e <- r8
+	%f <- r9
+	%g <- stack-arg 0
+	:call_label_ciao__ciao_7
+	goto :call_label_ciao__ciao_8
+	:call_label_ciao__ciao_8
+	%sum <- 0
+	%sum += %a
+	%sum += %b
+	%sum += %c
+	%sum += %d
+	%sum += %e
+	%sum += %f
+	%sum += %g
+	rax <- %sum
+	return
+)

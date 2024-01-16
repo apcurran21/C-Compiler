@@ -1,0 +1,33 @@
+(@main
+	0
+	%len <- 10
+	rdi <- %len
+	mem rsp -8 <- :call_label0
+	call @GetArray 1
+	:call_label0
+	%arr1 <- rax
+	rdi <- %arr1
+	rsi <- %len
+	mem rsp -8 <- :call_label1
+	call @PopulateArray1 2
+	:call_label1
+	rdi <- %arr1
+	mem rsp -8 <- :call_label2
+	call @printResultArray 1
+	:call_label2
+	rdi <- %len
+	mem rsp -8 <- :call_label3
+	call @GetArray 1
+	:call_label3
+	%arr2 <- rax
+	rdi <- %arr2
+	rsi <- %len
+	mem rsp -8 <- :call_label4
+	call @PopulateArray2 2
+	:call_label4
+	rdi <- %arr2
+	mem rsp -8 <- :call_label5
+	call @printResultArray 1
+	:call_label5
+	return
+)

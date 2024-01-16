@@ -1,0 +1,11 @@
+(@myF
+	1
+	%p1 <- rdi
+	%tempV <- %p1
+	%tempV += 2
+	mem rsp -8 <- :call_label1
+	rdi <- %tempV
+	call print 1
+	:call_label1
+	return
+)

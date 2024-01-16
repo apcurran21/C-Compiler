@@ -1,0 +1,13 @@
+(@sum
+	4
+	%a <- rdi
+	%b <- rsi
+	%c <- rdx
+	%d <- rcx
+	rax <- 0
+	rax += %a
+	rax += %b
+	rax += %c
+	rax += %d
+	return
+)

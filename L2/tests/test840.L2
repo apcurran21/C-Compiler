@@ -1,0 +1,61 @@
+// Count from 1 to 5, and then from 5 to 1
+
+(@go
+  (@go
+    0
+
+    rdi <- 1
+    mem rsp -8 <- :inc_ret
+    call @inc 1
+    :inc_ret
+
+    rdi <- 11
+    mem rsp -8 <- :dec_ret
+    call @dec 1
+    :dec_ret
+
+    return
+  )
+
+  (@inc
+    1
+
+    rax <- rdi
+
+    :LOOP_INC
+
+    %rax_backup <- rax
+    // save register
+
+    rdi <- rax
+    call print 1
+    rax <- %rax_backup
+    // restore register value
+
+    rax += 2
+    cjump rax <= 11 :LOOP_INC
+
+    return
+  )
+
+  (@dec
+    1
+
+    rax <- rdi
+
+    :LOOP_DEC
+
+    %rax_backup <- rax
+    // save register
+
+    rdi <- rax
+    call print 1
+    rax <- %rax_backup
+    // restore regsiter value
+    
+    rax -= 2
+    cjump 1 <= rax :LOOP_DEC
+
+    return
+  )
+)

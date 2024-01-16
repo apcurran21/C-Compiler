@@ -1,0 +1,30 @@
+(@go
+(@go
+	0 0
+	rdi <- 11
+	mem rsp -8 <- :init_array_ret
+	call @init_array 1
+	:init_array_ret
+	return
+)
+
+(@init_array
+	1 0
+	rsi <- 3
+	call allocate 2
+	rsi <- rax
+	r9 <- 0
+	rdx <- mem rax 0
+	rdi <- 1
+	:INIT
+	rax += 8
+	mem rax 0 <- rdi
+	r9 += 1
+	rdi += 2
+	cjump r9 < rdx :INIT
+	rdi <- rsi
+	call print 1
+	return
+)
+
+)

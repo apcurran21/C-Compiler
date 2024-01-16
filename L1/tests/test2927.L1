@@ -1,0 +1,46 @@
+(@go
+(@go
+	0 1
+	rdi <- 21
+	mem rsp 0 <- rdi
+	rdi <- 1
+	rsi <- mem rsp 0
+	rsi <- rsi
+	mem rsp -8 <- :F1_ret0
+	call @F1 2
+	:F1_ret0
+	rdi <- mem rsp 0
+	rsi <- rdi
+	rdi <- rax
+	mem rsp -8 <- :F1_ret1
+	call @F1 2
+	:F1_ret1
+	rdi <- mem rsp 0
+	rsi <- rdi
+	rdi <- mem rsp 0
+	rdi <- rdi
+	call print 1
+	return
+)
+
+(@F1
+	2 2
+	rdi <- rdi
+	mem rsp 0 <- rdi
+	rdi <- rsi
+	mem rsp 8 <- rdi
+	:LOOP
+	rdi <- mem rsp 0
+	rdi <- rdi
+	call print 1
+	rdi <- mem rsp 0
+	rdi += 4
+	mem rsp 0 <- rdi
+	rdi <- mem rsp 0
+	rsi <- mem rsp 8
+	cjump rdi <= rsi :LOOP
+	rax <- 3
+	return
+)
+
+)

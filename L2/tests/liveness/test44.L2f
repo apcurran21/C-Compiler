@@ -1,0 +1,9 @@
+(@power
+	0
+	rdi <- 2
+	rsi <- 6
+	mem rsp -8 <- :rtn1
+	call @array 2
+	:rtn1
+	return
+)

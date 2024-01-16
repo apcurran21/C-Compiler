@@ -1,0 +1,57 @@
+(@main
+  (@main
+    0 
+    // Lets check our instructions
+    // Store 3 into rax
+    %var1 <- 5
+    %var2 <- :my_label1
+    %var3<- 3
+    %var1 += %var3 
+    // Should jump
+    cjump %var1 = 8 :my_label1
+
+
+    :my_label2
+    // more math
+    %var1 -= 4
+    %var1 *= 3
+    rdi <- %var1
+    rdi <<= 1
+    rdi++
+    // Should print 12
+    call print 1
+
+    %var4 @ %var3 rax 4
+    // Allocate array of size 2 with value 3
+    rdi <- 5
+    rsi <- 7
+    // Discarding our rax value
+    call allocate 2
+    %var5 <- rax
+    // Store parameter
+    rdi <- %var3
+    // Encode
+    rdi <<= 1
+    rdi++
+    // Should print 4
+    call print 1
+
+    // Should be false
+    %var6 <- %var3 < 2
+    rdi <- %var6
+    rdi <<= 1 
+    rdi++
+    call print 1
+
+    // Now lets check out array
+    rdi <- %var5
+    call print 1
+    return
+
+    :my_label1
+    // increment to 4
+    %var3++
+    goto :my_label2
+    return 
+  )
+)

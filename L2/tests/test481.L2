@@ -1,0 +1,73 @@
+(@main
+  (@main
+    0
+    :call_label0
+    %tmp_rax <- 0
+    %tmp_rcx <- 2
+    %i <- 1
+    goto :call_label1
+    :call_label1
+    %icmpi <- 5 <= %i
+    
+    cjump %icmpi = 1 :call_label9
+    goto :call_label2
+    :call_label2
+    %j <- 1
+    goto :call_label3
+    :call_label3
+    %icmpj <- 5 <= %j
+    
+    cjump %icmpj = 1 :call_label8
+    goto :call_label4
+    :call_label4
+    %cucu <- %tmp_rax
+    %cucu -=%tmp_rax
+    %tmp_rax <- %cucu
+    
+    %k <- %tmp_rax
+    %k <- %k
+    %k += 1
+    goto :call_label5
+    :call_label5
+    %icmpk <- 1000 <= %k
+    
+    cjump %icmpk = 1 :call_label7
+    goto :call_label6
+    :call_label6
+    %old_rcx <- %tmp_rcx
+    %tmp_rdi <- %k
+    %tmp_rdi <- %tmp_rdi
+    %tmp_rdi <<= %tmp_rcx
+    %tmp_rdi <- %tmp_rdi
+    %tmp_rdi += 1
+    rdi <- %tmp_rdi
+    call print 1
+    %tmp_rdi <- %i
+    %tmp_rdi <- %tmp_rdi
+    %tmp_rdi *= %j
+    %tmp_rdi <- %tmp_rdi
+    %tmp_rdi *= %k
+    %tmp_rdi <- %tmp_rdi
+    %tmp_rdi <<= %old_rcx
+    %tmp_rdi <- %tmp_rdi
+    %tmp_rdi >>= 1
+    %tmp_rdi <- %tmp_rdi
+    %tmp_rdi += 1
+    rdi <- %tmp_rdi
+    call print 1
+    %tmp_rcx <- %old_rcx
+    %k <- %k
+    %k <<= %tmp_rcx
+    goto :call_label5
+    :call_label7
+    %j <- %j
+    %j += 1
+    goto :call_label3
+    :call_label8
+    %i <- %i
+    %i += 1
+    goto :call_label1
+    :call_label9
+    return
+  )
+)

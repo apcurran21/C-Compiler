@@ -1,0 +1,36 @@
+(@findSum
+	1
+	%array <- rdi
+	:call_label_ciao_4
+	goto :call_label_ciao_5
+	:call_label_ciao_5
+	%newVar1 <- 0
+	%newVar0 <- %newVar1
+	%newVar0 *= 8
+	%newVar0 += 24
+	%newVar3 <- %array
+	%newVar3 += %newVar0
+	%ret <- mem %newVar3 0
+	%newVar5 <- 0
+	%newVar5 += 1
+	%newVar4 <- %newVar5
+	%newVar4 *= 8
+	%newVar4 += 24
+	%newVar7 <- %array
+	%newVar7 += %newVar4
+	%temp <- mem %newVar7 0
+	%ret += %temp
+	%newVar9 <- 0
+	%newVar9 += 2
+	%newVar8 <- %newVar9
+	%newVar8 *= 8
+	%newVar8 += 24
+	%newVar11 <- %array
+	%newVar11 += %newVar8
+	%temp <- mem %newVar11 0
+	%ret += %temp
+	%ret <<= 1
+	%ret += 1
+	rax <- %ret
+	return
+)

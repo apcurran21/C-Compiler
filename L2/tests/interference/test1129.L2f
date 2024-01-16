@@ -1,0 +1,35 @@
+(@CalcArrSum
+	1
+	%TargetArr <- rdi
+	:call_label_ciao_6
+	goto :call_label_ciao_9
+	:call_label_ciao_7
+	rax <- %ArrSum
+	return
+	:call_label_ciao_8
+	%newVar1 <- 0
+	%newVar1 += %Count
+	%newVar0 <- %newVar1
+	%newVar0 *= 8
+	%newVar0 += 24
+	%newVar3 <- %TargetArr
+	%newVar3 += %newVar0
+	%CurrElm <- mem %newVar3 0
+	%Count += 1
+	%ArrSum += %CurrElm
+	%ContLoop <- %Count < %ArrLen
+	cjump %ContLoop = 1 :call_label_ciao_8
+	goto :call_label_ciao_7
+	:call_label_ciao_9
+	%newVar4 <- 0
+	%newVar4 *= 8
+	%newVar5 <- %newVar4
+	%newVar5 += 16
+	%newVar6 <- %TargetArr
+	%newVar6 += %newVar5
+	%ArrLen <- mem %newVar6 0
+	%ArrLen >>= 1
+	%Count <- 0
+	%ArrSum <- 0
+	goto :call_label_ciao_8
+)

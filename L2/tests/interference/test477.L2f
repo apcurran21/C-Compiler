@@ -1,0 +1,8 @@
+(@increaseOne
+	1
+	%p1 <- rdi
+	%p5 <- %p1
+	%p5 += 1
+	rax <- %p5
+	return
+)

@@ -1,0 +1,13 @@
+(@bar
+	7
+	%newVariable12 <- rdi
+	%newVariable12 += rsi
+	%newVariable12 += rdx
+	%newVariable12 += rcx
+	%newVariable12 += r8
+	%newVariable12 += r9
+	%newVariable13 <- stack-arg 0
+	%newVariable12 += %newVariable13
+	rax <- %newVariable12
+	return
+)

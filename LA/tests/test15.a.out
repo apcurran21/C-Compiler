@@ -1,0 +1,2 @@
+{s:27, 2, 3, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
+ERROR: instruction at line 13 attempted to use position 4 in the dimension 2 of a tensor that only has 4 elements in that dimension

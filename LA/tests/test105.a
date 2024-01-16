@@ -1,0 +1,12 @@
+void main ( ){
+
+  int64[][] t
+  t <- new Array(2,2)
+  print(t)
+  t[0][1] <- 4
+  t[1][1] <- 4
+
+  t[2][0] <- 4
+
+  return 
+}

@@ -1,0 +1,61 @@
+(@myTest3
+(@myTest3
+	0 4
+	mem rsp 24 <- r15
+	mem rsp 16 <- r14
+	mem rsp 8 <- r13
+	mem rsp 0 <- r12
+	r15 <- 5
+	r14 <- 10
+	r13 <- 15
+	rdi <- 5
+	rsi <- 3
+	r12 <- 20
+	mem rsp -8 <- :retMyTest3
+	call @myTest3Helper 2
+	:retMyTest3
+	cjump rax = 0 :elseCase
+	rax <- @retFun
+	goto :endIf
+	:elseCase
+	rax <- @altRetFun
+	:endIf
+	rdi <- r15
+	rdi += r14
+	rdi -= r13
+	rdi += r12
+	mem rsp -8 <- :retPos
+	call rax 1
+	:retPos
+	rax <<= 1
+	rax += 1
+	rdi <- rax
+	call print 1
+	r12 <- mem rsp 0
+	r13 <- mem rsp 8
+	r14 <- mem rsp 16
+	r15 <- mem rsp 24
+	return
+)
+
+(@myTest3Helper
+	2 0
+	rax <- rdi < rsi
+	return
+)
+
+(@retFun
+	1 0
+	rdi += 10
+	rax <- rdi
+	return
+)
+
+(@altRetFun
+	1 0
+	rdi -= 10
+	rax <- rdi
+	return
+)
+
+)

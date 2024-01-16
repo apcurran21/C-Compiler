@@ -1,0 +1,96 @@
+define @main () {
+ 
+:MainEntry
+ %ArrSize <- 10
+ %ArrSizeEncoded <- %ArrSize << 1
+ %ArrSizeEncoded <- %ArrSizeEncoded + 1
+ %Arr1 <- call @Alloc1DArr (%ArrSizeEncoded, 2)
+ %Arr2 <- call @Alloc1DArr (%ArrSizeEncoded, 4)
+ %Arr1Sum <- call @CalcArrSum (%Arr1)
+ %Arr2Sum <- call @CalcArrSum (%Arr2)
+ %SumOfArr <- %Arr1Sum + %Arr2Sum
+ %ProdOfArr <- %Arr1Sum * %Arr2Sum
+ %Arr1PrintVal <- %Arr1Sum << 1
+ %Arr1PrintVal <- %Arr1PrintVal + 1
+ call print (%Arr1PrintVal)
+ %Arr2PrintVal <- %Arr2Sum << 1
+ %Arr2PrintVal <- %Arr2PrintVal + 1
+ call print (%Arr2PrintVal)
+ %ArrSumPrintVal <- %SumOfArr << 1
+ %ArrSumPrintVal <- %ArrSumPrintVal + 1
+ %ArrProdPrintVal <- %ProdOfArr << 1
+ %ArrProdPrintVal <- %ArrProdPrintVal + 1
+ call print (%ArrSumPrintVal)
+ call print (%ArrProdPrintVal)
+ return 
+}
+
+define @CalcArrSum (%TargetArr) {
+ 
+:CalcArrEntry
+ %newVar0 <- 0 * 8
+ %newVar1 <- %newVar0 + 16
+ %newVar2 <- %TargetArr + %newVar1
+ %ArrLen <- load %newVar2
+ %ArrLen <- %ArrLen >> 1
+ %Count <- 0
+ %ArrSum <- 0
+ br :Loop
+ 
+:Loop
+ %newVar4 <- 0
+ %newVar5 <- 1
+ %newVar4 <- %newVar4 + %Count
+ %newVar3 <- %newVar4 * 8
+ %newVar3 <- %newVar3 + 24
+ %newVar6 <- %TargetArr + %newVar3
+ %CurrElm <- load %newVar6
+ %Count <- %Count + 1
+ %ArrSum <- %ArrSum + %CurrElm
+ %ContLoop <- %Count < %ArrLen
+ br %ContLoop :Loop 
+ br :Stop
+ 
+:Stop
+ return %ArrSum
+}
+
+define @Alloc1DArr (%ArrSize, %InitElmVal) {
+ 
+:Alloc1DEntry
+ %newVar1 <- %ArrSize >> 1
+ %newVar0 <- %newVar1
+ %newVar0 <- %newVar0 << 1
+ %newVar0 <- %newVar0 + 1
+ %newVar0 <- %newVar0 + 4
+ %NewArr <- call allocate (%newVar0, 1)
+ %newVar2 <- %NewArr + 8
+ store %newVar2 <- 3
+ %newVar3 <- %NewArr + 16
+ store %newVar3 <- %ArrSize
+ %newVar4 <- 0 * 8
+ %newVar5 <- %newVar4 + 16
+ %newVar6 <- %NewArr + %newVar5
+ %ArrLen <- load %newVar6
+ %ArrLen <- %ArrLen >> 1
+ %Count <- 0
+ %ArrSum <- 0
+ br :Loop
+ 
+:Loop
+ %newVar8 <- 0
+ %newVar9 <- 1
+ %newVar8 <- %newVar8 + %Count
+ %newVar7 <- %newVar8 * 8
+ %newVar7 <- %newVar7 + 24
+ %newVar10 <- %NewArr + %newVar7
+ store %newVar10 <- %InitElmVal
+ %Count <- %Count + 1
+ %ContLoop <- %Count < %ArrLen
+ br %ContLoop :Loop 
+ br :Stop
+ 
+:Stop
+ return %NewArr
+}
+

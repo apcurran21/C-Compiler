@@ -1,0 +1,22 @@
+%line_A_1 r12 r13 r14 r15 rbp rbx
+%line_A_2 r12 r13 r14 r15 rbp rbx
+%line_A_3 r12 r13 r14 r15 rbp rbx
+%line_A_4 r12 r13 r14 r15 rbp rbx
+%line_A_5 r12 r13 r14 r15 rbp rbx
+%line_A_6 r12 r13 r14 r15 rbp rbx
+%line_A_7 r12 r13 r14 r15 rbp rbx
+r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx rsi
+r11 r10 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx rsi
+r12 %line_A_1 %line_A_2 %line_A_3 %line_A_4 %line_A_5 %line_A_6 %line_A_7 r10 r11 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx rsi
+r13 %line_A_1 %line_A_2 %line_A_3 %line_A_4 %line_A_5 %line_A_6 %line_A_7 r10 r11 r12 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx rsi
+r14 %line_A_1 %line_A_2 %line_A_3 %line_A_4 %line_A_5 %line_A_6 %line_A_7 r10 r11 r12 r13 r15 r8 r9 rax rbp rbx rcx rdi rdx rsi
+r15 %line_A_1 %line_A_2 %line_A_3 %line_A_4 %line_A_5 %line_A_6 %line_A_7 r10 r11 r12 r13 r14 r8 r9 rax rbp rbx rcx rdi rdx rsi
+r8 r10 r11 r12 r13 r14 r15 r9 rax rbp rbx rcx rdi rdx rsi
+r9 r10 r11 r12 r13 r14 r15 r8 rax rbp rbx rcx rdi rdx rsi
+rax r10 r11 r12 r13 r14 r15 r8 r9 rbp rbx rcx rdi rdx rsi
+rbp %line_A_1 %line_A_2 %line_A_3 %line_A_4 %line_A_5 %line_A_6 %line_A_7 r10 r11 r12 r13 r14 r15 r8 r9 rax rbx rcx rdi rdx rsi
+rbx %line_A_1 %line_A_2 %line_A_3 %line_A_4 %line_A_5 %line_A_6 %line_A_7 r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rcx rdi rdx rsi
+rcx r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rdi rdx rsi
+rdi r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdx rsi
+rdx r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rsi
+rsi r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx

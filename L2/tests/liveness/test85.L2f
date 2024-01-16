@@ -1,0 +1,20 @@
+(@gcd
+	2
+	cjump rsi = 0 :gcdInitialCondition
+	%a <- rdi
+	%b <- rsi
+	rdi <- %a
+	rsi <- %b
+	mem rsp -8 <- :gcdCallsModReturn
+	call @mod 2
+	:gcdCallsModReturn
+	rdi <- %b
+	rsi <- rax
+	mem rsp -8 <- :gcdCallsGcdReturn
+	call @gcd 2
+	:gcdCallsGcdReturn
+	return
+	:gcdInitialCondition
+	rax <- rdi
+	return
+)

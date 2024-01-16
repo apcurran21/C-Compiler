@@ -1,0 +1,49 @@
+(@main
+        (@main
+        0 2
+        //this is defining rdi, not editting it
+        rdi <- 1
+        r10 <- 5
+        r11 <- 4
+        mem rsp -8 <- :myF2_ret
+        mem rsp 0 <- r10
+        mem rsp 8 <- r11
+        call @myF2 1
+        //this where you return to a.k.a return address
+        :myF2_ret
+        r10 <- mem rsp 0
+        r11 <- mem rsp 8
+        rdi <- r10
+        rdi += r11
+        rdi <- rax
+        call print 1
+        return
+        )
+        (@myF2
+        1 3
+        mem rsp 0 <- r12
+        mem rsp 8 <- r13
+        r13 <- 4
+        r12 <- 6
+        r12 += r13
+        rdi += r12
+        rax <- rdi
+        mem rsp 16 <- rax
+        mem rsp -8 <- :myF3_ret
+        call @myF3 1
+        :myF3_ret
+        r12 <- mem rsp 0
+        r13 <- mem rsp 8
+        rax <- mem rsp 16
+        return
+        )
+        (@myF3
+        1 1
+        mem rsp 0 <- r14
+        r14 <- 4
+        rdi += r14
+        r14 <- mem rsp 0
+        return
+        )
+
+)

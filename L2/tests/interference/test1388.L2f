@@ -1,0 +1,13 @@
+(@go
+	0
+	rdi <- 9
+	mem rsp -8 <- :fibo_ret
+	call @fibo 1
+	:fibo_ret
+	rdi <- rax
+	rdi <<= 1
+	rdi += 1
+	call print 1
+	rax <- 0
+	return
+)

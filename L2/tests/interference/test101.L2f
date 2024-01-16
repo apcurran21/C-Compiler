@@ -1,0 +1,50 @@
+(@Bubble_Sort
+	6
+	%arg1 <- rdi
+	%arg2 <- rsi
+	%arg3 <- rdx
+	%arg4 <- rcx
+	%arg5 <- r8
+	%arg6 <- r9
+	rdi <- 6
+	rdi <<= 1
+	rdi += 1
+	rsi <- 0
+	rsi <<= 1
+	rsi += 1
+	call allocate 2
+	%arr <- rax
+	mem %arr 8 <- %arg1
+	mem %arr 16 <- %arg2
+	mem %arr 24 <- %arg3
+	mem %arr 32 <- %arg4
+	mem %arr 40 <- %arg5
+	mem %arr 48 <- %arg6
+	%arr_end <- %arr
+	%arr_end += 48
+	%arr_start <- %arr
+	%arr_start += 8
+	%loop_end <- %arr_end
+	:comparison_end_point_decrement_loop
+	%i <- %arr_start
+	:print_loop
+	rdi <- mem %i 0
+	rdi <<= 1
+	rdi += 1
+	call print 1
+	%i += 8
+	cjump %i <= %arr_end :print_loop
+	%i <- %arr_start
+	:comparison_loop
+	%arr_i <- mem %i 0
+	%arr_ip1 <- mem %i 8
+	cjump %arr_i <= %arr_ip1 :dont_swap
+	mem %i 0 <- %arr_ip1
+	mem %i 8 <- %arr_i
+	:dont_swap
+	%i += 8
+	cjump %i < %loop_end :comparison_loop
+	%loop_end -= 8
+	cjump %arr_start <= %loop_end :comparison_end_point_decrement_loop
+	return
+)

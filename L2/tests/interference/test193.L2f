@@ -1,0 +1,66 @@
+(@transform
+	1
+	%v1 <- rdi
+	cjump %v1 = 1 :call_label_ciao__ciao_21
+	goto :call_label_ciao__ciao_22
+	:call_label_ciao__ciao_21
+	%v1 += 12
+	%v1 += 234
+	%v1 += 35
+	%v1 += 4
+	%v1 += 5
+	%v1 += 64
+	%v1 += 1
+	%v1 += 2225
+	%v1 += 2
+	%v1 += 232
+	%v1 += 335
+	%v1 += 32
+	%v1 += 31
+	:call_label_ciao__ciao_22
+	cjump %v1 = 1 :call_label_ciao__ciao_23
+	goto :call_label_ciao__ciao_24
+	:call_label_ciao__ciao_23
+	%v1 -= 6
+	:call_label_ciao__ciao_24
+	cjump %v1 = 1 :call_label_ciao__ciao_25
+	goto :call_label_ciao__ciao_26
+	:call_label_ciao__ciao_25
+	%v1 *= 2
+	%v1 *= 3
+	%v1 *= 4
+	%v1 *= 2
+	%v1 *= 2
+	%v1 *= -1
+	%v1 *= -12
+	%v1 *= -13
+	:call_label_ciao__ciao_26
+	cjump %v1 = 1 :call_label_ciao__ciao_27
+	goto :call_label_ciao__ciao_28
+	:call_label_ciao__ciao_27
+	%v1 &= 91823012
+	%v1 &= 283748234
+	%v1 &= 923492834
+	%v1 &= 837023412
+	%v1 &= 93498237
+	%v1 &= 987234922
+	%v1 &= 928374234
+	%v1 &= 98249234
+	%v1 &= 88888888
+	%v1 &= 88918239
+	%v1 &= 989891823
+	%v1 &= 98293849
+	:call_label_ciao__ciao_28
+	cjump %v1 = 1 :call_label_ciao__ciao_29
+	goto :call_label_ciao__ciao_30
+	:call_label_ciao__ciao_29
+	%v1 <<= 3
+	:call_label_ciao__ciao_30
+	cjump %v1 = 1 :call_label_ciao__ciao_31
+	goto :call_label_ciao__ciao_32
+	:call_label_ciao__ciao_31
+	%v1 >>= 2
+	:call_label_ciao__ciao_32
+	rax <- %v1
+	return
+)

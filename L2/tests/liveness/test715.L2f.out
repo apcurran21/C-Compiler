@@ -1,0 +1,22 @@
+(
+(in
+()
+()
+(rdi)
+(rdi rsi)
+(rdi rdx rsi)
+(rcx rdi rdx rsi)
+(r12 r13 r14 r15 rax rbp rbx)
+)
+
+(out
+()
+(rdi)
+(rdi rsi)
+(rdi rdx rsi)
+(rcx rdi rdx rsi)
+()
+()
+)
+
+)

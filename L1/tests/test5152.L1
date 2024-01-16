@@ -1,0 +1,51 @@
+//a^2 + b - c (a = 10, b = 2, c = 6)
+//b^3 - a + c
+(@go
+  (@go
+    0 0
+    rdi <- 21
+    rsi <- 5
+    rdx <- 13
+    mem rsp -8 <- :eq_ret
+    call @eq 3
+    :eq_ret
+    rdi <- rax
+    rdi <<= 1
+    rdi += 1
+    call print 1
+    rdi <- 21
+    rsi <- 5
+    rdx <- 13
+    mem rsp -8 <- :eq2_ret
+    call @eq2 3
+    :eq2_ret
+    rdi <- rax
+    rdi <<= 1
+    rdi += 1
+    call print 1
+    return
+  )
+  (@eq
+    3 0
+    rdi >>= 1
+    rax <- rdi
+    rax *= rax
+    rsi >>= 1
+    rax += rsi
+    rdx >>= 1
+    rax -= rdx
+    return
+  )
+  (@eq2
+    3 0
+    rsi >>= 1
+    rax <- rsi
+    rax *= rax
+    rax *= rsi
+    rdi >>= 1
+    rax -= rdi
+    rdx >>= 1
+    rax += rdx
+    return
+  )
+)

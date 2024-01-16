@@ -1,0 +1,13 @@
+(@GetArray
+	1
+	%len <- rdi
+	%len <<= 1
+	%len += 1
+	%val <- 1
+	rdi <- %len
+	rsi <- %val
+	call allocate 2
+	%arr <- rax
+	rax <- %arr
+	return
+)

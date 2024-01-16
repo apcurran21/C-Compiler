@@ -1,0 +1,33 @@
+void main(){
+    int64 return_var 
+    return_var <- fib(9)
+    print(return_var)
+    return
+}
+
+int64 fib(int64 p1){
+    int64 var1
+    int64 var2
+    int64 p2
+    int64 p3
+    int64 p4
+    int64 p5
+    int64 p6
+
+    var1 <- p1 = 0
+    var2 <- p1 = 1
+    br var1 :ENDzero :TryOne
+    :TryOne
+    br var2 :ENDone :Bigger
+    :Bigger
+    p2 <- p1 - 2
+    p3 <- p1 - 1
+    p4 <- fib(p2)
+    p5 <- fib(p3)
+    p6 <- p4 + p5
+    return p6
+    :ENDzero
+    return 0
+    :ENDone
+    return 1
+}

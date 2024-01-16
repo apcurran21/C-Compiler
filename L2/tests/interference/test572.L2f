@@ -1,0 +1,15 @@
+(@factorial
+	1
+	%x <- rdi
+	%result <- 1
+	%early_return <- %x <= 1
+	cjump %early_return = 1 :call_label_ciao__ciao__ciao_10
+	:call_label_ciao__ciao__ciao_9
+	%result *= %x
+	%x -= 1
+	%not_done <- 1 <= %x
+	cjump %not_done = 1 :call_label_ciao__ciao__ciao_9
+	:call_label_ciao__ciao__ciao_10
+	rax <- %result
+	return
+)

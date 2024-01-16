@@ -1,0 +1,47 @@
+(@power
+(@power
+	0 0
+	rdi <- 2
+	rsi <- 6
+	mem rsp -8 <- :rtn1
+	call @array 2
+	:rtn1
+	return
+)
+
+(@array
+	2 0
+	r15 <- -1
+	r14 <- rsi
+	r13 <- rdi
+	:array_begin
+	cjump r14 <= r15 :array_end
+	r15 += 1
+	rsi <- r15
+	rdi <- r13
+	mem rsp -8 <- :rtn2
+	call @calculate 2
+	:rtn2
+	rdi <- rax
+	rdi <<= 1
+	rdi += 1
+	call print 1
+	goto :array_begin
+	:array_end
+	return
+)
+
+(@calculate
+	2 0
+	rax <- 1
+	r12 <- 0
+	:loop_begin
+	cjump rsi <= r12 :loop_end
+	rax *= rdi
+	r12 += 1
+	goto :loop_begin
+	:loop_end
+	return
+)
+
+)

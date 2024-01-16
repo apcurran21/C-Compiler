@@ -1,0 +1,39 @@
+(@main
+(@main
+	0 2
+	mem rsp 8 <- r13
+	mem rsp 0 <- r12
+	:call_label0
+	goto :call_label1
+	:call_label1
+	r11 <- 0
+	r10 <- 43
+	r13 <- 55
+	r12 <- 32
+	rdi <- 74
+	r8 <- 67
+	rcx <- 83
+	r9 <- 39
+	rsi <- 45
+	rax <- 22
+	rdx <- 41
+	r11 += r10
+	r11 += r13
+	r11 += r12
+	r11 += rdi
+	r11 += r8
+	r11 += rcx
+	r11 += r9
+	r11 += rsi
+	r11 += rax
+	r11 += rdx
+	r11 <<= 1
+	r11 += 1
+	rdi <- r11
+	call print 1
+	r12 <- mem rsp 0
+	r13 <- mem rsp 8
+	return
+)
+
+)

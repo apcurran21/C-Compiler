@@ -1,0 +1,208 @@
+(@main
+(@main
+	0 2
+	mem rsp 8 <- r13
+	mem rsp 0 <- r12
+	:call_label0
+	goto :call_label1
+	:call_label1
+	r12 <- 10
+	rdi <- r12
+	mem rsp -8 <- :call_label2
+	call @GetArray 1
+	:call_label2
+	r13 <- rax
+	rdi <- r13
+	call print 1
+	rdi <- r13
+	rsi <- r12
+	mem rsp -8 <- :call_label3
+	call @FindPeak 2
+	:call_label3
+	rdi <- rax
+	mem rsp -8 <- :call_label4
+	call @PrintResult 1
+	:call_label4
+	r12 <- mem rsp 0
+	r13 <- mem rsp 8
+	return
+)
+
+(@GetArray
+	1 1
+	mem rsp 0 <- r12
+	r12 <- rdi
+	:call_label_ciao_5
+	goto :call_label_ciao_6
+	:call_label_ciao_6
+	r12 <<= 1
+	r12 += 1
+	rdi <- r12
+	rdi >>= 1
+	rdi <<= 1
+	rdi += 1
+	rdi += 4
+	rsi <- 1
+	call allocate 2
+	rsi <- rax
+	rdi <- rsi
+	rdi += 8
+	mem rdi 0 <- 3
+	rdi <- rsi
+	rdi += 16
+	mem rdi 0 <- r12
+	rdx <- 1
+	rdx <<= 1
+	rdx += 1
+	rdi <- 0
+	rcx <- rdi
+	rcx *= 8
+	rcx += 24
+	rdi <- rsi
+	rdi += rcx
+	mem rdi 0 <- rdx
+	rdx <- 2
+	rdx <<= 1
+	rdx += 1
+	rdi <- 0
+	rdi += 1
+	rcx <- rdi
+	rcx *= 8
+	rcx += 24
+	rdi <- rsi
+	rdi += rcx
+	mem rdi 0 <- rdx
+	rdx <- 3
+	rdx <<= 1
+	rdx += 1
+	rdi <- 0
+	rdi += 2
+	rdi *= 8
+	rdi += 24
+	rcx <- rsi
+	rcx += rdi
+	mem rcx 0 <- rdx
+	rdx <- 5
+	rdx <<= 1
+	rdx += 1
+	rdi <- 0
+	rdi += 3
+	rcx <- rdi
+	rcx *= 8
+	rcx += 24
+	rdi <- rsi
+	rdi += rcx
+	mem rdi 0 <- rdx
+	rdx <- 1
+	rdx <<= 1
+	rdx += 1
+	rdi <- 0
+	rdi += 4
+	rcx <- rdi
+	rcx *= 8
+	rcx += 24
+	rdi <- rsi
+	rdi += rcx
+	mem rdi 0 <- rdx
+	rdx <- 3
+	rdx <<= 1
+	rdx += 1
+	rdi <- 0
+	rdi += 5
+	rdi *= 8
+	rdi += 24
+	rcx <- rsi
+	rcx += rdi
+	mem rcx 0 <- rdx
+	rdx <- 2
+	rdx <<= 1
+	rdx += 1
+	rdi <- 0
+	rdi += 6
+	rdi *= 8
+	rdi += 24
+	rcx <- rsi
+	rcx += rdi
+	mem rcx 0 <- rdx
+	rdx <- 10
+	rdx <<= 1
+	rdx += 1
+	rdi <- 0
+	rdi += 7
+	rcx <- rdi
+	rcx *= 8
+	rcx += 24
+	rdi <- rsi
+	rdi += rcx
+	mem rdi 0 <- rdx
+	rdx <- 11
+	rdx <<= 1
+	rdx += 1
+	rdi <- 0
+	rdi += 8
+	rdi *= 8
+	rdi += 24
+	rcx <- rsi
+	rcx += rdi
+	mem rcx 0 <- rdx
+	rdx <- 8
+	rdx <<= 1
+	rdx += 1
+	rdi <- 0
+	rdi += 9
+	rdi *= 8
+	rdi += 24
+	rcx <- rsi
+	rcx += rdi
+	mem rcx 0 <- rdx
+	rax <- rsi
+	r12 <- mem rsp 0
+	return
+)
+
+(@FindPeak
+	2 0
+	r9 <- rdi
+	rdx <- rsi
+	:call_label_ciao__ciao_7
+	goto :call_label_ciao__ciao_13
+	:call_label_ciao__ciao_8
+	rax <- r8
+	return
+	:call_label_ciao__ciao_9
+	rcx += 1
+	goto :call_label_ciao__ciao_10
+	:call_label_ciao__ciao_10
+	rdi <- rdx <= rcx
+	cjump rdi = 1 :call_label_ciao__ciao_8
+	goto :call_label_ciao__ciao_11
+	:call_label_ciao__ciao_11
+	rdi <- 0
+	rdi += rcx
+	rdi *= 8
+	rdi += 24
+	rsi <- r9
+	rsi += rdi
+	rdi <- mem rsi 0
+	rsi <- rdi <= r8
+	cjump rsi = 1 :call_label_ciao__ciao_9
+	goto :call_label_ciao__ciao_12
+	:call_label_ciao__ciao_12
+	r8 <- rdi
+	goto :call_label_ciao__ciao_9
+	:call_label_ciao__ciao_13
+	r8 <- 0
+	rcx <- 0
+	goto :call_label_ciao__ciao_10
+)
+
+(@PrintResult
+	1 0
+	:call_label_ciao__ciao__ciao_14
+	goto :call_label_ciao__ciao__ciao_15
+	:call_label_ciao__ciao__ciao_15
+	call print 1
+	return
+)
+
+)

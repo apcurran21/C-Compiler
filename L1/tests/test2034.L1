@@ -1,0 +1,87 @@
+(@main
+(@main
+	0 0
+	:call_label0
+	rdi <- 0
+	mem rsp -8 <- :call_label1
+	call @func1 1
+	:call_label1
+	rdi <- rax
+	rdi <- rdi
+	call print 1
+	return
+)
+
+(@func1
+	1 0
+	rdi <- rdi
+	:call_label_ciao_2
+	rdi <- rdi
+	rdi += 10
+	rdi <- rdi
+	mem rsp -8 <- :call_label_ciao_3
+	call @func2 1
+	:call_label_ciao_3
+	rdi <- rax
+	rax <- rdi
+	return
+)
+
+(@func2
+	1 0
+	rdi <- rdi
+	:call_label_ciao__ciao_4
+	rdi <- rdi
+	rdi += 20
+	rdi <- rdi
+	mem rsp -8 <- :call_label_ciao__ciao_5
+	call @func3 1
+	:call_label_ciao__ciao_5
+	rdi <- rax
+	rax <- rdi
+	return
+)
+
+(@func3
+	1 0
+	rdi <- rdi
+	:call_label_ciao__ciao__ciao_6
+	rdi <- rdi
+	rdi += 30
+	rdi <- rdi
+	rsi <- 9
+	mem rsp -8 <- :call_label_ciao__ciao__ciao_7
+	call @recurse 2
+	:call_label_ciao__ciao__ciao_7
+	rdi <- rax
+	rax <- rdi
+	return
+)
+
+(@recurse
+	2 0
+	rdx <- rdi
+	rsi <- rsi
+	:call_label_ciao__ciao__ciao__ciao_8
+	rdx <- rdx
+	rdx += 1
+	rsi <- rsi
+	rsi -= 1
+	rdi <- rsi = 0
+	cjump rdi = 1 :call_label_ciao__ciao__ciao__ciao_10
+	goto :call_label_ciao__ciao__ciao__ciao_9
+	:call_label_ciao__ciao__ciao__ciao_9
+	rdi <- rdx
+	rsi <- rsi
+	mem rsp -8 <- :call_label_ciao__ciao__ciao__ciao_11
+	call @recurse 2
+	:call_label_ciao__ciao__ciao__ciao_11
+	rdi <- rax
+	rax <- rdi
+	return
+	:call_label_ciao__ciao__ciao__ciao_10
+	rax <- rdx
+	return
+)
+
+)

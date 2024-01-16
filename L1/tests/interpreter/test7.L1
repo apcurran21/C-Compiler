@@ -1,0 +1,19 @@
+(:go
+
+(:go
+  0 0
+
+  mem rsp -8 <- :myF_ret
+  call :myF 0
+  :myF_ret
+
+  return 
+)
+
+(:myF
+  0 0
+  rdi++
+  return 
+)
+
+)

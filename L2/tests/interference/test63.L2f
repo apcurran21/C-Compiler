@@ -1,0 +1,25 @@
+(@isPrime
+	1
+	%n <- rdi
+	%i <- 5
+	cjump %n <= 3 :return0
+	goto :loop
+	:loop
+	rdi <- %n
+	rsi <- %i
+	%i += 2
+	mem rsp -8 <- :isDivisible_ret
+	call @isDivisible 2
+	:isDivisible_ret
+	cjump rax = 3 :return0
+	goto :checkdone
+	:checkdone
+	cjump %n <= %i :return1
+	goto :loop
+	:return0
+	rax <- 1
+	return
+	:return1
+	rax <- 3
+	return
+)

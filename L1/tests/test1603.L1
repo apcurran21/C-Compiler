@@ -1,0 +1,18 @@
+(@main
+(@main
+	0 1
+	mem rsp 0 <- r12
+	rsi <- 4
+	rdi <- rsi
+	rsi <- 5
+	r12 <- rdi
+	r12 += 1
+	rdi <- rsi
+	call print 1
+	rdi <- r12
+	call print 1
+	r12 <- mem rsp 0
+	return
+)
+
+)

@@ -1,0 +1,7 @@
+(@arrLen
+	1
+	%arr <- rdi
+	%len <- mem %arr 0
+	rax <- %len
+	return
+)

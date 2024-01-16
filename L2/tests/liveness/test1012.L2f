@@ -1,0 +1,16 @@
+(@vol
+	1
+	%r <- rdi
+	:call_label_ciao__ciao__ciao__ciao_12
+	goto :call_label_ciao__ciao__ciao__ciao_13
+	:call_label_ciao__ciao__ciao__ciao_13
+	%r2 <- %r
+	%r2 *= %r
+	%r3 <- %r2
+	%r3 *= %r
+	%factor <- 4
+	%v <- %r3
+	%v *= %factor
+	rax <- %v
+	return
+)

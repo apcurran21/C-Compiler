@@ -1,0 +1,71 @@
+(@main
+(@main
+	0 2
+	mem rsp 8 <- r13
+	mem rsp 0 <- r12
+	rdi <- 5
+	rsi <- 3
+	call allocate 2
+	r12 <- rax
+	rdi <- r12
+	call print 1
+	r12 += 16
+	mem r12 0 <- 5
+	r12 -= 16
+	rdi <- r12
+	call print 1
+	rdi <- 5
+	rsi <- 7
+	call allocate 2
+	r13 <- rax
+	r13 += 16
+	mem r13 0 <- 9
+	r13 -= 16
+	rdi <- 5
+	rsi <- r12
+	call allocate 2
+	r12 <- rax
+	r12 += 16
+	mem r12 0 <- r13
+	r12 -= 16
+	rdi <- r12
+	call print 1
+	rdi <- r12
+	mem rsp -8 <- :call_label0
+	call @arrayprint 1
+	:call_label0
+	r12 <- mem rsp 0
+	r13 <- mem rsp 8
+	return
+)
+
+(@arrayprint
+	1 3
+	mem rsp 16 <- r14
+	mem rsp 8 <- r13
+	mem rsp 0 <- r12
+	rdx <- mem rdi 8
+	rsi <- mem rdi 16
+	rcx <- mem rdx 8
+	rdi <- rdx
+	rdi += 16
+	r12 <- mem rdi 0
+	r13 <- mem rsi 8
+	rdi <- rsi
+	rdi += 16
+	r14 <- mem rdi 0
+	rdi <- rcx
+	call print 1
+	rdi <- r12
+	call print 1
+	rdi <- r13
+	call print 1
+	rdi <- r14
+	call print 1
+	r12 <- mem rsp 0
+	r13 <- mem rsp 8
+	r14 <- mem rsp 16
+	return
+)
+
+)

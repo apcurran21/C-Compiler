@@ -1,0 +1,22 @@
+%encoded_ret_size r12 r13 r14 r15 rbp rbx %stack_ptr %val
+%not_empty r12 r13 r14 r15 rbp rbx %stack_ptr
+%old_size r12 r13 r14 r15 rbp rbx %stack_ptr
+r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx rsi %stack_ptr %val
+r11 r10 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx rsi %stack_ptr %val
+r12 %encoded_ret_size %not_empty %old_size r10 r11 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx %ret %ret_size rsi %stack_ptr %val
+r13 %encoded_ret_size %not_empty %old_size r10 r11 r12 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx %ret %ret_size rsi %stack_ptr %val
+r14 %encoded_ret_size %not_empty %old_size r10 r11 r12 r13 r15 r8 r9 rax rbp rbx rcx rdi rdx %ret %ret_size rsi %stack_ptr %val
+r15 %encoded_ret_size %not_empty %old_size r10 r11 r12 r13 r14 r8 r9 rax rbp rbx rcx rdi rdx %ret %ret_size rsi %stack_ptr %val
+r8 r10 r11 r12 r13 r14 r15 r9 rax rbp rbx rcx rdi rdx rsi %stack_ptr %val
+r9 r10 r11 r12 r13 r14 r15 r8 rax rbp rbx rcx rdi rdx rsi %stack_ptr %val
+rax r10 r11 r12 r13 r14 r15 r8 r9 rbp rbx rcx rdi rdx rsi %stack_ptr %val
+rbp %encoded_ret_size %not_empty %old_size r10 r11 r12 r13 r14 r15 r8 r9 rax rbx rcx rdi rdx %ret %ret_size rsi %stack_ptr %val
+rbx %encoded_ret_size %not_empty %old_size r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rcx rdi rdx %ret %ret_size rsi %stack_ptr %val
+rcx r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rdi rdx rsi %stack_ptr %val
+rdi r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdx rsi %stack_ptr %val
+rdx r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rsi %stack_ptr %val
+%ret r12 r13 r14 r15 rbp rbx %stack_ptr
+%ret_size r12 r13 r14 r15 rbp rbx %stack_ptr %val
+rsi r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx %stack_ptr %val
+%stack_ptr %encoded_ret_size %not_empty %old_size r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx %ret %ret_size rsi %val
+%val %encoded_ret_size r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx %ret_size rsi %stack_ptr

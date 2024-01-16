@@ -1,0 +1,40 @@
+(@main
+(@main
+  0 3
+  rdi <- 13
+  rsi <- 13
+  rdx <- 13
+  mem rsp 16 <- rdx
+  mem rsp 8 <- rsi
+  mem rsp 0 <- rdi
+  mem rsp -8 <- :array
+  call @create 3
+  :array
+  rdi <- mem rsp 0
+  rsi <- mem rsp 8
+  rdx <- mem rsp 16
+  call print 1
+  return 
+)
+(@create
+  3 0
+  rdi <- rdi
+  rsi <- rsi
+  rdx <- 3
+  call allocate 2
+  mem rax 8 <- 3
+  mem rax 16 <- 5
+  mem rax 24 <- 7
+  mem rax 32 <- 9
+  mem rax 40 <- 11
+  rsi <- rax
+  rdi <- 5
+  call allocate 2
+  rsi <- rax
+  rdi <- 5
+  call allocate 2
+  rdi <- rax
+  call print 1
+  return
+)
+)

@@ -1,0 +1,16 @@
+(@main
+	0
+	:call_label0
+	goto :call_label3
+	:call_label1
+	rdi <- 5
+	call print 1
+	return
+	:call_label2
+	rdi <- 3
+	call print 1
+	return
+	:call_label3
+	cjump 0 = 1 :call_label2
+	goto :call_label1
+)

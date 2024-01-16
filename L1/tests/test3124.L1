@@ -1,0 +1,66 @@
+(@main
+(@main
+	0 6
+	mem rsp 40 <- rbx
+	mem rsp 32 <- rbp
+	mem rsp 24 <- r15
+	mem rsp 16 <- r14
+	mem rsp 8 <- r13
+	mem rsp 0 <- r12
+	rdi <- 1
+	rsi <- 3
+	rdx <- 5
+	rcx <- 7
+	r8 <- 9
+	r9 <- 11
+	mem rsp -8 <- :ret
+	mem rsp -16 <- 13
+	mem rsp -24 <- 12
+	call @printVars 8
+	:ret
+	rdi <- rax
+	rbp <- 2
+	r15 <- 4
+	r14 <- 6
+	r13 <- 8
+	rdi <- 10
+	rbx <- 12
+	rdi <- rbx
+	rdi++
+	r12 <- rdi
+	rdi <- rdi
+	call print 1
+	rdi <- r12
+	rbp -= 1
+	r15 += 2
+	r14 *= 3
+	r13 &= 4
+	rax <- 5
+	cjump rax = 1 :true
+	goto :false
+	:true
+	goto :false
+	:false
+	rbx >>= 5
+	r12 <- mem rsp 0
+	r13 <- mem rsp 8
+	r14 <- mem rsp 16
+	r15 <- mem rsp 24
+	rbp <- mem rsp 32
+	rbx <- mem rsp 40
+	return
+)
+
+(@printVars
+	8 0
+	rsi <- mem rsp 0
+	rsi += rdi
+	rdi <- rsi
+	call print 1
+	rdi <- mem rsp 8
+	rdi <- rdi
+	call print 1
+	return
+)
+
+)

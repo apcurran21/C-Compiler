@@ -1,0 +1,37 @@
+(@main
+	0
+	%var1 <- 5
+	%var2 <- 3
+	rdi <- %var1
+	rsi <- %var2
+	call allocate 2
+	%my_V1 <- rax
+	rdi <- %my_V1
+	call print 1
+	%my_V1 += 16
+	mem %my_V1 0 <- 5
+	%my_V1 -= 16
+	rdi <- %my_V1
+	call print 1
+	rdi <- 5
+	rsi <- 7
+	call allocate 2
+	%my_V2 <- rax
+	%my_V2 += 16
+	mem %my_V2 0 <- 9
+	%my_V2 -= 16
+	rdi <- 5
+	rsi <- %my_V1
+	call allocate 2
+	%reg <- rax
+	%reg += 16
+	mem %reg 0 <- %my_V2
+	%reg -= 16
+	rdi <- %reg
+	call print 1
+	rdi <- %reg
+	mem rsp -8 <- :call_label0
+	call @arrayprint 1
+	:call_label0
+	return
+)

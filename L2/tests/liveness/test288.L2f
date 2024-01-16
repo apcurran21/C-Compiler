@@ -1,0 +1,51 @@
+(@main
+	0
+	:call_label0
+	%newVar1 <- 5
+	%newVar1 >>= 1
+	%newVar0 <- %newVar1
+	%newVar2 <- 5
+	%newVar2 >>= 1
+	%newVar0 *= %newVar2
+	%newVar0 <<= 1
+	%newVar0 += 1
+	%newVar0 += 6
+	rdi <- %newVar0
+	rsi <- 1
+	call allocate 2
+	%a <- rax
+	mem %a 8 <- 5
+	mem %a 16 <- 5
+	mem %a 24 <- 5
+	rdi <- %a
+	mem rsp -8 <- :call_label1
+	call @initArray 1
+	:call_label1
+	rdi <- %a
+	call print 1
+	rdi <- %a
+	rsi <- 0
+	rdx <- 0
+	mem rsp -8 <- :call_label2
+	call @printE 3
+	:call_label2
+	rdi <- %a
+	rsi <- 0
+	rdx <- 1
+	mem rsp -8 <- :call_label3
+	call @printE 3
+	:call_label3
+	rdi <- %a
+	rsi <- 1
+	rdx <- 0
+	mem rsp -8 <- :call_label4
+	call @printE 3
+	:call_label4
+	rdi <- %a
+	rsi <- 1
+	rdx <- 1
+	mem rsp -8 <- :call_label5
+	call @printE 3
+	:call_label5
+	return
+)

@@ -1,0 +1,24 @@
+(@getMax
+	1
+	%array <- rdi
+	%i <- 0
+	%maxValue <- -1
+	%currPointer <- %array
+	%arrayLength <- mem %currPointer 0
+	:call_label0
+	%currPointer += 8
+	%currValue <- mem %currPointer 0
+	%isGreaterThanMaxValue <- %maxValue < %currValue
+	cjump %isGreaterThanMaxValue = 1 :call_label1
+	goto :call_label2
+	:call_label1
+	%maxValue <- %currValue
+	:call_label2
+	%i += 1
+	%isIteratorLessThanArrayLength <- %i < %arrayLength
+	cjump %isIteratorLessThanArrayLength = 1 :call_label0
+	goto :call_label3
+	:call_label3
+	rax <- %maxValue
+	return
+)

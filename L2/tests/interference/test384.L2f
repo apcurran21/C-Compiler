@@ -1,0 +1,10 @@
+(@odd_nil
+	1
+	%n <- rdi
+	%n >>= 1
+	%n -= 1
+	%var <- %n
+	%var &= 1
+	rax <- %var
+	return
+)

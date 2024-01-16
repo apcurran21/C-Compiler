@@ -1,0 +1,9 @@
+define @main () {
+ 
+:NNNNNN
+ br :entry
+ 
+:entry
+ return 1
+}
+

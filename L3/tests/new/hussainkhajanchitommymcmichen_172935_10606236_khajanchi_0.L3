@@ -1,0 +1,35 @@
+// Recursive Fibonacci
+// Authors: Hussain Khajanchi and Tommy McMichen
+// Desc: An L3 implementation of recursive Fibonacci, 
+//       for EECS 322
+// Northwestern University
+
+// fib(n) = fib(n-1) + fib(n-2)
+
+define :fib(%n) {
+
+  %cond <- 1
+  %cond << 1
+  %br <- %n lte %cond 
+
+  br %br ret
+
+  %lhs <- %n - 1
+  %rhs <- %n - 2
+  %arg <- %lhs + %rhs
+  call fib(%arg) 
+
+  :ret
+    return %n
+
+}
+
+define :main () {
+  %n <- 10
+  %n << 1
+
+
+  %result <- call fib(%n)
+
+
+}

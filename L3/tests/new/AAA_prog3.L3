@@ -1,0 +1,47 @@
+
+define :main() {
+  %arr <- call allocate(7, 0)
+  %arr <- call :get_three(%arr)
+  %arr <- %arr + 8
+  %arg1 <- load %arr
+  %arr <- %arr + 8
+  %arg2 <- load %arr
+  %arr <- %arr + 8
+  %arg3 <- load %arr
+  %num <- call :sum_three(%arg1, %arg2, %arg3)
+  %num <- call :double(%num)
+  call print(%num)
+  return
+}
+
+define :get_three(%arr) {
+  %orig <- %arr
+  %val <- call input()
+  %arr <- %arr + 8
+  store %arr <- %val
+  %val <- call input()
+  %arr <- %arr + 8
+  store %arr <- %val
+  %val <- call input()
+  %arr <- %arr + 8
+  store %arr <- %val
+  return %orig
+}
+
+define :sum_three(%n1, %n2, %n3) {
+  %x <- %n1 >> 1
+  %y <- %n2 >> 1
+  %z <- %n3 >> 1
+  %result <- %x + %y
+  %result <- %result + %z
+  %result <- %result << 1
+  %result <- %result + 1
+  return %result
+}
+
+define :double(%var) {
+  %result <- %var >> 1
+  %result <- %result << 2
+  %result <- %result + 1
+  return %result
+}

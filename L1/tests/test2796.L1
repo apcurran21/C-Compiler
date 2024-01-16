@@ -1,0 +1,12 @@
+(@main
+(@main
+	0 0
+	:call_label0
+	goto :call_label1
+	:call_label1
+	call input 0
+	rdi <- rax
+	return
+)
+
+)

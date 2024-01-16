@@ -1,0 +1,30 @@
+(
+(in
+(r12 r13 r14 r15 rbp rbx rdi rsi)
+(%array r12 r13 r14 r15 rbp rbx rsi)
+(%array %index r12 r13 r14 r15 rbp rbx)
+(%array r12 r13 r14 r15 rbp rbx rdi)
+(%array r12 r13 r14 r15 rbp rbx rdi)
+(%array r12 r13 r14 r15 rax rbp rbx)
+(%array r12 r13 r14 r15 rax rbp rbx)
+(%array %index r12 r13 r14 r15 rbp rbx)
+(%addr r12 r13 r14 r15 rbp rbx)
+(%element r12 r13 r14 r15 rbp rbx)
+(r12 r13 r14 r15 rax rbp rbx)
+)
+
+(out
+(%array r12 r13 r14 r15 rbp rbx rsi)
+(%array %index r12 r13 r14 r15 rbp rbx)
+(%array r12 r13 r14 r15 rbp rbx rdi)
+(%array r12 r13 r14 r15 rbp rbx rdi)
+(%array r12 r13 r14 r15 rax rbp rbx)
+(%array r12 r13 r14 r15 rax rbp rbx)
+(%array %index r12 r13 r14 r15 rbp rbx)
+(%addr r12 r13 r14 r15 rbp rbx)
+(%element r12 r13 r14 r15 rbp rbx)
+(r12 r13 r14 r15 rax rbp rbx)
+()
+)
+
+)

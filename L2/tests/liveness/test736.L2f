@@ -1,0 +1,25 @@
+(@main
+	0
+	:call_label0
+	%a <- 1
+	%b <- 2
+	%c <- 3
+	%d <- 4
+	%e <- 5
+	%f <- 6
+	rdi <- %a
+	rsi <- %b
+	rdx <- %c
+	rcx <- %d
+	r8 <- %e
+	r9 <- %f
+	mem rsp -8 <- :call_label1
+	call @foo 6
+	:call_label1
+	%sum <- rax
+	rdi <- %sum
+	mem rsp -8 <- :call_label2
+	call @PrintArg 1
+	:call_label2
+	return
+)

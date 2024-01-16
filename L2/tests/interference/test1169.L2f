@@ -1,0 +1,70 @@
+(@main
+	0
+	:call_label_ciao__ciao_4
+	goto :call_label_ciao__ciao_5
+	:call_label_ciao__ciao_5
+	%arg3 <- 2
+	%arg4 <- 5
+	rdi <- %arg3
+	rsi <- %arg4
+	mem rsp -8 <- :call_label_ciao__ciao_6
+	call @newmat 2
+	:call_label_ciao__ciao_6
+	%arr <- rax
+	%M <- %arr
+	rdi <- %M
+	call print 1
+	%arg2 <- 0
+	%arg3 <- 1
+	%arg4 <- 3
+	rdi <- %M
+	rsi <- %arg2
+	rdx <- %arg3
+	rcx <- %arg4
+	mem rsp -8 <- :call_label_ciao__ciao_7
+	call @matset 4
+	:call_label_ciao__ciao_7
+	%arg2 <- 0
+	%arg3 <- 2
+	%arg4 <- 5
+	rdi <- %M
+	rsi <- %arg2
+	rdx <- %arg3
+	rcx <- %arg4
+	mem rsp -8 <- :call_label_ciao__ciao_8
+	call @matset 4
+	:call_label_ciao__ciao_8
+	%arg2 <- 0
+	%arg3 <- 3
+	%arg4 <- 7
+	rdi <- %M
+	rsi <- %arg2
+	rdx <- %arg3
+	rcx <- %arg4
+	mem rsp -8 <- :call_label_ciao__ciao_9
+	call @matset 4
+	:call_label_ciao__ciao_9
+	%arg2 <- 1
+	%arg3 <- 3
+	%arg4 <- 9
+	rdi <- %M
+	rsi <- %arg2
+	rdx <- %arg3
+	rcx <- %arg4
+	mem rsp -8 <- :call_label_ciao__ciao_10
+	call @matset 4
+	:call_label_ciao__ciao_10
+	%arg2 <- 1
+	%arg3 <- 0
+	%arg4 <- -1
+	rdi <- %M
+	rsi <- %arg2
+	rdx <- %arg3
+	rcx <- %arg4
+	mem rsp -8 <- :call_label_ciao__ciao_11
+	call @matset 4
+	:call_label_ciao__ciao_11
+	rdi <- %M
+	call print 1
+	return
+)

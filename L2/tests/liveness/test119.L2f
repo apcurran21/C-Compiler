@@ -1,0 +1,12 @@
+(@F1
+	2
+	%b <- rdi
+	%c <- rsi
+	:LOOP
+	rdi <- %b
+	call print 1
+	%b += 4
+	cjump %b <= %c :LOOP
+	rax <- 3
+	return
+)

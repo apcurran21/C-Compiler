@@ -1,0 +1,10 @@
+(@go
+	0
+	rdi <- 15
+	mem rsp -8 <- :fib_ret
+	call @fib 1
+	:fib_ret
+	rdi <- rax
+	call print 1
+	return
+)

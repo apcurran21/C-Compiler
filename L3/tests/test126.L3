@@ -1,0 +1,60 @@
+define @succ (%uu1, %uu2, %uu3, %uu4, %uu5, %uu6, %n, %uu8, %uu9, %uu10) {
+ 
+:entry
+ %m <- %n + 1
+ return %m
+}
+
+define @sum_to (%uu1, %uu2, %uu3, %uu4, %uu5, %uu6, %to) {
+ 
+:entry
+ %sum <- 0
+ %from <- 0
+ br :sum
+ 
+:sum
+ %tmp_rdx <- %to
+ %icmp <- %tmp_rdx < %from
+ br %icmp :end_sum 
+ br :do
+ 
+:do
+ %sum <- %sum + %from
+ %rsp_16 <- %from
+ %tmp_rax <- call @succ (%uu1, %uu2, %uu3, %uu4, %uu5, %uu6, %rsp_16, 8, 9, 10)
+ %from <- %tmp_rax
+ br :sum
+ 
+:end_sum
+ return %sum
+}
+
+define @main () {
+ 
+:entry
+ %i <- 0
+ %sft <- 1
+ br :for_go
+ 
+:for_go
+ %icmp <- %i <= 20
+ br %icmp :next_go 
+ br :end_go
+ 
+:next_go
+ %tmp_r12 <- %i
+ %rsp_16 <- %tmp_r12
+ %tmp_r12 <- %tmp_r12 + 1
+ %tmp_rax <- call @sum_to (1, 2, 3, 4, 5, 6, %rsp_16)
+ %tmp_rcx <- 1
+ %tmp_rax <- %tmp_rax << %sft
+ %tmp_rax <- %tmp_rax + %sft
+ %tmp_rdi <- %tmp_rax
+ call print (%tmp_rdi)
+ %i <- %tmp_r12
+ br :for_go
+ 
+:end_go
+ return 
+}
+

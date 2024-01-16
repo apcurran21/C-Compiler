@@ -1,0 +1,41 @@
+(@insertionSort
+	1
+	%array <- rdi
+	%arrayPointer <- %array
+	%arrayLength <- mem %arrayPointer 0
+	%i <- 2
+	:call_label0
+	%shouldOuterLoopTerminate <- %arrayLength < %i
+	cjump %shouldOuterLoopTerminate = 1 :call_label6
+	goto :call_label1
+	:call_label1
+	%j <- %i
+	:call_label2
+	%iteratorHasExhaustedAllPairs <- %j <= 1
+	cjump %iteratorHasExhaustedAllPairs = 1 :call_label5
+	goto :call_label3
+	:call_label3
+	%prevValueAddress <- %j
+	%prevValueAddress -= 1
+	%prevValueAddress <<= 3
+	%prevValueAddress += %arrayPointer
+	%currValueAddress <- %j
+	%currValueAddress <<= 3
+	%currValueAddress += %arrayPointer
+	%currValue <- mem %currValueAddress 0
+	%prevValue <- mem %prevValueAddress 0
+	%isCurrValueLessThanPrevValue <- %currValue < %prevValue
+	cjump %isCurrValueLessThanPrevValue = 1 :call_label4
+	goto :call_label5
+	:call_label4
+	mem %currValueAddress 0 <- %prevValue
+	mem %prevValueAddress 0 <- %currValue
+	%j -= 1
+	goto :call_label2
+	:call_label5
+	%i += 1
+	goto :call_label0
+	:call_label6
+	rax <- %arrayPointer
+	return
+)

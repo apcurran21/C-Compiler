@@ -1,0 +1,66 @@
+(@main
+	0
+	:call_label0
+	goto :call_label2
+	:call_label1
+	%newVar1 <- 7
+	%newVar1 >>= 1
+	%newVar0 <- %newVar1
+	%newVar2 <- 7
+	%newVar2 >>= 1
+	%newVar0 *= %newVar2
+	%newVar0 <<= 1
+	%newVar0 += 1
+	%newVar0 += 4
+	rdi <- %newVar0
+	rsi <- 1
+	call allocate 2
+	%ar <- rax
+	%newVar3 <- %ar
+	%newVar3 += 8
+	mem %newVar3 0 <- 7
+	%newVar4 <- %ar
+	%newVar4 += 16
+	mem %newVar4 0 <- 7
+	%newVar6 <- 0
+	%newVar7 <- %ar
+	%newVar7 += 16
+	%newVar8 <- mem %newVar7 0
+	%newVar10 <- 1
+	%newVar9 <- %newVar8
+	%newVar9 >>= 1
+	%newVar10 *= %newVar9
+	%newVar11 <- 1
+	%newVar11 *= %newVar10
+	%newVar6 += %newVar11
+	%newVar6 += 2
+	%newVar5 <- %newVar6
+	%newVar5 *= 8
+	%newVar5 += 24
+	%newVar12 <- %ar
+	%newVar12 += %newVar5
+	mem %newVar12 0 <- 5
+	%newVar14 <- 0
+	%newVar15 <- %ar
+	%newVar15 += 16
+	%newVar16 <- mem %newVar15 0
+	%newVar18 <- 1
+	%newVar17 <- %newVar16
+	%newVar17 >>= 1
+	%newVar18 *= %newVar17
+	%newVar19 <- 1
+	%newVar19 *= %newVar18
+	%newVar14 += %newVar19
+	%newVar14 += 2
+	%newVar13 <- %newVar14
+	%newVar13 *= 8
+	%newVar13 += 24
+	%newVar20 <- %ar
+	%newVar20 += %newVar13
+	%arElement <- mem %newVar20 0
+	rdi <- %arElement
+	call print 1
+	return
+	:call_label2
+	goto :call_label1
+)

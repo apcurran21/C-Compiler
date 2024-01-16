@@ -1,0 +1,41 @@
+(@avg
+    (@avg
+	0
+	rdi <- 1
+	rsi <- 3
+	rdx <- 5
+	rcx <- 7
+        mem rsp -8 <- :sum_ret
+        call @sum 4
+        :sum_ret
+        rdi <- rax
+        mem rsp -8 <- :divide_ret
+        call @divide 1
+        :divide_ret
+        rdi <- rax
+	rdi <<= 1
+	rdi += 1
+        call print 1
+        return)
+        
+        (@sum
+            4
+            %a <- rdi
+            %b <- rsi
+            %c <- rdx
+            %d <- rcx
+            rax <- 0
+            // rax += rdi
+            rax += %a
+            // rax += rsi
+            rax += %b
+            // rax += rdx
+            rax += %c
+            // rax += rcx
+            rax += %d
+            return)
+        (@divide
+            1
+            rdi >>= 2
+            rax <- rdi
+            return))

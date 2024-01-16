@@ -1,0 +1,30 @@
+(@euclid
+	2
+	%i0 <- rdi
+	%i1 <- rsi
+	%foo <- %i0
+	%bar <- %i1
+	:call_label0
+	%flag3 <- %foo = %bar
+	cjump %flag3 = 1 :call_label4
+	goto :call_label1
+	:call_label1
+	%flag <- %bar < %foo
+	cjump %flag = 1 :call_label3
+	goto :call_label2
+	:call_label2
+	%temp <- %foo
+	%foo <- %bar
+	%bar <- %temp
+	:call_label3
+	%temp <- %foo
+	%temp -= %bar
+	%foo <- %bar
+	%bar <- %temp
+	%flag2 <- 1
+	cjump %flag2 = 1 :call_label0
+	goto :call_label4
+	:call_label4
+	rax <- %foo
+	return
+)

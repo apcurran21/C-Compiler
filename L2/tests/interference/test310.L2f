@@ -1,0 +1,26 @@
+(@print_array
+	1
+	%vec_ptr <- rdi
+	%size <- mem %vec_ptr 0
+	rdi <- %size
+	mem rsp -8 <- :call_label_ciao_4
+	call @encode 1
+	:call_label_ciao_4
+	%size_e <- rax
+	rdi <- %size_e
+	call print 1
+	%ptr <- %vec_ptr
+	:call_label_ciao_1
+	%ptr += 8
+	%over <- %size = 0
+	cjump %over = 1 :call_label_ciao_3
+	goto :call_label_ciao_2
+	:call_label_ciao_2
+	%ele <- mem %ptr 0
+	rdi <- %ele
+	call print 1
+	%size -= 1
+	goto :call_label_ciao_1
+	:call_label_ciao_3
+	return
+)

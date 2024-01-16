@@ -1,0 +1,25 @@
+(@go
+(@go
+0 2
+rcx <- 1
+r11 <- 6
+r12 <- 1
+r13 <- 1
+:loop
+cjump r12<=r11 :loop2
+rdi <- r13
+rdi <<= rcx
+rdi += 1
+mem rsp 0 <- rcx
+mem rsp 8 <- r11
+call print 1
+rcx <- mem rsp 0
+r11 <- mem rsp 8
+return
+:loop2
+r13 *= r12
+r12++
+goto :loop
+return
+)
+)

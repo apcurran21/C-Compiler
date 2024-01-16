@@ -1,0 +1,55 @@
+void main()
+{
+   int64 number
+   number <- 12
+   array(number)
+   return
+}
+
+void array(int64 n)
+{
+   int64 first
+   int64 second
+   int64 index
+   int64 check
+   int64 value
+
+   first <- 1
+   second <- 1
+   index <- -1
+   
+   check <- n <= index
+   br check :array_end :array_continue1
+   :array_continue1
+   index <- index + 1
+   print (first)
+
+   check <- n = index
+   br check :array_end :array_continue2
+   :array_continue2
+   index <- index + 1
+   print (second)
+
+   first <- 1
+   second <- 1
+   br :array_begin
+   :array_begin
+   check <- n = index
+   br check :array_end :array_continue3
+   :array_continue3
+   index <- index + 1
+   value <- calculate(first, second)
+   first <- second
+   second <- value
+   print (value)
+   br :array_begin
+   :array_end
+   return   
+}
+
+int64 calculate(int64 f, int64 s)
+{
+   int64 next
+   next <- f + s
+   return next
+}

@@ -1,0 +1,64 @@
+(@main
+	0
+	%n <- 20
+	rdi <- %n
+	mem rsp -8 <- :call_label_ciao__ciao_8
+	call @generateFibonacciSequence 1
+	:call_label_ciao__ciao_8
+	%fibonacciSequence <- rax
+	rdi <- %fibonacciSequence
+	call print 1
+	rdi <- %n
+	mem rsp -8 <- :call_label_ciao__ciao_9
+	call @getNthFibonacciNumber 1
+	:call_label_ciao__ciao_9
+	%nthFibonacciNumber <- rax
+	rdi <- %nthFibonacciNumber
+	call print 1
+	%n <- 40
+	rdi <- %n
+	mem rsp -8 <- :call_label_ciao__ciao_10
+	call @generateFibonacciSequence 1
+	:call_label_ciao__ciao_10
+	%fibonacciSequence <- rax
+	rdi <- %fibonacciSequence
+	call print 1
+	rdi <- %n
+	mem rsp -8 <- :call_label_ciao__ciao_11
+	call @getNthFibonacciNumber 1
+	:call_label_ciao__ciao_11
+	%nthFibonacciNumber <- rax
+	rdi <- %nthFibonacciNumber
+	call print 1
+	%n <- 0
+	rdi <- %n
+	mem rsp -8 <- :call_label_ciao__ciao_12
+	call @generateFibonacciSequence 1
+	:call_label_ciao__ciao_12
+	%fibonacciSequence <- rax
+	rdi <- %fibonacciSequence
+	call print 1
+	rdi <- %n
+	mem rsp -8 <- :call_label_ciao__ciao_13
+	call @getNthFibonacciNumber 1
+	:call_label_ciao__ciao_13
+	%nthFibonacciNumber <- rax
+	rdi <- %nthFibonacciNumber
+	call print 1
+	%n <- 1
+	rdi <- %n
+	mem rsp -8 <- :call_label_ciao__ciao_14
+	call @generateFibonacciSequence 1
+	:call_label_ciao__ciao_14
+	%fibonacciSequence <- rax
+	rdi <- %fibonacciSequence
+	call print 1
+	rdi <- %n
+	mem rsp -8 <- :call_label_ciao__ciao_15
+	call @getNthFibonacciNumber 1
+	:call_label_ciao__ciao_15
+	%nthFibonacciNumber <- rax
+	rdi <- %nthFibonacciNumber
+	call print 1
+	return
+)

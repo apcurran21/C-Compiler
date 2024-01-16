@@ -1,0 +1,59 @@
+(@entry
+(@entry
+	0 3
+	mem rsp 16 <- r14
+	mem rsp 8 <- r13
+	mem rsp 0 <- r12
+	rdi <- 40
+	r12 <- rdi
+	rdi <- rdi
+	rdi <<= 1
+	rdi += 1
+	rsi <- -1
+	rsi <- rsi
+	call allocate 2
+	r13 <- rax
+	rsi <- 0
+	rdi <- rsi
+	:loop_start
+	rdx <- rdi
+	rdx <<= 1
+	rdx += 1
+	rcx <- rdi
+	rcx <<= 3
+	rcx += r13
+	mem rcx 8 <- rdx
+	mem rsp -8 <- :loop_inc
+	r14 <- rdi
+	rdi <- rdi
+	call @loop_inc_gen 1
+	:loop_inc
+	rdi <- rax
+	rsi <- r14
+	rsi += rdi
+	rdi <- rsi
+	cjump rdi < r12 :loop_start
+	goto :loop_end
+	:loop_end
+	rdi <- r13
+	call print 1
+	r12 <- mem rsp 0
+	r13 <- mem rsp 8
+	r14 <- mem rsp 16
+	return
+)
+
+(@loop_inc_gen
+	1 0
+	rsi <- 1
+	rdi &= 1
+	cjump rdi = 0 :is_dbt
+	goto :not_dbt
+	:is_dbt
+	rsi <- 3
+	:not_dbt
+	rax <- rsi
+	return
+)
+
+)

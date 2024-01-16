@@ -1,0 +1,110 @@
+(@main
+  (@mod
+    2
+    %x <- rdi
+    %y <- rsi
+    :call_label0
+    goto :call_label5
+    :call_label1
+    rax <- 1
+    return
+    :call_label2
+    %x <- %x
+    %x -= %y
+    %r <- %x = 0
+
+    cjump %r = 1 :call_label1
+    goto :call_label3
+    :call_label3
+    %r <- -1 < %x
+
+    cjump %r = 1 :call_label2
+    goto :call_label4
+    :call_label4
+    rax <- 0
+    return
+    :call_label5
+    %r <- %x = 0
+
+    cjump %r = 1 :call_label1
+    goto :call_label3
+  )
+  (@prime
+    1
+    %arg <- rdi
+    :call_label_ciao_6
+    goto :call_label_ciao_11
+    :call_label_ciao_7
+    rax <- 0
+    return
+    :call_label_ciao_8
+    rax <- 1
+    return
+    :call_label_ciao_9
+    %reloop <- %counter <= %halfarg
+
+    cjump %reloop = 1 :call_label_ciao_10
+    goto :call_label_ciao_8
+    :call_label_ciao_10
+    %halfarg <- %arg
+    %halfarg >>= 1
+    %counter <- %counter
+    %counter += 1
+    rdi <- %arg
+    rsi <- %counter
+
+mem rsp -8 <- :call_label_ciao_12
+    call @mod 2
+
+:call_label_ciao_12
+    %pstatus <- rax
+    cjump %pstatus = 1 :call_label_ciao_7
+    goto :call_label_ciao_9
+    :call_label_ciao_11
+    %inputIs2 <- %arg = 2
+
+    %counter <- 1
+    cjump %inputIs2 = 1 :call_label_ciao_8
+    goto :call_label_ciao_10
+  )
+  (@main
+    0
+    :call_label_ciao__ciao_13
+    goto :call_label_ciao__ciao_18
+    :call_label_ciao__ciao_14
+    %pr <- %searchCounter
+    %pr <<= 1
+    %pr <- %pr
+    %pr += 1
+    rdi <- %pr
+    call print 1
+    return
+    :call_label_ciao__ciao_15
+    %primeCounter <- %primeCounter
+    %primeCounter += 1
+    goto :call_label_ciao__ciao_16
+    :call_label_ciao__ciao_16
+    %weDone <- 58 <= %primeCounter
+
+    cjump %weDone = 1 :call_label_ciao__ciao_14
+    goto :call_label_ciao__ciao_17
+    :call_label_ciao__ciao_17
+    %searchCounter <- %searchCounter
+    %searchCounter += 1
+    rdi <- %searchCounter
+
+mem rsp -8 <- :call_label_ciao__ciao_19
+    call @prime 1
+
+:call_label_ciao__ciao_19
+    %result <- rax
+    %nresult <- %result = 0
+
+    cjump %nresult = 1 :call_label_ciao__ciao_16
+    goto :call_label_ciao__ciao_15
+    :call_label_ciao__ciao_18
+    %primeCounter <- 0
+    %searchCounter <- 0
+    goto :call_label_ciao__ciao_16
+  )
+)

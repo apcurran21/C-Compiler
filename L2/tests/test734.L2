@@ -1,0 +1,158 @@
+(@main
+  (@main
+    0
+    :call_label0
+    goto :call_label1
+    :call_label1
+    %newVar1 <- 7
+    %newVar1 >>= 1
+    %newVar0 <- %newVar1
+    %newVar0 <- %newVar0
+    %newVar0 <<= 1
+    %newVar0 <- %newVar0
+    %newVar0 += 1
+    %newVar0 <- %newVar0
+    %newVar0 += 2
+    rdi <- %newVar0
+    rsi <- 1
+    call allocate 2
+    %array <- rax
+    %newVar2 <- %array
+    %newVar2 += 8
+    mem %newVar2 0 <- 7
+    %newVar3 <- 0
+    %newVar3 *= 8
+    %newVar4 <- %newVar3
+    %newVar4 += 8
+    %newVar5 <- %array
+    %newVar5 += %newVar4
+    %ret <- mem %newVar5 0
+    rdi <- %array
+    rsi <- %ret
+
+mem rsp -8 <- :call_label2
+    call @rand 2
+
+:call_label2
+    %ret <- rax
+    %ret <- %ret
+    %ret <<= 1
+    %ret <- %ret
+    %ret += 1
+    rdi <- %ret
+    call print 1
+    %newVar7 <- 9
+    %newVar7 >>= 1
+    %newVar6 <- %newVar7
+    %newVar6 <- %newVar6
+    %newVar6 <<= 1
+    %newVar6 <- %newVar6
+    %newVar6 += 1
+    %newVar6 <- %newVar6
+    %newVar6 += 2
+    rdi <- %newVar6
+    rsi <- 1
+    call allocate 2
+    %array <- rax
+    %newVar8 <- %array
+    %newVar8 += 8
+    mem %newVar8 0 <- 9
+    %newVar9 <- 0
+    %newVar9 *= 8
+    %newVar10 <- %newVar9
+    %newVar10 += 8
+    %newVar11 <- %array
+    %newVar11 += %newVar10
+    %ret <- mem %newVar11 0
+    rdi <- %array
+    rsi <- %ret
+
+mem rsp -8 <- :call_label3
+    call @rand 2
+
+:call_label3
+    %ret <- rax
+    %ret <- %ret
+    %ret <<= 1
+    %ret <- %ret
+    %ret += 1
+    rdi <- %ret
+    call print 1
+    return
+  )
+  (@rand
+    2
+    %array <- rdi
+    %ret <- rsi
+    :call_label_ciao_4
+    goto :call_label_ciao_11
+    :call_label_ciao_5
+    rax <- 0
+    return
+    :call_label_ciao_6
+    goto :call_label_ciao_5
+    :call_label_ciao_7
+    %newVar1 <- 0
+    %newVar2 <- 1
+    %newVar1 <- %newVar1
+    %newVar1 += 0
+    %newVar0 <- %newVar1
+    %newVar0 *= 8
+    %newVar0 <- %newVar0
+    %newVar0 += 16
+    %newVar3 <- %array
+    %newVar3 += %newVar0
+    %ans <- mem %newVar3 0
+    %newVar5 <- 0
+    %newVar6 <- 1
+    %newVar5 <- %newVar5
+    %newVar5 += 1
+    %newVar4 <- %newVar5
+    %newVar4 *= 8
+    %newVar4 <- %newVar4
+    %newVar4 += 16
+    %newVar7 <- %array
+    %newVar7 += %newVar4
+    %test <- mem %newVar7 0
+    %newVar9 <- 0
+    %newVar10 <- 1
+    %newVar9 <- %newVar9
+    %newVar9 += 2
+    %newVar8 <- %newVar9
+    %newVar8 *= 8
+    %newVar8 <- %newVar8
+    %newVar8 += 16
+    %newVar11 <- %array
+    %newVar11 += %newVar8
+    %len <- mem %newVar11 0
+    %ans <- %ans
+    %ans += %test
+    %ans <- %ans
+    %ans += %len
+    rax <- %ans
+    return
+    :call_label_ciao_8
+    %ans <- 1
+    %test <- 0
+    rax <- 1
+    return
+    :call_label_ciao_9
+    %newVar12 <- 0
+    %newVar12 *= 8
+    %newVar13 <- %newVar12
+    %newVar13 += 8
+    %newVar14 <- %array
+    %newVar14 += %newVar13
+    %len <- mem %newVar14 0
+    %test <- %len = %ret
+
+    goto :call_label_ciao_7
+    :call_label_ciao_10
+    %ans <- 0
+    %len <- 0
+    %test <- 0
+    goto :call_label_ciao_9
+    :call_label_ciao_11
+    goto :call_label_ciao_10
+  )
+)

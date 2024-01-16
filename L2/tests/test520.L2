@@ -1,0 +1,58 @@
+(@main
+  (@main
+    0
+    :call_label0
+    goto :call_label1
+    :call_label1
+    rdi <- 7
+    rsi <- 13
+    rdx <- 41
+    rcx <- -4
+    r8 <- 123
+    r9 <- -134
+    mem rsp -16 <- 2
+
+mem rsp -8 <- :call_label2
+    call @big_func 7
+
+:call_label2
+    %res <- rax
+    %res <- %res
+    %res <<= 1
+    %res <- %res
+    %res += 1
+    rdi <- %res
+    call print 1
+    return
+  )
+  (@big_func
+    7
+    %v1 <- rdi
+    %v2 <- rsi
+    %v3 <- rdx
+    %v4 <- rcx
+    %v5 <- r8
+    %v6 <- r9
+    %v7 <- stack-arg 0
+    :call_label_ciao_3
+    goto :call_label_ciao_4
+    :call_label_ciao_4
+    %res <- 1
+    %res <- %res
+    %res *= %v1
+    %res <- %res
+    %res -= %v2
+    %res <- %res
+    %res += %v3
+    %res <- %res
+    %res *= %v4
+    %res <- %res
+    %res &= %v5
+    %res <- %res
+    %res += %v6
+    %res <- %res
+    %res -= %v7
+    rax <- %res
+    return
+  )
+)

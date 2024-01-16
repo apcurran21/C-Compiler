@@ -1,0 +1,60 @@
+(@main
+(@main
+	0 1
+	mem rsp 0 <- r12
+	r12 <- 9
+	r12 <- r12
+	r12 *= 4
+	r12 <- r12
+	r12 += 1
+	r12 <- r12
+	r12 <<= 3
+	r12 <- r12
+	r12 -= 10
+	rsi <- 1623
+	rdi @ rsi r12 4
+	rdi <- rsi
+	mem rsp -8 <- :call_label0
+	call @return_merge 1
+	:call_label0
+	rdi <- rax
+	rdi <- rdi
+	rdi <<= 1
+	rdi <- rdi
+	rdi += 1
+	rdi <- rdi
+	rsi <- 0
+	call allocate 2
+	rdi <- rax
+	rdi <- rdi
+	mem rsp -8 <- :call_label1
+	call @aliasing_issues 1
+	:call_label1
+	rax <- r12
+	r12 <- mem rsp 0
+	return
+)
+
+(@return_merge
+	1 0
+	rdi <- rdi
+	rdi <- rdi
+	rdi += 1
+	rax <- rdi
+	return
+)
+
+(@aliasing_issues
+	1 0
+	rdi <- rdi
+	mem rdi 0 <- 5
+	rsi <- mem rdi 0
+	rdi <- rdi
+	mem rdi 0 <- 4
+	rdi <- rsi
+	call print 1
+	rax <- 0
+	return
+)
+
+)

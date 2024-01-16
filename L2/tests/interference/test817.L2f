@@ -1,0 +1,71 @@
+(@recurse
+	2
+	%v1 <- rdi
+	%num <- rsi
+	:call_label_ciao__ciao_4
+	%newVar1 <- 0
+	%newVar0 <- %newVar1
+	%newVar0 *= 8
+	%newVar0 += 24
+	%newVar3 <- %v1
+	%newVar3 += %newVar0
+	%t1 <- mem %newVar3 0
+	%newVar5 <- 0
+	%newVar5 += 1
+	%newVar4 <- %newVar5
+	%newVar4 *= 8
+	%newVar4 += 24
+	%newVar7 <- %v1
+	%newVar7 += %newVar4
+	%t2 <- mem %newVar7 0
+	%newVar9 <- 0
+	%newVar9 += 2
+	%newVar8 <- %newVar9
+	%newVar8 *= 8
+	%newVar8 += 24
+	%newVar11 <- %v1
+	%newVar11 += %newVar8
+	%t3 <- mem %newVar11 0
+	%t1 += 1
+	%newVar13 <- 0
+	%newVar12 <- %newVar13
+	%newVar12 *= 8
+	%newVar12 += 24
+	%newVar15 <- %v1
+	%newVar15 += %newVar12
+	mem %newVar15 0 <- %t1
+	%t2 += 1
+	%newVar17 <- 0
+	%newVar17 += 1
+	%newVar16 <- %newVar17
+	%newVar16 *= 8
+	%newVar16 += 24
+	%newVar19 <- %v1
+	%newVar19 += %newVar16
+	mem %newVar19 0 <- %t2
+	%t3 += 1
+	%newVar21 <- 0
+	%newVar21 += 2
+	%newVar20 <- %newVar21
+	%newVar20 *= 8
+	%newVar20 += 24
+	%newVar23 <- %v1
+	%newVar23 += %newVar20
+	mem %newVar23 0 <- %t3
+	%num -= 1
+	%done <- %num = 0
+	cjump %done = 1 :call_label_ciao__ciao_6
+	goto :call_label_ciao__ciao_5
+	:call_label_ciao__ciao_5
+	rdi <- %v1
+	rsi <- %num
+	mem rsp -8 <- :call_label_ciao__ciao_7
+	call @recurse 2
+	:call_label_ciao__ciao_7
+	%ret <- rax
+	rax <- %ret
+	return
+	:call_label_ciao__ciao_6
+	rax <- %v1
+	return
+)

@@ -1,0 +1,46 @@
+//Manually iterate over array
+(@main
+        (@main
+          0 3
+                //Allocate array
+                rdi <- 4
+                rdi <<= 1
+                rdi++
+                rsi <- 7
+                rsi <<= 1
+                rsi++
+                rcx <- 0
+                rdx <- 0
+                mem rsp 0 <- rsi
+                mem rsp 8 <- rcx
+                mem rsp 16 <- rdx
+                call allocate 2
+                rsi <- mem rsp 0
+                rcx <- mem rsp 8
+                rdx <- mem rsp 16
+
+                //Iterate over array
+                rsi <- 5
+                //Index
+                rcx <- rax
+                rcx += 8
+                //End
+                rdx @ rax rsi 8
+
+                :cond
+                cjump rcx = rdx :end
+                rdi <- mem rcx 0
+                rcx += 8
+                mem rsp 0 <- rsi
+                mem rsp 8 <- rcx
+                mem rsp 16 <- rdx
+                call print 1
+                rsi <- mem rsp 0
+                rcx <- mem rsp 8
+                rdx <- mem rsp 16
+                goto :cond
+                :end
+
+                return
+        )
+)

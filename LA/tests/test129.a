@@ -1,0 +1,9 @@
+void main ( ){
+
+  :entry
+  tuple p
+  p <- new Tuple(3)
+  p[12] <- 21
+  return 
+
+}

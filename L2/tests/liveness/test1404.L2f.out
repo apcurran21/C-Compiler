@@ -1,0 +1,20 @@
+(
+(in
+(r12 r13 r14 r15 rbp rbx rdi)
+(%n r12 r13 r14 r15 rbp rbx)
+(%encodedN r12 r13 r14 r15 rbp rbx)
+(%encodedN r12 r13 r14 r15 rbp rbx)
+(%encodedN r12 r13 r14 r15 rbp rbx)
+(r12 r13 r14 r15 rax rbp rbx)
+)
+
+(out
+(%n r12 r13 r14 r15 rbp rbx)
+(%encodedN r12 r13 r14 r15 rbp rbx)
+(%encodedN r12 r13 r14 r15 rbp rbx)
+(%encodedN r12 r13 r14 r15 rbp rbx)
+(r12 r13 r14 r15 rax rbp rbx)
+()
+)
+
+)

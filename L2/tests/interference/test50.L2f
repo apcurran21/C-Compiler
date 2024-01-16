@@ -1,0 +1,29 @@
+(@primetest
+	1
+	%n <- rdi
+	%div <- 2
+	rdi <- %n
+	mem rsp -8 <- :sqrt_ret2
+	call @sqrt_ceil 1
+	:sqrt_ret2
+	%sqrt_n <- rax
+	rdi <- %div
+	:primetest_loop
+	rdi <- %n
+	rsi <- %div
+	mem rsp -8 <- :mod_ret
+	call @mod 2
+	:mod_ret
+	cjump rax = 0 :iscomposite
+	%div += 1
+	rsi <- %div
+	rdi <- %sqrt_n
+	cjump rdi < rsi :isprime
+	goto :primetest_loop
+	:isprime
+	rax <- 1
+	return
+	:iscomposite
+	rax <- 0
+	return
+)

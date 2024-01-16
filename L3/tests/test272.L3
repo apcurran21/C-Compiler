@@ -1,0 +1,25 @@
+// calculates (and prints) the 20th term of the fibonacci sequence
+// with fib(0) = fib(1) = 1
+
+define @main(){
+        %n <- 20
+        %result <- call @fib(%n)
+        %result <- %result << 1
+        %result <- %result + 1
+        call print(%result)
+        return
+}
+
+define @fib(%n){
+        %not_base <- %n > 1
+        br %not_base :recurse
+        return 1
+
+        :recurse
+        %n_sub_1 <- %n - 1
+        %fib_n_sub1 <- call @fib(%n_sub_1)
+        %n_sub_2 <- %n - 2
+        %fib_n_sub_2 <- call @fib(%n_sub_2)
+        %result <- %fib_n_sub1 + %fib_n_sub_2
+        return %result
+}

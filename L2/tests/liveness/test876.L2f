@@ -1,0 +1,8 @@
+(@decreaseOne
+	1
+	%p1 <- rdi
+	%res <- %p1
+	%res -= 1
+	rax <- %res
+	return
+)

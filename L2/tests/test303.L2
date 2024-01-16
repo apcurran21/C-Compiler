@@ -1,0 +1,74 @@
+(@main
+  (@main
+    0
+    rdi <- 20
+
+mem rsp -8 <- :call_label0
+    call @fib 1
+
+:call_label0
+    return
+  )
+  (@encode_and_print
+    1
+    %v <- rdi
+    %v_shifted <- %v
+    %v_shifted <<= 1
+    %v_encoded <- %v_shifted
+    %v_encoded += 1
+    rdi <- %v_encoded
+    call print 1
+    return
+  )
+  (@fib
+    1
+    %num <- rdi
+    %computes_remaining <- %num
+    %computes_started <- 0
+    %fib_i <- 0
+    %old_fib_i <- 0
+    %fib_im1 <- 0
+    :call_label_ciao_1
+    rdi <- %computes_started
+
+mem rsp -8 <- :call_label_ciao_6
+    call @encode_and_print 1
+
+:call_label_ciao_6
+    rdi <- %fib_i
+
+mem rsp -8 <- :call_label_ciao_7
+    call @encode_and_print 1
+
+:call_label_ciao_7
+    rdi <- 888888888888888888
+
+mem rsp -8 <- :call_label_ciao_8
+    call @encode_and_print 1
+
+:call_label_ciao_8
+    :call_label_ciao_2
+    %done <- %computes_remaining = 0
+
+    cjump %done = 1 :call_label_ciao_5
+    :call_label_ciao_3
+    %computes_remaining <- %computes_remaining
+    %computes_remaining -= 1
+    %computes_started <- %computes_started
+    %computes_started += 1
+    %past_base_case <- 1 < %computes_started
+
+    cjump %past_base_case = 1 :call_label_ciao_4
+    %fib_i <- %fib_i
+    %fib_i += 1
+    goto :call_label_ciao_1
+    :call_label_ciao_4
+    %old_fib_i <- %fib_i
+    %fib_i <- %fib_i
+    %fib_i += %fib_im1
+    %fib_im1 <- %old_fib_i
+    goto :call_label_ciao_1
+    :call_label_ciao_5
+    return
+  )
+)

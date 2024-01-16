@@ -1,0 +1,11 @@
+define @main (){
+  %v <- 2
+  %v <- 1 - %v
+
+  %w <- %v
+  %w <- %w << 1
+  %w <- %w + 1
+  call print(%w)
+
+  return
+}

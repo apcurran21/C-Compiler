@@ -1,0 +1,70 @@
+(@main
+  (@main
+    0
+    %var1 <- 5
+    %var2 <- 3
+    rdi <- %var1
+    rsi <- %var2
+    call allocate 2
+    %my_V1 <- rax
+    rdi <- %my_V1
+    call print 1
+    %my_V1 <- %my_V1
+    %my_V1 += 16
+    mem %my_V1 0 <- 5
+    %my_V1 <- %my_V1
+    %my_V1 -= 16
+    rdi <- %my_V1
+    call print 1
+    rdi <- 5
+    rsi <- 7
+    call allocate 2
+    %my_V2 <- rax
+    %my_V2 <- %my_V2
+    %my_V2 += 16
+    mem %my_V2 0 <- 9
+    %my_V2 <- %my_V2
+    %my_V2 -= 16
+    rdi <- 5
+    rsi <- %my_V1
+    call allocate 2
+    %reg <- rax
+    %reg <- %reg
+    %reg += 16
+    mem %reg 0 <- %my_V2
+    %reg <- %reg
+    %reg -= 16
+    rdi <- %reg
+    call print 1
+    rdi <- %reg
+
+mem rsp -8 <- :call_label0
+    call @arrayprint 1
+
+:call_label0
+    return
+  )
+  (@arrayprint
+    1
+    %p1 <- rdi
+    %el1 <- mem %p1 8
+    %el2 <- mem %p1 16
+    %el1_1 <- mem %el1 8
+    %el1mod <- %el1
+    %el1mod += 16
+    %el1_2 <- mem %el1mod 0
+    %el2_1 <- mem %el2 8
+    %el2mod <- %el2
+    %el2mod += 16
+    %el2_2 <- mem %el2mod 0
+    rdi <- %el1_1
+    call print 1
+    rdi <- %el1_2
+    call print 1
+    rdi <- %el2_1
+    call print 1
+    rdi <- %el2_2
+    call print 1
+    return
+  )
+)

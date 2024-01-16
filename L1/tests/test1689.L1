@@ -1,0 +1,51 @@
+(@main
+(@main
+	0 1
+	mem rsp 0 <- r12
+	rdi <- 50
+	rdi <<= 1
+	rdi += 1
+	rsi <- 1
+	call allocate 2
+	r12 <- rax
+	mem r12 8 <- 3
+	mem r12 16 <- 3
+	rdi <- 1
+	rcx <- 1
+	r8 <- 2
+	:call_label0
+	r8 += 1
+	rdx <- rdi
+	rdx += rcx
+	rdi <- rdx
+	rdi <<= 1
+	rdi += 1
+	rsi @ r12 r8 8
+	mem rsi 0 <- rdi
+	rdi <- rcx
+	rcx <- rdx
+	rsi <- r8 < 50
+	cjump rsi = 1 :call_label0
+	rdi <- r12
+	call print 1
+	rdx <- 0
+	r8 <- 0
+	:call_label1
+	rdi <- 50 <= r8
+	cjump rdi = 1 :call_label2
+	rsi @ r12 r8 8
+	rdi <- mem rsi 0
+	rdi >>= 1
+	rdx += rdi
+	r8 += 1
+	goto :call_label1
+	:call_label2
+	rdx <<= 1
+	rdx += 1
+	rdi <- rdx
+	call print 1
+	r12 <- mem rsp 0
+	return
+)
+
+)

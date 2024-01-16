@@ -1,0 +1,45 @@
+(@main
+(@main
+	0 2
+	mem rsp 8 <- r13
+	mem rsp 0 <- r12
+	rdi <- 5
+	rsi <- :my_label1
+	r12 <- 3
+	rdi += r12
+	cjump rdi = 8 :my_label1
+	:my_label2
+	rdi -= 4
+	rdi *= 3
+	rdi <- rdi
+	rdi <<= 1
+	rdi++
+	call print 1
+	rdi @ r12 rax 4
+	rdi <- 5
+	rsi <- 7
+	call allocate 2
+	r13 <- rax
+	rdi <- r12
+	rdi <<= 1
+	rdi++
+	call print 1
+	rdi <- r12 < 2
+	rdi <- rdi
+	rdi <<= 1
+	rdi++
+	call print 1
+	rdi <- r13
+	call print 1
+	r12 <- mem rsp 0
+	r13 <- mem rsp 8
+	return
+	:my_label1
+	r12++
+	goto :my_label2
+	r12 <- mem rsp 0
+	r13 <- mem rsp 8
+	return
+)
+
+)

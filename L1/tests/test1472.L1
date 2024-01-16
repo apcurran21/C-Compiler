@@ -1,0 +1,188 @@
+(@main
+(@array_encode
+	1 3
+	mem rsp 16 <- r14
+	mem rsp 8 <- r13
+	mem rsp 0 <- r12
+	r12 <- rdi
+	:call_label_ciao_10
+	rdi <- 0
+	rdi *= 8
+	rsi <- rdi
+	rsi += 16
+	rdi <- r12
+	rdi += rsi
+	r14 <- mem rdi 0
+	rdi <- r14
+	mem rsp -8 <- :call_label_ciao_14
+	call @int_decode 1
+	:call_label_ciao_14
+	r14 <- rax
+	r13 <- 0
+	goto :call_label_ciao_11
+	:call_label_ciao_11
+	rdi <- r13 = r14
+	cjump rdi = 1 :call_label_ciao_13
+	goto :call_label_ciao_12
+	:call_label_ciao_12
+	rdi <- 0
+	rdi += r13
+	rdi *= 8
+	rdi += 24
+	rsi <- r12
+	rsi += rdi
+	rdx <- mem rsi 0
+	rdi <- rdx
+	mem rsp -8 <- :call_label_ciao_15
+	call @int_encode 1
+	:call_label_ciao_15
+	rdx <- rax
+	rdi <- 0
+	rdi += r13
+	rdi *= 8
+	rdi += 24
+	rsi <- r12
+	rsi += rdi
+	mem rsi 0 <- rdx
+	r13 += 1
+	goto :call_label_ciao_11
+	:call_label_ciao_13
+	r12 <- mem rsp 0
+	r13 <- mem rsp 8
+	r14 <- mem rsp 16
+	return
+)
+
+(@int_decode
+	1 0
+	:call_label_ciao__ciao__ciao_17
+	rdi >>= 1
+	rax <- rdi
+	return
+)
+
+(@int_encode
+	1 0
+	:call_label_ciao__ciao_16
+	rdi <<= 1
+	rdi += 1
+	rax <- rdi
+	return
+)
+
+(@main
+	0 4
+	mem rsp 24 <- r15
+	mem rsp 16 <- r14
+	mem rsp 8 <- r13
+	mem rsp 0 <- r12
+	:call_label0
+	goto :call_label1
+	:call_label1
+	r12 <- 10
+	rdi <- r12 < 2
+	cjump rdi = 1 :call_label6
+	goto :call_label2
+	:call_label2
+	rdi <- r12
+	mem rsp -8 <- :call_label7
+	call @int_encode 1
+	:call_label7
+	r12 <- rax
+	rdi <- r12
+	rdi >>= 1
+	rdi <<= 1
+	rdi += 1
+	rdi += 4
+	rsi <- 1
+	call allocate 2
+	r14 <- rax
+	mem r14 8 <- 3
+	mem r14 16 <- r12
+	r13 <- 0
+	r12 <- 1
+	r15 <- 2
+	rdi <- 0
+	rdi += r13
+	rsi <- rdi
+	rsi *= 8
+	rsi += 24
+	rdi <- r14
+	rdi += rsi
+	mem rdi 0 <- 0
+	rdi <- 0
+	rdi += r12
+	rsi <- rdi
+	rsi *= 8
+	rsi += 24
+	rdi <- r14
+	rdi += rsi
+	mem rdi 0 <- 1
+	rdi <- 0
+	rdi *= 8
+	rdi += 16
+	rsi <- r14
+	rsi += rdi
+	rdx <- mem rsi 0
+	rdi <- rdx
+	mem rsp -8 <- :call_label8
+	call @int_decode 1
+	:call_label8
+	rdx <- rax
+	rsi <- 3
+	goto :call_label3
+	:call_label3
+	rdi <- rdx < rsi
+	cjump rdi = 1 :call_label5
+	goto :call_label4
+	:call_label4
+	rdi <- 0
+	rdi += r13
+	rcx <- rdi
+	rcx *= 8
+	rcx += 24
+	rdi <- r14
+	rdi += rcx
+	r9 <- mem rdi 0
+	rdi <- 0
+	rdi += r12
+	rdi *= 8
+	rdi += 24
+	rcx <- r14
+	rcx += rdi
+	rcx <- mem rcx 0
+	rdi <- 0
+	rdi += r15
+	r8 <- rdi
+	r8 *= 8
+	r8 += 24
+	r9 += rcx
+	rdi <- r14
+	rdi += r8
+	mem rdi 0 <- r9
+	rsi += 1
+	r13 += 1
+	r12 += 1
+	r15 += 1
+	goto :call_label3
+	:call_label5
+	rdi <- r14
+	mem rsp -8 <- :call_label9
+	call @array_encode 1
+	:call_label9
+	rdi <- r14
+	call print 1
+	r12 <- mem rsp 0
+	r13 <- mem rsp 8
+	r14 <- mem rsp 16
+	r15 <- mem rsp 24
+	return
+	:call_label6
+	r12 <- mem rsp 0
+	r13 <- mem rsp 8
+	r14 <- mem rsp 16
+	r15 <- mem rsp 24
+	return
+)
+
+)

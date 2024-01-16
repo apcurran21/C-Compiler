@@ -1,0 +1,64 @@
+(@matrix
+(@matrix
+	0 4
+	mem rsp 24 <- r15
+	mem rsp 16 <- r14
+	mem rsp 8 <- r13
+	mem rsp 0 <- r12
+	r15 <- 9
+	r12 <- 7
+	cjump r15 <= 1 :abort
+	cjump r12 <= 1 :abort
+	rdi <- r15
+	rsi <- 1
+	call allocate 2
+	r13 <- rax
+	rax += 8
+	r14 <- rax
+	:gen_rows
+	cjump r15 <= 1 :fill
+	rdi <- r12
+	rsi <- 1
+	call allocate 2
+	mem r14 0 <- rax
+	r14 += 8
+	r15 -= 2
+	goto :gen_rows
+	:fill
+	r14 -= 8
+	r15 <- mem r13 0
+	r12 <- mem r13 8
+	r12 <- mem r12 0
+	r15 *= r12
+	r15 <<= 1
+	r15++
+	rdi <- r15
+	call print 1
+	:outer_loop
+	cjump r14 <= r13 :end
+	rsi <- mem r14 0
+	rdi <- r12
+	rdi *= 8
+	rsi += rdi
+	rdi <- mem r14 0
+	:inner_loop
+	cjump rsi <= rdi :end_inner
+	mem rsi 0 <- r15
+	rsi -= 8
+	r15 -= 2
+	goto :inner_loop
+	:end_inner
+	r14 -= 8
+	goto :outer_loop
+	:end
+	rdi <- r13
+	call print 1
+	:abort
+	r12 <- mem rsp 0
+	r13 <- mem rsp 8
+	r14 <- mem rsp 16
+	r15 <- mem rsp 24
+	return
+)
+
+)

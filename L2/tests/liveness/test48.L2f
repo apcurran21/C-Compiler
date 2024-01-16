@@ -1,0 +1,15 @@
+(@sqrt_ceil
+	1
+	%n <- rdi
+	%sqrt <- 1
+	:sqrt_start
+	%newVariable12 <- %sqrt
+	%newVariable12 *= %newVariable12
+	rdi <- %n
+	cjump rdi < %newVariable12 :sqrt_end
+	%sqrt += 1
+	goto :sqrt_start
+	:sqrt_end
+	rax <- %sqrt
+	return
+)

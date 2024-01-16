@@ -1,0 +1,112 @@
+(@start
+(@newmat
+	2 5
+	rdx <- rdi
+	mem rsp 16 <- rdx
+	rdi += rdi
+	rdi++
+	rdx <- rdi
+	mem rsp 0 <- rdx
+	rdi += 4
+	rsi += rsi
+	rsi++
+	rsi <- rsi
+	mem rsp 24 <- rsi
+	rsi <- 1
+	call allocate 2
+	rdi <- mem rsp 0
+	mem rax 8 <- rdi
+	rdi <- mem rsp 24
+	mem rax 16 <- rdi
+	rdi <- rax
+	mem rsp 32 <- rdi
+	rdi <- 0
+	mem rsp 8 <- rdi
+	:nextcol
+	rdi <- mem rsp 24
+	rdi <- rdi
+	rsi <- 1
+	call allocate 2
+	rdi <- mem rsp 8
+	rsi <- mem rsp 32
+	rdi @ rsi rdi 8
+	mem rdi 24 <- rax
+	rdi <- mem rsp 8
+	rdi++
+	mem rsp 8 <- rdi
+	rdi <- mem rsp 8
+	rsi <- mem rsp 16
+	cjump rdi < rsi :nextcol
+	rdi <- mem rsp 32
+	rax <- rdi
+	return
+)
+
+(@matset
+	4 0
+	rdi @ rdi rsi 8
+	rdi <- mem rdi 24
+	rdi @ rdi rdx 8
+	mem rdi 8 <- rcx
+	return
+)
+
+(@start
+	0 1
+	mem rsp -8 <- :k1
+	rdi <- 2
+	rsi <- 5
+	call @newmat 2
+	:k1
+	rdi <- rax
+	mem rsp 0 <- rdi
+	rdi <- mem rsp 0
+	rdi <- rdi
+	call print 1
+	mem rsp -8 <- :s1
+	rdi <- mem rsp 0
+	rdi <- rdi
+	rsi <- 0
+	rdx <- 1
+	rcx <- 3
+	call @matset 4
+	:s1
+	mem rsp -8 <- :s2
+	rdi <- mem rsp 0
+	rdi <- rdi
+	rsi <- 0
+	rdx <- 2
+	rcx <- 5
+	call @matset 4
+	:s2
+	mem rsp -8 <- :s3
+	rdi <- mem rsp 0
+	rdi <- rdi
+	rsi <- 0
+	rdx <- 3
+	rcx <- 7
+	call @matset 4
+	:s3
+	mem rsp -8 <- :s4
+	rdi <- mem rsp 0
+	rdi <- rdi
+	rsi <- 1
+	rdx <- 3
+	rcx <- 9
+	call @matset 4
+	:s4
+	mem rsp -8 <- :s5
+	rdi <- mem rsp 0
+	rdi <- rdi
+	rsi <- 1
+	rdx <- 0
+	rcx <- -1
+	call @matset 4
+	:s5
+	rdi <- mem rsp 0
+	rdi <- rdi
+	call print 1
+	return
+)
+
+)

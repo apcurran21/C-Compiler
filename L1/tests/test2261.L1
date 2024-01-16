@@ -1,0 +1,39 @@
+(@myGo
+(@myGo
+	0 0
+	rdi <- 1
+	rsi <- 1
+	rdx <- 1
+	rcx <- 1
+	r8 <- 1
+	r9 <- 1
+	mem rsp -8 <- :f_ret
+	mem rsp -16 <- 1
+	call @add 7
+	:f_ret
+	rdi <- rax
+	call print 1
+	return
+)
+
+(@add
+	7 1
+	mem rsp 0 <- r12
+	r12 <- rdi
+	r12 += rsi
+	r12 += rdx
+	r12 += rcx
+	r12 += r8
+	r12 += r9
+	rdi <- mem rsp 8
+	r12 += rdi
+	r12 <<= 1
+	r12++
+	rdi <- r12
+	call print 1
+	rax <- r12
+	r12 <- mem rsp 0
+	return
+)
+
+)

@@ -1,0 +1,37 @@
+(@refill_stack
+	3
+	%new_stack_ptr <- rdi
+	%old_stack_ptr <- rsi
+	%num_remaining <- rdx
+	%more_to_write <- 0 < %num_remaining
+	cjump %more_to_write = 1 :call_label_ciao__ciao__ciao_11
+	goto :call_label_ciao__ciao__ciao_10
+	:call_label_ciao__ciao__ciao_10
+	rax <- %new_stack_ptr
+	return
+	:call_label_ciao__ciao__ciao_11
+	%old_size <- mem %old_stack_ptr 0
+	%old_stack_loc <- %old_stack_ptr
+	%old_stack_loc += 8
+	%num_elem_offset <- %old_size
+	%num_elem_offset -= %num_remaining
+	%offset <- %num_elem_offset
+	%offset *= 8
+	%old_stack_loc += %offset
+	%val_to_write <- mem %old_stack_loc 0
+	%new_stack_loc <- %new_stack_ptr
+	%new_stack_loc += 16
+	%new_stack_loc += %offset
+	mem %new_stack_loc 0 <- %val_to_write
+	%new_num_remaining <- %num_remaining
+	%new_num_remaining -= 1
+	rdi <- %new_stack_ptr
+	rsi <- %old_stack_ptr
+	rdx <- %new_num_remaining
+	mem rsp -8 <- :call_label_ciao__ciao__ciao_12
+	call @refill_stack 3
+	:call_label_ciao__ciao__ciao_12
+	%new_stack_ptr <- rax
+	rax <- %new_stack_ptr
+	return
+)

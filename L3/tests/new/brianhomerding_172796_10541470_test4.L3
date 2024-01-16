@@ -1,0 +1,51 @@
+define :main() {
+  %num1 <- 10
+  %num2 <- 25
+  %num3 <- 1
+
+  %lhs <- call input()
+  %rhs <- call input()
+
+  %cmp <- %lhs < %rhs
+  br %cmp :lt
+
+  %num3 <- %num1 + %num2
+  %num1 <- 4
+  %num2 <- %num3 * %num2
+  br :cont
+
+  :lt
+  %num4 <- %num1 + %num2
+  %num1 <- 40
+  %num2 <- %num3 - %num2
+
+  :cont
+  %res <- call :myF(%num1,%num2)
+
+  %out <- %res << 1
+  %out <- %out + 1
+  call print(%out)
+  return
+}
+
+define :myF(%p1,%p2) {
+
+  %cmp <- %p1 > %p2
+  br %cmp :true
+
+  %sub <- %p1 - %p2
+  %ret <- call :myF2(%sub)
+  return %ret
+
+  :true
+  return %p2
+
+}
+
+define :myF2(%p1) {
+
+  %v1 <- %p1 - 2
+  %v1 <- %v1 + 10
+  return %v1
+
+}

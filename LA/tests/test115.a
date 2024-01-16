@@ -1,0 +1,8 @@
+void main ( ){
+
+  :entry
+  tuple p
+  p[12] <- 21
+  return 
+
+}

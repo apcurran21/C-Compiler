@@ -1,0 +1,278 @@
+define tuple @vec_ctor() {
+:entry
+    tuple %res
+    int64[][] %buf
+    %res <- new Tuple(7)
+    %res[0] <- 0
+    %res[1] <- 1
+    %buf <- new Array(5,5)
+    %res[2] <- %buf
+    return %res
+}
+
+define void @memcp32(int64[][][] %ptr, int64 %idx, int64[][] %buf) {
+:entry
+    int64 %n
+    %n <- %ptr[%idx][0][0]
+    %buf[0][0] <- %n
+    %n <- %ptr[%idx][0][1]
+    %buf[0][1] <- %n
+    %n <- %ptr[%idx][1][0]
+    %buf[1][0] <- %n
+    %n <- %ptr[%idx][1][1]
+    %buf[1][1] <- %n
+    return
+}
+
+define void @memcp23(int64[][] %buf, int64[][][] %qtr, int64 %idx) {
+:entry
+    int64 %n
+    %n <- %buf[0][0]
+    %qtr[%idx][0][0] <- %n
+    %n <- %buf[0][1]
+    %qtr[%idx][0][1] <- %n
+    %n <- %buf[1][0]
+    %qtr[%idx][1][0] <- %n
+    %n <- %buf[1][1]
+    %qtr[%idx][1][1] <- %n
+    return
+}
+
+define void @vec_do_push_back(tuple %vec, int64[][] %new_val) {
+:entry
+    int64[][][] %ptr
+    int64 %size
+    int64 %new_size
+    %size <- %vec[0]
+    %ptr <- %vec[1]
+    call @memcp23(%new_val, %ptr, %size)
+    %new_size <- %size + 1
+    %vec[0] <- %new_size
+    return
+}
+
+define void @vec_push_back_alloc(tuple %vec) {
+:entry
+    int64[][][] %ptr
+    int64 %is_empty
+    int64 %size
+    int64 %capacity
+    int64 %len
+    int64 %is_full
+    int64[][][] %qtr
+    int64 %tiida
+    int64 %i
+    int64 %N
+    int64 %icmp
+    int64[][] %buf
+    int64[][][] %arr
+
+    %ptr <- %vec[1]
+    %is_empty <- %ptr & 1
+    br %is_empty :alloc_new :check_length
+:check_length
+    %size <- %vec[0]
+    %capacity <- length %ptr 0
+    // decode
+    %len <- %capacity >> 1
+    %is_full <- %size = %len
+    br %is_full :extend :has_space_left
+:has_space_left
+    return
+:extend
+    // decode
+    %tiida <- %capacity >> 1
+    // double
+    %tiida <- %tiida << 1
+    // encode
+    %tiida <- %tiida << 1
+    %tiida <- %tiida + 1
+    %qtr <- new Array(%tiida, 5, 5)
+
+    %i <- 0
+    %N <- %capacity >> 1
+    br :copy
+:copy
+    %icmp <- %i < %N
+    br %icmp :do :finish
+:do
+    %buf <- %vec[2]
+    call @memcp32(%ptr, %i, %buf)
+    call @memcp23(%buf, %qtr, %i)
+    br :inc
+:inc
+    %i <- %i + 1
+    br :copy
+:finish
+    %vec[1] <- %qtr
+    return
+:alloc_new
+    %arr <- new Array(3,5,5)
+    %vec[1] <- %arr
+    return
+}
+
+define void @main() {
+:entry
+    int64 %i
+    int64 %N
+    int64[][] %mat
+    tuple %vec
+    tuple %printing_buf
+    int64 %icmp
+    int64 %j
+    int64 %resid
+    int64 %notresid
+    int64 %size
+    int64 %capacity
+    int64[][][] %ptr
+    int64 %enci
+    int64[][][] %data
+    %j <- 0
+
+    br :B1
+:B1
+    %printing_buf <- new Tuple(5)
+    %vec <- call @vec_ctor()
+    %i <- 0
+    %N <- 300000000
+    %mat <- new Array(5, 5)
+    call @initmat(%mat)
+    br :B2
+:B2
+    %i <- 1 + %i
+    %icmp <-%i> %N
+    %icmp <- 1 - %icmp
+    br %icmp :B3 :B6
+:B3
+    %icmp <- %i <= 10
+    br %icmp :B5 :B3_5
+:B3_5
+    %j <- %i - 1
+    %resid <- %j & 33554431
+    %notresid <- 1 - %resid
+    br %notresid :B5 :B4
+:B4
+    call @nextfib(%mat)
+    %resid <- %j & 2097151
+    %icmp <- %resid = 0
+    br %icmp :save :B2
+:save
+    call @vec_push_back_alloc(%vec)
+    call @vec_do_push_back(%vec, %mat)
+    %size <- %vec[0]
+    %size <- %size << 1
+    %size <- %size + 1
+    %printing_buf[0] <- %size
+    %ptr <- %vec[1]
+    %capacity <- length %ptr 0
+    %printing_buf[1] <- %capacity
+    call print(%printing_buf)
+    br :B2
+:B5
+    %enci <- %i * 2
+    %enci <- %enci + 1
+    call print(%enci)
+    call print(%mat)
+    br :B4
+:B6
+    %data <- %vec[1]
+    call print(%data)
+    return
+}
+
+// compute fib by
+//   [0 1] n
+//   [1 1]
+define void @initmat(int64[][] %mat) {
+:entry
+    br :B1
+:B1
+    %mat[0][0] <- 1
+    %mat[0][1] <- 3
+    %mat[1][0] <- 3
+    %mat[1][1] <- 3
+    return
+}
+
+define int64 @mod10000(int64 %n) {
+:entry
+    int64 %icmp
+    %icmp <- %n >= 10000
+    br %icmp :mod :nothing
+:nothing
+    return %n
+:mod
+    %n <- %n - 10000
+    %n <- call @mod10000(%n)
+    return %n
+}
+
+define void @nextfib(int64[][] %acc) {
+:entry
+    int64 %n00
+    int64 %n01
+    int64 %n10
+    int64 %n11
+    int64 %B00
+    int64 %B01
+    int64 %B10
+    int64 %B11
+    int64 %A00
+    int64 %A01
+    int64 %A10
+    int64 %A11
+    int64 %g
+    int64 %h
+    int64 %e
+    int64 %f
+    int64 %c
+    int64 %d
+    int64 %a
+    int64 %b
+    br :B1
+:B2
+    %B00 <- 0
+    %B01 <- 1
+    %B10 <- 1
+    %B11 <- 1
+    br :B3
+:B1
+    %A00 <- %acc[0][0]
+    %A01 <- %acc[0][1]
+    %A10 <- %acc[1][0]
+    %A11 <- %acc[1][1]
+    %A00 <- %A00 - 1
+    %A01 <- %A01 - 1
+    %A10 <- %A10 - 1
+    %A11 <- %A11 - 1
+    br :B2
+:Bend
+    %n00 <- %n00 + 1
+    %n01 <- %n01 + 1
+    %n10 <- %n10 + 1
+    %n11 <- %n11 + 1
+    %n00 <- call @mod10000(%n00)
+    %n01 <- call @mod10000(%n10)
+    %n10 <- call @mod10000(%n10)
+    %n11 <- call @mod10000(%n11)
+    %acc[0][0] <- %n00
+    %acc[0][1] <- %n01
+    %acc[1][0] <- %n10
+    %acc[1][1] <- %n11
+    return
+:B3
+    %a <- %A00 * %B00
+    %b <- %A01 * %B10
+    %c <- %A00 * %B01
+    %d <- %A01 * %B11
+    %e <- %A10 * %B00
+    %f <- %A11 * %B10
+    %g <- %A10 * %B01
+    %h <- %A11 * %B11
+    %n00 <- %a + %b
+    %n01 <- %c + %d
+    %n10 <- %e + %f
+    %n11 <- %g + %h
+    br :Bend
+}

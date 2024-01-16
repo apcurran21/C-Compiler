@@ -1,0 +1,99 @@
+(@main
+(@insertionSort
+	1 0
+	r9 <- rdi
+	rax <- mem r9 0
+	r8 <- 2
+	:call_label0
+	rdi <- rax < r8
+	cjump rdi = 1 :call_label6
+	goto :call_label1
+	:call_label1
+	r10 <- r8
+	:call_label2
+	rdi <- r10 <= 1
+	cjump rdi = 1 :call_label5
+	goto :call_label3
+	:call_label3
+	rcx <- r10
+	rcx -= 1
+	rcx <<= 3
+	rcx += r9
+	r11 <- r10
+	r11 <<= 3
+	r11 += r9
+	rdx <- mem r11 0
+	rsi <- mem rcx 0
+	rdi <- rdx < rsi
+	cjump rdi = 1 :call_label4
+	goto :call_label5
+	:call_label4
+	mem r11 0 <- rsi
+	mem rcx 0 <- rdx
+	r10 -= 1
+	goto :call_label2
+	:call_label5
+	r8 += 1
+	goto :call_label0
+	:call_label6
+	rax <- r9
+	return
+)
+
+(@main
+	0 1
+	mem rsp 0 <- r12
+	rdi <- 11
+	rsi <- 1
+	call allocate 2
+	r12 <- rax
+	mem r12 8 <- 35
+	mem r12 16 <- 15
+	mem r12 24 <- 13
+	mem r12 32 <- 19
+	mem r12 40 <- 51
+	rdi <- r12
+	call print 1
+	rdi <- r12
+	mem rsp -8 <- :call_label_ciao_7
+	call @insertionSort 1
+	:call_label_ciao_7
+	rdi <- rax
+	call print 1
+	rdi <- 41
+	rsi <- 1
+	call allocate 2
+	r12 <- rax
+	mem r12 8 <- 35
+	mem r12 16 <- 15
+	mem r12 24 <- 13
+	mem r12 32 <- 19
+	mem r12 40 <- 51
+	mem r12 48 <- 27
+	mem r12 56 <- 49
+	mem r12 64 <- 57
+	mem r12 72 <- 9
+	mem r12 80 <- 63
+	mem r12 88 <- 81
+	mem r12 96 <- 97
+	mem r12 104 <- 11
+	mem r12 112 <- 11
+	mem r12 120 <- 13
+	mem r12 128 <- 7
+	mem r12 136 <- 33
+	mem r12 144 <- 37
+	mem r12 152 <- 27
+	mem r12 160 <- 51
+	rdi <- r12
+	call print 1
+	rdi <- r12
+	mem rsp -8 <- :call_label_ciao_8
+	call @insertionSort 1
+	:call_label_ciao_8
+	rdi <- rax
+	call print 1
+	r12 <- mem rsp 0
+	return
+)
+
+)

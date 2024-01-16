@@ -1,0 +1,13 @@
+(@isOdd
+	1
+	%a <- rdi
+	%a >>= 1
+	%a &= 1
+	%if <- %a = 1
+	cjump %if = 1 :call_label_ciao_6
+	rax <- 0
+	return
+	:call_label_ciao_6
+	rax <- 1
+	return
+)

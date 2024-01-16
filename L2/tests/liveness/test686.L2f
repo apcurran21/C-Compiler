@@ -1,0 +1,49 @@
+(@array_encode
+	1
+	%arrayAddr <- rdi
+	:call_label_ciao_10
+	%newVar0 <- 0
+	%newVar0 *= 8
+	%newVar1 <- %newVar0
+	%newVar1 += 16
+	%newVar2 <- %arrayAddr
+	%newVar2 += %newVar1
+	%arrayLen <- mem %newVar2 0
+	rdi <- %arrayLen
+	mem rsp -8 <- :call_label_ciao_14
+	call @int_decode 1
+	:call_label_ciao_14
+	%arrayLen <- rax
+	%pos <- 0
+	goto :call_label_ciao_11
+	:call_label_ciao_11
+	%ifDone <- %pos = %arrayLen
+	cjump %ifDone = 1 :call_label_ciao_13
+	goto :call_label_ciao_12
+	:call_label_ciao_12
+	%newVar4 <- 0
+	%newVar4 += %pos
+	%newVar3 <- %newVar4
+	%newVar3 *= 8
+	%newVar3 += 24
+	%newVar6 <- %arrayAddr
+	%newVar6 += %newVar3
+	%val <- mem %newVar6 0
+	rdi <- %val
+	mem rsp -8 <- :call_label_ciao_15
+	call @int_encode 1
+	:call_label_ciao_15
+	%val <- rax
+	%newVar8 <- 0
+	%newVar8 += %pos
+	%newVar7 <- %newVar8
+	%newVar7 *= 8
+	%newVar7 += 24
+	%newVar10 <- %arrayAddr
+	%newVar10 += %newVar7
+	mem %newVar10 0 <- %val
+	%pos += 1
+	goto :call_label_ciao_11
+	:call_label_ciao_13
+	return
+)

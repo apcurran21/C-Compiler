@@ -1,0 +1,40 @@
+(@isPrime
+	1
+	%n <- rdi
+	%n -= 1
+	%n >>= 1
+	%isNLessThan2 <- %n < 2
+	cjump %isNLessThan2 = 1 :call_label0
+	goto :call_label1
+	:call_label0
+	rax <- 1
+	return
+	:call_label1
+	%i <- 2
+	%end <- %n
+	%end -= 1
+	:call_label2
+	%isIteratorLessThanEnd <- %i < %end
+	cjump %isIteratorLessThanEnd = 1 :call_label3
+	goto :call_label4
+	:call_label3
+	%encodedI <- %i
+	%encodedI <<= 1
+	%encodedI += 1
+	%encodedN <- %n
+	%encodedN <<= 1
+	%encodedN += 1
+	rdi <- %encodedN
+	rsi <- %encodedI
+	mem rsp -8 <- :call_label5
+	call @modulo 2
+	:call_label5
+	%remainder <- rax
+	%i += 1
+	%isDivisible <- %remainder = 1
+	cjump %isDivisible = 1 :call_label0
+	goto :call_label2
+	:call_label4
+	rax <- 3
+	return
+)

@@ -1,0 +1,49 @@
+(@firstNPrimes
+	1
+	%n <- rdi
+	%isLessThanZero <- %n < 1
+	cjump %isLessThanZero = 1 :call_label0
+	goto :call_label1
+	:call_label0
+	rax <- -1
+	return
+	:call_label1
+	rdi <- %n
+	rsi <- 1
+	call allocate 2
+	%arr <- rax
+	%n -= 1
+	%n <<= 1
+	%numPrimes <- 0
+	%i <- 2
+	%offset <- 8
+	:call_label2
+	%isNotDone <- %numPrimes < %n
+	cjump %isNotDone = 1 :call_label3
+	goto :call_label6
+	:call_label3
+	%encodedI <- %i
+	%encodedI <<= 1
+	%encodedI += 1
+	rdi <- %encodedI
+	mem rsp -8 <- :call_label7
+	call @isPrime 1
+	:call_label7
+	%numIsPrime <- rax
+	%numIsPrime -= 1
+	%numIsPrime >>= 1
+	cjump %numIsPrime = 1 :call_label4
+	goto :call_label5
+	:call_label4
+	%address <- %arr
+	%address += %offset
+	mem %address 0 <- %encodedI
+	%offset += 8
+	%numPrimes += 1
+	:call_label5
+	%i += 1
+	goto :call_label2
+	:call_label6
+	rax <- %arr
+	return
+)

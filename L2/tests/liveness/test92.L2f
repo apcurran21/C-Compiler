@@ -1,0 +1,21 @@
+(@max
+	1
+	%curr_value_ptr <- rdi
+	%i <- 0
+	%max_value <- -1
+	%arr_len <- mem %curr_value_ptr 0
+	:loop
+	%curr_value_ptr += 8
+	%curr_value <- mem %curr_value_ptr 0
+	cjump %max_value < %curr_value :assign
+	goto :continue
+	:assign
+	%max_value <- %curr_value
+	:continue
+	%i += 1
+	cjump %i < %arr_len :loop
+	goto :after
+	:after
+	rax <- %max_value
+	return
+)

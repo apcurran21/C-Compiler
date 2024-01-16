@@ -1,0 +1,22 @@
+(@isDivisible
+	2
+	%a <- rdi
+	%b <- rsi
+	:check1
+	cjump %a < %b :ret0
+	goto :check2
+	:check2
+	cjump %a = %b :ret1
+	goto :subtract
+	:subtract
+	%a++
+	%a -= %b
+	goto :check1
+	:ret0
+	rax <- 1
+	return
+	:ret1
+	rax <- 3
+	return
+	return
+)

@@ -1,0 +1,135 @@
+(@main
+(@succ
+	10 0
+	rdi <- rdi
+	rdi <- rsi
+	rdi <- rdx
+	rdi <- rcx
+	rdi <- r8
+	rdi <- r9
+	rsi <- mem rsp 0
+	rdi <- mem rsp 8
+	rdi <- mem rsp 16
+	rdi <- mem rsp 24
+	:call_label0
+	rdi <- rsi
+	rdi += 1
+	rax <- rdi
+	return
+)
+
+(@sum_to
+	7 8
+	mem rsp 40 <- rbx
+	mem rsp 32 <- rbp
+	mem rsp 24 <- r15
+	mem rsp 16 <- r14
+	mem rsp 8 <- r13
+	mem rsp 0 <- r12
+	r14 <- rdi
+	r15 <- rsi
+	r12 <- rdx
+	r13 <- rcx
+	rdi <- r8
+	mem rsp 56 <- rdi
+	rdi <- r9
+	mem rsp 48 <- rdi
+	rbp <- mem rsp 64
+	:call_label_ciao_1
+	rbx <- 0
+	rsi <- 0
+	goto :call_label_ciao_2
+	:call_label_ciao_2
+	rdi <- rbp
+	rdi <- rdi < rsi
+	cjump rdi = 1 :call_label_ciao_4
+	goto :call_label_ciao_3
+	:call_label_ciao_3
+	rbx <- rbx
+	rbx += rsi
+	rax <- rsi
+	rdi <- r14
+	rsi <- r15
+	rdx <- r12
+	rcx <- r13
+	r8 <- mem rsp 56
+	r8 <- r8
+	r9 <- mem rsp 48
+	r9 <- r9
+	mem rsp -40 <- rax
+	mem rsp -32 <- 8
+	mem rsp -24 <- 9
+	mem rsp -16 <- 10
+	mem rsp -8 <- :call_label_ciao_5
+	call @succ 10
+	:call_label_ciao_5
+	rdi <- rax
+	rsi <- rdi
+	goto :call_label_ciao_2
+	:call_label_ciao_4
+	rax <- rbx
+	r12 <- mem rsp 0
+	r13 <- mem rsp 8
+	r14 <- mem rsp 16
+	r15 <- mem rsp 24
+	rbp <- mem rsp 32
+	rbx <- mem rsp 40
+	return
+)
+
+(@main
+	0 7
+	mem rsp 40 <- rbx
+	mem rsp 32 <- rbp
+	mem rsp 24 <- r15
+	mem rsp 16 <- r14
+	mem rsp 8 <- r13
+	mem rsp 0 <- r12
+	:call_label_ciao__ciao_6
+	rsi <- 0
+	rdi <- 1
+	mem rsp 48 <- rdi
+	goto :call_label_ciao__ciao_7
+	:call_label_ciao__ciao_7
+	rdi <- rsi <= 20
+	cjump rdi = 1 :call_label_ciao__ciao_8
+	goto :call_label_ciao__ciao_9
+	:call_label_ciao__ciao_8
+	r12 <- rsi
+	rax <- r12
+	r12 <- r12
+	r12 += 1
+	rdi <- 1
+	rsi <- 2
+	rdx <- 3
+	rcx <- 4
+	r8 <- 5
+	r9 <- 6
+	mem rsp -16 <- rax
+	mem rsp -8 <- :call_label_ciao__ciao_10
+	call @sum_to 7
+	:call_label_ciao__ciao_10
+	rsi <- rax
+	rdi <- 1
+	rsi <- rsi
+	rcx <- mem rsp 48
+	rsi <<= rcx
+	rsi <- rsi
+	rdi <- mem rsp 48
+	rsi += rdi
+	rdi <- rsi
+	rdi <- rdi
+	call print 1
+	rsi <- r12
+	goto :call_label_ciao__ciao_7
+	:call_label_ciao__ciao_9
+	r12 <- mem rsp 0
+	r13 <- mem rsp 8
+	r14 <- mem rsp 16
+	r15 <- mem rsp 24
+	rbp <- mem rsp 32
+	rbx <- mem rsp 40
+	return
+)
+
+)

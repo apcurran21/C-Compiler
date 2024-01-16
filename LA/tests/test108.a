@@ -1,0 +1,13 @@
+void main ( ){
+  code fp
+  fp <- myF
+  fp()
+
+  return
+
+}
+
+void myF ( ){
+  print(1)
+  return 
+}

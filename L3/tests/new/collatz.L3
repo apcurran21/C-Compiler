@@ -1,0 +1,57 @@
+define main() {
+	//%input1 <- call input //get a number, print the encoded version of that number ((n<<1)+1)
+	%input1 <- 27
+	%input1 <- %input1 << 1
+	%input1 <- %input1 + 1
+	call print(%input1)
+	
+	//%inputCollatz <- call input //get a new number, print the results of running the collatz function on it.
+	%num <- 55
+	%arrayLoc <- call allocate(7, 1)
+	%arrayLoc <- call collatz(%num, %arrayLoc)
+	call print(%arrayLoc)
+	return
+}
+define collatz(%num, %arrayLoc) {
+	%num <- %num >> 1
+	
+	:collatz_test
+	%temp <- %num << 1
+	%temp <- %temp + 1
+	
+	call print(%temp)
+	
+	%temp <- num <= 1
+	br %temp :collatz_end
+	
+	%tempL <- %arrayLoc + 8
+	%tempN <- load %tempL
+	%tempN <- %tempN + 2
+	store %tempL <- %tempN
+	
+	%temp <- %num & 1
+	%temp <- %temp = 1
+	cjump %temp :collatz_odd
+	
+	//collatz_even
+	%tempL <- %arrayLoc + 16
+	%tempN <- load %tempL
+	%tempN <- %tempN + 2
+	store %tempL <- %tempN
+	
+	%num <- %num >> 1
+	br :collatz_test
+	
+	:collatz_odd
+	%tempL <- %arrayLoc + 24
+	%tempN <- load %tempL
+	%tempN <- %tempN + 2
+	store %tempL <- %tempN
+	
+	%num <- %num * 3
+	%num <- %num + 1
+	br :collatz_test
+	
+	:collatz_end
+	return %arrayLoc
+}

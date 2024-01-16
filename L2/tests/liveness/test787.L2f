@@ -1,0 +1,12 @@
+(@circ
+	1
+	%r <- rdi
+	:call_label_ciao_5
+	%d <- 2
+	%d *= %r
+	%pi <- 3
+	%c <- %d
+	%c *= %pi
+	rax <- %c
+	return
+)

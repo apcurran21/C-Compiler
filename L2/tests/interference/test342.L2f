@@ -1,0 +1,17 @@
+(@main
+	0
+	%size <- 20
+	%ind <- %size
+	%ind *= 8
+	rdi <- %size
+	mem rsp -8 <- :call_label0
+	call @fibSeq 1
+	:call_label0
+	%arr <- rax
+	%ptr <- %arr
+	%ptr += %ind
+	%fibVal <- mem %ptr 0
+	rdi <- %fibVal
+	call print 1
+	return
+)

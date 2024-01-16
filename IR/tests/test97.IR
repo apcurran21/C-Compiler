@@ -1,0 +1,21 @@
+define void @main ( ){
+  :entry
+  int64 %c
+  int64 %i
+  %i <- 0
+  br :loopHeader
+
+  :loopHeader
+  %c <- %i = 10
+  br %c :exit :loopBody
+
+  :loopBody
+  %i <- %i + 1
+  br :loopHeader
+
+  :exit
+  %i <- %i << 1
+  %i <- %i + 1
+  call print(%i)
+  return
+}

@@ -1,0 +1,77 @@
+(@fib
+(@fib
+	0 0
+	rdi <- 10
+	mem rsp -8 <- :arr_rtn
+	call @array 1
+	:arr_rtn
+	return
+)
+
+(@array
+	1 4
+	rdi <- rdi
+	mem rsp 24 <- rdi
+	rdi <- 0
+	mem rsp 0 <- rdi
+	rdi <- mem rsp 0
+	rdi += 1
+	mem rsp 0 <- rdi
+	rdi <- 1
+	rdi <<= 1
+	rdi += 1
+	call print 1
+	rdi <- mem rsp 0
+	rsi <- mem rsp 24
+	cjump rsi < rdi :array_end
+	rdi <- mem rsp 0
+	rdi += 1
+	mem rsp 0 <- rdi
+	rdi <- 1
+	rdi <<= 1
+	rdi += 1
+	call print 1
+	rdi <- mem rsp 0
+	rsi <- mem rsp 24
+	cjump rsi < rdi :array_end
+	rdi <- 1
+	mem rsp 16 <- rdi
+	rdi <- 1
+	mem rsp 8 <- rdi
+	:array_begin
+	rdi <- mem rsp 0
+	rdi += 1
+	mem rsp 0 <- rdi
+	rdi <- mem rsp 16
+	rdi <- rdi
+	rsi <- mem rsp 8
+	rsi <- rsi
+	mem rsp -8 <- :calc_rtn
+	call @calculate 2
+	:calc_rtn
+	rdi <- mem rsp 8
+	rdi <- rdi
+	mem rsp 16 <- rdi
+	rdi <- rax
+	mem rsp 8 <- rdi
+	rdi <- mem rsp 8
+	rdi <- rdi
+	rdi <<= 1
+	rdi += 1
+	call print 1
+	rsi <- mem rsp 0
+	rdi <- mem rsp 24
+	cjump rdi < rsi :array_end
+	goto :array_begin
+	:array_end
+	return
+)
+
+(@calculate
+	2 0
+	rax <- rdi
+	rax += rsi
+	return
+)
+
+)

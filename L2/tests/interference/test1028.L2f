@@ -1,0 +1,10 @@
+(@retFun
+	1
+	%v1 <- rdi
+	:call_label_ciao__ciao_9
+	goto :call_label_ciao__ciao_10
+	:call_label_ciao__ciao_10
+	%v1 += 10
+	rax <- %v1
+	return
+)

@@ -1,0 +1,199 @@
+(@entry
+  //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
+  (@entry
+  // Fill the heap and try to blow the stack recursing all over it.
+  //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
+    0 1
+
+    mem rsp 0 <- rbx
+
+    //
+    // Allocate space for 1..15
+    //
+    rdi <- 31       // decoded : 15
+    rsi <- 1        // decoded : 0
+    call allocate 2 // rax     : [ 0 x 15 ]
+    rbx <- rax      // save the array for later
+
+    //
+    // Initialize 1..15
+    //
+    mem rax 8   <- 3  // 1
+    mem rax 16  <- 5  // 2
+    mem rax 24  <- 7  // 3
+    mem rax 32  <- 9  // 4
+    mem rax 40  <- 11 // 5
+    mem rax 48  <- 13 // 6
+    mem rax 56  <- 15 // 7
+    mem rax 64  <- 17 // 8
+    mem rax 72  <- 19 // 9
+    mem rax 80  <- 21 // 10
+    mem rax 88  <- 23 // 11
+    mem rax 96  <- 25 // 12
+    mem rax 104 <- 27 // 13
+    mem rax 112 <- 29 // 14
+    mem rax 120 <- 31 // 15
+
+    //
+    // Test checked_array_at
+    //
+    rdi <- rbx
+    rsi <- 4
+    // Exits with an out of bounds message:
+    // rsi <- 15
+    mem rsp -8 <- :got_array_4
+    call @checked_array_at 2
+    :got_array_4
+    rdi <- rax
+    call print 1
+
+    //
+    // Test checked_array_set
+    //
+    rdi <- rbx  // array_ptr
+    rsi <- 4    // index
+    rdx <- 201  // decoded: 100
+    mem rsp -8 <- :set_array_4
+    call @checked_array_set 3
+    :set_array_4
+    // Now print back the array
+    rdi <- rbx
+    call print 1
+
+    rbx <- mem rsp 0
+
+    return
+    )
+
+  //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
+  (@print_array
+  // Recursively & inefficiently print the whole of an array
+  //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
+    1 0 // array_ptr
+    mem rsp -8 <- :got_size
+    call @array_size 1
+    :got_size
+    rsi <- 1   // start at 1
+    rdx <- rax // stop at size
+    rcx <- :print_array_range
+    mem rsp -8 <- :exit_print_array
+    call @trampoline_3 4
+    :exit_print_array
+    return)
+
+  //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
+  (@print_array_range
+  // Recursively & inefficiently print a range of values from an array
+  //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
+    3 3 // array_ptr, start, end (both ends inclusive)
+    cjump rsi < rdx :ok1 // check that we're in-bounds
+    rdi <- 0
+    call tensor-error 1  // if not, fail angrily
+    :ok1
+    mem rsp 0  <- rdi // save array_ptr
+    mem rsp 8  <- rsi // save start
+    mem rsp 16 <- rdx // save end
+    rdi @ rdi rsi 8   // get address of a[i]
+    rdi <- mem rdi 0  // get a[i] from its address
+    call print 1      // print a[i]
+    rdi <- mem rsp 0  // restore array_ptr
+    rsi <- mem rsp 8  // restore start
+    rdx <- mem rsp 16 // restore end
+    rax <- 0          // set rax to 'terminate'
+    rsi++             // increment index
+    cjump rsi = rdx :exit_print_array_range // if we're at the end, quit
+    //*** THIS WILL SEGFAULT... I can't convince it to blow the stack!
+    //*** THIS SHOULD BLOW THE STACK
+    // mem rsp -8 <- :exit_print_array_range
+    // call @print_array_range 3
+    //*** Instead, do this:
+    rax <- :print_array_range // set rax to 'continue'
+    :exit_print_array_range
+    return)
+
+  //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
+  (@array_size
+  // Get the size of an array
+  //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
+    1 0 // array_ptr
+    rax <- mem rdi 0 // get array size (not! encoded)
+    return)
+
+  //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
+  (@checked_array_at
+  // Safely(!) get an element of an array
+  // NOTE: Efficiency is traded for safety for no particular reason here.
+  //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
+    2 0 // array_ptr, index
+    rsi++ // indices start from 1! but programmers count from 0!
+    mem rsp -8 <- :check1
+    call @array_size 1
+    :check1 cjump rsi < rax :ok2
+    rdi <- 0
+    call tensor-error 1    // array_error exits. do not pass go; no return
+    :ok2 rax @ rdi rsi 8  // array_ptr + (8 * index)
+    rax <- mem rax 0
+    return)
+
+  //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
+  (@checked_array_set
+  // Safely(!) set an element of an array
+  // NOTE: Efficiency is traded for safety for no particular reason here.
+  //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
+    3 0 // array_ptr, index, value
+    rsi++ // indices start from 1
+    mem rsp -8 <- :check2
+    call @array_size 1
+    :check2 cjump rsi < rax :ok3
+    rdi <- 0
+    call tensor-error 1 // exits program; no need to clean up.
+    :ok3
+    rsi @ rdi rsi 8    // array_ptr + (i * 8)
+    mem rsi 0 <- rdx   // array_ptr + (i * 8) <- value
+    return)
+
+  //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
+  (@array_swap
+  // Swap 2 elements of an array
+  // NOTE: Uses (very) unnecessary amounts of stack space.
+  //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
+    3 3 // array_ptr, i, j, tmp, a[i], a[j]
+    // get  a[i]
+    mem rsp 0  <- rsi      // save i
+    mem rsp -8 <- :save_a_i
+    call @checked_array_at 2
+    :save_a_i
+    mem rsp 8 <- rax       // save a[i]
+    rsi <- rdx             // prepare j
+    // get  a[j]
+    mem rsp -8 <- :save_a_j
+    call @checked_array_at 2
+    :save_a_j
+    mem rsp 16 <- rax      // save a[j]
+    rsi <- mem rsp 0       // restore i
+    mem rsp 0 <- rdx       // save j
+    rdx <- mem rsp 16      // prepare a[j]
+    // set a[i] to a[j]
+    mem rsp -8 <- :done_set_a_i
+    call @checked_array_set 3
+    :done_set_a_i
+    rsi <- mem rsp 0       // restore j
+    rdx <- mem rsp 8       // prepare a[i]
+    // set a[j] to a[i]
+    mem rsp -8 <- :done_set_a_j
+    call @checked_array_set 3
+    :done_set_a_j
+    return)
+
+  //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
+  (@trampoline_3
+  // Make the stack bouncy
+  // rdi: arg1 rsi: arg2 rdx: arg3 rcx: fn
+  //-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
+    4 0
+    r12 <- rcx
+    :trampoline_jump
+    mem rsp -8 <- :trampoline_after_call
+    call r12 3    :trampoline_after_call
+    cjump rax = r12 :trampoline_jump
+    return))

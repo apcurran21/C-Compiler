@@ -1,0 +1,7 @@
+(@myF
+	0
+	mem rsp -8 <- :retMyF
+	call @myF2 0
+	:retMyF
+	return
+)

@@ -1,0 +1,153 @@
+(@main
+  (@main
+    0
+    :call_label0
+    goto :call_label1
+    :call_label1
+    %num_sides <- 31
+    rdi <- %num_sides
+    call print 1
+    rdi <- %num_sides
+
+mem rsp -8 <- :call_label2
+    call @compute_num_degrees_angle_for_shape 1
+
+:call_label2
+    rdi <- %num_sides
+
+mem rsp -8 <- :call_label3
+    call @compute_many_degrees 1
+
+:call_label3
+    %lots_of_sides <- 175
+    rdi <- %lots_of_sides
+
+mem rsp -8 <- :call_label4
+    call @compute_num_degrees_angle_for_shape 1
+
+:call_label4
+    return
+  )
+  (@compute_num_degrees_angle_for_shape
+    1
+    %sides <- rdi
+    :call_label_ciao_5
+    goto :call_label_ciao_6
+    :call_label_ciao_6
+    %decoded_sides <- %sides
+    %decoded_sides >>= 1
+    %temp_1 <- %decoded_sides
+    %temp_1 -= 2
+    %temp_1 <- %temp_1
+    %temp_1 *= 180
+    rdi <- %temp_1
+    rsi <- %decoded_sides
+
+mem rsp -8 <- :call_label_ciao_7
+    call @divide 2
+
+:call_label_ciao_7
+    %division <- rax
+    %temp_1 <- %division
+    %temp_1 <- %temp_1
+    %temp_1 <<= 1
+    %temp_1 <- %temp_1
+    %temp_1 += 1
+    rdi <- %temp_1
+    call print 1
+    return
+  )
+  (@compute_many_degrees
+    1
+    %sides <- rdi
+    :call_label_ciao__ciao_8
+    goto :call_label_ciao__ciao_13
+    :call_label_ciao__ciao_9
+    return
+    :call_label_ciao__ciao_10
+    %nth_side <- %nth_side
+    %nth_side += 1
+    goto :call_label_ciao__ciao_11
+    :call_label_ciao__ciao_11
+    %cond <- %decoded_sides < %nth_side
+
+    cjump %cond = 1 :call_label_ciao__ciao_9
+    goto :call_label_ciao__ciao_12
+    :call_label_ciao__ciao_12
+    %call_nth_side <- %nth_side
+    %call_nth_side <<= 1
+    %call_nth_side <- %call_nth_side
+    %call_nth_side += 1
+    rdi <- %call_nth_side
+
+mem rsp -8 <- :call_label_ciao__ciao_14
+    call @compute_num_degrees_angle_for_shape 1
+
+:call_label_ciao__ciao_14
+    goto :call_label_ciao__ciao_10
+    :call_label_ciao__ciao_13
+    %decoded_sides <- %sides
+    %decoded_sides >>= 1
+    %nth_side <- 7
+    %nth_side <- %nth_side
+    %nth_side >>= 1
+    goto :call_label_ciao__ciao_11
+  )
+  (@divide
+    2
+    %numer <- rdi
+    %denom <- rsi
+    :call_label_ciao__ciao__ciao_15
+    goto :call_label_ciao__ciao__ciao_25
+    :call_label_ciao__ciao__ciao_16
+    rax <- %quotient
+    return
+    :call_label_ciao__ciao__ciao_17
+    goto :call_label_ciao__ciao__ciao_18
+    :call_label_ciao__ciao__ciao_18
+    %cond_2 <- 1 < %temp
+
+    cjump %cond_2 = 1 :call_label_ciao__ciao__ciao_19
+    goto :call_label_ciao__ciao__ciao_16
+    :call_label_ciao__ciao__ciao_19
+    %d <- %d
+    %d >>= 1
+    %temp <- %temp
+    %temp >>= 1
+    %cond_3 <- %d <= %n
+
+    cjump %cond_3 = 1 :call_label_ciao__ciao__ciao_20
+    goto :call_label_ciao__ciao__ciao_17
+    :call_label_ciao__ciao__ciao_20
+    %n <- %n
+    %n -= %d
+    %quotient <- %quotient
+    %quotient += %temp
+    goto :call_label_ciao__ciao__ciao_17
+    :call_label_ciao__ciao__ciao_21
+    goto :call_label_ciao__ciao__ciao_18
+    :call_label_ciao__ciao__ciao_22
+    goto :call_label_ciao__ciao__ciao_23
+    :call_label_ciao__ciao__ciao_23
+    %cond_1 <- %d <= %n
+
+    cjump %cond_1 = 1 :call_label_ciao__ciao__ciao_24
+    goto :call_label_ciao__ciao__ciao_21
+    :call_label_ciao__ciao__ciao_24
+    %d <- %d
+    %d <<= 1
+    %temp <- %temp
+    %temp <<= 1
+    goto :call_label_ciao__ciao__ciao_22
+    :call_label_ciao__ciao__ciao_25
+    %n <- %numer
+    %d <- %denom
+    %enc_temp <- 3
+    %enc_quotient <- 1
+    %temp <- %enc_temp
+    %temp >>= 1
+    %quotient <- %enc_quotient
+    %quotient >>= 1
+    goto :call_label_ciao__ciao__ciao_23
+  )
+)

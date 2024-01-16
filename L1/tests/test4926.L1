@@ -1,0 +1,14 @@
+(@main
+ (@main
+  0
+  0
+  rdi <- 7
+  rsi <- 1
+  call allocate 2
+  rdi <- rax
+  rsi <- 19
+  rdi <- 1
+  call tensor-error 1
+  rdi <- 3
+  call print 1
+  return))

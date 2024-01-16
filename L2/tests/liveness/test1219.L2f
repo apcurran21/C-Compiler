@@ -1,0 +1,10 @@
+(@encodeValue
+	1
+	%v <- rdi
+	:call_label11
+	%encodedV <- %v
+	%encodedV <<= 1
+	%encodedV += 1
+	rax <- %encodedV
+	return
+)

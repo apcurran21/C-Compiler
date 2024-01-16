@@ -1,0 +1,32 @@
+(@printArray
+	1
+	%array <- rdi
+	%index <- 0
+	%arrayLength <- mem %array 0
+	%tempArrayPointer <- %array
+	%tempArrayPointer &= 1
+	cjump %tempArrayPointer = 1 :call_label2
+	goto :call_label3
+	:call_label2
+	rax <- 0
+	return
+	:call_label3
+	:call_label4
+	%continueToExecute <- %index < %arrayLength
+	cjump %continueToExecute = 1 :call_label5
+	goto :call_label6
+	:call_label5
+	%encodedIndex <- %index
+	%encodedIndex <<= 1
+	%encodedIndex += 1
+	rdi <- %array
+	rsi <- %encodedIndex
+	mem rsp -8 <- :call_label7
+	call @printData 2
+	:call_label7
+	%index += 1
+	goto :call_label4
+	:call_label6
+	rax <- 1
+	return
+)

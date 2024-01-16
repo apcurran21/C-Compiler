@@ -1,0 +1,63 @@
+define :main() {
+	//%checking <- call :create_filler(3)
+	//call print(%checking)
+   	%age <- call input()
+	
+	%age_d <- call :decode_int(%age) //call input(0)
+	//call print(%age)
+	
+	%cond <- %age_d > 20
+	br %cond :exit
+	br :print_array
+
+	:print_array
+	%counter <- 8
+	%filler <- call :create_filler(%age_d)
+	%array <- call allocate (%age, %filler)
+	%size_in_bytes <- %age_d * 8
+	%size_in_bytes <- %size_in_bytes + 1
+	br :loop
+
+	:loop
+	%to_print <- %array + %counter
+	%val <- load %to_print
+	call print(%val)
+	%counter <- %counter + 8
+
+	%cond <- %size_in_bytes > %counter
+	br %cond :loop
+	br :exit
+
+	:exit
+    return
+}
+
+define :create_filler(%length) {
+	%counter <- 0
+	%total <- 1
+	%length <- %length - 1
+
+	:loop
+	%total <- %total * 10
+	%total <- %total + 1
+	%counter <- %counter + 1
+	
+	%cond <- %counter < %length
+	br %cond :loop
+	br :exit	
+	
+	:exit
+	%total <- call :encode_int(%total)
+	return %total
+}
+
+define :encode_int(%decoded) {
+        %decoded <- %decoded << 1
+        %decoded <- %decoded + 1
+        return %decoded
+}
+
+define :decode_int(%encoded) {
+	%encoded <- %encoded >> 1
+	return %encoded
+}

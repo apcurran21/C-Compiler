@@ -1,0 +1,24 @@
+(@go
+	0
+	%test1 <- -41
+	rdi <- %test1
+	mem rsp -8 <- :test1
+	call @mod3 1
+	:test1
+	%test2 <- 234
+	rdi <- %test2
+	mem rsp -8 <- :test2
+	call @mod3 1
+	:test2
+	%test3 <- 0
+	rdi <- %test3
+	mem rsp -8 <- :test3
+	call @mod3 1
+	:test3
+	%test4 <- -310
+	rdi <- %test4
+	mem rsp -8 <- :test4
+	call @mod3 1
+	:test4
+	return
+)

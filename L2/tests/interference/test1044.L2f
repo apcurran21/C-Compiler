@@ -1,0 +1,26 @@
+(@mod
+	2
+	%x <- rdi
+	%y <- rsi
+	:call_label0
+	goto :call_label5
+	:call_label1
+	rax <- 1
+	return
+	:call_label2
+	%x -= %y
+	%r <- %x = 0
+	cjump %r = 1 :call_label1
+	goto :call_label3
+	:call_label3
+	%r <- -1 < %x
+	cjump %r = 1 :call_label2
+	goto :call_label4
+	:call_label4
+	rax <- 0
+	return
+	:call_label5
+	%r <- %x = 0
+	cjump %r = 1 :call_label1
+	goto :call_label3
+)

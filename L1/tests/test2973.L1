@@ -1,0 +1,99 @@
+(@main
+(@main
+	0 11
+	mem rsp 40 <- rbx
+	mem rsp 32 <- rbp
+	mem rsp 24 <- r15
+	mem rsp 16 <- r14
+	mem rsp 8 <- r13
+	mem rsp 0 <- r12
+	:call_label0
+	r8 <- 55
+	r14 <- 2
+	r15 <- 63
+	rdx <- 33
+	r9 <- 6
+	rax <- 44
+	r13 <- 3
+	r11 <- 5
+	rdi <- 37
+	mem rsp 48 <- rdi
+	rsi <- 843
+	rdi <- 96
+	r12 <- 66
+	rbx <- 83
+	rbp <- 34
+	r10 <- 27
+	rcx <- 5
+	mem rsp 64 <- rcx
+	rcx <- 10
+	mem rsp 56 <- rcx
+	rcx <- 17
+	r8 += rsi
+	r14 += rdi
+	r15 += r12
+	r12 <- rdx
+	r12 += rbx
+	rbx <- r9
+	rbx += rbp
+	rbp <- rax
+	rbp += r10
+	rdi <- mem rsp 64
+	r13 += rdi
+	rdi <- r11
+	mem rsp 72 <- rdi
+	rdi <- mem rsp 56
+	rsi <- mem rsp 72
+	rsi += rdi
+	mem rsp 72 <- rsi
+	rdi <- mem rsp 48
+	mem rsp 80 <- rdi
+	rdi <- mem rsp 80
+	rdi += rcx
+	mem rsp 80 <- rdi
+	rdi <- r8
+	rdi <<= 1
+	rdi += 1
+	call print 1
+	rdi <- r12
+	rdi <<= 1
+	rdi += 1
+	call print 1
+	rdi <- r13
+	rdi <<= 1
+	rdi += 1
+	call print 1
+	rdi <- r14
+	rdi <<= 1
+	rdi += 1
+	call print 1
+	rdi <- rbx
+	rdi <<= 1
+	rdi += 1
+	call print 1
+	rdi <- mem rsp 72
+	rdi <<= 1
+	rdi += 1
+	call print 1
+	rdi <- r15
+	rdi <<= 1
+	rdi += 1
+	call print 1
+	rdi <- rbp
+	rdi <<= 1
+	rdi += 1
+	call print 1
+	rdi <- mem rsp 80
+	rdi <<= 1
+	rdi += 1
+	call print 1
+	r12 <- mem rsp 0
+	r13 <- mem rsp 8
+	r14 <- mem rsp 16
+	r15 <- mem rsp 24
+	rbp <- mem rsp 32
+	rbx <- mem rsp 40
+	return
+)
+
+)

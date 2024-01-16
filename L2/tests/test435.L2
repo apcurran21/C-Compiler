@@ -1,0 +1,107 @@
+(@main
+  (@main
+    0
+    %len <- 10
+    rdi <- %len
+
+mem rsp -8 <- :call_label0
+    call @GetArray 1
+
+:call_label0
+    %arr1 <- rax
+    rdi <- %arr1
+    rsi <- %len
+
+mem rsp -8 <- :call_label1
+    call @PopulateArray1 2
+
+:call_label1
+    rdi <- %arr1
+
+mem rsp -8 <- :call_label2
+    call @printResultArray 1
+
+:call_label2
+    rdi <- %len
+
+mem rsp -8 <- :call_label3
+    call @GetArray 1
+
+:call_label3
+    %arr2 <- rax
+    rdi <- %arr2
+    rsi <- %len
+
+mem rsp -8 <- :call_label4
+    call @PopulateArray2 2
+
+:call_label4
+    rdi <- %arr2
+
+mem rsp -8 <- :call_label5
+    call @printResultArray 1
+
+:call_label5
+    return
+  )
+  (@GetArray
+    1
+    %len <- rdi
+    %len <- %len
+    %len <<= 1
+    %len <- %len
+    %len += 1
+    %val <- 1
+    rdi <- %len
+    rsi <- %val
+    call allocate 2
+    %arr <- rax
+    rax <- %arr
+    return
+  )
+  (@PopulateArray1
+    2
+    %arr <- rdi
+    %len <- rsi
+    %pos <- %arr
+    %pos += 8
+    %ind <- 1
+    :call_label_ciao_6
+    %stop <- %len <= %ind
+
+    cjump %stop = 1 :call_label_ciao_7
+    mem %pos 0 <- %ind
+    %ind <- %ind
+    %ind += 2
+    %pos <- %pos
+    %pos += 8
+    goto :call_label_ciao_6
+    :call_label_ciao_7
+    return
+  )
+  (@PopulateArray2
+    2
+    %arr <- rdi
+    %len <- rsi
+    %pos <- %arr
+    %pos += 8
+    %ind <- 1
+    :call_label_ciao__ciao_8
+    mem %pos 0 <- 5
+    %pos <- %pos
+    %pos += 8
+    %ind <- %ind
+    %ind += 1
+    %continue <- %ind <= %len
+
+    cjump %continue = 1 :call_label_ciao__ciao_8
+    return
+  )
+  (@printResultArray
+    1
+    %arr <- rdi
+    rdi <- %arr
+    call print 1
+    return
+  )
+)

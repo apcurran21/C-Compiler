@@ -1,0 +1,130 @@
+(@main
+	0
+	rdi <- 7
+	rsi <- 1
+	call allocate 2
+	%ops <- rax
+	%plus <- @plus
+	%minus <- @minus
+	%times <- @times
+	rdi <- %ops
+	rsi <- 0
+	rdx <- %plus
+	mem rsp -8 <- :call_label3
+	call @store 3
+	:call_label3
+	rdi <- %ops
+	rsi <- 1
+	rdx <- %minus
+	mem rsp -8 <- :call_label4
+	call @store 3
+	:call_label4
+	rdi <- %ops
+	rsi <- 2
+	rdx <- %times
+	mem rsp -8 <- :call_label5
+	call @store 3
+	:call_label5
+	%X <- 7
+	%Y <- 2
+	%i <- 0
+	:call_label0
+	rdi <- %ops
+	rsi <- %i
+	mem rsp -8 <- :call_label6
+	call @load 2
+	:call_label6
+	%f <- rax
+	rdi <- %ops
+	rsi <- %X
+	rdx <- %Y
+	mem rsp -8 <- :call_label7
+	call %f 3
+	:call_label7
+	%ans <- rax
+	%num <- %ans
+	%num *= 2
+	%num += 1
+	rdi <- %num
+	call print 1
+	%i += 1
+	%fin <- %i < 3
+	cjump %fin = 1 :call_label0
+	rdi <- 7
+	rsi <- 1
+	call allocate 2
+	%cGs <- rax
+	%i <- 0
+	:call_label1
+	rdi <- %ops
+	rsi <- %i
+	mem rsp -8 <- :call_label8
+	call @load 2
+	:call_label8
+	%f <- rax
+	rdi <- 3
+	rsi <- 1
+	call allocate 2
+	%cF <- rax
+	rdi <- %cF
+	rsi <- 0
+	rdx <- %f
+	mem rsp -8 <- :call_label9
+	call @store 3
+	:call_label9
+	rdi <- %cF
+	mem rsp -8 <- :call_label10
+	call @curry 1
+	:call_label10
+	%cG <- rax
+	rdi <- %cGs
+	rsi <- %i
+	rdx <- %cG
+	mem rsp -8 <- :call_label11
+	call @store 3
+	:call_label11
+	%i += 1
+	%fin <- %i < 3
+	cjump %fin = 1 :call_label1
+	%i <- 0
+	:call_label2
+	rdi <- %cGs
+	rsi <- %i
+	mem rsp -8 <- :call_label12
+	call @load 2
+	:call_label12
+	%cG <- rax
+	rdi <- %cG
+	rsi <- 0
+	mem rsp -8 <- :call_label13
+	call @load 2
+	:call_label13
+	%g <- rax
+	rdi <- %cG
+	rsi <- %X
+	mem rsp -8 <- :call_label14
+	call %g 2
+	:call_label14
+	%cH <- rax
+	rdi <- %cH
+	rsi <- 0
+	mem rsp -8 <- :call_label15
+	call @load 2
+	:call_label15
+	%h <- rax
+	rdi <- %cH
+	rsi <- %Y
+	mem rsp -8 <- :call_label16
+	call %h 2
+	:call_label16
+	%ans <- rax
+	%num <- %ans
+	%num *= 2
+	%num += 1
+	rdi <- %num
+	call print 1
+	%i += 1
+	%fin <- %i < 3
+	cjump %fin = 1 :call_label2
+	return
+)

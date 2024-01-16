@@ -1,0 +1,53 @@
+(@go
+(@go
+	0 3
+	mem rsp 16 <- r14
+	mem rsp 8 <- r13
+	mem rsp 0 <- r12
+	rdi <- 18
+	rsi <- 24
+	r13 <- rdi
+	r12 <- rsi
+	mem rsp -8 <- :go_ret
+	call @gcd 2
+	:go_ret
+	r14 <- rax
+	rdi <- r13
+	rdi <<= 1
+	rdi++
+	call print 1
+	rdi <- r12
+	rdi <<= 1
+	rdi++
+	call print 1
+	rdi <- r14
+	rdi <<= 1
+	rdi++
+	call print 1
+	r12 <- mem rsp 0
+	r13 <- mem rsp 8
+	r14 <- mem rsp 16
+	return
+)
+
+(@gcd
+	2 0
+	cjump rdi = 1 :equal_zero
+	goto :continue
+	:equal_zero
+	rax <- rsi
+	return
+	:continue
+	cjump rsi = 0 :finish
+	cjump rdi <= rsi :else
+	rdi -= rsi
+	goto :continue
+	:else
+	rsi -= rdi
+	goto :continue
+	:finish
+	rax <- rdi
+	return
+)
+
+)

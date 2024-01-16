@@ -1,0 +1,24 @@
+void main() {
+    int64 a
+    int64[] arr
+
+    arr <- new Array(1000)
+
+    int64 i 
+    i <- -1
+
+    int64 x
+    x <- 1
+
+    :loop
+    i <- i + 1
+    x <- x + i
+    arr[i] <- x
+    int64 cond
+    cond <- i < 999
+    br cond :loop :done
+    :done
+
+    print(arr)
+    return
+}

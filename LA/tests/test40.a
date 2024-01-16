@@ -1,0 +1,67 @@
+// This test deals with some comparisons 
+// prints 1 \n 0
+void main () {
+    buildASandwich(1,0)
+    return
+}
+void buildASandwich(int64 cheese, int64 meat) {
+    
+    int64 isHavarti
+    int64 isSalami
+
+    // Choose cheese
+    isHavarti <- cheese = 1
+    br isHavarti :havarti :swiss
+
+    //swiss
+    :swiss
+    swissChoice()
+    br :cheese_ret
+
+    //havarti
+    :havarti
+    havartiChoice()
+    br :cheese_ret
+
+    :cheese_ret
+
+    // Choose meat
+    isSalami <- meat = 1
+    br isSalami :salami :turkey
+
+    //turkey
+    :turkey
+    turkeyChoice()
+    br :meat_ret
+
+    //salami
+    :salami
+    salamiChoice()
+    br :meat_ret
+
+    :meat_ret
+    return
+}
+void havartiChoice() {
+    
+    print(1)
+    return
+}
+void swissChoice() {
+    
+    print(0)
+    return
+}
+
+void salamiChoice() {
+    
+    print(1)
+    return
+}
+
+void turkeyChoice() {
+    
+    print(0)
+    return
+}
+

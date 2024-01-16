@@ -1,0 +1,32 @@
+(@dotProduct
+	2
+	%v1 <- rdi
+	%v2 <- rsi
+	%len1 <- mem %v1 0
+	%len2 <- mem %v2 0
+	%comp <- %len1 = %len2
+	cjump %comp = 1 :call_label_ciao__ciao_6
+	goto :call_label_ciao__ciao_5
+	:call_label_ciao__ciao_5
+	return
+	:call_label_ciao__ciao_6
+	%result <- 0
+	%count <- 0
+	%curr1 <- %v1
+	%curr2 <- %v2
+	:call_label_ciao__ciao_7
+	%curr1 += 8
+	%curr2 += 8
+	%temp1 <- mem %curr1 0
+	%temp2 <- mem %curr2 0
+	%tempResult <- %temp1
+	%tempResult *= %temp2
+	%result += %tempResult
+	%count += 1
+	%cont <- %count < %len1
+	cjump %cont = 1 :call_label_ciao__ciao_7
+	goto :call_label_ciao__ciao_8
+	:call_label_ciao__ciao_8
+	rax <- %result
+	return
+)

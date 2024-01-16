@@ -1,0 +1,83 @@
+(@go
+    (@go
+0
+        rdi <- 5
+        rsi <- 5
+        call allocate 2
+        %pointer_1 <- rax
+        %iter <- rax
+        %iter += 8
+        mem %iter 0 <- 3
+        %iter += 8
+        mem %iter 0 <- 5
+        rdi <- 5
+        rsi <- 11
+        call allocate 2
+        %pointer_2 <- rax
+
+        rdi <- %pointer_1
+        call print 1
+        rdi <- %pointer_2
+        call print 1
+
+        rdi <- %pointer_1
+        rsi <- %pointer_2
+        mem rsp -8 <- :f_ret
+        call @extend_array 1
+        :f_ret
+
+        rdi <- rax
+        call print 1
+        return)
+ 
+
+    (@extend_array
+2
+%variableMP8KZ0NE7Z <- %newVariable12
+%variableDC178I3ZWH <- %newVariable13
+        %newVariable12 <- rdi //pointer to array1
+        %newVariable13 <- rsi //pointer to array2
+
+        r8 <- mem rdi 0
+        rdi <- mem rsi 0
+        rdi += r8
+        rdi <<= 1
+        rdi +=1
+        rsi <- 0
+        call allocate 2 // allocate output array with the sum of the two sizes
+        rdx <- rax
+
+        //copy first array
+        rcx <- mem %newVariable12 0
+        :loop1
+        %newVariable12 += 8
+        rdx += 8
+        cjump rcx = 0 :finish1 
+goto :cont1
+
+
+        :cont1
+        rdi <- mem %newVariable12 0
+        mem rdx 0 <- rdi
+        rcx -= 1
+        goto :loop1
+
+        :finish1
+        //copy second array
+        rcx <- mem %newVariable13 0
+        :loop2
+        %newVariable13 += 8
+        cjump rcx = 0 :finish2 
+goto :cont2
+
+
+        :cont2
+        rdi <- mem %newVariable13 0
+        mem rdx 0 <- rdi
+        rdx += 8
+        rcx -= 1
+        goto :loop2
+        :finish2
+%newVariable12 <- %variableMP8KZ0NE7Z
+%newVariable13 <- %variableDC178I3ZWH
+        return))

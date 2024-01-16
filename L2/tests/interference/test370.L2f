@@ -1,0 +1,62 @@
+(@common_divisor
+	2
+	%foo <- rdi
+	%bar <- rsi
+	%com_div <- 1
+	%cd <- 2
+	%com_g <- %foo < %bar
+	cjump %com_g = 1 :call_label_ciao__ciao__ciao__ciao__ciao__ciao_24
+	goto :call_label_ciao__ciao__ciao__ciao__ciao__ciao_25
+	:call_label_ciao__ciao__ciao__ciao__ciao__ciao_24
+	%temp <- %foo
+	%foo <- %bar
+	%bar <- %temp
+	:call_label_ciao__ciao__ciao__ciao__ciao__ciao_25
+	rdi <- %foo
+	mem rsp -8 <- :call_label_ciao__ciao__ciao__ciao__ciao__ciao_31
+	call @sqrt 1
+	:call_label_ciao__ciao__ciao__ciao__ciao__ciao_31
+	%com_sqrt <- rax
+	:call_label_ciao__ciao__ciao__ciao__ciao__ciao_26
+	rdi <- %foo
+	rsi <- %cd
+	mem rsp -8 <- :call_label_ciao__ciao__ciao__ciao__ciao__ciao_32
+	call @divisible 2
+	:call_label_ciao__ciao__ciao__ciao__ciao__ciao_32
+	%div_foo <- rax
+	rdi <- %bar
+	rsi <- %cd
+	mem rsp -8 <- :call_label_ciao__ciao__ciao__ciao__ciao__ciao_33
+	call @divisible 2
+	:call_label_ciao__ciao__ciao__ciao__ciao__ciao_33
+	%div_bar <- rax
+	%both <- %div_foo
+	%both *= %div_bar
+	cjump %both = 1 :call_label_ciao__ciao__ciao__ciao__ciao__ciao_27
+	goto :call_label_ciao__ciao__ciao__ciao__ciao__ciao_28
+	:call_label_ciao__ciao__ciao__ciao__ciao__ciao_27
+	%com_div *= %cd
+	rdi <- %foo
+	rsi <- %cd
+	mem rsp -8 <- :call_label_ciao__ciao__ciao__ciao__ciao__ciao_34
+	call @customer_divide 2
+	:call_label_ciao__ciao__ciao__ciao__ciao__ciao_34
+	%foo <- rax
+	rdi <- %bar
+	rsi <- %cd
+	mem rsp -8 <- :call_label_ciao__ciao__ciao__ciao__ciao__ciao_35
+	call @customer_divide 2
+	:call_label_ciao__ciao__ciao__ciao__ciao__ciao_35
+	%bar <- rax
+	goto :call_label_ciao__ciao__ciao__ciao__ciao__ciao_26
+	:call_label_ciao__ciao__ciao__ciao__ciao__ciao_28
+	%cd += 1
+	%last_flag <- %com_sqrt < %cd
+	cjump %last_flag = 1 :call_label_ciao__ciao__ciao__ciao__ciao__ciao_30
+	goto :call_label_ciao__ciao__ciao__ciao__ciao__ciao_29
+	:call_label_ciao__ciao__ciao__ciao__ciao__ciao_29
+	goto :call_label_ciao__ciao__ciao__ciao__ciao__ciao_26
+	:call_label_ciao__ciao__ciao__ciao__ciao__ciao_30
+	rax <- %com_div
+	return
+)

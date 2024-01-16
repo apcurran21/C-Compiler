@@ -1,0 +1,114 @@
+define @main() {
+    %periods <- 10
+    :start
+    %line    <- 0
+    %restart <- 31
+    :loop
+        %x   <- call @a_times_sine_bth_x_pi(18, 30, %line)
+        %out <- call @pow(10, %x)
+        call @encode_and_print(%out)
+        %line <- %line + 1
+        %cont <- %line < %restart
+    br %cont :loop
+    %periods <- %periods - 1
+    %cont    <- %periods > 0
+    br %cont :start
+
+    return
+}
+
+define @encode_and_print(%v) {
+    %v_shifted <- %v << 1
+    %v_encoded <- %v_shifted + 1
+    call print(%v_encoded)
+    return
+}
+
+define @divide(%top, %bot) {
+    %quotient <- 0
+
+    %early_return <- %top < %bot
+    br %early_return :done
+    %early_return <- %bot <= 0
+    br %early_return :done
+
+    :loop
+        %quotient <- %quotient + 1
+        %top <- %top - %bot
+        
+        %not_done <- %top >= %bot
+    br %not_done :loop
+
+    :done
+    return %quotient
+}
+
+define @pow(%x, %e) {
+    %result <- 1
+
+    %early_return <- %e <= 0
+    br %early_return :ret
+
+    :loop
+        %result <- %result * %x
+        %e <- %e - 1
+        %not_done <- %e > 0
+    br %not_done :loop
+    
+    :ret
+    return %result
+}
+
+define @factorial(%x) {
+    %result <- 1
+
+    %early_return <- %x <= 1
+    br %early_return :ret
+
+    :loop
+        %result <- %result * %x
+        %x <- %x - 1
+        %not_done <- %x >= 1
+    br %not_done :loop
+
+    :ret
+    return %result
+}
+
+define @a_times_sine_bth_x_pi(%a, %b, %x) {
+    // Approximates a*sin(pi*x/b)
+    // a*3*x/b - a*(3*x)^3/(3!*b^3) + a*(3*x)^5/(5!*b^5) ...
+
+    %pi_x <- 3 * %x
+    
+    %top    <- %a * %pi_x
+    %bot    <- %b
+    %result <- call @divide(%top, %bot)
+
+    %pi_x_cubed <- call @pow(%pi_x, 3)
+    %top           <- %a * %pi_x_cubed
+    %three_fact    <- call @factorial(3)
+    %eight_cubed   <- call @pow(%b, 3)
+    %bot           <- %three_fact * %eight_cubed
+    %div           <- call @divide(%top, %bot)
+    %result        <- %result - %div
+
+    %pi_x_five  <- call @pow(%pi_x, 5)
+    %top           <- %a * %pi_x_five
+    %five_fact     <- call @factorial(5)
+    %eight_five    <- call @pow(%b, 5)
+    %bot           <- %five_fact * %eight_five
+    %div           <- call @divide(%top, %bot)
+    %result        <- %result + %div
+
+    %pi_x_seven <- call @pow(%pi_x, 7)
+    %top           <- %a * %pi_x_seven
+    %seven_fact    <- call @factorial(7)
+    %eight_seven   <- call @pow(%b, 7)
+    %bot           <- %seven_fact * %eight_seven
+    %div           <- call @divide(%top, %bot)
+    %result        <- %result - %div
+    
+    return %result
+}
+

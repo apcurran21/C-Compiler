@@ -1,0 +1,21 @@
+(@main
+	0
+	mem rsp -8 <- :call_label0
+	call @createArray 0
+	:call_label0
+	%arr <- rax
+	rdi <- %arr
+	mem rsp -8 <- :call_label1
+	call @printArr 1
+	:call_label1
+	rdi <- %arr
+	mem rsp -8 <- :call_label2
+	call @sumArr 1
+	:call_label2
+	%sum <- rax
+	%sum <<= 1
+	%sum += 1
+	rdi <- %sum
+	call print 1
+	return
+)

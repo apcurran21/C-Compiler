@@ -1,0 +1,17 @@
+(@go
+
+  (@go
+ 
+    0 0
+    call input 0
+    rdi <- rax
+    call print 1
+
+    call input 0
+    rdi <- rax
+    call print 1
+
+    return
+  )
+
+)

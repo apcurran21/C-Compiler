@@ -1,0 +1,53 @@
+(@main
+(@main
+	0 3
+	:call_label0
+	goto :call_label1
+	:call_label1
+	r9 <- 0
+	rdi <- 43
+	mem rsp 8 <- rdi
+	r10 <- 55
+	rdi <- 32
+	mem rsp 0 <- rdi
+	rdi <- 74
+	rcx <- 67
+	r8 <- 83
+	rax <- 39
+	rsi <- 45
+	rdx <- 22
+	mem rsp 16 <- rdx
+	rdx <- 41
+	r9 <- r9
+	r11 <- mem rsp 8
+	r9 += r11
+	r9 <- r9
+	r9 += r10
+	r9 <- r9
+	r10 <- mem rsp 0
+	r9 += r10
+	r9 <- r9
+	r9 += rdi
+	r9 <- r9
+	r9 += rcx
+	r9 <- r9
+	r9 += r8
+	r9 <- r9
+	r9 += rax
+	r9 <- r9
+	r9 += rsi
+	r9 <- r9
+	rdi <- mem rsp 16
+	r9 += rdi
+	r9 <- r9
+	r9 += rdx
+	r9 <- r9
+	r9 <<= 1
+	r9 <- r9
+	r9 += 1
+	rdi <- r9
+	call print 1
+	return
+)
+
+)

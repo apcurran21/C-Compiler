@@ -1,0 +1,71 @@
+define @main () {
+ 
+:NNNNNNNNNNNNNNN
+ br :entrance
+ 
+:hello
+ %var2 <- %var2 * 2
+ %len <- %var2 + 1
+ %rax <- call @make_array2 ()
+ call print (%rax)
+ return 
+ 
+:por_aqui_viene
+ %temp <- 7
+ %var2 <- %temp + %var2
+ %var1 <- %var1 + 2
+ %len <- 0
+ %test <- %len - %var1
+ br %test :por_aqui_viene 
+ br :hello
+ 
+:entrance
+ %rax <- call @make_array ()
+ %var1 <- 2
+ %var2 <- 1
+ %var3 <- %var1 * 4
+ br :por_aqui_viene
+}
+
+define @make_array () {
+ 
+:NNNNNNNNN
+ br :entrance
+ 
+:entrance
+ %arg1 <- 201
+ %newVar1 <- %arg1 >> 1
+ %newVar0 <- %newVar1
+ %newVar0 <- %newVar0 << 1
+ %newVar0 <- %newVar0 + 1
+ %newVar0 <- %newVar0 + 4
+ %rax <- call allocate (%newVar0, 1)
+ %newVar2 <- %rax + 8
+ store %newVar2 <- 3
+ %newVar3 <- %rax + 16
+ store %newVar3 <- %arg1
+ %arg2 <- 17
+ return %rax
+}
+
+define @make_array2 () {
+ 
+:NNNNNNNNN
+ br :entrance
+ 
+:entrance
+ %arg1 <- 21
+ %arg2 <- 9
+ %newVar1 <- %arg1 >> 1
+ %newVar0 <- %newVar1
+ %newVar0 <- %newVar0 << 1
+ %newVar0 <- %newVar0 + 1
+ %newVar0 <- %newVar0 + 4
+ %rax <- call allocate (%newVar0, 1)
+ %newVar2 <- %rax + 8
+ store %newVar2 <- 3
+ %newVar3 <- %rax + 16
+ store %newVar3 <- %arg1
+ return %rax
+}
+

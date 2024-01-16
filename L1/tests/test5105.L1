@@ -1,0 +1,40 @@
+(@go
+	(@go
+	0 0
+	rdi <- 1
+	rsi <- 2
+	rdx <- 3
+	rcx <- 4
+	r8 <- 5
+	r9 <- 6
+	mem rsp -8 <- :next_ret
+	call @next 6
+	:next_ret
+	rdi <- rax
+	rdi <<= 1
+	rdi++
+	call print 1
+	return
+	)
+
+	(@next
+	6 0
+	r10 <- 0
+	r10 += rdi
+	r10 += rsi
+	r10 += rdx
+	r10 += rcx
+	r10 += r8
+	r10 += r9
+	r9 ++
+	r10 += r9
+	r9 ++
+	r10 += r9
+	r9 ++
+	r10 += r9
+	r9 ++
+	r10 += r9
+	rax <- r10
+	return
+	)
+)

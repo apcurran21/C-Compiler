@@ -1,0 +1,151 @@
+(:go
+ (:go
+  0 0
+  rax <- 0
+  :loop
+  cjmp rax < 83 :next //42
+  mem rsp -8 <- :loop
+  call :deal 0
+  :next
+  :luup
+  cjmp rax < 2057 :more //1028
+  mem rsp -8 <- :luup
+  call :dell 0
+  rdi <- rax
+  rsi <- rax
+  rdx <- rax
+  rcx <- rax
+  r8 <- rax
+  r9 <- rax
+  mem rsp -8 <- :jove
+  mem rsp -16 <- 29
+  call :dale 7
+  :jove
+  rdi <- rax
+  call print 1
+  return
+  )
+
+  (:deal
+    0 0
+    rax++
+    return)
+
+  (:dell
+    0 0
+    rax *= 5 //2
+    return)
+
+  (:dale
+    7 0
+    rax += rdi
+    rax += rsi
+    rax += rdx
+    rax += rcx
+    rax += r8
+    rax += r9
+    rdi <- mem rsp 0
+    rax += rdi
+    return)
+)
+
+(:go
+	(:go
+	  0 0
+	  rax += 5 //2
+	  rax <<= 33 //16
+	  rax <<= 33 //16
+	  rax += 3 //1
+	  cjmp rax <= 18001 :youareweak //9000
+	  rdi <- rax
+	  call print 1
+	  return
+	  :youareweak
+	  rdi <- rax
+	  mem rsp -8 <- :fightvegeta
+	  call :train 1
+	  :fightvegeta
+	  rdx <- 36001 //15000
+	  :punch
+	  rax--
+	  rdx--
+	  cjmp 0 < rax :punch
+	  rdi <- rax
+	  call print 1
+	  goto :vegetahasdefeatedyou
+	  return //you win!
+	  :vegetahasdefeatedyou
+	  return //SON GOKU HAS FAILED THE EARTH
+	)
+
+	(:train
+	  1 0
+	  rdx <- 18001
+	  rdx -= rdi
+	  rax <- rdi
+	  :dopushup
+	  rax++
+	  rdx--
+	  cjmp rdx > 0 :dopushup
+	  return
+	)
+)
+
+(:start
+	(:start
+	  0 7
+	  rax <- 2
+	  rbx <- 2
+	  rbp <- 2
+	  r8 <- 2
+	  r9 <- 2
+	  r10 <- 2
+	  r11 <- 2
+	  r12 <- 2
+	  r13 <- 2
+	  r14 <- 2
+	  r15 <- 2
+	  rdi <- 2
+	  rsi <- 2
+	  rdx <- 2
+	  rcx <- 2
+	  mem rsp 0 <- 2
+	  mem rsp 8 <- 2
+	  mem rsp 16 <- 2
+	  mem rsp 24 <- 2
+	  mem rsp 32 <- 2
+	  mem rsp 40 <- 2
+	  mem rsp 48 <- 2
+	  rax += rbx
+	  rax += rbp
+	  rax += r8
+	  rax += r9
+	  rax += r10
+	  rax += r11
+	  rax += r12
+	  rax += r13
+	  rax += r14
+	  rax += r15
+	  rax += rdi
+	  rax += rsi
+	  rax += rdx
+	  rax += rcx
+	  rdi <- mem rsp 0
+	  rax += rdi
+	  rdi <- mem rsp 8
+	  rax += rdi
+	  rdi <- mem rsp 16
+	  rax += rdi
+	  rdi <- mem rsp 24
+	  rax += rdi
+	  rdi <- mem rsp 32
+	  rax += rdi
+	  rdi <- mem rsp 40
+	  rax += rdi
+	  rdi <- mem rsp 48
+	  rax += rdi
+	  rdi <- rax
+	  call print 1
+	  return	
+	)
+)

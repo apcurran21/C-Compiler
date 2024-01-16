@@ -1,0 +1,26 @@
+(@getSum
+	1
+	%array <- rdi
+	%i <- 0
+	%sum <- 1
+	%currPointer <- %array
+	%arrayLength <- mem %currPointer 0
+	:call_label_ciao__ciao_8
+	%currPointer += 8
+	%currValue <- mem %currPointer 0
+	%sum -= 1
+	%sum >>= 1
+	%currValue -= 1
+	%currValue >>= 1
+	%sum += %currValue
+	%sum <<= 1
+	%sum += 1
+	:call_label_ciao__ciao_9
+	%i += 1
+	%isIteratorLessThanArrayLength <- %i < %arrayLength
+	cjump %isIteratorLessThanArrayLength = 1 :call_label_ciao__ciao_8
+	goto :call_label_ciao__ciao_10
+	:call_label_ciao__ciao_10
+	rax <- %sum
+	return
+)

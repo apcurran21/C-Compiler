@@ -1,0 +1,13 @@
+(@big_func
+	7
+	%arg7 <- stack-arg 0
+	rax <- 1
+	rax *= rdi
+	rax -= rsi
+	rax += rdx
+	rax *= rcx
+	rax &= r8
+	rax += r9
+	rax -= %arg7
+	return
+)

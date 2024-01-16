@@ -1,0 +1,12 @@
+(@dec
+	1
+	rax <- rdi
+	:LOOP_DEC
+	%rax_backup <- rax
+	rdi <- rax
+	call print 1
+	rax <- %rax_backup
+	rax -= 2
+	cjump 1 <= rax :LOOP_DEC
+	return
+)

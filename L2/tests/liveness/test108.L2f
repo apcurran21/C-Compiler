@@ -1,0 +1,37 @@
+(@printArrayElement
+	2
+	%array <- rdi
+	%arrayIndex <- rsi
+	rdi <- rsi
+	mem rsp -8 <- :printValue_ret1
+	call @printValue 1
+	:printValue_ret1
+	%arrayIndexOffset <- %arrayIndex
+	%arrayIndexOffset *= 8
+	%arrayIndexOffset += 8
+	rdi <- %arrayIndexOffset
+	mem rsp -8 <- :printValue_ret2
+	call @printValue 1
+	:printValue_ret2
+	%arrayElementAddress <- %arrayIndexOffset
+	%arrayElementAddress += %array
+	%arrayIndexOffset <- mem %arrayElementAddress 0
+	rdi <- %arrayIndexOffset
+	mem rsp -8 <- :checkArray_ret1
+	call @checkArray 1
+	:checkArray_ret1
+	cjump rax = 0 :isInt2
+	goto :isAnArray2
+	:isInt2
+	rdi <- %arrayIndexOffset
+	mem rsp -8 <- :printValue_ret3
+	call @printValue 1
+	:printValue_ret3
+	return
+	:isAnArray2
+	rdi <- %arrayIndexOffset
+	mem rsp -8 <- :printArray_ret1
+	call @printArray 1
+	:printArray_ret1
+	return
+)

@@ -1,0 +1,14 @@
+(@isEqual
+	2
+	%p1 <- rdi
+	%p2 <- rsi
+	%p3 <- %p1 = %p2
+	cjump %p3 = 1 :call_label_ciao__ciao__ciao_6
+	goto :call_label_ciao__ciao__ciao_7
+	:call_label_ciao__ciao__ciao_6
+	rax <- 1
+	return
+	:call_label_ciao__ciao__ciao_7
+	rax <- 0
+	return
+)

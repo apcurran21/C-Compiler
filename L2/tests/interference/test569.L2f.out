@@ -1,0 +1,32 @@
+%a %b %bot %div %eight_cubed %eight_five %five_fact %pi_x %pi_x_cubed %pi_x_five %pi_x_seven r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx %result rsi %three_fact %top %x
+%b %a %bot %div %eight_cubed %eight_five %five_fact %pi_x %pi_x_cubed %pi_x_five %pi_x_seven r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx %result rsi %seven_fact %three_fact %top %x
+%bot %a %b %eight_cubed %eight_five %eight_seven %pi_x r12 r13 r14 r15 rbp rbx rdi %result %top
+%div %a %b %pi_x r12 r13 r14 r15 rbp rbx %result
+%eight_cubed %a %b %bot %pi_x r12 r13 r14 r15 rbp rbx %result %three_fact %top
+%eight_five %a %b %bot %five_fact %pi_x r12 r13 r14 r15 rbp rbx %result %top
+%eight_seven %bot r12 r13 r14 r15 rbp rbx %result %seven_fact %top
+%five_fact %a %b %eight_five %pi_x r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx %result rsi %top
+%pi_x %a %b %bot %div %eight_cubed %eight_five %five_fact %pi_x_cubed %pi_x_five r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx %result rsi %three_fact %top %x
+%pi_x_cubed %a %b %pi_x r12 r13 r14 r15 rbp rbx %result %top
+%pi_x_five %a %b %pi_x r12 r13 r14 r15 rbp rbx %result %top
+%pi_x_seven %a %b r12 r13 r14 r15 rbp rbx %result %top
+r10 %a %b %five_fact %pi_x r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx %result rsi %seven_fact %three_fact %top
+r11 %a %b %five_fact %pi_x r10 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx %result rsi %seven_fact %three_fact %top
+r12 %a %b %bot %div %eight_cubed %eight_five %eight_seven %five_fact %pi_x %pi_x_cubed %pi_x_five %pi_x_seven r10 r11 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx %result rsi %seven_fact %three_fact %top %x
+r13 %a %b %bot %div %eight_cubed %eight_five %eight_seven %five_fact %pi_x %pi_x_cubed %pi_x_five %pi_x_seven r10 r11 r12 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx %result rsi %seven_fact %three_fact %top %x
+r14 %a %b %bot %div %eight_cubed %eight_five %eight_seven %five_fact %pi_x %pi_x_cubed %pi_x_five %pi_x_seven r10 r11 r12 r13 r15 r8 r9 rax rbp rbx rcx rdi rdx %result rsi %seven_fact %three_fact %top %x
+r15 %a %b %bot %div %eight_cubed %eight_five %eight_seven %five_fact %pi_x %pi_x_cubed %pi_x_five %pi_x_seven r10 r11 r12 r13 r14 r8 r9 rax rbp rbx rcx rdi rdx %result rsi %seven_fact %three_fact %top %x
+r8 %a %b %five_fact %pi_x r10 r11 r12 r13 r14 r15 r9 rax rbp rbx rcx rdi rdx %result rsi %seven_fact %three_fact %top
+r9 %a %b %five_fact %pi_x r10 r11 r12 r13 r14 r15 r8 rax rbp rbx rcx rdi rdx %result rsi %seven_fact %three_fact %top
+rax %a %b %five_fact %pi_x r10 r11 r12 r13 r14 r15 r8 r9 rbp rbx rcx rdi rdx %result rsi %seven_fact %three_fact %top
+rbp %a %b %bot %div %eight_cubed %eight_five %eight_seven %five_fact %pi_x %pi_x_cubed %pi_x_five %pi_x_seven r10 r11 r12 r13 r14 r15 r8 r9 rax rbx rcx rdi rdx %result rsi %seven_fact %three_fact %top %x
+rbx %a %b %bot %div %eight_cubed %eight_five %eight_seven %five_fact %pi_x %pi_x_cubed %pi_x_five %pi_x_seven r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rcx rdi rdx %result rsi %seven_fact %three_fact %top %x
+rcx %a %b %five_fact %pi_x r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rdi rdx %result rsi %seven_fact %three_fact %top
+rdi %a %b %bot %five_fact %pi_x r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdx %result rsi %seven_fact %three_fact %top
+rdx %a %b %five_fact %pi_x r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi %result rsi %seven_fact %three_fact %top
+%result %a %b %bot %div %eight_cubed %eight_five %eight_seven %five_fact %pi_x %pi_x_cubed %pi_x_five %pi_x_seven r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx rsi %seven_fact %three_fact %top
+rsi %a %b %five_fact %pi_x r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx %result %seven_fact %three_fact %top
+%seven_fact %b %eight_seven r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx %result rsi %top
+%three_fact %a %b %eight_cubed %pi_x r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx %result rsi %top
+%top %a %b %bot %eight_cubed %eight_five %eight_seven %five_fact %pi_x %pi_x_cubed %pi_x_five %pi_x_seven r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx %result rsi %seven_fact %three_fact
+%x %a %b %pi_x r12 r13 r14 r15 rbp rbx

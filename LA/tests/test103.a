@@ -1,0 +1,57 @@
+// test array error
+// expected: 
+// {s:15, 2, 3, 4, 11, 12, 13, 14, 21, 22, 23, 24, 31, 32, 33, 34}
+// attempted to use position 4 (linearized array length: 15) 
+
+void main () {
+  int64[][] arr
+  arr <- init(3, 4)
+  print(arr)
+
+  int64 v
+
+  // out of range
+  v <- arr[1][4] 
+
+  // should not print arr[2][0] == 31
+  print(v) 
+
+  return
+}
+
+int64[][] init (int64 rows, int64 cols) {
+  int64[][] ret
+  ret <- new Array(rows, cols)
+  int64 i
+  int64 j
+  int64 done_out
+  int64 done_in
+  int64 x
+  i <- 0
+
+  :cond_out
+  done_out <- i = rows
+  br done_out :end :loop_out
+
+  :loop_out
+  j <- 0
+
+  :cond_in
+  done_in <- j = cols
+  br done_in :next :loop_in
+
+  :loop_in
+  x <- i * 10
+  x <- x + j
+  x <- x + 11
+  ret[i][j] <- x
+  j <- j + 1
+  br :cond_in
+
+  :next
+  i <- i + 1
+  br :cond_out
+
+  :end
+  return ret
+}

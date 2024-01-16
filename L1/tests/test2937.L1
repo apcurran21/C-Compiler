@@ -1,0 +1,69 @@
+(@go
+(@go
+	0 0
+	rdi <- 0
+	mem rsp -8 <- :test1_ret
+	call @fib 1
+	:test1_ret
+	rdi <- 1
+	mem rsp -8 <- :test2_ret
+	call @fib 1
+	:test2_ret
+	rdi <- 15
+	mem rsp -8 <- :test3_ret
+	call @fib 1
+	:test3_ret
+	rdi <- 40
+	mem rsp -8 <- :test4_ret
+	call @fib 1
+	:test4_ret
+	return
+)
+
+(@fib
+	1 4
+	rdi <- rdi
+	mem rsp 16 <- rdi
+	rdi <- 0
+	mem rsp 8 <- rdi
+	rdi <- 0
+	mem rsp 24 <- rdi
+	rdi <- 1
+	mem rsp 0 <- rdi
+	:loop
+	rsi <- mem rsp 8
+	rdi <- mem rsp 16
+	cjump rsi = rdi :end
+	rdi <- mem rsp 24
+	rdi <- rdi
+	rdi <<= 1
+	rdi++
+	call print 1
+	rdi <- mem rsp 24
+	rdi <- rdi
+	rsi <- mem rsp 0
+	rsi <- rsi
+	mem rsp -8 <- :next_ret
+	call @next 2
+	:next_ret
+	rdi <- mem rsp 0
+	rdi <- rdi
+	mem rsp 24 <- rdi
+	rdi <- rax
+	mem rsp 0 <- rdi
+	rdi <- mem rsp 8
+	rdi++
+	mem rsp 8 <- rdi
+	goto :loop
+	:end
+	return
+)
+
+(@next
+	2 0
+	rsi += rdi
+	rax <- rsi
+	return
+)
+
+)

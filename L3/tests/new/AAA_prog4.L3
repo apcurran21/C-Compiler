@@ -1,0 +1,40 @@
+
+define :main() {
+  %n <- call input()
+  %n <- %n >> 1
+  %nfacr <- call :rec_fac(%n)
+  %nfaci <- call :iter_fac(%n)
+  %agree <- %nfacr = %nfaci
+  br %agree :equal
+  call print(1) // encoded 0
+  return
+  :equal
+  %result <- %nfacr << 1
+  %result <- %result + 1
+  call print(%result)
+  call print(3) // encoded 1
+  return
+}
+
+define :rec_fac(%n) {
+  %base <- %n <= 1
+  br %base :base_case
+  %next <- %n - 1
+  %result <- call :rec_fac(%next)
+  %result <- %result * %n
+  return %result
+  :base_case
+  return 1
+}
+
+define :iter_fac(%num) {
+  %result <- 1
+  :start
+  %done <- %num <= 1
+  br %done :done
+  %result <- %result * %num
+  %num <- %num - 1
+  br :start
+  :done
+  return %result
+}

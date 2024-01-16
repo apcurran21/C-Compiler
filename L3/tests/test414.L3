@@ -1,0 +1,58 @@
+define @main() {
+	%len <- 10
+
+	%arr1 <- call @GetArray(%len)
+	call @PopulateArray1(%arr1, %len)
+
+	call @printResultArray(%arr1)
+
+	%arr2 <- call @GetArray(%len)
+	call @PopulateArray2(%arr2, %len)
+
+	call @printResultArray(%arr2)
+
+	return
+}
+
+define @GetArray(%len) {
+	%len <- %len << 1
+	%len <- %len + 1
+	%val <- 1
+	%arr <- call allocate(%len, %val)
+	return %arr
+}
+
+define @PopulateArray1(%arr, %len) {
+	%pos <- %arr + 8
+	%ind <- 1
+
+	:loopStart1
+	%stop <- %len <= %ind
+	br %stop :LoopEnd
+	store %pos <- %ind
+	%ind <- %ind + 2
+	%pos <- %pos + 8
+	br :loopStart1
+
+	:LoopEnd
+	return
+}
+
+define @PopulateArray2(%arr, %len) {
+	%pos <- %arr + 8
+	%ind <- 1
+
+	:LoopStart2
+	store %pos <- 5
+	%pos <- %pos + 8
+	%ind <- %ind + 1
+	%continue <- %len >= %ind
+	br %continue :LoopStart2
+
+	return
+}
+
+define @printResultArray(%arr) {
+	call print(%arr)
+	return
+}

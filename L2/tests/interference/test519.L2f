@@ -1,0 +1,15 @@
+(@calculate
+	1
+	%n <- rdi
+	%output <- 1
+	%index <- 0
+	:call_label_ciao__ciao_4
+	%check <- %index = %n
+	cjump %check = 1 :call_label_ciao__ciao_5
+	%index += 1
+	%output *= %index
+	goto :call_label_ciao__ciao_4
+	:call_label_ciao__ciao_5
+	rax <- %output
+	return
+)

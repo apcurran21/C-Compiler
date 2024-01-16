@@ -1,0 +1,10 @@
+(@double
+	1
+	%v <- rdi
+	:call_label0
+	goto :call_label1
+	:call_label1
+	%v *= 2
+	rax <- %v
+	return
+)

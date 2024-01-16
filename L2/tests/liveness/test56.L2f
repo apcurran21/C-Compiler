@@ -1,0 +1,6 @@
+(@calculate
+	2
+	rax <- rdi
+	rax += rsi
+	return
+)

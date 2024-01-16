@@ -1,0 +1,22 @@
+(@main
+(@main
+	0 0
+	:call_label0
+	rsi <- 1
+	rdi <- 2
+	goto :call_label1
+	:call_label1
+	rsi <- rsi
+	rsi += rdi
+	rdi <- 1 < rsi
+	cjump rdi = 1 :call_label2
+	goto :call_label3
+	:call_label2
+	rdi <- rsi
+	call print 1
+	return
+	:call_label3
+	return
+)
+
+)

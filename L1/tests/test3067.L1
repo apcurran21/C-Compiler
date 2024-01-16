@@ -1,0 +1,22 @@
+(@go
+(@go
+	0 0
+	rcx <- 1
+	rdi <- 6
+	rdx <- 1
+	rsi <- 1
+	:loop
+	cjump rdx <= rdi :loop2
+	rdi <- rsi
+	rdi <<= rcx
+	rdi += 1
+	call print 1
+	return
+	:loop2
+	rsi *= rdx
+	rdx++
+	goto :loop
+	return
+)
+
+)

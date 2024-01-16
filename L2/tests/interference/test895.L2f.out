@@ -1,0 +1,24 @@
+%dequeue_loc %queue_ptr r12 r13 r14 r15 rbp rbx
+%encoded_ret_size %queue_ptr r12 r13 r14 r15 rbp rbx %val
+%not_empty %queue_ptr r12 r13 r14 r15 rbp rbx
+%old_size %queue_ptr r12 r13 r14 r15 rbp rbx
+%queue_ptr %dequeue_loc %encoded_ret_size %not_empty %old_size r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx %ret %ret_back %ret_size rsi %val
+r10 %queue_ptr r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx rsi %val
+r11 %queue_ptr r10 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx rsi %val
+r12 %dequeue_loc %encoded_ret_size %not_empty %old_size %queue_ptr r10 r11 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx %ret %ret_back %ret_size rsi %val
+r13 %dequeue_loc %encoded_ret_size %not_empty %old_size %queue_ptr r10 r11 r12 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx %ret %ret_back %ret_size rsi %val
+r14 %dequeue_loc %encoded_ret_size %not_empty %old_size %queue_ptr r10 r11 r12 r13 r15 r8 r9 rax rbp rbx rcx rdi rdx %ret %ret_back %ret_size rsi %val
+r15 %dequeue_loc %encoded_ret_size %not_empty %old_size %queue_ptr r10 r11 r12 r13 r14 r8 r9 rax rbp rbx rcx rdi rdx %ret %ret_back %ret_size rsi %val
+r8 %queue_ptr r10 r11 r12 r13 r14 r15 r9 rax rbp rbx rcx rdi rdx rsi %val
+r9 %queue_ptr r10 r11 r12 r13 r14 r15 r8 rax rbp rbx rcx rdi rdx rsi %val
+rax %queue_ptr r10 r11 r12 r13 r14 r15 r8 r9 rbp rbx rcx rdi rdx rsi %val
+rbp %dequeue_loc %encoded_ret_size %not_empty %old_size %queue_ptr r10 r11 r12 r13 r14 r15 r8 r9 rax rbx rcx rdi rdx %ret %ret_back %ret_size rsi %val
+rbx %dequeue_loc %encoded_ret_size %not_empty %old_size %queue_ptr r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rcx rdi rdx %ret %ret_back %ret_size rsi %val
+rcx %queue_ptr r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rdi rdx rsi %val
+rdi %queue_ptr r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdx rsi %val
+rdx %queue_ptr r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rsi %val
+%ret_back %queue_ptr r12 r13 r14 r15 rbp rbx %ret
+%ret %queue_ptr r12 r13 r14 r15 rbp rbx %ret_back
+%ret_size %queue_ptr r12 r13 r14 r15 rbp rbx %val
+rsi %queue_ptr r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx %val
+%val %encoded_ret_size %queue_ptr r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx %ret_size rsi

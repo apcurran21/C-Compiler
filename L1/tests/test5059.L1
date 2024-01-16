@@ -1,0 +1,69 @@
+(@main
+  (@main
+    0 0
+    rdi <- 21
+    rsi <- 0
+    call allocate 2
+    mem rax 8 <- 2
+    mem rax 16 <- 11
+    mem rax 24 <- 14
+    mem rax 32 <- 23
+    mem rax 40 <- 35
+    mem rax 48 <- 47
+    mem rax 56 <- 51
+    mem rax 64 <- 59
+    mem rax 72 <- 72
+    mem rax 80 <- 84
+    rdx <- 9
+    rsi <- 0
+    rax += 8
+    rdi <- rax
+    rcx <- 47
+    mem rsp -8 <- :test1_ret
+    call @binary_search 4
+    :test1_ret
+    rdi <- rax
+    rdi <<= 1
+    rdi++
+    call print 1
+    return
+  )
+
+  // {*arr = rdi, left = rsi, right = rdx, val = rcx} : pass array ptr + 8
+    (@binary_search
+    4 0
+    :while
+    cjump rdx < rsi :not_found
+    //rdx holds right index
+    r9 <- rdx
+    //rsi holds left index
+    r9 += rsi
+    r9 >>= 1
+    //r9 -= rsi
+    r10 @ rdi r9 8
+    //need to load register val from array index r9, but can only use numbers
+    r8 <- mem r10 0
+    //rcx holds value we are searching for
+    cjump r8 = rcx :found
+    cjump r8 < rcx :go_right
+
+    r9--
+    //revisit what is returned
+    rdx <- r9
+    goto :while
+
+    :found
+    rax <- r9
+    goto :done
+
+    :go_right
+    r9++
+    rsi <- r9
+    goto :while
+
+    :not_found
+    rax <- -1
+    :done
+    return
+  )
+)

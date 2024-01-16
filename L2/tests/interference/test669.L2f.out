@@ -1,0 +1,27 @@
+%Arr1 %Arr2 %ArrSizeEncoded r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx rsi
+%Arr1PrintVal %Arr1Sum %Arr2Sum r12 r13 r14 r15 rbp rbx
+%Arr1Sum %Arr1PrintVal %Arr2 %Arr2PrintVal %Arr2Sum %ArrSumPrintVal r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx rsi %SumOfArr
+%Arr2 %Arr1 %Arr1Sum r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx rsi
+%Arr2PrintVal %Arr1Sum %Arr2Sum r12 r13 r14 r15 rbp rbx
+%Arr2Sum %Arr1PrintVal %Arr1Sum %Arr2PrintVal %ArrSumPrintVal %ProdOfArr r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx rsi %SumOfArr
+%ArrProdPrintVal %ArrSumPrintVal r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx rsi
+%ArrSizeEncoded %Arr1 r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx rsi
+%ArrSize r12 r13 r14 r15 rbp rbx
+%ArrSumPrintVal %Arr1Sum %Arr2Sum %ArrProdPrintVal %ProdOfArr r12 r13 r14 r15 rbp rbx
+%ProdOfArr %Arr2Sum %ArrSumPrintVal r12 r13 r14 r15 rbp rbx
+r10 %Arr1 %Arr1Sum %Arr2 %Arr2Sum %ArrProdPrintVal %ArrSizeEncoded r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx rsi
+r11 %Arr1 %Arr1Sum %Arr2 %Arr2Sum %ArrProdPrintVal %ArrSizeEncoded r10 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx rsi
+r12 %Arr1 %Arr1PrintVal %Arr1Sum %Arr2 %Arr2PrintVal %Arr2Sum %ArrProdPrintVal %ArrSize %ArrSizeEncoded %ArrSumPrintVal %ProdOfArr r10 r11 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx rsi %SumOfArr
+r13 %Arr1 %Arr1PrintVal %Arr1Sum %Arr2 %Arr2PrintVal %Arr2Sum %ArrProdPrintVal %ArrSize %ArrSizeEncoded %ArrSumPrintVal %ProdOfArr r10 r11 r12 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx rsi %SumOfArr
+r14 %Arr1 %Arr1PrintVal %Arr1Sum %Arr2 %Arr2PrintVal %Arr2Sum %ArrProdPrintVal %ArrSize %ArrSizeEncoded %ArrSumPrintVal %ProdOfArr r10 r11 r12 r13 r15 r8 r9 rax rbp rbx rcx rdi rdx rsi %SumOfArr
+r15 %Arr1 %Arr1PrintVal %Arr1Sum %Arr2 %Arr2PrintVal %Arr2Sum %ArrProdPrintVal %ArrSize %ArrSizeEncoded %ArrSumPrintVal %ProdOfArr r10 r11 r12 r13 r14 r8 r9 rax rbp rbx rcx rdi rdx rsi %SumOfArr
+r8 %Arr1 %Arr1Sum %Arr2 %Arr2Sum %ArrProdPrintVal %ArrSizeEncoded r10 r11 r12 r13 r14 r15 r9 rax rbp rbx rcx rdi rdx rsi
+r9 %Arr1 %Arr1Sum %Arr2 %Arr2Sum %ArrProdPrintVal %ArrSizeEncoded r10 r11 r12 r13 r14 r15 r8 rax rbp rbx rcx rdi rdx rsi
+rax %Arr1 %Arr1Sum %Arr2 %Arr2Sum %ArrProdPrintVal %ArrSizeEncoded r10 r11 r12 r13 r14 r15 r8 r9 rbp rbx rcx rdi rdx rsi
+rbp %Arr1 %Arr1PrintVal %Arr1Sum %Arr2 %Arr2PrintVal %Arr2Sum %ArrProdPrintVal %ArrSize %ArrSizeEncoded %ArrSumPrintVal %ProdOfArr r10 r11 r12 r13 r14 r15 r8 r9 rax rbx rcx rdi rdx rsi %SumOfArr
+rbx %Arr1 %Arr1PrintVal %Arr1Sum %Arr2 %Arr2PrintVal %Arr2Sum %ArrProdPrintVal %ArrSize %ArrSizeEncoded %ArrSumPrintVal %ProdOfArr r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rcx rdi rdx rsi %SumOfArr
+rcx %Arr1 %Arr1Sum %Arr2 %Arr2Sum %ArrProdPrintVal %ArrSizeEncoded r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rdi rdx rsi
+rdi %Arr1 %Arr1Sum %Arr2 %Arr2Sum %ArrProdPrintVal %ArrSizeEncoded r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdx rsi
+rdx %Arr1 %Arr1Sum %Arr2 %Arr2Sum %ArrProdPrintVal %ArrSizeEncoded r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rsi
+rsi %Arr1 %Arr1Sum %Arr2 %Arr2Sum %ArrProdPrintVal %ArrSizeEncoded r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx
+%SumOfArr %Arr1Sum %Arr2Sum r12 r13 r14 r15 rbp rbx

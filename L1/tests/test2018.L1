@@ -1,0 +1,248 @@
+(@main
+(@acc
+	2 0
+	rdx <- rdi
+	rdi <- rsi
+	r8 <- 0
+	rcx <- rdi
+	rcx -= 2
+	rsi <- rdx
+	rsi += 8
+	:call_label_ciao_6
+	rdi <- rcx <= 0
+	cjump rdi = 1 :call_label_ciao_8
+	goto :call_label_ciao_7
+	:call_label_ciao_7
+	rdi <- mem rsi 0
+	r8 += rdi
+	rcx -= 2
+	rsi += 8
+	goto :call_label_ciao_6
+	:call_label_ciao_8
+	r8 -= 2
+	r8 -= 2
+	rax <- r8
+	return
+)
+
+(@even_nil
+	1 0
+	rdi >>= 1
+	rdi &= 1
+	rax <- rdi
+	return
+)
+
+(@filter
+	3 4
+	mem rsp 24 <- r15
+	mem rsp 16 <- r14
+	mem rsp 8 <- r13
+	mem rsp 0 <- r12
+	r13 <- rdi
+	rdi <- rsi
+	rsi <- rdx
+	r12 <- rdi
+	r12 -= 2
+	r14 <- r13
+	r14 += 8
+	r15 <- rsi
+	:call_label_ciao__ciao_9
+	rdi <- r12 <= 0
+	cjump rdi = 1 :call_label_ciao__ciao_14
+	goto :call_label_ciao__ciao_10
+	:call_label_ciao__ciao_10
+	rdi <- mem r14 0
+	rsi <- r15 = 0
+	cjump rsi = 1 :call_label_ciao__ciao_11
+	goto :call_label_ciao__ciao_12
+	:call_label_ciao__ciao_11
+	mem rsp -8 <- :call_label_ciao__ciao_15
+	call @even_nil 1
+	:call_label_ciao__ciao_15
+	rsi <- rax
+	goto :call_label_ciao__ciao_13
+	:call_label_ciao__ciao_12
+	mem rsp -8 <- :call_label_ciao__ciao_16
+	call @odd_nil 1
+	:call_label_ciao__ciao_16
+	rsi <- rax
+	:call_label_ciao__ciao_13
+	mem r14 0 <- rsi
+	r12 -= 2
+	r14 += 8
+	goto :call_label_ciao__ciao_9
+	:call_label_ciao__ciao_14
+	rax <- r13
+	r12 <- mem rsp 0
+	r13 <- mem rsp 8
+	r14 <- mem rsp 16
+	r15 <- mem rsp 24
+	return
+)
+
+(@i_wish
+	2 1
+	mem rsp 0 <- r12
+	rdi <- rsi
+	r12 <- rdi
+	r12 <- rdi
+	r12 += 1
+	mem rsp -8 <- :call_label_ciao__ciao__ciao__ciao_23
+	call @even_nil 1
+	:call_label_ciao__ciao__ciao__ciao_23
+	rdi <- rax
+	rdi <- rdi = 0
+	cjump rdi = 1 :call_label_ciao__ciao__ciao__ciao_21
+	goto :call_label_ciao__ciao__ciao__ciao_22
+	:call_label_ciao__ciao__ciao__ciao_21
+	r12 += 1
+	:call_label_ciao__ciao__ciao__ciao_22
+	rax <- r12
+	r12 <- mem rsp 0
+	return
+)
+
+(@main
+	0 2
+	mem rsp 8 <- r13
+	mem rsp 0 <- r12
+	r12 <- 1
+	rdx <- r12
+	rdx <<= 1
+	rsi <- r12
+	rsi <<= 2
+	rcx <- r12
+	rcx <<= 3
+	r8 <- r12
+	r8 <<= 4
+	r9 <- r12
+	r9 <<= 5
+	rax <- r12
+	rax <<= 6
+	rdi <- r12
+	r12 <- rsi
+	r12 -= rdx
+	r12 += r8
+	r12 -= rcx
+	r12 += rax
+	r12 -= r9
+	r12 >>= 2
+	r12 += 1
+	r13 <- 1
+	rdi <- 3
+	rsi <- 1
+	call allocate 2
+	rsi <- rax
+	rdi <- 3
+	call allocate 2
+	rsi <- rax
+	rdi <- 3
+	call allocate 2
+	rsi <- rax
+	rdi <- 3
+	call allocate 2
+	rsi <- rax
+	rdi <- rsi
+	call print 1
+	rdi <- r12
+	rsi <- r13
+	call allocate 2
+	rdi <- rax
+	rsi <- r12
+	mem rsp -8 <- :call_label0
+	call @map 2
+	:call_label0
+	r13 <- rax
+	rdi <- r13
+	call print 1
+	rdx <- 0
+	rdi <- r13
+	rsi <- r12
+	mem rsp -8 <- :call_label1
+	call @filter 3
+	:call_label1
+	r13 <- rax
+	rdi <- r13
+	call print 1
+	rdi <- r13
+	rsi <- r12
+	mem rsp -8 <- :call_label2
+	call @map 2
+	:call_label2
+	r13 <- rax
+	rdi <- r13
+	call print 1
+	rdx <- 1
+	rdi <- r13
+	rsi <- r12
+	mem rsp -8 <- :call_label3
+	call @filter 3
+	:call_label3
+	r13 <- rax
+	rdi <- r13
+	call print 1
+	rdi <- r13
+	rsi <- r12
+	mem rsp -8 <- :call_label4
+	call @map 2
+	:call_label4
+	r13 <- rax
+	rdi <- r13
+	rsi <- r12
+	mem rsp -8 <- :call_label5
+	call @acc 2
+	:call_label5
+	rdi <- rax
+	call print 1
+	r12 <- mem rsp 0
+	r13 <- mem rsp 8
+	return
+)
+
+(@map
+	2 3
+	mem rsp 16 <- r14
+	mem rsp 8 <- r13
+	mem rsp 0 <- r12
+	r13 <- rdi
+	rdi <- rsi
+	r14 <- rdi
+	r14 -= 2
+	r12 <- r13
+	r12 += 8
+	:call_label_ciao__ciao__ciao_17
+	rdi <- r14 <= 0
+	cjump rdi = 1 :call_label_ciao__ciao__ciao_19
+	goto :call_label_ciao__ciao__ciao_18
+	:call_label_ciao__ciao__ciao_18
+	rdi <- mem r12 0
+	rsi <- r14
+	mem rsp -8 <- :call_label_ciao__ciao__ciao_20
+	call @i_wish 2
+	:call_label_ciao__ciao__ciao_20
+	rdi <- rax
+	rdi <<= 1
+	rdi += 1
+	mem r12 0 <- rdi
+	r14 -= 2
+	r12 += 8
+	goto :call_label_ciao__ciao__ciao_17
+	:call_label_ciao__ciao__ciao_19
+	rax <- r13
+	r12 <- mem rsp 0
+	r13 <- mem rsp 8
+	r14 <- mem rsp 16
+	return
+)
+
+(@odd_nil
+	1 0
+	rdi >>= 1
+	rdi -= 1
+	rdi &= 1
+	rax <- rdi
+	return
+)
+
+)

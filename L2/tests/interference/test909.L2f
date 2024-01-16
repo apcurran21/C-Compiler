@@ -1,0 +1,27 @@
+(@main
+	0
+	:call_label0
+	mem rsp -8 <- :call_label3
+	call @make_array 0
+	:call_label3
+	%var1 <- 2
+	%var2 <- 1
+	goto :call_label1
+	:call_label1
+	%temp <- 7
+	%var2 += %temp
+	%var1 += 2
+	%len <- 0
+	%test <- %len
+	%test -= %var1
+	cjump %test = 1 :call_label1
+	goto :call_label2
+	:call_label2
+	mem rsp -8 <- :call_label4
+	call @make_array2 0
+	:call_label4
+	%rax <- rax
+	rdi <- %rax
+	call print 1
+	return
+)

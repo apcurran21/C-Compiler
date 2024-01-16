@@ -1,0 +1,57 @@
+(@go
+(@go
+	0 2
+	mem rsp 8 <- r13
+	mem rsp 0 <- r12
+	rdi <- 5
+	rsi <- 7
+	call allocate 2
+	r12 <- rax
+	rdi <- r12
+	mem rsp -8 <- :funct_ret
+	call @findLen 1
+	:funct_ret
+	r13 <- rax
+	rdi <- r12
+	mem rsp -8 <- :funct_ret1
+	call @findSum 1
+	:funct_ret1
+	rdi <- rax
+	call print 1
+	rdi <- r13
+	call print 1
+	r12 <- mem rsp 0
+	r13 <- mem rsp 8
+	return
+)
+
+(@findLen
+	1 0
+	rax <- mem rdi 0
+	rax <<= 1
+	rax++
+	return
+)
+
+(@findSum
+	1 0
+	rax <- 0
+	rdx <- mem rdi 0
+	rcx <- 0
+	:START
+	rdi >>= 1
+	rdi += 4
+	rdi <<= 1
+	cjump rdx <= rcx :END
+	rsi <- mem rdi 0
+	rsi >>= 1
+	rax += rsi
+	rcx++
+	goto :START
+	:END
+	rax <<= 1
+	rax++
+	return
+)
+
+)

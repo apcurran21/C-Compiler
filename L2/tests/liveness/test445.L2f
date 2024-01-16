@@ -1,0 +1,11 @@
+(@myF512
+	1
+	%rdi <- rdi
+	%myvar0 <- %rdi
+	%myvar0 <<= 1
+	%myvar0 += 1
+	%rdi <- %myvar0
+	rdi <- %rdi
+	call print 1
+	return
+)

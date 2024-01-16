@@ -1,0 +1,71 @@
+(@main
+(@compute_many_diagonals
+	1 2
+	mem rsp 8 <- r13
+	mem rsp 0 <- r12
+	:call_label_ciao__ciao_5
+	r13 <- rdi
+	r13 >>= 1
+	r12 <- 7
+	r12 >>= 1
+	goto :call_label_ciao__ciao_6
+	:call_label_ciao__ciao_6
+	rdi <- r13 < r12
+	cjump rdi = 1 :call_label_ciao__ciao_9
+	goto :call_label_ciao__ciao_7
+	:call_label_ciao__ciao_7
+	rdi <- r12
+	rdi <<= 1
+	rdi += 1
+	mem rsp -8 <- :call_label_ciao__ciao_10
+	call @compute_num_diagonals_for_shape 1
+	:call_label_ciao__ciao_10
+	goto :call_label_ciao__ciao_8
+	:call_label_ciao__ciao_8
+	r12 += 1
+	goto :call_label_ciao__ciao_6
+	:call_label_ciao__ciao_9
+	r12 <- mem rsp 0
+	r13 <- mem rsp 8
+	return
+)
+
+(@compute_num_diagonals_for_shape
+	1 0
+	:call_label_ciao_4
+	rdi >>= 1
+	rsi <- rdi
+	rsi -= 3
+	rsi *= rdi
+	rsi >>= 1
+	rsi <<= 1
+	rsi += 1
+	rdi <- rsi
+	call print 1
+	return
+)
+
+(@main
+	0 1
+	mem rsp 0 <- r12
+	:call_label0
+	r12 <- 25
+	rdi <- r12
+	call print 1
+	rdi <- r12
+	mem rsp -8 <- :call_label1
+	call @compute_num_diagonals_for_shape 1
+	:call_label1
+	rdi <- r12
+	mem rsp -8 <- :call_label2
+	call @compute_many_diagonals 1
+	:call_label2
+	rdi <- 103
+	mem rsp -8 <- :call_label3
+	call @compute_num_diagonals_for_shape 1
+	:call_label3
+	r12 <- mem rsp 0
+	return
+)
+
+)

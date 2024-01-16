@@ -1,0 +1,28 @@
+(@sum
+	2
+	%array <- rdi
+	%len <- rsi
+	:call_label_ciao_2
+	%i <- 0
+	%res <- 0
+	goto :call_label_ciao_3
+	:call_label_ciao_3
+	%if <- %i < %len
+	cjump %if = 1 :call_label_ciao_4
+	goto :call_label_ciao_5
+	:call_label_ciao_4
+	%newVar1 <- 0
+	%newVar1 += %i
+	%newVar0 <- %newVar1
+	%newVar0 *= 8
+	%newVar0 += 24
+	%newVar3 <- %array
+	%newVar3 += %newVar0
+	%v <- mem %newVar3 0
+	%res += %v
+	%i += 1
+	goto :call_label_ciao_3
+	:call_label_ciao_5
+	rax <- %res
+	return
+)

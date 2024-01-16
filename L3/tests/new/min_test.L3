@@ -1,0 +1,53 @@
+
+
+define :main() {
+    call :min(10, 16, 8)
+    return
+}
+
+define :min(%a, %b, %c) {
+    %a_less_b <- %a <= %b 
+    %a_less_c <- %a <= %c 
+    %a_lowest <- %a_less_b & %a_less_c
+
+    br %a_lowest :print_a
+    :cont_a
+
+    %b_less_a <- %b <= %a
+    %b_less_c <- %b <= %c
+    %b_lowest <- %b_less_a & %b_less_c
+
+    br %b_lowest :print_b
+    :cont_b
+
+    %c_less_a <- %c <= %a
+    %c_less_b <- %c <= %b
+    %c_lowest <- %c_less_a & %c_less_b
+
+    br %c_lowest :print_c
+    :cont_c
+
+    br :done
+
+    :print_a 
+    call :print_num(%a)
+    br :cont_a
+
+    :print_b
+    call :print_num(%b)
+    br :cont_b
+
+    :print_c
+    call :print_num(%c)
+    br :cont_c
+
+    :done
+    return
+}
+
+define :print_num(%num) {
+    %print_num <- %num * 2
+    %print_num <- %print_num + 1
+    call print(%print_num)
+    return
+}

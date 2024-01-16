@@ -1,0 +1,132 @@
+(@main
+	0
+	:call_label0
+	%newVar0dim <- 601
+	%newVar_ciao__ciao__ciao_1 <- %newVar0dim
+	%newVar_ciao__ciao__ciao_1 >>= 1
+	%newVar_ciao__ciao__ciao_0 <- %newVar_ciao__ciao__ciao_1
+	%newVar_ciao__ciao__ciao_2 <- %newVar0dim
+	%newVar_ciao__ciao__ciao_2 >>= 1
+	%newVar_ciao__ciao__ciao_0 *= %newVar_ciao__ciao__ciao_2
+	%newVar_ciao__ciao__ciao_0 <<= 1
+	%newVar_ciao__ciao__ciao_0 += 1
+	%newVar_ciao__ciao__ciao_0 += 6
+	rdi <- %newVar_ciao__ciao__ciao_0
+	rsi <- 1
+	call allocate 2
+	%newVar0m1 <- rax
+	%newVar_ciao__ciao__ciao_3 <- %newVar0m1
+	%newVar_ciao__ciao__ciao_3 += 8
+	mem %newVar_ciao__ciao__ciao_3 0 <- 5
+	%newVar_ciao__ciao__ciao_4 <- %newVar0m1
+	%newVar_ciao__ciao__ciao_4 += 16
+	mem %newVar_ciao__ciao__ciao_4 0 <- %newVar0dim
+	%newVar_ciao__ciao__ciao_5 <- %newVar0m1
+	%newVar_ciao__ciao__ciao_5 += 24
+	mem %newVar_ciao__ciao__ciao_5 0 <- %newVar0dim
+	%newVar_ciao__ciao__ciao_7 <- %newVar0dim
+	%newVar_ciao__ciao__ciao_7 >>= 1
+	%newVar_ciao__ciao__ciao_6 <- %newVar_ciao__ciao__ciao_7
+	%newVar_ciao__ciao__ciao_8 <- %newVar0dim
+	%newVar_ciao__ciao__ciao_8 >>= 1
+	%newVar_ciao__ciao__ciao_6 *= %newVar_ciao__ciao__ciao_8
+	%newVar_ciao__ciao__ciao_6 <<= 1
+	%newVar_ciao__ciao__ciao_6 += 1
+	%newVar_ciao__ciao__ciao_6 += 6
+	rdi <- %newVar_ciao__ciao__ciao_6
+	rsi <- 1
+	call allocate 2
+	%newVar0m2 <- rax
+	%newVar_ciao__ciao__ciao_9 <- %newVar0m2
+	%newVar_ciao__ciao__ciao_9 += 8
+	mem %newVar_ciao__ciao__ciao_9 0 <- 5
+	%newVar_ciao__ciao__ciao_10 <- %newVar0m2
+	%newVar_ciao__ciao__ciao_10 += 16
+	mem %newVar_ciao__ciao__ciao_10 0 <- %newVar0dim
+	%newVar_ciao__ciao__ciao_11 <- %newVar0m2
+	%newVar_ciao__ciao__ciao_11 += 24
+	mem %newVar_ciao__ciao__ciao_11 0 <- %newVar0dim
+	%newVar_ciao__ciao__ciao_13 <- %newVar0dim
+	%newVar_ciao__ciao__ciao_13 >>= 1
+	%newVar_ciao__ciao__ciao_12 <- %newVar_ciao__ciao__ciao_13
+	%newVar_ciao__ciao__ciao_14 <- %newVar0dim
+	%newVar_ciao__ciao__ciao_14 >>= 1
+	%newVar_ciao__ciao__ciao_12 *= %newVar_ciao__ciao__ciao_14
+	%newVar_ciao__ciao__ciao_12 <<= 1
+	%newVar_ciao__ciao__ciao_12 += 1
+	%newVar_ciao__ciao__ciao_12 += 6
+	rdi <- %newVar_ciao__ciao__ciao_12
+	rsi <- 1
+	call allocate 2
+	%newVar0m3 <- rax
+	%newVar_ciao__ciao__ciao_15 <- %newVar0m3
+	%newVar_ciao__ciao__ciao_15 += 8
+	mem %newVar_ciao__ciao__ciao_15 0 <- 5
+	%newVar_ciao__ciao__ciao_16 <- %newVar0m3
+	%newVar_ciao__ciao__ciao_16 += 16
+	mem %newVar_ciao__ciao__ciao_16 0 <- %newVar0dim
+	%newVar_ciao__ciao__ciao_17 <- %newVar0m3
+	%newVar_ciao__ciao__ciao_17 += 24
+	mem %newVar_ciao__ciao__ciao_17 0 <- %newVar0dim
+	%newVar1max1 <- 9
+	%newVar1max2 <- 9
+	%newVar1index1 <- 1
+	goto :call_label1
+	:call_label1
+	%newVar_ciao__ciao_0 <- %newVar1index1
+	%newVar_ciao__ciao_0 >>= 1
+	%newVar_ciao__ciao_1 <- %newVar1max1
+	%newVar_ciao__ciao_1 >>= 1
+	%newVar_ciao_0 <- %newVar_ciao__ciao_0 < %newVar_ciao__ciao_1
+	%newVar_ciao_0 <<= 1
+	%newVar_ciao_0 += 1
+	%newVar_ciao__ciao_0 <- %newVar_ciao_0
+	%newVar_ciao__ciao_0 >>= 1
+	cjump %newVar_ciao__ciao_0 = 1 :call_label2
+	goto :call_label6
+	:call_label2
+	%newVar1index2 <- 1
+	goto :call_label3
+	:call_label3
+	%newVar_ciao__ciao_0 <- %newVar1index2
+	%newVar_ciao__ciao_0 >>= 1
+	%newVar_ciao__ciao_1 <- %newVar1max2
+	%newVar_ciao__ciao_1 >>= 1
+	%newVar_ciao_1 <- %newVar_ciao__ciao_0 < %newVar_ciao__ciao_1
+	%newVar_ciao_1 <<= 1
+	%newVar_ciao_1 += 1
+	%newVar_ciao__ciao_0 <- %newVar_ciao_1
+	%newVar_ciao__ciao_0 >>= 1
+	cjump %newVar_ciao__ciao_0 = 1 :call_label4
+	goto :call_label5
+	:call_label4
+	rdi <- %newVar0m1
+	rsi <- %newVar0m2
+	rdx <- %newVar0m3
+	rcx <- %newVar1index1
+	r8 <- %newVar1index2
+	mem rsp -8 <- :call_label7
+	call @computeAndPrint 5
+	:call_label7
+	%newVar_ciao__ciao_0 <- %newVar1index2
+	%newVar_ciao__ciao_0 >>= 1
+	%newVar_ciao__ciao_1 <- 3
+	%newVar_ciao__ciao_1 >>= 1
+	%newVar1index2 <- %newVar_ciao__ciao_0
+	%newVar1index2 += %newVar_ciao__ciao_1
+	%newVar1index2 <<= 1
+	%newVar1index2 += 1
+	goto :call_label3
+	:call_label5
+	%newVar_ciao__ciao_0 <- %newVar1index1
+	%newVar_ciao__ciao_0 >>= 1
+	%newVar_ciao__ciao_1 <- 3
+	%newVar_ciao__ciao_1 >>= 1
+	%newVar1index1 <- %newVar_ciao__ciao_0
+	%newVar1index1 += %newVar_ciao__ciao_1
+	%newVar1index1 <<= 1
+	%newVar1index1 += 1
+	goto :call_label1
+	:call_label6
+	return
+)

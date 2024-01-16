@@ -1,0 +1,197 @@
+(@main
+(@insertionSort
+	1 0
+	rdi <- rdi
+	r9 <- rdi
+	rax <- mem r9 0
+	r8 <- 2
+	:call_label0
+	rdi <- rax < r8
+	cjump rdi = 1 :call_label6
+	goto :call_label1
+	:call_label1
+	r10 <- r8
+	:call_label2
+	rdi <- r10 <= 1
+	cjump rdi = 1 :call_label5
+	goto :call_label3
+	:call_label3
+	r11 <- r10
+	r11 <- r11
+	r11 -= 1
+	r11 <- r11
+	r11 <<= 3
+	r11 <- r11
+	r11 += r9
+	rdi <- r10
+	rdi <- rdi
+	rdi <<= 3
+	rdi <- rdi
+	rdi += r9
+	rdx <- mem rdi 0
+	rsi <- mem r11 0
+	rcx <- rdx < rsi
+	cjump rcx = 1 :call_label4
+	goto :call_label5
+	:call_label4
+	mem rdi 0 <- rsi
+	mem r11 0 <- rdx
+	r10 <- r10
+	r10 -= 1
+	goto :call_label2
+	:call_label5
+	r8 <- r8
+	r8 += 1
+	goto :call_label0
+	:call_label6
+	rax <- r9
+	return
+)
+
+(@main
+	0 12
+	rdi <- 41
+	rdi <- rdi
+	rsi <- 1
+	call allocate 2
+	rdi <- rax
+	mem rsp 88 <- rdi
+	rdi <- mem rsp 88
+	rsi <- rdi
+	rsi += 8
+	rdi <- mem rsp 88
+	rdx <- rdi
+	rdx += 16
+	rdi <- mem rsp 88
+	rdi <- rdi
+	mem rsp 8 <- rdi
+	rdi <- mem rsp 8
+	rdi += 24
+	mem rsp 8 <- rdi
+	rdi <- mem rsp 88
+	rdi <- rdi
+	mem rsp 80 <- rdi
+	rdi <- mem rsp 80
+	rdi += 32
+	mem rsp 80 <- rdi
+	rdi <- mem rsp 88
+	rdi <- rdi
+	mem rsp 16 <- rdi
+	rdi <- mem rsp 16
+	rdi += 40
+	mem rsp 16 <- rdi
+	rdi <- mem rsp 88
+	rdi <- rdi
+	mem rsp 40 <- rdi
+	rdi <- mem rsp 40
+	rdi += 48
+	mem rsp 40 <- rdi
+	rdi <- mem rsp 88
+	rdi <- rdi
+	mem rsp 56 <- rdi
+	rdi <- mem rsp 56
+	rdi += 56
+	mem rsp 56 <- rdi
+	rdi <- mem rsp 88
+	rdi <- rdi
+	mem rsp 48 <- rdi
+	rdi <- mem rsp 48
+	rdi += 64
+	mem rsp 48 <- rdi
+	rdi <- mem rsp 88
+	r10 <- rdi
+	r10 += 72
+	rdi <- mem rsp 88
+	r11 <- rdi
+	r11 += 80
+	rdi <- mem rsp 88
+	rdi <- rdi
+	rdi += 88
+	rcx <- mem rsp 88
+	rcx <- rcx
+	mem rsp 64 <- rcx
+	rcx <- mem rsp 64
+	rcx += 96
+	mem rsp 64 <- rcx
+	rcx <- mem rsp 88
+	rcx <- rcx
+	mem rsp 32 <- rcx
+	rcx <- mem rsp 32
+	rcx += 104
+	mem rsp 32 <- rcx
+	rcx <- mem rsp 88
+	r9 <- rcx
+	r9 += 112
+	rcx <- mem rsp 88
+	rcx <- rcx
+	mem rsp 72 <- rcx
+	rcx <- mem rsp 72
+	rcx += 120
+	mem rsp 72 <- rcx
+	rcx <- mem rsp 88
+	rax <- rcx
+	rax += 128
+	rcx <- mem rsp 88
+	rcx <- rcx
+	mem rsp 24 <- rcx
+	rcx <- mem rsp 24
+	rcx += 136
+	mem rsp 24 <- rcx
+	rcx <- mem rsp 88
+	rcx <- rcx
+	mem rsp 0 <- rcx
+	rcx <- mem rsp 0
+	rcx += 144
+	mem rsp 0 <- rcx
+	rcx <- mem rsp 88
+	rcx <- rcx
+	rcx += 152
+	r8 <- mem rsp 88
+	r8 <- r8
+	r8 += 160
+	mem rsi 0 <- 35
+	mem rdx 0 <- 15
+	rsi <- mem rsp 8
+	mem rsi 0 <- 13
+	rsi <- mem rsp 80
+	mem rsi 0 <- 19
+	rsi <- mem rsp 16
+	mem rsi 0 <- 51
+	rsi <- mem rsp 40
+	mem rsi 0 <- 27
+	rsi <- mem rsp 56
+	mem rsi 0 <- 49
+	rsi <- mem rsp 48
+	mem rsi 0 <- 57
+	mem r10 0 <- 9
+	mem r11 0 <- 63
+	mem rdi 0 <- 81
+	rdi <- mem rsp 64
+	mem rdi 0 <- 97
+	rdi <- mem rsp 32
+	mem rdi 0 <- 11
+	mem r9 0 <- 11
+	rdi <- mem rsp 72
+	mem rdi 0 <- 13
+	mem rax 0 <- 7
+	rdi <- mem rsp 24
+	mem rdi 0 <- 33
+	rdi <- mem rsp 0
+	mem rdi 0 <- 37
+	mem rcx 0 <- 27
+	mem r8 0 <- 51
+	rdi <- mem rsp 88
+	rdi <- rdi
+	call print 1
+	rdi <- mem rsp 88
+	rdi <- rdi
+	mem rsp -8 <- :call_label_ciao_7
+	call @insertionSort 1
+	:call_label_ciao_7
+	rdi <- rax
+	rdi <- rdi
+	call print 1
+	return
+)
+
+)

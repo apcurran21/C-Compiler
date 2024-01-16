@@ -1,0 +1,35 @@
+(@main
+	0
+	%filler <- 0
+	%max <- 100
+	%max <<= 1
+	%max += 1
+	rdi <- %max
+	rsi <- %filler
+	call allocate 2
+	%arr <- rax
+	%ptr <- %arr
+	%ptr += 8
+	rdi <- %ptr
+	rsi <- %max
+	mem rsp -8 <- :call_label_ciao__ciao_4
+	call @fill_array 2
+	:call_label_ciao__ciao_4
+	rdi <- %max
+	rsi <- %filler
+	call allocate 2
+	%arr2 <- rax
+	%ptr2 <- %arr2
+	%ptr2 += 8
+	rdi <- %ptr
+	rsi <- %ptr2
+	rdx <- %max
+	mem rsp -8 <- :call_label_ciao__ciao_5
+	call @double_array 3
+	:call_label_ciao__ciao_5
+	rdi <- %arr
+	call print 1
+	rdi <- %arr2
+	call print 1
+	return
+)

@@ -1,0 +1,37 @@
+(@main
+	0
+	:call_label0
+	goto :call_label1
+	:call_label1
+	%newVar1 <- 5
+	%newVar1 >>= 1
+	%newVar0 <- %newVar1
+	%newVar0 <<= 1
+	%newVar0 += 1
+	%newVar0 += 4
+	rdi <- %newVar0
+	rsi <- 1
+	call allocate 2
+	%array <- rax
+	%newVar2 <- %array
+	%newVar2 += 8
+	mem %newVar2 0 <- 3
+	%newVar3 <- %array
+	%newVar3 += 16
+	mem %newVar3 0 <- 5
+	rdi <- %array
+	mem rsp -8 <- :call_label2
+	call @findLen 1
+	:call_label2
+	%print1 <- rax
+	rdi <- %array
+	mem rsp -8 <- :call_label3
+	call @findSum 1
+	:call_label3
+	%print2 <- rax
+	rdi <- %print1
+	call print 1
+	rdi <- %print2
+	call print 1
+	return
+)

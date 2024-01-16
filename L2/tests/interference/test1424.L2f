@@ -1,0 +1,83 @@
+(@main
+	0
+	:call_label0
+	goto :call_label4
+	:call_label1
+	return
+	:call_label2
+	%newVar1 <- 0
+	%i_sub_2 <- %i
+	%i_sub_2 -= 2
+	%newVar1 += %i_sub_2
+	%newVar0 <- %newVar1
+	%newVar0 *= 8
+	%newVar0 += 16
+	%newVar3 <- %fib_arr
+	%newVar3 += %newVar0
+	%fib_sub_2 <- mem %newVar3 0
+	%newVar5 <- 0
+	%i_sub_1 <- %i
+	%i_sub_1 -= 1
+	%newVar5 += %i_sub_1
+	%newVar4 <- %newVar5
+	%newVar4 *= 8
+	%newVar4 += 16
+	%newVar7 <- %fib_arr
+	%newVar7 += %newVar4
+	%fib_sub_1 <- mem %newVar7 0
+	%fib_i <- %fib_sub_2
+	%fib_i += %fib_sub_1
+	%newVar9 <- 0
+	%newVar9 += %i
+	%newVar8 <- %newVar9
+	%newVar8 *= 8
+	%newVar8 += 16
+	%newVar11 <- %fib_arr
+	%newVar11 += %newVar8
+	mem %newVar11 0 <- %fib_i
+	%fib_i <<= 1
+	%fib_i += 1
+	rdi <- %fib_i
+	call print 1
+	%i += 1
+	goto :call_label3
+	:call_label3
+	%loop_done <- 21 <= %i
+	cjump %loop_done = 1 :call_label1
+	goto :call_label2
+	:call_label4
+	%newVar13 <- 43
+	%newVar13 >>= 1
+	%newVar12 <- %newVar13
+	%newVar12 <<= 1
+	%newVar12 += 1
+	%newVar12 += 2
+	rdi <- %newVar12
+	rsi <- 1
+	call allocate 2
+	%fib_arr <- rax
+	%newVar14 <- %fib_arr
+	%newVar14 += 8
+	mem %newVar14 0 <- 43
+	%newVar16 <- 0
+	%newVar15 <- %newVar16
+	%newVar15 *= 8
+	%newVar15 += 16
+	%newVar18 <- %fib_arr
+	%newVar18 += %newVar15
+	mem %newVar18 0 <- 1
+	%newVar20 <- 0
+	%newVar20 += 1
+	%newVar19 <- %newVar20
+	%newVar19 *= 8
+	%newVar19 += 16
+	%newVar22 <- %fib_arr
+	%newVar22 += %newVar19
+	mem %newVar22 0 <- 1
+	rdi <- 3
+	call print 1
+	rdi <- 3
+	call print 1
+	%i <- 2
+	goto :call_label3
+)

@@ -1,0 +1,63 @@
+(@go
+(@go
+	0 0
+	rdi <- 1
+	rsi <- 2
+	rdx <- 3
+	rcx <- 4
+	r8 <- 5
+	r9 <- 6
+	mem rsp -8 <- :fooRet
+	call @foo 6
+	:fooRet
+	rdi <- rax
+	mem rsp -8 <- :printRet
+	call @PrintArg 1
+	:printRet
+	return
+)
+
+(@foo
+	6 0
+	rdi <- rdi
+	rdi += rsi
+	rdi += rdx
+	rdi += rcx
+	rdi += r8
+	rdi += r9
+	rdi <- rdi
+	rsi <- 2
+	rdx <- 3
+	rcx <- 4
+	r8 <- 5
+	r9 <- 6
+	mem rsp -8 <- :bar_ret
+	mem rsp -16 <- 7
+	call @bar 7
+	:bar_ret
+	return
+)
+
+(@PrintArg
+	1 0
+	rdi <<= 1
+	rdi += 1
+	call print 1
+	return
+)
+
+(@bar
+	7 0
+	rdi <- rdi
+	rdi += rsi
+	rdi += rdx
+	rdi += rcx
+	rdi += r8
+	rdi += r9
+	rsi <- mem rsp 0
+	rdi += rsi
+	rax <- rdi
+	return
+)
+
+)

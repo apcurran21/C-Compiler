@@ -1,0 +1,26 @@
+(@flip_array
+	3
+	%p1 <- rdi
+	%p2 <- rsi
+	%max <- rdx
+	%c1 <- %p1
+	%c2 <- %p2
+	%index <- 0
+	%max -= 1
+	%max >>= 1
+	%ind <- %max
+	%ind -= 1
+	%ind *= 8
+	%c2 += %ind
+	:call_label_ciao_2
+	%val <- mem %c1 0
+	mem %c2 0 <- %val
+	%c1 += 8
+	%c2 -= 8
+	%check <- %index < %max
+	%index += 1
+	cjump %check = 1 :call_label_ciao_2
+	goto :call_label_ciao_3
+	:call_label_ciao_3
+	return
+)

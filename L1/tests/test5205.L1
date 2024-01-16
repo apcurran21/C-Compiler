@@ -1,0 +1,9 @@
+(@go
+
+  (@go
+    0 0
+    call input 0
+    return
+  )
+
+)

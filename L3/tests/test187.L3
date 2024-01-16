@@ -1,0 +1,91 @@
+define @mod (%x, %y) {
+ 
+:NNNNNNNNNN
+ br :entry
+ 
+:mgood
+ return 1
+ 
+:mloop
+ %x <- %x - %y
+ %r <- %x = 0
+ br %r :mgood 
+ br :misneg
+ 
+:misneg
+ %r <- %x > -1
+ br %r :mloop 
+ br :ret_early
+ 
+:ret_early
+ return 0
+ 
+:entry
+ %r <- %x = 0
+ br %r :mgood 
+ br :misneg
+}
+
+define @prime (%arg) {
+ 
+:NNNNNNNNNNNN
+ br :entry
+ 
+:not_prime
+ return 0
+ 
+:is_prime
+ return 1
+ 
+:maybe_prime
+ %reloop <- %counter <= %halfarg
+ br %reloop :prime_loop 
+ br :is_prime
+ 
+:prime_loop
+ %halfarg <- %arg >> 1
+ %counter <- %counter + 1
+ %pstatus <- call @mod (%arg, %counter)
+ br %pstatus :not_prime 
+ br :maybe_prime
+ 
+:entry
+ %inputIs2 <- %arg = 2
+ %counter <- 1
+ br %inputIs2 :is_prime 
+ br :prime_loop
+}
+
+define @main () {
+ 
+:NNNNNNN
+ br :entry
+ 
+:done
+ %pr <- %searchCounter << 1
+ %pr <- %pr + 1
+ call print (%pr)
+ return 
+ 
+:nloop
+ %primeCounter <- %primeCounter + 1
+ br :loop
+ 
+:loop
+ %weDone <- %primeCounter >= 58
+ br %weDone :done 
+ br :nodone
+ 
+:nodone
+ %searchCounter <- %searchCounter + 1
+ %result <- call @prime (%searchCounter)
+ %nresult <- %result = 0
+ br %nresult :loop 
+ br :nloop
+ 
+:entry
+ %primeCounter <- 0
+ %searchCounter <- 0
+ br :loop
+}
+

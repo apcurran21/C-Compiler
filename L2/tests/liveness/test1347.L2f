@@ -1,0 +1,44 @@
+(@main
+	0
+	%encoded <- 5
+	%encoded <<= 1
+	%encoded += 1
+	rdi <- %encoded
+	rsi <- 3
+	call allocate 2
+	%array <- rax
+	%newVar <- %array
+	%newVar += 8
+	mem %newVar 0 <- 5
+	%newVar2 <- %array
+	%newVar2 += 16
+	mem %newVar2 0 <- 7
+	rdi <- %array
+	call print 1
+	rdi <- %encoded
+	rsi <- 3
+	call allocate 2
+	%array2 <- rax
+	rdi <- %array2
+	rsi <- 3
+	rdx <- 1
+	mem rsp -8 <- :call_label0
+	call @storeValueToArray 3
+	:call_label0
+	rdi <- %array2
+	call print 1
+	rdi <- %array
+	rsi <- %array2
+	mem rsp -8 <- :call_label1
+	call @isArraySame 2
+	:call_label1
+	%same <- rax
+	rdi <- %same
+	mem rsp -8 <- :call_label2
+	call @encode 1
+	:call_label2
+	%decoded_same <- rax
+	rdi <- %decoded_same
+	call print 1
+	return
+)

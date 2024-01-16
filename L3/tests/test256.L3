@@ -1,0 +1,24 @@
+define @main () {
+ 
+:NNNNNNNNN
+ br :entry
+ 
+:false
+ return 
+ 
+:true
+ call print (%v3)
+ return 
+ 
+:myLabel1
+ %v3 <- %v1 + %v2
+ %check <- %v3 > 1
+ br %check :true 
+ br :false
+ 
+:entry
+ %v1 <- 1
+ %v2 <- 2
+ br :myLabel1
+}
+

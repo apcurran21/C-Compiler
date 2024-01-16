@@ -1,0 +1,17 @@
+(@false_loopy
+	0
+	%newVariableBx <- 1
+	:false_start
+	cjump %newVariableBx = 11 :false_done
+	goto :false_notdone
+	:false_notdone
+	rdi <- %newVariableBx
+	rdi *= 5
+	%variableEU0HW83MOT <- %newVariableBx
+	call print 1
+	%newVariableBx <- %variableEU0HW83MOT
+	%newVariableBx += 2
+	goto :false_start
+	:false_done
+	return
+)

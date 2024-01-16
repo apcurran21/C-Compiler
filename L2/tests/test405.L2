@@ -1,0 +1,112 @@
+(@main
+  (@main
+    0
+    :call_label0
+    %radius <- 5
+    rdi <- %radius
+
+mem rsp -8 <- :call_label1
+    call @circ 1
+
+:call_label1
+    %value <- rax
+    %value <- %value
+    %value <<= 1
+    %value <- %value
+    %value += 1
+    rdi <- %value
+    call print 1
+    rdi <- %radius
+
+mem rsp -8 <- :call_label2
+    call @area 1
+
+:call_label2
+    %value <- rax
+    %value <- %value
+    %value <<= 1
+    %value <- %value
+    %value += 1
+    rdi <- %value
+    call print 1
+    rdi <- %radius
+
+mem rsp -8 <- :call_label3
+    call @SA 1
+
+:call_label3
+    %value <- rax
+    %value <- %value
+    %value <<= 1
+    %value <- %value
+    %value += 1
+    rdi <- %value
+    call print 1
+    rdi <- %radius
+
+mem rsp -8 <- :call_label4
+    call @vol 1
+
+:call_label4
+    %value <- rax
+    %value <- %value
+    %value <<= 1
+    %value <- %value
+    %value += 1
+    rdi <- %value
+    call print 1
+    return
+  )
+  (@circ
+    1
+    %r <- rdi
+    :call_label_ciao_5
+    %d <- 2
+    %d *= %r
+    %pi <- 3
+    %c <- %d
+    %c *= %pi
+    rax <- %c
+    return
+  )
+  (@area
+    1
+    %r <- rdi
+    :call_label_ciao__ciao_6
+    %r2 <- %r
+    %r2 *= %r
+    %pi <- 3
+    %a <- %r2
+    %a *= %pi
+    rax <- %a
+    return
+  )
+  (@SA
+    1
+    %r <- rdi
+    :call_label_ciao__ciao__ciao_7
+    %r2 <- %r
+    %r2 *= %r
+    %r2 <- %r2
+    %r2 *= 4
+    %pi <- 3
+    %sa <- %r2
+    %sa *= %pi
+    rax <- %sa
+    return
+  )
+  (@vol
+    1
+    %r <- rdi
+    :call_label_ciao__ciao__ciao__ciao_8
+    %r2 <- %r
+    %r2 *= %r
+    %r3 <- %r2
+    %r3 *= %r
+    %factor <- 4
+    %v <- %r3
+    %v *= %factor
+    rax <- %v
+    return
+  )
+)

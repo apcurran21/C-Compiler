@@ -1,0 +1,34 @@
+(@go
+  (@go
+    0 0
+    rdi <- 11
+    rsi <- 0
+    call allocate 2
+    mem rsp -8 <- :fib_return
+    rdi <- rax
+    call @fib 1
+    :fib_return
+    rdi <- mem rax 72
+    rdi <<= 1
+    rdi++
+    call print 1
+    return
+  )
+  (@fib
+    1 0
+    rax <- rdi
+    mem rax 16 <- 1
+    rdx <- 1
+    :loop
+    rcx @ rax rdx 8
+    r8 <- mem rcx 0
+    r9 <- mem rcx 8
+    r10 <- 0
+    r10 += r8
+    r10 += r9
+    mem rcx 16 <- r10
+    rdx++
+    cjump rdx <= 10 :loop
+    return
+  )
+)

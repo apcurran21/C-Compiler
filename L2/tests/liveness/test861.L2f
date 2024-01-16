@@ -1,0 +1,7 @@
+(@printResultArray
+	1
+	%arr <- rdi
+	rdi <- %arr
+	call print 1
+	return
+)

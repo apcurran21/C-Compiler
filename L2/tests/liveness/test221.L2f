@@ -1,0 +1,15 @@
+(@sqrt
+	1
+	%var <- rdi
+	%i <- 0
+	:call_label_ciao__ciao_13
+	%i += 1
+	%i2 <- %i
+	%i2 *= %i
+	%sqrt_flag <- %i2 <= %var
+	cjump %sqrt_flag = 1 :call_label_ciao__ciao_13
+	goto :call_label_ciao__ciao_14
+	:call_label_ciao__ciao_14
+	rax <- %i
+	return
+)

@@ -1,0 +1,50 @@
+(@main
+(@main
+	0 3
+	r8 <- 0
+	rdx <- 43
+	rsi <- 55
+	rdi <- 32
+	rcx <- 74
+	mem rsp 0 <- rcx
+	rcx <- 67
+	r10 <- 83
+	r9 <- 39
+	mem rsp 16 <- r9
+	r9 <- 45
+	rax <- 22
+	r11 <- 41
+	mem rsp 8 <- r11
+	r8 <- r8
+	r8 += rdx
+	r8 <- r8
+	r8 += rsi
+	r8 <- r8
+	r8 += rdi
+	r8 <- r8
+	rdi <- mem rsp 0
+	r8 += rdi
+	r8 <- r8
+	r8 += rcx
+	r8 <- r8
+	r8 += r10
+	r8 <- r8
+	rdi <- mem rsp 16
+	r8 += rdi
+	r8 <- r8
+	r8 += r9
+	r8 <- r8
+	r8 += rax
+	r8 <- r8
+	rdi <- mem rsp 8
+	r8 += rdi
+	r8 <- r8
+	r8 <<= 1
+	r8 <- r8
+	r8 += 1
+	rdi <- r8
+	call print 1
+	return
+)
+
+)

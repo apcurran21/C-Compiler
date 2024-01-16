@@ -1,0 +1,20 @@
+%newVariable12 %newV %newVariable13 %newVariable14 %print_val r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx rsi
+%newVariable13 %newV %newVariable12 %newVariable14 %print_val r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx rsi
+%newVariable14 %newV %newVariable12 %newVariable13 %print_val r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx rsi
+%newV %newVariable12 %newVariable13 %newVariable14 r12 r13 r14 r15 rbp rbx
+%print_val %newVariable12 %newVariable13 %newVariable14 r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx rsi
+r10 %newVariable12 %newVariable13 %newVariable14 %print_val r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx rsi
+r11 %newVariable12 %newVariable13 %newVariable14 %print_val r10 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx rsi
+r12 %newV %newVariable12 %newVariable13 %newVariable14 %print_val r10 r11 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx rsi
+r13 %newV %newVariable12 %newVariable13 %newVariable14 %print_val r10 r11 r12 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx rsi
+r14 %newV %newVariable12 %newVariable13 %newVariable14 %print_val r10 r11 r12 r13 r15 r8 r9 rax rbp rbx rcx rdi rdx rsi
+r15 %newV %newVariable12 %newVariable13 %newVariable14 %print_val r10 r11 r12 r13 r14 r8 r9 rax rbp rbx rcx rdi rdx rsi
+r8 %newVariable12 %newVariable13 %newVariable14 %print_val r10 r11 r12 r13 r14 r15 r9 rax rbp rbx rcx rdi rdx rsi
+r9 %newVariable12 %newVariable13 %newVariable14 %print_val r10 r11 r12 r13 r14 r15 r8 rax rbp rbx rcx rdi rdx rsi
+rax %newVariable12 %newVariable13 %newVariable14 %print_val r10 r11 r12 r13 r14 r15 r8 r9 rbp rbx rcx rdi rdx rsi
+rbp %newV %newVariable12 %newVariable13 %newVariable14 %print_val r10 r11 r12 r13 r14 r15 r8 r9 rax rbx rcx rdi rdx rsi
+rbx %newV %newVariable12 %newVariable13 %newVariable14 %print_val r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rcx rdi rdx rsi
+rcx %newVariable12 %newVariable13 %newVariable14 %print_val r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rdi rdx rsi
+rdi %newVariable12 %newVariable13 %newVariable14 %print_val r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdx rsi
+rdx %newVariable12 %newVariable13 %newVariable14 %print_val r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rsi
+rsi %newVariable12 %newVariable13 %newVariable14 %print_val r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx

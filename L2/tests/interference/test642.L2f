@@ -1,0 +1,55 @@
+(@main
+	0
+	%arrSize <- 50
+	%arrSize <<= 1
+	%arrSize += 1
+	%arrInit <- 1
+	rdi <- %arrSize
+	rsi <- %arrInit
+	call allocate 2
+	%arr <- rax
+	%arr0 <- %arr
+	%arr0 += 8
+	%arr1 <- %arr
+	%arr1 += 16
+	mem %arr0 0 <- 3
+	mem %arr1 0 <- 3
+	%back0 <- 1
+	%back1 <- 1
+	%i <- 2
+	:call_label0
+	%i += 1
+	%sum <- %back0
+	%sum += %back1
+	%ssum <- %sum
+	%ssum <<= 1
+	%ssum += 1
+	%addr @ %arr %i 8
+	mem %addr 0 <- %ssum
+	%back0 <- %back1
+	%back1 <- %sum
+	%continue <- %i < 50
+	cjump %continue = 1 :call_label0
+	rdi <- %arr
+	call print 1
+	%arrsum <- 0
+	%i <- 0
+	:call_label1
+	%dcontinue <- 50 <= %i
+	cjump %dcontinue = 1 :call_label2
+	%offset <- %i
+	%offset *= 8
+	%addr <- %offset
+	%addr += %arr
+	%arrval <- mem %addr 0
+	%arrval >>= 1
+	%arrsum += %arrval
+	%i += 1
+	goto :call_label1
+	:call_label2
+	%arrsum <<= 1
+	%arrsum += 1
+	rdi <- %arrsum
+	call print 1
+	return
+)

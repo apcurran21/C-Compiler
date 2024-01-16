@@ -1,0 +1,60 @@
+(@main
+(@succ
+	10 0
+	rax <- mem rsp 24
+	rax++
+	return
+)
+
+(@sum_to
+	7 1
+	rdx <- 0
+	mem rsp 0 <- rdx
+	rax <- 0
+	:sum
+	rdx <- mem rsp 8
+	cjump rdx < rax :end_sum
+	r10 <- mem rsp 0
+	r10 += rax
+	mem rsp 0 <- r10
+	mem rsp -8 <- :succed
+	mem rsp -16 <- rax
+	call @succ 10
+	:succed
+	rax <- rax
+	goto :sum
+	:end_sum
+	rdi <- mem rsp 0
+	rax <- rdi
+	return
+)
+
+(@main
+	0 1
+	r10 <- 0
+	r11 <- 1
+	mem rsp 0 <- r11
+	:for_go
+	cjump r10 <= 20 :next_go
+	goto :end_go
+	:next_go
+	r12 <- r10
+	mem rsp -8 <- :total
+	mem rsp -16 <- r12
+	r12++
+	call @sum_to 7
+	:total
+	rcx <- 1
+	rcx <- mem rsp 0
+	rax <<= rcx
+	rdi <- mem rsp 0
+	rax += rdi
+	rdi <- rax
+	call print 1
+	r10 <- r12
+	goto :for_go
+	:end_go
+	return
+)
+
+)

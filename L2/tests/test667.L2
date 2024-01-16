@@ -1,0 +1,14 @@
+(@main
+  (@main
+    0
+    %src1 <- 1
+    %src2 <- 2
+    %tmp <- %src2
+    %tmp *= 4
+    %finalV <- %tmp
+    %finalV += %src1
+    rdi <- %finalV
+    call print 1
+    return
+  )
+)

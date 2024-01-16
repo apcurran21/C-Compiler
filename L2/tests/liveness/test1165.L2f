@@ -1,0 +1,61 @@
+(@isdiv
+	2
+	%d <- rdi
+	%s <- rsi
+	:call_label_ciao_9
+	goto :call_label_ciao_24
+	:call_label_ciao_10
+	rax <- -1
+	return
+	:call_label_ciao_11
+	rax <- 0
+	return
+	:call_label_ciao_12
+	rax <- 1
+	return
+	:call_label_ciao_13
+	goto :call_label_ciao_14
+	:call_label_ciao_14
+	%sub += %sub2
+	%check <- %d = %sub
+	cjump %check = 1 :call_label_ciao_12
+	goto :call_label_ciao_15
+	:call_label_ciao_15
+	%check <- %d < %sub
+	cjump %check = 1 :call_label_ciao_11
+	goto :call_label_ciao_13
+	:call_label_ciao_16
+	%sub2 <- %sub
+	goto :call_label_ciao_14
+	:call_label_ciao_17
+	%sub <- %s
+	%sub *= -1
+	goto :call_label_ciao_16
+	:call_label_ciao_18
+	%sub <- %s
+	goto :call_label_ciao_16
+	:call_label_ciao_19
+	%d *= -1
+	%check <- %s < 0
+	cjump %check = 1 :call_label_ciao_17
+	goto :call_label_ciao_18
+	:call_label_ciao_20
+	%sub <- %s
+	%sub *= -1
+	goto :call_label_ciao_16
+	:call_label_ciao_21
+	%sub <- %s
+	goto :call_label_ciao_16
+	:call_label_ciao_22
+	%check <- %s < 0
+	cjump %check = 1 :call_label_ciao_20
+	goto :call_label_ciao_21
+	:call_label_ciao_23
+	%check <- %d < 0
+	cjump %check = 1 :call_label_ciao_19
+	goto :call_label_ciao_22
+	:call_label_ciao_24
+	%check <- %s = 0
+	cjump %check = 1 :call_label_ciao_10
+	goto :call_label_ciao_23
+)

@@ -1,0 +1,28 @@
+define @main () {
+ 
+:entry
+ %f <- 1
+ %s <- 1
+ %n <- 10
+ %l <- 0
+ br :loop
+ 
+:loop
+ %check <- %l = %n
+ br %check :return 
+ br :false
+ 
+:false
+ %p <- %s << 1
+ %p <- %p + 1
+ call print (%p)
+ %t <- %s
+ %s <- %s + %f
+ %f <- %t
+ %l <- %l + 1
+ br :loop
+ 
+:return
+ return 
+}
+

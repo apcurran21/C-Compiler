@@ -1,0 +1,13 @@
+(@main
+	0
+	rdi <- 30030
+	mem rsp -8 <- :call_label_ciao__ciao__ciao_13
+	call @gpf 1
+	:call_label_ciao__ciao__ciao_13
+	%result <- rax
+	%result <<= 1
+	%result += 1
+	rdi <- %result
+	call print 1
+	return
+)

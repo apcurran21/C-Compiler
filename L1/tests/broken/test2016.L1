@@ -1,0 +1,292 @@
+(@main
+(@plus
+	3 0
+	rdi <- rsi
+	rsi <- rdx
+	:call_label0
+	rdi += rsi
+	rax <- rdi
+	return
+)
+
+(@minus
+	3 0
+	rdi <- rsi
+	rsi <- rdx
+	:call_label_ciao_1
+	rdi -= rsi
+	rax <- rdi
+	return
+)
+
+(@times
+	3 0
+	rdi <- rsi
+	rsi <- rdx
+	:call_label_ciao__ciao_2
+	rdi *= rsi
+	rax <- rdi
+	return
+)
+
+(@main
+	0 6
+	mem rsp 40 <- rbx
+	mem rsp 32 <- rbp
+	mem rsp 24 <- r15
+	mem rsp 16 <- r14
+	mem rsp 8 <- r13
+	mem rsp 0 <- r12
+	:call_label_ciao__ciao__ciao_3
+	rdi <- 7
+	rsi <- 1
+	call allocate 2
+	r13 <- rax
+	rdx <- :plus
+	rdi <- 0
+	rdi *= 8
+	rdi += 8
+	rsi <- r13
+	rsi += rdi
+	mem rsi 0 <- rdx
+	rdx <- :minus
+	rdi <- 1
+	rdi *= 8
+	rdi += 8
+	rsi <- r13
+	rsi += rdi
+	mem rsi 0 <- rdx
+	rdi <- 2
+	rdi *= 8
+	rdi += 8
+	rsi <- r13
+	rsi += rdi
+	rdi <- :times
+	mem rsi 0 <- rdi
+	r12 <- 7
+	r14 <- 2
+	r15 <- 0
+	goto :call_label_ciao__ciao__ciao_4
+	:call_label_ciao__ciao__ciao_4
+	rdi <- r15
+	rdi *= 8
+	rsi <- rdi
+	rsi += 8
+	rdi <- r13
+	rdi += rsi
+	rbx <- mem rdi 0
+	rdi <- r13
+	rsi <- r12
+	rdx <- r14
+	mem rsp -8 <- :call_label_ciao__ciao__ciao_10
+	call rbx 3
+	:call_label_ciao__ciao__ciao_10
+	rdi <- rax
+	rdi *= 2
+	rdi += 1
+	call print 1
+	r15 += 1
+	rdi <- r15 < 3
+	cjump rdi = 1 :call_label_ciao__ciao__ciao_4
+	goto :call_label_ciao__ciao__ciao_5
+	:call_label_ciao__ciao__ciao_5
+	rdi <- 7
+	rsi <- 1
+	call allocate 2
+	rbp <- rax
+	r15 <- 0
+	goto :call_label_ciao__ciao__ciao_6
+	:call_label_ciao__ciao__ciao_6
+	rdi <- r15
+	rdi *= 8
+	rsi <- rdi
+	rsi += 8
+	rdi <- r13
+	rdi += rsi
+	rbx <- mem rdi 0
+	rdi <- 3
+	rsi <- 1
+	call allocate 2
+	rdx <- rax
+	rdi <- 0
+	rdi *= 8
+	rsi <- rdi
+	rsi += 8
+	rdi <- rdx
+	rdi += rsi
+	mem rdi 0 <- rbx
+	rdi <- rdx
+	mem rsp -8 <- :call_label_ciao__ciao__ciao_11
+	call @curry 1
+	:call_label_ciao__ciao__ciao_11
+	rcx <- rax
+	rdi <- r15
+	rdi *= 8
+	rdi += 8
+	rsi <- rbp
+	rsi += rdi
+	mem rsi 0 <- rcx
+	r15 += 1
+	rdi <- r15 < 3
+	cjump rdi = 1 :call_label_ciao__ciao__ciao_6
+	goto :call_label_ciao__ciao__ciao_7
+	:call_label_ciao__ciao__ciao_7
+	r15 <- 0
+	goto :call_label_ciao__ciao__ciao_8
+	:call_label_ciao__ciao__ciao_8
+	rdi <- r15
+	rdi *= 8
+	rdi += 8
+	rsi <- rbp
+	rsi += rdi
+	rcx <- mem rsi 0
+	rdi <- 0
+	rdi *= 8
+	rsi <- rdi
+	rsi += 8
+	rdi <- rcx
+	rdi += rsi
+	rdx <- mem rdi 0
+	rdi <- rcx
+	rsi <- r12
+	mem rsp -8 <- :call_label_ciao__ciao__ciao_12
+	call rdx 2
+	:call_label_ciao__ciao__ciao_12
+	rcx <- rax
+	rdi <- 0
+	rdi *= 8
+	rsi <- rdi
+	rsi += 8
+	rdi <- rcx
+	rdi += rsi
+	rdx <- mem rdi 0
+	rdi <- rcx
+	rsi <- r14
+	mem rsp -8 <- :call_label_ciao__ciao__ciao_13
+	call rdx 2
+	:call_label_ciao__ciao__ciao_13
+	rdi <- rax
+	rdi *= 2
+	rdi += 1
+	call print 1
+	r15 += 1
+	rdi <- r15 < 3
+	cjump rdi = 1 :call_label_ciao__ciao__ciao_8
+	goto :call_label_ciao__ciao__ciao_9
+	:call_label_ciao__ciao__ciao_9
+	r12 <- mem rsp 0
+	r13 <- mem rsp 8
+	r14 <- mem rsp 16
+	r15 <- mem rsp 24
+	rbp <- mem rsp 32
+	rbx <- mem rsp 40
+	return
+)
+
+(@curry
+	1 1
+	mem rsp 0 <- r12
+	r12 <- rdi
+	:call_label_ciao__ciao__ciao__ciao_14
+	rdi <- 5
+	rsi <- 1
+	call allocate 2
+	rdx <- rax
+	rdi <- 0
+	rdi *= 8
+	rsi <- rdi
+	rsi += 8
+	rdi <- rdx
+	rdi += rsi
+	mem rdi 0 <- :curry_arg1
+	rdi <- 1
+	rdi *= 8
+	rsi <- rdi
+	rsi += 8
+	rdi <- rdx
+	rdi += rsi
+	mem rdi 0 <- r12
+	rax <- rdx
+	r12 <- mem rsp 0
+	return
+)
+
+(@curry_arg1
+	2 2
+	mem rsp 8 <- r13
+	mem rsp 0 <- r12
+	r13 <- rdi
+	r12 <- rsi
+	:call_label_ciao__ciao__ciao__ciao__ciao_15
+	rdi <- 7
+	rsi <- 1
+	call allocate 2
+	rdx <- rax
+	rdi <- 1
+	rdi *= 8
+	rsi <- rdi
+	rsi += 8
+	rdi <- r13
+	rdi += rsi
+	rcx <- mem rdi 0
+	rdi <- 0
+	rdi *= 8
+	rsi <- rdi
+	rsi += 8
+	rdi <- rdx
+	rdi += rsi
+	mem rdi 0 <- :curry_arg2
+	rdi <- 1
+	rdi *= 8
+	rdi += 8
+	rsi <- rdx
+	rsi += rdi
+	mem rsi 0 <- rcx
+	rdi <- 2
+	rdi *= 8
+	rdi += 8
+	rsi <- rdx
+	rsi += rdi
+	mem rsi 0 <- r12
+	rax <- rdx
+	r12 <- mem rsp 0
+	r13 <- mem rsp 8
+	return
+)
+
+(@curry_arg2
+	2 0
+	rcx <- rdi
+	rdx <- rsi
+	:call_label_ciao__ciao__ciao__ciao__ciao__ciao_16
+	rdi <- 1
+	rdi *= 8
+	rdi += 8
+	rsi <- rcx
+	rsi += rdi
+	r9 <- mem rsi 0
+	rdi <- 2
+	rdi *= 8
+	rsi <- rdi
+	rsi += 8
+	rdi <- rcx
+	rdi += rsi
+	r8 <- mem rdi 0
+	rdi <- 0
+	rdi *= 8
+	rsi <- rdi
+	rsi += 8
+	rdi <- r9
+	rdi += rsi
+	rcx <- mem rdi 0
+	rdi <- r9
+	rsi <- r8
+	mem rsp -8 <- :call_label_ciao__ciao__ciao__ciao__ciao__ciao_17
+	call rcx 3
+	:call_label_ciao__ciao__ciao__ciao__ciao__ciao_17
+	rdi <- rax
+	rax <- rdi
+	return
+)
+
+)

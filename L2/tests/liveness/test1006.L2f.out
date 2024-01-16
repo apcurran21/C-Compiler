@@ -1,0 +1,30 @@
+(
+(in
+(r12 r13 r14 r15 rbp rbx rdi)
+(%r r12 r13 r14 r15 rbp rbx)
+(%r r12 r13 r14 r15 rbp rbx)
+(%r r12 r13 r14 r15 rbp rbx)
+(%r r12 r13 r14 r15 rbp rbx)
+(%pi %r r12 r13 r14 r15 rbp rbx)
+(%d %pi %r r12 r13 r14 r15 rbp rbx)
+(%d %pi r12 r13 r14 r15 rbp rbx)
+(%c %pi r12 r13 r14 r15 rbp rbx)
+(%c r12 r13 r14 r15 rbp rbx)
+(r12 r13 r14 r15 rax rbp rbx)
+)
+
+(out
+(%r r12 r13 r14 r15 rbp rbx)
+(%r r12 r13 r14 r15 rbp rbx)
+(%r r12 r13 r14 r15 rbp rbx)
+(%r r12 r13 r14 r15 rbp rbx)
+(%pi %r r12 r13 r14 r15 rbp rbx)
+(%d %pi %r r12 r13 r14 r15 rbp rbx)
+(%d %pi r12 r13 r14 r15 rbp rbx)
+(%c %pi r12 r13 r14 r15 rbp rbx)
+(%c r12 r13 r14 r15 rbp rbx)
+(r12 r13 r14 r15 rax rbp rbx)
+()
+)
+
+)

@@ -1,0 +1,44 @@
+(@go
+	0
+	%y <- 1
+	%c <- 1
+	%x <- 1
+	:BEGIN
+	cjump 21 <= %x :END
+	%x >>= 1
+	%y >>= 1
+	%y += %x
+	%y <<= 1
+	%x <<= 1
+	%y += 1
+	%x += 1
+	cjump 21 <= %y :BOTTOM
+	%z <- 21
+	:WHILE
+	cjump %z < 2 :ALMOST
+	%z -= 2
+	goto :WHILE
+	:ALMOST
+	%c += 2
+	:BOTTOM
+	%x += 2
+	goto :BEGIN
+	:END
+	rdi <- %y
+	call print 1
+	rdi <- %c
+	call print 1
+	rdi <- %x
+	call print 1
+	%y >>= 1
+	%c >>= 1
+	%x >>= 1
+	rdi <- %x
+	rdi += %c
+	rdi += %y
+	rdi <<= 1
+	rdi += 1
+	rdi += 20
+	call print 1
+	return
+)

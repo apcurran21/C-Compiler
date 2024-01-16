@@ -1,0 +1,11 @@
+(@main
+	0
+	rdi <- 19
+	mem rsp -8 <- :call_label0
+	call @fib 1
+	:call_label0
+	%return_var <- rax
+	rdi <- %return_var
+	call print 1
+	return
+)

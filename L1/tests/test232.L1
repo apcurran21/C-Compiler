@@ -1,0 +1,42 @@
+(@identity
+(@identity
+	0 3
+	mem rsp 16 <- r14
+	mem rsp 8 <- r13
+	mem rsp 0 <- r12
+	rdi <- 7
+	rsi <- 1
+	call allocate 2
+	r12 <- rax
+	r9 <- mem r12 8
+	r9 += 2
+	mem r12 8 <- r9
+	rdi <- 7
+	rsi <- 1
+	call allocate 2
+	r14 <- rax
+	r9 <- mem r14 16
+	r9 += 2
+	mem r14 16 <- r9
+	rdi <- 7
+	rsi <- 1
+	call allocate 2
+	r13 <- rax
+	r9 <- mem r13 24
+	r9 += 2
+	mem r13 24 <- r9
+	rdi <- 7
+	rsi <- 1
+	call allocate 2
+	rdi <- rax
+	mem rdi 8 <- r12
+	mem rdi 16 <- r14
+	mem rdi 24 <- r13
+	call print 1
+	r12 <- mem rsp 0
+	r13 <- mem rsp 8
+	r14 <- mem rsp 16
+	return
+)
+
+)

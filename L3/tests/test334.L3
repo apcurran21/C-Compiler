@@ -1,0 +1,123 @@
+define @plus(%self, %x, %y)
+{ 
+  %ans <- %x+%y
+  return %ans
+}
+
+define @minus(%self, %x, %y)
+{ 
+  %ans <- %x-%y
+  return %ans
+}
+
+define @times(%self, %x, %y)
+{ 
+  %ans <- %x*%y
+  return %ans
+}
+
+define @main()
+{
+  %ops <- call allocate(7, 1)
+  %plus <- @plus
+  %minus <- @minus
+  %times <- @times
+  call @store(%ops, 0, %plus)
+  call @store(%ops, 1, %minus)
+  call @store(%ops, 2, %times)
+
+  %X <- 7
+  %Y <- 2
+
+  %i <- 0
+:L1
+  %f <- call @load(%ops, %i)
+  %ans <- call %f(%ops, %X, %Y)
+  %num <- %ans*2
+  %num <- %num+1
+  call print(%num)
+  %i <- %i+1
+  %fin <- %i < 3
+  br %fin :L1
+
+
+  %cGs <- call allocate(7, 1)
+  
+  %i <- 0
+:L2
+  %f <- call @load(%ops, %i)
+  %cF <- call allocate(3, 1)
+  call @store(%cF, 0, %f)
+  %cG <- call @curry(%cF)
+  call @store(%cGs, %i, %cG)
+  %i <- %i+1
+  %fin <- %i < 3
+  br %fin :L2
+
+  %i <- 0
+:L3
+  %cG <- call @load(%cGs, %i)
+
+  %g <- call @load(%cG, 0)
+  %cH <- call %g(%cG, %X)
+
+  %h <- call @load(%cH, 0)
+  %ans <- call %h(%cH, %Y)
+
+  %num <- %ans*2
+  %num <- %num+1
+  call print(%num)
+
+  %i <- %i+1
+  %fin <- %i < 3
+  br %fin :L3
+
+  return
+}
+
+define @load(%addr, %idx)
+{
+    %offset <- %idx*8
+    %dest <- %offset + 8
+    %addr <- %addr + %dest
+    %value <- load %addr
+    return %value
+}
+
+define @store(%addr, %idx, %value)
+{
+    %idx <- %idx + 1
+    %offset <- %idx*8
+    %addr <- %addr + %offset
+    store %addr <- %value
+    return
+}
+
+define @curry(%F)
+{
+    %cF <- call allocate(5, 1)
+    %func <- @curry_arg1
+    call @store(%cF, 0, %func)
+    call @store(%cF, 1, %F)
+    return %cF
+}
+
+define @curry_arg1(%self, %x)
+{
+    %cF1 <- call allocate(7, 1)
+    %func <- @curry_arg2
+    %F <- call @load(%self, 1)
+    call @store(%cF1, 0, %func)
+    call @store(%cF1, 1, %F)
+    call @store(%cF1, 2, %x)
+    return %cF1
+}
+
+define @curry_arg2(%self, %y)
+{
+    %F <- call @load(%self, 1)
+    %x <- call @load(%self, 2)
+    %func <- call @load(%F, 0)
+    %ans <- call %func(%F, %x, %y)
+    return %ans
+}

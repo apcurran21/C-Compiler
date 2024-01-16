@@ -1,0 +1,38 @@
+(@concat_array
+	2
+	%ptr1 <- rdi
+	%ptr2 <- rsi
+	%len1 <- mem %ptr1 0
+	%len2 <- mem %ptr2 0
+	%len3 <- %len1
+	%len3 += %len2
+	%len3 <<= 1
+	%len3 += 1
+	rdi <- %len3
+	rsi <- 3
+	call allocate 2
+	%ret <- rax
+	%ptr3 <- %ret
+	:call_label_ciao_1
+	%ptr1 += 8
+	%ptr3 += 8
+	%tmp <- mem %ptr1 0
+	mem %ptr3 0 <- %tmp
+	%len1 -= 1
+	%ifDone1 <- %len1 = 0
+	cjump %ifDone1 = 1 :call_label_ciao_2
+	goto :call_label_ciao_1
+	:call_label_ciao_2
+	:call_label_ciao_3
+	%ptr2 += 8
+	%ptr3 += 8
+	%tmp <- mem %ptr2 0
+	mem %ptr3 0 <- %tmp
+	%len2 -= 1
+	%ifDone2 <- %len2 = 0
+	cjump %ifDone2 = 1 :call_label_ciao_4
+	goto :call_label_ciao_3
+	:call_label_ciao_4
+	rax <- %ret
+	return
+)

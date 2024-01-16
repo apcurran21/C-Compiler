@@ -1,0 +1,50 @@
+(@main
+    (@main
+      0 1
+            rdi <- 2
+        mem rsp -8 <- :fib_ret
+        call @fib 1
+        :fib_ret
+        rdi <- rax
+        call print 1
+        rdi <- 10
+        mem rsp -8 <- :fib_ret2
+        call @fib 1
+        :fib_ret2
+        rdi <- rax
+        call print 1
+        return
+    )
+    (@fib
+      1 1
+            cjump rdi < 1 :fib_end
+        mem rsp 0 <- rdi
+            rdi <<= 1
+        // encoded
+        rdi++
+        rsi <- 1
+        call allocate 2
+        rdi <- mem rsp 0
+        cjump rdi = 1 :fib_end
+        // 2nd element = 1
+        mem rax 16 <- 3
+        cjump rdi = 2 :fib_end
+        rcx <- rax
+        // start address past size
+        rcx += 8
+        rdi <<= 3
+        rdi += rcx
+        rcx += 16
+        goto :fib_cond
+        :fib_body
+        rdx <- mem rcx -8
+        rdx -= 1
+        rdx += mem rcx -16
+        mem rcx 0 <- rdx
+        rcx += 8
+        :fib_cond
+        cjump rcx < rdi :fib_body
+        :fib_end
+        return
+    )
+)

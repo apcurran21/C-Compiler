@@ -1,0 +1,18 @@
+(@findLen
+	1
+	%array <- rdi
+	:call_label_ciao__ciao_6
+	goto :call_label_ciao__ciao_7
+	:call_label_ciao__ciao_7
+	%newVar0 <- 0
+	%newVar0 *= 8
+	%newVar1 <- %newVar0
+	%newVar1 += 16
+	%newVar2 <- %array
+	%newVar2 += %newVar1
+	%ret <- mem %newVar2 0
+	%ret <<= 1
+	%ret += 1
+	rax <- %ret
+	return
+)

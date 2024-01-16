@@ -1,0 +1,77 @@
+(@secondtest
+    (@secondtest
+        0 6
+                mem rsp 0 <- r12
+                mem rsp 8 <- r13
+                mem rsp 16 <- r14
+                mem rsp 24 <- r15
+                mem rsp 32 <- rbp
+                mem rsp 40 <- rbx
+
+        r12 <- 1
+        r13 <- 2
+        r14 <- 3
+        r15 <- 4
+        rbp <- 5
+        rbx <- 6
+
+        //quadrupleInt input
+        rdi <- r12
+        rdi += r13
+        rdi *= r14
+        //rdi should be 1 here
+        rdi &= rbp
+
+        mem rsp -8 <- :quadruple_ret
+        call @quadrupleInt 1
+        :quadruple_ret
+
+        rdi <- rax
+        rdi <<= 1
+        rdi += 1
+        //value should be quadruple the input
+        call print 1
+        rdi <- r12
+        rdi <<= 1
+        rdi += 1
+        //original r12 value, should be 1, verify callee-save
+        call print 1
+
+                r12 <- mem rsp 0
+                r13 <- mem rsp 8
+                r14 <- mem rsp 16
+                r15 <- mem rsp 24
+                rbp <- mem rsp 32
+                rbx <- mem rsp 40
+
+        return
+    )
+        (@quadrupleInt
+                1 6
+                mem rsp 0 <- r12
+                mem rsp 8 <- r13
+                mem rsp 16 <- r14
+                mem rsp 24 <- r15
+                mem rsp 32 <- rbp
+                mem rsp 40 <- rbx
+
+                rdi *= 4
+
+                r12 <- 11
+                r13 <- 12
+                r14 <- 13
+                r15 <- 14
+                rbp <- 15
+                rbx <- 16
+
+                r12 <- mem rsp 0
+                r13 <- mem rsp 8
+                r14 <- mem rsp 16
+                r15 <- mem rsp 24
+                rbp <- mem rsp 32
+                rbx <- mem rsp 40
+
+                rax <- rdi
+                return
+    )
+)

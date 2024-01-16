@@ -1,0 +1,58 @@
+(@main
+  (@main
+    0
+    %number <- 7
+    rdi <- %number
+
+mem rsp -8 <- :call_label0
+    call @array 1
+
+:call_label0
+    return
+  )
+  (@array
+    1
+    %n <- rdi
+    %index <- -1
+    :call_label_ciao_1
+    %check <- %index = %n
+
+    cjump %check = 1 :call_label_ciao_2
+    %index <- %index
+    %index += 1
+    rdi <- %index
+
+mem rsp -8 <- :call_label_ciao_3
+    call @calculate 1
+
+:call_label_ciao_3
+    %value <- rax
+    %value <- %value
+    %value <<= 1
+    %value <- %value
+    %value += 1
+    rdi <- %value
+    call print 1
+    goto :call_label_ciao_1
+    :call_label_ciao_2
+    return
+  )
+  (@calculate
+    1
+    %n <- rdi
+    %output <- 1
+    %index <- 0
+    :call_label_ciao__ciao_4
+    %check <- %index = %n
+
+    cjump %check = 1 :call_label_ciao__ciao_5
+    %index <- %index
+    %index += 1
+    %output <- %output
+    %output *= %index
+    goto :call_label_ciao__ciao_4
+    :call_label_ciao__ciao_5
+    rax <- %output
+    return
+  )
+)

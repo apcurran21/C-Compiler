@@ -1,0 +1,171 @@
+(@main
+  (@main
+    0
+    :call_label0
+    goto :call_label1
+    :call_label1
+    %ArrSize <- 10
+    %ArrSizeEncoded <- %ArrSize
+    %ArrSizeEncoded <<= 1
+    %ArrSizeEncoded <- %ArrSizeEncoded
+    %ArrSizeEncoded += 1
+    rdi <- %ArrSizeEncoded
+    rsi <- 2
+
+mem rsp -8 <- :call_label2
+    call @Alloc1DArr 2
+
+:call_label2
+    %Arr1 <- rax
+    rdi <- %ArrSizeEncoded
+    rsi <- 4
+
+mem rsp -8 <- :call_label3
+    call @Alloc1DArr 2
+
+:call_label3
+    %Arr2 <- rax
+    rdi <- %Arr1
+
+mem rsp -8 <- :call_label4
+    call @CalcArrSum 1
+
+:call_label4
+    %Arr1Sum <- rax
+    rdi <- %Arr2
+
+mem rsp -8 <- :call_label5
+    call @CalcArrSum 1
+
+:call_label5
+    %Arr2Sum <- rax
+    %SumOfArr <- %Arr1Sum
+    %SumOfArr += %Arr2Sum
+    %ProdOfArr <- %Arr1Sum
+    %ProdOfArr *= %Arr2Sum
+    %Arr1PrintVal <- %Arr1Sum
+    %Arr1PrintVal <<= 1
+    %Arr1PrintVal <- %Arr1PrintVal
+    %Arr1PrintVal += 1
+    rdi <- %Arr1PrintVal
+    call print 1
+    %Arr2PrintVal <- %Arr2Sum
+    %Arr2PrintVal <<= 1
+    %Arr2PrintVal <- %Arr2PrintVal
+    %Arr2PrintVal += 1
+    rdi <- %Arr2PrintVal
+    call print 1
+    %ArrSumPrintVal <- %SumOfArr
+    %ArrSumPrintVal <<= 1
+    %ArrSumPrintVal <- %ArrSumPrintVal
+    %ArrSumPrintVal += 1
+    %ArrProdPrintVal <- %ProdOfArr
+    %ArrProdPrintVal <<= 1
+    %ArrProdPrintVal <- %ArrProdPrintVal
+    %ArrProdPrintVal += 1
+    rdi <- %ArrSumPrintVal
+    call print 1
+    rdi <- %ArrProdPrintVal
+    call print 1
+    return
+  )
+  (@CalcArrSum
+    1
+    %TargetArr <- rdi
+    :call_label_ciao_6
+    goto :call_label_ciao_9
+    :call_label_ciao_7
+    rax <- %ArrSum
+    return
+    :call_label_ciao_8
+    %newVar1 <- 0
+    %newVar2 <- 1
+    %newVar1 <- %newVar1
+    %newVar1 += %Count
+    %newVar0 <- %newVar1
+    %newVar0 *= 8
+    %newVar0 <- %newVar0
+    %newVar0 += 16
+    %newVar3 <- %TargetArr
+    %newVar3 += %newVar0
+    %CurrElm <- mem %newVar3 0
+    %Count <- %Count
+    %Count += 1
+    %ArrSum <- %ArrSum
+    %ArrSum += %CurrElm
+    %ContLoop <- %Count < %ArrLen
+
+    cjump %ContLoop = 1 :call_label_ciao_8
+    goto :call_label_ciao_7
+    :call_label_ciao_9
+    %newVar4 <- 0
+    %newVar4 *= 8
+    %newVar5 <- %newVar4
+    %newVar5 += 8
+    %newVar6 <- %TargetArr
+    %newVar6 += %newVar5
+    %ArrLen <- mem %newVar6 0
+    %ArrLen <- %ArrLen
+    %ArrLen >>= 1
+    %Count <- 0
+    %ArrSum <- 0
+    goto :call_label_ciao_8
+  )
+  (@Alloc1DArr
+    2
+    %ArrSize <- rdi
+    %InitElmVal <- rsi
+    :call_label_ciao__ciao_10
+    goto :call_label_ciao__ciao_13
+    :call_label_ciao__ciao_11
+    rax <- %NewArr
+    return
+    :call_label_ciao__ciao_12
+    %newVar1 <- 0
+    %newVar2 <- 1
+    %newVar1 <- %newVar1
+    %newVar1 += %Count
+    %newVar0 <- %newVar1
+    %newVar0 *= 8
+    %newVar0 <- %newVar0
+    %newVar0 += 16
+    %newVar3 <- %NewArr
+    %newVar3 += %newVar0
+    mem %newVar3 0 <- %InitElmVal
+    %Count <- %Count
+    %Count += 1
+    %ContLoop <- %Count < %ArrLen
+
+    cjump %ContLoop = 1 :call_label_ciao__ciao_12
+    goto :call_label_ciao__ciao_11
+    :call_label_ciao__ciao_13
+    %newVar5 <- %ArrSize
+    %newVar5 >>= 1
+    %newVar4 <- %newVar5
+    %newVar4 <- %newVar4
+    %newVar4 <<= 1
+    %newVar4 <- %newVar4
+    %newVar4 += 1
+    %newVar4 <- %newVar4
+    %newVar4 += 2
+    rdi <- %newVar4
+    rsi <- 1
+    call allocate 2
+    %NewArr <- rax
+    %newVar6 <- %NewArr
+    %newVar6 += 8
+    mem %newVar6 0 <- %ArrSize
+    %newVar7 <- 0
+    %newVar7 *= 8
+    %newVar8 <- %newVar7
+    %newVar8 += 8
+    %newVar9 <- %NewArr
+    %newVar9 += %newVar8
+    %ArrLen <- mem %newVar9 0
+    %ArrLen <- %ArrLen
+    %ArrLen >>= 1
+    %Count <- 0
+    %ArrSum <- 0
+    goto :call_label_ciao__ciao_12
+  )
+)

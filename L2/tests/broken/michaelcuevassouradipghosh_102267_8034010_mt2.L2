@@ -1,0 +1,58 @@
+(@entrance
+    (@entrance
+    0
+// length of array (encoded integer)
+    rdi <- 41
+// initial value of each element (encoded int)
+    rsi <- 3
+// number to modify elements to (encoded int)
+    rdx <- 41
+// number of elements to modify (encoded int)
+    rcx <- 5
+// set up call stack
+    mem rsp -8 <- :create_arr_ret
+    call @create_arr 4
+    :create_arr_ret 
+    return
+    )
+    (@create_arr
+    4
+// save 3rd and 4th arg into vars
+    %addToElm <-rdx
+    %elmToModify <- rcx
+// call library function
+    call allocate 2
+// loop through the first 5 elements of the array
+    :loop
+    cjump %elmToModify <= 0 :loopexit
+    rdi @ rax %elmToModify 8
+    mem rdi 0 <- %addToElm
+    %elmToModify -= 1 
+    goto :loop
+    :loopexit
+// print array and save rax into var
+    %retVal <- rax
+    rdi <- rax
+    call print 1
+// restore value of rax into rdi
+    rdi <- %retVal
+    mem rsp -8 <- :sq_arr_return
+    call @sq_arr_length 1
+    :sq_arr_return
+    return
+    )
+    (@sq_arr_length
+    1
+// get length of arr
+    %arr_len <- mem rdi 0
+// sq array length
+    %arr_len *= %arr_len
+// encode the sq value
+    %arr_len *= 2
+    %arr_len += 1
+// print sq value
+    rdi <- %arr_len
+    call print 1
+    return
+    )
+)

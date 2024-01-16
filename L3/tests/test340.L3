@@ -1,0 +1,36 @@
+define @main () {
+    %ret <- call @func1(0)
+    call print(%ret)
+    return
+}
+
+define @func1(%v1) {
+    %v1 <- %v1 + 10
+    %ret <- call @func2(%v1)
+    return %ret
+}
+
+define @func2(%v1) {
+    %v1 <- %v1 + 20
+    %ret <- call @func3(%v1)
+    return %ret
+}
+
+define @func3(%v1) {
+    %v1 <- %v1 + 30
+    %ret <- call @recurse(%v1, 9)
+    return %ret
+}
+
+define @recurse(%v1, %num) {
+    %v1 <- %v1 + 1
+    %num <- %num - 1
+    %done <- %num = 0
+    br %done :done
+
+    %ret <- call @recurse(%v1, %num)
+    return %ret
+
+    :done
+    return %v1
+}

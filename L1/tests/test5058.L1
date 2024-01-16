@@ -1,0 +1,22 @@
+(@go
+    
+    (@go
+0 0 
+    rdi <- 1
+	// call @subFunc1 0
+	call tensor-error 1
+    return
+	)
+)
+
+(@subFunc1
+	0 3
+	rdx <- 12
+	rdi <- mem rsp 12
+	rdi <- rdx*2
+	mem rax 12 <- rdi
+	call print 1
+	// call @subFunc2 0
+	call allocate 2
+	return
+	)

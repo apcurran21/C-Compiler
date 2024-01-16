@@ -1,0 +1,106 @@
+(@go
+    //returns 1 if positive integer and is modx == 0, else return 0
+    (@mod
+        2
+        cjump rdi = 0 :mgood
+        :misneg
+        cjump -1 < rdi :mloop
+        rax <- 0
+        return
+
+        :mloop
+        rdi -= rsi
+        cjump rdi = 0 :mgood
+        goto :misneg
+
+        :mgood
+        rax <- 1
+        return
+    )
+    //detect whether or not an unencoded positive integer is a prime
+    (@prime
+        1
+        cjump rdi = 2 :is_prime
+
+        //store the number in question
+        %halfarg <- rdi
+        %arg <- rdi
+        //get the half of the number since it is the max case
+        %halfarg >>= 1
+
+        %counter <- 1
+
+        :prime_loop
+        %counter += 1
+        //prime
+        rdi <- %arg
+        //counter
+        rsi <- %counter
+        mem rsp -8 <- :prime_ret0
+        call @mod 2
+        :prime_ret0
+        cjump rax = 1 :not_prime
+        cjump %counter <= %halfarg :prime_loop
+
+        :is_prime
+        rax <- 1
+        return
+
+        :not_prime
+        rax <- 0
+        return
+    )
+    //greatest prime factor of argument
+    (@gpf
+        1
+        //keep rdi the same but save it
+        %arg <- rdi
+        mem rsp -8 <- :gpf_ret0
+        call @prime 1
+        :gpf_ret0
+        cjump rax = 0 :not_itself
+        rax <- %arg
+        goto :gpf_done
+        :not_itself
+
+        %possibleprime <- %arg
+        %possibleprime >>= 1
+        %possibleprime += 1
+
+        :gpf_loop
+        cjump %possibleprime < 2 :gpf_done_sad
+        %possibleprime -= 1
+        rdi <- %arg
+        rsi <- %possibleprime
+        mem rsp -8 <- :gpf_ret1
+        call @mod 2
+        :gpf_ret1
+        //not a factor, so move on
+        cjump rax = 0 :gpf_loop
+        rdi <- %possibleprime
+        mem rsp -8 <- :gpf_ret2
+        call @prime 1
+        :gpf_ret2
+        //same thing so move on
+        cjump rax = 0 :gpf_loop
+        rax <- %possibleprime
+        goto :gpf_done
+
+        :gpf_done_sad
+        rax <- -1
+        :gpf_done
+        return
+    )
+    (@go
+        0
+        rdi <- 30030
+        mem rsp -8 <- :go_ret0
+        call @gpf 1
+        :go_ret0
+        rdi <- rax
+        rdi <<= 1
+        rdi += 1
+        call print 1
+        return
+    )
+)

@@ -1,0 +1,88 @@
+(@main
+  (@main
+    0
+    :call_label0
+    mem rsp -8 <- 
+:call_label3
+    call @make_array 0
+    
+:call_label3
+    %rax <- rax
+    %var1 <- 2
+    %var2 <- 1
+    %var3 <- %var1
+    %var3 *= 4
+    goto :call_label1
+    :call_label1
+    %temp <- 7
+    %var2 <- %var2
+    %var2 += %temp
+    %var1 <- %var1
+    %var1 += 2
+    %len <- 0
+    %test <- %len
+    %test -= %var1
+    cjump %test = 1 :call_label1
+    goto :call_label2
+    :call_label2
+    %var2 <- %var2
+    %var2 *= 2
+    %len <- %var2
+    %len += 1
+    mem rsp -8 <- 
+:call_label4
+    call @make_array2 0
+    
+:call_label4
+    %rax <- rax
+    rdi <- %rax
+    call print 1
+    return
+  )
+  (@make_array
+    0
+    :call_label_ciao_5
+    %newVar1 <- 21
+    %newVar1 >>= 1
+    %newVar0 <- %newVar1
+    %newVar0 <- %newVar0
+    %newVar0 <<= 1
+    %newVar0 <- %newVar0
+    %newVar0 += 1
+    %newVar0 <- %newVar0
+    %newVar0 += 4
+    rdi <- %newVar0
+    rsi <- 1
+    call allocate 2
+    %rax <- rax
+    mem %rax 8 <- 3
+    mem %rax 16 <- %arg1
+    %arg1 <- 201
+    %arg2 <- 17
+    rax <- %rax
+    return
+  )
+  (@make_array2
+    0
+    :call_label_ciao__ciao_6
+    %arg1 <- 21
+    %arg2 <- 9
+    %newVar1 <- %arg1
+    %newVar1 >>= 1
+    %newVar0 <- %newVar1
+    %newVar0 <- %newVar0
+    %newVar0 <<= 1
+    %newVar0 <- %newVar0
+    %newVar0 += 1
+    %newVar0 <- %newVar0
+    %newVar0 += 4
+    rdi <- %newVar0
+    rsi <- 1
+    call allocate 2
+    %rax <- rax
+    mem %rax 8 <- 3
+    mem %rax 16 <- %arg1
+    rax <- %rax
+    return
+  )
+)

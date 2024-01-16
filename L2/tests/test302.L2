@@ -1,0 +1,136 @@
+(@main
+  (@main
+    0
+    rdi <- 77
+    rsi <- 42
+    rdx <- 13
+    rcx <- 16
+    r8 <- 774
+    r9 <- 209
+
+mem rsp -8 <- :call_label0
+    call @Bubble_Sort 6
+
+:call_label0
+    return
+  )
+  (@encode
+    1
+    %unencoded <- rdi
+    %shifted <- %unencoded
+    %shifted <<= 1
+    %encoded <- %shifted
+    %encoded += 1
+    rax <- %encoded
+    return
+  )
+  (@decode
+    1
+    %encoded <- rdi
+    %decoded <- %encoded
+    %decoded >>= 1
+    rax <- %decoded
+    return
+  )
+  (@Bubble_Sort
+    6
+    %arg1 <- rdi
+    %arg2 <- rsi
+    %arg3 <- rdx
+    %arg4 <- rcx
+    %arg5 <- r8
+    %arg6 <- r9
+    rdi <- 6
+
+mem rsp -8 <- :call_label_ciao_6
+    call @encode 1
+
+:call_label_ciao_6
+    %len <- rax
+    rdi <- 0
+
+mem rsp -8 <- :call_label_ciao_7
+    call @encode 1
+
+:call_label_ciao_7
+    %init <- rax
+    rdi <- %len
+    rsi <- %init
+    call allocate 2
+    %arr <- rax
+    %ptr <- %arr
+    %ptr += 8
+    %arr_start <- %ptr
+    mem %ptr 0 <- %arg1
+    %ptr <- %ptr
+    %ptr += 8
+    mem %ptr 0 <- %arg2
+    %ptr <- %ptr
+    %ptr += 8
+    mem %ptr 0 <- %arg3
+    %ptr <- %ptr
+    %ptr += 8
+    mem %ptr 0 <- %arg4
+    %ptr <- %ptr
+    %ptr += 8
+    mem %ptr 0 <- %arg5
+    %ptr <- %ptr
+    %ptr += 8
+    mem %ptr 0 <- %arg6
+    %arr_end <- %ptr
+    %loop_end <- %arr_end
+    :call_label_ciao_1
+    %i <- %arr_start
+    :call_label_ciao_2
+    %arr_i <- mem %i 0
+    rdi <- %arr_i
+
+mem rsp -8 <- :call_label_ciao_8
+    call @encode 1
+
+:call_label_ciao_8
+    %enc_arr_i <- rax
+    rdi <- %enc_arr_i
+    call print 1
+    %i <- %i
+    %i += 8
+    %not_at_end <- %i <= %arr_end
+
+    cjump %not_at_end = 1 :call_label_ciao_2
+    %big_num <- 888888888888888888
+    rdi <- %big_num
+
+mem rsp -8 <- :call_label_ciao_9
+    call @encode 1
+
+:call_label_ciao_9
+    %enc_big_num <- rax
+    rdi <- %enc_big_num
+    call print 1
+    %i <- %arr_start
+    %ip1 <- %arr_start
+    %ip1 += 8
+    :call_label_ciao_3
+    %arr_i <- mem %i 0
+    %arr_ip1 <- mem %ip1 0
+    %arr_i_lte_ip1 <- %arr_i <= %arr_ip1
+
+    cjump %arr_i_lte_ip1 = 1 :call_label_ciao_5
+    :call_label_ciao_4
+    mem %i 0 <- %arr_ip1
+    mem %ip1 0 <- %arr_i
+    :call_label_ciao_5
+    %i <- %ip1
+    %ip1 <- %ip1
+    %ip1 += 8
+    %not_at_end <- %i < %loop_end
+
+    cjump %not_at_end = 1 :call_label_ciao_3
+    %loop_end <- %loop_end
+    %loop_end -= 8
+    %not_at_end <- %arr_start <= %loop_end
+
+    cjump %not_at_end = 1 :call_label_ciao_1
+    return
+  )
+)

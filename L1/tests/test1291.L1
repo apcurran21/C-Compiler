@@ -1,0 +1,45 @@
+(@go
+(@go
+	0 0
+	rdi <- 1
+	mem rsp -8 <- :inc_ret
+	call @inc 1
+	:inc_ret
+	rdi <- 11
+	mem rsp -8 <- :dec_ret
+	call @dec 1
+	:dec_ret
+	return
+)
+
+(@inc
+	1 1
+	mem rsp 0 <- r12
+	rax <- rdi
+	:LOOP_INC
+	r12 <- rax
+	rdi <- rax
+	call print 1
+	rax <- r12
+	rax += 2
+	cjump rax <= 11 :LOOP_INC
+	r12 <- mem rsp 0
+	return
+)
+
+(@dec
+	1 1
+	mem rsp 0 <- r12
+	rax <- rdi
+	:LOOP_DEC
+	r12 <- rax
+	rdi <- rax
+	call print 1
+	rax <- r12
+	rax -= 2
+	cjump 1 <= rax :LOOP_DEC
+	r12 <- mem rsp 0
+	return
+)
+
+)

@@ -1,0 +1,9 @@
+(@main
+	0
+	rdi <- 1
+	rsi <- 0
+	mem rsp -8 <- :call_label0
+	call @buildASandwich 2
+	:call_label0
+	return
+)

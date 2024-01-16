@@ -1,0 +1,31 @@
+(@fill_array
+	3
+	%current_year <- rsi
+	%array_index <- rdi
+	%array <- rdi
+	%end_year <- rdx
+	:loop_start
+	cjump %current_year <= %end_year :calc
+	goto :ret
+	:calc
+	rdi <- %current_year
+	mem rsp -8 <- :ily_ret
+	call @is_leap_year 1
+	:ily_ret
+	cjump 1 = rax :leap
+	goto :not_leap
+	:not_leap
+	goto :continue_loop
+	:leap
+	%encode_current_year <- %current_year
+	%encode_current_year <<= 1
+	%encode_current_year++
+	%array_index += 8
+	mem %array_index 0 <- %encode_current_year
+	:continue_loop
+	%current_year += 1
+	goto :loop_start
+	:ret
+	rax <- %array
+	return
+)

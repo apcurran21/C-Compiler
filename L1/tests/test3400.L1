@@ -1,0 +1,129 @@
+(@main
+(@main
+	0 3
+	rdi <- 1
+	mem rsp 16 <- rdi
+	rdi <- 1
+	mem rsp 0 <- rdi
+	rdi <- 1
+	mem rsp 8 <- rdi
+	:call_label0
+	rdi <- mem rsp 8
+	rdi <- 21 <= rdi
+	cjump rdi = 1 :call_label4
+	rdi <- mem rsp 8
+	rdi <- rdi
+	mem rsp 8 <- rdi
+	rdi <- mem rsp 8
+	rdi >>= 1
+	mem rsp 8 <- rdi
+	rdi <- mem rsp 16
+	rdi <- rdi
+	mem rsp 16 <- rdi
+	rdi <- mem rsp 16
+	rdi >>= 1
+	mem rsp 16 <- rdi
+	rdi <- mem rsp 16
+	rdi <- rdi
+	mem rsp 16 <- rdi
+	rdi <- mem rsp 8
+	rsi <- mem rsp 16
+	rsi += rdi
+	mem rsp 16 <- rsi
+	rdi <- mem rsp 16
+	rdi <- rdi
+	mem rsp 16 <- rdi
+	rdi <- mem rsp 16
+	rdi <<= 1
+	mem rsp 16 <- rdi
+	rdi <- mem rsp 8
+	rdi <- rdi
+	mem rsp 8 <- rdi
+	rdi <- mem rsp 8
+	rdi <<= 1
+	mem rsp 8 <- rdi
+	rdi <- mem rsp 16
+	rdi <- rdi
+	mem rsp 16 <- rdi
+	rdi <- mem rsp 16
+	rdi += 1
+	mem rsp 16 <- rdi
+	rdi <- mem rsp 8
+	rdi <- rdi
+	mem rsp 8 <- rdi
+	rdi <- mem rsp 8
+	rdi += 1
+	mem rsp 8 <- rdi
+	rdi <- mem rsp 16
+	rdi <- 21 <= rdi
+	cjump rdi = 1 :call_label3
+	rsi <- 21
+	:call_label1
+	rdi <- rsi < 1
+	cjump rdi = 1 :call_label2
+	rsi <- rsi
+	rsi -= 2
+	goto :call_label1
+	:call_label2
+	rdi <- mem rsp 0
+	rdi <- rdi
+	mem rsp 0 <- rdi
+	rdi <- mem rsp 0
+	rdi += 2
+	mem rsp 0 <- rdi
+	:call_label3
+	rdi <- mem rsp 8
+	rdi <- rdi
+	mem rsp 8 <- rdi
+	rdi <- mem rsp 8
+	rdi += 2
+	mem rsp 8 <- rdi
+	goto :call_label0
+	:call_label4
+	rdi <- mem rsp 16
+	rdi <- rdi
+	call print 1
+	rdi <- mem rsp 0
+	rdi <- rdi
+	call print 1
+	rdi <- mem rsp 8
+	rdi <- rdi
+	call print 1
+	rdi <- mem rsp 16
+	rdi <- rdi
+	mem rsp 16 <- rdi
+	rdi <- mem rsp 16
+	rdi >>= 1
+	mem rsp 16 <- rdi
+	rdi <- mem rsp 0
+	rdi <- rdi
+	mem rsp 0 <- rdi
+	rdi <- mem rsp 0
+	rdi >>= 1
+	mem rsp 0 <- rdi
+	rdi <- mem rsp 8
+	rdi <- rdi
+	mem rsp 8 <- rdi
+	rdi <- mem rsp 8
+	rdi >>= 1
+	mem rsp 8 <- rdi
+	rdi <- mem rsp 8
+	rsi <- rdi
+	rsi <- rsi
+	rdi <- mem rsp 0
+	rsi += rdi
+	rsi <- rsi
+	rdi <- mem rsp 16
+	rsi += rdi
+	rsi <- rsi
+	rsi <<= 1
+	rsi <- rsi
+	rsi += 1
+	rsi <- rsi
+	rsi += 20
+	rdi <- rsi
+	call print 1
+	return
+)
+
+)

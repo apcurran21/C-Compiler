@@ -1,0 +1,13 @@
+(@greaterThan
+	2
+	cjump rdi <= rsi :lessEq
+	goto :greater
+	:lessEq
+	%retval <- 1
+	rax <- %retval
+	return
+	:greater
+	%retval <- 3
+	rax <- %retval
+	return
+)

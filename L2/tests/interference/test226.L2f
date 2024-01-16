@@ -1,0 +1,56 @@
+(@print_primes
+	1
+	%num <- rdi
+	%d <- 2
+	%orig_num <- %num
+	%most_freq <- 0
+	%curr_freq <- 0
+	rdi <- %num
+	mem rsp -8 <- :call_label_ciao__ciao__ciao__ciao__ciao__ciao_31
+	call @sqrt 1
+	:call_label_ciao__ciao__ciao__ciao__ciao__ciao_31
+	:call_label_ciao__ciao__ciao__ciao__ciao__ciao_24
+	%ini_ret <- %orig_num < %d
+	cjump %ini_ret = 1 :call_label_ciao__ciao__ciao__ciao__ciao__ciao_30
+	goto :call_label_ciao__ciao__ciao__ciao__ciao__ciao_25
+	:call_label_ciao__ciao__ciao__ciao__ciao__ciao_25
+	rdi <- %num
+	rsi <- %d
+	mem rsp -8 <- :call_label_ciao__ciao__ciao__ciao__ciao__ciao_32
+	call @divisible 2
+	:call_label_ciao__ciao__ciao__ciao__ciao__ciao_32
+	%divisible_flag <- rax
+	cjump %divisible_flag = 1 :call_label_ciao__ciao__ciao__ciao__ciao__ciao_26
+	goto :call_label_ciao__ciao__ciao__ciao__ciao__ciao_27
+	:call_label_ciao__ciao__ciao__ciao__ciao__ciao_26
+	rdi <- %d
+	mem rsp -8 <- :call_label_ciao__ciao__ciao__ciao__ciao__ciao_33
+	call @encode_print 1
+	:call_label_ciao__ciao__ciao__ciao__ciao__ciao_33
+	rdi <- %num
+	rsi <- %d
+	mem rsp -8 <- :call_label_ciao__ciao__ciao__ciao__ciao__ciao_34
+	call @customer_divide 2
+	:call_label_ciao__ciao__ciao__ciao__ciao__ciao_34
+	%new_num <- rax
+	%num <- %new_num
+	%curr_freq += 1
+	goto :call_label_ciao__ciao__ciao__ciao__ciao__ciao_24
+	:call_label_ciao__ciao__ciao__ciao__ciao__ciao_27
+	%d += 1
+	%curr_most <- %most_freq < %curr_freq
+	cjump %curr_most = 1 :call_label_ciao__ciao__ciao__ciao__ciao__ciao_28
+	goto :call_label_ciao__ciao__ciao__ciao__ciao__ciao_29
+	:call_label_ciao__ciao__ciao__ciao__ciao__ciao_28
+	%most_freq <- %curr_freq
+	:call_label_ciao__ciao__ciao__ciao__ciao__ciao_29
+	%curr_freq <- 0
+	goto :call_label_ciao__ciao__ciao__ciao__ciao__ciao_24
+	:call_label_ciao__ciao__ciao__ciao__ciao__ciao_30
+	rdi <- %most_freq
+	mem rsp -8 <- :call_label_ciao__ciao__ciao__ciao__ciao__ciao_35
+	call @encode_print 1
+	:call_label_ciao__ciao__ciao__ciao__ciao__ciao_35
+	rax <- 0
+	return
+)

@@ -1,0 +1,17 @@
+(@PopulateArray1
+	2
+	%arr <- rdi
+	%len <- rsi
+	%pos <- %arr
+	%pos += 8
+	%ind <- 1
+	:call_label_ciao_6
+	%stop <- %len <= %ind
+	cjump %stop = 1 :call_label_ciao_7
+	mem %pos 0 <- %ind
+	%ind += 2
+	%pos += 8
+	goto :call_label_ciao_6
+	:call_label_ciao_7
+	return
+)

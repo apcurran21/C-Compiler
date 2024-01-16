@@ -1,0 +1,13 @@
+define @main () {
+ 
+:NNNNNN
+ br :entry
+ 
+:entry
+ %v <- 7
+ call print (%v)
+ %v <- 9
+ call print (%v)
+ return 
+}
+

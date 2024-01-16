@@ -1,0 +1,9 @@
+(@myF
+	0
+	:call_label_ciao_2
+	rdi <- 5
+	mem rsp -8 <- :call_label_ciao_3
+	call @myF2 1
+	:call_label_ciao_3
+	return
+)

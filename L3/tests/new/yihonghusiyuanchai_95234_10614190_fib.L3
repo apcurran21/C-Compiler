@@ -1,0 +1,43 @@
+// Computes the <input>th entry of the Fibonacci sequence
+
+define :fibo(%n){
+        
+    %res <- 0
+    %cmp_n_2 <- %n <= 2
+    br %cmp_n_2 :leq_2                        // rdi arg <= 2
+
+    %fib_arg <- %n - 2                          // fibo (n - 2)
+    %r1 <- call :fibo(%fib_arg)
+    
+    %fib_arg <- %n - 1                           // fibo (n - 1)
+    %r2 <- call :fibo(%fib_arg)
+
+    %res <- %r1 + %r2                         // ans = fibo (n - 1) + fibo (n - 2)
+
+    br :done 
+
+    :leq_2
+    %cmp_n_0 <- %n <= 0
+    br %cmp_n_0 :less_0          
+    %res <- 1                               // %n == 1, 2
+    br :done
+
+    :less_0                                 // %res <= 0
+    %res <- 0
+
+    :done
+
+    return %res  
+}
+
+define :main(){
+    
+    %fib <- call :fibo(9)
+
+    %toPrint <- %fib << 1
+    %toPrint <- %toPrint +  1
+    call print(%toPrint)
+    
+    return %toPrint
+}
+

@@ -1,0 +1,71 @@
+define @mod(%x, %y) {
+    %r <- %x = 0
+    br %r :mgood
+    
+    :misneg
+    %r <- %x > -1
+    br %r :mloop
+    return 0
+
+    :mloop
+    %x <- %x - %y
+    %r <- %x = 0
+    br %r :mgood
+    br :misneg
+
+    :mgood
+    return 1
+}
+
+define @prime(%arg) {
+    %inputIs2 <- %arg = 2
+    br %inputIs2 :is_prime
+
+    %halfarg <- %arg >> 1
+    %counter <- 1
+    :prime_loop
+    %counter <- %counter + 1
+    %pstatus <- call @mod(%arg, %counter)
+    br %pstatus :not_prime
+    %reloop <- %counter <= %halfarg
+    br %reloop :prime_loop
+
+    :is_prime
+    return 1
+
+    :not_prime
+    return 0
+}
+
+define @gpf(%arg) {
+    %argIsPrime <- call @prime(%arg)
+    %argNotPrime <- %argIsPrime = 0
+    br %argNotPrime :not_itself
+    return %arg
+    :not_itself
+
+    %possiblePrime <- %arg >> 1
+    %possiblePrime <- %possiblePrime + 1
+
+    :gpf_loop
+    %sad <- %possiblePrime < 2
+    br %sad :gpf_done_sad
+    %possiblePrime <- %possiblePrime - 1
+    %modulo <- call @mod(%arg, %possiblePrime)
+    %notFactor <- %modulo = 0
+    br %notFactor :gpf_loop
+    %cndIsPrime <- call @prime(%possiblePrime)
+    %notPrime <- %cndIsPrime = 0
+    br %notPrime :gpf_loop
+    return %possiblePrime
+    :gpf_done_sad
+    return -1
+}
+
+define @main() {
+    %result <- call @gpf(30030)
+    %result <- %result << 1
+    %result <- %result + 1
+    call print(%result)
+    return
+}

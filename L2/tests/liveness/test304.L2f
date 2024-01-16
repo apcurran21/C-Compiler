@@ -1,0 +1,50 @@
+(@zip
+	2
+	%arr1 <- rdi
+	%arr2 <- rsi
+	%len1 <- mem %arr1 0
+	%len2 <- mem %arr2 0
+	%comp <- %len1 = %len2
+	cjump %comp = 1 :call_label_ciao_4
+	goto :call_label_ciao_3
+	:call_label_ciao_3
+	return
+	:call_label_ciao_4
+	%encodedLen <- %len1
+	%encodedLen <<= 1
+	%encodedLen += 1
+	rdi <- %encodedLen
+	rsi <- 1
+	call allocate 2
+	%newArr <- rax
+	%count <- 0
+	:call_label_ciao_5
+	%currOffsetMultiple <- %count
+	%currOffsetMultiple += 1
+	%currOffsetMultiple *= 8
+	%arr1Offset <- %arr1
+	%arr1Offset += %currOffsetMultiple
+	%arr2Offset <- %arr2
+	%arr2Offset += %currOffsetMultiple
+	rdi <- 5
+	rsi <- 1
+	call allocate 2
+	%zipElem <- rax
+	%elemOffset <- %zipElem
+	%elemOffset += 8
+	%tempVar1 <- mem %arr1Offset 0
+	mem %elemOffset 0 <- %tempVar1
+	%tempVar2 <- mem %arr2Offset 0
+	%elemOffset += 8
+	mem %elemOffset 0 <- %tempVar2
+	%tempNewArr <- %newArr
+	%tempNewArr += %currOffsetMultiple
+	mem %tempNewArr 0 <- %zipElem
+	%count += 1
+	%cont <- %count < %len1
+	cjump %cont = 1 :call_label_ciao_5
+	goto :call_label_ciao_6
+	:call_label_ciao_6
+	rax <- %newArr
+	return
+)

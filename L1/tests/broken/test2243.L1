@@ -1,0 +1,118 @@
+(@go
+(@go
+	0 1
+	mem rsp 0 <- r12
+	rdi <- 5
+	rsi <- 5
+	call allocate 2
+	r12 <- rax
+	mem r12 8 <- 85
+	rdi <- r12
+	call print 1
+	rdi <- r12
+	mem rsp -8 <- :printArray_ret
+	call @printArray 1
+	:printArray_ret
+	rdi <- 5
+	rsi <- 5
+	call allocate 2
+	rdi <- rax
+	mem r12 8 <- rdi
+	rdi <- r12
+	call print 1
+	rdi <- r12
+	mem rsp -8 <- :printArray_ret2
+	call @printArray 1
+	:printArray_ret2
+	r12 <- mem rsp 0
+	return
+)
+
+(@printArray
+	1 3
+	mem rsp 16 <- r14
+	mem rsp 8 <- r13
+	mem rsp 0 <- r12
+	r12 <- rdi
+	r13 <- 0
+	r14 <- mem r12 0
+	rdi <- r12
+	rdi &= 1
+	cjump rdi = 0 :isAnArray
+	goto :isAnInt
+	:isAnInt
+	rax <- 0
+	r12 <- mem rsp 0
+	r13 <- mem rsp 8
+	r14 <- mem rsp 16
+	return
+	:isAnArray
+	:check
+	cjump r13 < r14 :true
+	goto :false
+	:true
+	rsi <- r13
+	rsi <<= 1
+	rsi++
+	rdi <- r12
+	mem rsp -8 <- :printData_ret
+	call @printData 2
+	:printData_ret
+	r13++
+	goto :check
+	:false
+	rax <- 1
+	r12 <- mem rsp 0
+	r13 <- mem rsp 8
+	r14 <- mem rsp 16
+	return
+)
+
+(@printData
+	2 2
+	mem rsp 8 <- r13
+	mem rsp 0 <- r12
+	r12 <- rdi
+	r13 <- rsi
+	rdi <- r13
+	call print 1
+	rdi <- mem r12 0
+	rdi <<= 1
+	rdi += 1
+	cjump r13 < rdi :correct
+	goto :wrong
+	:wrong
+	rdi <- r12
+	rsi <- r13
+	rdi <- 0
+	call tensor-error 1
+	:correct
+	r13 >>= 1
+	r13 *= 8
+	r13 += 8
+	rdi <- r13
+	rdi <<= 1
+	rdi += 1
+	call print 1
+	rdi <- r13
+	rdi += r12
+	rsi <- mem rdi 0
+	rdi <- rsi
+	rdi &= 1
+	cjump rdi = 0 :isAnArray2
+	goto :isAnInt2
+	:isAnInt2
+	rdi <- rsi
+	call print 1
+	goto :exitFunction
+	:isAnArray2
+	mem rsp -8 <- :exitFunction
+	rdi <- rsi
+	call @printArray 1
+	:exitFunction
+	r12 <- mem rsp 0
+	r13 <- mem rsp 8
+	return
+)
+
+)

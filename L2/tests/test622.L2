@@ -1,0 +1,15 @@
+(@main
+  (@main
+    0
+    :call_label0
+    goto :call_label1
+    :call_label1
+    rdi <- 5
+    rsi <- 1
+    call allocate 2
+    %p <- rax
+    rdi <- %p
+    call print 1
+    return
+  )
+)

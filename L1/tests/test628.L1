@@ -1,0 +1,64 @@
+(@main
+(@main
+	0 0
+	:call_label0
+	rdi <- 7
+	rdi >>= 1
+	rsi <- rdi
+	rdi <- 7
+	rdi >>= 1
+	rsi *= rdi
+	rdi <- 7
+	rdi >>= 1
+	rsi *= rdi
+	rsi <<= 1
+	rsi += 1
+	rsi += 8
+	rdi <- rsi
+	rsi <- 1
+	call allocate 2
+	rdi <- rax
+	mem rdi 8 <- 7
+	mem rdi 16 <- 7
+	mem rdi 24 <- 7
+	mem rdi 32 <- 7
+	rsi <- 1
+	rdx <- 2
+	rcx <- 3
+	mem rsp -8 <- :call_label1
+	call @storeV 4
+	:call_label1
+	return
+)
+
+(@storeV
+	4 0
+	r8 <- rdi
+	r9 <- rsi
+	rdi <- rdx
+	:call_label_ciao_2
+	rsi <- 0
+	r10 <- mem r8 24
+	r11 <- mem r8 32
+	rdx <- 1
+	r11 >>= 1
+	rdx *= r11
+	rdi *= rdx
+	rsi += rdi
+	rdi <- r10
+	rdi >>= 1
+	rdx *= rdi
+	rdi <- r9
+	rdi *= rdx
+	rsi += rdi
+	rsi += rcx
+	rdi <- rsi
+	rdi *= 8
+	rdi += 40
+	rsi <- r8
+	rsi += rdi
+	mem rsi 0 <- 5
+	return
+)
+
+)

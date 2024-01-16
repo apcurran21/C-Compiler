@@ -1,0 +1,33 @@
+(@go
+	0
+	rdi <- 41
+	rsi <- 1
+	call allocate 2
+	%constraint <- 10
+	%constraint <<= 1
+	%constraint++
+	%counter <- 0
+	:loop
+	%val <- %counter
+	%val <<= 2
+	%val++
+	%offset <- %counter
+	%offset <<= 3
+	%offset += 8
+	%offset += rax
+	cjump %val <= %constraint :fill
+	goto :stopFill
+	:fill
+	mem %offset 0 <- %val
+	goto :incCount
+	:stopFill
+	mem %offset 0 <- 0
+	:incCount
+	%counter++
+	cjump %counter < 20 :loop
+	goto :continue
+	:continue
+	rdi <- rax
+	call print 1
+	return
+)

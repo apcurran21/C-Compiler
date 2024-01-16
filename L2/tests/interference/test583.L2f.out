@@ -1,0 +1,26 @@
+%more_to_write %new_queue_ptr %num_remaining %old_queue_ptr r12 r13 r14 r15 rbp rbx
+%new_num_remaining %new_queue_ptr %old_queue_ptr r12 r13 r14 r15 rbp rbx rdi rsi
+%new_queue_loc %new_queue_ptr %num_remaining %offset %old_queue_ptr r12 r13 r14 r15 rbp rbx %val_to_write
+%new_queue_ptr %more_to_write %new_num_remaining %new_queue_loc %num_elem_offset %num_remaining %offset %old_queue_loc %old_queue_ptr %old_size r12 r13 r14 r15 rbp rbx rdx rsi %val_to_write
+%num_elem_offset %new_queue_ptr %num_remaining %old_queue_loc %old_queue_ptr r12 r13 r14 r15 rbp rbx
+%num_remaining %more_to_write %new_queue_loc %new_queue_ptr %num_elem_offset %offset %old_queue_loc %old_queue_ptr %old_size r12 r13 r14 r15 rbp rbx %val_to_write
+%offset %new_queue_loc %new_queue_ptr %num_remaining %old_queue_loc %old_queue_ptr r12 r13 r14 r15 rbp rbx %val_to_write
+%old_queue_loc %new_queue_ptr %num_elem_offset %num_remaining %offset %old_queue_ptr %old_size r12 r13 r14 r15 rbp rbx
+%old_queue_ptr %more_to_write %new_num_remaining %new_queue_loc %new_queue_ptr %num_elem_offset %num_remaining %offset %old_queue_loc %old_size r12 r13 r14 r15 rbp rbx rdi rdx %val_to_write
+%old_size %new_queue_ptr %num_remaining %old_queue_loc %old_queue_ptr r12 r13 r14 r15 rbp rbx
+r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx rsi
+r11 r10 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx rsi
+r12 %more_to_write %new_num_remaining %new_queue_loc %new_queue_ptr %num_elem_offset %num_remaining %offset %old_queue_loc %old_queue_ptr %old_size r10 r11 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx rsi %val_to_write
+r13 %more_to_write %new_num_remaining %new_queue_loc %new_queue_ptr %num_elem_offset %num_remaining %offset %old_queue_loc %old_queue_ptr %old_size r10 r11 r12 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx rsi %val_to_write
+r14 %more_to_write %new_num_remaining %new_queue_loc %new_queue_ptr %num_elem_offset %num_remaining %offset %old_queue_loc %old_queue_ptr %old_size r10 r11 r12 r13 r15 r8 r9 rax rbp rbx rcx rdi rdx rsi %val_to_write
+r15 %more_to_write %new_num_remaining %new_queue_loc %new_queue_ptr %num_elem_offset %num_remaining %offset %old_queue_loc %old_queue_ptr %old_size r10 r11 r12 r13 r14 r8 r9 rax rbp rbx rcx rdi rdx rsi %val_to_write
+r8 r10 r11 r12 r13 r14 r15 r9 rax rbp rbx rcx rdi rdx rsi
+r9 r10 r11 r12 r13 r14 r15 r8 rax rbp rbx rcx rdi rdx rsi
+rax r10 r11 r12 r13 r14 r15 r8 r9 rbp rbx rcx rdi rdx rsi
+rbp %more_to_write %new_num_remaining %new_queue_loc %new_queue_ptr %num_elem_offset %num_remaining %offset %old_queue_loc %old_queue_ptr %old_size r10 r11 r12 r13 r14 r15 r8 r9 rax rbx rcx rdi rdx rsi %val_to_write
+rbx %more_to_write %new_num_remaining %new_queue_loc %new_queue_ptr %num_elem_offset %num_remaining %offset %old_queue_loc %old_queue_ptr %old_size r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rcx rdi rdx rsi %val_to_write
+rcx r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rdi rdx rsi
+rdi %new_num_remaining %old_queue_ptr r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdx rsi
+rdx %new_queue_ptr %old_queue_ptr r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rsi
+rsi %new_num_remaining %new_queue_ptr r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx
+%val_to_write %new_queue_loc %new_queue_ptr %num_remaining %offset %old_queue_ptr r12 r13 r14 r15 rbp rbx

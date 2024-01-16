@@ -1,0 +1,452 @@
+(@main
+(@main
+	0 7
+	mem rsp 40 <- rbx
+	mem rsp 32 <- rbp
+	mem rsp 24 <- r15
+	mem rsp 16 <- r14
+	mem rsp 8 <- r13
+	mem rsp 0 <- r12
+	:call_label0
+	rbp <- 7
+	r15 <- 11
+	r14 <- 3
+	r13 <- 9
+	r12 <- 5
+	rdi <- 1
+	mem rsp 48 <- rdi
+	rdi <- 11
+	rdi >>= 1
+	rsi <- rdi
+	rdi <- 9
+	rdi >>= 1
+	rsi <- rsi
+	rsi *= rdi
+	rdi <- 7
+	rdi >>= 1
+	rsi <- rsi
+	rsi *= rdi
+	rsi <- rsi
+	rsi <<= 1
+	rsi <- rsi
+	rsi += 1
+	rsi <- rsi
+	rsi += 8
+	rdi <- rsi
+	rsi <- 1
+	call allocate 2
+	rbx <- rax
+	rdi <- rbx
+	rdi += 8
+	mem rdi 0 <- 7
+	rdi <- rbx
+	rdi += 16
+	mem rdi 0 <- 11
+	rdi <- rbx
+	rdi += 24
+	mem rdi 0 <- 9
+	rdi <- rbx
+	rdi += 32
+	mem rdi 0 <- 7
+	rdx <- 0
+	rdi <- rbx
+	rdi += 24
+	rdi <- mem rdi 0
+	rcx <- rdi
+	rcx >>= 1
+	rdi <- rbx
+	rdi += 32
+	rdi <- mem rdi 0
+	rdi <- rdi
+	rdi >>= 1
+	rsi <- 1
+	rsi <- rsi
+	rsi *= rdi
+	rdi <- 0
+	rdi *= rsi
+	rdx <- rdx
+	rdx += rdi
+	rsi <- rsi
+	rsi *= rcx
+	rdi <- 0
+	rdi *= rsi
+	rdx <- rdx
+	rdx += rdi
+	rdx <- rdx
+	rdx += 1
+	rdi <- rdx
+	rdi *= 8
+	rdi <- rdi
+	rdi += 40
+	rsi <- rbx
+	rsi += rdi
+	mem rsi 0 <- rbp
+	rdx <- 0
+	rdi <- rbx
+	rdi += 24
+	rdi <- mem rdi 0
+	rcx <- rdi
+	rcx >>= 1
+	rdi <- rbx
+	rdi += 32
+	rdi <- mem rdi 0
+	rdi <- rdi
+	rdi >>= 1
+	rsi <- 1
+	rsi <- rsi
+	rsi *= rdi
+	rdi <- 0
+	rdi *= rsi
+	rdx <- rdx
+	rdx += rdi
+	rsi <- rsi
+	rsi *= rcx
+	rdi <- 0
+	rdi *= rsi
+	rdx <- rdx
+	rdx += rdi
+	rdx <- rdx
+	rdx += 2
+	rsi <- rdx
+	rsi *= 8
+	rsi <- rsi
+	rsi += 40
+	rdi <- rbx
+	rdi += rsi
+	mem rdi 0 <- r15
+	rdx <- 0
+	rdi <- rbx
+	rdi += 24
+	rdi <- mem rdi 0
+	rcx <- rdi
+	rcx >>= 1
+	rdi <- rbx
+	rdi += 32
+	rdi <- mem rdi 0
+	rdi <- rdi
+	rdi >>= 1
+	rsi <- 1
+	rsi <- rsi
+	rsi *= rdi
+	rdi <- 1
+	rdi *= rsi
+	rdx <- rdx
+	rdx += rdi
+	rsi <- rsi
+	rsi *= rcx
+	rdi <- 0
+	rdi *= rsi
+	rdx <- rdx
+	rdx += rdi
+	rdx <- rdx
+	rdx += 0
+	rdi <- rdx
+	rdi *= 8
+	rdi <- rdi
+	rdi += 40
+	rsi <- rbx
+	rsi += rdi
+	mem rsi 0 <- r14
+	rdx <- 0
+	rdi <- rbx
+	rdi += 24
+	rdi <- mem rdi 0
+	rcx <- rdi
+	rcx >>= 1
+	rdi <- rbx
+	rdi += 32
+	rdi <- mem rdi 0
+	rdi <- rdi
+	rdi >>= 1
+	rsi <- 1
+	rsi <- rsi
+	rsi *= rdi
+	rdi <- 2
+	rdi *= rsi
+	rdx <- rdx
+	rdx += rdi
+	rsi <- rsi
+	rsi *= rcx
+	rdi <- 0
+	rdi *= rsi
+	rdx <- rdx
+	rdx += rdi
+	rdx <- rdx
+	rdx += 2
+	rsi <- rdx
+	rsi *= 8
+	rsi <- rsi
+	rsi += 40
+	rdi <- rbx
+	rdi += rsi
+	mem rdi 0 <- r13
+	rdx <- 0
+	rdi <- rbx
+	rdi += 24
+	rdi <- mem rdi 0
+	rcx <- rdi
+	rcx >>= 1
+	rdi <- rbx
+	rdi += 32
+	rdi <- mem rdi 0
+	rdi <- rdi
+	rdi >>= 1
+	rsi <- 1
+	rsi <- rsi
+	rsi *= rdi
+	rdi <- 0
+	rdi *= rsi
+	rdx <- rdx
+	rdx += rdi
+	rsi <- rsi
+	rsi *= rcx
+	rdi <- 1
+	rdi *= rsi
+	rdx <- rdx
+	rdx += rdi
+	rdx <- rdx
+	rdx += 1
+	rsi <- rdx
+	rsi *= 8
+	rsi <- rsi
+	rsi += 40
+	rdi <- rbx
+	rdi += rsi
+	mem rdi 0 <- r12
+	rdx <- 0
+	rdi <- rbx
+	rdi += 24
+	rdi <- mem rdi 0
+	rcx <- rdi
+	rcx >>= 1
+	rdi <- rbx
+	rdi += 32
+	rdi <- mem rdi 0
+	rdi <- rdi
+	rdi >>= 1
+	rsi <- 1
+	rsi <- rsi
+	rsi *= rdi
+	rdi <- 1
+	rdi *= rsi
+	rdx <- rdx
+	rdx += rdi
+	rsi <- rsi
+	rsi *= rcx
+	rdi <- 2
+	rdi *= rsi
+	rdx <- rdx
+	rdx += rdi
+	rdx <- rdx
+	rdx += 0
+	rdi <- rdx
+	rdi *= 8
+	rdi <- rdi
+	rdi += 40
+	rsi <- rbx
+	rsi += rdi
+	rdi <- mem rsp 48
+	mem rsi 0 <- rdi
+	mem rsp -8 <- :call_label1
+	rdi <- rbx
+	rsi <- rbp
+	call @findArrayValue 2
+	:call_label1
+	rdi <- rax
+	rdi <- rdi
+	call print 1
+	mem rsp -8 <- :call_label2
+	rdi <- rbx
+	rsi <- r15
+	call @findArrayValue 2
+	:call_label2
+	rdi <- rax
+	rdi <- rdi
+	call print 1
+	mem rsp -8 <- :call_label3
+	rdi <- rbx
+	rsi <- 13
+	call @findArrayValue 2
+	:call_label3
+	rdi <- rax
+	rdi <- rdi
+	call print 1
+	mem rsp -8 <- :call_label4
+	rdi <- rbx
+	rsi <- r14
+	call @findArrayValue 2
+	:call_label4
+	rdi <- rax
+	rdi <- rdi
+	call print 1
+	mem rsp -8 <- :call_label5
+	rdi <- rbx
+	rsi <- r13
+	call @findArrayValue 2
+	:call_label5
+	rdi <- rax
+	rdi <- rdi
+	call print 1
+	mem rsp -8 <- :call_label6
+	rdi <- rbx
+	rsi <- r12
+	call @findArrayValue 2
+	:call_label6
+	rdi <- rax
+	rdi <- rdi
+	call print 1
+	mem rsp -8 <- :call_label7
+	rdi <- rbx
+	rsi <- 17
+	call @findArrayValue 2
+	:call_label7
+	rdi <- rax
+	rdi <- rdi
+	call print 1
+	mem rsp -8 <- :call_label8
+	rdi <- rbx
+	rsi <- 21
+	call @findArrayValue 2
+	:call_label8
+	rdi <- rax
+	rdi <- rdi
+	call print 1
+	mem rsp -8 <- :call_label9
+	rdi <- rbx
+	rsi <- mem rsp 48
+	rsi <- rsi
+	call @findArrayValue 2
+	:call_label9
+	rdi <- rax
+	rdi <- rdi
+	call print 1
+	r12 <- mem rsp 0
+	r13 <- mem rsp 8
+	r14 <- mem rsp 16
+	r15 <- mem rsp 24
+	rbp <- mem rsp 32
+	rbx <- mem rsp 40
+	return
+)
+
+(@findArrayValue
+	2 3
+	mem rsp 16 <- r14
+	mem rsp 8 <- r13
+	mem rsp 0 <- r12
+	rdx <- rdi
+	rsi <- rsi
+	:call_label10
+	rdi <- 0
+	rdi *= 8
+	rdi <- rdi
+	rdi += 16
+	rcx <- rdx
+	rcx += rdi
+	rcx <- mem rcx 0
+	rdi <- 1
+	rdi *= 8
+	r8 <- rdi
+	r8 += 16
+	rdi <- rdx
+	rdi += r8
+	r8 <- mem rdi 0
+	rdi <- 2
+	rdi *= 8
+	r9 <- rdi
+	r9 += 16
+	rdi <- rdx
+	rdi += r9
+	rax <- mem rdi 0
+	rcx <- rcx
+	rcx >>= 1
+	r8 <- r8
+	r8 >>= 1
+	rax <- rax
+	rax >>= 1
+	goto :call_label11
+	:call_label11
+	r9 <- 0
+	goto :call_label12
+	:call_label12
+	rdi <- r9 < rcx
+	cjump rdi = 1 :call_label13
+	goto :call_label21
+	:call_label13
+	r10 <- 0
+	goto :call_label14
+	:call_label14
+	rdi <- r10 < r8
+	cjump rdi = 1 :call_label15
+	goto :call_label20
+	:call_label15
+	r11 <- 0
+	goto :call_label16
+	:call_label16
+	rdi <- r11 < rax
+	cjump rdi = 1 :call_label17
+	goto :call_label19
+	:call_label17
+	r12 <- 0
+	rdi <- rdx
+	rdi += 24
+	rdi <- mem rdi 0
+	r13 <- rdi
+	r13 >>= 1
+	rdi <- rdx
+	rdi += 32
+	rdi <- mem rdi 0
+	rdi <- rdi
+	rdi >>= 1
+	r14 <- 1
+	r14 <- r14
+	r14 *= rdi
+	rdi <- r10
+	rdi *= r14
+	r12 <- r12
+	r12 += rdi
+	r14 <- r14
+	r14 *= r13
+	rdi <- r9
+	rdi *= r14
+	r12 <- r12
+	r12 += rdi
+	r12 <- r12
+	r12 += r11
+	r12 <- r12
+	r12 *= 8
+	r12 <- r12
+	r12 += 40
+	rdi <- rdx
+	rdi += r12
+	rdi <- mem rdi 0
+	rdi <- rdi = rsi
+	cjump rdi = 1 :call_label22
+	goto :call_label18
+	:call_label18
+	r11 <- r11
+	r11 += 1
+	goto :call_label16
+	:call_label19
+	r10 <- r10
+	r10 += 1
+	goto :call_label14
+	:call_label20
+	r9 <- r9
+	r9 += 1
+	goto :call_label12
+	:call_label21
+	rax <- 1
+	r12 <- mem rsp 0
+	r13 <- mem rsp 8
+	r14 <- mem rsp 16
+	return
+	:call_label22
+	rax <- 3
+	r12 <- mem rsp 0
+	r13 <- mem rsp 8
+	r14 <- mem rsp 16
+	return
+)
+
+)

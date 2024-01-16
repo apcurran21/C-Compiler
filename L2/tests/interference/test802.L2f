@@ -1,0 +1,7 @@
+(@havartiChoice
+	0
+	:call_label_ciao__ciao_13
+	rdi <- 3
+	call print 1
+	return
+)

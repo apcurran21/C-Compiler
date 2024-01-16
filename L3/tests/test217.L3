@@ -1,0 +1,116 @@
+define @main () {
+ 
+:NNNNNN
+ br :entry
+ 
+:entry
+ %num_sides <- 31
+ call print (%num_sides)
+ call @compute_num_degrees_angle_for_shape (%num_sides)
+ call @compute_many_degrees (%num_sides)
+ %lots_of_sides <- 175
+ call @compute_num_degrees_angle_for_shape (%lots_of_sides)
+ return 
+}
+
+define @compute_num_degrees_angle_for_shape (%sides) {
+ 
+:NNNNNN
+ br :entry
+ 
+:entry
+ %decoded_sides <- %sides >> 1
+ %temp_1 <- %decoded_sides - 2
+ %temp_1 <- %temp_1 * 180
+ %division <- call @divide (%temp_1, %decoded_sides)
+ %temp_1 <- %division
+ %temp_1 <- %temp_1 << 1
+ %temp_1 <- %temp_1 + 1
+ call print (%temp_1)
+ return 
+}
+
+define @compute_many_degrees (%sides) {
+ 
+:NNNNNNNNNNNNNN
+ br :entry
+ 
+:deg_exit
+ return 
+ 
+:deg_latch
+ %nth_side <- %nth_side + 1
+ br :deg_preheader
+ 
+:deg_preheader
+ %cond <- %nth_side > %decoded_sides
+ br %cond :deg_exit 
+ br :deg_body
+ 
+:deg_body
+ %call_nth_side <- %nth_side << 1
+ %call_nth_side <- %call_nth_side + 1
+ call @compute_num_degrees_angle_for_shape (%call_nth_side)
+ br :deg_latch
+ 
+:entry
+ %decoded_sides <- %sides >> 1
+ %nth_side <- 7
+ %nth_side <- %nth_side >> 1
+ br :deg_preheader
+}
+
+define @divide (%numer, %denom) {
+ 
+:NNNNNNNNNNNNNNNNNN
+ br :entry
+ 
+:t_loop_exit
+ return %quotient
+ 
+:t_loop_latch
+ br :t_loop_preheader
+ 
+:t_loop_preheader
+ %cond_2 <- %temp > 1
+ br %cond_2 :t_loop_body 
+ br :t_loop_exit
+ 
+:t_loop_body
+ %d <- %d >> 1
+ %temp <- %temp >> 1
+ %cond_3 <- %n >= %d
+ br %cond_3 :quotient_calc 
+ br :t_loop_latch
+ 
+:quotient_calc
+ %n <- %n - %d
+ %quotient <- %quotient + %temp
+ br :t_loop_latch
+ 
+:nd_loop_exit
+ br :t_loop_preheader
+ 
+:nd_loop_latch
+ br :nd_loop_preheader
+ 
+:nd_loop_preheader
+ %cond_1 <- %d <= %n
+ br %cond_1 :nd_loop_body 
+ br :nd_loop_exit
+ 
+:nd_loop_body
+ %d <- %d << 1
+ %temp <- %temp << 1
+ br :nd_loop_latch
+ 
+:entry
+ %n <- %numer
+ %d <- %denom
+ %enc_temp <- 3
+ %enc_quotient <- 1
+ %temp <- %enc_temp >> 1
+ %quotient <- %enc_quotient >> 1
+ br :nd_loop_preheader
+}
+

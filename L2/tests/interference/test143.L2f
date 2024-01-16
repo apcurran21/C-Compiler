@@ -1,0 +1,32 @@
+(@printArrayElement
+	2
+	%a <- rdi
+	%i <- rsi
+	rdi <- %i
+	rdi <<= 1
+	rdi += 1
+	call print 1
+	rdi <- %i
+	rdi <<= 3
+	rdi += 8
+	%offset <- rdi
+	rdi <<= 1
+	rdi += 1
+	call print 1
+	%a += %offset
+	%a_i <- mem %a 0
+	%check_val <- %a_i
+	%check_val &= 1
+	cjump %check_val = 1 :not_an_array
+	goto :else
+	:not_an_array
+	rdi <- %a_i
+	call print 1
+	return
+	:else
+	rdi <- %a_i
+	mem rsp -8 <- :printArray_return
+	call @printArray 1
+	:printArray_return
+	return
+)

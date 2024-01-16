@@ -1,0 +1,449 @@
+(@main
+  (@main
+    0
+    :call_label0
+    goto :call_label1
+    :call_label1
+    %test1 <- 7
+    %test2 <- 11
+    %test3 <- 3
+    %test4 <- 9
+    %test5 <- 5
+    %test6 <- 1
+    %newVar1 <- 11
+    %newVar1 >>= 1
+    %newVar0 <- %newVar1
+    %newVar2 <- 9
+    %newVar2 >>= 1
+    %newVar0 <- %newVar0
+    %newVar0 *= %newVar2
+    %newVar3 <- 7
+    %newVar3 >>= 1
+    %newVar0 <- %newVar0
+    %newVar0 *= %newVar3
+    %newVar0 <- %newVar0
+    %newVar0 <<= 1
+    %newVar0 <- %newVar0
+    %newVar0 += 1
+    %newVar0 <- %newVar0
+    %newVar0 += 6
+    rdi <- %newVar0
+    rsi <- 1
+    call allocate 2
+    %A <- rax
+    %newVar4 <- %A
+    %newVar4 += 8
+    mem %newVar4 0 <- 11
+    %newVar5 <- %A
+    %newVar5 += 16
+    mem %newVar5 0 <- 9
+    %newVar6 <- %A
+    %newVar6 += 24
+    mem %newVar6 0 <- 7
+    %newVar8 <- 0
+    %newVar9 <- %A
+    %newVar9 += 16
+    %newVar10 <- mem %newVar9 0
+    %newVar12 <- %A
+    %newVar12 += 24
+    %newVar13 <- mem %newVar12 0
+    %newVar15 <- 1
+    %newVar14 <- %newVar13
+    %newVar14 >>= 1
+    %newVar15 <- %newVar15
+    %newVar15 *= %newVar14
+    %newVar16 <- 0
+    %newVar16 *= %newVar15
+    %newVar8 <- %newVar8
+    %newVar8 += %newVar16
+    %newVar11 <- %newVar10
+    %newVar11 >>= 1
+    %newVar15 <- %newVar15
+    %newVar15 *= %newVar11
+    %newVar17 <- 0
+    %newVar17 *= %newVar15
+    %newVar8 <- %newVar8
+    %newVar8 += %newVar17
+    %newVar8 <- %newVar8
+    %newVar8 += 1
+    %newVar7 <- %newVar8
+    %newVar7 *= 8
+    %newVar7 <- %newVar7
+    %newVar7 += 32
+    %newVar18 <- %A
+    %newVar18 += %newVar7
+    mem %newVar18 0 <- %test1
+    %newVar20 <- 0
+    %newVar21 <- %A
+    %newVar21 += 16
+    %newVar22 <- mem %newVar21 0
+    %newVar24 <- %A
+    %newVar24 += 24
+    %newVar25 <- mem %newVar24 0
+    %newVar27 <- 1
+    %newVar26 <- %newVar25
+    %newVar26 >>= 1
+    %newVar27 <- %newVar27
+    %newVar27 *= %newVar26
+    %newVar28 <- 0
+    %newVar28 *= %newVar27
+    %newVar20 <- %newVar20
+    %newVar20 += %newVar28
+    %newVar23 <- %newVar22
+    %newVar23 >>= 1
+    %newVar27 <- %newVar27
+    %newVar27 *= %newVar23
+    %newVar29 <- 0
+    %newVar29 *= %newVar27
+    %newVar20 <- %newVar20
+    %newVar20 += %newVar29
+    %newVar20 <- %newVar20
+    %newVar20 += 2
+    %newVar19 <- %newVar20
+    %newVar19 *= 8
+    %newVar19 <- %newVar19
+    %newVar19 += 32
+    %newVar30 <- %A
+    %newVar30 += %newVar19
+    mem %newVar30 0 <- %test2
+    %newVar32 <- 0
+    %newVar33 <- %A
+    %newVar33 += 16
+    %newVar34 <- mem %newVar33 0
+    %newVar36 <- %A
+    %newVar36 += 24
+    %newVar37 <- mem %newVar36 0
+    %newVar39 <- 1
+    %newVar38 <- %newVar37
+    %newVar38 >>= 1
+    %newVar39 <- %newVar39
+    %newVar39 *= %newVar38
+    %newVar40 <- 1
+    %newVar40 *= %newVar39
+    %newVar32 <- %newVar32
+    %newVar32 += %newVar40
+    %newVar35 <- %newVar34
+    %newVar35 >>= 1
+    %newVar39 <- %newVar39
+    %newVar39 *= %newVar35
+    %newVar41 <- 0
+    %newVar41 *= %newVar39
+    %newVar32 <- %newVar32
+    %newVar32 += %newVar41
+    %newVar32 <- %newVar32
+    %newVar32 += 0
+    %newVar31 <- %newVar32
+    %newVar31 *= 8
+    %newVar31 <- %newVar31
+    %newVar31 += 32
+    %newVar42 <- %A
+    %newVar42 += %newVar31
+    mem %newVar42 0 <- %test3
+    %newVar44 <- 0
+    %newVar45 <- %A
+    %newVar45 += 16
+    %newVar46 <- mem %newVar45 0
+    %newVar48 <- %A
+    %newVar48 += 24
+    %newVar49 <- mem %newVar48 0
+    %newVar51 <- 1
+    %newVar50 <- %newVar49
+    %newVar50 >>= 1
+    %newVar51 <- %newVar51
+    %newVar51 *= %newVar50
+    %newVar52 <- 2
+    %newVar52 *= %newVar51
+    %newVar44 <- %newVar44
+    %newVar44 += %newVar52
+    %newVar47 <- %newVar46
+    %newVar47 >>= 1
+    %newVar51 <- %newVar51
+    %newVar51 *= %newVar47
+    %newVar53 <- 0
+    %newVar53 *= %newVar51
+    %newVar44 <- %newVar44
+    %newVar44 += %newVar53
+    %newVar44 <- %newVar44
+    %newVar44 += 2
+    %newVar43 <- %newVar44
+    %newVar43 *= 8
+    %newVar43 <- %newVar43
+    %newVar43 += 32
+    %newVar54 <- %A
+    %newVar54 += %newVar43
+    mem %newVar54 0 <- %test4
+    %newVar56 <- 0
+    %newVar57 <- %A
+    %newVar57 += 16
+    %newVar58 <- mem %newVar57 0
+    %newVar60 <- %A
+    %newVar60 += 24
+    %newVar61 <- mem %newVar60 0
+    %newVar63 <- 1
+    %newVar62 <- %newVar61
+    %newVar62 >>= 1
+    %newVar63 <- %newVar63
+    %newVar63 *= %newVar62
+    %newVar64 <- 0
+    %newVar64 *= %newVar63
+    %newVar56 <- %newVar56
+    %newVar56 += %newVar64
+    %newVar59 <- %newVar58
+    %newVar59 >>= 1
+    %newVar63 <- %newVar63
+    %newVar63 *= %newVar59
+    %newVar65 <- 1
+    %newVar65 *= %newVar63
+    %newVar56 <- %newVar56
+    %newVar56 += %newVar65
+    %newVar56 <- %newVar56
+    %newVar56 += 1
+    %newVar55 <- %newVar56
+    %newVar55 *= 8
+    %newVar55 <- %newVar55
+    %newVar55 += 32
+    %newVar66 <- %A
+    %newVar66 += %newVar55
+    mem %newVar66 0 <- %test5
+    %newVar68 <- 0
+    %newVar69 <- %A
+    %newVar69 += 16
+    %newVar70 <- mem %newVar69 0
+    %newVar72 <- %A
+    %newVar72 += 24
+    %newVar73 <- mem %newVar72 0
+    %newVar75 <- 1
+    %newVar74 <- %newVar73
+    %newVar74 >>= 1
+    %newVar75 <- %newVar75
+    %newVar75 *= %newVar74
+    %newVar76 <- 1
+    %newVar76 *= %newVar75
+    %newVar68 <- %newVar68
+    %newVar68 += %newVar76
+    %newVar71 <- %newVar70
+    %newVar71 >>= 1
+    %newVar75 <- %newVar75
+    %newVar75 *= %newVar71
+    %newVar77 <- 2
+    %newVar77 *= %newVar75
+    %newVar68 <- %newVar68
+    %newVar68 += %newVar77
+    %newVar68 <- %newVar68
+    %newVar68 += 0
+    %newVar67 <- %newVar68
+    %newVar67 *= 8
+    %newVar67 <- %newVar67
+    %newVar67 += 32
+    %newVar78 <- %A
+    %newVar78 += %newVar67
+    mem %newVar78 0 <- %test6
+    rdi <- %A
+    rsi <- %test1
+
+mem rsp -8 <- :call_label2
+    call @findArrayValue 2
+
+:call_label2
+    %test <- rax
+    rdi <- %test
+    call print 1
+    rdi <- %A
+    rsi <- %test2
+
+mem rsp -8 <- :call_label3
+    call @findArrayValue 2
+
+:call_label3
+    %test <- rax
+    rdi <- %test
+    call print 1
+    rdi <- %A
+    rsi <- 13
+
+mem rsp -8 <- :call_label4
+    call @findArrayValue 2
+
+:call_label4
+    %test <- rax
+    rdi <- %test
+    call print 1
+    rdi <- %A
+    rsi <- %test3
+
+mem rsp -8 <- :call_label5
+    call @findArrayValue 2
+
+:call_label5
+    %test <- rax
+    rdi <- %test
+    call print 1
+    rdi <- %A
+    rsi <- %test4
+
+mem rsp -8 <- :call_label6
+    call @findArrayValue 2
+
+:call_label6
+    %test <- rax
+    rdi <- %test
+    call print 1
+    rdi <- %A
+    rsi <- %test5
+
+mem rsp -8 <- :call_label7
+    call @findArrayValue 2
+
+:call_label7
+    %test <- rax
+    rdi <- %test
+    call print 1
+    rdi <- %A
+    rsi <- 17
+
+mem rsp -8 <- :call_label8
+    call @findArrayValue 2
+
+:call_label8
+    %test <- rax
+    rdi <- %test
+    call print 1
+    rdi <- %A
+    rsi <- 21
+
+mem rsp -8 <- :call_label9
+    call @findArrayValue 2
+
+:call_label9
+    %test <- rax
+    rdi <- %test
+    call print 1
+    rdi <- %A
+    rsi <- %test6
+
+mem rsp -8 <- :call_label10
+    call @findArrayValue 2
+
+:call_label10
+    %test <- rax
+    rdi <- %test
+    call print 1
+    return
+  )
+  (@findArrayValue
+    2
+    %A <- rdi
+    %v <- rsi
+    :call_label_ciao_11
+    goto :call_label_ciao_24
+    :call_label_ciao_12
+    rax <- 3
+    return
+    :call_label_ciao_13
+    rax <- 1
+    return
+    :call_label_ciao_14
+    %i <- %i
+    %i += 1
+    goto :call_label_ciao_15
+    :call_label_ciao_15
+    %check_loop_1 <- %i < %first_dimension_length
+
+    cjump %check_loop_1 = 1 :call_label_ciao_16
+    goto :call_label_ciao_13
+    :call_label_ciao_16
+    %j <- 0
+    goto :call_label_ciao_17
+    :call_label_ciao_17
+    %check_loop_2 <- %j < %second_dimension_length
+
+    cjump %check_loop_2 = 1 :call_label_ciao_18
+    goto :call_label_ciao_14
+    :call_label_ciao_18
+    %k <- 0
+    goto :call_label_ciao_19
+    :call_label_ciao_19
+    %check_loop_3 <- %k < %third_dimension_length
+
+    cjump %check_loop_3 = 1 :call_label_ciao_20
+    goto :call_label_ciao_22
+    :call_label_ciao_20
+    %newVar1 <- 0
+    %newVar2 <- %A
+    %newVar2 += 16
+    %newVar3 <- mem %newVar2 0
+    %newVar5 <- %A
+    %newVar5 += 24
+    %newVar6 <- mem %newVar5 0
+    %newVar8 <- 1
+    %newVar7 <- %newVar6
+    %newVar7 >>= 1
+    %newVar8 <- %newVar8
+    %newVar8 *= %newVar7
+    %newVar9 <- %j
+    %newVar9 *= %newVar8
+    %newVar1 <- %newVar1
+    %newVar1 += %newVar9
+    %newVar4 <- %newVar3
+    %newVar4 >>= 1
+    %newVar8 <- %newVar8
+    %newVar8 *= %newVar4
+    %newVar10 <- %i
+    %newVar10 *= %newVar8
+    %newVar1 <- %newVar1
+    %newVar1 += %newVar10
+    %newVar1 <- %newVar1
+    %newVar1 += %k
+    %newVar0 <- %newVar1
+    %newVar0 *= 8
+    %newVar0 <- %newVar0
+    %newVar0 += 32
+    %newVar11 <- %A
+    %newVar11 += %newVar0
+    %current_value <- mem %newVar11 0
+    %check_value_equality <- %current_value = %v
+
+    cjump %check_value_equality = 1 :call_label_ciao_12
+    goto :call_label_ciao_21
+    :call_label_ciao_21
+    %k <- %k
+    %k += 1
+    goto :call_label_ciao_19
+    :call_label_ciao_22
+    %j <- %j
+    %j += 1
+    goto :call_label_ciao_17
+    :call_label_ciao_23
+    %i <- 0
+    goto :call_label_ciao_15
+    :call_label_ciao_24
+    %newVar12 <- 0
+    %newVar12 *= 8
+    %newVar13 <- %newVar12
+    %newVar13 += 8
+    %newVar14 <- %A
+    %newVar14 += %newVar13
+    %first_dimension_length <- mem %newVar14 0
+    %newVar15 <- 1
+    %newVar15 *= 8
+    %newVar16 <- %newVar15
+    %newVar16 += 8
+    %newVar17 <- %A
+    %newVar17 += %newVar16
+    %second_dimension_length <- mem %newVar17 0
+    %newVar18 <- 2
+    %newVar18 *= 8
+    %newVar19 <- %newVar18
+    %newVar19 += 8
+    %newVar20 <- %A
+    %newVar20 += %newVar19
+    %third_dimension_length <- mem %newVar20 0
+    %first_dimension_length <- %first_dimension_length
+    %first_dimension_length >>= 1
+    %second_dimension_length <- %second_dimension_length
+    %second_dimension_length >>= 1
+    %third_dimension_length <- %third_dimension_length
+    %third_dimension_length >>= 1
+    goto :call_label_ciao_23
+  )
+)

@@ -1,0 +1,43 @@
+(@main
+(@main
+	0 1
+	rdi <- 0
+	mem rsp 0 <- rdi
+	:call_label0
+	rdi <- mem rsp 0
+	rdi <- rdi
+	rdi <<= 1
+	rdi <- rdi
+	rdi += 1
+	rdi <- rdi
+	call print 1
+	rdi <- mem rsp 0
+	rdi <- rdi
+	rdi <- rdi
+	rdi >>= 1
+	rdi <- rdi
+	rdi <<= 1
+	rsi <- mem rsp 0
+	rdi <- rdi = rsi
+	cjump rdi = 1 :call_label1
+	rdi <- 3
+	call print 1
+	goto :call_label2
+	:call_label1
+	rdi <- 1
+	call print 1
+	:call_label2
+	rdi <- mem rsp 0
+	rdi <- rdi
+	mem rsp 0 <- rdi
+	rdi <- mem rsp 0
+	rdi += 1
+	mem rsp 0 <- rdi
+	rdi <- mem rsp 0
+	rdi <- rdi < 20
+	cjump rdi = 1 :call_label0
+	rax <- 0
+	return
+)
+
+)

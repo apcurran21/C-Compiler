@@ -1,0 +1,14 @@
+void main () {
+  int64[][] t
+
+  // Allocate a tensor
+  t <- new Array(3, 3)
+
+  // Print the tensor
+  print(t)
+
+  // Access the tensor
+  t[3][3] <- 5
+
+  return
+}

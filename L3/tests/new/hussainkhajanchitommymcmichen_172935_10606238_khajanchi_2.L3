@@ -1,0 +1,37 @@
+// L3 Summation program
+// Authors: Hussain Khajanchi and Tommy McMichen
+// Description: A completely non-trivial summation program
+//              written in the L3 language for EECS 322
+// Northwestern University
+
+define :nonTrivialFunction(%val_0, %val_1) {
+  %val_0 << 1
+  %val_1 << 1
+
+  %val_1 <- val_0 * 4
+  %val_0 <- val_1 - 3 
+
+  %some_other_val <- %val_0 &* %val_1 
+
+  %val_0 << %some_other_val
+  %val_1 <- %val_1 * %some_other_val
+  %b <- %val_0 > 0 
+
+  br %b :cond_handler
+  br :not_cond_handler
+
+  :not_cond_handler
+    %ret <- %val_0 - %val_1
+    return %ret
+
+  :cond_handler 
+    %ret <- %val_0 * %val_1
+    return %ret
+}
+
+
+define :main() {
+  %n <- 1
+  %n << 1
+
+}

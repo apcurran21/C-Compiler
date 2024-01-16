@@ -1,0 +1,35 @@
+define void @main() {
+	:entry
+	int64[] %array
+	%array <- new Array(5)
+	int64 %print1
+	int64 %print2
+	%print1 <- call @findLen(%array)
+	%print2 <- call @findSum(%array)
+	call print(%print1)
+	call print(%print2)
+	return
+}
+define int64 @findSum(int64[] %array) {
+	:entry1
+	int64 %ret
+	int64 %temp
+	%ret <- %array[0]
+	%temp <- %array[1]
+	%ret <- %ret + %temp
+	%temp <- %array[2]
+	%ret <- %ret + %temp
+	%ret <- %ret << 1
+	%ret <- %ret + 1
+	return %ret
+
+}
+
+define int64 @findLen(int64[] %array) {
+	:entry2
+	int64 %ret
+	%ret <- length %array 0
+	%ret <- %ret << 1
+	%ret <- %ret + 1
+	return %ret
+}

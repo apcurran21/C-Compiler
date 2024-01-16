@@ -1,0 +1,6 @@
+(@myF
+	1
+	%v1 <- rdi
+	rax <- %v1
+	return
+)

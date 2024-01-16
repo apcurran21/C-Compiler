@@ -1,0 +1,333 @@
+(@main
+(@main
+	0 9
+	mem rsp 40 <- rbx
+	mem rsp 32 <- rbp
+	mem rsp 24 <- r15
+	mem rsp 16 <- r14
+	mem rsp 8 <- r13
+	mem rsp 0 <- r12
+	:call_label0
+	r13 <- 1
+	rdi <- 2
+	mem rsp 64 <- rdi
+	rdi <- mem rsp 64
+	r12 <- r13 = rdi
+	rdi <- mem rsp 64
+	rdi <- r13 < rdi
+	r14 <- r13
+	rdi <- mem rsp 64
+	r14 += rdi
+	rdi <- r13
+	rcx <- mem rsp 64
+	rdi <<= rcx
+	rdi <- rdi
+	mem rsp -8 <- :call_label5
+	call @isNumber 1
+	:call_label5
+	r15 <- rax
+	rdi <- r14
+	mem rsp -8 <- :call_label6
+	call @isAddress 1
+	:call_label6
+	rdi <- rax
+	mem rsp 48 <- rdi
+	rdi <- mem rsp 48
+	cjump rdi = 1 :call_label4
+	goto :call_label1
+	:call_label1
+	rdi <- mem rsp 48
+	rbp <- rdi
+	rbp *= 3
+	rbp <- rbp
+	rbp += 2
+	rdi <- r15
+	mem rsp -8 <- :call_label7
+	call @lea 1
+	:call_label7
+	r15 <- rax
+	r14 <- r15
+	r14 <- r14
+	r14 <<= 1
+	r14 <- r14
+	r14 += 1
+	rdi <- r14
+	call print 1
+	rdi <- r14
+	rsi <- 3
+	call allocate 2
+	r14 <- rax
+	rdi <- r14
+	rdi += 8
+	mem rdi 0 <- 5
+	rdi <- r14
+	rdi += 16
+	mem rdi 0 <- 7
+	rsi <- r14
+	rsi += 24
+	mem rsi 0 <- 9
+	rdi <- mem rdi 0
+	mem rsp 56 <- rdi
+	rdi <- mem rsp 56
+	rbx <- rdi < r15
+	rdi <- rbp
+	mem rsp -8 <- :call_label8
+	call @decreaseOne 1
+	:call_label8
+	r15 <- rax
+	rdi <- rbx
+	rsi <- r15
+	mem rsp -8 <- :call_label9
+	call @aop_plus 2
+	:call_label9
+	rdi <- rax
+	rdi <- r13
+	rsi <- r15
+	mem rsp -8 <- :call_label10
+	call @aop_minus 2
+	:call_label10
+	rdi <- rax
+	rdi <- mem rsp 56
+	rdi <- rdi
+	rsi <- rbx
+	mem rsp -8 <- :call_label11
+	call @aop_and 2
+	:call_label11
+	rdi <- rax
+	rdi <- rdi
+	mem rsp -8 <- :call_label12
+	call @isAddress 1
+	:call_label12
+	rdi <- rax
+	cjump rdi = 1 :call_label3
+	goto :call_label2
+	:call_label2
+	rdi <- rbp
+	mem rsp -8 <- :call_label13
+	call @increaseOne 1
+	:call_label13
+	rdi <- rax
+	rdi <- mem rsp 64
+	rdi <- rdi
+	rsi <- r15
+	mem rsp -8 <- :call_label14
+	call @aop_product 2
+	:call_label14
+	rdi <- rax
+	rdi <- mem rsp 56
+	rdi <- rdi
+	rsi <- mem rsp 48
+	rsi <- rsi
+	mem rsp -8 <- :call_label15
+	call @isEqual 2
+	:call_label15
+	rbp <- rax
+	rdi <- rbp
+	rsi <- r13
+	mem rsp -8 <- :call_label16
+	call @isSmallerAndEqual 2
+	:call_label16
+	rdi <- rax
+	rdi <- rbp
+	rsi <- mem rsp 64
+	rsi <- rsi
+	mem rsp -8 <- :call_label17
+	call @isSmaller 2
+	:call_label17
+	rdi <- rax
+	:call_label3
+	rsi <- r14
+	rsi += 32
+	r15 <- r15
+	r15 += 8
+	r13 <- @otherF
+	mem rsp -8 <- :call_label18
+	call @otherF 0
+	:call_label18
+	mem rsp -8 <- :call_label19
+	call r13 0
+	:call_label19
+	rsi <- @otherF2
+	rdi <- 2
+	mem rsp -8 <- :call_label20
+	call rsi 1
+	:call_label20
+	rdi <- rax
+	rdi <- r12
+	mem rsp -8 <- :call_label21
+	call @otherF2 1
+	:call_label21
+	rdi <- rax
+	rdi <- rdi
+	rdi -= 1
+	rdi <- rdi
+	call print 1
+	:call_label4
+	r12 <- mem rsp 0
+	r13 <- mem rsp 8
+	r14 <- mem rsp 16
+	r15 <- mem rsp 24
+	rbp <- mem rsp 32
+	rbx <- mem rsp 40
+	return
+)
+
+(@isNumber
+	1 0
+	rdi <- rdi
+	rdi <- rdi
+	rdi &= 1
+	rdi <- rdi = 0
+	cjump rdi = 1 :call_label_ciao_22
+	goto :call_label_ciao_23
+	:call_label_ciao_22
+	rax <- 0
+	return
+	:call_label_ciao_23
+	rax <- 1
+	return
+)
+
+(@isAddress
+	1 0
+	rdi <- rdi
+	rdi <- rdi
+	rdi &= 1
+	rdi <- rdi = 0
+	cjump rdi = 1 :call_label_ciao__ciao_24
+	goto :call_label_ciao__ciao_25
+	:call_label_ciao__ciao_24
+	rax <- 1
+	return
+	:call_label_ciao__ciao_25
+	rax <- 0
+	return
+)
+
+(@lea
+	1 0
+	rdi <- rdi
+	rdi @ rdi rdi 4
+	rax <- rdi
+	return
+)
+
+(@decreaseOne
+	1 0
+	rdi <- rdi
+	rdi <- rdi
+	rdi -= 1
+	rax <- rdi
+	return
+)
+
+(@aop_plus
+	2 0
+	rdi <- rdi
+	rsi <- rsi
+	rdi <- rdi
+	rdi += rsi
+	rax <- rdi
+	return
+)
+
+(@aop_minus
+	2 0
+	rdi <- rdi
+	rsi <- rsi
+	rdi <- rdi
+	rdi -= rsi
+	rax <- rdi
+	return
+)
+
+(@aop_and
+	2 0
+	rdi <- rdi
+	rsi <- rsi
+	rdi <- rdi
+	rdi &= rsi
+	rax <- rdi
+	return
+)
+
+(@increaseOne
+	1 0
+	rdi <- rdi
+	rdi <- rdi
+	rdi += 1
+	rax <- rdi
+	return
+)
+
+(@aop_product
+	2 0
+	rdi <- rdi
+	rsi <- rsi
+	rdi <- rdi
+	rdi *= rsi
+	rax <- rdi
+	return
+)
+
+(@isEqual
+	2 0
+	rdi <- rdi
+	rsi <- rsi
+	rdi <- rdi = rsi
+	cjump rdi = 1 :call_label_ciao__ciao__ciao__ciao__ciao_30
+	goto :call_label_ciao__ciao__ciao__ciao__ciao_31
+	:call_label_ciao__ciao__ciao__ciao__ciao_30
+	rax <- 1
+	return
+	:call_label_ciao__ciao__ciao__ciao__ciao_31
+	rax <- 0
+	return
+)
+
+(@isSmallerAndEqual
+	2 0
+	rdi <- rdi
+	rsi <- rsi
+	rdi <- rdi <= 1
+	cjump rdi = 1 :call_label_ciao__ciao__ciao__ciao_28
+	goto :call_label_ciao__ciao__ciao__ciao_29
+	:call_label_ciao__ciao__ciao__ciao_28
+	rax <- 1
+	return
+	:call_label_ciao__ciao__ciao__ciao_29
+	rax <- 0
+	return
+)
+
+(@isSmaller
+	2 0
+	rdi <- rdi
+	rsi <- rsi
+	rdi <- rdi < 1
+	cjump rdi = 1 :call_label_ciao__ciao__ciao_26
+	goto :call_label_ciao__ciao__ciao_27
+	:call_label_ciao__ciao__ciao_26
+	rax <- 1
+	return
+	:call_label_ciao__ciao__ciao_27
+	rax <- 0
+	return
+)
+
+(@otherF
+	0 0
+	rdi <- 11
+	return
+)
+
+(@otherF2
+	1 0
+	rdi <- rdi
+	rdi <- rdi
+	rdi *= rdi
+	rax <- rdi
+	return
+)
+
+)

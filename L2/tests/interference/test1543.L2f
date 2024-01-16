@@ -1,0 +1,186 @@
+(@memcp32
+	3
+	%ptr <- rdi
+	%idx <- rsi
+	%buf <- rdx
+	:call_label_ciao_2
+	goto :call_label_ciao_3
+	:call_label_ciao_3
+	%newVar1 <- 0
+	%newVar2 <- %ptr
+	%newVar2 += 16
+	%newVar3 <- mem %newVar2 0
+	%newVar4 <- %newVar3
+	%newVar4 >>= 1
+	%newVar5 <- %ptr
+	%newVar5 += 24
+	%newVar6 <- mem %newVar5 0
+	%newVar7 <- %newVar6
+	%newVar7 >>= 1
+	%newVar8 <- 1
+	%newVar8 *= %newVar7
+	%newVar9 <- 0
+	%newVar9 *= %newVar8
+	%newVar1 += %newVar9
+	%newVar8 *= %newVar4
+	%newVar10 <- %idx
+	%newVar10 *= %newVar8
+	%newVar1 += %newVar10
+	%newVar0 <- %newVar1
+	%newVar0 *= 8
+	%newVar0 += 32
+	%newVar11 <- %ptr
+	%newVar11 += %newVar0
+	%n <- mem %newVar11 0
+	%newVar13 <- 0
+	%newVar14 <- %buf
+	%newVar14 += 16
+	%newVar15 <- mem %newVar14 0
+	%newVar16 <- %newVar15
+	%newVar16 >>= 1
+	%newVar17 <- 1
+	%newVar17 *= %newVar16
+	%newVar18 <- 0
+	%newVar18 *= %newVar17
+	%newVar13 += %newVar18
+	%newVar12 <- %newVar13
+	%newVar12 *= 8
+	%newVar12 += 24
+	%newVar19 <- %buf
+	%newVar19 += %newVar12
+	mem %newVar19 0 <- %n
+	%newVar21 <- 0
+	%newVar22 <- %ptr
+	%newVar22 += 16
+	%newVar23 <- mem %newVar22 0
+	%newVar24 <- %newVar23
+	%newVar24 >>= 1
+	%newVar25 <- %ptr
+	%newVar25 += 24
+	%newVar26 <- mem %newVar25 0
+	%newVar27 <- %newVar26
+	%newVar27 >>= 1
+	%newVar28 <- 1
+	%newVar28 *= %newVar27
+	%newVar29 <- 0
+	%newVar29 *= %newVar28
+	%newVar21 += %newVar29
+	%newVar28 *= %newVar24
+	%newVar30 <- %idx
+	%newVar30 *= %newVar28
+	%newVar21 += %newVar30
+	%newVar21 += 1
+	%newVar20 <- %newVar21
+	%newVar20 *= 8
+	%newVar20 += 32
+	%newVar31 <- %ptr
+	%newVar31 += %newVar20
+	%n <- mem %newVar31 0
+	%newVar33 <- 0
+	%newVar34 <- %buf
+	%newVar34 += 16
+	%newVar35 <- mem %newVar34 0
+	%newVar36 <- %newVar35
+	%newVar36 >>= 1
+	%newVar37 <- 1
+	%newVar37 *= %newVar36
+	%newVar38 <- 0
+	%newVar38 *= %newVar37
+	%newVar33 += %newVar38
+	%newVar33 += 1
+	%newVar32 <- %newVar33
+	%newVar32 *= 8
+	%newVar32 += 24
+	%newVar39 <- %buf
+	%newVar39 += %newVar32
+	mem %newVar39 0 <- %n
+	%newVar41 <- 0
+	%newVar42 <- %ptr
+	%newVar42 += 16
+	%newVar43 <- mem %newVar42 0
+	%newVar44 <- %newVar43
+	%newVar44 >>= 1
+	%newVar45 <- %ptr
+	%newVar45 += 24
+	%newVar46 <- mem %newVar45 0
+	%newVar47 <- %newVar46
+	%newVar47 >>= 1
+	%newVar48 <- 1
+	%newVar48 *= %newVar47
+	%newVar49 <- 1
+	%newVar49 *= %newVar48
+	%newVar41 += %newVar49
+	%newVar48 *= %newVar44
+	%newVar50 <- %idx
+	%newVar50 *= %newVar48
+	%newVar41 += %newVar50
+	%newVar40 <- %newVar41
+	%newVar40 *= 8
+	%newVar40 += 32
+	%newVar51 <- %ptr
+	%newVar51 += %newVar40
+	%n <- mem %newVar51 0
+	%newVar53 <- 0
+	%newVar54 <- %buf
+	%newVar54 += 16
+	%newVar55 <- mem %newVar54 0
+	%newVar56 <- %newVar55
+	%newVar56 >>= 1
+	%newVar57 <- 1
+	%newVar57 *= %newVar56
+	%newVar58 <- 1
+	%newVar58 *= %newVar57
+	%newVar53 += %newVar58
+	%newVar52 <- %newVar53
+	%newVar52 *= 8
+	%newVar52 += 24
+	%newVar59 <- %buf
+	%newVar59 += %newVar52
+	mem %newVar59 0 <- %n
+	%newVar61 <- 0
+	%newVar62 <- %ptr
+	%newVar62 += 16
+	%newVar63 <- mem %newVar62 0
+	%newVar64 <- %newVar63
+	%newVar64 >>= 1
+	%newVar65 <- %ptr
+	%newVar65 += 24
+	%newVar66 <- mem %newVar65 0
+	%newVar67 <- %newVar66
+	%newVar67 >>= 1
+	%newVar68 <- 1
+	%newVar68 *= %newVar67
+	%newVar69 <- 1
+	%newVar69 *= %newVar68
+	%newVar61 += %newVar69
+	%newVar68 *= %newVar64
+	%newVar70 <- %idx
+	%newVar70 *= %newVar68
+	%newVar61 += %newVar70
+	%newVar61 += 1
+	%newVar60 <- %newVar61
+	%newVar60 *= 8
+	%newVar60 += 32
+	%newVar71 <- %ptr
+	%newVar71 += %newVar60
+	%n <- mem %newVar71 0
+	%newVar73 <- 0
+	%newVar74 <- %buf
+	%newVar74 += 16
+	%newVar75 <- mem %newVar74 0
+	%newVar76 <- %newVar75
+	%newVar76 >>= 1
+	%newVar77 <- 1
+	%newVar77 *= %newVar76
+	%newVar78 <- 1
+	%newVar78 *= %newVar77
+	%newVar73 += %newVar78
+	%newVar73 += 1
+	%newVar72 <- %newVar73
+	%newVar72 *= 8
+	%newVar72 += 24
+	%newVar79 <- %buf
+	%newVar79 += %newVar72
+	mem %newVar79 0 <- %n
+	return
+)

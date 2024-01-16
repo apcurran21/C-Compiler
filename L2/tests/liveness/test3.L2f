@@ -1,0 +1,32 @@
+(@printArrayElement
+	2
+	%arr <- rdi
+	%i <- rsi
+	rdi <- %i
+	rdi <<= 1
+	rdi += 1
+	call print 1
+	rdi <- %i
+	rdi *= 8
+	rdi += 8
+	rdi <<= 1
+	rdi += 1
+	%offset <- rdi
+	call print 1
+	%offset >>= 1
+	%arr += %offset
+	%ai <- mem %arr 0
+	%check <- %ai
+	%check &= 1
+	rdi <- %ai
+	cjump %check = 0 :isarr
+	goto :notarr
+	:notarr
+	call print 1
+	goto :fnc_ret
+	:isarr
+	mem rsp -8 <- :fnc_ret
+	call @printArray 1
+	:fnc_ret
+	return
+)

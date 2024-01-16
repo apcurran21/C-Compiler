@@ -1,0 +1,143 @@
+(@main
+(@main
+	0 0
+	:call_label0
+	rdi <- 3
+	mem rsp -8 <- :call_label1
+	call @createTuple 1
+	:call_label1
+	rdi <- rax
+	rdi <- rdi
+	rsi <- 4
+	mem rsp -8 <- :call_label2
+	call @myF 2
+	:call_label2
+	rdi <- rax
+	rdi <- rdi
+	mem rsp -8 <- :call_label3
+	call @encodeValue 1
+	:call_label3
+	rdi <- rax
+	rdi <- rdi
+	call print 1
+	return
+)
+
+(@createTuple
+	1 1
+	mem rsp 0 <- r12
+	r12 <- rdi
+	:call_label_ciao_4
+	rdi <- 9
+	rsi <- 1
+	call allocate 2
+	rdx <- rax
+	rdi <- 0
+	rdi *= 8
+	rsi <- rdi
+	rsi += 8
+	rdi <- rdx
+	rdi += rsi
+	mem rdi 0 <- 0
+	rdi <- 1
+	rdi *= 8
+	rdi <- rdi
+	rdi += 8
+	rsi <- rdx
+	rsi += rdi
+	mem rsi 0 <- 1
+	rdi <- 2
+	rdi *= 8
+	rsi <- rdi
+	rsi += 8
+	rdi <- rdx
+	rdi += rsi
+	mem rdi 0 <- r12
+	rdi <- 3
+	rdi *= 8
+	rdi <- rdi
+	rdi += 8
+	rsi <- rdx
+	rsi += rdi
+	rdi <- 21
+	mem rsi 0 <- rdi
+	rax <- rdx
+	r12 <- mem rsp 0
+	return
+)
+
+(@myF
+	2 3
+	mem rsp 16 <- r14
+	mem rsp 8 <- r13
+	mem rsp 0 <- r12
+	rdx <- rdi
+	r12 <- rsi
+	:call_label_ciao__ciao_5
+	rdi <- 2
+	rdi *= 8
+	rsi <- rdi
+	rsi += 8
+	rdi <- rdx
+	rdi += rsi
+	r13 <- mem rdi 0
+	rdi <- 3
+	rdi *= 8
+	rsi <- rdi
+	rsi += 8
+	rdi <- rdx
+	rdi += rsi
+	r14 <- mem rdi 0
+	rdi <- r13
+	mem rsp -8 <- :call_label_ciao__ciao_6
+	call @encodeValue 1
+	:call_label_ciao__ciao_6
+	rdi <- rax
+	rdi <- rdi
+	call print 1
+	rdi <- r14
+	mem rsp -8 <- :call_label_ciao__ciao_7
+	call @encodeValue 1
+	:call_label_ciao__ciao_7
+	rdi <- rax
+	rdi <- rdi
+	call print 1
+	rdi <- r12
+	mem rsp -8 <- :call_label_ciao__ciao_8
+	call @encodeValue 1
+	:call_label_ciao__ciao_8
+	rdi <- rax
+	rdi <- rdi
+	call print 1
+	r13 <- r13
+	r13 += r14
+	rdi <- r13
+	mem rsp -8 <- :call_label_ciao__ciao_9
+	call @encodeValue 1
+	:call_label_ciao__ciao_9
+	rdi <- rax
+	rdi <- rdi
+	call print 1
+	rdi <- r13
+	rdi += r12
+	rax <- rdi
+	r12 <- mem rsp 0
+	r13 <- mem rsp 8
+	r14 <- mem rsp 16
+	return
+)
+
+(@encodeValue
+	1 0
+	rdi <- rdi
+	:call_label_ciao__ciao__ciao_10
+	rdi <- rdi
+	rdi <- rdi
+	rdi <<= 1
+	rdi <- rdi
+	rdi += 1
+	rax <- rdi
+	return
+)
+
+)

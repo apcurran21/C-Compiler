@@ -1,0 +1,57 @@
+// This test deals with some comparisons 
+define @main () {
+    call @buildASandwich(1,0)
+    return
+}
+define @buildASandwich(%cheese, %meat) {
+    // Choose cheese
+
+    %isHavarti <- %cheese = 1
+    br %isHavarti :havarti
+
+    //swiss
+    call @swissChoice()
+    br :cheese_ret
+
+    //havarti
+    :havarti
+    call @havartiChoice()
+
+    :cheese_ret
+
+    // Choose meat
+    %isSalami <- %meat = 1
+    br %isSalami :salami
+
+    //turkey
+    call @turkeyChoice()
+    br :meat_ret
+
+    //salami
+    :salami
+    call @salamiChoice()
+
+    :meat_ret
+
+
+    return
+}
+define @havartiChoice() {
+    call print(3)
+    return
+}
+define @swissChoice() {
+    call print(1)
+    return
+}
+
+define @salamiChoice() {
+    call print(3)
+    return
+}
+
+define @turkeyChoice() {
+    call print(1)
+    return
+}
+

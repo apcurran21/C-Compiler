@@ -1,0 +1,116 @@
+//This program prints hello world in integer (ASCII) form
+(@hwtest1
+    (@hwtest1
+      0
+        //store return address on stack
+        mem rsp -8 <- :ret1
+        call @h 0
+        :ret1
+
+        mem rsp -8 <- :ret2
+        call @e 0
+        :ret2
+
+        mem rsp -8 <- :ret3
+        call @l 0
+        :ret3
+
+        mem rsp -8 <- :ret4
+        call @l 0
+        :ret4
+
+        mem rsp -8 <- :ret5
+        call @o 0
+        :ret5
+
+        mem rsp -8 <- :ret6
+        call @space 0
+        :ret6
+
+        rdi <- 238
+        mem rsp -8 <- :ret7
+        call @w 0
+        :ret7
+
+        mem rsp -8 <- :ret8
+        call @o 0
+        :ret8
+
+        mem rsp -8 <- :ret9
+        call @r 0
+        :ret9
+
+        mem rsp -8 <- :ret10
+        call @l 0
+        :ret10
+
+        mem rsp -8 <- :ret11
+        call @d 0
+        :ret11
+        return
+)
+
+(@h
+  0
+    //pass in first argument (h in ASCII) according to calling convention
+    %var <- 209
+    rdi <- %var
+    call print 1
+    return
+)
+
+(@e
+  0
+    %var <- 203
+    rdi <- %var
+    call print 1
+    return
+)
+
+(@l
+  0
+    %var <- 217
+    rdi <- %var
+    call print 1
+    return
+)
+
+(@space
+  0
+    %var <- 65
+    rdi <- %var
+    call print 1
+    return
+)
+
+(@o
+  0
+    %var <- 223
+    rdi <- %var
+    call print 1
+    return
+)
+
+(@w
+  0
+    %var <- 239
+    rdi <- %var
+    call print 1
+    return
+)
+
+(@r
+  0
+    %var <- 229
+    rdi <- %var
+    call print 1
+    return
+)
+
+(@d
+  0
+    %var <- 201
+    rdi <- %var
+    call print 1
+    return
+))

@@ -1,0 +1,7 @@
+(@myF
+	0
+	:call_label3
+	%fp <- @myOtherF
+	rax <- %fp
+	return
+)

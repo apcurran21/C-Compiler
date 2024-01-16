@@ -1,0 +1,35 @@
+(@rotateOnce
+	1
+	%arr <- rdi
+	%count <- 0
+	%len <- mem %arr 0
+	%len <<= 1
+	%len += 1
+	rdi <- %len
+	rsi <- 0
+	call allocate 2
+	%newArr <- rax
+	%tempLen <- %len
+	%tempLen -= 1
+	%lastElem <- %tempLen
+	%lastElem *= 8
+	%lastElem += %arr
+	%lastElem <- mem %lastElem 0
+	mem %newArr 8 <- %lastElem
+	%len -= 1
+	%curr <- %arr
+	%newCurr <- %newArr
+	%newCurr += 8
+	:call_label_ciao__ciao_5
+	%curr += 8
+	%newCurr += 8
+	%temp <- mem %curr 0
+	mem %newCurr 0 <- %temp
+	%count += 1
+	%cont <- %count < %len
+	cjump %cont = 1 :call_label_ciao__ciao_5
+	goto :call_label_ciao__ciao_6
+	:call_label_ciao__ciao_6
+	rax <- %newArr
+	return
+)

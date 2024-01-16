@@ -1,0 +1,9 @@
+(@encoded_add
+	2
+	%a <- rdi
+	%b <- rsi
+	%a += %b
+	%a -= 1
+	rax <- %a
+	return
+)

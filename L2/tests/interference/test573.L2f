@@ -1,0 +1,7 @@
+(@main
+	0
+	mem rsp -8 <- :call_label0
+	call @myF 0
+	:call_label0
+	return
+)

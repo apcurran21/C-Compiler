@@ -1,0 +1,18 @@
+%jennysNumber r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx %retVal rsi %tempJenny
+r10 %jennysNumber r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx rsi %tempJenny
+r11 %jennysNumber r10 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx rsi %tempJenny
+r12 %jennysNumber r10 r11 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx %retVal rsi %tempJenny
+r13 %jennysNumber r10 r11 r12 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx %retVal rsi %tempJenny
+r14 %jennysNumber r10 r11 r12 r13 r15 r8 r9 rax rbp rbx rcx rdi rdx %retVal rsi %tempJenny
+r15 %jennysNumber r10 r11 r12 r13 r14 r8 r9 rax rbp rbx rcx rdi rdx %retVal rsi %tempJenny
+r8 %jennysNumber r10 r11 r12 r13 r14 r15 r9 rax rbp rbx rcx rdi rdx rsi %tempJenny
+r9 %jennysNumber r10 r11 r12 r13 r14 r15 r8 rax rbp rbx rcx rdi rdx rsi %tempJenny
+rax %jennysNumber r10 r11 r12 r13 r14 r15 r8 r9 rbp rbx rcx rdi rdx rsi %tempJenny
+rbp %jennysNumber r10 r11 r12 r13 r14 r15 r8 r9 rax rbx rcx rdi rdx %retVal rsi %tempJenny
+rbx %jennysNumber r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rcx rdi rdx %retVal rsi %tempJenny
+rcx %jennysNumber r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rdi rdx rsi %tempJenny
+rdi %jennysNumber r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdx rsi %tempJenny
+rdx %jennysNumber r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rsi %tempJenny
+%retVal %jennysNumber r12 r13 r14 r15 rbp rbx %tempJenny
+rsi %jennysNumber r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx %tempJenny
+%tempJenny %jennysNumber r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx %retVal rsi

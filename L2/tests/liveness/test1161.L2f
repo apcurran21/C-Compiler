@@ -1,0 +1,25 @@
+(@even
+	1
+	%var1 <- rdi
+	:call_label_ciao__ciao_16
+	goto :call_label_ciao__ciao_20
+	:call_label_ciao__ciao_17
+	%ret <- 1
+	rax <- %ret
+	return
+	:call_label_ciao__ciao_18
+	%ret <- 0
+	rax <- %ret
+	return
+	:call_label_ciao__ciao_19
+	%var1 -= 2
+	goto :call_label_ciao__ciao_20
+	:call_label_ciao__ciao_20
+	%test <- %var1 < 0
+	cjump %test = 1 :call_label_ciao__ciao_18
+	goto :call_label_ciao__ciao_21
+	:call_label_ciao__ciao_21
+	%test <- %var1 = 0
+	cjump %test = 1 :call_label_ciao__ciao_17
+	goto :call_label_ciao__ciao_19
+)

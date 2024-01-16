@@ -1,0 +1,81 @@
+(@main
+	0
+	:call_label0
+	%var1 <- 3
+	%var2 <- 6
+	%var3 <- 8
+	%var4 <- 90
+	rdi <- %var1
+	mem rsp -8 <- :call_label1
+	call @odd 1
+	:call_label1
+	%ret <- rax
+	%ret <<= 1
+	%ret += 1
+	rdi <- %ret
+	call print 1
+	rdi <- %var2
+	mem rsp -8 <- :call_label2
+	call @odd 1
+	:call_label2
+	%ret <- rax
+	%ret <<= 1
+	%ret += 1
+	rdi <- %ret
+	call print 1
+	rdi <- %var3
+	mem rsp -8 <- :call_label3
+	call @odd 1
+	:call_label3
+	%ret <- rax
+	%ret <<= 1
+	%ret += 1
+	rdi <- %ret
+	call print 1
+	rdi <- %var4
+	mem rsp -8 <- :call_label4
+	call @odd 1
+	:call_label4
+	%ret <- rax
+	%ret <<= 1
+	%ret += 1
+	rdi <- %ret
+	call print 1
+	rdi <- %var1
+	mem rsp -8 <- :call_label5
+	call @even 1
+	:call_label5
+	%ret <- rax
+	%ret <<= 1
+	%ret += 1
+	rdi <- %ret
+	call print 1
+	rdi <- %var2
+	mem rsp -8 <- :call_label6
+	call @even 1
+	:call_label6
+	%ret <- rax
+	%ret <<= 1
+	%ret += 1
+	rdi <- %ret
+	call print 1
+	rdi <- %var3
+	mem rsp -8 <- :call_label7
+	call @even 1
+	:call_label7
+	%ret <- rax
+	%ret <<= 1
+	%ret += 1
+	rdi <- %ret
+	call print 1
+	rdi <- %var4
+	mem rsp -8 <- :call_label8
+	call @even 1
+	:call_label8
+	%ret <- rax
+	%ret <<= 1
+	%ret += 1
+	rdi <- %ret
+	call print 1
+	return
+)

@@ -1,0 +1,154 @@
+(@main
+(@compute_many_degrees
+	1 2
+	rdi <- rdi
+	:call_label_ciao__ciao_6
+	rdi <- rdi
+	mem rsp 0 <- rdi
+	rdi <- mem rsp 0
+	rdi >>= 1
+	mem rsp 0 <- rdi
+	rdi <- 7
+	mem rsp 8 <- rdi
+	rdi <- mem rsp 8
+	rdi <- rdi
+	mem rsp 8 <- rdi
+	rdi <- mem rsp 8
+	rdi >>= 1
+	mem rsp 8 <- rdi
+	goto :call_label_ciao__ciao_7
+	:call_label_ciao__ciao_7
+	rsi <- mem rsp 0
+	rdi <- mem rsp 8
+	rdi <- rsi < rdi
+	cjump rdi = 1 :call_label_ciao__ciao_10
+	goto :call_label_ciao__ciao_8
+	:call_label_ciao__ciao_8
+	rdi <- mem rsp 8
+	rdi <- rdi
+	rdi <<= 1
+	rdi <- rdi
+	rdi += 1
+	rdi <- rdi
+	mem rsp -8 <- :call_label_ciao__ciao_11
+	call @compute_num_degrees_angle_for_shape 1
+	:call_label_ciao__ciao_11
+	goto :call_label_ciao__ciao_9
+	:call_label_ciao__ciao_9
+	rdi <- mem rsp 8
+	rdi <- rdi
+	mem rsp 8 <- rdi
+	rdi <- mem rsp 8
+	rdi += 1
+	mem rsp 8 <- rdi
+	goto :call_label_ciao__ciao_7
+	:call_label_ciao__ciao_10
+	return
+)
+
+(@compute_num_degrees_angle_for_shape
+	1 0
+	rdi <- rdi
+	:call_label_ciao_4
+	rsi <- rdi
+	rsi >>= 1
+	rdi <- rsi
+	rdi -= 2
+	rdi <- rdi
+	rdi *= 180
+	rdi <- rdi
+	rsi <- rsi
+	mem rsp -8 <- :call_label_ciao_5
+	call @divide 2
+	:call_label_ciao_5
+	rdi <- rax
+	rdi <- rdi
+	rdi <- rdi
+	rdi <<= 1
+	rdi <- rdi
+	rdi += 1
+	rdi <- rdi
+	call print 1
+	return
+)
+
+(@divide
+	2 0
+	rdi <- rdi
+	rsi <- rsi
+	:call_label_ciao__ciao__ciao_12
+	rcx <- rdi
+	r8 <- rsi
+	rdi <- 3
+	rdx <- rdi
+	rdx >>= 1
+	rdi <- 1
+	rsi <- rdi
+	rsi >>= 1
+	goto :call_label_ciao__ciao__ciao_13
+	:call_label_ciao__ciao__ciao_13
+	rdi <- r8 <= rcx
+	cjump rdi = 1 :call_label_ciao__ciao__ciao_14
+	goto :call_label_ciao__ciao__ciao_16
+	:call_label_ciao__ciao__ciao_14
+	r8 <- r8
+	r8 <<= 1
+	rdx <- rdx
+	rdx <<= 1
+	goto :call_label_ciao__ciao__ciao_15
+	:call_label_ciao__ciao__ciao_15
+	goto :call_label_ciao__ciao__ciao_13
+	:call_label_ciao__ciao__ciao_16
+	goto :call_label_ciao__ciao__ciao_17
+	:call_label_ciao__ciao__ciao_17
+	rdi <- 1 < rdx
+	cjump rdi = 1 :call_label_ciao__ciao__ciao_18
+	goto :call_label_ciao__ciao__ciao_21
+	:call_label_ciao__ciao__ciao_18
+	r8 <- r8
+	r8 >>= 1
+	rdx <- rdx
+	rdx >>= 1
+	rdi <- r8 <= rcx
+	cjump rdi = 1 :call_label_ciao__ciao__ciao_19
+	goto :call_label_ciao__ciao__ciao_20
+	:call_label_ciao__ciao__ciao_19
+	rcx <- rcx
+	rcx -= r8
+	rsi <- rsi
+	rsi += rdx
+	goto :call_label_ciao__ciao__ciao_20
+	:call_label_ciao__ciao__ciao_20
+	goto :call_label_ciao__ciao__ciao_17
+	:call_label_ciao__ciao__ciao_21
+	rax <- rsi
+	return
+)
+
+(@main
+	0 1
+	:call_label0
+	rdi <- 31
+	mem rsp 0 <- rdi
+	rdi <- mem rsp 0
+	rdi <- rdi
+	call print 1
+	rdi <- mem rsp 0
+	rdi <- rdi
+	mem rsp -8 <- :call_label1
+	call @compute_num_degrees_angle_for_shape 1
+	:call_label1
+	rdi <- mem rsp 0
+	rdi <- rdi
+	mem rsp -8 <- :call_label2
+	call @compute_many_degrees 1
+	:call_label2
+	rdi <- 175
+	rdi <- rdi
+	mem rsp -8 <- :call_label3
+	call @compute_num_degrees_angle_for_shape 1
+	:call_label3
+	return
+)
+
+)

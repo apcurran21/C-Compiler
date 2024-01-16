@@ -1,0 +1,16 @@
+(@loopy
+	0
+	%newVariableBx <- 1
+	:start
+	cjump %newVariableBx = 11 :done
+	goto :notdone
+	:notdone
+	rdi <- %newVariableBx
+	%variableUODNNFAVDY <- %newVariableBx
+	call print 1
+	%newVariableBx <- %variableUODNNFAVDY
+	%newVariableBx += 2
+	goto :start
+	:done
+	return
+)

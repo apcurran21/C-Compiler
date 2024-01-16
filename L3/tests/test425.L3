@@ -1,0 +1,38 @@
+// This program prints out two arrays: an array of square numbers and another with reversed order (each array has 5 elements).
+// {s:5,1,4,9,16,25}
+// {s:5,25,16,9,4,1}
+define @main(){
+  %len <- 5
+  %encoded_len <- call @encode(%len)
+
+  %ptr <- call allocate(%encoded_len, 3)
+
+  %pos <- %ptr + 16
+  store %pos <- 9
+  %pos <- %pos + 8
+  store %pos <- 19
+  %pos <- %pos + 8
+  store %pos <- 33
+  %pos <- %pos + 8
+  store %pos <- 51
+  call print(%ptr)
+
+
+  %ptr <- call allocate(%encoded_len, 51)
+  %pos <- %ptr + 16
+  store %pos <- 33
+  %pos <- %pos + 8
+  store %pos <- 19
+  %pos <- %pos + 8
+  store %pos <- 9
+  %pos <- %pos + 8
+  store %pos <- 3
+  call print(%ptr)
+  return
+}
+    
+define @encode(%tmp){
+    %tmp <- %tmp << 1
+    %tmp <- %tmp + 1
+    return %tmp
+}

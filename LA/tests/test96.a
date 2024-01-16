@@ -1,0 +1,82 @@
+void main(){
+	:entry
+	int64 cprime
+	int64 n
+	int64 v
+	int64 check
+	int64 p
+	cprime <- 17
+	n <- 2
+	br :loop
+	:loop
+	v <- isdiv(cprime,n)
+	check <- v = 1
+	br check :returnfalsemain :b1
+	:b1
+	n <- n + 1
+	check <- n = cprime
+	br check :returntruemain :b2
+	:b2
+	br :loop
+	:returntruemain
+	v <- 1
+	br :returnmain
+	:returnfalsemain
+	v <- 0
+	br :returnmain
+	:returnmain
+	p <- v 
+	print (p)
+	return
+}
+
+int64isdiv (int64 d,int64 s){
+	:entry
+	int64 check
+	int64 sub
+	int64 sub2
+	check <- s = 0
+	br check :error :b1
+	:b1
+	check <- d < 0
+	br check :negd :posd
+	:posd
+	check <- s < 0
+	br check :posdnegs :posdposs
+	:posdposs
+	sub <- s
+	br :start
+	:posdnegs
+	sub <- s * -1
+	br :start
+	:negd
+	d <- d * -1
+	check <- s < 0
+	br check :negdnegs :negdposs
+	:negdposs
+	sub <- s
+	br :start
+	:negdnegs
+	sub <- s * -1
+	br :start
+	:start
+	sub2 <- sub
+	br :loop
+	:loop
+	sub <- sub + sub2
+	check <- d = sub
+	br check :returntrue :b2
+	:b2
+	check <- sub > d
+	br check :returnfalse :b3
+	:b3
+	br :loop
+	:returntrue
+	return 1
+	:returnfalse
+	return 0
+	:error
+	return -1
+}
+
+

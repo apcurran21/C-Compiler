@@ -1,0 +1,38 @@
+(@print_letter
+	5
+	%line_1 <- rdi
+	%line_2 <- rsi
+	%line_3 <- rdx
+	%line_4 <- rcx
+	%line_5 <- r8
+	:print_line
+	mem rsp -8 <- :print_line_2
+	rdi <- 11111111111
+	call @print_encoded 1
+	:print_line_2
+	mem rsp -8 <- :print_line_3
+	rdi <- %line_1
+	call @print_encoded 1
+	:print_line_3
+	mem rsp -8 <- :print_line_4
+	rdi <- %line_2
+	call @print_encoded 1
+	:print_line_4
+	mem rsp -8 <- :print_line_5
+	rdi <- %line_3
+	call @print_encoded 1
+	:print_line_5
+	mem rsp -8 <- :print_line_6
+	rdi <- %line_4
+	call @print_encoded 1
+	:print_line_6
+	mem rsp -8 <- :print_line_7
+	rdi <- %line_5
+	call @print_encoded 1
+	:print_line_7
+	mem rsp -8 <- :done_printing_lines
+	rdi <- 11111111111
+	call @print_encoded 1
+	:done_printing_lines
+	return
+)

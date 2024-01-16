@@ -1,0 +1,49 @@
+define @main()
+{
+   %number <- 11
+   call @array(%number)
+   return
+}
+
+define @array(%n)
+{
+   %first <- 1
+   %second <- 1
+   %index <- -1
+   
+   %check <- %n <= %index
+   br %check :array_end
+   %index <- %index + 1
+   %first <- %first << 1
+   %first <- %first + 1
+   call print (%first)
+
+   %check <- %n = %index
+   br %check :array_end
+   %index <- %index + 1
+   %second <- %second << 1
+   %second <- %second + 1
+   call print (%first)
+
+   %first <- 1
+   %second <- 1
+   :array_begin
+   %check <- %n = %index
+   br %check :array_end
+   %index <- %index + 1
+   %value <- call @calculate(%first, %second)
+   %first <- %second
+   %second <- %value
+   %value <- %value << 1
+   %value <- %value + 1
+   call print (%value)
+   br :array_begin
+   :array_end
+   return   
+}
+
+define @calculate(%f, %s)
+{
+  %next <- %f + %s
+  return %next
+}

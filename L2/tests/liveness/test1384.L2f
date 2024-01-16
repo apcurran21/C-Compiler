@@ -1,0 +1,17 @@
+(@add
+	7
+	%sum <- rdi
+	%sum += rsi
+	%sum += rdx
+	%sum += rcx
+	%sum += r8
+	%sum += r9
+	%arg7 <- stack-arg 0
+	%sum += %arg7
+	%sum <<= 1
+	%sum++
+	rdi <- %sum
+	call print 1
+	rax <- %sum
+	return
+)

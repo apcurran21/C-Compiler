@@ -1,0 +1,9 @@
+(@int_encode
+	1
+	%v <- rdi
+	:call_label_ciao__ciao__ciao__ciao_12
+	%v <<= 1
+	%v += 1
+	rax <- %v
+	return
+)

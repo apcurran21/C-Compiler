@@ -1,0 +1,27 @@
+(@fib
+	1
+	%n <- rdi
+	%not_base <- 1 < %n
+	cjump %not_base = 1 :call_label_ciao_1
+	rax <- 1
+	return
+	:call_label_ciao_1
+	%n_sub_1 <- %n
+	%n_sub_1 -= 1
+	rdi <- %n_sub_1
+	mem rsp -8 <- :call_label_ciao_2
+	call @fib 1
+	:call_label_ciao_2
+	%fib_n_sub1 <- rax
+	%n_sub_2 <- %n
+	%n_sub_2 -= 2
+	rdi <- %n_sub_2
+	mem rsp -8 <- :call_label_ciao_3
+	call @fib 1
+	:call_label_ciao_3
+	%fib_n_sub_2 <- rax
+	%result <- %fib_n_sub1
+	%result += %fib_n_sub_2
+	rax <- %result
+	return
+)

@@ -1,0 +1,69 @@
+define :main() {
+    %left <- call input()
+    %left <- %left >> 1
+
+    :LOOP
+    %cond <- %left = 1
+    br %cond :END
+    %is_prime <- call :is_prime(%left)
+
+    :POST
+    %not_prime <- %is_prime = 0
+    br %not_prime :ITER
+    %tmp <- %left << 1
+    %tmp <- %tmp + 1
+    call print(%tmp)
+
+    :ITER
+    %left <- %left - 1
+    br :LOOP
+
+    :END
+    return
+    
+}
+
+
+define :is_prime(%num) {
+    %base <- %num = 2
+    br %base :END_PRIME
+    %divisor <- 2
+
+    :FOR
+    %end <- %divisor = %num
+    br %end :END_PRIME
+    %ret <- call :divisible(%num, %divisor)
+
+    :POST
+    br %ret :END_NOT_PRIME
+    %divisor <- %divisor + 1
+    br :FOR
+    
+
+    :END_PRIME
+    return 1
+
+    :END_NOT_PRIME
+    return 0
+}    
+
+
+define :divisible(%divisor, %dividend) {
+    %incr <- 1
+
+    :LOOP
+    %mult <- %incr * %dividend
+    %cond <- %mult = %divisor
+    %cond2 <- %mult > %divisor
+    br %cond :FOUND
+    br %cond2 :NOT_FOUND
+
+    %incr <- %incr + 1
+    br :LOOP
+
+    :FOUND
+    return 1
+
+    :NOT_FOUND
+    return 0    
+}

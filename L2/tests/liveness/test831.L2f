@@ -1,0 +1,20 @@
+(@main
+	0
+	:call_label_ciao__ciao__ciao_15
+	%n <- 289
+	%n <<= 1
+	%n += 1
+	rdi <- %n
+	call print 1
+	%n >>= 1
+	rdi <- %n
+	mem rsp -8 <- :call_label_ciao__ciao__ciao_16
+	call @primetest 1
+	:call_label_ciao__ciao__ciao_16
+	%n <- rax
+	%n <<= 1
+	%n += 1
+	rdi <- %n
+	call print 1
+	return
+)

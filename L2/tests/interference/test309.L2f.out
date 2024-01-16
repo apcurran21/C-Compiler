@@ -1,0 +1,19 @@
+%init_v %len r12 r13 r14 r15 rbp rbx rdi
+%len %init_v r12 r13 r14 r15 rbp rbx
+%ptr r12 r13 r14 r15 rbp rbx %vec_ptr
+r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx rsi %vec_ptr
+r11 r10 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx rsi %vec_ptr
+r12 %init_v %len %ptr r10 r11 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx rsi %vec_ptr
+r13 %init_v %len %ptr r10 r11 r12 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx rsi %vec_ptr
+r14 %init_v %len %ptr r10 r11 r12 r13 r15 r8 r9 rax rbp rbx rcx rdi rdx rsi %vec_ptr
+r15 %init_v %len %ptr r10 r11 r12 r13 r14 r8 r9 rax rbp rbx rcx rdi rdx rsi %vec_ptr
+r8 r10 r11 r12 r13 r14 r15 r9 rax rbp rbx rcx rdi rdx rsi %vec_ptr
+r9 r10 r11 r12 r13 r14 r15 r8 rax rbp rbx rcx rdi rdx rsi %vec_ptr
+rax r10 r11 r12 r13 r14 r15 r8 r9 rbp rbx rcx rdi rdx rsi %vec_ptr
+rbp %init_v %len %ptr r10 r11 r12 r13 r14 r15 r8 r9 rax rbx rcx rdi rdx rsi %vec_ptr
+rbx %init_v %len %ptr r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rcx rdi rdx rsi %vec_ptr
+rcx r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rdi rdx rsi %vec_ptr
+rdi %init_v r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdx rsi %vec_ptr
+rdx r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rsi %vec_ptr
+rsi r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx %vec_ptr
+%vec_ptr %ptr r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx rsi

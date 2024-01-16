@@ -1,0 +1,60 @@
+(@go
+(@go
+	0 1
+	rdi <- 5
+	rsi <- 3
+	call allocate 2
+	r14 <- rax
+	rdi <- r14
+	call print 1
+	mem r14 16 <- 5
+	rdi <- r14
+	call print 1
+	rdi <- 5
+	rsi <- 7
+	call allocate 2
+	rdi <- rax
+	mem rsp 0 <- rdi
+	rdi <- mem rsp 0
+	mem rdi 16 <- 9
+	rdi <- 5
+	rsi <- r14
+	call allocate 2
+	r14 <- rax
+	rdi <- mem rsp 0
+	mem r14 16 <- rdi
+	rdi <- r14
+	call print 1
+	rdi <- r14
+	mem rsp -8 <- :arrayprint_ret
+	call @arrayprint 1
+	:arrayprint_ret
+	return
+)
+
+(@arrayprint
+	1 2
+	rdi <- rdi
+	mem rsp 0 <- rdi
+	rdi <- mem rsp 0
+	rdi <- mem rdi 8
+	mem rsp 8 <- rdi
+	rdi <- mem rsp 8
+	rdi <- mem rdi 8
+	call print 1
+	rdi <- mem rsp 8
+	rdi <- mem rdi 16
+	call print 1
+	rdi <- mem rsp 0
+	rdi <- mem rdi 16
+	mem rsp 8 <- rdi
+	rdi <- mem rsp 8
+	rdi <- mem rdi 8
+	call print 1
+	rdi <- mem rsp 8
+	rdi <- mem rdi 16
+	call print 1
+	return
+)
+
+)

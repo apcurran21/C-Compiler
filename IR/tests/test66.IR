@@ -1,0 +1,57 @@
+define void @main() {
+    :entrance
+    int64[] %rax
+    int64 %var1
+    int64 %var2
+    int64 %var3
+    int64 %r14
+    int64 %temp
+    int64 %len
+    int64 %test
+
+    %rax <- call @make_array()
+    %var1 <- 2
+    %var2 <- 1
+    %var3 <- %var1 * 4
+    br :por_aqui_viene
+    :por_aqui_viene
+
+
+    %temp <- 7
+    %var2 <- %temp + %var2
+
+    %var1 <- %var1 + 2
+    %len <- 0
+    %test <- %len - %var1
+    br %test :por_aqui_viene :hello
+
+    :hello
+    %var2 <- %var2 * 2
+    %len <- %var2 + 1
+
+    %rax <- call @make_array2()
+    call print(%rax) 
+    return
+}
+
+define int64[] @make_array() {
+    :entrance
+    int64 %arg1
+    int64 %arg2
+    int64[] %rax
+    %arg1 <- 201
+    %rax <- new Array(%arg1)
+    %arg2 <- 17
+    return %rax
+}
+
+define int64[] @make_array2() {
+    :entrance
+    int64 %arg1
+    int64 %arg2  
+    int64[] %rax  
+    %arg1 <- 21
+    %arg2 <- 9
+    %rax <- new Array(%arg1)
+    return %rax
+}

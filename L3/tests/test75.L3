@@ -1,0 +1,172 @@
+define @plus (%self, %x, %y) {
+ 
+:_self
+ %ans <- %x + %y
+ return %ans
+}
+
+define @minus (%self, %x, %y) {
+ 
+:_self
+ %ans <- %x - %y
+ return %ans
+}
+
+define @times (%self, %x, %y) {
+ 
+:_self
+ %ans <- %x * %y
+ return %ans
+}
+
+define @main () {
+ 
+:_start
+ %ops <- call allocate (7, 1)
+ %plus <- @plus
+ %minus <- @minus
+ %times <- @times
+ %newVar1 <- 0 * 8
+ %newVar0 <- %newVar1 + 8
+ %newVar2 <- %ops + %newVar0
+ store %newVar2 <- %plus
+ %newVar4 <- 1 * 8
+ %newVar3 <- %newVar4 + 8
+ %newVar5 <- %ops + %newVar3
+ store %newVar5 <- %minus
+ %newVar7 <- 2 * 8
+ %newVar6 <- %newVar7 + 8
+ %newVar8 <- %ops + %newVar6
+ store %newVar8 <- %times
+ %X <- 7
+ %Y <- 2
+ %i <- 0
+ br :L1
+ 
+:L1
+ %newVar10 <- %i * 8
+ %newVar9 <- %newVar10 + 8
+ %newVar11 <- %ops + %newVar9
+ %f <- load %newVar11
+ %ans <- call %f (%ops, %X, %Y)
+ %num <- %ans * 2
+ %num <- %num + 1
+ call print (%num)
+ %i <- %i + 1
+ %fin <- %i < 3
+ br %fin :L1 
+ br :L2b
+ 
+:L2b
+ %cGs <- call allocate (7, 1)
+ %i <- 0
+ br :L2
+ 
+:L2
+ %newVar13 <- %i * 8
+ %newVar12 <- %newVar13 + 8
+ %newVar14 <- %ops + %newVar12
+ %f <- load %newVar14
+ %cF <- call allocate (3, 1)
+ %newVar16 <- 0 * 8
+ %newVar15 <- %newVar16 + 8
+ %newVar17 <- %cF + %newVar15
+ store %newVar17 <- %f
+ %cG <- call @curry (%cF)
+ %newVar19 <- %i * 8
+ %newVar18 <- %newVar19 + 8
+ %newVar20 <- %cGs + %newVar18
+ store %newVar20 <- %cG
+ %i <- %i + 1
+ %fin <- %i < 3
+ br %fin :L2 
+ br :L3b
+ 
+:L3b
+ %i <- 0
+ br :L3
+ 
+:L3
+ %newVar22 <- %i * 8
+ %newVar21 <- %newVar22 + 8
+ %newVar23 <- %cGs + %newVar21
+ %cG <- load %newVar23
+ %newVar25 <- 0 * 8
+ %newVar24 <- %newVar25 + 8
+ %newVar26 <- %cG + %newVar24
+ %g <- load %newVar26
+ %cH <- call %g (%cG, %X)
+ %newVar28 <- 0 * 8
+ %newVar27 <- %newVar28 + 8
+ %newVar29 <- %cH + %newVar27
+ %h <- load %newVar29
+ %ans <- call %h (%cH, %Y)
+ %num <- %ans * 2
+ %num <- %num + 1
+ call print (%num)
+ %i <- %i + 1
+ %fin <- %i < 3
+ br %fin :L3 
+ br :exit
+ 
+:exit
+ return 
+}
+
+define @curry (%F) {
+ 
+:start
+ %cF <- call allocate (5, 1)
+ %newVar1 <- 0 * 8
+ %newVar0 <- %newVar1 + 8
+ %newVar2 <- %cF + %newVar0
+ store %newVar2 <- @curry_arg1
+ %newVar4 <- 1 * 8
+ %newVar3 <- %newVar4 + 8
+ %newVar5 <- %cF + %newVar3
+ store %newVar5 <- %F
+ return %cF
+}
+
+define @curry_arg1 (%self, %x) {
+ 
+:start
+ %cF1 <- call allocate (7, 1)
+ %newVar1 <- 1 * 8
+ %newVar0 <- %newVar1 + 8
+ %newVar2 <- %self + %newVar0
+ %F <- load %newVar2
+ %newVar4 <- 0 * 8
+ %newVar3 <- %newVar4 + 8
+ %newVar5 <- %cF1 + %newVar3
+ store %newVar5 <- @curry_arg2
+ %newVar7 <- 1 * 8
+ %newVar6 <- %newVar7 + 8
+ %newVar8 <- %cF1 + %newVar6
+ store %newVar8 <- %F
+ %newVar10 <- 2 * 8
+ %newVar9 <- %newVar10 + 8
+ %newVar11 <- %cF1 + %newVar9
+ store %newVar11 <- %x
+ return %cF1
+}
+
+define @curry_arg2 (%self, %y) {
+ 
+:start
+ %newVar1 <- 1 * 8
+ %newVar0 <- %newVar1 + 8
+ %newVar2 <- %self + %newVar0
+ %F <- load %newVar2
+ %newVar4 <- 2 * 8
+ %newVar3 <- %newVar4 + 8
+ %newVar5 <- %self + %newVar3
+ %x <- load %newVar5
+ %newVar7 <- 0 * 8
+ %newVar6 <- %newVar7 + 8
+ %newVar8 <- %F + %newVar6
+ %func <- load %newVar8
+ %ans <- call %func (%F, %x, %y)
+ return %ans
+}
+

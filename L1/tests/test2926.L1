@@ -1,0 +1,45 @@
+(@go
+(@go
+	0 0
+	rdi <- 1
+	rsi <- 1
+	rdx <- 1
+	rcx <- 1
+	r8 <- 1
+	r9 <- 1
+	mem rsp -8 <- :go_ret
+	mem rsp -16 <- 1
+	call @do_math 7
+	:go_ret
+	rdi <- rax
+	call print 1
+	return
+)
+
+(@do_math
+	7 0
+	rax <- rdi
+	rax += rsi
+	rax += rdx
+	rax += rcx
+	rax += r8
+	rax += r9
+	rdi <- mem rsp 0
+	rax += rdi
+	rax <<= 1
+	rdi <- rax
+	mem rsp -8 <- :math_ret
+	call @decode 1
+	:math_ret
+	return
+)
+
+(@decode
+	1 0
+	rdi <<= 1
+	rdi++
+	rax <- rdi
+	return
+)
+
+)

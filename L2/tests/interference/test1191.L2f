@@ -1,0 +1,12 @@
+(@encodeValue
+	1
+	%v <- rdi
+	:call_label_ciao__ciao__ciao_13
+	goto :call_label_ciao__ciao__ciao_14
+	:call_label_ciao__ciao__ciao_14
+	%encodedV <- %v
+	%encodedV <<= 1
+	%encodedV += 1
+	rax <- %encodedV
+	return
+)

@@ -1,0 +1,47 @@
+define :main() {
+    %limit <- call input()
+    %limit <- %limit >> 1
+    %invalid <- %limit <= 0
+    br %invalid :INVALID
+    %base <- %limit = 1
+    br %base :BASE
+    call print(3)
+
+    %base <- %limit = 2
+    br %base :BASE
+    call print(3)
+     
+    %counter <- 3
+    %a <- 1
+    %b <- 1
+    %c <- %a + %b
+
+    :WHILE_LOOP
+    %cond <- %limit <= %counter
+    br %cond :END
+    %tmp <- %c << 1
+    %tmp <- %tmp + 1
+    call print(%tmp)
+
+    %a <- %b
+    %b <- %c
+    %c <- %a + %b
+    %counter <- %counter + 1
+    br :WHILE_LOOP
+
+    :END
+    %c <- %c << 1
+    %c <- %c + 1
+    br :PRINT
+
+:BASE
+    %c <- 3
+    br :PRINT
+
+:INVALID
+    %c <- 1
+
+:PRINT
+    call print(%c)
+    return
+}

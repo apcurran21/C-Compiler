@@ -1,0 +1,42 @@
+(@main
+	0
+	:call_label0
+	%arg1 <- 100
+	%arg2 <- 1
+	:call_label1
+	%result <- %arg1 < %arg2
+	cjump %result = 1 :call_label2
+	%arg1_encoded <- %arg1
+	%arg1_encoded <<= 1
+	%arg1_encoded += 1
+	%arg2_encoded <- %arg2
+	%arg2_encoded <<= 1
+	%arg2_encoded += 1
+	rdi <- %arg1_encoded
+	call print 1
+	rdi <- %arg2_encoded
+	call print 1
+	%arg1 += 1
+	%arg2 <<= 1
+	goto :call_label1
+	:call_label2
+	%func_label <- @print_array
+	rdi <- 3
+	rsi <- 5
+	rdx <- 7
+	rcx <- 9
+	r8 <- 11
+	r9 <- 13
+	mem rsp -24 <- 15
+	mem rsp -16 <- 17
+	mem rsp -8 <- :call_label4
+	call %func_label 8
+	:call_label4
+	%ret_val <- rax
+	%if_correct <- %ret_val < 19
+	cjump %if_correct = 1 :call_label3
+	rdi <- %ret_val
+	call print 1
+	:call_label3
+	return
+)

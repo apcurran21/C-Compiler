@@ -1,0 +1,20 @@
+(@make_pos
+	1
+	%n <- rdi
+	%increm <- 1
+	%counter <- 0
+	%iterations <- -2
+	%iterations *= %n
+	rdi <- %n
+	call print 1
+	:call_label0
+	%n += %increm
+	%counter += 1
+	%check <- %counter < %iterations
+	cjump %check = 1 :call_label0
+	goto :call_label1
+	:call_label1
+	rdi <- %n
+	call print 1
+	return
+)

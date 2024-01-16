@@ -1,0 +1,629 @@
+(@main
+  (@main
+    0
+    :call_label0
+    goto :call_label1
+    :call_label1
+    %newVar1 <- 7
+    %newVar1 >>= 1
+    %newVar0 <- %newVar1
+    %newVar0 <- %newVar0
+    %newVar0 <<= 1
+    %newVar0 <- %newVar0
+    %newVar0 += 1
+    %newVar0 <- %newVar0
+    %newVar0 += 2
+    rdi <- %newVar0
+    rsi <- 1
+    call allocate 2
+    %number <- rax
+    %newVar2 <- %number
+    %newVar2 += 8
+    mem %newVar2 0 <- 7
+    %newVar3 <- 0
+    %newVar3 *= 8
+    %newVar4 <- %newVar3
+    %newVar4 += 8
+    %newVar5 <- %number
+    %newVar5 += %newVar4
+    %tempNumber <- mem %newVar5 0
+    rdi <- 1
+
+mem rsp -8 <- :call_label2
+    call @op1 1
+
+:call_label2
+    %retVal <- rax
+    %newVar7 <- 0
+    %newVar8 <- 1
+    %newVar7 <- %newVar7
+    %newVar7 += 0
+    %newVar6 <- %newVar7
+    %newVar6 *= 8
+    %newVar6 <- %newVar6
+    %newVar6 += 16
+    %newVar9 <- %number
+    %newVar9 += %newVar6
+    mem %newVar9 0 <- %retVal
+    %tempNumber <- %tempNumber
+    %tempNumber += 8
+    rdi <- 2
+
+mem rsp -8 <- :call_label3
+    call @op1 1
+
+:call_label3
+    %retVal <- rax
+    %newVar11 <- 0
+    %newVar12 <- 1
+    %newVar11 <- %newVar11
+    %newVar11 += 1
+    %newVar10 <- %newVar11
+    %newVar10 *= 8
+    %newVar10 <- %newVar10
+    %newVar10 += 16
+    %newVar13 <- %number
+    %newVar13 += %newVar10
+    mem %newVar13 0 <- %retVal
+    %tempNumber <- %tempNumber
+    %tempNumber += 8
+    rdi <- 3
+
+mem rsp -8 <- :call_label4
+    call @op2 1
+
+:call_label4
+    %retVal <- rax
+    %newVar15 <- 0
+    %newVar16 <- 1
+    %newVar15 <- %newVar15
+    %newVar15 += 2
+    %newVar14 <- %newVar15
+    %newVar14 *= 8
+    %newVar14 <- %newVar14
+    %newVar14 += 16
+    %newVar17 <- %number
+    %newVar17 += %newVar14
+    mem %newVar17 0 <- %retVal
+    %tempNumber <- %tempNumber
+    %tempNumber += 8
+    rdi <- 4
+
+mem rsp -8 <- :call_label5
+    call @op3 1
+
+:call_label5
+    %retVal <- rax
+    %newVar19 <- 0
+    %newVar20 <- 1
+    %newVar19 <- %newVar19
+    %newVar19 += 3
+    %newVar18 <- %newVar19
+    %newVar18 *= 8
+    %newVar18 <- %newVar18
+    %newVar18 += 16
+    %newVar21 <- %number
+    %newVar21 += %newVar18
+    mem %newVar21 0 <- %retVal
+    %tempNumber <- %tempNumber
+    %tempNumber += 8
+    rdi <- 5
+
+mem rsp -8 <- :call_label6
+    call @op4 1
+
+:call_label6
+    %retVal <- rax
+    %newVar23 <- 0
+    %newVar24 <- 1
+    %newVar23 <- %newVar23
+    %newVar23 += 4
+    %newVar22 <- %newVar23
+    %newVar22 *= 8
+    %newVar22 <- %newVar22
+    %newVar22 += 16
+    %newVar25 <- %number
+    %newVar25 += %newVar22
+    mem %newVar25 0 <- %retVal
+    %tempNumber <- %tempNumber
+    %tempNumber += 8
+    rdi <- 6
+
+mem rsp -8 <- :call_label7
+    call @op5 1
+
+:call_label7
+    %retVal <- rax
+    %newVar27 <- 0
+    %newVar28 <- 1
+    %newVar27 <- %newVar27
+    %newVar27 += 5
+    %newVar26 <- %newVar27
+    %newVar26 *= 8
+    %newVar26 <- %newVar26
+    %newVar26 += 16
+    %newVar29 <- %number
+    %newVar29 += %newVar26
+    mem %newVar29 0 <- %retVal
+    %tempNumber <- %tempNumber
+    %tempNumber += 8
+    rdi <- 7
+
+mem rsp -8 <- :call_label8
+    call @op6 1
+
+:call_label8
+    %retVal <- rax
+    %newVar31 <- 0
+    %newVar32 <- 1
+    %newVar31 <- %newVar31
+    %newVar31 += 6
+    %newVar30 <- %newVar31
+    %newVar30 *= 8
+    %newVar30 <- %newVar30
+    %newVar30 += 16
+    %newVar33 <- %number
+    %newVar33 += %newVar30
+    mem %newVar33 0 <- %retVal
+    %tempNumber <- %tempNumber
+    %tempNumber += 8
+    rdi <- %number
+
+mem rsp -8 <- :call_label9
+    call @printArr 1
+
+:call_label9
+    return
+  )
+  (@op1
+    1
+    %number <- rdi
+    :call_label_ciao_10
+    goto :call_label_ciao_11
+    :call_label_ciao_11
+    %newVar1 <- 3
+    %newVar1 >>= 1
+    %newVar0 <- %newVar1
+    %newVar0 <- %newVar0
+    %newVar0 <<= 1
+    %newVar0 <- %newVar0
+    %newVar0 += 1
+    %newVar0 <- %newVar0
+    %newVar0 += 2
+    rdi <- %newVar0
+    rsi <- 1
+    call allocate 2
+    %temp_spot <- rax
+    %newVar2 <- %temp_spot
+    %newVar2 += 8
+    mem %newVar2 0 <- 3
+    %newVar4 <- 0
+    %newVar5 <- 1
+    %newVar4 <- %newVar4
+    %newVar4 += 0
+    %newVar3 <- %newVar4
+    %newVar3 *= 8
+    %newVar3 <- %newVar3
+    %newVar3 += 16
+    %newVar6 <- %temp_spot
+    %newVar6 += %newVar3
+    mem %newVar6 0 <- %number
+    %number <- %number < 1
+
+    %newVar8 <- 5
+    %newVar8 >>= 1
+    %newVar7 <- %newVar8
+    %newVar7 <- %newVar7
+    %newVar7 <<= 1
+    %newVar7 <- %newVar7
+    %newVar7 += 1
+    %newVar7 <- %newVar7
+    %newVar7 += 2
+    rdi <- %newVar7
+    rsi <- 1
+    call allocate 2
+    %num_array <- rax
+    %newVar9 <- %num_array
+    %newVar9 += 8
+    mem %newVar9 0 <- 5
+    %newVar11 <- 3
+    %newVar11 >>= 1
+    %newVar10 <- %newVar11
+    %newVar10 <- %newVar10
+    %newVar10 <<= 1
+    %newVar10 <- %newVar10
+    %newVar10 += 1
+    %newVar10 <- %newVar10
+    %newVar10 += 2
+    rdi <- %newVar10
+    rsi <- 1
+    call allocate 2
+    %arr <- rax
+    %newVar12 <- %arr
+    %newVar12 += 8
+    mem %newVar12 0 <- 3
+    %newVar14 <- 0
+    %newVar15 <- 1
+    %newVar14 <- %newVar14
+    %newVar14 += 0
+    %newVar13 <- %newVar14
+    %newVar13 *= 8
+    %newVar13 <- %newVar13
+    %newVar13 += 16
+    %newVar16 <- %arr
+    %newVar16 += %newVar13
+    %arr_elem <- mem %newVar16 0
+    %newVar18 <- 0
+    %newVar19 <- 1
+    %newVar18 <- %newVar18
+    %newVar18 += 0
+    %newVar17 <- %newVar18
+    %newVar17 *= 8
+    %newVar17 <- %newVar17
+    %newVar17 += 16
+    %newVar20 <- %temp_spot
+    %newVar20 += %newVar17
+    %number <- mem %newVar20 0
+    rax <- %number
+    return
+  )
+  (@op2
+    1
+    %number <- rdi
+    :call_label_ciao__ciao_12
+    goto :call_label_ciao__ciao_13
+    :call_label_ciao__ciao_13
+    %newVar1 <- 3
+    %newVar1 >>= 1
+    %newVar0 <- %newVar1
+    %newVar0 <- %newVar0
+    %newVar0 <<= 1
+    %newVar0 <- %newVar0
+    %newVar0 += 1
+    %newVar0 <- %newVar0
+    %newVar0 += 2
+    rdi <- %newVar0
+    rsi <- 1
+    call allocate 2
+    %temp_spot <- rax
+    %newVar2 <- %temp_spot
+    %newVar2 += 8
+    mem %newVar2 0 <- 3
+    %newVar4 <- 0
+    %newVar5 <- 1
+    %newVar4 <- %newVar4
+    %newVar4 += 0
+    %newVar3 <- %newVar4
+    %newVar3 *= 8
+    %newVar3 <- %newVar3
+    %newVar3 += 16
+    %newVar6 <- %temp_spot
+    %newVar6 += %newVar3
+    mem %newVar6 0 <- %number
+    %number <- %number < 1
+
+    %newVar8 <- 5
+    %newVar8 >>= 1
+    %newVar7 <- %newVar8
+    %newVar7 <- %newVar7
+    %newVar7 <<= 1
+    %newVar7 <- %newVar7
+    %newVar7 += 1
+    %newVar7 <- %newVar7
+    %newVar7 += 2
+    rdi <- %newVar7
+    rsi <- 1
+    call allocate 2
+    %num_array <- rax
+    %newVar9 <- %num_array
+    %newVar9 += 8
+    mem %newVar9 0 <- 5
+    %newVar11 <- 0
+    %newVar12 <- 1
+    %newVar11 <- %newVar11
+    %newVar11 += 0
+    %newVar10 <- %newVar11
+    %newVar10 *= 8
+    %newVar10 <- %newVar10
+    %newVar10 += 16
+    %newVar13 <- %temp_spot
+    %newVar13 += %newVar10
+    %number <- mem %newVar13 0
+    rax <- %number
+    return
+  )
+  (@op3
+    1
+    %number <- rdi
+    :call_label_ciao__ciao__ciao_14
+    goto :call_label_ciao__ciao__ciao_15
+    :call_label_ciao__ciao__ciao_15
+    %newVar1 <- 3
+    %newVar1 >>= 1
+    %newVar0 <- %newVar1
+    %newVar0 <- %newVar0
+    %newVar0 <<= 1
+    %newVar0 <- %newVar0
+    %newVar0 += 1
+    %newVar0 <- %newVar0
+    %newVar0 += 2
+    rdi <- %newVar0
+    rsi <- 1
+    call allocate 2
+    %temp_spot <- rax
+    %newVar2 <- %temp_spot
+    %newVar2 += 8
+    mem %newVar2 0 <- 3
+    %newVar4 <- 0
+    %newVar5 <- 1
+    %newVar4 <- %newVar4
+    %newVar4 += 0
+    %newVar3 <- %newVar4
+    %newVar3 *= 8
+    %newVar3 <- %newVar3
+    %newVar3 += 16
+    %newVar6 <- %temp_spot
+    %newVar6 += %newVar3
+    mem %newVar6 0 <- %number
+    %number <- %number < 1
+
+    %newVar8 <- 5
+    %newVar8 >>= 1
+    %newVar7 <- %newVar8
+    %newVar7 <- %newVar7
+    %newVar7 <<= 1
+    %newVar7 <- %newVar7
+    %newVar7 += 1
+    %newVar7 <- %newVar7
+    %newVar7 += 2
+    rdi <- %newVar7
+    rsi <- 1
+    call allocate 2
+    %num_array <- rax
+    %newVar9 <- %num_array
+    %newVar9 += 8
+    mem %newVar9 0 <- 5
+    %number <- %number
+    %number *= 200000
+    %newVar11 <- 0
+    %newVar12 <- 1
+    %newVar11 <- %newVar11
+    %newVar11 += 0
+    %newVar10 <- %newVar11
+    %newVar10 *= 8
+    %newVar10 <- %newVar10
+    %newVar10 += 16
+    %newVar13 <- %temp_spot
+    %newVar13 += %newVar10
+    %number <- mem %newVar13 0
+    rax <- %number
+    return
+  )
+  (@op4
+    1
+    %number <- rdi
+    :call_label_ciao__ciao__ciao__ciao_16
+    goto :call_label_ciao__ciao__ciao__ciao_17
+    :call_label_ciao__ciao__ciao__ciao_17
+    %newVar1 <- 3
+    %newVar1 >>= 1
+    %newVar0 <- %newVar1
+    %newVar0 <- %newVar0
+    %newVar0 <<= 1
+    %newVar0 <- %newVar0
+    %newVar0 += 1
+    %newVar0 <- %newVar0
+    %newVar0 += 2
+    rdi <- %newVar0
+    rsi <- 1
+    call allocate 2
+    %temp_spot <- rax
+    %newVar2 <- %temp_spot
+    %newVar2 += 8
+    mem %newVar2 0 <- 3
+    %newVar4 <- 0
+    %newVar5 <- 1
+    %newVar4 <- %newVar4
+    %newVar4 += 0
+    %newVar3 <- %newVar4
+    %newVar3 *= 8
+    %newVar3 <- %newVar3
+    %newVar3 += 16
+    %newVar6 <- %temp_spot
+    %newVar6 += %newVar3
+    mem %newVar6 0 <- %number
+    %number <- %number < 1
+
+    %newVar8 <- 5
+    %newVar8 >>= 1
+    %newVar7 <- %newVar8
+    %newVar7 <- %newVar7
+    %newVar7 <<= 1
+    %newVar7 <- %newVar7
+    %newVar7 += 1
+    %newVar7 <- %newVar7
+    %newVar7 += 2
+    rdi <- %newVar7
+    rsi <- 1
+    call allocate 2
+    %num_array <- rax
+    %newVar9 <- %num_array
+    %newVar9 += 8
+    mem %newVar9 0 <- 5
+    %newVar11 <- 0
+    %newVar12 <- 1
+    %newVar11 <- %newVar11
+    %newVar11 += 0
+    %newVar10 <- %newVar11
+    %newVar10 *= 8
+    %newVar10 <- %newVar10
+    %newVar10 += 16
+    %newVar13 <- %temp_spot
+    %newVar13 += %newVar10
+    %number <- mem %newVar13 0
+    %newVar15 <- 6
+    %newVar15 >>= 1
+    %newVar14 <- %newVar15
+    %newVar16 <- 6
+    %newVar16 >>= 1
+    %newVar14 <- %newVar14
+    %newVar14 *= %newVar16
+    %newVar17 <- 6
+    %newVar17 >>= 1
+    %newVar14 <- %newVar14
+    %newVar14 *= %newVar17
+    %newVar14 <- %newVar14
+    %newVar14 <<= 1
+    %newVar14 <- %newVar14
+    %newVar14 += 1
+    %newVar14 <- %newVar14
+    %newVar14 += 6
+    rdi <- %newVar14
+    rsi <- 1
+    call allocate 2
+    %threeD <- rax
+    %newVar18 <- %threeD
+    %newVar18 += 8
+    mem %newVar18 0 <- 6
+    %newVar19 <- %threeD
+    %newVar19 += 16
+    mem %newVar19 0 <- 6
+    %newVar20 <- %threeD
+    %newVar20 += 24
+    mem %newVar20 0 <- 6
+    %newVar21 <- 0
+    %newVar21 *= 8
+    %newVar22 <- %newVar21
+    %newVar22 += 8
+    %newVar23 <- %threeD
+    %newVar23 += %newVar22
+    %first_dimension_length <- mem %newVar23 0
+    %newVar24 <- 1
+    %newVar24 *= 8
+    %newVar25 <- %newVar24
+    %newVar25 += 8
+    %newVar26 <- %threeD
+    %newVar26 += %newVar25
+    %second_dimension_length <- mem %newVar26 0
+    %newVar27 <- 2
+    %newVar27 *= 8
+    %newVar28 <- %newVar27
+    %newVar28 += 8
+    %newVar29 <- %threeD
+    %newVar29 += %newVar28
+    %third_dimension_length <- mem %newVar29 0
+    rax <- %number
+    return
+  )
+  (@op5
+    1
+    %number <- rdi
+    :call_label_ciao__ciao__ciao__ciao__ciao_18
+    goto :call_label_ciao__ciao__ciao__ciao__ciao_19
+    :call_label_ciao__ciao__ciao__ciao__ciao_19
+    rax <- %number
+    return
+  )
+  (@op6
+    1
+    %number <- rdi
+    :call_label_ciao__ciao__ciao__ciao__ciao__ciao_20
+    goto :call_label_ciao__ciao__ciao__ciao__ciao__ciao_21
+    :call_label_ciao__ciao__ciao__ciao__ciao__ciao_21
+    %newVar1 <- 3
+    %newVar1 >>= 1
+    %newVar0 <- %newVar1
+    %newVar0 <- %newVar0
+    %newVar0 <<= 1
+    %newVar0 <- %newVar0
+    %newVar0 += 1
+    %newVar0 <- %newVar0
+    %newVar0 += 2
+    rdi <- %newVar0
+    rsi <- 1
+    call allocate 2
+    %temp_spot <- rax
+    %newVar2 <- %temp_spot
+    %newVar2 += 8
+    mem %newVar2 0 <- 3
+    %newVar4 <- 0
+    %newVar5 <- 1
+    %newVar4 <- %newVar4
+    %newVar4 += 0
+    %newVar3 <- %newVar4
+    %newVar3 *= 8
+    %newVar3 <- %newVar3
+    %newVar3 += 16
+    %newVar6 <- %temp_spot
+    %newVar6 += %newVar3
+    mem %newVar6 0 <- %number
+    %number <- %number < 1
+
+    %newVar8 <- 5
+    %newVar8 >>= 1
+    %newVar7 <- %newVar8
+    %newVar7 <- %newVar7
+    %newVar7 <<= 1
+    %newVar7 <- %newVar7
+    %newVar7 += 1
+    %newVar7 <- %newVar7
+    %newVar7 += 2
+    rdi <- %newVar7
+    rsi <- 1
+    call allocate 2
+    %num_array <- rax
+    %newVar9 <- %num_array
+    %newVar9 += 8
+    mem %newVar9 0 <- 5
+    %newVar11 <- 0
+    %newVar12 <- 1
+    %newVar11 <- %newVar11
+    %newVar11 += 0
+    %newVar10 <- %newVar11
+    %newVar10 *= 8
+    %newVar10 <- %newVar10
+    %newVar10 += 16
+    %newVar13 <- %temp_spot
+    %newVar13 += %newVar10
+    %number <- mem %newVar13 0
+    rax <- %number
+    return
+  )
+  (@printArr
+    1
+    %num_array <- rdi
+    :call_label_ciao__ciao__ciao__ciao__ciao__ciao__ciao_22
+    goto :call_label_ciao__ciao__ciao__ciao__ciao__ciao__ciao_26
+    :call_label_ciao__ciao__ciao__ciao__ciao__ciao__ciao_23
+    return
+    :call_label_ciao__ciao__ciao__ciao__ciao__ciao__ciao_24
+    %newVar1 <- 0
+    %newVar2 <- 1
+    %newVar1 <- %newVar1
+    %newVar1 += %count
+    %newVar0 <- %newVar1
+    %newVar0 *= 8
+    %newVar0 <- %newVar0
+    %newVar0 += 16
+    %newVar3 <- %num_array
+    %newVar3 += %newVar0
+    %number <- mem %newVar3 0
+    %number <- %number
+    %number <<= 1
+    %number <- %number
+    %number += 1
+    rdi <- %number
+    call print 1
+    %count <- %count
+    %count += 1
+    goto :call_label_ciao__ciao__ciao__ciao__ciao__ciao__ciao_25
+    :call_label_ciao__ciao__ciao__ciao__ciao__ciao__ciao_25
+    %comp <- %count = 7
+
+    cjump %comp = 1 :call_label_ciao__ciao__ciao__ciao__ciao__ciao__ciao_23
+    goto :call_label_ciao__ciao__ciao__ciao__ciao__ciao__ciao_24
+    :call_label_ciao__ciao__ciao__ciao__ciao__ciao__ciao_26
+    %count <- 0
+    goto :call_label_ciao__ciao__ciao__ciao__ciao__ciao__ciao_25
+  )
+)

@@ -1,0 +1,26 @@
+define :main() {
+  %input <- call input()
+  %result <- call :yeet (%input, 1, 1, 1, 1, %input, 1)
+  %c <- %result = 0
+  br %c :err
+  call print(%result)
+  br :end
+  :err
+  %result <- -1
+  call print(%result)
+  :end
+  return
+}
+
+define :yeet(%num1, %num2, %num3, %num4, %num5, %num6, %num7) {
+  %yeet <- %num2
+  %yeet <- %yeet + %num3
+  %yeet <- %yeet + %num4
+  %yeet <- %yeet + %num5
+  %yeet <- %yeet + %num6
+  %yeet <- %yeet + %num7
+  %num6 <- %num6 + %num7
+  %num6 <- %num6 + 6
+  %c <- %num6 = %yeet
+  return %c  
+}

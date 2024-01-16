@@ -1,0 +1,551 @@
+define @main () {
+ 
+:entry
+ %newVar1 <- 7 >> 1
+ %newVar0 <- %newVar1
+ %newVar2 <- 7 >> 1
+ %newVar0 <- %newVar0 * %newVar2
+ %newVar3 <- 7 >> 1
+ %newVar0 <- %newVar0 * %newVar3
+ %newVar0 <- %newVar0 << 1
+ %newVar0 <- %newVar0 + 1
+ %newVar0 <- %newVar0 + 8
+ %bigArr <- call allocate (%newVar0, 1)
+ %newVar4 <- %bigArr + 8
+ store %newVar4 <- 7
+ %newVar5 <- %bigArr + 16
+ store %newVar5 <- 7
+ %newVar6 <- %bigArr + 24
+ store %newVar6 <- 7
+ %newVar7 <- %bigArr + 32
+ store %newVar7 <- 7
+ %newVar9 <- 0
+ %newVar10 <- %bigArr + 24
+ %newVar11 <- load %newVar10
+ %newVar12 <- %newVar11 >> 1
+ %newVar13 <- %bigArr + 32
+ %newVar14 <- load %newVar13
+ %newVar15 <- %newVar14 >> 1
+ %newVar16 <- 1
+ %newVar16 <- %newVar15 * %newVar16
+ %newVar17 <- 0 * %newVar16
+ %newVar9 <- %newVar17 + %newVar9
+ %newVar16 <- %newVar12 * %newVar16
+ %newVar18 <- 0 * %newVar16
+ %newVar9 <- %newVar18 + %newVar9
+ %newVar9 <- %newVar9 + 0
+ %newVar8 <- %newVar9 * 8
+ %newVar8 <- %newVar8 + 40
+ %newVar19 <- %bigArr + %newVar8
+ store %newVar19 <- 1
+ %newVar21 <- 0
+ %newVar22 <- %bigArr + 24
+ %newVar23 <- load %newVar22
+ %newVar24 <- %newVar23 >> 1
+ %newVar25 <- %bigArr + 32
+ %newVar26 <- load %newVar25
+ %newVar27 <- %newVar26 >> 1
+ %newVar28 <- 1
+ %newVar28 <- %newVar27 * %newVar28
+ %newVar29 <- 0 * %newVar28
+ %newVar21 <- %newVar29 + %newVar21
+ %newVar28 <- %newVar24 * %newVar28
+ %newVar30 <- 0 * %newVar28
+ %newVar21 <- %newVar30 + %newVar21
+ %newVar21 <- %newVar21 + 1
+ %newVar20 <- %newVar21 * 8
+ %newVar20 <- %newVar20 + 40
+ %newVar31 <- %bigArr + %newVar20
+ store %newVar31 <- 3
+ %newVar33 <- 0
+ %newVar34 <- %bigArr + 24
+ %newVar35 <- load %newVar34
+ %newVar36 <- %newVar35 >> 1
+ %newVar37 <- %bigArr + 32
+ %newVar38 <- load %newVar37
+ %newVar39 <- %newVar38 >> 1
+ %newVar40 <- 1
+ %newVar40 <- %newVar39 * %newVar40
+ %newVar41 <- 0 * %newVar40
+ %newVar33 <- %newVar41 + %newVar33
+ %newVar40 <- %newVar36 * %newVar40
+ %newVar42 <- 0 * %newVar40
+ %newVar33 <- %newVar42 + %newVar33
+ %newVar33 <- %newVar33 + 2
+ %newVar32 <- %newVar33 * 8
+ %newVar32 <- %newVar32 + 40
+ %newVar43 <- %bigArr + %newVar32
+ store %newVar43 <- 5
+ %newVar45 <- 0
+ %newVar46 <- %bigArr + 24
+ %newVar47 <- load %newVar46
+ %newVar48 <- %newVar47 >> 1
+ %newVar49 <- %bigArr + 32
+ %newVar50 <- load %newVar49
+ %newVar51 <- %newVar50 >> 1
+ %newVar52 <- 1
+ %newVar52 <- %newVar51 * %newVar52
+ %newVar53 <- 1 * %newVar52
+ %newVar45 <- %newVar53 + %newVar45
+ %newVar52 <- %newVar48 * %newVar52
+ %newVar54 <- 0 * %newVar52
+ %newVar45 <- %newVar54 + %newVar45
+ %newVar45 <- %newVar45 + 0
+ %newVar44 <- %newVar45 * 8
+ %newVar44 <- %newVar44 + 40
+ %newVar55 <- %bigArr + %newVar44
+ store %newVar55 <- 7
+ %newVar57 <- 0
+ %newVar58 <- %bigArr + 24
+ %newVar59 <- load %newVar58
+ %newVar60 <- %newVar59 >> 1
+ %newVar61 <- %bigArr + 32
+ %newVar62 <- load %newVar61
+ %newVar63 <- %newVar62 >> 1
+ %newVar64 <- 1
+ %newVar64 <- %newVar63 * %newVar64
+ %newVar65 <- 1 * %newVar64
+ %newVar57 <- %newVar65 + %newVar57
+ %newVar64 <- %newVar60 * %newVar64
+ %newVar66 <- 0 * %newVar64
+ %newVar57 <- %newVar66 + %newVar57
+ %newVar57 <- %newVar57 + 1
+ %newVar56 <- %newVar57 * 8
+ %newVar56 <- %newVar56 + 40
+ %newVar67 <- %bigArr + %newVar56
+ store %newVar67 <- 9
+ %newVar69 <- 0
+ %newVar70 <- %bigArr + 24
+ %newVar71 <- load %newVar70
+ %newVar72 <- %newVar71 >> 1
+ %newVar73 <- %bigArr + 32
+ %newVar74 <- load %newVar73
+ %newVar75 <- %newVar74 >> 1
+ %newVar76 <- 1
+ %newVar76 <- %newVar75 * %newVar76
+ %newVar77 <- 1 * %newVar76
+ %newVar69 <- %newVar77 + %newVar69
+ %newVar76 <- %newVar72 * %newVar76
+ %newVar78 <- 0 * %newVar76
+ %newVar69 <- %newVar78 + %newVar69
+ %newVar69 <- %newVar69 + 2
+ %newVar68 <- %newVar69 * 8
+ %newVar68 <- %newVar68 + 40
+ %newVar79 <- %bigArr + %newVar68
+ store %newVar79 <- 11
+ %newVar81 <- 0
+ %newVar82 <- %bigArr + 24
+ %newVar83 <- load %newVar82
+ %newVar84 <- %newVar83 >> 1
+ %newVar85 <- %bigArr + 32
+ %newVar86 <- load %newVar85
+ %newVar87 <- %newVar86 >> 1
+ %newVar88 <- 1
+ %newVar88 <- %newVar87 * %newVar88
+ %newVar89 <- 2 * %newVar88
+ %newVar81 <- %newVar89 + %newVar81
+ %newVar88 <- %newVar84 * %newVar88
+ %newVar90 <- 0 * %newVar88
+ %newVar81 <- %newVar90 + %newVar81
+ %newVar81 <- %newVar81 + 0
+ %newVar80 <- %newVar81 * 8
+ %newVar80 <- %newVar80 + 40
+ %newVar91 <- %bigArr + %newVar80
+ store %newVar91 <- 13
+ %newVar93 <- 0
+ %newVar94 <- %bigArr + 24
+ %newVar95 <- load %newVar94
+ %newVar96 <- %newVar95 >> 1
+ %newVar97 <- %bigArr + 32
+ %newVar98 <- load %newVar97
+ %newVar99 <- %newVar98 >> 1
+ %newVar100 <- 1
+ %newVar100 <- %newVar99 * %newVar100
+ %newVar101 <- 2 * %newVar100
+ %newVar93 <- %newVar101 + %newVar93
+ %newVar100 <- %newVar96 * %newVar100
+ %newVar102 <- 0 * %newVar100
+ %newVar93 <- %newVar102 + %newVar93
+ %newVar93 <- %newVar93 + 1
+ %newVar92 <- %newVar93 * 8
+ %newVar92 <- %newVar92 + 40
+ %newVar103 <- %bigArr + %newVar92
+ store %newVar103 <- 15
+ %newVar105 <- 0
+ %newVar106 <- %bigArr + 24
+ %newVar107 <- load %newVar106
+ %newVar108 <- %newVar107 >> 1
+ %newVar109 <- %bigArr + 32
+ %newVar110 <- load %newVar109
+ %newVar111 <- %newVar110 >> 1
+ %newVar112 <- 1
+ %newVar112 <- %newVar111 * %newVar112
+ %newVar113 <- 2 * %newVar112
+ %newVar105 <- %newVar113 + %newVar105
+ %newVar112 <- %newVar108 * %newVar112
+ %newVar114 <- 0 * %newVar112
+ %newVar105 <- %newVar114 + %newVar105
+ %newVar105 <- %newVar105 + 2
+ %newVar104 <- %newVar105 * 8
+ %newVar104 <- %newVar104 + 40
+ %newVar115 <- %bigArr + %newVar104
+ store %newVar115 <- 17
+ %newVar117 <- 0
+ %newVar118 <- %bigArr + 24
+ %newVar119 <- load %newVar118
+ %newVar120 <- %newVar119 >> 1
+ %newVar121 <- %bigArr + 32
+ %newVar122 <- load %newVar121
+ %newVar123 <- %newVar122 >> 1
+ %newVar124 <- 1
+ %newVar124 <- %newVar123 * %newVar124
+ %newVar125 <- 0 * %newVar124
+ %newVar117 <- %newVar125 + %newVar117
+ %newVar124 <- %newVar120 * %newVar124
+ %newVar126 <- 1 * %newVar124
+ %newVar117 <- %newVar126 + %newVar117
+ %newVar117 <- %newVar117 + 0
+ %newVar116 <- %newVar117 * 8
+ %newVar116 <- %newVar116 + 40
+ %newVar127 <- %bigArr + %newVar116
+ store %newVar127 <- 19
+ %newVar129 <- 0
+ %newVar130 <- %bigArr + 24
+ %newVar131 <- load %newVar130
+ %newVar132 <- %newVar131 >> 1
+ %newVar133 <- %bigArr + 32
+ %newVar134 <- load %newVar133
+ %newVar135 <- %newVar134 >> 1
+ %newVar136 <- 1
+ %newVar136 <- %newVar135 * %newVar136
+ %newVar137 <- 0 * %newVar136
+ %newVar129 <- %newVar137 + %newVar129
+ %newVar136 <- %newVar132 * %newVar136
+ %newVar138 <- 1 * %newVar136
+ %newVar129 <- %newVar138 + %newVar129
+ %newVar129 <- %newVar129 + 1
+ %newVar128 <- %newVar129 * 8
+ %newVar128 <- %newVar128 + 40
+ %newVar139 <- %bigArr + %newVar128
+ store %newVar139 <- 21
+ %newVar141 <- 0
+ %newVar142 <- %bigArr + 24
+ %newVar143 <- load %newVar142
+ %newVar144 <- %newVar143 >> 1
+ %newVar145 <- %bigArr + 32
+ %newVar146 <- load %newVar145
+ %newVar147 <- %newVar146 >> 1
+ %newVar148 <- 1
+ %newVar148 <- %newVar147 * %newVar148
+ %newVar149 <- 0 * %newVar148
+ %newVar141 <- %newVar149 + %newVar141
+ %newVar148 <- %newVar144 * %newVar148
+ %newVar150 <- 1 * %newVar148
+ %newVar141 <- %newVar150 + %newVar141
+ %newVar141 <- %newVar141 + 2
+ %newVar140 <- %newVar141 * 8
+ %newVar140 <- %newVar140 + 40
+ %newVar151 <- %bigArr + %newVar140
+ store %newVar151 <- 23
+ %newVar153 <- 0
+ %newVar154 <- %bigArr + 24
+ %newVar155 <- load %newVar154
+ %newVar156 <- %newVar155 >> 1
+ %newVar157 <- %bigArr + 32
+ %newVar158 <- load %newVar157
+ %newVar159 <- %newVar158 >> 1
+ %newVar160 <- 1
+ %newVar160 <- %newVar159 * %newVar160
+ %newVar161 <- 1 * %newVar160
+ %newVar153 <- %newVar161 + %newVar153
+ %newVar160 <- %newVar156 * %newVar160
+ %newVar162 <- 1 * %newVar160
+ %newVar153 <- %newVar162 + %newVar153
+ %newVar153 <- %newVar153 + 0
+ %newVar152 <- %newVar153 * 8
+ %newVar152 <- %newVar152 + 40
+ %newVar163 <- %bigArr + %newVar152
+ store %newVar163 <- 25
+ %newVar165 <- 0
+ %newVar166 <- %bigArr + 24
+ %newVar167 <- load %newVar166
+ %newVar168 <- %newVar167 >> 1
+ %newVar169 <- %bigArr + 32
+ %newVar170 <- load %newVar169
+ %newVar171 <- %newVar170 >> 1
+ %newVar172 <- 1
+ %newVar172 <- %newVar171 * %newVar172
+ %newVar173 <- 1 * %newVar172
+ %newVar165 <- %newVar173 + %newVar165
+ %newVar172 <- %newVar168 * %newVar172
+ %newVar174 <- 1 * %newVar172
+ %newVar165 <- %newVar174 + %newVar165
+ %newVar165 <- %newVar165 + 1
+ %newVar164 <- %newVar165 * 8
+ %newVar164 <- %newVar164 + 40
+ %newVar175 <- %bigArr + %newVar164
+ store %newVar175 <- 27
+ %newVar177 <- 0
+ %newVar178 <- %bigArr + 24
+ %newVar179 <- load %newVar178
+ %newVar180 <- %newVar179 >> 1
+ %newVar181 <- %bigArr + 32
+ %newVar182 <- load %newVar181
+ %newVar183 <- %newVar182 >> 1
+ %newVar184 <- 1
+ %newVar184 <- %newVar183 * %newVar184
+ %newVar185 <- 1 * %newVar184
+ %newVar177 <- %newVar185 + %newVar177
+ %newVar184 <- %newVar180 * %newVar184
+ %newVar186 <- 1 * %newVar184
+ %newVar177 <- %newVar186 + %newVar177
+ %newVar177 <- %newVar177 + 2
+ %newVar176 <- %newVar177 * 8
+ %newVar176 <- %newVar176 + 40
+ %newVar187 <- %bigArr + %newVar176
+ store %newVar187 <- 29
+ %newVar189 <- 0
+ %newVar190 <- %bigArr + 24
+ %newVar191 <- load %newVar190
+ %newVar192 <- %newVar191 >> 1
+ %newVar193 <- %bigArr + 32
+ %newVar194 <- load %newVar193
+ %newVar195 <- %newVar194 >> 1
+ %newVar196 <- 1
+ %newVar196 <- %newVar195 * %newVar196
+ %newVar197 <- 2 * %newVar196
+ %newVar189 <- %newVar197 + %newVar189
+ %newVar196 <- %newVar192 * %newVar196
+ %newVar198 <- 1 * %newVar196
+ %newVar189 <- %newVar198 + %newVar189
+ %newVar189 <- %newVar189 + 0
+ %newVar188 <- %newVar189 * 8
+ %newVar188 <- %newVar188 + 40
+ %newVar199 <- %bigArr + %newVar188
+ store %newVar199 <- 31
+ %newVar201 <- 0
+ %newVar202 <- %bigArr + 24
+ %newVar203 <- load %newVar202
+ %newVar204 <- %newVar203 >> 1
+ %newVar205 <- %bigArr + 32
+ %newVar206 <- load %newVar205
+ %newVar207 <- %newVar206 >> 1
+ %newVar208 <- 1
+ %newVar208 <- %newVar207 * %newVar208
+ %newVar209 <- 2 * %newVar208
+ %newVar201 <- %newVar209 + %newVar201
+ %newVar208 <- %newVar204 * %newVar208
+ %newVar210 <- 1 * %newVar208
+ %newVar201 <- %newVar210 + %newVar201
+ %newVar201 <- %newVar201 + 1
+ %newVar200 <- %newVar201 * 8
+ %newVar200 <- %newVar200 + 40
+ %newVar211 <- %bigArr + %newVar200
+ store %newVar211 <- 33
+ %newVar213 <- 0
+ %newVar214 <- %bigArr + 24
+ %newVar215 <- load %newVar214
+ %newVar216 <- %newVar215 >> 1
+ %newVar217 <- %bigArr + 32
+ %newVar218 <- load %newVar217
+ %newVar219 <- %newVar218 >> 1
+ %newVar220 <- 1
+ %newVar220 <- %newVar219 * %newVar220
+ %newVar221 <- 2 * %newVar220
+ %newVar213 <- %newVar221 + %newVar213
+ %newVar220 <- %newVar216 * %newVar220
+ %newVar222 <- 1 * %newVar220
+ %newVar213 <- %newVar222 + %newVar213
+ %newVar213 <- %newVar213 + 2
+ %newVar212 <- %newVar213 * 8
+ %newVar212 <- %newVar212 + 40
+ %newVar223 <- %bigArr + %newVar212
+ store %newVar223 <- 35
+ %newVar225 <- 0
+ %newVar226 <- %bigArr + 24
+ %newVar227 <- load %newVar226
+ %newVar228 <- %newVar227 >> 1
+ %newVar229 <- %bigArr + 32
+ %newVar230 <- load %newVar229
+ %newVar231 <- %newVar230 >> 1
+ %newVar232 <- 1
+ %newVar232 <- %newVar231 * %newVar232
+ %newVar233 <- 0 * %newVar232
+ %newVar225 <- %newVar233 + %newVar225
+ %newVar232 <- %newVar228 * %newVar232
+ %newVar234 <- 2 * %newVar232
+ %newVar225 <- %newVar234 + %newVar225
+ %newVar225 <- %newVar225 + 0
+ %newVar224 <- %newVar225 * 8
+ %newVar224 <- %newVar224 + 40
+ %newVar235 <- %bigArr + %newVar224
+ store %newVar235 <- 37
+ %newVar237 <- 0
+ %newVar238 <- %bigArr + 24
+ %newVar239 <- load %newVar238
+ %newVar240 <- %newVar239 >> 1
+ %newVar241 <- %bigArr + 32
+ %newVar242 <- load %newVar241
+ %newVar243 <- %newVar242 >> 1
+ %newVar244 <- 1
+ %newVar244 <- %newVar243 * %newVar244
+ %newVar245 <- 0 * %newVar244
+ %newVar237 <- %newVar245 + %newVar237
+ %newVar244 <- %newVar240 * %newVar244
+ %newVar246 <- 2 * %newVar244
+ %newVar237 <- %newVar246 + %newVar237
+ %newVar237 <- %newVar237 + 1
+ %newVar236 <- %newVar237 * 8
+ %newVar236 <- %newVar236 + 40
+ %newVar247 <- %bigArr + %newVar236
+ store %newVar247 <- 39
+ %newVar249 <- 0
+ %newVar250 <- %bigArr + 24
+ %newVar251 <- load %newVar250
+ %newVar252 <- %newVar251 >> 1
+ %newVar253 <- %bigArr + 32
+ %newVar254 <- load %newVar253
+ %newVar255 <- %newVar254 >> 1
+ %newVar256 <- 1
+ %newVar256 <- %newVar255 * %newVar256
+ %newVar257 <- 0 * %newVar256
+ %newVar249 <- %newVar257 + %newVar249
+ %newVar256 <- %newVar252 * %newVar256
+ %newVar258 <- 2 * %newVar256
+ %newVar249 <- %newVar258 + %newVar249
+ %newVar249 <- %newVar249 + 2
+ %newVar248 <- %newVar249 * 8
+ %newVar248 <- %newVar248 + 40
+ %newVar259 <- %bigArr + %newVar248
+ store %newVar259 <- 41
+ %newVar261 <- 0
+ %newVar262 <- %bigArr + 24
+ %newVar263 <- load %newVar262
+ %newVar264 <- %newVar263 >> 1
+ %newVar265 <- %bigArr + 32
+ %newVar266 <- load %newVar265
+ %newVar267 <- %newVar266 >> 1
+ %newVar268 <- 1
+ %newVar268 <- %newVar267 * %newVar268
+ %newVar269 <- 1 * %newVar268
+ %newVar261 <- %newVar269 + %newVar261
+ %newVar268 <- %newVar264 * %newVar268
+ %newVar270 <- 2 * %newVar268
+ %newVar261 <- %newVar270 + %newVar261
+ %newVar261 <- %newVar261 + 0
+ %newVar260 <- %newVar261 * 8
+ %newVar260 <- %newVar260 + 40
+ %newVar271 <- %bigArr + %newVar260
+ store %newVar271 <- 43
+ %newVar273 <- 0
+ %newVar274 <- %bigArr + 24
+ %newVar275 <- load %newVar274
+ %newVar276 <- %newVar275 >> 1
+ %newVar277 <- %bigArr + 32
+ %newVar278 <- load %newVar277
+ %newVar279 <- %newVar278 >> 1
+ %newVar280 <- 1
+ %newVar280 <- %newVar279 * %newVar280
+ %newVar281 <- 1 * %newVar280
+ %newVar273 <- %newVar281 + %newVar273
+ %newVar280 <- %newVar276 * %newVar280
+ %newVar282 <- 2 * %newVar280
+ %newVar273 <- %newVar282 + %newVar273
+ %newVar273 <- %newVar273 + 1
+ %newVar272 <- %newVar273 * 8
+ %newVar272 <- %newVar272 + 40
+ %newVar283 <- %bigArr + %newVar272
+ store %newVar283 <- 45
+ %newVar285 <- 0
+ %newVar286 <- %bigArr + 24
+ %newVar287 <- load %newVar286
+ %newVar288 <- %newVar287 >> 1
+ %newVar289 <- %bigArr + 32
+ %newVar290 <- load %newVar289
+ %newVar291 <- %newVar290 >> 1
+ %newVar292 <- 1
+ %newVar292 <- %newVar291 * %newVar292
+ %newVar293 <- 1 * %newVar292
+ %newVar285 <- %newVar293 + %newVar285
+ %newVar292 <- %newVar288 * %newVar292
+ %newVar294 <- 2 * %newVar292
+ %newVar285 <- %newVar294 + %newVar285
+ %newVar285 <- %newVar285 + 2
+ %newVar284 <- %newVar285 * 8
+ %newVar284 <- %newVar284 + 40
+ %newVar295 <- %bigArr + %newVar284
+ store %newVar295 <- 47
+ %newVar297 <- 0
+ %newVar298 <- %bigArr + 24
+ %newVar299 <- load %newVar298
+ %newVar300 <- %newVar299 >> 1
+ %newVar301 <- %bigArr + 32
+ %newVar302 <- load %newVar301
+ %newVar303 <- %newVar302 >> 1
+ %newVar304 <- 1
+ %newVar304 <- %newVar303 * %newVar304
+ %newVar305 <- 2 * %newVar304
+ %newVar297 <- %newVar305 + %newVar297
+ %newVar304 <- %newVar300 * %newVar304
+ %newVar306 <- 2 * %newVar304
+ %newVar297 <- %newVar306 + %newVar297
+ %newVar297 <- %newVar297 + 0
+ %newVar296 <- %newVar297 * 8
+ %newVar296 <- %newVar296 + 40
+ %newVar307 <- %bigArr + %newVar296
+ store %newVar307 <- 49
+ %newVar309 <- 0
+ %newVar310 <- %bigArr + 24
+ %newVar311 <- load %newVar310
+ %newVar312 <- %newVar311 >> 1
+ %newVar313 <- %bigArr + 32
+ %newVar314 <- load %newVar313
+ %newVar315 <- %newVar314 >> 1
+ %newVar316 <- 1
+ %newVar316 <- %newVar315 * %newVar316
+ %newVar317 <- 2 * %newVar316
+ %newVar309 <- %newVar317 + %newVar309
+ %newVar316 <- %newVar312 * %newVar316
+ %newVar318 <- 2 * %newVar316
+ %newVar309 <- %newVar318 + %newVar309
+ %newVar309 <- %newVar309 + 1
+ %newVar308 <- %newVar309 * 8
+ %newVar308 <- %newVar308 + 40
+ %newVar319 <- %bigArr + %newVar308
+ store %newVar319 <- 51
+ %newVar321 <- 0
+ %newVar322 <- %bigArr + 24
+ %newVar323 <- load %newVar322
+ %newVar324 <- %newVar323 >> 1
+ %newVar325 <- %bigArr + 32
+ %newVar326 <- load %newVar325
+ %newVar327 <- %newVar326 >> 1
+ %newVar328 <- 1
+ %newVar328 <- %newVar327 * %newVar328
+ %newVar329 <- 2 * %newVar328
+ %newVar321 <- %newVar329 + %newVar321
+ %newVar328 <- %newVar324 * %newVar328
+ %newVar330 <- 2 * %newVar328
+ %newVar321 <- %newVar330 + %newVar321
+ %newVar321 <- %newVar321 + 2
+ %newVar320 <- %newVar321 * 8
+ %newVar320 <- %newVar320 + 40
+ %newVar331 <- %bigArr + %newVar320
+ store %newVar331 <- 53
+ call print (%bigArr)
+ %fp <- @diFF
+ %r_val <- call %fp ()
+ call print (1)
+ call print (%r_val)
+ return 
+}
+
+define @diFF () {
+ 
+:entry
+ %duh <- 7
+ %muh <- 9
+ %val_to_return <- %duh * %muh
+ return %val_to_return
+}
+

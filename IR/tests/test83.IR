@@ -1,0 +1,48 @@
+// This program prints out two arrays:
+//  an array of square numbers
+//  and another with reversed order
+//   (each array has 5 elements).
+// {s:5,1,4,9,16,25}
+// {s:5,25,16,9,4,1}
+// We'll use tuple instead of array this time.
+
+define void @main () {
+  :var_declarations
+  int64 %len
+  int64 %vv
+  tuple %ptr
+  tuple %ptr2
+  br :start
+
+  :start
+  %len <- 5
+  %len <- call @int_encode(%len)
+  %ptr <- new Tuple(%len)
+  %ptr[0] <- 3
+  %ptr[1] <- 9
+  %ptr[2] <- 19
+  %ptr[3] <- 33
+  %ptr[4] <- 51
+  call print(%ptr)
+
+  %ptr2 <- new Tuple(%len)
+  %vv <- %ptr[4]
+  %ptr2[0] <- %vv
+  %vv <- %ptr[3]
+  %ptr2[1] <- %vv
+  %vv <- %ptr[2]
+  %ptr2[2] <- %vv
+  %vv <- %ptr[1]
+  %ptr2[3] <- %vv
+  %vv <- %ptr[0]
+  %ptr2[4] <- %vv
+  call print(%ptr2)
+  return
+}
+
+define int64 @int_encode (int64 %v) {
+  :entry
+  %v <- %v << 1
+  %v <- %v + 1
+  return %v
+}

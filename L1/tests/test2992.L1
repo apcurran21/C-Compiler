@@ -1,0 +1,15 @@
+(@main
+(@main
+	0 0
+	rsi <- 2
+	rdi <- 1
+	rdi -= rsi
+	rsi <- rdi
+	rdi <- rsi
+	rdi <<= 1
+	rdi += 1
+	call print 1
+	return
+)
+
+)

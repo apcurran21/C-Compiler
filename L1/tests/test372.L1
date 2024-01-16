@@ -1,0 +1,87 @@
+(@calcs
+(@calcs
+	0 6
+	rdi <- 5
+	mem rsp 8 <- rdi
+	rdi <- 3
+	mem rsp 0 <- rdi
+	rdi <- 13
+	mem rsp 16 <- rdi
+	rdi <- 17
+	mem rsp 32 <- rdi
+	rdi <- 7
+	mem rsp 24 <- rdi
+	rdi <- 23
+	mem rsp 40 <- rdi
+	rdi <- mem rsp 8
+	rdi <- rdi
+	rsi <- mem rsp 0
+	rsi <- rsi
+	rdx <- mem rsp 16
+	rdx <- rdx
+	rcx <- mem rsp 32
+	rcx <- rcx
+	r8 <- mem rsp 24
+	r8 <- r8
+	r9 <- mem rsp 40
+	r9 <- r9
+	mem rsp -8 <- :sum_ret
+	call @sum 6
+	:sum_ret
+	rdi <- rax
+	mem rsp -8 <- :int_print_ret
+	call @int_print 1
+	:int_print_ret
+	rdi <- mem rsp 8
+	rdi <- rdi
+	rsi <- mem rsp 0
+	rsi <- rsi
+	rdx <- mem rsp 16
+	rdx <- rdx
+	rcx <- mem rsp 32
+	rcx <- rcx
+	r8 <- mem rsp 24
+	r8 <- r8
+	r9 <- mem rsp 40
+	r9 <- r9
+	mem rsp -8 <- :prod_ret
+	call @prod 6
+	:prod_ret
+	rdi <- rax
+	mem rsp -8 <- :int_print_ret_2
+	call @int_print 1
+	:int_print_ret_2
+	return
+)
+
+(@int_print
+	1 0
+	rdi <<= 1
+	rdi++
+	call print 1
+	return
+)
+
+(@prod
+	6 0
+	rdi *= rsi
+	rdx *= rcx
+	r8 *= r9
+	rdi *= rdx
+	rdi *= r8
+	rax <- rdi
+	return
+)
+
+(@sum
+	6 0
+	rdi += rsi
+	rdx += rcx
+	r8 += r9
+	rdx += r8
+	rdi += rdx
+	rax <- rdi
+	return
+)
+
+)

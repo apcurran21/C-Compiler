@@ -1,0 +1,42 @@
+define @main () {
+ 
+:NNNNNN
+ br :entry
+ 
+:entry
+ %return_var <- call @fib (19)
+ call print (%return_var)
+ return 
+}
+
+define @fib (%p1) {
+ 
+:NNNNNNNN
+ br :entry
+ 
+:ENDone
+ return 3
+ 
+:ENDzero
+ return 1
+ 
+:Bigger
+ %p2 <- %p1 - 4
+ %p3 <- %p1 - 2
+ %p4 <- call @fib (%p2)
+ %p5 <- call @fib (%p3)
+ %p6 <- %p4 + %p5
+ %p6 <- %p6 - 1
+ return %p6
+ 
+:TryOne
+ br %var2 :ENDone 
+ br :Bigger
+ 
+:entry
+ %var1 <- %p1 = 1
+ %var2 <- %p1 = 3
+ br %var1 :ENDzero 
+ br :TryOne
+}
+

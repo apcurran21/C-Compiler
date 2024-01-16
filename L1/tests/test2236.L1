@@ -1,0 +1,16 @@
+(@entry
+(@entry
+	0 1
+	mem rsp 0 <- r12
+	r12 <- 1
+	rdi <- 1
+	rdi <<= 1
+	rdi += 1
+	call print 1
+	rdi <- r12
+	call print 1
+	r12 <- mem rsp 0
+	return
+)
+
+)

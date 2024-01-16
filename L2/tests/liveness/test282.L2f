@@ -1,0 +1,7 @@
+(@myF
+	1
+	%p1 <- rdi
+	%p1 += 2
+	rax <- %p1
+	return
+)

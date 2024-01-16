@@ -1,0 +1,30 @@
+define :main(){
+    %arr <- call allocate(7, 15)   
+    %arr_1 <- %arr + 8
+    store %arr_1 <- 19      //init array with [9,7,7]
+
+    call print(%arr)
+    %res <- call :Sum(7, %arr)             //Call sum
+
+    %res <- %res << 1
+    %res <- %res + 1                //Encode the sum result
+    call print (%res)
+    return
+}
+
+define :Sum(%num, %arr){
+    %i <- 1                
+    %res <- 0                //r11 is the result
+
+    :LOOP                   //calculate the sum
+    %arr <- %arr + 8        //add the address
+    %temp <- load %arr 
+    %temp <- %temp >> 1               //decode the value
+    %res <- %res + %temp
+    %i <- %i + 2                 //add the index
+    %cmp <- %i <= %num
+    br %cmp :LOOP 
+
+    return %res
+}
+

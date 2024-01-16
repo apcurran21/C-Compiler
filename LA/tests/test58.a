@@ -1,0 +1,40 @@
+void main () {
+int64 num
+int64 divisor
+int64 rem
+int64 c
+int64 i
+
+num <- 100
+divisor <- 19
+
+c <- divisor = 0
+br c :divbyzero :notzero
+:divbyzero
+print(-1)
+return
+:notzero
+
+c <- divisor < 0
+br c :divneg :divpos
+:divneg
+divisor <- -1 * divisor
+:divpos
+
+c <- num < 0
+br c :numneg :numpos
+:numneg
+num <- -1 * num
+:numpos
+
+c <- num < divisor
+br c :exit :loop
+
+:loop
+num <- num - divisor
+c <- num >= divisor
+br c :loop :exit 
+:exit
+print(num)
+return
+}

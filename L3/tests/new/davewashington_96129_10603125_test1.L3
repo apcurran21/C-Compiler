@@ -1,0 +1,56 @@
+define :main(){
+    %counter <- 1
+    %sum <- 0
+    %end <- call input()
+
+    :POST_INPUT
+    %end <- %end >> 1
+
+    :FOR_COND
+    %cond <- %counter = %end
+    br %cond :END
+
+
+    %divisible3 <- call :divisible(%counter, 3)
+
+    :CHECK
+    %cond2 <- %divisible3 = %counter
+    br %cond2 :ADD_SUM
+    %divisible5 <- call :divisible(%counter, 5)
+    %cond2 <- %divisible5 = %counter
+    br %cond2 :ADD_SUM
+    br :NEXT
+    
+    :ADD_SUM
+    %sum <- %sum + %counter
+
+    :NEXT
+    %counter <- %counter + 1
+    br :FOR_COND
+
+    :END
+    %sum <- %sum << 1
+    %sum <- %sum + 1
+    call print(%sum)
+    return
+}
+
+define :divisible(%divisor, %dividend) {
+    %incr <- 1
+
+    :LOOP
+    %mult <- %incr * %dividend
+    %cond <- %mult = %divisor
+    %cond2 <- %mult > %divisor
+    br %cond :FOUND
+    br %cond2 :NOT_FOUND
+
+    %incr <- %incr + 1
+    br :LOOP
+
+    :FOUND
+    return %divisor
+
+    :NOT_FOUND
+    return 0
+}

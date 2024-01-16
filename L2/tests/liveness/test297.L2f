@@ -1,0 +1,30 @@
+(@main
+	0
+	:call_label0
+	%v <- 21
+	%newVar1 <- 21
+	%newVar1 >>= 1
+	%newVar0 <- %newVar1
+	%newVar2 <- 21
+	%newVar2 >>= 1
+	%newVar0 *= %newVar2
+	%newVar0 <<= 1
+	%newVar0 += 1
+	%newVar0 += 6
+	rdi <- %newVar0
+	rsi <- 1
+	call allocate 2
+	%m <- rax
+	mem %m 8 <- 5
+	mem %m 16 <- 21
+	mem %m 24 <- 21
+	rdi <- %m
+	rsi <- %v
+	mem rsp -8 <- :call_label1
+	call @checkMatrix 2
+	:call_label1
+	%r <- rax
+	rdi <- %r
+	call print 1
+	return
+)

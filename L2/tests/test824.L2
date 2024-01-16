@@ -1,0 +1,80 @@
+// This program generates two array of positive integers and then concatenate them
+// {s:5, 1,2,3,4,5}
+// {s:5, 6,7,8,9,10}
+// {s:10, 1,2,3,4,5,6,7,8,9,10}
+(@main
+  (@main
+    0
+    // initialize first array
+    rdi <- 11
+    rsi <- 3
+    call allocate 2
+    %addr1 <- rax
+    mem rax 16 <- 5
+    mem rax 24 <- 7
+    mem rax 32 <- 9
+    mem rax 40 <- 11
+    rdi <- rax
+    call print 1
+
+    //initialize second array
+    rdi <- 11
+    rsi <- 13
+    call allocate 2
+    %addr2 <- rax
+    mem rax 16 <- 15
+    mem rax 24 <- 17
+    mem rax 32 <- 19
+    mem rax 40 <- 21
+    rdi <- rax
+    call print 1
+
+    // call concat_array function to concatenate the two arrays
+    rdi <- %addr1
+    rsi <- %addr2
+    mem rsp -8 <- :ret_1
+    call @concat_array 2
+    :ret_1
+    rdi <- rax
+    call print 1
+    return
+  )
+
+  (@concat_array
+    2
+    %ptr1 <- rdi
+    %ptr2 <- rsi
+    // calculate the total array length and allocate it
+    rdi <- mem %ptr1 0
+    rdi += mem %ptr2 0
+    rdi <<= 1
+    rdi ++
+    rsi <- 3
+    call allocate 2
+    %ret <- rax
+    // copy the first array
+    rdi <- mem %ptr1 0
+    :do_1
+    %ptr1 += 8
+    rax += 8
+    %tmp <- mem %ptr1 0
+    mem rax 0 <- %tmp
+    rdi --
+    cjump rdi = 0 :done_1
+    goto :do_1
+    :done_1
+    // copy the second array
+    rdi <- mem %ptr2 0
+    :do_2
+    %ptr2 += 8
+    rax += 8
+    %tmp <- mem %ptr2 0
+    mem rax 0 <- %tmp
+    rdi --
+    cjump rdi = 0 :done_2
+    goto :do_2
+    :done_2
+    rax <- %ret
+    return
+  )
+)

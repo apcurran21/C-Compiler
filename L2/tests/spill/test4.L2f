@@ -1,0 +1,15 @@
+(@myF
+0
+
+  %myPtr <- :myF2
+  
+  mem rsp -8 <- :f1_ret
+  call %myPtr 0
+  :f1_ret
+
+  return
+)
+
+%myPtr
+
+%S

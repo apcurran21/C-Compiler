@@ -1,0 +1,27 @@
+void main (){
+	int64 loopvar
+	int64 printvar
+	int64 s
+	int64 d
+	int64 check
+	loopvar <- 0
+	:loop
+	print (loopvar)
+	s <- loopvar
+	s <- s >> 1
+	s <- s << 1
+	d <- s = loopvar
+	br d :even :false
+	:false
+	print (1)
+	br :check
+	:even
+	print (0)
+	br :check
+	:check
+	loopvar <- loopvar + 1
+	check <- loopvar < 20
+	br check :loop :return
+	:return
+	return
+}

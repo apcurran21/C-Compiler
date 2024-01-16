@@ -1,0 +1,31 @@
+(@main
+	0
+	:call_label_ciao__ciao_11
+	%primeCounter <- 0
+	%searchCounter <- 0
+	goto :call_label_ciao__ciao_12
+	:call_label_ciao__ciao_12
+	%weDone <- 58 <= %primeCounter
+	cjump %weDone = 1 :call_label_ciao__ciao_15
+	goto :call_label_ciao__ciao_13
+	:call_label_ciao__ciao_13
+	%searchCounter += 1
+	rdi <- %searchCounter
+	mem rsp -8 <- :call_label_ciao__ciao_16
+	call @prime 1
+	:call_label_ciao__ciao_16
+	%result <- rax
+	%nresult <- %result = 0
+	cjump %nresult = 1 :call_label_ciao__ciao_12
+	goto :call_label_ciao__ciao_14
+	:call_label_ciao__ciao_14
+	%primeCounter += 1
+	goto :call_label_ciao__ciao_12
+	:call_label_ciao__ciao_15
+	%pr <- %searchCounter
+	%pr <<= 1
+	%pr += 1
+	rdi <- %pr
+	call print 1
+	return
+)

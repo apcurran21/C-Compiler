@@ -1,0 +1,11 @@
+(@go
+(@go
+	0 0
+	rsi <- 1
+	rdi <- 3
+	rdi @ rsi rdi 4
+	rax <- rdi
+	return
+)
+
+)

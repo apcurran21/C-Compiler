@@ -1,0 +1,46 @@
+define :main() {
+  %input1 <- call input()
+  %input2 <- call input()
+  %check1 <- %input1 << 32
+  %check1 <- %check1 >> 32
+  %c <- %check1 = %input1
+  br %c :next
+  br :end
+  :next
+  %check2 <- %input2 << 32
+  %check2 <- %check2 >> 32
+  %c <- %check2 = %input2
+  br %c :go
+  br :end
+  :go
+  // Supposed to multiply the two but it just returns the square of the first...
+  %ret <- call :karatsuba(%input1, %input2)
+  call print(%ret)
+  :end
+  return
+}
+
+define :karatsuba(%num1, %num2) {
+  %num1 <- %num1 >> 1
+  %num2 <- %num2 >> 1
+  %a1 <- %num1 >> 16
+  %a2 <- %num1 << 48
+  %a2 <- %a2 >> 48
+  %b1 <- %num1 >> 16
+  %b2 <- %num1 << 48
+  %b2 <- %b2 >> 48
+  %prod1 <- %a1 * %b1
+  %prod2 <- %a2 * %b2
+  %prod3 <- %a1 + %a2
+  %temp <- %b1 + %b2
+  %prod3 <- %prod3 * %temp
+  %midTerm <- %prod3 - %prod1
+  %midTerm <- %midTerm - %prod2
+  %ans <- %prod1 << 32
+  %ans <- %ans + %prod2
+  %midTerm <- %midTerm << 16
+  %ans <- %ans + %midTerm
+  %ans <- %ans << 1
+  %ans <- %ans + 1
+  return %ans
+}

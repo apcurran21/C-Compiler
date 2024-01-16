@@ -1,0 +1,12 @@
+(@leftShiftStuff_4
+	3
+	%v1 <- rdi
+	%v2 <- rsi
+	%v3 <- rdx
+	%v3 <<= %v2
+	%v1 <<= %v3
+	rax <- %v1
+	rax += %v2
+	rax += %v3
+	return
+)

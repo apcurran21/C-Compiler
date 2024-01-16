@@ -1,0 +1,33 @@
+(@newmat
+	2
+	%arg1 <- rdi
+	%arg2 <- rsi
+	:call_label0
+	goto :call_label1
+	:call_label1
+	%arg1 += %arg1
+	%arg1 += 1
+	%arg2 += %arg2
+	%arg2 += 1
+	%newVar1 <- %arg1
+	%newVar1 >>= 1
+	%newVar0 <- %newVar1
+	%newVar2 <- %arg2
+	%newVar2 >>= 1
+	%newVar0 *= %newVar2
+	%newVar0 <<= 1
+	%newVar0 += 1
+	%newVar0 += 4
+	rdi <- %newVar0
+	rsi <- 1
+	call allocate 2
+	%arr <- rax
+	%newVar3 <- %arr
+	%newVar3 += 8
+	mem %newVar3 0 <- %arg1
+	%newVar4 <- %arr
+	%newVar4 += 16
+	mem %newVar4 0 <- %arg2
+	rax <- %arr
+	return
+)

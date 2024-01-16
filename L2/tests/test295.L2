@@ -1,0 +1,57 @@
+(@main
+  (@main
+    0
+    %n <- 120
+    %res <- 0
+    %i <- 0
+    :call_label0
+    %if <- %i <= %n
+
+    cjump %if = 1 :call_label1
+    goto :call_label4
+    :call_label1
+    rdi <- %i
+
+mem rsp -8 <- :call_label5
+    call @isOdd 1
+
+:call_label5
+    %if <- rax
+    %if <- %if = 1
+
+    cjump %if = 1 :call_label2
+    goto :call_label3
+    :call_label2
+    %res <- %res
+    %res += 1
+    :call_label3
+    %i <- %i
+    %i += 1
+    goto :call_label0
+    :call_label4
+    %res <- %res
+    %res <<= 1
+    %res <- %res
+    %res += 1
+    rdi <- %res
+    call print 1
+    rax <- 0
+    return
+  )
+  (@isOdd
+    1
+    %a <- rdi
+    %a <- %a
+    %a >>= 1
+    %a <- %a
+    %a &= 1
+    %if <- %a = 1
+
+    cjump %if = 1 :call_label_ciao_6
+    rax <- 0
+    return
+    :call_label_ciao_6
+    rax <- 1
+    return
+  )
+)

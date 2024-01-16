@@ -1,0 +1,12 @@
+(@plus
+	3
+	%x <- rsi
+	%y <- rdx
+	:call_label0
+	goto :call_label1
+	:call_label1
+	%ans <- %x
+	%ans += %y
+	rax <- %ans
+	return
+)

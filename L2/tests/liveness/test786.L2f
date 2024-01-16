@@ -1,0 +1,42 @@
+(@main
+	0
+	:call_label0
+	%radius <- 5
+	rdi <- %radius
+	mem rsp -8 <- :call_label1
+	call @circ 1
+	:call_label1
+	%value <- rax
+	%value <<= 1
+	%value += 1
+	rdi <- %value
+	call print 1
+	rdi <- %radius
+	mem rsp -8 <- :call_label2
+	call @area 1
+	:call_label2
+	%value <- rax
+	%value <<= 1
+	%value += 1
+	rdi <- %value
+	call print 1
+	rdi <- %radius
+	mem rsp -8 <- :call_label3
+	call @SA 1
+	:call_label3
+	%value <- rax
+	%value <<= 1
+	%value += 1
+	rdi <- %value
+	call print 1
+	rdi <- %radius
+	mem rsp -8 <- :call_label4
+	call @vol 1
+	:call_label4
+	%value <- rax
+	%value <<= 1
+	%value += 1
+	rdi <- %value
+	call print 1
+	return
+)

@@ -1,0 +1,124 @@
+(@main
+(@main
+	0 0
+	:call_label0
+	goto :call_label1
+	:call_label1
+	rdi <- 7
+	rdi >>= 1
+	rdi <<= 1
+	rdi += 1
+	rdi += 4
+	rsi <- 1
+	call allocate 2
+	rdx <- rax
+	rdi <- rdx
+	rdi += 8
+	mem rdi 0 <- 3
+	rdi <- rdx
+	rdi += 16
+	mem rdi 0 <- 7
+	rdi <- 0
+	rdi *= 8
+	rdi += 16
+	rsi <- rdx
+	rsi += rdi
+	rsi <- mem rsi 0
+	rdi <- rdx
+	mem rsp -8 <- :call_label2
+	call @rand 2
+	:call_label2
+	rsi <- rax
+	rsi <<= 1
+	rsi += 1
+	rdi <- rsi
+	call print 1
+	rdi <- 9
+	rdi >>= 1
+	rdi <<= 1
+	rdi += 1
+	rdi += 4
+	rsi <- 1
+	call allocate 2
+	rdx <- rax
+	rdi <- rdx
+	rdi += 8
+	mem rdi 0 <- 3
+	rdi <- rdx
+	rdi += 16
+	mem rdi 0 <- 9
+	rdi <- 0
+	rdi *= 8
+	rdi += 16
+	rsi <- rdx
+	rsi += rdi
+	rsi <- mem rsi 0
+	rdi <- rdx
+	mem rsp -8 <- :call_label3
+	call @rand 2
+	:call_label3
+	rsi <- rax
+	rsi <<= 1
+	rsi += 1
+	rdi <- rsi
+	call print 1
+	return
+)
+
+(@rand
+	2 0
+	rdx <- rdi
+	rcx <- rsi
+	:call_label_ciao_4
+	goto :call_label_ciao_11
+	:call_label_ciao_5
+	rax <- 0
+	return
+	:call_label_ciao_6
+	goto :call_label_ciao_5
+	:call_label_ciao_7
+	rdi <- 0
+	rdi *= 8
+	rdi += 24
+	rsi <- rdx
+	rsi += rdi
+	rcx <- mem rsi 0
+	rdi <- 0
+	rdi += 1
+	rsi <- rdi
+	rsi *= 8
+	rsi += 24
+	rdi <- rdx
+	rdi += rsi
+	r8 <- mem rdi 0
+	rdi <- 0
+	rdi += 2
+	rsi <- rdi
+	rsi *= 8
+	rsi += 24
+	rdi <- rdx
+	rdi += rsi
+	rdi <- mem rdi 0
+	rcx += r8
+	rcx += rdi
+	rax <- rcx
+	return
+	:call_label_ciao_8
+	rax <- 1
+	return
+	:call_label_ciao_9
+	rdi <- 0
+	rdi *= 8
+	rdi += 16
+	rsi <- rdx
+	rsi += rdi
+	rdi <- mem rsi 0
+	r8 <- rdi = rcx
+	goto :call_label_ciao_7
+	:call_label_ciao_10
+	goto :call_label_ciao_9
+	:call_label_ciao_11
+	goto :call_label_ciao_10
+)
+
+)

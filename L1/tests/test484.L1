@@ -1,0 +1,56 @@
+(@LoopyLoop
+(@LoopyLoop
+	0 3
+	mem rsp 16 <- r14
+	mem rsp 8 <- r13
+	mem rsp 0 <- r12
+	rdi <- 1
+	r14 <- 0
+	r13 <- 0
+	r12 <- 0
+	call print 1
+	goto :outerBegin
+	:outerBegin
+	cjump r12 < 3 :true
+	goto :false
+	:true
+	r13 <- 1
+	goto :middleBegin
+	:middleBegin
+	cjump r13 < 3 :true1
+	goto :false1
+	:true1
+	r14 <- 1
+	goto :innerBegin
+	:innerBegin
+	cjump r14 < 3 :true2
+	goto :false2
+	:true2
+	rdi <- r12
+	rdi <<= 1
+	rdi++
+	call print 1
+	rdi <- r13
+	rdi <<= 1
+	rdi++
+	call print 1
+	rdi <- r14
+	rdi <<= 1
+	rdi++
+	call print 1
+	r14++
+	goto :innerBegin
+	:false1
+	r12++
+	goto :outerBegin
+	:false2
+	r13++
+	goto :middleBegin
+	:false
+	r12 <- mem rsp 0
+	r13 <- mem rsp 8
+	r14 <- mem rsp 16
+	return
+)
+
+)

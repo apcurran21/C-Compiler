@@ -1,0 +1,10 @@
+(@decode
+	1
+	%i <- rdi
+	:call_label_ciao_2
+	goto :call_label_ciao_3
+	:call_label_ciao_3
+	%i >>= 1
+	rax <- %i
+	return
+)

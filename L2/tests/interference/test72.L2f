@@ -1,0 +1,7 @@
+(@h
+	0
+	%var <- 209
+	rdi <- %var
+	call print 1
+	return
+)

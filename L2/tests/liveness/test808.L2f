@@ -1,0 +1,8 @@
+(@altRetFun
+	1
+	%v1 <- rdi
+	:call_label_ciao__ciao__ciao_8
+	%v1 -= 10
+	rax <- %v1
+	return
+)

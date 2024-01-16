@@ -1,0 +1,33 @@
+(@dequeue
+	1
+	%queue_ptr <- rdi
+	%old_size <- mem %queue_ptr 0
+	%not_empty <- 0 < %old_size
+	cjump %not_empty = 1 :call_label_ciao__ciao__ciao__ciao__ciao_17
+	goto :call_label_ciao__ciao__ciao__ciao__ciao_16
+	:call_label_ciao__ciao__ciao__ciao__ciao_16
+	rdi <- 0
+	call tensor-error 1
+	rax <- %queue_ptr
+	return
+	:call_label_ciao__ciao__ciao__ciao__ciao_17
+	%val <- mem %queue_ptr 8
+	rdi <- %queue_ptr
+	mem rsp -8 <- :call_label_ciao__ciao__ciao__ciao__ciao_18
+	call @shrink_queue 1
+	:call_label_ciao__ciao__ciao__ciao__ciao_18
+	%queue_ptr <- rax
+	%ret_size <- 2
+	rdi <- %ret_size
+	mem rsp -8 <- :call_label_ciao__ciao__ciao__ciao__ciao_19
+	call @encode 1
+	:call_label_ciao__ciao__ciao__ciao__ciao_19
+	%encoded_ret_size <- rax
+	rdi <- %encoded_ret_size
+	rsi <- %val
+	call allocate 2
+	%ret <- rax
+	mem %ret 16 <- %queue_ptr
+	rax <- %ret
+	return
+)

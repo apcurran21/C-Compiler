@@ -1,0 +1,30 @@
+(@main
+	0
+	%arr_size <- 21
+	rdi <- %arr_size
+	rsi <- 7
+	%arr_size >>= 1
+	call allocate 2
+	%count <- 0
+	%address <- rax
+	:true
+	%address += 8
+	rdi <- 2
+	rsi <- %count
+	mem rsp -8 <- :power_ret
+	call @power 2
+	:power_ret
+	rdi <- rax
+	mem rsp -8 <- :encode_ret
+	call @encode 1
+	:encode_ret
+	%newVariable14 <- %address
+	mem %newVariable14 0 <- rax
+	rdi <- rax
+	call print 1
+	%count++
+	cjump %count < %arr_size :true
+	goto :done
+	:done
+	return
+)

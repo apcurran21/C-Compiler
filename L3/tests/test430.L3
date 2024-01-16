@@ -1,0 +1,58 @@
+define @main () {
+ :NNNNNNNNNNN
+ br :entry
+ :new_label8
+ return 
+ :new_label7
+ %newVar_ciao_1 <- %newVar1 * 8
+ %newVar_ciao_0 <- %newVar_ciao_1 + 8
+ %newVar_ciao_2 <- %p + %newVar_ciao_0
+ store %newVar_ciao_2 <- 43
+ return 
+ :new_label2
+ call tensor-error (%newVar2, %newVar4, %newVar3, %newVar5)
+ br :new_label7
+ :new_label3
+ call tuple-error (%newVar2, %newVar3, %newVar5)
+ br :new_label2
+ :new_label1
+ call tensor-error (%newVar2, %newVar3, %newVar5)
+ br :new_label3
+ :new_label0
+ call tensor-error (%newVar2)
+ br :new_label1
+ :new_label6
+ br :new_label7
+ :new_label5
+ %newVar9 <- %newVar1 < %newVar7
+ br %newVar9 :new_label6 
+ br :new_label3
+ :new_label4
+ %newVar_ciao_3 <- %p + 0
+ %newVar7 <- load %newVar_ciao_3
+ %newVar7 <- %newVar7 << 1
+ %newVar7 <- %newVar7 + 1
+ %newVar3 <- %newVar7
+ %newVar7 <- %newVar7 >> 1
+ %newVar5 <- %newVar1
+ %newVar5 <- %newVar5 << 1
+ %newVar5 <- %newVar5 + 1
+ %newVar8 <- %newVar1 >= 0
+ br %newVar8 :new_label5 
+ br :new_label3
+ :entry
+ %p <- 0
+ %p <- call allocate (7, 1)
+ %newVar0 <- 1
+ %newVar1 <- 1
+ %newVar1 <- 25
+ %newVar1 <- %newVar1 >> 1
+ %newVar2 <- 13
+ %newVar3 <- 1
+ %newVar4 <- 1
+ %newVar5 <- 1
+ %newVar6 <- %p = 0
+ br %newVar6 :new_label0 
+ br :new_label4
+}
+

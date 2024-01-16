@@ -1,0 +1,82 @@
+// prints 10
+define void @main () {
+    // Local Variables
+    :entry
+    int64 %local1
+    int64 %local2
+    int64 %local3
+    int64 %local4
+    int64 %local5
+
+    int64 %v1
+    int64 %v2
+
+    int64 %ret
+
+    int64 %bool
+    code %func
+
+    %local1 <- 5
+    %local2 <- 10
+    %local3 <- 15
+    
+    %v1 <- 5
+    %v2 <- 3
+
+    // Storing in Memory
+    %local4 <- %v1
+    %local5 <- 20
+
+    %ret <- call @myTest3Helper(%v1, %v2)
+
+    // If Statements and Storing Labels
+    %bool <- %ret = 0
+    br %bool :elseCase :ifCase
+
+    :ifCase
+    %func <- @retFun
+    br :endIf
+
+    :elseCase
+    %func <- @altRetFun
+    br :endIf
+
+    :endIf
+
+    // Add from Memory
+    %v1 <- %local1
+    %v1 <- %v1 + %local2
+    %v1 <- %v1 - %local3
+    %v1 <- %v1 + %local5
+
+    %ret <- call %func(%v1)
+
+    // Adjust to match number representation 
+    %ret <- %ret << 1
+    %ret <- %ret + 1
+
+    %v1 <- %ret
+    call print(%v1)
+    return
+}
+
+define int64 @myTest3Helper(int64 %v1, int64 %v2) {
+    :entry
+    int64 %ret
+
+    %ret <- %v1 < %v2
+    return %ret
+}
+
+define int64 @retFun(int64 %v1) {
+
+    :entry
+    %v1 <- %v1 + 10
+    return %v1
+}
+
+define int64 @altRetFun(int64 %v1) {
+    :entry
+    %v1 <- %v1 - 10
+    return %v1
+}

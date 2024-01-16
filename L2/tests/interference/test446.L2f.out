@@ -1,0 +1,21 @@
+%a %m r12 r13 r14 r15 rax rbp rbx rsi
+%check %counter %index %m r12 r13 r14 r15 rax rbp rbx %val
+%counter %check %index %m r12 r13 r14 r15 rax rbp rbx %val
+%index %check %counter %m r12 r13 r14 r15 rax rbp rbx %val
+%m %a %check %counter %index r12 r13 r14 r15 rax rbp rbx %val
+r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx rsi
+r11 r10 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx rsi
+r12 %a %check %counter %index %m r10 r11 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx rsi %val
+r13 %a %check %counter %index %m r10 r11 r12 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx rsi %val
+r14 %a %check %counter %index %m r10 r11 r12 r13 r15 r8 r9 rax rbp rbx rcx rdi rdx rsi %val
+r15 %a %check %counter %index %m r10 r11 r12 r13 r14 r8 r9 rax rbp rbx rcx rdi rdx rsi %val
+r8 r10 r11 r12 r13 r14 r15 r9 rax rbp rbx rcx rdi rdx rsi
+r9 r10 r11 r12 r13 r14 r15 r8 rax rbp rbx rcx rdi rdx rsi
+rax %a %check %counter %index %m r10 r11 r12 r13 r14 r15 r8 r9 rbp rbx rcx rdi rdx rsi %val
+rbp %a %check %counter %index %m r10 r11 r12 r13 r14 r15 r8 r9 rax rbx rcx rdi rdx rsi %val
+rbx %a %check %counter %index %m r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rcx rdi rdx rsi %val
+rcx r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rdi rdx rsi
+rdi r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdx rsi
+rdx r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rsi
+rsi %a r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx
+%val %check %counter %index %m r12 r13 r14 r15 rax rbp rbx

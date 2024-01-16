@@ -1,0 +1,8 @@
+(@l
+	0
+	:call_label_ciao__ciao__ciao_14
+	%var <- 217
+	rdi <- %var
+	call print 1
+	return
+)

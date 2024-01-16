@@ -1,0 +1,96 @@
+(@go
+(@go
+	0 0
+	rdi <- 5
+	rsi <- 5
+	call allocate 2
+	rdi <- 85
+	mem rax 8 <- rdi
+	rdi <- rax
+	rdi <- rdi
+	mem rsp -8 <- :ret
+	call @printArray 1
+	:ret
+	return
+)
+
+(@printArray
+	1 2
+	mem rsp 8 <- r13
+	mem rsp 0 <- r12
+	r12 <- rdi
+	rsi <- r12
+	rsi &= 1
+	cjump rsi = 1 :retFalse
+	goto :continue
+	:continue
+	r13 <- 0
+	goto :loopCheck
+	:loop
+	rdi <- r12
+	rsi <- r13
+	mem rsp -8 <- :printArRet
+	call @printArrayElement 2
+	:printArRet
+	rdi <- r12
+	r13 += 1
+	:loopCheck
+	rax <- mem rdi 0
+	rax >>= 1
+	rdi <- r13
+	cjump rax < rdi :retTrue
+	goto :loop
+	:retFalse
+	rax <- 0
+	r12 <- mem rsp 0
+	r13 <- mem rsp 8
+	return
+	:retTrue
+	rax <- 1
+	r12 <- mem rsp 0
+	r13 <- mem rsp 8
+	return
+)
+
+(@printArrayElement
+	2 2
+	mem rsp 8 <- r13
+	mem rsp 0 <- r12
+	r12 <- rdi
+	r13 <- rsi
+	rsi <<= 1
+	rsi++
+	rdi <- rsi
+	call print 1
+	rdi <- r13
+	rdi <<= 3
+	rdi += 8
+	rdi <<= 1
+	rdi += 1
+	rdi <- rdi
+	call print 1
+	rax <- r13
+	rax++
+	rax <<= 3
+	rdi <- r12
+	rdi += rax
+	rax <- rdi
+	rdi <- mem rax 0
+	rdi &= 1
+	cjump rdi = 1 :notArray
+	goto :array
+	:notArray
+	rdi <- mem rax 0
+	call print 1
+	goto :r
+	:array
+	rdi <- mem rax 0
+	mem rsp -8 <- :r
+	call @printArray 1
+	:r
+	r12 <- mem rsp 0
+	r13 <- mem rsp 8
+	return
+)
+
+)

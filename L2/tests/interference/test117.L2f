@@ -1,0 +1,11 @@
+(@f1
+	6
+	%newVariable10 <- rdi
+	%newVariable10 += rsi
+	%newVariable10 += rdx
+	%newVariable10 += rcx
+	%newVariable10 += r8
+	%newVariable10 += r9
+	rax <- %newVariable10
+	return
+)

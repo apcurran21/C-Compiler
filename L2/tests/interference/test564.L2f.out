@@ -1,0 +1,23 @@
+%computes_remaining %computes_started %done %fib_i %fib_im1 %old_fib_i %past_base_case r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx rsi
+%computes_started %computes_remaining %done %fib_i %fib_im1 %old_fib_i %past_base_case r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx rsi
+%done %computes_remaining %computes_started %fib_i %fib_im1 r12 r13 r14 r15 rax rbp rbx
+%fib_i %computes_remaining %computes_started %done %fib_im1 %old_fib_i %past_base_case r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx rsi
+%fib_im1 %computes_remaining %computes_started %done %fib_i %old_fib_i %past_base_case r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx rsi
+%num r12 r13 r14 r15 rbp rbx
+%old_fib_i %computes_remaining %computes_started %fib_i %fib_im1 r12 r13 r14 r15 rbp rbx
+%past_base_case %computes_remaining %computes_started %fib_i %fib_im1 r12 r13 r14 r15 rbp rbx
+r10 %computes_remaining %computes_started %fib_i %fib_im1 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx rsi
+r11 %computes_remaining %computes_started %fib_i %fib_im1 r10 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx rsi
+r12 %computes_remaining %computes_started %done %fib_i %fib_im1 %num %old_fib_i %past_base_case r10 r11 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx rsi
+r13 %computes_remaining %computes_started %done %fib_i %fib_im1 %num %old_fib_i %past_base_case r10 r11 r12 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx rsi
+r14 %computes_remaining %computes_started %done %fib_i %fib_im1 %num %old_fib_i %past_base_case r10 r11 r12 r13 r15 r8 r9 rax rbp rbx rcx rdi rdx rsi
+r15 %computes_remaining %computes_started %done %fib_i %fib_im1 %num %old_fib_i %past_base_case r10 r11 r12 r13 r14 r8 r9 rax rbp rbx rcx rdi rdx rsi
+r8 %computes_remaining %computes_started %fib_i %fib_im1 r10 r11 r12 r13 r14 r15 r9 rax rbp rbx rcx rdi rdx rsi
+r9 %computes_remaining %computes_started %fib_i %fib_im1 r10 r11 r12 r13 r14 r15 r8 rax rbp rbx rcx rdi rdx rsi
+rax %computes_remaining %computes_started %done %fib_i %fib_im1 r10 r11 r12 r13 r14 r15 r8 r9 rbp rbx rcx rdi rdx rsi
+rbp %computes_remaining %computes_started %done %fib_i %fib_im1 %num %old_fib_i %past_base_case r10 r11 r12 r13 r14 r15 r8 r9 rax rbx rcx rdi rdx rsi
+rbx %computes_remaining %computes_started %done %fib_i %fib_im1 %num %old_fib_i %past_base_case r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rcx rdi rdx rsi
+rcx %computes_remaining %computes_started %fib_i %fib_im1 r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rdi rdx rsi
+rdi %computes_remaining %computes_started %fib_i %fib_im1 r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdx rsi
+rdx %computes_remaining %computes_started %fib_i %fib_im1 r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rsi
+rsi %computes_remaining %computes_started %fib_i %fib_im1 r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx

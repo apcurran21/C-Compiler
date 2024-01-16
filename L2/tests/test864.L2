@@ -1,0 +1,45 @@
+// This program prints out two arrays: an array of square numbers and another with reversed order (each array has 5 elements).
+// {s:5,1,4,9,16,25}
+// {s:5,25,16,9,4,1}
+(@main
+  (@main
+    0
+    rdi <- 5
+    mem rsp -8 <- :encode_ret1
+    call @encode 1
+    :encode_ret1
+    rdi <- rax
+    rsi <- 3
+    call allocate 2
+    %ptr <- rax
+    mem %ptr 16 <- 9
+    mem %ptr 24 <- 19
+    mem %ptr 32 <- 33
+    mem %ptr 40 <- 51
+    rdi <- %ptr
+    call print 1
+
+    rdi <- 5
+    mem rsp -8 <- :encode_ret2
+    call @encode 1
+    :encode_ret2
+    rdi <- rax
+    rsi <- 51
+    call allocate 2
+    %ptr <- rax
+    mem %ptr 16 <- 33
+    mem %ptr 24 <- 19
+    mem %ptr 32 <- 9
+    mem %ptr 40 <- 3
+    rdi <- %ptr
+    call print 1
+    return
+  )
+  (@encode
+    1
+    rax <- rdi
+    rax <<= 1
+    rax += 1
+    return
+  )
+)

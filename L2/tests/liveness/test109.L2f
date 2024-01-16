@@ -1,0 +1,9 @@
+(@printValue
+	1
+	%intToPrint <- rdi
+	%intToPrint <<= 1
+	%intToPrint++
+	rdi <- %intToPrint
+	call print 1
+	return
+)

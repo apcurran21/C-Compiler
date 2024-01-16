@@ -1,0 +1,49 @@
+define @main() {
+    %arrSize <- 50 << 1
+    %arrSize <- %arrSize + 1
+    //actually integer 0
+    %arrInit <- 1
+    %arr <- call allocate(%arrSize, %arrInit)
+    
+    %arr0 <- %arr + 8
+    %arr1 <- %arr + 16
+    store %arr0 <- 3
+    store %arr1 <- 3
+
+    %back0 <- 1
+    %back1 <- 1
+
+    %i <- 2
+    :loop
+    %i <- %i + 1
+    %sum <- %back0 + %back1
+    %ssum <- %sum << 1
+    %ssum <- %ssum + 1
+    %offset <- %i * 8
+    %addr <- %arr + %offset
+    store %addr <- %ssum
+    %back0 <- %back1
+    %back1 <- %sum
+    %continue <- %i < 50
+    br %continue :loop
+
+    call print(%arr)
+
+    %arrsum <- 0
+    %i <- 0
+    :loop2
+    %dcontinue <- %i >= 50
+    br %dcontinue :done
+    %offset <- %i * 8
+    %addr <- %offset + %arr
+    %arrval <- load %addr
+    %arrval <- %arrval >> 1
+    %arrsum <- %arrsum + %arrval
+    %i <- %i + 1
+    br :loop2
+    :done
+    %arrsum <- %arrsum << 1
+    %arrsum <- %arrsum + 1
+    call print(%arrsum)
+    return
+}

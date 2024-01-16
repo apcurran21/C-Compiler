@@ -1,0 +1,28 @@
+// A function that takes 7 arguments, adds them together and multiplies by 2, and a function to decode the result
+// output: 14
+
+define :main() {
+	%result <- call :do_math(1,1,1,1,1,1,1)
+	call print(%result)
+	return
+}
+
+define :do_math(%a, %b, %c, %d, %e, %f, %g) {
+	%result  <- 0
+	%result <- %a + %b 
+	%result <- %result + %c 
+	%result <- %result + %d 
+	%result <- %result + %e 
+	%result <- %result + %f 
+	%result <- %result + %g 
+	%result <- %result * 2
+	
+	call :decode(%result)
+	return 
+}
+
+define :decode(%a) {
+	%a <- %a << 1
+	%a <- %a + 1
+	return %a
+}

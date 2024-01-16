@@ -1,0 +1,69 @@
+(@main
+(@main
+	0 2
+	mem rsp 8 <- r13
+	mem rsp 0 <- r12
+	rdi <- 10
+	rdi <<= 1
+	rdi += 1
+	rsi <- 20
+	r13 <- rsi
+	r13 <<= 1
+	r13 += 1
+	rsi <- 11
+	call allocate 2
+	r12 <- rax
+	rdi <- r13
+	rsi <- 11
+	call allocate 2
+	r13 <- rax
+	rdi <- r12
+	mem rsp -8 <- :call_label2
+	call @CalcArrSum 1
+	:call_label2
+	r12 <- rax
+	rdi <- r13
+	mem rsp -8 <- :call_label3
+	call @CalcArrSum 1
+	:call_label3
+	rdi <- rax
+	rsi <- rdi < r12
+	cjump rsi = 1 :call_label0
+	goto :call_label1
+	:call_label0
+	rdi <- r12
+	rdi <<= 1
+	rdi += 1
+	call print 1
+	r12 <- mem rsp 0
+	r13 <- mem rsp 8
+	return
+	:call_label1
+	rdi <<= 1
+	rdi += 1
+	call print 1
+	r12 <- mem rsp 0
+	r13 <- mem rsp 8
+	return
+)
+
+(@CalcArrSum
+	1 0
+	r8 <- mem rdi 0
+	rcx <- 0
+	rdx <- 0
+	rsi <- rdi
+	:call_label_ciao_4
+	rsi += 8
+	rdi <- mem rsi 0
+	rcx += 1
+	rdx += rdi
+	rdi <- rcx < r8
+	cjump rdi = 1 :call_label_ciao_4
+	goto :call_label_ciao_5
+	:call_label_ciao_5
+	rax <- rdx
+	return
+)
+
+)

@@ -1,0 +1,20 @@
+(@mod10000
+	1
+	%n <- rdi
+	:call_label_ciao__ciao__ciao__ciao__ciao__ciao__ciao_32
+	%icmp <- 20000 <= %n
+	cjump %icmp = 1 :call_label_ciao__ciao__ciao__ciao__ciao__ciao__ciao_34
+	goto :call_label_ciao__ciao__ciao__ciao__ciao__ciao__ciao_33
+	:call_label_ciao__ciao__ciao__ciao__ciao__ciao__ciao_33
+	rax <- %n
+	return
+	:call_label_ciao__ciao__ciao__ciao__ciao__ciao__ciao_34
+	%n -= 20000
+	rdi <- %n
+	mem rsp -8 <- :call_label_ciao__ciao__ciao__ciao__ciao__ciao__ciao_35
+	call @mod10000 1
+	:call_label_ciao__ciao__ciao__ciao__ciao__ciao__ciao_35
+	%n <- rax
+	rax <- %n
+	return
+)

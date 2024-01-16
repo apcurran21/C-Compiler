@@ -1,0 +1,15 @@
+(@myF16
+	1
+	%rdi <- rdi
+	%myvar0 <- %rdi
+	%myvar0 <<= 1
+	%myvar0 += 1
+	%rdi <- %myvar0
+	rdi <- %rdi
+	call print 1
+	rdi <- %myvar0
+	mem rsp -8 <- :call_label_ciao__ciao__ciao__ciao_23
+	call @myF32 1
+	:call_label_ciao__ciao__ciao__ciao_23
+	return
+)

@@ -1,0 +1,60 @@
+// factorial test
+(@factorial
+  (@factorial
+   0 0
+   rdi <- 5
+   mem rsp -8 <- :fact_rtn
+   call @calc 1
+   :fact_rtn
+   return
+  )
+  (@calc
+   1 5
+   // save callee-save regs
+   mem rsp 8 <- r12
+   mem rsp 16 <- r13
+   mem rsp 24 <- r14
+   mem rsp 32 <- r15
+
+   // set increment and save limit
+   r12 <- 0
+   r13 <- rdi
+
+   // shift and increment allocation amount
+   r14 <- r13
+   r14 <<= 1
+   r14 += 1
+
+   // allocate array on heap, values initialized to 1
+   rdi <- r14
+   rsi <- 1
+   call allocate 2
+   r14 <- rax
+   r14 += 8
+
+   :loop_bgn
+   // exit condition
+   cjump r13 < r12 :loop_end
+
+   rdi <- mem r14 0
+   rdi <<= 1
+   rdi += 1
+   call print 1
+
+   r12 += 1
+   r15 <- mem r14 0
+   r15 *= r12
+   mem r14 8 <- r15
+   r14 += 8
+
+   goto :loop_bgn
+   :loop_end
+
+   // restore callee-save regs
+   r12 <- mem rsp 8
+   r13 <- mem rsp 16
+   r14 <- mem rsp 24
+   r15 <- mem rsp 32
+   return
+  )
+)

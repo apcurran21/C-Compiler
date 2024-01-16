@@ -1,0 +1,9 @@
+(@o
+	0
+	%var <- 223
+	rdi <- %var
+	call print 1
+	%var <- rax
+	rax <- %var
+	return
+)

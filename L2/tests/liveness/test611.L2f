@@ -1,0 +1,19 @@
+(@CalcArrSum
+	1
+	%TargetArr <- rdi
+	%ArrLen <- mem %TargetArr 0
+	%Count <- 0
+	%ArrSum <- 0
+	%CurrOffset <- %TargetArr
+	:call_label_ciao_4
+	%CurrOffset += 8
+	%CurrElm <- mem %CurrOffset 0
+	%Count += 1
+	%ArrSum += %CurrElm
+	%ContLoop <- %Count < %ArrLen
+	cjump %ContLoop = 1 :call_label_ciao_4
+	goto :call_label_ciao_5
+	:call_label_ciao_5
+	rax <- %ArrSum
+	return
+)

@@ -1,0 +1,15 @@
+(@customer_divide
+	2
+	%dividend <- rdi
+	%divisor <- rsi
+	%ret <- 0
+	:call_label_ciao__ciao__ciao__ciao__ciao_22
+	%dividend -= %divisor
+	%ret += 1
+	%flg <- %dividend = 0
+	cjump %flg = 1 :call_label_ciao__ciao__ciao__ciao__ciao_23
+	goto :call_label_ciao__ciao__ciao__ciao__ciao_22
+	:call_label_ciao__ciao__ciao__ciao__ciao_23
+	rax <- %ret
+	return
+)

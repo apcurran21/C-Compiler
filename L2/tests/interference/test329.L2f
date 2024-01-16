@@ -1,0 +1,20 @@
+(@gimmeACall
+	1
+	%jennysNumber <- rdi
+	%count <- 0
+	:call_label_ciao_8
+	%compVal <- %count = 7
+	cjump %compVal = 1 :call_label_ciao_10
+	goto :call_label_ciao_9
+	:call_label_ciao_9
+	%number <- mem %jennysNumber 0
+	%number <<= 1
+	%number += 1
+	rdi <- %number
+	call print 1
+	%count += 1
+	%jennysNumber += 8
+	goto :call_label_ciao_8
+	:call_label_ciao_10
+	return
+)

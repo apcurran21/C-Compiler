@@ -1,0 +1,11 @@
+(@myTest3Helper
+	2
+	%v1 <- rdi
+	%v2 <- rsi
+	:call_label_ciao_7
+	goto :call_label_ciao_8
+	:call_label_ciao_8
+	%ret <- %v1 < %v2
+	rax <- %ret
+	return
+)

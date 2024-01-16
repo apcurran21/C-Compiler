@@ -1,0 +1,62 @@
+(@main
+  (@main
+    0
+    %c <- 9
+    %c <- %c
+    %c *= 4
+    %c <- %c
+    %c += 1
+    %c <- %c
+    %c <<= 3
+    %c <- %c
+    %c -= 10
+    %x <- 1623
+    %should_lea <- %c
+    %should_lea *= 4
+    %should_lea <- %should_lea
+    %should_lea += %x
+    rdi <- %x
+
+mem rsp -8 <- :call_label0
+    call @return_merge 1
+
+:call_label0
+    %abc <- rax
+    %size <- %abc
+    %size <<= 1
+    %size <- %size
+    %size += 1
+    rdi <- %size
+    rsi <- 0
+    call allocate 2
+    %ptr <- rax
+    rdi <- %ptr
+
+mem rsp -8 <- :call_label1
+    call @aliasing_issues 1
+
+:call_label1
+    rax <- %c
+    return
+  )
+  (@return_merge
+    1
+    %p <- rdi
+    %r <- %p
+    %r += 1
+    rax <- %r
+    return
+  )
+  (@aliasing_issues
+    1
+    %p <- rdi
+    %v <- %p
+    mem %p 0 <- 5
+    %x <- mem %p 0
+    mem %v 0 <- 4
+    rdi <- %x
+    call print 1
+    rax <- 0
+    return
+  )
+)

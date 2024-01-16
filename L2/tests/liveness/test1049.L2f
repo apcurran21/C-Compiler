@@ -1,0 +1,33 @@
+(@prime
+	1
+	%arg <- rdi
+	:call_label_ciao_6
+	goto :call_label_ciao_11
+	:call_label_ciao_7
+	rax <- 0
+	return
+	:call_label_ciao_8
+	rax <- 1
+	return
+	:call_label_ciao_9
+	%reloop <- %counter <= %halfarg
+	cjump %reloop = 1 :call_label_ciao_10
+	goto :call_label_ciao_8
+	:call_label_ciao_10
+	%halfarg <- %arg
+	%halfarg >>= 1
+	%counter += 1
+	rdi <- %arg
+	rsi <- %counter
+	mem rsp -8 <- :call_label_ciao_12
+	call @mod 2
+	:call_label_ciao_12
+	%pstatus <- rax
+	cjump %pstatus = 1 :call_label_ciao_7
+	goto :call_label_ciao_9
+	:call_label_ciao_11
+	%counter <- 1
+	%inputIs2 <- %arg = 2
+	cjump %inputIs2 = 1 :call_label_ciao_8
+	goto :call_label_ciao_10
+)

@@ -1,0 +1,11 @@
+(@meh
+	0
+	%memmy <- 69
+	rdi <- %memmy
+	rsi <- 3
+	call allocate 2
+	%thing <- rax
+	rdi <- %thing
+	call print 1
+	return
+)

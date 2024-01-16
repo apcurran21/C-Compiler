@@ -1,0 +1,47 @@
+define :main() {
+	:input
+	//%topSize <- call input //get input for number of sub-arrays in tensor
+	%topSize <- 9
+	%temp <- %topSize = 1
+	
+	//%subSize <- call input //get input for size of sub-arrays
+	%subSize <- 7
+	%temp <- %subSize = 1
+	br %temp :input
+	
+	%defaultArray <- call allocate(%subSize, 1)
+	
+	%arrayLoc <- call allocate(%topSize, %defaultArray) //allocate array of 3 pointers, initializing them to the previously allocated array
+	
+	call print(%arrayLoc)
+	
+	%numSubs <- 0
+	
+	:allocate_subarray
+	%temp <- %topSize = 1
+	br %temp :modify_first_subarray
+	%temp <- %topSize < 1
+	br %temp :end
+	
+	%currLoc <- call allocate(%subSize, 1)
+	%numSubs <- %numSubs + 1
+	%nextElem <- %numSubs * 8
+	%nextElem <- %arrayLoc + %nextElem
+	store %nextElem <- %currLoc
+	
+	%temp <- %topSize >> 1
+	%temp <- %numSubs < %temp
+	br %temp :allocate_subarray
+	
+	:modify_first_subarray
+	%temp <- %arrayLoc + 8
+	%firstElemTop <- load %temp //first element in top-level array, also address of first sub-array
+	%temp <- %firstElemTop + 8
+	%firstElemSub <- load %temp //first element in first sub-array
+	%firstElemSub <- %firstElemSub + 2
+	store %temp <- %firstElemSub
+	
+	:end
+	call print(%arrayLoc)
+	return %arrayLoc
+}

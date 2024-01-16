@@ -1,0 +1,20 @@
+%my_V1 %my_V2 r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx rsi
+%my_V2 %my_V1 r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx %reg rsi
+r10 %my_V1 %my_V2 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx %reg rsi
+r11 %my_V1 %my_V2 r10 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx %reg rsi
+r12 %my_V1 %my_V2 r10 r11 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx %reg rsi %var1 %var2
+r13 %my_V1 %my_V2 r10 r11 r12 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx %reg rsi %var1 %var2
+r14 %my_V1 %my_V2 r10 r11 r12 r13 r15 r8 r9 rax rbp rbx rcx rdi rdx %reg rsi %var1 %var2
+r15 %my_V1 %my_V2 r10 r11 r12 r13 r14 r8 r9 rax rbp rbx rcx rdi rdx %reg rsi %var1 %var2
+r8 %my_V1 %my_V2 r10 r11 r12 r13 r14 r15 r9 rax rbp rbx rcx rdi rdx %reg rsi
+r9 %my_V1 %my_V2 r10 r11 r12 r13 r14 r15 r8 rax rbp rbx rcx rdi rdx %reg rsi
+rax %my_V1 %my_V2 r10 r11 r12 r13 r14 r15 r8 r9 rbp rbx rcx rdi rdx %reg rsi
+rbp %my_V1 %my_V2 r10 r11 r12 r13 r14 r15 r8 r9 rax rbx rcx rdi rdx %reg rsi %var1 %var2
+rbx %my_V1 %my_V2 r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rcx rdi rdx %reg rsi %var1 %var2
+rcx %my_V1 %my_V2 r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rdi rdx %reg rsi
+rdi %my_V1 %my_V2 r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdx %reg rsi %var2
+rdx %my_V1 %my_V2 r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi %reg rsi
+%reg %my_V2 r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx rsi
+rsi %my_V1 %my_V2 r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx %reg
+%var1 r12 r13 r14 r15 rbp rbx %var2
+%var2 r12 r13 r14 r15 rbp rbx rdi %var1

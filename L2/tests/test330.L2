@@ -1,0 +1,161 @@
+(@main
+  (@getMax
+    1
+    %array <- rdi
+    %i <- 0
+    %maxValue <- -1
+    %currPointer <- %array
+    %arrayLength <- mem %currPointer 0
+    :call_label0
+    %currPointer <- %currPointer
+    %currPointer += 8
+    %currValue <- mem %currPointer 0
+    %isGreaterThanMaxValue <- %maxValue < %currValue
+
+    cjump %isGreaterThanMaxValue = 1 :call_label1
+    goto :call_label2
+    :call_label1
+    %maxValue <- %currValue
+    :call_label2
+    %i <- %i
+    %i += 1
+    %isIteratorLessThanArrayLength <- %i < %arrayLength
+
+    cjump %isIteratorLessThanArrayLength = 1 :call_label0
+    goto :call_label3
+    :call_label3
+    rax <- %maxValue
+    return
+  )
+  (@getMin
+    1
+    %array <- rdi
+    %i <- 0
+    %minValue <- 999999
+    %currPointer <- %array
+    %arrayLength <- mem %currPointer 0
+    :call_label_ciao_4
+    %currPointer <- %currPointer
+    %currPointer += 8
+    %currValue <- mem %currPointer 0
+    %isLessThanMinValue <- %currValue < %minValue
+
+    cjump %isLessThanMinValue = 1 :call_label_ciao_5
+    goto :call_label_ciao_6
+    :call_label_ciao_5
+    %minValue <- %currValue
+    :call_label_ciao_6
+    %i <- %i
+    %i += 1
+    %isIteratorLessThanArrayLength <- %i < %arrayLength
+
+    cjump %isIteratorLessThanArrayLength = 1 :call_label_ciao_4
+    goto :call_label_ciao_7
+    :call_label_ciao_7
+    rax <- %minValue
+    return
+  )
+  (@getSum
+    1
+    %array <- rdi
+    %i <- 0
+    %sum <- 1
+    %currPointer <- %array
+    %arrayLength <- mem %currPointer 0
+    :call_label_ciao__ciao_8
+    %currPointer <- %currPointer
+    %currPointer += 8
+    %currValue <- mem %currPointer 0
+    %sum <- %sum
+    %sum -= 1
+    %sum <- %sum
+    %sum >>= 1
+    %currValue <- %currValue
+    %currValue -= 1
+    %currValue <- %currValue
+    %currValue >>= 1
+    %sum <- %sum
+    %sum += %currValue
+    %sum <- %sum
+    %sum <<= 1
+    %sum <- %sum
+    %sum += 1
+    :call_label_ciao__ciao_9
+    %i <- %i
+    %i += 1
+    %isIteratorLessThanArrayLength <- %i < %arrayLength
+
+    cjump %isIteratorLessThanArrayLength = 1 :call_label_ciao__ciao_8
+    goto :call_label_ciao__ciao_10
+    :call_label_ciao__ciao_10
+    rax <- %sum
+    return
+  )
+  (@main
+    0
+    rdi <- 21
+    rsi <- 1
+    call allocate 2
+    %arr <- rax
+    %element1Address <- %arr
+    %element1Address += 8
+    %element2Address <- %arr
+    %element2Address += 16
+    %element3Address <- %arr
+    %element3Address += 24
+    %element4Address <- %arr
+    %element4Address += 32
+    %element5Address <- %arr
+    %element5Address += 40
+    %element6Address <- %arr
+    %element6Address += 48
+    %element7Address <- %arr
+    %element7Address += 56
+    %element8Address <- %arr
+    %element8Address += 64
+    %element9Address <- %arr
+    %element9Address += 72
+    %element10Address <- %arr
+    %element10Address += 80
+    mem %element1Address 0 <- 25
+    mem %element2Address 0 <- 41
+    mem %element3Address 0 <- 37
+    mem %element4Address 0 <- 107
+    mem %element5Address 0 <- 27
+    mem %element6Address 0 <- 49
+    mem %element7Address 0 <- 121
+    mem %element8Address 0 <- 81
+    mem %element9Address 0 <- 73
+    mem %element10Address 0 <- 7
+    rdi <- %arr
+    call print 1
+    rdi <- %arr
+
+mem rsp -8 <- :call_label_ciao__ciao__ciao_11
+    call @getMax 1
+
+:call_label_ciao__ciao__ciao_11
+    %max <- rax
+    rdi <- %max
+    call print 1
+    rdi <- %arr
+
+mem rsp -8 <- :call_label_ciao__ciao__ciao_12
+    call @getMin 1
+
+:call_label_ciao__ciao__ciao_12
+    %min <- rax
+    rdi <- %min
+    call print 1
+    rdi <- %arr
+
+mem rsp -8 <- :call_label_ciao__ciao__ciao_13
+    call @getSum 1
+
+:call_label_ciao__ciao__ciao_13
+    %total <- rax
+    rdi <- %total
+    call print 1
+    return
+  )
+)

@@ -1,0 +1,79 @@
+(@run_bubble_sort
+(@Bubble_Sort
+	6 6
+	mem rsp 40 <- rbx
+	mem rsp 32 <- rbp
+	mem rsp 24 <- r15
+	mem rsp 16 <- r14
+	mem rsp 8 <- r13
+	mem rsp 0 <- r12
+	r15 <- rdi
+	rbp <- rsi
+	r12 <- rdx
+	rbx <- rcx
+	r13 <- r8
+	r14 <- r9
+	rdi <- 6
+	rdi <<= 1
+	rdi += 1
+	rsi <- 0
+	rsi <<= 1
+	rsi += 1
+	call allocate 2
+	rdi <- rax
+	mem rdi 8 <- r15
+	mem rdi 16 <- rbp
+	mem rdi 24 <- r12
+	mem rdi 32 <- rbx
+	mem rdi 40 <- r13
+	mem rdi 48 <- r14
+	r14 <- rdi
+	r14 += 48
+	r15 <- rdi
+	r15 += 8
+	r12 <- r14
+	:comparison_end_point_decrement_loop
+	r13 <- r15
+	:print_loop
+	rdi <- mem r13 0
+	rdi <<= 1
+	rdi += 1
+	call print 1
+	r13 += 8
+	cjump r13 <= r14 :print_loop
+	r13 <- r15
+	:comparison_loop
+	rsi <- mem r13 0
+	rdi <- mem r13 8
+	cjump rsi <= rdi :dont_swap
+	mem r13 0 <- rdi
+	mem r13 8 <- rsi
+	:dont_swap
+	r13 += 8
+	cjump r13 < r12 :comparison_loop
+	r12 -= 8
+	cjump r15 <= r12 :comparison_end_point_decrement_loop
+	r12 <- mem rsp 0
+	r13 <- mem rsp 8
+	r14 <- mem rsp 16
+	r15 <- mem rsp 24
+	rbp <- mem rsp 32
+	rbx <- mem rsp 40
+	return
+)
+
+(@run_bubble_sort
+	0 0
+	mem rsp -8 <- :ret_from_Bubble_Sort
+	rdi <- 77
+	rsi <- 42
+	rdx <- 13
+	rcx <- 16
+	r8 <- 774
+	r9 <- 209
+	call @Bubble_Sort 6
+	:ret_from_Bubble_Sort
+	return
+)
+
+)

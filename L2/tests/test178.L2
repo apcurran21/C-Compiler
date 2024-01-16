@@ -1,0 +1,266 @@
+(@main
+  (@main
+    0
+    %size <- 1
+    %var3 <- %size
+    %var3 <<= 3
+    %var4 <- %size
+    %var4 <<= 4
+    %var5 <- %size
+    %var5 <<= 5
+    %var6 <- %size
+    %var6 <<= 6
+    %var7 <- %size
+    %var7 <<= 7
+    %var2 <- %size
+    %var2 <<= 2
+    %var1 <- %size
+    %var1 <<= 1
+    %size <- %var2
+    %size -= %var1
+    %size <- %size
+    %size += %var4
+    %size <- %size
+    %size -= %var3
+    %size <- %size
+    %size += %var6
+    %size <- %size
+    %size -= %var5
+    %size <- %size
+    %size >>= 2
+    %size <- %size
+    %size += 1
+    %init <- 1
+    rdi <- 3
+    rsi <- 1
+    call allocate 2
+    %x_1 <- rax
+    rdi <- 3
+    rsi <- %x_1
+    call allocate 2
+    %x_1 <- rax
+    rdi <- 3
+    rsi <- %x_1
+    call allocate 2
+    %x_1 <- rax
+    rdi <- 3
+    rsi <- %x_1
+    call allocate 2
+    %x_1 <- rax
+    rdi <- %x_1
+    call print 1
+    rdi <- %size
+    rsi <- %init
+    call allocate 2
+    %start <- rax
+    rdi <- %start
+    rsi <- %size
+    mem rsp -8 <- :call_label0
+    call @map 2
+    :call_label0
+    %mapped <- rax
+    rdi <- %mapped
+    call print 1
+    %which <- 0
+    rdi <- %mapped
+    rsi <- %size
+    rdx <- %which
+    mem rsp -8 <- :call_label1
+    call @filter 3
+    :call_label1
+    %fin <- rax
+    rdi <- %fin
+    call print 1
+    rdi <- %fin
+    rsi <- %size
+    mem rsp -8 <- :call_label2
+    call @map 2
+    :call_label2
+    %mapped <- rax
+    rdi <- %mapped
+    call print 1
+    %which <- 1
+    rdi <- %mapped
+    rsi <- %size
+    rdx <- %which
+    mem rsp -8 <- :call_label3
+    call @filter 3
+    :call_label3
+    %fin <- rax
+    rdi <- %fin
+    call print 1
+    %size <- %size
+    rdi <- %fin
+    rsi <- %size
+    mem rsp -8 <- :call_label4
+    call @map 2
+    :call_label4
+    %mapped <- rax
+    rdi <- %mapped
+    rsi <- %size
+    mem rsp -8 <- :call_label5
+    call @acc 2
+    :call_label5
+    %do <- rax
+    rdi <- %do
+    call print 1
+    return
+  )
+  (@acc
+    2
+    %s <- rdi
+    %n <- rsi
+    %a <- 0
+    %refcount <- %n
+    %refcount -= 2
+    %addr <- %s
+    %addr += 8
+    :call_label_ciao_6
+    %res <- %refcount <= 0
+    
+    cjump %res = 1 :call_label_ciao_8
+    goto :call_label_ciao_7
+    :call_label_ciao_7
+    %val1 <- mem %addr 0 
+    %a <- %a
+    %a += %val1
+    %refcount <- %refcount
+    %refcount -= 2
+    %addr <- %addr
+    %addr += 8
+    goto :call_label_ciao_6
+    :call_label_ciao_8
+    %a <- %a
+    %a -= 2
+    %a <- %a
+    %a -= 2
+    rax <- %a
+    return
+  )
+  (@filter
+    3
+    %s <- rdi
+    %n <- rsi
+    %w <- rdx
+    %refcount <- %n
+    %refcount -= 2
+    %addr <- %s
+    %addr += 8
+    %switch <- %w
+    :call_label_ciao__ciao_9
+    %res <- %refcount <= 0
+    
+    cjump %res = 1 :call_label_ciao__ciao_14
+    goto :call_label_ciao__ciao_10
+    :call_label_ciao__ciao_10
+    %val1 <- mem %addr 0 
+    %val2 <- %switch = 0
+    
+    cjump %val2 = 1 :call_label_ciao__ciao_11
+    goto :call_label_ciao__ciao_12
+    :call_label_ciao__ciao_11
+    rdi <- %val1
+    mem rsp -8 <- :call_label_ciao__ciao_15
+    call @even_nil 1
+    :call_label_ciao__ciao_15
+    %val2 <- rax
+    goto :call_label_ciao__ciao_13
+    :call_label_ciao__ciao_12
+    rdi <- %val1
+    mem rsp -8 <- :call_label_ciao__ciao_16
+    call @odd_nil 1
+    :call_label_ciao__ciao_16
+    %val2 <- rax
+    :call_label_ciao__ciao_13
+    mem %addr 0  <- %val2
+    %refcount <- %refcount
+    %refcount -= 2
+    %addr <- %addr
+    %addr += 8
+    goto :call_label_ciao__ciao_9
+    :call_label_ciao__ciao_14
+    rax <- %s
+    return
+  )
+  (@even_nil
+    1
+    %n <- rdi
+    %n <- %n
+    %n >>= 1
+    %var <- %n
+    %var &= 1
+    rax <- %var
+    return
+  )
+  (@odd_nil
+    1
+    %n <- rdi
+    %n <- %n
+    %n >>= 1
+    %n <- %n
+    %n -= 1
+    %var <- %n
+    %var &= 1
+    rax <- %var
+    return
+  )
+  (@map
+    2
+    %s <- rdi
+    %n <- rsi
+    %refcount <- %n
+    %refcount -= 2
+    %addr <- %s
+    %addr += 8
+    :call_label_ciao__ciao__ciao_17
+    %res <- %refcount <= 0
+    
+    cjump %res = 1 :call_label_ciao__ciao__ciao_19
+    goto :call_label_ciao__ciao__ciao_18
+    :call_label_ciao__ciao__ciao_18
+    %val1 <- mem %addr 0 
+    rdi <- %val1
+    rsi <- %refcount
+    mem rsp -8 <- :call_label_ciao__ciao__ciao_20
+    call @i_wish 2
+    :call_label_ciao__ciao__ciao_20
+    %val2 <- rax
+    %val2 <- %val2
+    %val2 <<= 1
+    %val2 <- %val2
+    %val2 += 1
+    mem %addr 0  <- %val2
+    %refcount <- %refcount
+    %refcount -= 2
+    %addr <- %addr
+    %addr += 8
+    goto :call_label_ciao__ciao__ciao_17
+    :call_label_ciao__ciao__ciao_19
+    rax <- %s
+    return
+  )
+  (@i_wish
+    2
+    %val <- rdi
+    %scaler <- rsi
+    %out_val <- %scaler
+    %out_val <<= 1
+    %out_val <- %scaler
+    %out_val += 1
+    rdi <- %scaler
+    mem rsp -8 <- :call_label_ciao__ciao__ciao__ciao_23
+    call @even_nil 1
+    :call_label_ciao__ciao__ciao__ciao_23
+    %x <- rax
+    %result <- %x = 0
+    
+    cjump %result = 1 :call_label_ciao__ciao__ciao__ciao_21
+    goto :call_label_ciao__ciao__ciao__ciao_22
+    :call_label_ciao__ciao__ciao__ciao_21
+    %out_val <- %out_val
+    %out_val += 1
+    :call_label_ciao__ciao__ciao__ciao_22
+    rax <- %out_val
+    return
+  )
+)

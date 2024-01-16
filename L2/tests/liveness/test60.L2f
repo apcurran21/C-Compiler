@@ -1,0 +1,19 @@
+(@gcd
+	2
+	cjump rdi = 1 :equal_zero
+	goto :continue
+	:equal_zero
+	rax <- rsi
+	return
+	:continue
+	cjump rsi = 0 :finish
+	cjump rdi <= rsi :else
+	rdi -= rsi
+	goto :continue
+	:else
+	rsi -= rdi
+	goto :continue
+	:finish
+	rax <- rdi
+	return
+)

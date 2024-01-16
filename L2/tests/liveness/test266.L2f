@@ -1,0 +1,60 @@
+(@main
+	0
+	:call_label0
+	%test_value <- 1234
+	%newVar1 <- 9
+	%newVar1 >>= 1
+	%newVar0 <- %newVar1
+	%newVar2 <- 9
+	%newVar2 >>= 1
+	%newVar0 *= %newVar2
+	%newVar3 <- 9
+	%newVar3 >>= 1
+	%newVar0 *= %newVar3
+	%newVar0 <<= 1
+	%newVar0 += 1
+	%newVar0 += 8
+	rdi <- %newVar0
+	rsi <- 1
+	call allocate 2
+	%matrix <- rax
+	mem %matrix 8 <- 7
+	mem %matrix 16 <- 9
+	mem %matrix 24 <- 9
+	mem %matrix 32 <- 9
+	rdi <- %matrix
+	rsi <- %test_value
+	mem rsp -8 <- :call_label1
+	call @find 2
+	:call_label1
+	%result <- rax
+	rdi <- %result
+	call print 1
+	%newVar9 <- 0
+	%newVar11 <- mem %matrix 24
+	%newVar14 <- mem %matrix 32
+	%newVar16 <- 1
+	%newVar15 <- %newVar14
+	%newVar15 >>= 1
+	%newVar16 *= %newVar15
+	%newVar9 @ %newVar9 %newVar16 1
+	%newVar12 <- %newVar11
+	%newVar12 >>= 1
+	%newVar16 *= %newVar12
+	%newVar9 @ %newVar9 %newVar16 2
+	%newVar8 <- %newVar9
+	%newVar8 *= 8
+	%newVar8 += 40
+	%newVar19 <- %matrix
+	%newVar19 += %newVar8
+	mem %newVar19 0 <- %test_value
+	rdi <- %matrix
+	rsi <- %test_value
+	mem rsp -8 <- :call_label2
+	call @find 2
+	:call_label2
+	%result <- rax
+	rdi <- %result
+	call print 1
+	return
+)

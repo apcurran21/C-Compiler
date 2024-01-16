@@ -1,0 +1,12 @@
+(@calculate
+	2
+	rax <- 1
+	%newVariable <- 0
+	:loop_begin
+	cjump rsi <= %newVariable :loop_end
+	rax *= rdi
+	%newVariable += 1
+	goto :loop_begin
+	:loop_end
+	return
+)

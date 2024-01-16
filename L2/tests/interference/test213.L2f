@@ -1,0 +1,35 @@
+(@is_leap_year
+	1
+	%year <- rdi
+	%flag <- %year
+	%flag &= 15
+	%i <- %flag = 0
+	cjump %i = 1 :call_label_ciao__ciao__ciao__ciao_17
+	goto :call_label_ciao__ciao__ciao__ciao_12
+	:call_label_ciao__ciao__ciao__ciao_12
+	%flag <- %year
+	%flag >>= 2
+	:call_label_ciao__ciao__ciao__ciao_13
+	%i <- %flag = 25
+	cjump %i = 1 :call_label_ciao__ciao__ciao__ciao_18
+	goto :call_label_ciao__ciao__ciao__ciao_14
+	:call_label_ciao__ciao__ciao__ciao_14
+	%i <- 25 < %flag
+	cjump %i = 1 :call_label_ciao__ciao__ciao__ciao_15
+	goto :call_label_ciao__ciao__ciao__ciao_16
+	:call_label_ciao__ciao__ciao__ciao_15
+	%flag -= 25
+	goto :call_label_ciao__ciao__ciao__ciao_13
+	:call_label_ciao__ciao__ciao__ciao_16
+	%flag <- %year
+	%flag &= 3
+	%i <- %flag = 0
+	cjump %i = 1 :call_label_ciao__ciao__ciao__ciao_17
+	goto :call_label_ciao__ciao__ciao__ciao_18
+	:call_label_ciao__ciao__ciao__ciao_17
+	rax <- 1
+	return
+	:call_label_ciao__ciao__ciao__ciao_18
+	rax <- 0
+	return
+)

@@ -1,0 +1,8 @@
+(@return_merge
+	1
+	%p <- rdi
+	%r <- %p
+	%r += 1
+	rax <- %r
+	return
+)

@@ -1,0 +1,20 @@
+(@printArr
+	1
+	%arr <- rdi
+	%len <- mem %arr 0
+	%count <- 0
+	%curr <- %arr
+	:call_label_ciao_3
+	%curr += 8
+	%currP <- mem %curr 0
+	%currP <<= 1
+	%currP += 1
+	rdi <- %currP
+	call print 1
+	%count += 1
+	%cont <- %count < %len
+	cjump %cont = 1 :call_label_ciao_3
+	goto :call_label_ciao_4
+	:call_label_ciao_4
+	return
+)

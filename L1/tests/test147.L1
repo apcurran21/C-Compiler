@@ -1,0 +1,57 @@
+(@go
+(@fib
+	1 3
+	rsi <- 1
+	mem rsp 16 <- rsi
+	cjump rdi = 1 :ENDzero
+	cjump rdi = 3 :ENDone
+	rdi -= 2
+	rsi <- rdi
+	mem rsp 8 <- rsi
+	rsi <- :fib_ret1
+	mem rsp -8 <- rsi
+	call @fib 1
+	:fib_ret1
+	rdi <- mem rsp 8
+	rdi <- rdi
+	rsi <- :fib_ret2
+	mem rsp -8 <- rsi
+	rsi <- rax
+	mem rsp 0 <- rsi
+	rdi -= 2
+	call @fib 1
+	:fib_ret2
+	rdi <- mem rsp 0
+	rdi <- rdi
+	rcx <- mem rsp 16
+	rdi >>= rcx
+	rcx <- mem rsp 16
+	rax >>= rcx
+	rax += rdi
+	rcx <- mem rsp 16
+	rax <<= rcx
+	rdi <- mem rsp 16
+	rax += rdi
+	return
+	:ENDzero
+	rdi <- mem rsp 16
+	rax <- rdi
+	return
+	:ENDone
+	rax <- 3
+	return
+)
+
+(@go
+	0 0
+	rdi <- 19
+	rsi <- :fibend
+	mem rsp -8 <- rsi
+	call @fib 1
+	:fibend
+	rdi <- rax
+	call print 1
+	return
+)
+
+)

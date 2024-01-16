@@ -1,0 +1,55 @@
+// test out stack-arg function in L2
+
+(@go
+  (@go
+    0
+    rdi <- 1
+    rsi <- 2
+    rdx <- 3
+    rcx <- 4
+    r8 <- 5
+    r9 <- 6
+    
+    mem rsp -8 <- :ret
+    mem rsp -16 <- 100
+    call @manyArgsFunction 7
+    :ret
+    return
+  )
+
+  (@manyArgsFunction
+    7
+    %a <- rdi
+    %b <- rsi
+    %c <- rdx
+    %d <- rcx
+    %e <- r8
+    %f <- r9
+    %g <- stack-arg 0
+    
+    %diag <- %a
+    %diag *= %d
+    
+    %inv_diag <- %b
+    %inv_diag *= %c
+    
+    %det <- %diag
+    %det -= %inv_diag
+
+    %diff <- %f
+    %diff -= %e
+
+    %ret_val <- 1
+    %ret_val *= %g
+    %ret_val -= %diff
+    %ret_val <<= 1
+    %ret_val += 1
+
+    rdi <- %ret_val
+    call print 1
+
+    rax <- %ret_val
+    return
+  )
+)
+

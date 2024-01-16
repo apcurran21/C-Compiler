@@ -1,0 +1,25 @@
+%address %arr %encodedI %i %n %numPrimes %offset r12 r13 r14 r15 rbp rbx
+%arr %address %encodedI %i %isNotDone %n %numIsPrime %numPrimes %offset r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx rsi
+%encodedI %address %arr %i %n %numIsPrime %numPrimes %offset r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx rsi
+%i %address %arr %encodedI %isNotDone %n %numIsPrime %numPrimes %offset r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx rsi
+%isLessThanZero %n r12 r13 r14 r15 rbp rbx
+%isNotDone %arr %i %n %numPrimes %offset r12 r13 r14 r15 rbp rbx
+%n %address %arr %encodedI %i %isLessThanZero %isNotDone %numIsPrime %numPrimes %offset r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx rsi
+%numIsPrime %arr %encodedI %i %n %numPrimes %offset r12 r13 r14 r15 rbp rbx
+%numPrimes %address %arr %encodedI %i %isNotDone %n %numIsPrime %offset r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx rsi
+%offset %address %arr %encodedI %i %isNotDone %n %numIsPrime %numPrimes r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx rsi
+r10 %arr %encodedI %i %n %numPrimes %offset r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx rsi
+r11 %arr %encodedI %i %n %numPrimes %offset r10 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx rsi
+r12 %address %arr %encodedI %i %isLessThanZero %isNotDone %n %numIsPrime %numPrimes %offset r10 r11 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx rsi
+r13 %address %arr %encodedI %i %isLessThanZero %isNotDone %n %numIsPrime %numPrimes %offset r10 r11 r12 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx rsi
+r14 %address %arr %encodedI %i %isLessThanZero %isNotDone %n %numIsPrime %numPrimes %offset r10 r11 r12 r13 r15 r8 r9 rax rbp rbx rcx rdi rdx rsi
+r15 %address %arr %encodedI %i %isLessThanZero %isNotDone %n %numIsPrime %numPrimes %offset r10 r11 r12 r13 r14 r8 r9 rax rbp rbx rcx rdi rdx rsi
+r8 %arr %encodedI %i %n %numPrimes %offset r10 r11 r12 r13 r14 r15 r9 rax rbp rbx rcx rdi rdx rsi
+r9 %arr %encodedI %i %n %numPrimes %offset r10 r11 r12 r13 r14 r15 r8 rax rbp rbx rcx rdi rdx rsi
+rax %arr %encodedI %i %n %numPrimes %offset r10 r11 r12 r13 r14 r15 r8 r9 rbp rbx rcx rdi rdx rsi
+rbp %address %arr %encodedI %i %isLessThanZero %isNotDone %n %numIsPrime %numPrimes %offset r10 r11 r12 r13 r14 r15 r8 r9 rax rbx rcx rdi rdx rsi
+rbx %address %arr %encodedI %i %isLessThanZero %isNotDone %n %numIsPrime %numPrimes %offset r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rcx rdi rdx rsi
+rcx %arr %encodedI %i %n %numPrimes %offset r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rdi rdx rsi
+rdi %arr %encodedI %i %n %numPrimes %offset r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdx rsi
+rdx %arr %encodedI %i %n %numPrimes %offset r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rsi
+rsi %arr %encodedI %i %n %numPrimes %offset r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx

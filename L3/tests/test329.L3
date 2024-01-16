@@ -1,0 +1,50 @@
+
+	define @main(){
+		//%y = y
+		%y <- 1
+		//%c = c
+		%c <- 1
+		//%x = x
+		%x <- 1
+		:BEGIN
+        %var21 <- 21 <= %x
+		br %var21 :END
+        //call print(19)
+		%x <- %x >> 1
+		%y <- %y >> 1
+		%y <- %y + %x
+		%y <- %y << 1
+		%x <- %x << 1
+		%y <- %y + 1
+		%x <- %x + 1
+        %var33 <- 21 <= %y
+		br %var33 :BOTTOM 
+		%z <- 21
+		// %z = z
+		:WHILE
+        %var45 <- %z < 1
+		br %var45 :ALMOST
+		%z <- %z - 2
+		br :WHILE
+		:ALMOST
+		%c <- %c + 2
+		:BOTTOM
+		%x <- %x + 2
+        //call print(%x)
+		br :BEGIN
+		:END
+		call print(%y)
+		call print(%c)
+		call print(%x)
+		%y <- %y >> 1
+		%c <- %c >> 1
+		%x <- %x >> 1
+		%cheese <- %x
+		%cheese <- %cheese + %c
+		%cheese <- %cheese + %y
+		%cheese <- %cheese << 1
+		%cheese <- %cheese + 1
+		%cheese <- %cheese + 20
+		call print(%cheese)
+		return
+    }

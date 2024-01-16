@@ -1,0 +1,29 @@
+%new_size %newVar6 %newVar7 %newVar8 r12 r13 r14 r15 rax rbp rbx %vec
+%new_val %newVar0 %newVar1 %newVar2 %newVar3 %newVar4 %newVar5 %ptr r12 r13 r14 r15 rbp rbx %size %vec
+%newVar0 %new_val %newVar2 r12 r13 r14 r15 rbp rbx %vec
+%newVar1 %new_val r12 r13 r14 r15 rbp rbx %vec
+%newVar2 %new_val %newVar0 r12 r13 r14 r15 rbp rbx %vec
+%newVar3 %new_val %newVar5 r12 r13 r14 r15 rbp rbx %size %vec
+%newVar4 %new_val r12 r13 r14 r15 rbp rbx %size %vec
+%newVar5 %new_val %newVar3 r12 r13 r14 r15 rbp rbx %size %vec
+%newVar6 %new_size %newVar8 r12 r13 r14 r15 rax rbp rbx %vec
+%newVar7 %new_size r12 r13 r14 r15 rax rbp rbx %vec
+%newVar8 %new_size %newVar6 r12 r13 r14 r15 rax rbp rbx
+%ptr %new_val r12 r13 r14 r15 rbp rbx rdi %size %vec
+r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx rsi %size %vec
+r11 r10 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx rsi %size %vec
+r12 %new_size %new_val %newVar0 %newVar1 %newVar2 %newVar3 %newVar4 %newVar5 %newVar6 %newVar7 %newVar8 %ptr r10 r11 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx rsi %size %vec
+r13 %new_size %new_val %newVar0 %newVar1 %newVar2 %newVar3 %newVar4 %newVar5 %newVar6 %newVar7 %newVar8 %ptr r10 r11 r12 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx rsi %size %vec
+r14 %new_size %new_val %newVar0 %newVar1 %newVar2 %newVar3 %newVar4 %newVar5 %newVar6 %newVar7 %newVar8 %ptr r10 r11 r12 r13 r15 r8 r9 rax rbp rbx rcx rdi rdx rsi %size %vec
+r15 %new_size %new_val %newVar0 %newVar1 %newVar2 %newVar3 %newVar4 %newVar5 %newVar6 %newVar7 %newVar8 %ptr r10 r11 r12 r13 r14 r8 r9 rax rbp rbx rcx rdi rdx rsi %size %vec
+r8 r10 r11 r12 r13 r14 r15 r9 rax rbp rbx rcx rdi rdx rsi %size %vec
+r9 r10 r11 r12 r13 r14 r15 r8 rax rbp rbx rcx rdi rdx rsi %size %vec
+rax %new_size %newVar6 %newVar7 %newVar8 r10 r11 r12 r13 r14 r15 r8 r9 rbp rbx rcx rdi rdx rsi %size %vec
+rbp %new_size %new_val %newVar0 %newVar1 %newVar2 %newVar3 %newVar4 %newVar5 %newVar6 %newVar7 %newVar8 %ptr r10 r11 r12 r13 r14 r15 r8 r9 rax rbx rcx rdi rdx rsi %size %vec
+rbx %new_size %new_val %newVar0 %newVar1 %newVar2 %newVar3 %newVar4 %newVar5 %newVar6 %newVar7 %newVar8 %ptr r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rcx rdi rdx rsi %size %vec
+rcx r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rdi rdx rsi %size %vec
+rdi %ptr r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdx rsi %size %vec
+rdx r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rsi %size %vec
+rsi r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx %size %vec
+%size %new_val %newVar3 %newVar4 %newVar5 %ptr r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx rsi %vec
+%vec %new_size %new_val %newVar0 %newVar1 %newVar2 %newVar3 %newVar4 %newVar5 %newVar6 %newVar7 %ptr r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx rsi %size

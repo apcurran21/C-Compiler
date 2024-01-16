@@ -1,0 +1,77 @@
+(@main
+(@main
+	0 2
+	mem rsp 8 <- r13
+	mem rsp 0 <- r12
+	rdi <- 11
+	rsi <- 3
+	call allocate 2
+	r13 <- rax
+	mem rax 16 <- 5
+	mem rax 24 <- 7
+	mem rax 32 <- 9
+	mem rax 40 <- 11
+	rdi <- rax
+	call print 1
+	rdi <- 11
+	rsi <- 13
+	call allocate 2
+	r12 <- rax
+	mem rax 16 <- 15
+	mem rax 24 <- 17
+	mem rax 32 <- 19
+	mem rax 40 <- 21
+	rdi <- rax
+	call print 1
+	rdi <- r13
+	rsi <- r12
+	mem rsp -8 <- :ret_1
+	call @concat_array 2
+	:ret_1
+	rdi <- rax
+	call print 1
+	r12 <- mem rsp 0
+	r13 <- mem rsp 8
+	return
+)
+
+(@concat_array
+	2 2
+	mem rsp 8 <- r13
+	mem rsp 0 <- r12
+	r12 <- rdi
+	r13 <- rsi
+	rdi <- mem r12 0
+	rdi += mem r13 0
+	rdi <<= 1
+	rdi++
+	rsi <- 3
+	call allocate 2
+	rdx <- rax
+	rdi <- mem r12 0
+	:do_1
+	r12 += 8
+	rax += 8
+	rsi <- mem r12 0
+	mem rax 0 <- rsi
+	rdi--
+	cjump rdi = 0 :done_1
+	goto :do_1
+	:done_1
+	rdi <- mem r13 0
+	:do_2
+	r13 += 8
+	rax += 8
+	rsi <- mem r13 0
+	mem rax 0 <- rsi
+	rdi--
+	cjump rdi = 0 :done_2
+	goto :do_2
+	:done_2
+	rax <- rdx
+	r12 <- mem rsp 0
+	r13 <- mem rsp 8
+	return
+)
+
+)

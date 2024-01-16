@@ -1,0 +1,280 @@
+(@main
+(@firstNPrimes
+	1 6
+	mem rsp 40 <- rbx
+	mem rsp 32 <- rbp
+	mem rsp 24 <- r15
+	mem rsp 16 <- r14
+	mem rsp 8 <- r13
+	mem rsp 0 <- r12
+	r15 <- rdi
+	rdi <- r15 < 1
+	cjump rdi = 1 :call_label0
+	goto :call_label1
+	:call_label0
+	rax <- -1
+	r12 <- mem rsp 0
+	r13 <- mem rsp 8
+	r14 <- mem rsp 16
+	r15 <- mem rsp 24
+	rbp <- mem rsp 32
+	rbx <- mem rsp 40
+	return
+	:call_label1
+	rdi <- r15
+	rsi <- 1
+	call allocate 2
+	r12 <- rax
+	r15 <- r15
+	r15 -= 1
+	r15 <- r15
+	r15 <<= 1
+	r13 <- 0
+	r14 <- 2
+	rbp <- 8
+	:call_label2
+	rdi <- r13 < r15
+	cjump rdi = 1 :call_label3
+	goto :call_label6
+	:call_label3
+	rbx <- r14
+	rbx <<= 1
+	rbx <- rbx
+	rbx += 1
+	rdi <- rbx
+	mem rsp -8 <- :call_label7
+	call @isPrime 1
+	:call_label7
+	rdi <- rax
+	rdi <- rdi
+	rdi -= 1
+	rdi <- rdi
+	rdi >>= 1
+	cjump rdi = 1 :call_label4
+	goto :call_label5
+	:call_label4
+	rdi <- r12
+	rdi += rbp
+	mem rdi 0 <- rbx
+	rbp <- rbp
+	rbp += 8
+	r13 <- r13
+	r13 += 1
+	:call_label5
+	r14 <- r14
+	r14 += 1
+	goto :call_label2
+	:call_label6
+	rax <- r12
+	r12 <- mem rsp 0
+	r13 <- mem rsp 8
+	r14 <- mem rsp 16
+	r15 <- mem rsp 24
+	rbp <- mem rsp 32
+	rbx <- mem rsp 40
+	return
+)
+
+(@isPrime
+	1 3
+	mem rsp 16 <- r14
+	mem rsp 8 <- r13
+	mem rsp 0 <- r12
+	r13 <- rdi
+	r13 <- r13
+	r13 -= 1
+	r13 <- r13
+	r13 >>= 1
+	rdi <- r13 < 2
+	cjump rdi = 1 :call_label_ciao_8
+	goto :call_label_ciao_9
+	:call_label_ciao_8
+	rax <- 1
+	r12 <- mem rsp 0
+	r13 <- mem rsp 8
+	r14 <- mem rsp 16
+	return
+	:call_label_ciao_9
+	r14 <- 2
+	r12 <- r13
+	r12 -= 1
+	:call_label_ciao_10
+	rdi <- r14 < r12
+	cjump rdi = 1 :call_label_ciao_11
+	goto :call_label_ciao_12
+	:call_label_ciao_11
+	rsi <- r14
+	rsi <<= 1
+	rsi <- rsi
+	rsi += 1
+	rdi <- r13
+	rdi <<= 1
+	rdi <- rdi
+	rdi += 1
+	r14 <- r14
+	r14 += 1
+	rdi <- rdi
+	rsi <- rsi
+	mem rsp -8 <- :call_label_ciao_13
+	call @modulo 2
+	:call_label_ciao_13
+	rdi <- rax
+	rdi <- rdi = 1
+	cjump rdi = 1 :call_label_ciao_8
+	goto :call_label_ciao_10
+	:call_label_ciao_12
+	rax <- 3
+	r12 <- mem rsp 0
+	r13 <- mem rsp 8
+	r14 <- mem rsp 16
+	return
+)
+
+(@modulo
+	2 0
+	rdi <- rdi
+	rdx <- rsi
+	rcx <- rdi
+	rsi <- rdx <= 1
+	cjump rsi = 1 :call_label_ciao__ciao_14
+	goto :call_label_ciao__ciao_15
+	:call_label_ciao__ciao_14
+	rax <- -1
+	return
+	:call_label_ciao__ciao_15
+	rdi <- rdi < rdx
+	cjump rdi = 1 :call_label_ciao__ciao_16
+	goto :call_label_ciao__ciao_17
+	:call_label_ciao__ciao_16
+	rax <- rcx
+	return
+	:call_label_ciao__ciao_17
+	rcx <- rcx
+	rcx -= 1
+	rcx <- rcx
+	rcx >>= 1
+	rdx <- rdx
+	rdx -= 1
+	rdx <- rdx
+	rdx >>= 1
+	rcx <- rcx
+	rcx -= rdx
+	rcx <- rcx
+	rcx <<= 1
+	rcx <- rcx
+	rcx += 1
+	rdx <- rdx
+	rdx <<= 1
+	rdx <- rdx
+	rdx += 1
+	rdi <- rcx < rdx
+	cjump rdi = 1 :call_label_ciao__ciao_16
+	goto :call_label_ciao__ciao_17
+)
+
+(@encodeNumber
+	1 0
+	rdi <- rdi
+	rdi <- rdi
+	rdi <- rdi
+	rdi <<= 1
+	rdi <- rdi
+	rdi += 1
+	rax <- rdi
+	return
+)
+
+(@main
+	0 0
+	rdi <- 10
+	mem rsp -8 <- :call_label_ciao__ciao__ciao_18
+	call @encodeNumber 1
+	:call_label_ciao__ciao__ciao_18
+	rdi <- rax
+	rdi <- rdi
+	call print 1
+	rdi <- 1
+	mem rsp -8 <- :call_label_ciao__ciao__ciao_19
+	call @encodeNumber 1
+	:call_label_ciao__ciao__ciao_19
+	rdi <- rax
+	rdi <- rdi
+	call print 1
+	rdi <- 17
+	mem rsp -8 <- :call_label_ciao__ciao__ciao_20
+	call @encodeNumber 1
+	:call_label_ciao__ciao__ciao_20
+	rdi <- rax
+	rdi <- rdi
+	call print 1
+	rdi <- 11
+	rdi <- rdi
+	mem rsp -8 <- :call_label_ciao__ciao__ciao_21
+	call @firstNPrimes 1
+	:call_label_ciao__ciao__ciao_21
+	rdi <- rax
+	rdi <- rdi
+	call print 1
+	rdi <- 41
+	rdi <- rdi
+	mem rsp -8 <- :call_label_ciao__ciao__ciao_22
+	call @firstNPrimes 1
+	:call_label_ciao__ciao__ciao_22
+	rdi <- rax
+	rdi <- rdi
+	call print 1
+	rdi <- 103
+	rdi <- rdi
+	mem rsp -8 <- :call_label_ciao__ciao__ciao_23
+	call @firstNPrimes 1
+	:call_label_ciao__ciao__ciao_23
+	rdi <- rax
+	rdi <- rdi
+	call print 1
+	rdi <- 64
+	mem rsp -8 <- :call_label_ciao__ciao__ciao_24
+	call @encodeNumber 1
+	:call_label_ciao__ciao__ciao_24
+	rdi <- rax
+	rdi <- rdi
+	mem rsp -8 <- :call_label_ciao__ciao__ciao_25
+	call @firstNPrimes 1
+	:call_label_ciao__ciao__ciao_25
+	rdi <- rax
+	rdi <- rdi
+	call print 1
+	rdi <- 0
+	mem rsp -8 <- :call_label_ciao__ciao__ciao_26
+	call @encodeNumber 1
+	:call_label_ciao__ciao__ciao_26
+	rdi <- rax
+	rdi <- rdi
+	mem rsp -8 <- :call_label_ciao__ciao__ciao_27
+	call @firstNPrimes 1
+	:call_label_ciao__ciao__ciao_27
+	rdi <- rax
+	rdi <- rdi
+	call print 1
+	rdi <- -5
+	mem rsp -8 <- :call_label_ciao__ciao__ciao_28
+	call @firstNPrimes 1
+	:call_label_ciao__ciao__ciao_28
+	rdi <- rax
+	rdi <- rdi
+	call print 1
+	rdi <- 1
+	mem rsp -8 <- :call_label_ciao__ciao__ciao_29
+	call @encodeNumber 1
+	:call_label_ciao__ciao__ciao_29
+	rdi <- rax
+	rdi <- rdi
+	mem rsp -8 <- :call_label_ciao__ciao__ciao_30
+	call @firstNPrimes 1
+	:call_label_ciao__ciao__ciao_30
+	rdi <- rax
+	rdi <- rdi
+	call print 1
+	return
+)
+
+)

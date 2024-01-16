@@ -1,0 +1,9 @@
+(@get_next_fib
+	2
+	%two_prev <- rdi
+	%prev <- rsi
+	%fib <- %two_prev
+	%fib += %prev
+	rax <- %fib
+	return
+)

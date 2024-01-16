@@ -1,0 +1,53 @@
+define @main () {
+ 
+:function0
+ %number <- 4
+ %exp <- 6
+ call @array (%number, %exp)
+ return 
+}
+
+define @array (%n, %e) {
+ 
+:function1
+ %index <- -1
+ br :array_begin
+ 
+:array_begin
+ %check <- %index = %e
+ br %check :array_end 
+ br :array_continue
+ 
+:array_continue
+ %index <- %index + 1
+ %value <- call @calculate (%n, %index)
+ %value <- %value << 1
+ %value <- %value + 1
+ call print (%value)
+ br :array_begin
+ 
+:array_end
+ return 
+}
+
+define @calculate (%n, %e) {
+ 
+:function2
+ %output <- 1
+ %index <- 0
+ br :loop_begin
+ 
+:loop_begin
+ %check <- %index = %e
+ br %check :loop_end 
+ br :loop_continue
+ 
+:loop_continue
+ %output <- %output * %n
+ %index <- %index + 1
+ br :loop_begin
+ 
+:loop_end
+ return %output
+}
+

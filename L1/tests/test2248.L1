@@ -1,0 +1,38 @@
+(@go
+(@go
+	0 0
+	mem rsp -8 <- :ret
+	call @myF 0
+	:ret
+	return
+)
+
+(@myF
+	0 0
+	rdi <- 1
+	rsi <- 1
+	rdx <- 1
+	rcx <- 1
+	r8 <- 1
+	r9 <- 1
+	rdi += 1
+	rsi += 1
+	rdx += 1
+	rcx += 1
+	r8 += 1
+	r9 += 1
+	rdi += 1
+	rsi += 1
+	rdx += 1
+	rcx += 1
+	r8 += 1
+	r9 += 1
+	return
+)
+
+(@myF2
+	0 0
+	return
+)
+
+)

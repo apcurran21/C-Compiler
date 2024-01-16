@@ -1,0 +1,45 @@
+// a - b + c - d + e - f + g - h
+// a = 3, b = 8, c = 2, d = 1, e = 5, f = 7, g = 6, h = 4
+(@go
+  (@go
+    0 0
+    rdi <- 7
+    rsi <- 17
+    rdx <- 5
+    rcx <- 3
+    r8 <- 11
+    r9 <- 15
+    mem rsp -8 <- :eqLong_ret
+    mem rsp -16 <- 13
+    mem rsp -24 <- 9
+    call @eqLong 8
+    :eqLong_ret
+    rdi <- rax
+    rdi <<= 1
+    rdi += 1
+    call print 1
+    return
+  )
+  (@eqLong
+    8 0
+    rdi >>= 1
+    rax <- rdi
+    rsi >>= 1
+    rax -= rsi
+    rdx >>= 1
+    rax += rdx
+    rcx >>= 1
+    rax -= rcx
+    r8 >>= 1
+    rax += r8
+    r9 >>= 1
+    rax -= r9
+    r10 <- mem rsp 8
+    r10 >>= 1
+    rax += r10
+    r11 <- mem rsp 0
+    r11 >>= 1
+    rax -= r11
+    return
+  )
+)

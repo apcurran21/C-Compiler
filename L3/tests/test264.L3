@@ -1,0 +1,123 @@
+define @double (%v) {
+ 
+:NNNNNN
+ br :entry
+ 
+:entry
+ %v <- %v * 2
+ return %v
+}
+
+define @plus_10 (%v) {
+ 
+:NNNNNN
+ br :entry
+ 
+:entry
+ %v <- %v + 10
+ return %v
+}
+
+define @map (%arr, %f) {
+ 
+:NNNNNN
+ br :entry
+ 
+:end
+ return 
+ 
+:loop
+ %newVar1 <- 0
+ %newVar2 <- 1
+ %newVar1 <- %newVar1 + %i
+ %newVar0 <- %newVar1 * 8
+ %newVar0 <- %newVar0 + 24
+ %newVar3 <- %arr + %newVar0
+ %v <- load %newVar3
+ %v <- call %f (%v)
+ %newVar5 <- 0
+ %newVar6 <- 1
+ %newVar5 <- %newVar5 + %i
+ %newVar4 <- %newVar5 * 8
+ %newVar4 <- %newVar4 + 24
+ %newVar7 <- %arr + %newVar4
+ store %newVar7 <- %v
+ %i <- %i + 1
+ br :cond
+ 
+:cond
+ %done <- %i = %len
+ br %done :end 
+ br :loop
+ 
+:entry
+ %newVar8 <- 0 * 8
+ %newVar9 <- %newVar8 + 16
+ %newVar10 <- %arr + %newVar9
+ %len <- load %newVar10
+ %len <- %len >> 1
+ %i <- 0
+ br :cond
+}
+
+define @main () {
+ 
+:NNNNNN
+ br :defs
+ 
+:entry
+ %newVar1 <- 7 >> 1
+ %newVar0 <- %newVar1
+ %newVar0 <- %newVar0 << 1
+ %newVar0 <- %newVar0 + 1
+ %newVar0 <- %newVar0 + 4
+ %a <- call allocate (%newVar0, 1)
+ %newVar2 <- %a + 8
+ store %newVar2 <- 3
+ %newVar3 <- %a + 16
+ store %newVar3 <- 7
+ %newVar5 <- 0
+ %newVar6 <- 1
+ %newVar5 <- %newVar5 + 0
+ %newVar4 <- %newVar5 * 8
+ %newVar4 <- %newVar4 + 24
+ %newVar7 <- %a + %newVar4
+ store %newVar7 <- 1
+ %newVar9 <- 0
+ %newVar10 <- 1
+ %newVar9 <- %newVar9 + 1
+ %newVar8 <- %newVar9 * 8
+ %newVar8 <- %newVar8 + 24
+ %newVar11 <- %a + %newVar8
+ store %newVar11 <- 2
+ %newVar13 <- 0
+ %newVar14 <- 1
+ %newVar13 <- %newVar13 + 2
+ %newVar12 <- %newVar13 * 8
+ %newVar12 <- %newVar12 + 24
+ %newVar15 <- %a + %newVar12
+ store %newVar15 <- 3
+ %func <- @double
+ call @map (%a, %func)
+ %func <- @plus_10
+ call @map (%a, %func)
+ %func <- @int_encode
+ call @map (%a, %func)
+ call print (%a)
+ return 
+ 
+:defs
+ br :entry
+}
+
+define @int_encode (%v) {
+ 
+:NNNNNN
+ br :entry
+ 
+:entry
+ %v <- %v << 1
+ %v <- %v + 1
+ return %v
+}
+

@@ -1,0 +1,65 @@
+(@main
+(@f1
+	7 0
+	rdi <- 2
+	rsi <- mem rsp 0
+	rsi -= rdi
+	rdi <- rsi
+	call print 1
+	return
+)
+
+(@f2
+	1 0
+	rdi <- rdx
+	rdi <- rdi
+	rdi <<= 1
+	rdi++
+	rdi <- rdi
+	call print 1
+	return
+)
+
+(@main
+	0 2
+	rdi <- 11
+	rsi <- 9
+	rdx <- 7
+	rcx <- 5
+	r8 <- 3
+	r9 <- 1
+	rax <- rdi
+	mem rsp 8 <- rax
+	mem rsp -8 <- :f1_ret
+	mem rsp -16 <- 15
+	call @f1 7
+	:f1_ret
+	rdi <- mem rsp 8
+	rdi <- rdi
+	call print 1
+	rdi <- 15
+	mem rsp -8 <- :f2_ret
+	rdx <- 13
+	rdi <- 13
+	call @f2 1
+	:f2_ret
+	rdi <- 3
+	rsi <- 0
+	cjump rsi = rdi :endLoop
+	goto :loop
+	:loop
+	rsi++
+	cjump rsi < rdi :loop
+	goto :endLoop
+	:endLoop
+	rdi <- rsi
+	mem rsp 0 <- rdi
+	rdi <- rsi
+	call print 1
+	rdi <- mem rsp 0
+	rsi <- rdi
+	rsi++
+	return
+)
+
+)

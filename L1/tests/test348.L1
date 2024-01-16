@@ -1,0 +1,41 @@
+(@main
+(@encode
+	1 0
+	rax <- rdi
+	rax <<= 1
+	rax += 1
+	return
+)
+
+(@main
+	0 0
+	rdi <- 5
+	mem rsp -8 <- :encode_ret1
+	call @encode 1
+	:encode_ret1
+	rdi <- rax
+	rsi <- 3
+	call allocate 2
+	rdi <- rax
+	mem rdi 16 <- 9
+	mem rdi 24 <- 19
+	mem rdi 32 <- 33
+	mem rdi 40 <- 51
+	call print 1
+	rdi <- 5
+	mem rsp -8 <- :encode_ret2
+	call @encode 1
+	:encode_ret2
+	rdi <- rax
+	rsi <- 51
+	call allocate 2
+	rdi <- rax
+	mem rdi 16 <- 33
+	mem rdi 24 <- 19
+	mem rdi 32 <- 9
+	mem rdi 40 <- 3
+	call print 1
+	return
+)
+
+)

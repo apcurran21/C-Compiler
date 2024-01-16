@@ -1,0 +1,51 @@
+// how many odd numbers there are in [0, n]?
+
+define void @main() {
+    :entry
+    int64 %n
+    int64 %res
+    int64 %i
+    int64 %if
+    %n <- 120
+    %res <- 0
+    %i <- 0
+    br :while
+
+    :while
+        %if <- %i <= %n
+        br %if :whileInto :whileBreak
+        
+        :whileInto
+        %if <- call @isOdd(%i)
+        %if <- %if = 1
+        br %if :count :whileContinue
+
+        :count
+        %res <- %res + 1
+        br :whileContinue
+        
+        :whileContinue
+        %i <- %i + 1
+        br :while
+        
+    :whileBreak
+    %res <- %res << 1
+    %res <- %res + 1
+    call print(%res)
+    return
+}
+
+define int64 @isOdd(int64 %a) {
+    :entry
+    %a <- %a >> 1
+    %a <- %a & 1
+    int64 %if
+    %if <- %a = 1
+    br %if :yes :no
+    
+    :no
+    return 0
+
+    :yes
+    return 1
+}

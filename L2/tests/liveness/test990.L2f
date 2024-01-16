@@ -1,0 +1,9 @@
+(@op5
+	1
+	%number <- rdi
+	:call_label_ciao__ciao__ciao__ciao__ciao_18
+	goto :call_label_ciao__ciao__ciao__ciao__ciao_19
+	:call_label_ciao__ciao__ciao__ciao__ciao_19
+	rax <- %number
+	return
+)

@@ -1,0 +1,27 @@
+(@fib
+	1
+	%iters_left <- rdi
+	%iters_started <- 0
+	%fib_n <- 0
+	%fib_prev <- 0
+	:print_result
+	mem rsp -8 <- :fib_main_loop
+	rdi <- %fib_n
+	call @print_encoded 1
+	:fib_main_loop
+	cjump %iters_left = 0 :fib_return
+	%iters_left -= 1
+	%iters_started += 1
+	cjump %iters_started = 1 :fib_1
+	goto :fib_else
+	:fib_1
+	%fib_n += 1
+	goto :print_result
+	:fib_else
+	%temp <- %fib_n
+	%fib_n += %fib_prev
+	%fib_prev <- %temp
+	goto :print_result
+	:fib_return
+	return
+)

@@ -1,0 +1,76 @@
+define @main()
+{
+	%num_sides <- 25
+	
+	// Compute the number of diagonals for 
+	// a polygon with %num_sides sides
+
+	call print (%num_sides)
+	call @compute_num_diagonals_for_shape(%num_sides)
+	call @compute_many_diagonals(%num_sides)
+	
+
+	// Compute number of diagonals for polygon 
+	// with 51 sides
+	%lots_of_sides <- 103
+	call @compute_num_diagonals_for_shape(%lots_of_sides)
+	
+	return
+}
+
+define @compute_num_diagonals_for_shape(%sides)
+{
+	// Decode sides to multiply
+	%decoded_sides <- %sides >> 1 
+
+	// Formula = (n * (n - 3)) / 2	
+	// n - 3
+	%temp_1 <- %decoded_sides - 3
+	
+	// n * (n - 3)
+	%temp_1 <- %temp_1 * %decoded_sides
+
+	// (n * (n - 3)) / 2	 
+	%temp_1 <- %temp_1 >> 1
+
+	// Encode for print
+	%temp_1 <- %temp_1 << 1
+	%temp_1 <- %temp_1 + 1
+
+	call print(%temp_1)
+
+	return
+}
+
+define @compute_many_diagonals(%sides)
+{
+	// Decode %sides to use
+	%decoded_sides <- %sides >> 1
+
+	// Start at 3 --- triangle
+	%nth_side <- 7
+	
+	// Decode to operate on
+	%nth_side <- %nth_side >> 1
+
+	:diag_preheader
+	// Condition
+	%cond <- %nth_side > %decoded_sides	
+	br %cond :diag_exit
+
+	:diag_body
+	// Encode for call
+	%call_nth_side <- %nth_side << 1
+	%call_nth_side <- %call_nth_side + 1
+	call @compute_num_diagonals_for_shape(%call_nth_side)
+	br :diag_latch
+
+	:diag_latch
+	%nth_side <- %nth_side + 1
+	br :diag_preheader
+
+	:diag_exit
+	return
+}
+
+

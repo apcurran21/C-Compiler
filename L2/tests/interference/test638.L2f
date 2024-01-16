@@ -1,0 +1,38 @@
+(@newmat
+	2
+	%arg1 <- rdi
+	%arg2 <- rsi
+	%row <- %arg1
+	%arg1 += %arg1
+	%arg1 += 1
+	%row_enc <- %arg1
+	%arg1 += 4
+	%arg2 += %arg2
+	%arg2 += 1
+	%col_enc <- %arg2
+	%arg2 <- 1
+	rdi <- %arg1
+	rsi <- %arg2
+	call allocate 2
+	%arr <- rax
+	mem %arr 8 <- %row_enc
+	mem %arr 16 <- %col_enc
+	%rowptr <- %arr
+	%i <- 0
+	:call_label0
+	%arg1 <- %col_enc
+	%arg2 <- 1
+	rdi <- %arg1
+	rsi <- %arg2
+	call allocate 2
+	%arr <- rax
+	%arg1 <- %i
+	%arg1 *= 8
+	%arg1 += %rowptr
+	mem %arg1 24 <- %arr
+	%i += 1
+	%irow <- %i < %row
+	cjump %irow = 1 :call_label0
+	rax <- %rowptr
+	return
+)

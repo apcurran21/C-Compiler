@@ -1,0 +1,64 @@
+(@main
+(@main
+	0 0
+	:entry
+	rsi <- 100
+	rdi <- 1
+	:restart
+	cjump rsi < rdi :start
+	rsi += 1
+	rdi <<= 1
+	goto :restart
+	:start
+	rdi <- 1
+	rsi <- 3
+	rdx <- 5
+	rcx <- 7
+	r8 <- 9
+	r9 <- 13
+	mem rsp -16 <- 15
+	rax <- @print_array
+	mem rsp -8 <- :func_ret
+	call rax 7
+	:func_ret
+	return
+)
+
+(@print_array
+	7 6
+	mem rsp 40 <- rbx
+	mem rsp 32 <- rbp
+	mem rsp 24 <- r15
+	mem rsp 16 <- r14
+	mem rsp 8 <- r13
+	mem rsp 0 <- r12
+	rbx <- rdi
+	r15 <- rsi
+	r14 <- rdx
+	r13 <- rcx
+	r12 <- r8
+	rbp <- r9
+	rdi <- mem rsp 48
+	call print 1
+	rdi <- rbp
+	call print 1
+	rdi <- r12
+	call print 1
+	rdi <- r13
+	call print 1
+	rdi <- r14
+	call print 1
+	rdi <- r15
+	call print 1
+	rdi <- rbx
+	call print 1
+	r12 <- mem rsp 0
+	r13 <- mem rsp 8
+	r14 <- mem rsp 16
+	r15 <- mem rsp 24
+	rbp <- mem rsp 32
+	rbx <- mem rsp 40
+	return
+)
+
+)

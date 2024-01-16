@@ -1,0 +1,97 @@
+(@main
+	(@main
+		0 3
+		rdi <- 2
+
+		mem rsp 0 <- rdi
+		mem rsp -8 <- :incrementwithfive_ret
+		call @incrementwithfive 1
+		:incrementwithfive_ret
+		rdi <- mem rsp 0
+		rdi += rax
+		mem rsp 0 <- rdi
+		call print 1
+		rdi <- mem rsp 0
+		rsi <- rdi
+
+		rdi <- 8
+		rdi *= 2
+		rdi -= 1
+		mem rsp 8 <- rsi
+		mem rsp 0 <- rdi
+		mem rsp -8 <- :dobitwise_ret
+		call @dobitwise 1
+		:dobitwise_ret
+		rsi <- mem rsp 8
+		rdi <- mem rsp 0
+		rdi <- rax
+		mem rsp 8 <- rsi
+		mem rsp 0 <- rdi
+		call print 1
+		rsi <- mem rsp 8
+		rdi <- mem rsp 0
+		rdx <- rdi
+
+		rdi >>= 1
+		rdi += 2
+
+		mem rsp 16 <- rdx
+		mem rsp 8 <- rsi
+		mem rsp 0 <- rdi
+		mem rsp -8 <- :combinecooly_ret
+		call @combinecooly 3
+		:combinecooly_ret
+		rdi <- mem rsp 0
+		rsi <- mem rsp 8
+		rdx <- mem rsp 16
+		rdi <- rax
+		
+		call print 1
+		return
+	)
+
+	(@incrementwithfive
+		1 0
+		:start
+		cjump rdi < 5 :increment
+		rax <- rdi
+		return
+
+		:increment
+		rdi += 5
+		goto :start
+	)
+
+	(@dobitwise
+		1 1
+		mem rsp 0 <- r12
+		r12 <- 11
+		rdi &= r12
+		r12 <- mem rsp 0
+		rax <- rdi
+		return
+		)
+	
+	(@combinecooly
+		3 3
+		mem rsp 0 <- rdi
+		mem rsp 8 <- rsi
+		mem rsp 16 <- rdx
+		call allocate 2
+		rdi <- mem rsp 0
+		rsi <- mem rsp 8
+		rdx <- mem rsp 16
+		
+		mem rax 8 <- rdi
+		mem rax 16 <- rsi
+		mem rax 24 <- rdx
+
+		rdi <- mem rax 16
+		mem rax 8 += rdi
+		rdi <- mem rax 24
+		mem rax 8 -= rdi
+		rax <- mem rax 8
+		
+		return
+	)
+)

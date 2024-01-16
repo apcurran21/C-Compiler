@@ -1,0 +1,13 @@
+(@main
+	0
+	rdi <- 1000
+	mem rsp -8 <- :call_label_ciao__ciao_8
+	call @mod_sum 1
+	:call_label_ciao__ciao_8
+	%v <- rax
+	%v <<= 1
+	%v += 1
+	rdi <- %v
+	call print 1
+	return
+)

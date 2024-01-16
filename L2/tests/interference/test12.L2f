@@ -1,0 +1,18 @@
+(@go
+	0
+	rdi <- 7
+	rsi <- 13
+	rdx <- 41
+	rcx <- -4
+	r8 <- 123
+	r9 <- -134
+	mem rsp -8 <- :ret
+	mem rsp -16 <- 2
+	call @big_func 7
+	:ret
+	rdi <- rax
+	rdi <<= 1
+	rdi++
+	call print 1
+	return
+)

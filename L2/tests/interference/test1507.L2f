@@ -1,0 +1,38 @@
+(@storeV
+	4
+	%A <- rdi
+	%k <- rsi
+	%i <- rdx
+	%j <- rcx
+	:call_label_ciao_3
+	goto :call_label_ciao_4
+	:call_label_ciao_4
+	%newVar1 <- 0
+	%newVar2 <- %A
+	%newVar2 += 16
+	%newVar3 <- mem %newVar2 0
+	%newVar5 <- %A
+	%newVar5 += 24
+	%newVar6 <- mem %newVar5 0
+	%newVar8 <- 1
+	%newVar7 <- %newVar6
+	%newVar7 >>= 1
+	%newVar8 *= %newVar7
+	%newVar9 <- %i
+	%newVar9 *= %newVar8
+	%newVar1 += %newVar9
+	%newVar4 <- %newVar3
+	%newVar4 >>= 1
+	%newVar8 *= %newVar4
+	%newVar10 <- %k
+	%newVar10 *= %newVar8
+	%newVar1 += %newVar10
+	%newVar1 += %j
+	%newVar0 <- %newVar1
+	%newVar0 *= 8
+	%newVar0 += 32
+	%newVar11 <- %A
+	%newVar11 += %newVar0
+	mem %newVar11 0 <- 5
+	return
+)

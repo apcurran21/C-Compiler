@@ -1,0 +1,74 @@
+// O(log n) modulo 3
+// L2 adaptation
+
+(@go
+    (@go
+        0 
+        %test1 <- -41
+        rdi <- %test1
+        mem rsp -8 <- :test1
+        call @mod3 1
+        :test1
+
+        %test2 <- 234
+        rdi <- %test2
+        mem rsp -8 <- :test2
+        call @mod3 1
+        :test2
+
+        %test3 <- 0
+        rdi <- %test3
+        mem rsp -8 <- :test3
+        call @mod3 1
+        :test3
+
+        %test4<- -310
+        rdi <- %test4
+        mem rsp -8 <- :test4
+        call @mod3 1
+        :test4
+        return
+    )
+    (@encode
+        1
+        %num <- rdi
+        %num <<= 1
+        %num += 1
+        rax <- %num
+        return
+    )
+    (@mod3 
+        1
+
+        %num <- rdi
+
+        cjump 0 < %num :positive
+        %num *= -2
+
+        :positive
+        :loop 
+        cjump %num < 3 :return
+        
+        %bitmasked <- %num
+        %bitmasked &= 3
+        cjump %bitmasked = 3 :shift
+        cjump %bitmasked = 0 :shift
+        %num -= 3
+        goto :loop
+
+        :shift
+        %num >>= 2
+        goto :loop
+
+        :return
+        rdi <- %num
+        mem rsp -8 <- :encode_ret
+        call @encode 1
+        :encode_ret
+        rdi <- rax
+        call print 1
+        return
+    ) 
+)
+
+

@@ -1,0 +1,28 @@
+(@buildASandwich
+	2
+	%cheese <- rdi
+	%meat <- rsi
+	%isHavarti <- %cheese = 1
+	cjump %isHavarti = 1 :call_label_ciao_1
+	mem rsp -8 <- :call_label_ciao_5
+	call @swissChoice 0
+	:call_label_ciao_5
+	goto :call_label_ciao_2
+	:call_label_ciao_1
+	mem rsp -8 <- :call_label_ciao_6
+	call @havartiChoice 0
+	:call_label_ciao_6
+	:call_label_ciao_2
+	%isSalami <- %meat = 1
+	cjump %isSalami = 1 :call_label_ciao_3
+	mem rsp -8 <- :call_label_ciao_7
+	call @turkeyChoice 0
+	:call_label_ciao_7
+	goto :call_label_ciao_4
+	:call_label_ciao_3
+	mem rsp -8 <- :call_label_ciao_8
+	call @salamiChoice 0
+	:call_label_ciao_8
+	:call_label_ciao_4
+	return
+)

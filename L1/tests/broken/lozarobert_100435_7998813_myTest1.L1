@@ -1,0 +1,50 @@
+//comment about what this program does
+(@prog1
+  (@prog1
+    0 1
+    mem rsp 0 <-r12
+    r12 <- 0
+    rdi <- 33  //because of encoding, these values are 16 and 2
+    rsi <- 4 
+    mem rsp -8 <- :func1_ret1
+    call @func1 2
+   :func1_ret1 
+    r12 += rax
+    rdi += r12
+    call print 1
+    rdi <- 17
+    rsi <- 1
+    mem rsp -8 <- :func1_ret2
+    call @func1 2
+   :func1_ret2
+    r12 += rax
+    rdi += rax
+    call print 1
+    rdi <- 9
+    rsi <- 2
+    mem rsp -8 <- :func1_ret3
+    call @func1 2
+   :func1_ret3
+    r12 += rax
+    rdi += rax
+    call print 1
+    rdi <- 1 //because of the way the encoding works, we need the initial value of r or else the print will seg fault
+    rdi += r12 
+    call print 1
+    r12 <- mem rsp 0 
+   return
+   )
+  (@func1
+    2 0
+    rax <- 0
+   :label1
+    cjump rdi <= 1 :END  
+    rax += rdi   //rax is the sum of all rdi values 
+   :label2
+    rdi -= rsi     //we are decrementing rdi by rsi each iteration
+       //rdi is decremented 
+    goto :label1
+   :END 
+    return
+  ) 
+)

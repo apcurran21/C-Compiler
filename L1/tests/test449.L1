@@ -1,0 +1,217 @@
+(@stub
+(@leftShiftStuff_1
+	3 9
+	mem rsp 40 <- rbx
+	mem rsp 32 <- rbp
+	mem rsp 24 <- r15
+	mem rsp 16 <- r14
+	mem rsp 8 <- r13
+	mem rsp 0 <- r12
+	mem rsp 56 <- rdi
+	rdi <- rsi
+	mem rsp 48 <- rdi
+	rdi <- rdx
+	mem rsp 64 <- rdi
+	rdi <- mem rsp 48
+	rcx <- mem rsp 56
+	rdi <<= rcx
+	mem rsp 48 <- rdi
+	rcx <- mem rsp 48
+	rdi <- mem rsp 64
+	rdi <<= rcx
+	mem rsp 64 <- rdi
+	rdi <- mem rsp 64
+	rax <- rdi
+	rdi <- mem rsp 56
+	rax += rdi
+	rdi <- mem rsp 48
+	rax += rdi
+	r12 <- mem rsp 0
+	r13 <- mem rsp 8
+	r14 <- mem rsp 16
+	r15 <- mem rsp 24
+	rbp <- mem rsp 32
+	rbx <- mem rsp 40
+	return
+)
+
+(@leftShiftStuff_2
+	3 9
+	mem rsp 40 <- rbx
+	mem rsp 32 <- rbp
+	mem rsp 24 <- r15
+	mem rsp 16 <- r14
+	mem rsp 8 <- r13
+	mem rsp 0 <- r12
+	mem rsp 56 <- rdi
+	rdi <- rsi
+	mem rsp 48 <- rdi
+	rdi <- rdx
+	mem rsp 64 <- rdi
+	rcx <- mem rsp 48
+	rdi <- mem rsp 56
+	rdi <<= rcx
+	mem rsp 56 <- rdi
+	rcx <- mem rsp 56
+	rdi <- mem rsp 64
+	rdi <<= rcx
+	mem rsp 64 <- rdi
+	rdi <- mem rsp 64
+	rax <- rdi
+	rdi <- mem rsp 48
+	rax += rdi
+	rdi <- mem rsp 56
+	rax += rdi
+	r12 <- mem rsp 0
+	r13 <- mem rsp 8
+	r14 <- mem rsp 16
+	r15 <- mem rsp 24
+	rbp <- mem rsp 32
+	rbx <- mem rsp 40
+	return
+)
+
+(@leftShiftStuff_3
+	3 9
+	mem rsp 40 <- rbx
+	mem rsp 32 <- rbp
+	mem rsp 24 <- r15
+	mem rsp 16 <- r14
+	mem rsp 8 <- r13
+	mem rsp 0 <- r12
+	mem rsp 64 <- rdi
+	rdi <- rsi
+	mem rsp 56 <- rdi
+	rdi <- rdx
+	mem rsp 48 <- rdi
+	rdi <- mem rsp 48
+	rcx <- mem rsp 64
+	rdi <<= rcx
+	mem rsp 48 <- rdi
+	rcx <- mem rsp 48
+	rdi <- mem rsp 56
+	rdi <<= rcx
+	mem rsp 56 <- rdi
+	rdi <- mem rsp 56
+	rax <- rdi
+	rdi <- mem rsp 64
+	rax += rdi
+	rdi <- mem rsp 48
+	rax += rdi
+	r12 <- mem rsp 0
+	r13 <- mem rsp 8
+	r14 <- mem rsp 16
+	r15 <- mem rsp 24
+	rbp <- mem rsp 32
+	rbx <- mem rsp 40
+	return
+)
+
+(@leftShiftStuff_4
+	3 8
+	mem rsp 40 <- rbx
+	mem rsp 32 <- rbp
+	mem rsp 24 <- r15
+	mem rsp 16 <- r14
+	mem rsp 8 <- r13
+	mem rsp 0 <- r12
+	r8 <- rdi
+	rdi <- rsi
+	mem rsp 48 <- rdi
+	rdi <- rdx
+	mem rsp 56 <- rdi
+	rcx <- mem rsp 48
+	rdi <- mem rsp 56
+	rdi <<= rcx
+	mem rsp 56 <- rdi
+	rcx <- mem rsp 56
+	r8 <<= rcx
+	rax <- r8
+	rdi <- mem rsp 48
+	rax += rdi
+	rdi <- mem rsp 56
+	rax += rdi
+	r12 <- mem rsp 0
+	r13 <- mem rsp 8
+	r14 <- mem rsp 16
+	r15 <- mem rsp 24
+	rbp <- mem rsp 32
+	rbx <- mem rsp 40
+	return
+)
+
+(@leftShiftStuff_5
+	3 9
+	mem rsp 40 <- rbx
+	mem rsp 32 <- rbp
+	mem rsp 24 <- r15
+	mem rsp 16 <- r14
+	mem rsp 8 <- r13
+	mem rsp 0 <- r12
+	mem rsp 64 <- rdi
+	rdi <- rsi
+	mem rsp 56 <- rdi
+	rdi <- rdx
+	mem rsp 48 <- rdi
+	rcx <- mem rsp 48
+	rdi <- mem rsp 64
+	rdi <<= rcx
+	mem rsp 64 <- rdi
+	rdi <- mem rsp 56
+	rcx <- mem rsp 64
+	rdi <<= rcx
+	mem rsp 56 <- rdi
+	rdi <- mem rsp 56
+	rax <- rdi
+	rdi <- mem rsp 48
+	rax += rdi
+	rdi <- mem rsp 64
+	rax += rdi
+	r12 <- mem rsp 0
+	r13 <- mem rsp 8
+	r14 <- mem rsp 16
+	r15 <- mem rsp 24
+	rbp <- mem rsp 32
+	rbx <- mem rsp 40
+	return
+)
+
+(@leftShiftStuff_6
+	3 8
+	mem rsp 40 <- rbx
+	mem rsp 32 <- rbp
+	mem rsp 24 <- r15
+	mem rsp 16 <- r14
+	mem rsp 8 <- r13
+	mem rsp 0 <- r12
+	r8 <- rdi
+	rdi <- rsi
+	mem rsp 48 <- rdi
+	rdi <- rdx
+	mem rsp 56 <- rdi
+	rdi <- mem rsp 48
+	rcx <- mem rsp 56
+	rdi <<= rcx
+	mem rsp 48 <- rdi
+	rcx <- mem rsp 48
+	r8 <<= rcx
+	rax <- r8
+	rdi <- mem rsp 56
+	rax += rdi
+	rdi <- mem rsp 48
+	rax += rdi
+	r12 <- mem rsp 0
+	r13 <- mem rsp 8
+	r14 <- mem rsp 16
+	r15 <- mem rsp 24
+	rbp <- mem rsp 32
+	rbx <- mem rsp 40
+	return
+)
+
+(@stub
+	0 0
+	return
+)
+
+)

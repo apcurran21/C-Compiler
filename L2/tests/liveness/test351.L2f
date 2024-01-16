@@ -1,0 +1,51 @@
+(@generateFibonacciSequence
+	1
+	%n <- rdi
+	%isNZero <- %n = 0
+	cjump %isNZero = 1 :call_label0
+	goto :call_label2
+	:call_label0
+	rax <- 1
+	return
+	:call_label1
+	rax <- %originalTablePointer
+	return
+	:call_label2
+	%size <- %n
+	%size += 1
+	%size <<= 1
+	%size += 1
+	rdi <- %size
+	rsi <- 1
+	call allocate 2
+	%table <- rax
+	mem %table 16 <- 3
+	%originalTablePointer <- %table
+	%offset <- 24
+	%tableLength <- %n
+	%tableLength <<= 3
+	%tableLength += 8
+	%nIsOne <- %n = 2
+	cjump %nIsOne = 1 :call_label1
+	goto :call_label3
+	:call_label3
+	%tablePointer <- %originalTablePointer
+	%tablePointer += %offset
+	%prevValue <- mem %tablePointer -8
+	%prevValue -= 1
+	%prevValue >>= 1
+	%prevPrevValue <- mem %tablePointer -16
+	%prevPrevValue -= 1
+	%prevPrevValue >>= 1
+	%prevValue += %prevPrevValue
+	%prevValue <<= 1
+	%prevValue += 1
+	mem %tablePointer 0 <- %prevValue
+	%offset += 8
+	%isIteratorLessThanLength <- %offset <= %tableLength
+	cjump %isIteratorLessThanLength = 1 :call_label3
+	goto :call_label4
+	:call_label4
+	rax <- %originalTablePointer
+	return
+)

@@ -1,0 +1,65 @@
+void main() {
+    :entry
+    int64 arrSize
+    int64[] arr
+    int64 arr0
+    int64 arr1
+    int64 back0
+    int64 back1
+    int64 sum
+    int64 ssum
+    int64 offset
+    int64 continue
+    int64 dcontinue
+    int64 arrval
+    int64 arrsum
+    int64 i
+
+    arrSize <- 50
+    arr <- new Array(arrSize)
+
+    arr[0] <- 1
+    arr[1] <- 1
+
+    back0 <- 1
+    back1 <- 1
+
+    i <- 2
+    br :loop
+
+    :loop
+    i <- i + 1
+    sum <- back0 + back1
+    ssum <- sum << 1
+    ssum <- ssum + 1
+    offset <- i - 1
+    arr[offset] <- ssum
+    back0 <- back1
+    back1 <- sum
+    continue <- i < 50
+    br continue :loop :ncontinue
+
+    :ncontinue
+    print(arr)
+    arrsum <- 0
+    
+    i <- 0
+    br :loop2 
+
+    :loop2
+    dcontinue <- i >= 50
+    br dcontinue :done :ndone
+
+    :ndone
+    arrval <- arr[i]
+    arrval <- arrval >> 1
+    arrsum <- arrsum + arrval
+    i <- i + 1
+    br :loop2
+
+    :done
+    arrsum <- arrsum << 1
+    arrsum <- arrsum + 1
+    print(arrsum)
+    return
+}

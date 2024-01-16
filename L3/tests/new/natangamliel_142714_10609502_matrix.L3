@@ -1,0 +1,69 @@
+// get 2 numbers i and j from user, generates a matrix of dimensions ixj
+// fills the matrix with numbers 1 through i*j
+
+// note: i and j are expected to be >= 0
+
+define :matrix (%rows, %cols) {
+	%check <- %rows <= 1
+	br %check :abort
+	%check <- %cols <= 1
+	br %check :abort
+
+	%matrix_start <- call allocate (%rows, 1)
+	%row_ptr <- %matrix_start
+	%row_ptr <- %row_ptr + 8
+
+	:gen_rows
+	%check <- %rows <= 1
+	br %check :fill
+	%row_allocate <- call allocate (%cols, 1)
+	store %row_ptr <- %row_allocate
+	%row_ptr <- %row_ptr + 8
+	%rows <- %rows - 2
+	br :gen_rows
+
+	:fill
+	%row_ptr <- %row_ptr - 8
+	%rows <- load %matrix_start
+	%matrix_start <- %matrix_start + 8
+	%cols <- load %matrix_start // num cols (raw)
+	%matrix_start <- %matrix_start - 8
+	%cols <- load %cols
+	%fill_value <- %rows
+	%fill_value <- %fill_value * %cols
+	%fill_value <- %fill_value << 1
+	%fill_value <- %fill_value + 1  // num rows * num cols (value encoded)
+
+	:outer_loop
+	%check <- %row_ptr <= %matrix_start
+	br %check :end
+	%row_index <- load %row_ptr
+	%row_width <- %cols
+	%row_width <- %row_width * 8
+	%row_index <- %row_index + %row_width
+	%row_front <- load %row_ptr
+	:inner_loop
+	%check <- %row_index <= %row_front
+	br %check :end_inner
+	store %row_index <- %fill_value
+	%row_index <- %row_index - 8
+	%fill_value <- %fill_value - 2
+	br :inner_loop
+	:end_inner
+	%row_ptr <- %row_ptr - 8
+	br :outer_loop
+
+	:end
+	call print (%matrix_start)
+
+	:abort
+	return
+
+}
+
+define :main () {
+	%num_rows <- 9
+	%num_cols <- 13
+	call :matrix (%num_rows, %num_cols)
+	return
+}

@@ -1,0 +1,35 @@
+// calculates (and prints) the first 20 terms of the fibonacci sequence
+// with fib(0) = fib(1) = 1
+
+define @main() {
+        // 21 << 1 + 1
+        %fib_arr <- call allocate(43, 0)
+        %fib_arr_0 <- %fib_arr + 8
+        // f(0) = 1
+        store %fib_arr_0 <- 1
+        %fib_arr_1 <- %fib_arr + 16
+        // f(1) = 1
+        store %fib_arr_1 <- 1
+        // 1 << 1 + 1
+        call print(3)
+        call print(3)
+        %fib_arr <- %fib_arr + 24
+        %i <- 2
+        :loop_start
+        %loop_done <- %i >= 21
+        br %loop_done :loop_end
+        %fib_sub_2 <- %fib_arr - 16
+        %fib_i <- load %fib_sub_2
+        %fib_sub_1 <- %fib_arr - 8
+        %tmp <- load %fib_sub_1
+        %fib_i <- %fib_i + %tmp
+        store %fib_arr <- %fib_i
+        %fib_i <- %fib_i << 1
+        %fib_i <- %fib_i + 1
+        call print(%fib_i)
+        %fib_arr <- %fib_arr + 8
+        %i <- %i + 1
+        br :loop_start
+        :loop_end
+    return
+}

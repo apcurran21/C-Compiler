@@ -1,0 +1,86 @@
+(@main
+(@main
+	0 1
+	rdi <- 21
+	mem rsp 0 <- rdi
+	rdi <- mem rsp 0
+	rdi <- rdi
+	call print 1
+	rdi <- mem rsp 0
+	rdi <- rdi
+	mem rsp -8 <- :call_label0
+	call @compute_triangular_num 1
+	:call_label0
+	rdi <- mem rsp 0
+	rdi <- rdi
+	mem rsp -8 <- :call_label1
+	call @compute_many_tns 1
+	:call_label1
+	return
+)
+
+(@compute_triangular_num
+	1 0
+	rdi <- rdi
+	rdi <- rdi
+	rdi >>= 1
+	rsi <- rdi
+	rsi -= 1
+	rsi <- rsi
+	rsi *= rdi
+	rsi <- rsi
+	rsi >>= 1
+	rsi <- rsi
+	rsi <<= 1
+	rsi <- rsi
+	rsi += 1
+	rdi <- rsi
+	call print 1
+	return
+)
+
+(@compute_many_tns
+	1 2
+	rdi <- rdi
+	rdi <- rdi
+	mem rsp 8 <- rdi
+	rdi <- mem rsp 8
+	rdi >>= 1
+	mem rsp 8 <- rdi
+	rdi <- 3
+	mem rsp 0 <- rdi
+	rdi <- mem rsp 0
+	rdi <- rdi
+	mem rsp 0 <- rdi
+	rdi <- mem rsp 0
+	rdi >>= 1
+	mem rsp 0 <- rdi
+	:call_label_ciao_2
+	rdi <- mem rsp 0
+	rsi <- mem rsp 8
+	rdi <- rsi < rdi
+	cjump rdi = 1 :call_label_ciao_5
+	:call_label_ciao_3
+	rdi <- mem rsp 0
+	rdi <- rdi
+	rdi <<= 1
+	rdi <- rdi
+	rdi += 1
+	rdi <- rdi
+	mem rsp -8 <- :call_label_ciao_6
+	call @compute_triangular_num 1
+	:call_label_ciao_6
+	goto :call_label_ciao_4
+	:call_label_ciao_4
+	rdi <- mem rsp 0
+	rdi <- rdi
+	mem rsp 0 <- rdi
+	rdi <- mem rsp 0
+	rdi += 1
+	mem rsp 0 <- rdi
+	goto :call_label_ciao_2
+	:call_label_ciao_5
+	return
+)
+
+)

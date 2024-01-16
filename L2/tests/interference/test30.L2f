@@ -1,0 +1,32 @@
+(@fib
+	1
+	%one <- 1
+	cjump rdi = 1 :ENDzero
+	cjump rdi = 3 :ENDone
+	rdi -= 2
+	%hello <- rdi
+	%my_var2 <- :fib_ret1
+	mem rsp -8 <- %my_var2
+	call @fib 1
+	:fib_ret1
+	rdi <- %hello
+	%my_var3 <- :fib_ret2
+	mem rsp -8 <- %my_var3
+	%newV <- rax
+	rdi -= 2
+	call @fib 1
+	:fib_ret2
+	rdi <- %newV
+	rdi >>= %one
+	rax >>= %one
+	rax += rdi
+	rax <<= %one
+	rax += %one
+	return
+	:ENDzero
+	rax <- %one
+	return
+	:ENDone
+	rax <- 3
+	return
+)

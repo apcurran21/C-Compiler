@@ -1,0 +1,8 @@
+(@squares
+	1
+	%n <- rdi
+	%ret <- %n
+	%ret *= %n
+	rax <- %ret
+	return
+)

@@ -1,0 +1,66 @@
+define :main() {
+	%num_primes <- 100
+	%found <- 0
+	%cur <- 2
+
+	:keep_going
+	%res <- call :is_prime(%cur)
+	%jp <- %res < 1
+	br %jp :not_prime
+
+	%found <- %found + 1
+	%pt <- %cur
+	%pt <- %pt << 1
+	%pt <- %pt + 1
+	call print(%pt)
+
+	:not_prime
+	%cur <- %cur + 1
+	%tst <- %found < %num_primes
+	br %tst :keep_going
+
+	return
+}
+
+define :is_prime(%chk) {
+	%cur <- 2
+
+	:test
+	%tst <- %cur < %chk
+	br %tst :loop
+	br :prime
+
+	:loop
+	%res <- call :is_divisible(%chk, %cur)
+	br %res :not_prime
+
+	%cur <- %cur + 1
+	br :test
+
+	:prime
+	return 1
+
+	:not_prime
+	return 0
+}
+
+define :is_divisible(%dividend, %divisor) {
+	%cur_divisor <- %divisor
+
+	:test
+	%lp <- %cur_divisor < %dividend
+	%ee <- %cur_divisor = %dividend
+	br %lp :loop
+	br %ee :d
+	br :nd
+
+	:loop
+	%cur_divisor <- %divisor + %cur_divisor
+	br :test
+
+	:d
+	return 1
+
+	:nd
+	return 0
+}

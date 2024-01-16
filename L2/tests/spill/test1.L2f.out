@@ -1,0 +1,21 @@
+(@myF
+	0 1
+	%S0 <- 0
+	mem rsp 0 <- %S0
+	%S1 <- mem rsp 0
+	%S1++
+	mem rsp 0 <- %S1
+	%S2 <- mem rsp 0
+	%S2 += 3
+	mem rsp 0 <- %S2
+	%S3 <- mem rsp 0
+	%S3 += 5
+	mem rsp 0 <- %S3
+	%S4 <- mem rsp 0
+	%variable6GXZOSEK7I <- %S4
+	rdi <- %variable6GXZOSEK7I
+	mem rsp -8 <- :f1_ret
+	call @myF2 0
+	:f1_ret
+	return
+)

@@ -1,0 +1,23 @@
+(@FindPeak
+	2
+	%arr <- rdi
+	%len <- rsi
+	%max <- 0
+	%ind <- 0
+	%pos <- %arr
+	%pos += 8
+	:call_label_ciao_3
+	%loopEnded <- %len <= %ind
+	cjump %loopEnded = 1 :call_label_ciao_5
+	%cur <- mem %pos 0
+	%notMax <- %cur <= %max
+	cjump %notMax = 1 :call_label_ciao_4
+	%max <- %cur
+	:call_label_ciao_4
+	%ind += 1
+	%pos += 8
+	goto :call_label_ciao_3
+	:call_label_ciao_5
+	rax <- %max
+	return
+)

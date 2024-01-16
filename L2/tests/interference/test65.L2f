@@ -1,0 +1,19 @@
+(@main
+	0
+	%start_year <- 1900
+	%end_year <- 2000
+	rdi <- %start_year
+	rsi <- %end_year
+	mem rsp -8 <- :ca_ret
+	call @create_array 2
+	:ca_ret
+	rdi <- rax
+	rsi <- %start_year
+	rdx <- %end_year
+	mem rsp -8 <- :fa_ret
+	call @fill_array 3
+	:fa_ret
+	rdi <- rax
+	call print 1
+	return
+)

@@ -1,0 +1,99 @@
+define @main () {
+ 
+:NNNNNN
+ br :entry
+ 
+:entry
+ %v <- 21
+ %newVar1 <- 21 >> 1
+ %newVar0 <- %newVar1
+ %newVar2 <- 21 >> 1
+ %newVar0 <- %newVar0 * %newVar2
+ %newVar0 <- %newVar0 << 1
+ %newVar0 <- %newVar0 + 1
+ %newVar0 <- %newVar0 + 6
+ %m <- call allocate (%newVar0, 1)
+ %newVar3 <- %m + 8
+ store %newVar3 <- 5
+ %newVar4 <- %m + 16
+ store %newVar4 <- 21
+ %newVar5 <- %m + 24
+ store %newVar5 <- 21
+ %r <- call @checkMatrix (%m, %v)
+ call print (%r)
+ return 
+}
+
+define @checkMatrix (%m, %v) {
+ 
+:NNNNNNNNNNNNN
+ br :entry
+ 
+:leave
+ return %found
+ 
+:setAndLeave
+ %found <- 3
+ br :leave
+ 
+:endOuterBody
+ %index <- %index + 1
+ br :header
+ 
+:header
+ %check <- %index < %l1
+ br %check :outerBody 
+ br :leave
+ 
+:outerBody
+ %index2 <- 0
+ br :header2
+ 
+:header2
+ %check2 <- %index2 < %l2
+ br %check2 :innerBody 
+ br :endOuterBody
+ 
+:innerBody
+ %newVar1 <- 0
+ %newVar2 <- %m + 24
+ %newVar3 <- load %newVar2
+ %newVar4 <- %newVar3 >> 1
+ %newVar5 <- 1
+ %newVar5 <- %newVar4 * %newVar5
+ %newVar6 <- %index * %newVar5
+ %newVar1 <- %newVar6 + %newVar1
+ %newVar1 <- %newVar1 + %index2
+ %newVar0 <- %newVar1 * 8
+ %newVar0 <- %newVar0 + 32
+ %newVar7 <- %m + %newVar0
+ %e <- load %newVar7
+ %sameE <- %e = %v
+ br %sameE :setAndLeave 
+ br :endInnerBody
+ 
+:endInnerBody
+ %index2 <- %index2 + 1
+ br :header2
+ 
+:init
+ %found <- 1
+ %index <- 0
+ br :header
+ 
+:entry
+ %newVar8 <- 0 * 8
+ %newVar9 <- %newVar8 + 16
+ %newVar10 <- %m + %newVar9
+ %l1encoded <- load %newVar10
+ %newVar11 <- 1 * 8
+ %newVar12 <- %newVar11 + 16
+ %newVar13 <- %m + %newVar12
+ %l2encoded <- load %newVar13
+ call print (%l1encoded)
+ call print (%l2encoded)
+ %l1 <- %l1encoded >> 1
+ %l2 <- %l2encoded >> 1
+ br :init
+}
+

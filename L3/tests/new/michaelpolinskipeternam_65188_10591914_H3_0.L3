@@ -1,0 +1,31 @@
+define :main (){
+  %argv <- call input()
+  %argv <- %argv - 1
+  %argv <- %argv >> 1
+  %fibbNum <- call :fibb(%argv)
+  %fibbNum <- %fibbNum << 1
+  %fibbNum <- %fibbNum + 1
+  call print(%fibbNum)
+  return
+}
+
+define :fibb (%idx){
+  %curr <- 0
+  %next <- 1
+  %idxIs0 <- %idx = 0
+  %idxIs1 <- %idx = 1
+  br %idxIs0 :FIBB_DONE 
+  br %idxIs1 :FIBB_DONE
+
+  :FIBB_LOOP
+  %temp <- %next
+  %next <- %next + %curr
+  %curr <- %temp
+  %idx <- %idx - 1
+  %idxIs1 <- %idx = 1
+  br %idxIs1 :FIBB_DONE
+  br :FIBB_LOOP
+
+  :FIBB_DONE
+  return %next
+}

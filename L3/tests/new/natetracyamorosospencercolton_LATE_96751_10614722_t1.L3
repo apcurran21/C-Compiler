@@ -1,0 +1,35 @@
+define :main() {
+	%size <- 17 // 8
+	%init <- 2675 // 1337
+	%addr <- call allocate(%size, %init)
+	call :inc_array(%addr)
+	call print(%addr)
+	return
+}
+
+define :inc_array(%addr) {
+	%sz <- load %addr
+
+	%offset <- 0
+	%pointer <- %addr
+	%pointer <- %pointer + 8
+
+	:test
+	%tst <- %offset < %sz
+	br %tst :loop
+	br :done
+
+	:loop
+	%val <- load %pointer
+	%ad <- %offset
+	%ad <- %ad << 1
+	%val <- %val + %ad
+	store %pointer <- %val
+
+	%offset <- %offset + 1
+	%pointer <- %pointer + 8
+	br :test
+
+	:done
+	return
+}

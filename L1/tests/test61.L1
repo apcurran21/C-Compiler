@@ -1,0 +1,35 @@
+(@go
+(@big_func
+	7 0
+	r10 <- mem rsp 0
+	rax <- 1
+	rax *= rdi
+	rax -= rsi
+	rax += rdx
+	rax *= rcx
+	rax &= r8
+	rax += r9
+	rax -= r10
+	return
+)
+
+(@go
+	0 0
+	rdi <- 7
+	rsi <- 13
+	rdx <- 41
+	rcx <- -4
+	r8 <- 123
+	r9 <- -134
+	mem rsp -8 <- :ret
+	mem rsp -16 <- 2
+	call @big_func 7
+	:ret
+	rdi <- rax
+	rdi <<= 1
+	rdi++
+	call print 1
+	return
+)
+
+)

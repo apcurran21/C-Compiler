@@ -1,0 +1,21 @@
+(@fib
+	1
+	cjump 1 < rdi :recurse
+	rax <- 1
+	return
+	:recurse
+	%n <- rdi
+	rdi -= 1
+	mem rsp -8 <- :f_n1
+	call @fib 1
+	:f_n1
+	%fib_n_sub1 <- rax
+	rdi <- %n
+	rdi -= 2
+	mem rsp -8 <- :f_n2
+	call @fib 1
+	:f_n2
+	rax += %fib_n_sub1
+	rdi <- %n
+	return
+)

@@ -1,0 +1,9 @@
+(@encodeNumber
+	1
+	%n <- rdi
+	%encodedN <- %n
+	%encodedN <<= 1
+	%encodedN += 1
+	rax <- %encodedN
+	return
+)

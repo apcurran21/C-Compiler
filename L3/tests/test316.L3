@@ -1,0 +1,104 @@
+define @main () {
+ 
+:NNNNNNNNNNN
+ br :EntryPoint
+ 
+:EntryPoint
+ %len <- 10
+ %arr1 <- call @GetArray (%len)
+ call @PopulateArray1 (%arr1, %len)
+ call @printResultArray (%arr1)
+ %arr2 <- call @GetArray (%len)
+ call @PopulateArray2 (%arr2, %len)
+ call @printResultArray (%arr2)
+ return 
+}
+
+define @GetArray (%len) {
+ 
+:NNNNNNNNNNN
+ br :EntryPoint
+ 
+:EntryPoint
+ %len <- %len << 1
+ %len <- %len + 1
+ %val <- 1
+ %newVar1 <- %len >> 1
+ %newVar0 <- %newVar1
+ %newVar0 <- %newVar0 << 1
+ %newVar0 <- %newVar0 + 1
+ %newVar0 <- %newVar0 + 2
+ %arr <- call allocate (%newVar0, 1)
+ %newVar2 <- %arr + 8
+ store %newVar2 <- %len
+ return %arr
+}
+
+define @PopulateArray1 (%arr, %len) {
+ 
+:NNNNNNNNNNNNN
+ br :EntryPoint
+ 
+:LoopEnd
+ return 
+ 
+:LoopContinue
+ %value <- %ind * 8
+ %value <- %value << 1
+ %value <- %value + 1
+ %newVar1 <- 0
+ %newVar2 <- 1
+ %newVar1 <- %newVar1 + %ind
+ %newVar0 <- %newVar1 * 8
+ %newVar0 <- %newVar0 + 16
+ %newVar3 <- %arr + %newVar0
+ store %newVar3 <- %value
+ %ind <- %ind + 1
+ br :loopStart1
+ 
+:loopStart1
+ %stop <- %len <= %ind
+ br %stop :LoopEnd 
+ br :LoopContinue
+ 
+:EntryPoint
+ %ind <- 0
+ br :loopStart1
+}
+
+define @PopulateArray2 (%arr, %len) {
+ 
+:NNNNNNNNNNN
+ br :EntryPoint
+ 
+:Exit
+ return 
+ 
+:LoopStart2
+ %newVar1 <- 0
+ %newVar2 <- 1
+ %newVar1 <- %newVar1 + %ind
+ %newVar0 <- %newVar1 * 8
+ %newVar0 <- %newVar0 + 16
+ %newVar3 <- %arr + %newVar0
+ store %newVar3 <- 5
+ %ind <- %ind + 1
+ %continue <- %len >= %ind
+ br %continue :LoopStart2 
+ br :Exit
+ 
+:EntryPoint
+ %ind <- 0
+ br :LoopStart2
+}
+
+define @printResultArray (%arr) {
+ 
+:NNNNNNNNNNN
+ br :EntryPoint
+ 
+:EntryPoint
+ call print (%arr)
+ return 
+}
+

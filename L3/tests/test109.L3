@@ -1,0 +1,273 @@
+define @main () {
+ 
+:entry
+ %newVar1 <- 5 >> 1
+ %newVar0 <- %newVar1
+ %newVar2 <- 5 >> 1
+ %newVar0 <- %newVar0 * %newVar2
+ %newVar0 <- %newVar0 << 1
+ %newVar0 <- %newVar0 + 1
+ %newVar0 <- %newVar0 + 6
+ %A <- call allocate (%newVar0, 1)
+ %newVar3 <- %A + 8
+ store %newVar3 <- 5
+ %newVar4 <- %A + 16
+ store %newVar4 <- 5
+ %newVar5 <- %A + 24
+ store %newVar5 <- 5
+ %newVar7 <- 5 >> 1
+ %newVar6 <- %newVar7
+ %newVar8 <- 5 >> 1
+ %newVar6 <- %newVar6 * %newVar8
+ %newVar6 <- %newVar6 << 1
+ %newVar6 <- %newVar6 + 1
+ %newVar6 <- %newVar6 + 6
+ %B <- call allocate (%newVar6, 1)
+ %newVar9 <- %B + 8
+ store %newVar9 <- 5
+ %newVar10 <- %B + 16
+ store %newVar10 <- 5
+ %newVar11 <- %B + 24
+ store %newVar11 <- 5
+ %newVar13 <- 0
+ %newVar14 <- %A + 24
+ %newVar15 <- load %newVar14
+ %newVar16 <- %newVar15 >> 1
+ %newVar17 <- 1
+ %newVar17 <- %newVar16 * %newVar17
+ %newVar18 <- 0 * %newVar17
+ %newVar13 <- %newVar18 + %newVar13
+ %newVar13 <- %newVar13 + 0
+ %newVar12 <- %newVar13 * 8
+ %newVar12 <- %newVar12 + 32
+ %newVar19 <- %A + %newVar12
+ store %newVar19 <- 5
+ %newVar21 <- 0
+ %newVar22 <- %A + 24
+ %newVar23 <- load %newVar22
+ %newVar24 <- %newVar23 >> 1
+ %newVar25 <- 1
+ %newVar25 <- %newVar24 * %newVar25
+ %newVar26 <- 0 * %newVar25
+ %newVar21 <- %newVar26 + %newVar21
+ %newVar21 <- %newVar21 + 1
+ %newVar20 <- %newVar21 * 8
+ %newVar20 <- %newVar20 + 32
+ %newVar27 <- %A + %newVar20
+ store %newVar27 <- 5
+ %newVar29 <- 0
+ %newVar30 <- %A + 24
+ %newVar31 <- load %newVar30
+ %newVar32 <- %newVar31 >> 1
+ %newVar33 <- 1
+ %newVar33 <- %newVar32 * %newVar33
+ %newVar34 <- 1 * %newVar33
+ %newVar29 <- %newVar34 + %newVar29
+ %newVar29 <- %newVar29 + 0
+ %newVar28 <- %newVar29 * 8
+ %newVar28 <- %newVar28 + 32
+ %newVar35 <- %A + %newVar28
+ store %newVar35 <- 5
+ %newVar37 <- 0
+ %newVar38 <- %A + 24
+ %newVar39 <- load %newVar38
+ %newVar40 <- %newVar39 >> 1
+ %newVar41 <- 1
+ %newVar41 <- %newVar40 * %newVar41
+ %newVar42 <- 1 * %newVar41
+ %newVar37 <- %newVar42 + %newVar37
+ %newVar37 <- %newVar37 + 1
+ %newVar36 <- %newVar37 * 8
+ %newVar36 <- %newVar36 + 32
+ %newVar43 <- %A + %newVar36
+ store %newVar43 <- 5
+ %newVar45 <- 0
+ %newVar46 <- %B + 24
+ %newVar47 <- load %newVar46
+ %newVar48 <- %newVar47 >> 1
+ %newVar49 <- 1
+ %newVar49 <- %newVar48 * %newVar49
+ %newVar50 <- 0 * %newVar49
+ %newVar45 <- %newVar50 + %newVar45
+ %newVar45 <- %newVar45 + 0
+ %newVar44 <- %newVar45 * 8
+ %newVar44 <- %newVar44 + 32
+ %newVar51 <- %B + %newVar44
+ store %newVar51 <- 5
+ %newVar53 <- 0
+ %newVar54 <- %B + 24
+ %newVar55 <- load %newVar54
+ %newVar56 <- %newVar55 >> 1
+ %newVar57 <- 1
+ %newVar57 <- %newVar56 * %newVar57
+ %newVar58 <- 0 * %newVar57
+ %newVar53 <- %newVar58 + %newVar53
+ %newVar53 <- %newVar53 + 1
+ %newVar52 <- %newVar53 * 8
+ %newVar52 <- %newVar52 + 32
+ %newVar59 <- %B + %newVar52
+ store %newVar59 <- 5
+ %newVar61 <- 0
+ %newVar62 <- %B + 24
+ %newVar63 <- load %newVar62
+ %newVar64 <- %newVar63 >> 1
+ %newVar65 <- 1
+ %newVar65 <- %newVar64 * %newVar65
+ %newVar66 <- 1 * %newVar65
+ %newVar61 <- %newVar66 + %newVar61
+ %newVar61 <- %newVar61 + 0
+ %newVar60 <- %newVar61 * 8
+ %newVar60 <- %newVar60 + 32
+ %newVar67 <- %B + %newVar60
+ store %newVar67 <- 5
+ %newVar69 <- 0
+ %newVar70 <- %B + 24
+ %newVar71 <- load %newVar70
+ %newVar72 <- %newVar71 >> 1
+ %newVar73 <- 1
+ %newVar73 <- %newVar72 * %newVar73
+ %newVar74 <- 1 * %newVar73
+ %newVar69 <- %newVar74 + %newVar69
+ %newVar69 <- %newVar69 + 1
+ %newVar68 <- %newVar69 * 8
+ %newVar68 <- %newVar68 + 32
+ %newVar75 <- %B + %newVar68
+ store %newVar75 <- 5
+ %newVar76 <- 1 * 8
+ %newVar77 <- %newVar76 + 16
+ %newVar78 <- %A + %newVar77
+ %Asize <- load %newVar78
+ %newVar79 <- 1 * 8
+ %newVar80 <- %newVar79 + 16
+ %newVar81 <- %B + %newVar80
+ %Bsize <- load %newVar81
+ %Asize <- %Asize >> 1
+ %Bsize <- %Bsize >> 1
+ %temp <- -1
+ %temp2 <- 0
+ br :outerloop
+ 
+:outerloop
+ %temp <- %temp + 1
+ %temp2 <- 0
+ %check1 <- %temp = %Asize
+ br %check1 :finish 
+ br :innerloop
+ 
+:innerloop
+ %check2 <- %temp2 = %Bsize
+ br %check2 :outerloop 
+ br :continue
+ 
+:continue
+ %newVar83 <- 0
+ %newVar84 <- %A + 24
+ %newVar85 <- load %newVar84
+ %newVar86 <- %newVar85 >> 1
+ %newVar87 <- 1
+ %newVar87 <- %newVar86 * %newVar87
+ %newVar88 <- %temp * %newVar87
+ %newVar83 <- %newVar88 + %newVar83
+ %newVar83 <- %newVar83 + %temp2
+ %newVar82 <- %newVar83 * 8
+ %newVar82 <- %newVar82 + 32
+ %newVar89 <- %A + %newVar82
+ %v1 <- load %newVar89
+ %newVar91 <- 0
+ %newVar92 <- %B + 24
+ %newVar93 <- load %newVar92
+ %newVar94 <- %newVar93 >> 1
+ %newVar95 <- 1
+ %newVar95 <- %newVar94 * %newVar95
+ %newVar96 <- %temp * %newVar95
+ %newVar91 <- %newVar96 + %newVar91
+ %newVar91 <- %newVar91 + %temp2
+ %newVar90 <- %newVar91 * 8
+ %newVar90 <- %newVar90 + 32
+ %newVar97 <- %B + %newVar90
+ %v2 <- load %newVar97
+ %v3 <- %v1 + %v2
+ %newVar99 <- 0
+ %newVar100 <- %A + 24
+ %newVar101 <- load %newVar100
+ %newVar102 <- %newVar101 >> 1
+ %newVar103 <- 1
+ %newVar103 <- %newVar102 * %newVar103
+ %newVar104 <- %temp * %newVar103
+ %newVar99 <- %newVar104 + %newVar99
+ %newVar99 <- %newVar99 + %temp2
+ %newVar98 <- %newVar99 * 8
+ %newVar98 <- %newVar98 + 32
+ %newVar105 <- %A + %newVar98
+ store %newVar105 <- %v3
+ %temp2 <- %temp2 + 1
+ br :innerloop
+ 
+:finish
+ %newVar107 <- 0
+ %newVar108 <- %A + 24
+ %newVar109 <- load %newVar108
+ %newVar110 <- %newVar109 >> 1
+ %newVar111 <- 1
+ %newVar111 <- %newVar110 * %newVar111
+ %newVar112 <- 0 * %newVar111
+ %newVar107 <- %newVar112 + %newVar107
+ %newVar107 <- %newVar107 + 0
+ %newVar106 <- %newVar107 * 8
+ %newVar106 <- %newVar106 + 32
+ %newVar113 <- %A + %newVar106
+ %temp <- load %newVar113
+ %temp <- %temp << 1
+ %temp <- %temp + 1
+ call print (%temp)
+ %newVar115 <- 0
+ %newVar116 <- %A + 24
+ %newVar117 <- load %newVar116
+ %newVar118 <- %newVar117 >> 1
+ %newVar119 <- 1
+ %newVar119 <- %newVar118 * %newVar119
+ %newVar120 <- 0 * %newVar119
+ %newVar115 <- %newVar120 + %newVar115
+ %newVar115 <- %newVar115 + 1
+ %newVar114 <- %newVar115 * 8
+ %newVar114 <- %newVar114 + 32
+ %newVar121 <- %A + %newVar114
+ %temp <- load %newVar121
+ %temp <- %temp << 1
+ %temp <- %temp + 1
+ call print (%temp)
+ %newVar123 <- 0
+ %newVar124 <- %A + 24
+ %newVar125 <- load %newVar124
+ %newVar126 <- %newVar125 >> 1
+ %newVar127 <- 1
+ %newVar127 <- %newVar126 * %newVar127
+ %newVar128 <- 1 * %newVar127
+ %newVar123 <- %newVar128 + %newVar123
+ %newVar123 <- %newVar123 + 0
+ %newVar122 <- %newVar123 * 8
+ %newVar122 <- %newVar122 + 32
+ %newVar129 <- %A + %newVar122
+ %temp <- load %newVar129
+ %temp <- %temp << 1
+ %temp <- %temp + 1
+ call print (%temp)
+ %newVar131 <- 0
+ %newVar132 <- %A + 24
+ %newVar133 <- load %newVar132
+ %newVar134 <- %newVar133 >> 1
+ %newVar135 <- 1
+ %newVar135 <- %newVar134 * %newVar135
+ %newVar136 <- 1 * %newVar135
+ %newVar131 <- %newVar136 + %newVar131
+ %newVar131 <- %newVar131 + 1
+ %newVar130 <- %newVar131 * 8
+ %newVar130 <- %newVar130 + 32
+ %newVar137 <- %A + %newVar130
+ %temp <- load %newVar137
+ %temp <- %temp << 1
+ %temp <- %temp + 1
+ call print (%temp)
+ return 
+}
+

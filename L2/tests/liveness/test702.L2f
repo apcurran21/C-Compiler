@@ -1,0 +1,23 @@
+(@odd
+	1
+	%var1 <- rdi
+	:call_label_ciao_9
+	%test <- %var1 < 1
+	cjump %test = 1 :call_label_ciao_12
+	goto :call_label_ciao_10
+	:call_label_ciao_10
+	%test <- %var1 = 1
+	cjump %test = 1 :call_label_ciao_13
+	goto :call_label_ciao_11
+	:call_label_ciao_11
+	%var1 -= 2
+	goto :call_label_ciao_9
+	:call_label_ciao_12
+	%ret <- 0
+	rax <- %ret
+	return
+	:call_label_ciao_13
+	%ret <- 1
+	rax <- %ret
+	return
+)

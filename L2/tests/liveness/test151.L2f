@@ -1,0 +1,20 @@
+(@go
+	0
+	%rcss <- 1
+	%rs <- 0
+	%newVariable <- 1
+	%newVariable4 <- 0
+	:loop
+	%newVariable2 <- %rs
+	%newVariable2 += %newVariable
+	rdi <- %newVariable2
+	rdi <<= %rcss
+	rdi += 1
+	call print 1
+	%rs <- %newVariable
+	%newVariable <- %newVariable2
+	%newVariable4++
+	rax <- %newVariable4 <= 20
+	cjump rax = 1 :loop
+	return
+)

@@ -1,0 +1,93 @@
+(@main
+(@main
+	0 1
+	mem rsp 0 <- r12
+	:call_label0
+	r12 <- 5
+	rdi <- r12
+	mem rsp -8 <- :call_label1
+	call @circ 1
+	:call_label1
+	rdi <- rax
+	rdi <<= 1
+	rdi += 1
+	call print 1
+	rdi <- r12
+	mem rsp -8 <- :call_label2
+	call @area 1
+	:call_label2
+	rdi <- rax
+	rdi <<= 1
+	rdi += 1
+	call print 1
+	rdi <- r12
+	mem rsp -8 <- :call_label3
+	call @SA 1
+	:call_label3
+	rdi <- rax
+	rdi <<= 1
+	rdi += 1
+	call print 1
+	rdi <- r12
+	mem rsp -8 <- :call_label4
+	call @vol 1
+	:call_label4
+	rdi <- rax
+	rdi <<= 1
+	rdi += 1
+	call print 1
+	r12 <- mem rsp 0
+	return
+)
+
+(@circ
+	1 0
+	rsi <- rdi
+	:call_label_ciao_5
+	rdi <- 2
+	rdi *= rsi
+	rsi <- 3
+	rdi *= rsi
+	rax <- rdi
+	return
+)
+
+(@area
+	1 0
+	rsi <- rdi
+	:call_label_ciao__ciao_6
+	rdi <- rsi
+	rdi *= rsi
+	rsi <- 3
+	rdi *= rsi
+	rax <- rdi
+	return
+)
+
+(@SA
+	1 0
+	:call_label_ciao__ciao__ciao_7
+	rsi <- rdi
+	rsi *= rdi
+	rsi *= 4
+	rdx <- 3
+	rdi <- rsi
+	rdi *= rdx
+	rax <- rdi
+	return
+)
+
+(@vol
+	1 0
+	rsi <- rdi
+	:call_label_ciao__ciao__ciao__ciao_8
+	rdi <- rsi
+	rdi *= rsi
+	rdi *= rsi
+	rsi <- 4
+	rdi *= rsi
+	rax <- rdi
+	return
+)
+
+)

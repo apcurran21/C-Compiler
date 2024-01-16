@@ -1,0 +1,47 @@
+(@go
+(@go
+	0 0
+	rdi <- 9
+	mem rsp -8 <- :fibo_ret
+	call @fibo 1
+	:fibo_ret
+	rdi <- rax
+	rdi <<= 1
+	rdi += 1
+	call print 1
+	rax <- 0
+	return
+)
+
+(@fibo
+	1 2
+	mem rsp 8 <- r13
+	mem rsp 0 <- r12
+	r12 <- rdi
+	cjump r12 <= 2 :leq_2
+	rdi -= 2
+	mem rsp -8 <- :callfibo_1_finish
+	call @fibo 1
+	:callfibo_1_finish
+	r13 <- rax
+	rdi <- r12
+	rdi -= 1
+	mem rsp -8 <- :callfibo_2_finish
+	call @fibo 1
+	:callfibo_2_finish
+	r13 += rax
+	goto :done
+	:leq_2
+	cjump r12 <= 0 :less_0
+	r13 <- 1
+	goto :done
+	:less_0
+	r13 <- 0
+	:done
+	rax <- r13
+	r12 <- mem rsp 0
+	r13 <- mem rsp 8
+	return
+)
+
+)

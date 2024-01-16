@@ -1,0 +1,84 @@
+(@main
+	0
+	rdi <- 11001110011
+	rsi <- 11001110011
+	rdx <- 11000000011
+	rcx <- 11001110011
+	r8 <- 11001110011
+	mem rsp -8 <- :call_label0
+	call @print_letter 5
+	:call_label0
+	rdi <- 11100000111
+	rsi <- 11100111111
+	rdx <- 11100000111
+	rcx <- 11100111111
+	r8 <- 11100000111
+	mem rsp -8 <- :call_label1
+	call @print_letter 5
+	:call_label1
+	rdi <- 11100111111
+	rsi <- 11100111111
+	rdx <- 11100111111
+	rcx <- 11100111111
+	r8 <- 11100000011
+	mem rsp -8 <- :call_label2
+	call @print_letter 5
+	:call_label2
+	rdi <- 11100111111
+	rsi <- 11100111111
+	rdx <- 11100111111
+	rcx <- 11100111111
+	r8 <- 11100000011
+	mem rsp -8 <- :call_label3
+	call @print_letter 5
+	:call_label3
+	rdi <- 11100000111
+	rsi <- 11001110011
+	rdx <- 11001110011
+	rcx <- 11001110011
+	r8 <- 11100000111
+	mem rsp -8 <- :call_label4
+	call @print_letter 5
+	:call_label4
+	rdi <- 10111111101
+	rsi <- 11011111011
+	rdx <- 11011011011
+	rcx <- 11000100011
+	r8 <- 11101110111
+	mem rsp -8 <- :call_label5
+	call @print_letter 5
+	:call_label5
+	rdi <- 11100000111
+	rsi <- 11001110011
+	rdx <- 11001110011
+	rcx <- 11001110011
+	r8 <- 11100000111
+	mem rsp -8 <- :call_label6
+	call @print_letter 5
+	:call_label6
+	rdi <- 11000001111
+	rsi <- 11001110111
+	rdx <- 11000011111
+	rcx <- 11001001111
+	r8 <- 11001110011
+	mem rsp -8 <- :call_label7
+	call @print_letter 5
+	:call_label7
+	rdi <- 11100111111
+	rsi <- 11100111111
+	rdx <- 11100111111
+	rcx <- 11100111111
+	r8 <- 11100000011
+	mem rsp -8 <- :call_label8
+	call @print_letter 5
+	:call_label8
+	rdi <- 11000000111
+	rsi <- 11001110011
+	rdx <- 11001110011
+	rcx <- 11001110011
+	r8 <- 11000000111
+	mem rsp -8 <- :call_label9
+	call @print_letter 5
+	:call_label9
+	return
+)

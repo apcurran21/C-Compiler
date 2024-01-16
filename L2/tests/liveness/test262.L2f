@@ -1,0 +1,24 @@
+(@printArrayGE
+	1
+	:call_label_ciao__ciao_11
+	%i <- 5
+	goto :call_label_ciao__ciao_12
+	:call_label_ciao__ciao_12
+	%keepExecuting <- 0 <= %i
+	cjump %keepExecuting = 1 :call_label_ciao__ciao_13
+	goto :call_label_ciao__ciao_15
+	:call_label_ciao__ciao_13
+	rdi <- %i
+	mem rsp -8 <- :call_label_ciao__ciao_16
+	call @encodedValue 1
+	:call_label_ciao__ciao_16
+	%encodedI <- rax
+	rdi <- %encodedI
+	call print 1
+	goto :call_label_ciao__ciao_14
+	:call_label_ciao__ciao_14
+	%i -= 1
+	goto :call_label_ciao__ciao_12
+	:call_label_ciao__ciao_15
+	return
+)

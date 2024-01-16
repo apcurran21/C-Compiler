@@ -1,0 +1,37 @@
+// project euler problem #1: multiples of 3 or 5
+(@main
+  (@main
+    0 2
+    mem rsp 0 <- r15
+    mem rsp 8 <- rbx
+    // limit
+    r15 <- 1000
+    // result
+    rax <- 0
+    // start val
+    rbx <- 0
+    :LOOP_1
+    rax += rbx
+    rbx += 3
+    cjump rbx < r15 :LOOP_1
+    rbx <- 0
+    :LOOP_2
+    rax += rbx
+    rbx += 5
+    cjump rbx < r15 :LOOP_2
+    rbx <- 0
+    // remove duplicates
+    :LOOP_3
+    rax -= rbx
+    rbx += 15
+    cjump rbx < r15 :LOOP_3
+    rcx <- 1
+    rax <<= rcx
+    rax ++
+    rdi <- rax
+    call print 1
+    r15 <- mem rsp 0
+    rbx <- mem rsp 8
+    return
+  )
+)

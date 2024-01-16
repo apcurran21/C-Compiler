@@ -1,0 +1,37 @@
+(@go
+(@go
+0
+%rccsd <- 1
+%helldsd <- 0
+%newVariable12 <- 1
+%newVariable13 <- 2
+:loop
+rdi <- %helldsd
+rdi <<= %rccsd
+rdi += 1
+
+call print 1
+%newVariable14 <- %helldsd
+%newVariable14 >>=%rccsd
+%newVariable14 <<=%rccsd
+cjump %helldsd=%newVariable14 :e
+rdi <- %newVariable12
+rdi <<= %rccsd
+rdi += 1
+call print 1
+%helldsd++
+rax <- %helldsd<=20
+cjump rax = 1 :loop
+:e
+rdi <- %newVariable13
+rdi <<= %rccsd
+rdi += 1
+call print 1
+%helldsd++
+rax <- %helldsd<=20
+cjump rax = 1 :loop
+rdi <- 5
+call print 1
+return
+)
+)

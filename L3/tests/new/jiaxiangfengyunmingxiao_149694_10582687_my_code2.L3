@@ -1,0 +1,18 @@
+define :main(){
+    %end <- 21
+    %start <- 1
+    %start <- call :F1(%start, %end)        //print even number <= 10
+
+    call :F1(%start, %end)                  //print odd number <= 10
+    call print(21)                          //print 10
+    return
+}
+define :F1(%start, %end){
+        :LOOP
+        call print(%start)
+        %start <- %start + 4
+        %cmp_res <- %start <= %end
+        br %cmp_res :LOOP
+        return 3
+} 
+

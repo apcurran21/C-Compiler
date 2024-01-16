@@ -1,0 +1,12 @@
+(@go
+	0
+	rdi <- 1
+	mem rsp -8 <- :inc_ret
+	call @inc 1
+	:inc_ret
+	rdi <- 11
+	mem rsp -8 <- :dec_ret
+	call @dec 1
+	:dec_ret
+	return
+)

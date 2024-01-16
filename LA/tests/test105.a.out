@@ -1,0 +1,2 @@
+{s:6, 2, 2, 0, 0, 0, 0}
+ERROR: instruction at line 9 attempted to use position 2 in the dimension 0 of a tensor that only has 2 elements in that dimension

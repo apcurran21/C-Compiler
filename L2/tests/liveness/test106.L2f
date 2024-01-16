@@ -1,0 +1,28 @@
+(@printArray
+	1
+	%array <- rdi
+	%arraySize <- 2
+	mem rsp -8 <- :checkArray_ret
+	call @checkArray 1
+	:checkArray_ret
+	cjump rax = 0 :isInt1
+	goto :isAnArray1
+	:isInt1
+	rax <- 0
+	return
+	:isAnArray1
+	%i <- 0
+	cjump %i < %arraySize :loop_start
+	goto :loop_end
+	:loop_start
+	rdi <- %array
+	rsi <- %i
+	mem rsp -8 <- :printArrayElement_ret
+	call @printArrayElement 2
+	:printArrayElement_ret
+	%i++
+	cjump %i < %arraySize :loop_start
+	goto :loop_end
+	:loop_end
+	return
+)

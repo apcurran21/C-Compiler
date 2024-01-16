@@ -1,0 +1,21 @@
+(@myF
+	1
+	%x <- rdi
+	%pos <- 0 < %x
+	cjump %pos = 1 :call_label_ciao_4
+	goto :call_label_ciao_3
+	:call_label_ciao_3
+	%x *= -1
+	:call_label_ciao_4
+	%divBy2 <- %x
+	%divBy2 &= 1
+	%e <- %divBy2 = 0
+	cjump %e = 1 :call_label_ciao_5
+	goto :call_label_ciao_6
+	:call_label_ciao_5
+	rax <- 1
+	return
+	:call_label_ciao_6
+	rax <- 0
+	return
+)

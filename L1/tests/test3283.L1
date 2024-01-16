@@ -1,0 +1,66 @@
+(@main
+(@main
+	0 1
+	mem rsp 0 <- r12
+	rdi <- 11
+	rsi <- 5
+	call allocate 2
+	rdi <- rax
+	r12 <- rdi
+	rdi += 8
+	mem rdi 0 <- 3
+	rdi += 8
+	mem rdi 0 <- 5
+	rdi += 8
+	mem rdi 0 <- 7
+	rdi += 8
+	mem rdi 0 <- 9
+	rdi += 8
+	mem rdi 0 <- 11
+	rdi <- r12
+	mem rsp -8 <- :call_label0
+	call @print_array 1
+	:call_label0
+	rdi <- r12
+	call print 1
+	r12 <- mem rsp 0
+	return
+)
+
+(@print_array
+	1 2
+	mem rsp 8 <- r13
+	mem rsp 0 <- r12
+	r12 <- rdi
+	r13 <- mem r12 0
+	rdi <- r13
+	mem rsp -8 <- :call_label_ciao_4
+	call @encode 1
+	:call_label_ciao_4
+	rdi <- rax
+	call print 1
+	:call_label_ciao_1
+	r12 += 8
+	rdi <- r13 = 0
+	cjump rdi = 1 :call_label_ciao_3
+	goto :call_label_ciao_2
+	:call_label_ciao_2
+	rdi <- mem r12 0
+	call print 1
+	r13 -= 1
+	goto :call_label_ciao_1
+	:call_label_ciao_3
+	r12 <- mem rsp 0
+	r13 <- mem rsp 8
+	return
+)
+
+(@encode
+	1 0
+	rdi <<= 1
+	rdi += 1
+	rax <- rdi
+	return
+)
+
+)

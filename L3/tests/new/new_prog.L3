@@ -1,0 +1,153 @@
+// Find if a (positive) number is base 3 palindrome, use constant space
+// Copies mod3 code but still has enough original instructions
+// Also implements O (log n) integer division by 3
+
+define :encode(%n) {
+  %encoded <- %n * 2
+  %encoded <- %encoded + 1
+  return %encoded
+}
+
+define :digits(%n) {
+  %exp <- 1
+  %test <- 1
+  :loop
+  %test <- %test * 3
+  %cond <- %test > %n 
+  br %cond :return 
+  %exp <- %exp + 1
+  br :loop
+  :return 
+  return %exp
+}
+
+define :normalize (%n) {
+  %pos_flag <- 0 < %n
+  br %pos_flag :positive
+  %n <- %n * -2
+  :positive
+  return %n
+}
+
+define :mod3 (%n) {
+  %n <- call :normalize(%n)
+
+  :loop
+
+  %done <- %n < 3
+  br %done :return
+
+  %bitmasked <- %n
+  %bitmasked <- %bitmasked & 3
+
+  %flag1 <- %bitmasked = 3
+  %flag2 <- %bitmasked = 0
+  %shift_flag <- %flag1 + %flag2
+  br %shift_flag :shift
+  %n <- %n - 3
+  br :loop
+
+  :shift
+  %n <- %n >> 2
+  br :loop
+
+  :return
+  return %n
+}
+
+define :div3 (%n) {
+  %rem <- call :mod3(%n)
+  %n <- %n - %rem
+  %sum <- 0
+  %parity <- 1
+  
+  :loop
+  %cond <- %n  = 0
+  br %cond :return
+  %inc <- %parity * %n
+  %sum <- %sum + %inc
+  %parity <- %parity * -1
+  %n <- %n >> 1
+  br :loop
+  :return
+  %sum <- %sum >> 1
+  return %sum
+}
+
+define :get_digit_k (%n, %k) {
+  :loop
+  %cond <- %k = 0
+  br %cond :return
+  %n <- call :div3(%n)
+  %k <- %k - 1
+  br :loop
+  :return
+  %ans <- call :mod3(%n)
+  return %ans
+}
+
+define :is_palindrome(%n) {
+  %digits <- call :digits(%n)
+  %i <- 0
+  %last <- %digits >> 1
+
+  :loop 
+  %cond <- %i > %last
+  br %cond :return_true
+
+  %k1 <- %i 
+  %k2 <- %digits - %i
+  %k2 <- %k2 - 1
+
+  %x1 <- call :encode(%k1)
+  %x2 <- call :encode(%k2)
+
+  %d1 <- call :get_digit_k(%n, %k1)
+  %d2 <- call :get_digit_k(%n, %k2)
+  %diff <- %d1 - %d2
+  %flag <- %diff = 0
+  br %flag :next_iter
+  return 0
+
+  :next_iter
+  %i <- %i + 1
+  br :loop
+
+  :return_true
+  return 1
+}
+  
+
+define :main () {
+  %test1 <- 52
+  %test2 <- 11
+  %test3 <- 225
+  %test4 <- 1
+  %test5 <- 912424
+  %test6 <- 16
+
+  %ans1 <- call :is_palindrome(%test1)
+  %ans2 <- call :is_palindrome(%test2)
+  %ans3 <- call :is_palindrome(%test3)
+  %ans4 <- call :is_palindrome(%test4)
+  %ans5 <- call :is_palindrome(%test5)
+  %ans6 <- call :is_palindrome(%test6)
+
+  %ans1 <- call :encode(%ans1)
+  %ans2 <- call :encode(%ans2)
+  %ans3 <- call :encode(%ans3)
+  %ans4 <- call :encode(%ans4)
+  %ans5 <- call :encode(%ans5)
+  %ans6 <- call :encode(%ans6)
+
+  call print(%ans1)
+  call print(%ans2)
+  call print(%ans3)
+  call print(%ans4)
+  call print(%ans5)
+  call print(%ans6)
+  
+  return 1
+}
+
+

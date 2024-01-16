@@ -1,0 +1,113 @@
+(@main
+	0
+	:call_label0
+	goto :call_label7
+	:call_label1
+	return
+	:call_label2
+	rdi <- %arrayAddr
+	mem rsp -8 <- :call_label8
+	call @array_encode 1
+	:call_label8
+	rdi <- %arrayAddr
+	call print 1
+	return
+	:call_label3
+	%newVar1 <- 0
+	%newVar1 += %pos0
+	%newVar0 <- %newVar1
+	%newVar0 *= 8
+	%newVar0 += 24
+	%newVar3 <- %arrayAddr
+	%newVar3 += %newVar0
+	%val0 <- mem %newVar3 0
+	%newVar5 <- 0
+	%newVar5 += %pos1
+	%newVar4 <- %newVar5
+	%newVar4 *= 8
+	%newVar4 += 24
+	%newVar7 <- %arrayAddr
+	%newVar7 += %newVar4
+	%val1 <- mem %newVar7 0
+	%val2 <- %val0
+	%val2 += %val1
+	%newVar9 <- 0
+	%newVar9 += %pos2
+	%newVar8 <- %newVar9
+	%newVar8 *= 8
+	%newVar8 += 24
+	%newVar11 <- %arrayAddr
+	%newVar11 += %newVar8
+	mem %newVar11 0 <- %val2
+	%count += 1
+	%pos0 += 1
+	%pos1 += 1
+	%pos2 += 1
+	goto :call_label4
+	:call_label4
+	%ifDone <- %arrayLen < %count
+	cjump %ifDone = 1 :call_label2
+	goto :call_label3
+	:call_label5
+	rdi <- %arg1
+	mem rsp -8 <- :call_label9
+	call @int_encode 1
+	:call_label9
+	%arg1 <- rax
+	%newVar13 <- %arg1
+	%newVar13 >>= 1
+	%newVar12 <- %newVar13
+	%newVar12 <<= 1
+	%newVar12 += 1
+	%newVar12 += 4
+	rdi <- %newVar12
+	rsi <- 1
+	call allocate 2
+	%arrayAddr <- rax
+	%newVar14 <- %arrayAddr
+	%newVar14 += 8
+	mem %newVar14 0 <- 3
+	%newVar15 <- %arrayAddr
+	%newVar15 += 16
+	mem %newVar15 0 <- %arg1
+	%pos0 <- 0
+	%pos1 <- 1
+	%pos2 <- 2
+	%newVar17 <- 0
+	%newVar17 += %pos0
+	%newVar16 <- %newVar17
+	%newVar16 *= 8
+	%newVar16 += 24
+	%newVar19 <- %arrayAddr
+	%newVar19 += %newVar16
+	mem %newVar19 0 <- 0
+	%newVar21 <- 0
+	%newVar21 += %pos1
+	%newVar20 <- %newVar21
+	%newVar20 *= 8
+	%newVar20 += 24
+	%newVar23 <- %arrayAddr
+	%newVar23 += %newVar20
+	mem %newVar23 0 <- 1
+	%newVar24 <- 0
+	%newVar24 *= 8
+	%newVar25 <- %newVar24
+	%newVar25 += 16
+	%newVar26 <- %arrayAddr
+	%newVar26 += %newVar25
+	%arrayLen <- mem %newVar26 0
+	rdi <- %arrayLen
+	mem rsp -8 <- :call_label10
+	call @int_decode 1
+	:call_label10
+	%arrayLen <- rax
+	%count <- 3
+	goto :call_label4
+	:call_label6
+	%arg1 <- 10
+	%invalid <- %arg1 < 2
+	cjump %invalid = 1 :call_label1
+	goto :call_label5
+	:call_label7
+	goto :call_label6
+)

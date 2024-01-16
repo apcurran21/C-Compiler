@@ -1,0 +1,34 @@
+(@go
+	0
+	mem rsp -8 <- :max_ret
+	mem rsp -16 <- 15
+	mem rsp -24 <- 5
+	rdi <- 0
+	rsi <- 10
+	rdx <- -25
+	rcx <- 90
+	r8 <- 2
+	r9 <- 1
+	call @max 8
+	:max_ret
+	rdi <- rax
+	rdi <<= 1
+	rdi++
+	call print 1
+	mem rsp -8 <- :max_ret_2
+	mem rsp -16 <- 90
+	mem rsp -24 <- 5
+	rdi <- 0
+	rsi <- 10
+	rdx <- 5
+	rcx <- -150
+	r8 <- 0
+	r9 <- 5
+	call @max 8
+	:max_ret_2
+	rdi <- rax
+	rdi <<= 1
+	rdi++
+	call print 1
+	return
+)

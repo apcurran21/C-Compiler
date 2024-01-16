@@ -1,0 +1,37 @@
+(@main
+ (@main 0
+        rcx <- 2
+        %i <- 1
+        :for_i
+        cjump 5 <= %i :end_for_i
+            %j <- 1
+            :for_j
+            cjump 5 <= %j :end_for_j
+                rax -= rax
+                %k <- rax
+                %k++
+                :for_k
+                cjump 1000 <= %k :end_for_k
+                    %old_rcx <- rcx
+                    rdi <- %k
+                    rdi <<= rcx
+                    rdi++
+                    call print 1
+                    rdi <- %i
+                    rdi *= %j
+                    rdi *= %k
+                    rdi <<= %old_rcx
+                    rdi >>= 1
+                    rdi += 1
+                    call print 1
+                    rcx <- %old_rcx
+                    %k <<= rcx
+                goto :for_k
+                :end_for_k
+                %j ++
+            goto :for_j
+            :end_for_j
+            %i += 1
+        goto :for_i
+        :end_for_i
+        return))

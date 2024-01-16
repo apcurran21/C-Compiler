@@ -1,0 +1,130 @@
+(@main
+	0
+	:call_label0
+	%var1 <- 1
+	%var2 <- 2
+	%var3 <- %var1 = %var2
+	%var4 <- %var1 < %var2
+	%var5 <- %var1
+	%var5 += %var2
+	%var6 <- %var1
+	%var6 <<= %var2
+	rdi <- %var6
+	mem rsp -8 <- :call_label5
+	call @isNumber 1
+	:call_label5
+	%var7 <- rax
+	rdi <- %var5
+	mem rsp -8 <- :call_label6
+	call @isAddress 1
+	:call_label6
+	%var8 <- rax
+	cjump %var8 = 1 :call_label4
+	goto :call_label1
+	:call_label1
+	%var9 <- %var8
+	%var9 *= 3
+	%var9 += 2
+	rdi <- %var7
+	mem rsp -8 <- :call_label7
+	call @lea 1
+	:call_label7
+	%var10 <- rax
+	%encoded <- %var10
+	%encoded <<= 1
+	%encoded += 1
+	rdi <- %encoded
+	call print 1
+	rdi <- %encoded
+	rsi <- 3
+	call allocate 2
+	%array <- rax
+	%newVar <- %array
+	%newVar += 8
+	mem %newVar 0 <- 5
+	%newVar2 <- %array
+	%newVar2 += 16
+	mem %newVar2 0 <- 7
+	%newVar3 <- %array
+	%newVar3 += 24
+	mem %newVar3 0 <- 9
+	%var11 <- mem %newVar2 0
+	%var12 <- %var11 < %var10
+	rdi <- %var9
+	mem rsp -8 <- :call_label8
+	call @decreaseOne 1
+	:call_label8
+	%var13 <- rax
+	rdi <- %var12
+	rsi <- %var13
+	mem rsp -8 <- :call_label9
+	call @aop_plus 2
+	:call_label9
+	rdi <- %var1
+	rsi <- %var13
+	mem rsp -8 <- :call_label10
+	call @aop_minus 2
+	:call_label10
+	rdi <- %var11
+	rsi <- %var12
+	mem rsp -8 <- :call_label11
+	call @aop_and 2
+	:call_label11
+	%var16 <- rax
+	rdi <- %var16
+	mem rsp -8 <- :call_label12
+	call @isAddress 1
+	:call_label12
+	%var <- rax
+	cjump %var = 1 :call_label3
+	goto :call_label2
+	:call_label2
+	rdi <- %var9
+	mem rsp -8 <- :call_label13
+	call @increaseOne 1
+	:call_label13
+	rdi <- %var2
+	rsi <- %var13
+	mem rsp -8 <- :call_label14
+	call @aop_product 2
+	:call_label14
+	rdi <- %var11
+	rsi <- %var8
+	mem rsp -8 <- :call_label15
+	call @isEqual 2
+	:call_label15
+	%var20 <- rax
+	rdi <- %var20
+	rsi <- %var1
+	mem rsp -8 <- :call_label16
+	call @isSmallerAndEqual 2
+	:call_label16
+	rdi <- %var20
+	rsi <- %var2
+	mem rsp -8 <- :call_label17
+	call @isSmaller 2
+	:call_label17
+	:call_label3
+	%callFL <- @otherF
+	mem rsp -8 <- :call_label18
+	call @otherF 0
+	:call_label18
+	mem rsp -8 <- :call_label19
+	call %callFL 0
+	:call_label19
+	%callerFP <- @otherF2
+	rdi <- 2
+	mem rsp -8 <- :call_label20
+	call %callerFP 1
+	:call_label20
+	rdi <- %var3
+	mem rsp -8 <- :call_label21
+	call @otherF2 1
+	:call_label21
+	%res2 <- rax
+	%res2 -= 1
+	rdi <- %res2
+	call print 1
+	:call_label4
+	return
+)

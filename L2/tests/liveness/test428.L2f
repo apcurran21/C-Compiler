@@ -1,0 +1,23 @@
+(@curry
+	1
+	%F <- rdi
+	rdi <- 5
+	rsi <- 1
+	call allocate 2
+	%cF <- rax
+	%func <- @curry_arg1
+	rdi <- %cF
+	rsi <- 0
+	rdx <- %func
+	mem rsp -8 <- :call_label_ciao_17
+	call @store 3
+	:call_label_ciao_17
+	rdi <- %cF
+	rsi <- 1
+	rdx <- %F
+	mem rsp -8 <- :call_label_ciao_18
+	call @store 3
+	:call_label_ciao_18
+	rax <- %cF
+	return
+)

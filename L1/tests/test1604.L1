@@ -1,0 +1,29 @@
+(@main
+(@main
+	0 0
+	rdi <- 5
+	rdi <- rdi
+	rdi <<= 1
+	rdi <- rdi
+	rdi += 1
+	rdi <- rdi
+	rsi <- 3
+	call allocate 2
+	rdi <- rax
+	rdi <- rdi
+	rsi <- 3
+	mem rsp -8 <- :call_label0
+	call @storeValueToArray 2
+	:call_label0
+	return
+)
+
+(@storeValueToArray
+	2 0
+	rdi <- rdi
+	rsi <- rsi
+	rdi <- mem rdi 0
+	return
+)
+
+)

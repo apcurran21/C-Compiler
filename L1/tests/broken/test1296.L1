@@ -1,0 +1,62 @@
+(@main
+(@main
+	0 4
+	rcx <- 2
+	rdi <- 1
+	mem rsp 16 <- rdi
+	:for_i
+	rdi <- mem rsp 16
+	cjump 5 <= rdi :end_for_i
+	rdi <- 1
+	mem rsp 0 <- rdi
+	:for_j
+	rdi <- mem rsp 0
+	cjump 5 <= rdi :end_for_j
+	rax -= rax
+	rdi <- rax
+	mem rsp 8 <- rdi
+	rdi <- mem rsp 8
+	rdi++
+	mem rsp 8 <- rdi
+	:for_k
+	rdi <- mem rsp 8
+	cjump 1000 <= rdi :end_for_k
+	rdi <- rcx
+	mem rsp 24 <- rdi
+	rdi <- mem rsp 8
+	rdi <- rdi
+	rdi <<= rcx
+	rdi++
+	call print 1
+	rdi <- mem rsp 16
+	rdi <- rdi
+	rsi <- mem rsp 0
+	rdi *= rsi
+	rsi <- mem rsp 8
+	rdi *= rsi
+	rcx <- mem rsp 24
+	rdi <<= rcx
+	rdi >>= 1
+	rdi += 1
+	call print 1
+	rdi <- mem rsp 24
+	rcx <- rdi
+	rdi <- mem rsp 8
+	rdi <<= rcx
+	mem rsp 8 <- rdi
+	goto :for_k
+	:end_for_k
+	rdi <- mem rsp 0
+	rdi++
+	mem rsp 0 <- rdi
+	goto :for_j
+	:end_for_j
+	rdi <- mem rsp 16
+	rdi += 1
+	mem rsp 16 <- rdi
+	goto :for_i
+	:end_for_i
+	return
+)
+
+)

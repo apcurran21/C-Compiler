@@ -1,0 +1,16 @@
+define @main () {
+ 
+:NNNNNNNNN
+ br :entry
+ 
+:true
+ call print (1)
+ return 
+ 
+:myLabel1
+ br :true
+ 
+:entry
+ br :myLabel1
+}
+

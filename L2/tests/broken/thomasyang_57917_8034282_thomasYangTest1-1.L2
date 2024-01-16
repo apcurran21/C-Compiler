@@ -1,0 +1,81 @@
+(@go
+
+	(@go
+		0
+
+		rdi <- 3
+		rsi <- 3
+		mem rsp -8 <- :gcd_ret1
+		call @findGCD 2
+		:gcd_ret1
+
+		rdi <- 30
+		rsi <- 50
+
+		mem rsp -8 <- :gcd_ret2
+		call @findGCD 2
+		:gcd_ret2
+		
+		return
+	)
+
+	(@findGCD
+		2
+
+		:TestNumbers
+		cjump rdi < rsi :Lesser
+		cjump rdi = rsi :Equal
+
+		:Greater
+		rdi -= rsi
+
+		mem rsp -8 <- :print_ret1
+		call @printResult 2
+		:print_ret1
+
+		mem rsp -8 <- :gcd_ret3
+		call @findGCD 2
+		:gcd_ret3
+
+		goto :Finished
+
+		:Lesser
+		rsi -= rdi
+		mem rsp -8 <- :print_ret2
+		call @printResult 2
+		:print_ret2
+
+		mem rsp -8 <- :gcd_ret4
+		call @findGCD 2
+		:gcd_ret4
+
+		goto :Finished
+
+		:Equal
+		mem rsp -8 <- :print_ret3
+		call @printResult 2
+		:print_ret3
+		rax <- rdi
+
+		:Finished
+		return
+	)
+
+	(@printResult
+		2
+		%a <- rdi
+		%b <- rsi
+		rdi <<= 1
+		rdi += 1
+		call print 1
+
+		rsi <<= 1
+		rdi <- rsi
+		rdi += 1
+		call print 1
+
+		rdi <- %a
+		rsi <- %b
+		return
+	)
+)

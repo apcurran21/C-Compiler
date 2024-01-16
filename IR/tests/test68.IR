@@ -1,0 +1,70 @@
+define void @main() {
+:entrance
+int64[][] %arr1
+int64[][] %arr2
+int64[][] %arr3
+int64[][] %arr4
+int64[][] %arr5
+int64[][] %arr6
+int64[][] %arr7
+int64[][] %arr8
+int64[][] %arr9
+int64[][] %arr10
+int64 %ans
+
+%arr1 <- new Array(11,11)
+%arr2 <- new Array(10,10)
+%arr3 <- new Array(20,20)
+%arr4 <- new Array(10,40)
+%arr5 <- new Array(3,45)
+%arr6 <- new Array(3,10)
+%arr7 <- new Array(3,10)
+%arr8 <- new Array(3,10)
+%arr9 <- new Array(3,10)
+%arr10 <- new Array(3,10)
+
+int64 %temp
+%temp <- call @sum(%arr1)
+%ans <- %temp
+%temp <- call @sum(%arr2)
+%ans <- %temp + %ans
+%temp <- call @sum(%arr3)
+%ans <- %temp + %ans
+%temp <- call @sum(%arr4)
+%ans <- %temp + %ans
+%temp <- call @sum(%arr5)
+%ans <- %temp + %ans
+%temp <- call @sum(%arr6)
+%ans <- %temp + %ans
+%temp <- call @sum(%arr7)
+%ans <- %temp + %ans
+%temp <- call @sum(%arr8)
+%ans <- %temp + %ans
+%temp <- call @sum(%arr9)
+%ans <- %temp + %ans
+%temp <- call @sum(%arr10)
+%ans <- %temp + %ans
+return
+}
+
+define int64 @sum(int64[][] %arr){
+:entrance
+int64 %sum1
+int64 %len
+int64 %len2
+int64 %len_track1
+int64 %len_track2
+int64 %s
+int64 %sum
+%sum <- 0
+%sum1 <- 0
+br :entrance2
+:entrance2
+%len <- length %arr 0
+%len2 <- length %arr 1
+%len_track1 <- %len - 1
+%len_track2 <- %len2 - 1
+%s <- %arr[0][%len_track2]
+%sum <- %s + %sum
+return %sum
+}

@@ -1,0 +1,63 @@
+(@GetArray
+	1
+	%len <- rdi
+	%len <<= 1
+	%len += 1
+	rdi <- %len
+	rsi <- 1
+	call allocate 2
+	%arr <- rax
+	%pos <- %arr
+	%pos += 8
+	%x <- 1
+	%x <<= 1
+	%x += 1
+	mem %pos 0 <- %x
+	%pos += 8
+	%x <- 2
+	%x <<= 1
+	%x += 1
+	mem %pos 0 <- %x
+	%pos += 8
+	%x <- 3
+	%x <<= 1
+	%x += 1
+	mem %pos 0 <- %x
+	%pos += 8
+	%x <- 5
+	%x <<= 1
+	%x += 1
+	mem %pos 0 <- %x
+	%pos += 8
+	%x <- 1
+	%x <<= 1
+	%x += 1
+	mem %pos 0 <- %x
+	%pos += 8
+	%x <- 3
+	%x <<= 1
+	%x += 1
+	mem %pos 0 <- %x
+	%pos += 8
+	%x <- 2
+	%x <<= 1
+	%x += 1
+	mem %pos 0 <- %x
+	%pos += 8
+	%x <- 10
+	%x <<= 1
+	%x += 1
+	mem %pos 0 <- %x
+	%pos += 8
+	%x <- 11
+	%x <<= 1
+	%x += 1
+	mem %pos 0 <- %x
+	%pos += 8
+	%x <- 8
+	%x <<= 1
+	%x += 1
+	mem %pos 0 <- %x
+	rax <- %arr
+	return
+)

@@ -1,0 +1,150 @@
+(@main
+(@encodedValue
+	1 0
+	rdi <- rdi
+	:call_label23
+	rdi <- rdi
+	rdi <<= 1
+	rdi <- rdi
+	rdi += 1
+	rax <- rdi
+	return
+)
+
+(@main
+	0 2
+	mem rsp 8 <- r13
+	mem rsp 0 <- r12
+	:call_label0
+	r12 <- 5
+	rdi <- r12
+	rdi >>= 1
+	rdi <- rdi
+	rdi <- rdi
+	rdi <<= 1
+	rdi <- rdi
+	rdi += 1
+	rdi <- rdi
+	rdi += 4
+	rdi <- rdi
+	rsi <- 1
+	call allocate 2
+	r13 <- rax
+	rdi <- r13
+	rdi += 8
+	mem rdi 0 <- 3
+	rdi <- r13
+	rdi += 16
+	mem rdi 0 <- r12
+	mem rsp -8 <- :call_label1
+	rdi <- r12
+	call @encodedValue 1
+	:call_label1
+	rdi <- rax
+	rdi <- rdi
+	call print 1
+	mem rsp -8 <- :call_label2
+	rdi <- r13
+	call @printArrayGT 1
+	:call_label2
+	mem rsp -8 <- :call_label3
+	rdi <- r13
+	call @printArrayGE 1
+	:call_label3
+	mem rsp -8 <- :call_label4
+	rdi <- r13
+	call @printArrayE 1
+	:call_label4
+	r12 <- mem rsp 0
+	r13 <- mem rsp 8
+	return
+)
+
+(@printArrayE
+	1 1
+	mem rsp 0 <- r12
+	rdi <- rdi
+	:call_label17
+	r12 <- 5
+	goto :call_label18
+	:call_label18
+	rdi <- 5 = r12
+	cjump rdi = 1 :call_label19
+	goto :call_label21
+	:call_label19
+	mem rsp -8 <- :call_label22
+	rdi <- r12
+	call @encodedValue 1
+	:call_label22
+	rdi <- rax
+	rdi <- rdi
+	call print 1
+	goto :call_label20
+	:call_label20
+	r12 <- r12
+	r12 -= 1
+	goto :call_label18
+	:call_label21
+	r12 <- mem rsp 0
+	return
+)
+
+(@printArrayGE
+	1 1
+	mem rsp 0 <- r12
+	rdi <- rdi
+	:call_label11
+	r12 <- 5
+	goto :call_label12
+	:call_label12
+	rdi <- 0 <= r12
+	cjump rdi = 1 :call_label13
+	goto :call_label15
+	:call_label13
+	mem rsp -8 <- :call_label16
+	rdi <- r12
+	call @encodedValue 1
+	:call_label16
+	rdi <- rax
+	rdi <- rdi
+	call print 1
+	goto :call_label14
+	:call_label14
+	r12 <- r12
+	r12 -= 1
+	goto :call_label12
+	:call_label15
+	r12 <- mem rsp 0
+	return
+)
+
+(@printArrayGT
+	1 1
+	mem rsp 0 <- r12
+	rdi <- rdi
+	:call_label5
+	r12 <- 6
+	goto :call_label6
+	:call_label6
+	rdi <- 0 < r12
+	cjump rdi = 1 :call_label7
+	goto :call_label9
+	:call_label7
+	mem rsp -8 <- :call_label10
+	rdi <- r12
+	call @encodedValue 1
+	:call_label10
+	rdi <- rax
+	rdi <- rdi
+	call print 1
+	goto :call_label8
+	:call_label8
+	r12 <- r12
+	r12 -= 1
+	goto :call_label6
+	:call_label9
+	r12 <- mem rsp 0
+	return
+)
+
+)

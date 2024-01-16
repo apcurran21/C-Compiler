@@ -1,0 +1,12 @@
+(@go
+	0
+	rdi <- 30030
+	mem rsp -8 <- :go_ret0
+	call @gpf 1
+	:go_ret0
+	rdi <- rax
+	rdi <<= 1
+	rdi += 1
+	call print 1
+	return
+)

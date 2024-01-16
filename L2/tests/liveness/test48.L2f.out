@@ -1,0 +1,32 @@
+(
+(in
+(r12 r13 r14 r15 rbp rbx rdi)
+(%n r12 r13 r14 r15 rbp rbx)
+(%n r12 r13 r14 r15 rbp rbx %sqrt)
+(%n r12 r13 r14 r15 rbp rbx %sqrt)
+(%n %newVariable12 r12 r13 r14 r15 rbp rbx %sqrt)
+(%n %newVariable12 r12 r13 r14 r15 rbp rbx %sqrt)
+(%n %newVariable12 r12 r13 r14 r15 rbp rbx rdi %sqrt)
+(%n r12 r13 r14 r15 rbp rbx %sqrt)
+(%n r12 r13 r14 r15 rbp rbx %sqrt)
+(r12 r13 r14 r15 rbp rbx %sqrt)
+(r12 r13 r14 r15 rbp rbx %sqrt)
+(r12 r13 r14 r15 rax rbp rbx)
+)
+
+(out
+(%n r12 r13 r14 r15 rbp rbx)
+(%n r12 r13 r14 r15 rbp rbx %sqrt)
+(%n r12 r13 r14 r15 rbp rbx %sqrt)
+(%n %newVariable12 r12 r13 r14 r15 rbp rbx %sqrt)
+(%n %newVariable12 r12 r13 r14 r15 rbp rbx %sqrt)
+(%n %newVariable12 r12 r13 r14 r15 rbp rbx rdi %sqrt)
+(%n r12 r13 r14 r15 rbp rbx %sqrt)
+(%n r12 r13 r14 r15 rbp rbx %sqrt)
+(%n r12 r13 r14 r15 rbp rbx %sqrt)
+(r12 r13 r14 r15 rbp rbx %sqrt)
+(r12 r13 r14 r15 rax rbp rbx)
+()
+)
+
+)

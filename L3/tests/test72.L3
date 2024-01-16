@@ -1,0 +1,80 @@
+define @main () {
+ 
+:entry
+ %loop <- 222221
+ br :BEGIN
+ 
+:BEGIN
+ %cmp <- %loop < 1
+ br %cmp :END 
+ br :START
+ 
+:START
+ %my_var1 <- 3
+ call print (%my_var1)
+ %my_var2 <- 23
+ call print (%my_var2)
+ %my_var3 <- 2223
+ call print (%my_var3)
+ %my_var4 <- 2223
+ call print (%my_var4)
+ %my_var5 <- 22223
+ call print (%my_var5)
+ %my_var4 <- 2223
+ call print (%my_var4)
+ %my_var3 <- 223
+ call print (%my_var3)
+ %my_var2 <- 23
+ call print (%my_var2)
+ %my_var1 <- 3
+ call print (%my_var1)
+ %loop <- %loop - 2
+ br :BEGIN
+ 
+:END
+ %mult <- 3 * 11
+ %mult <- %mult + 6
+ call @meh ()
+ call print (%mult)
+ return 
+}
+
+define @meh () {
+ 
+:NEW
+ %memmy <- 69
+ %newVar1 <- %memmy >> 1
+ %newVar0 <- %newVar1
+ %newVar0 <- %newVar0 << 1
+ %newVar0 <- %newVar0 + 1
+ %newVar0 <- %newVar0 + 4
+ %thing <- call allocate (%newVar0, 1)
+ %newVar2 <- %thing + 8
+ store %newVar2 <- 3
+ %newVar3 <- %thing + 16
+ store %newVar3 <- %memmy
+ %lengtharr <- 34
+ %i <- 0
+ br :ENTER
+ 
+:ENTER
+ %cond <- %i < 34
+ br %cond :LOOP 
+ br :END
+ 
+:LOOP
+ %newVar5 <- 0
+ %newVar6 <- 1
+ %newVar5 <- %newVar5 + %i
+ %newVar4 <- %newVar5 * 8
+ %newVar4 <- %newVar4 + 24
+ %newVar7 <- %thing + %newVar4
+ store %newVar7 <- 3
+ %i <- %i + 1
+ br :ENTER
+ 
+:END
+ call print (%thing)
+ return 
+}
+

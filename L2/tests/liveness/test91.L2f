@@ -1,0 +1,20 @@
+(@go
+	0
+	rdi <- 11
+	rsi <- 3
+	call allocate 2
+	mem rax 8 <- 21
+	mem rax 16 <- 23
+	mem rax 24 <- 19
+	mem rax 32 <- 7
+	mem rax 40 <- 51
+	mem rsp -8 <- :max_ret
+	rdi <- rax
+	call @max 1
+	:max_ret
+	rdi <- rax
+	rdi <<= 1
+	rdi++
+	call print 1
+	return
+)

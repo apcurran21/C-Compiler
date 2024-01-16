@@ -1,0 +1,92 @@
+(@main
+	0
+	rdi <- 10
+	mem rsp -8 <- :call_label_ciao__ciao__ciao_18
+	call @encodeNumber 1
+	:call_label_ciao__ciao__ciao_18
+	%eN <- rax
+	rdi <- %eN
+	call print 1
+	rdi <- 1
+	mem rsp -8 <- :call_label_ciao__ciao__ciao_19
+	call @encodeNumber 1
+	:call_label_ciao__ciao__ciao_19
+	%eN <- rax
+	rdi <- %eN
+	call print 1
+	rdi <- 17
+	mem rsp -8 <- :call_label_ciao__ciao__ciao_20
+	call @encodeNumber 1
+	:call_label_ciao__ciao__ciao_20
+	%eN <- rax
+	rdi <- %eN
+	call print 1
+	%n <- 11
+	rdi <- %n
+	mem rsp -8 <- :call_label_ciao__ciao__ciao_21
+	call @firstNPrimes 1
+	:call_label_ciao__ciao__ciao_21
+	%primes <- rax
+	rdi <- %primes
+	call print 1
+	%n <- 41
+	rdi <- %n
+	mem rsp -8 <- :call_label_ciao__ciao__ciao_22
+	call @firstNPrimes 1
+	:call_label_ciao__ciao__ciao_22
+	%primes <- rax
+	rdi <- %primes
+	call print 1
+	%n <- 103
+	rdi <- %n
+	mem rsp -8 <- :call_label_ciao__ciao__ciao_23
+	call @firstNPrimes 1
+	:call_label_ciao__ciao__ciao_23
+	%primes <- rax
+	rdi <- %primes
+	call print 1
+	rdi <- 64
+	mem rsp -8 <- :call_label_ciao__ciao__ciao_24
+	call @encodeNumber 1
+	:call_label_ciao__ciao__ciao_24
+	%eN <- rax
+	rdi <- %eN
+	mem rsp -8 <- :call_label_ciao__ciao__ciao_25
+	call @firstNPrimes 1
+	:call_label_ciao__ciao__ciao_25
+	%primes <- rax
+	rdi <- %primes
+	call print 1
+	rdi <- 0
+	mem rsp -8 <- :call_label_ciao__ciao__ciao_26
+	call @encodeNumber 1
+	:call_label_ciao__ciao__ciao_26
+	%eN <- rax
+	rdi <- %eN
+	mem rsp -8 <- :call_label_ciao__ciao__ciao_27
+	call @firstNPrimes 1
+	:call_label_ciao__ciao__ciao_27
+	%primes <- rax
+	rdi <- %primes
+	call print 1
+	rdi <- -5
+	mem rsp -8 <- :call_label_ciao__ciao__ciao_28
+	call @firstNPrimes 1
+	:call_label_ciao__ciao__ciao_28
+	%primes <- rax
+	rdi <- %primes
+	call print 1
+	rdi <- 1
+	mem rsp -8 <- :call_label_ciao__ciao__ciao_29
+	call @encodeNumber 1
+	:call_label_ciao__ciao__ciao_29
+	%eN <- rax
+	rdi <- %eN
+	mem rsp -8 <- :call_label_ciao__ciao__ciao_30
+	call @firstNPrimes 1
+	:call_label_ciao__ciao__ciao_30
+	%primes <- rax
+	rdi <- %primes
+	call print 1
+	return
+)

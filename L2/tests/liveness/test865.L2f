@@ -1,0 +1,9 @@
+(@PrintArg
+	1
+	%arg <- rdi
+	%arg <<= 1
+	%arg += 1
+	rdi <- %arg
+	call print 1
+	return
+)

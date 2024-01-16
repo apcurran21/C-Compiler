@@ -1,0 +1,17 @@
+(@getArrayElementByIndex
+	2
+	%array <- rdi
+	%index <- rsi
+	rdi <- %index
+	mem rsp -8 <- :call_label_ciao__ciao__ciao__ciao__ciao__ciao__ciao_15
+	call @increaseOne 1
+	:call_label_ciao__ciao__ciao__ciao__ciao__ciao__ciao_15
+	%index <- rax
+	%offest <- 8
+	%offest *= %index
+	%addr <- %array
+	%addr += %offest
+	%element <- mem %addr 0
+	rax <- %element
+	return
+)

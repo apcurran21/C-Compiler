@@ -1,0 +1,100 @@
+(@main
+	0
+	rdi <- 20
+	mem rsp -8 <- :call_label0
+	call @loop1 1
+	:call_label0
+	%ret <- rax
+	rdi <- %ret
+	mem rsp -8 <- :call_label1
+	call @encode 1
+	:call_label1
+	%ret <- rax
+	rdi <- %ret
+	call print 1
+	rdi <- -20
+	mem rsp -8 <- :call_label2
+	call @loop2 1
+	:call_label2
+	%ret <- rax
+	rdi <- %ret
+	mem rsp -8 <- :call_label3
+	call @encode 1
+	:call_label3
+	%ret <- rax
+	rdi <- %ret
+	call print 1
+	rdi <- 100
+	mem rsp -8 <- :call_label4
+	call @loop3 1
+	:call_label4
+	%ret <- rax
+	rdi <- %ret
+	mem rsp -8 <- :call_label5
+	call @encode 1
+	:call_label5
+	%ret <- rax
+	rdi <- %ret
+	call print 1
+	rdi <- 20
+	mem rsp -8 <- :call_label6
+	call @loop4 1
+	:call_label6
+	%ret <- rax
+	rdi <- %ret
+	mem rsp -8 <- :call_label7
+	call @encode 1
+	:call_label7
+	%ret <- rax
+	rdi <- %ret
+	call print 1
+	rdi <- 248
+	mem rsp -8 <- :call_label8
+	call @loop5 1
+	:call_label8
+	%ret <- rax
+	rdi <- %ret
+	mem rsp -8 <- :call_label9
+	call @encode 1
+	:call_label9
+	%ret <- rax
+	rdi <- %ret
+	call print 1
+	rdi <- 19
+	mem rsp -8 <- :call_label10
+	call @loop6 1
+	:call_label10
+	%ret <- rax
+	rdi <- %ret
+	mem rsp -8 <- :call_label11
+	call @encode 1
+	:call_label11
+	%ret <- rax
+	rdi <- %ret
+	call print 1
+	rdi <- 15
+	mem rsp -8 <- :call_label12
+	call @loop7 1
+	:call_label12
+	%ret <- rax
+	rdi <- %ret
+	mem rsp -8 <- :call_label13
+	call @encode 1
+	:call_label13
+	%ret <- rax
+	rdi <- %ret
+	call print 1
+	rdi <- -61254
+	mem rsp -8 <- :call_label14
+	call @loop8 1
+	:call_label14
+	%ret <- rax
+	rdi <- %ret
+	mem rsp -8 <- :call_label15
+	call @encode 1
+	:call_label15
+	%ret <- rax
+	rdi <- %ret
+	call print 1
+	return
+)

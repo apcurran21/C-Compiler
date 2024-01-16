@@ -1,0 +1,118 @@
+define @main () {
+ 
+:NNNNNNNNNNNN
+ br :init_first
+ 
+:concatenate
+ %addr3 <- call @concat_array (%addr1, %addr2)
+ call print (%addr3)
+ return 
+ 
+:init_second
+ %addr2 <- call allocate (11, 1)
+ %newVar1 <- 0 * 8
+ %newVar0 <- %newVar1 + 8
+ %newVar2 <- %addr2 + %newVar0
+ store %newVar2 <- 13
+ %newVar4 <- 1 * 8
+ %newVar3 <- %newVar4 + 8
+ %newVar5 <- %addr2 + %newVar3
+ store %newVar5 <- 15
+ %newVar7 <- 2 * 8
+ %newVar6 <- %newVar7 + 8
+ %newVar8 <- %addr2 + %newVar6
+ store %newVar8 <- 17
+ %newVar10 <- 3 * 8
+ %newVar9 <- %newVar10 + 8
+ %newVar11 <- %addr2 + %newVar9
+ store %newVar11 <- 19
+ %newVar13 <- 4 * 8
+ %newVar12 <- %newVar13 + 8
+ %newVar14 <- %addr2 + %newVar12
+ store %newVar14 <- 21
+ call print (%addr2)
+ br :concatenate
+ 
+:init_first
+ %addr1 <- call allocate (11, 1)
+ %newVar16 <- 0 * 8
+ %newVar15 <- %newVar16 + 8
+ %newVar17 <- %addr1 + %newVar15
+ store %newVar17 <- 3
+ %newVar19 <- 1 * 8
+ %newVar18 <- %newVar19 + 8
+ %newVar20 <- %addr1 + %newVar18
+ store %newVar20 <- 5
+ %newVar22 <- 2 * 8
+ %newVar21 <- %newVar22 + 8
+ %newVar23 <- %addr1 + %newVar21
+ store %newVar23 <- 7
+ %newVar25 <- 3 * 8
+ %newVar24 <- %newVar25 + 8
+ %newVar26 <- %addr1 + %newVar24
+ store %newVar26 <- 9
+ %newVar28 <- 4 * 8
+ %newVar27 <- %newVar28 + 8
+ %newVar29 <- %addr1 + %newVar27
+ store %newVar29 <- 11
+ call print (%addr1)
+ br :init_second
+}
+
+define @concat_array (%ptr1, %ptr2) {
+ 
+:NNNNN
+ br :init
+ 
+:done
+ return %ret
+ 
+:do_2
+ %newVar1 <- %index2 * 8
+ %newVar0 <- %newVar1 + 8
+ %newVar2 <- %ptr2 + %newVar0
+ %temp <- load %newVar2
+ %newVar4 <- %index3 * 8
+ %newVar3 <- %newVar4 + 8
+ %newVar5 <- %ret + %newVar3
+ store %newVar5 <- %temp
+ %index2 <- %index2 + 1
+ %index3 <- %index3 + 1
+ %if_done <- %index2 = %len2
+ br %if_done :done 
+ br :do_2
+ 
+:do_1
+ %newVar7 <- %index1 * 8
+ %newVar6 <- %newVar7 + 8
+ %newVar8 <- %ptr1 + %newVar6
+ %temp <- load %newVar8
+ %newVar10 <- %index3 * 8
+ %newVar9 <- %newVar10 + 8
+ %newVar11 <- %ret + %newVar9
+ store %newVar11 <- %temp
+ %index1 <- %index1 + 1
+ %index3 <- %index3 + 1
+ %if_done <- %index1 = %len1
+ br %if_done :do_2 
+ br :do_1
+ 
+:init
+ %newVar13 <- -1 * 8
+ %newVar12 <- %newVar13 + 8
+ %newVar14 <- %ptr1 + %newVar12
+ %len1 <- load %newVar14
+ %newVar16 <- -1 * 8
+ %newVar15 <- %newVar16 + 8
+ %newVar17 <- %ptr2 + %newVar15
+ %len2 <- load %newVar17
+ %len3 <- %len1 + %len2
+ %len3 <- %len3 << 1
+ %len3 <- %len3 + 1
+ %ret <- call allocate (%len3, 1)
+ %index1 <- 0
+ %index2 <- 0
+ %index3 <- 0
+ br :do_1
+}
+

@@ -1,0 +1,65 @@
+define :main() {
+    %offset <- 8
+    %count <- 1
+    %top <- 20
+    %first <- call allocate(41, 1)
+    %second <- call allocate(41, 1)
+    %third <- call allocate(41, 1)    
+
+    :LOOP
+    %cond <- %count > %top
+    br %cond :DISPLAY_RESULTS
+    %addr <- %offset * %count
+    
+    %tri <- call :triangle(%count)
+    %tri <- call :encode(%tri)
+    %addr_t <- %first + %addr
+    store %addr_t <- %tri
+
+    %pent <- call :pentagonal(%count)
+    %pent <- call :encode(%pent)
+    %addr_p <- %second + %addr
+    store %addr_p <- %pent
+
+    %hex <- call :hexagonal(%count)
+    %hex <- call :encode(%hex)
+    %addr_h <- %third + %addr
+    store %addr_h <- %hex
+    
+    %count <- %count + 1    
+    br :LOOP
+
+    :DISPLAY_RESULTS
+    call print(%first)
+    call print(%second)
+    call print(%third)
+    return
+}
+
+define :encode(%val) {
+    %val <- %val << 1
+    %val <- %val + 1
+    return %val
+}    
+    
+define :triangle(%n) {
+    %add1 <- %n + 1
+    %n <- %add1 * %n
+    %pn <- %n >> 1
+    return %pn
+}
+
+define :pentagonal(%n) {
+    %square <- %n * %n
+    %first <- 3 * %square
+    %numerator <- %first - %n
+    %pn <- %numerator >> 1
+    return %pn
+}
+
+define :hexagonal(%n) {
+    %square <- %n * %n
+    %first <- 2 * %square
+    %pn <- %first - %n 
+    return %pn
+}

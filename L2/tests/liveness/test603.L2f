@@ -1,0 +1,31 @@
+(@shrink_stack
+	1
+	%old_stack_ptr <- rdi
+	%old_size <- mem %old_stack_ptr 0
+	%new_size <- %old_size
+	%new_size -= 1
+	rdi <- %new_size
+	mem rsp -8 <- :call_label_ciao__ciao__ciao__ciao__ciao__ciao__ciao__ciao__ciao_30
+	call @encode 1
+	:call_label_ciao__ciao__ciao__ciao__ciao__ciao__ciao__ciao__ciao_30
+	%encoded_new_size <- rax
+	%default <- 0
+	rdi <- %default
+	mem rsp -8 <- :call_label_ciao__ciao__ciao__ciao__ciao__ciao__ciao__ciao__ciao_31
+	call @encode 1
+	:call_label_ciao__ciao__ciao__ciao__ciao__ciao__ciao__ciao__ciao_31
+	%encoded_default <- rax
+	rdi <- %encoded_new_size
+	rsi <- %encoded_default
+	call allocate 2
+	%new_stack_ptr <- rax
+	rdi <- %new_stack_ptr
+	rsi <- %old_stack_ptr
+	rdx <- %new_size
+	mem rsp -8 <- :call_label_ciao__ciao__ciao__ciao__ciao__ciao__ciao__ciao__ciao_32
+	call @do_shrink_stack 3
+	:call_label_ciao__ciao__ciao__ciao__ciao__ciao__ciao__ciao__ciao_32
+	%new_stack_ptr <- rax
+	rax <- %new_stack_ptr
+	return
+)

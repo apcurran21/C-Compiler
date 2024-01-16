@@ -1,0 +1,75 @@
+(@main
+(@encode_and_print
+	1 0
+	rdi <- rdi
+	rdi <- rdi
+	rdi <<= 1
+	rdi <- rdi
+	rdi += 1
+	rdi <- rdi
+	call print 1
+	return
+)
+
+(@fib
+	1 4
+	mem rsp 24 <- r15
+	mem rsp 16 <- r14
+	mem rsp 8 <- r13
+	mem rsp 0 <- r12
+	rdi <- rdi
+	r13 <- rdi
+	r14 <- 0
+	r15 <- 0
+	rdi <- 0
+	r12 <- 0
+	:call_label_ciao_1
+	rdi <- r14
+	mem rsp -8 <- :call_label_ciao_6
+	call @encode_and_print 1
+	:call_label_ciao_6
+	rdi <- r15
+	mem rsp -8 <- :call_label_ciao_7
+	call @encode_and_print 1
+	:call_label_ciao_7
+	rdi <- 888888888888888888
+	mem rsp -8 <- :call_label_ciao_8
+	call @encode_and_print 1
+	:call_label_ciao_8
+	:call_label_ciao_2
+	rdi <- r13 = 0
+	cjump rdi = 1 :call_label_ciao_5
+	:call_label_ciao_3
+	r13 <- r13
+	r13 -= 1
+	r14 <- r14
+	r14 += 1
+	rdi <- 1 < r14
+	cjump rdi = 1 :call_label_ciao_4
+	r15 <- r15
+	r15 += 1
+	goto :call_label_ciao_1
+	:call_label_ciao_4
+	rdi <- r15
+	r15 <- r15
+	r15 += r12
+	r12 <- rdi
+	goto :call_label_ciao_1
+	:call_label_ciao_5
+	r12 <- mem rsp 0
+	r13 <- mem rsp 8
+	r14 <- mem rsp 16
+	r15 <- mem rsp 24
+	return
+)
+
+(@main
+	0 0
+	rdi <- 20
+	mem rsp -8 <- :call_label0
+	call @fib 1
+	:call_label0
+	return
+)
+
+)

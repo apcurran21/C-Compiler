@@ -1,0 +1,80 @@
+(@checkMatrix
+	2
+	%m <- rdi
+	%v <- rsi
+	:call_label_ciao_3
+	goto :call_label_ciao_13
+	:call_label_ciao_4
+	rax <- %found
+	return
+	:call_label_ciao_5
+	%found <- 3
+	goto :call_label_ciao_4
+	:call_label_ciao_6
+	%index += 1
+	goto :call_label_ciao_7
+	:call_label_ciao_7
+	%check <- %index < %l1
+	cjump %check = 1 :call_label_ciao_8
+	goto :call_label_ciao_4
+	:call_label_ciao_8
+	%index2 <- 0
+	goto :call_label_ciao_9
+	:call_label_ciao_9
+	%check2 <- %index2 < %l2
+	cjump %check2 = 1 :call_label_ciao_10
+	goto :call_label_ciao_6
+	:call_label_ciao_10
+	%newVar1 <- 0
+	%newVar2 <- %m
+	%newVar2 += 16
+	%newVar3 <- mem %newVar2 0
+	%newVar4 <- %newVar3
+	%newVar4 >>= 1
+	%newVar5 <- 1
+	%newVar5 *= %newVar4
+	%newVar6 <- %index
+	%newVar6 *= %newVar5
+	%newVar1 += %newVar6
+	%newVar1 += %index2
+	%newVar0 <- %newVar1
+	%newVar0 *= 8
+	%newVar0 += 24
+	%newVar7 <- %m
+	%newVar7 += %newVar0
+	%e <- mem %newVar7 0
+	%sameE <- %e = %v
+	cjump %sameE = 1 :call_label_ciao_5
+	goto :call_label_ciao_11
+	:call_label_ciao_11
+	%index2 += 1
+	goto :call_label_ciao_9
+	:call_label_ciao_12
+	%found <- 1
+	%index <- 0
+	goto :call_label_ciao_7
+	:call_label_ciao_13
+	%newVar8 <- 0
+	%newVar8 *= 8
+	%newVar9 <- %newVar8
+	%newVar9 += 8
+	%newVar10 <- %m
+	%newVar10 += %newVar9
+	%l1encoded <- mem %newVar10 0
+	%newVar11 <- 1
+	%newVar11 *= 8
+	%newVar12 <- %newVar11
+	%newVar12 += 8
+	%newVar13 <- %m
+	%newVar13 += %newVar12
+	%l2encoded <- mem %newVar13 0
+	rdi <- %l1encoded
+	call print 1
+	rdi <- %l2encoded
+	call print 1
+	%l1 <- %l1encoded
+	%l1 >>= 1
+	%l2 <- %l2encoded
+	%l2 >>= 1
+	goto :call_label_ciao_12
+)

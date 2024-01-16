@@ -1,0 +1,17 @@
+(@manyArgsFunction
+	7
+	%e <- r8
+	%f <- r9
+	%g <- stack-arg 0
+	%diff <- %f
+	%diff -= %e
+	%ret_val <- 1
+	%ret_val *= %g
+	%ret_val -= %diff
+	%ret_val <<= 1
+	%ret_val += 1
+	rdi <- %ret_val
+	call print 1
+	rax <- %ret_val
+	return
+)

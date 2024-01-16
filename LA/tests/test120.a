@@ -1,0 +1,75 @@
+ void main() {
+	:EntryPoint
+
+
+	int64 len
+	len <- 10
+
+	int64[] arr
+
+	arr <- GetArray(len)
+	PrintArray(arr)
+
+
+	int64 res
+	res <- FindElement(100, arr, len)
+
+	print(res)
+
+	return
+}
+
+
+ int64[] GetArray(int64 len) {
+	:EntryPoint
+	int64[] arr
+
+
+	arr <- new Array(len)
+
+	int64 targetInd
+	int64 targetVal
+
+	targetInd <- 2
+	targetVal <- 100
+
+	arr[targetInd] <- targetVal
+
+	return arr
+}
+
+
+
+
+ int64 FindElement(int64 target, int64[] arr, int64 len) {
+	:EntryPoint
+	int64 ind
+	ind <- 0
+	br :LoopStart
+
+	:LoopStart
+	int64 isDone
+	isDone <- ind = len
+	br isDone :ExitLoop :EnterLoop
+
+	:EnterLoop
+	int64 foundValue
+	int64 cur
+	cur <- arr[ind]
+	foundValue <- cur = target
+	br foundValue :ExitLoop :Continue
+
+	:Continue
+	ind <- ind + 1
+	br :LoopStart
+
+	:ExitLoop
+	return ind
+}
+
+
+ void PrintArray(int64[] arr) {
+	:EntryPoint
+	print(arr)
+	return
+}

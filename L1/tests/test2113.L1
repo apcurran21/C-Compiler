@@ -1,0 +1,21 @@
+(@main
+(@main
+	0 0
+	:call_label0
+	rdi <- 3
+	rdi >>= 1
+	rdi <<= 1
+	rdi += 1
+	rdi += 4
+	rsi <- 1
+	call allocate 2
+	rdi <- rax
+	rsi <- rdi
+	rsi += 8
+	mem rsi 0 <- 3
+	rdi += 16
+	mem rdi 0 <- 3
+	return
+)
+
+)

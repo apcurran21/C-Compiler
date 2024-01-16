@@ -1,0 +1,46 @@
+define :main() {
+    %var16 <- 1
+    %var1 <- 5
+    %var2 <- 7
+    %var19 <- 14
+    %var4 <- %var19 <= 10
+    %var5 <- %var3 = %var2
+    %p1 <- 9
+    %p2 <- 11
+    %p3 <- %var16
+    %p4 <- 4
+    %p5 <- 2
+    %p6 <- -12
+
+
+    %var20 <- call :callMe(%p1,%p2,%p3,%p4,%p5,%p6)
+
+    %var20 <- %var20 << 1
+    %var20 <- %var20 + 1
+    call print(%var20)
+    return
+}
+
+define :thenCallMe(%p1, %p2) {
+    %p1 <- %p1 + %p2
+    return %p1
+}
+
+define :callMe(%p1,%p2,%p3,%p4,%p5,%p6) {
+    %var3 <- 0
+    %var3 <- %var3 + %p1
+    %var3 <- %var3 - %p2
+    %var3 <- %var3 * %p3
+
+    %var4 <- 3
+    %var4 <- %var4 + %p4
+    %var4 <- %var4 + %p5
+    %var4 <- %var4 + %p6
+
+    %var15 <- call :thenCallMe(%var3, %var4)
+    %var15 <- %var15 + %var3
+    return %var15
+}
+
+
+

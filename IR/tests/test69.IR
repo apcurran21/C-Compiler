@@ -1,0 +1,47 @@
+// sum of array
+
+define void @main() {
+    :entry
+    int64[] %array
+    int64 %len
+    int64 %encodedLen
+    %len <- 5
+    %encodedLen <- %len << 1
+    %encodedLen <- %len + 1
+    %array <- new Array(%encodedLen)
+    %array[0] <- 2
+    %array[1] <- 3
+    %array[2] <- 0
+    %array[3] <- 0
+    %array[4] <- 0
+    int64 %res
+    %res <- call @sum(%array, %len)
+    %res <- %res << 1
+    %res <- %res + 1
+    call print(%res)
+    return
+}
+
+define int64 @sum(int64[] %array, int64 %len) {
+    :entry
+    int64 %i
+    int64 %res
+    int64 %if
+    int64 %v
+    %i <- 0
+    %res <- 0
+    br :for
+    
+    :for
+        %if <- %i < %len
+        br %if :forInto :forBreak
+        
+        :forInto
+        %v <- %array[%i]
+        %res <- %res + %v
+        %i <- %i + 1
+        br :for
+        
+        :forBreak
+        return %res
+}

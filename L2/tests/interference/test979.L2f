@@ -1,0 +1,42 @@
+(@main
+	0
+	:call_label0
+	goto :call_label1
+	:call_label1
+	%c <- 9
+	%c *= 4
+	%c += 1
+	%c <<= 3
+	%c -= 10
+	%x <- 1623
+	rdi <- %x
+	mem rsp -8 <- :call_label2
+	call @return_merge 1
+	:call_label2
+	%abc <- rax
+	%size <- %abc
+	%size <<= 1
+	%size += 1
+	%newVar1 <- %size
+	%newVar1 >>= 1
+	%newVar0 <- %newVar1
+	%newVar0 <<= 1
+	%newVar0 += 1
+	%newVar0 += 4
+	rdi <- %newVar0
+	rsi <- 1
+	call allocate 2
+	%ptr <- rax
+	%newVar2 <- %ptr
+	%newVar2 += 8
+	mem %newVar2 0 <- 3
+	%newVar3 <- %ptr
+	%newVar3 += 16
+	mem %newVar3 0 <- %size
+	rdi <- %ptr
+	mem rsp -8 <- :call_label3
+	call @aliasing_issues 1
+	:call_label3
+	rax <- %c
+	return
+)

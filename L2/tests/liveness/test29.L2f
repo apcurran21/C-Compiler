@@ -1,0 +1,11 @@
+(@go
+	0
+	rdi <- 19
+	%my_var1 <- :fibend
+	mem rsp -8 <- %my_var1
+	call @fib 1
+	:fibend
+	rdi <- rax
+	call print 1
+	return
+)

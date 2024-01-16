@@ -1,0 +1,309 @@
+(@main
+	0
+	:call_label0
+	%newVar1 <- 5
+	%newVar1 >>= 1
+	%newVar0 <- %newVar1
+	%newVar2 <- 5
+	%newVar2 >>= 1
+	%newVar0 *= %newVar2
+	%newVar0 <<= 1
+	%newVar0 += 1
+	%newVar0 += 6
+	rdi <- %newVar0
+	rsi <- 1
+	call allocate 2
+	%A <- rax
+	mem %A 8 <- 5
+	mem %A 16 <- 5
+	mem %A 24 <- 5
+	%newVar7 <- 5
+	%newVar7 >>= 1
+	%newVar6 <- %newVar7
+	%newVar8 <- 5
+	%newVar8 >>= 1
+	%newVar6 *= %newVar8
+	%newVar6 <<= 1
+	%newVar6 += 1
+	%newVar6 += 6
+	rdi <- %newVar6
+	rsi <- 1
+	call allocate 2
+	%B <- rax
+	mem %B 8 <- 5
+	mem %B 16 <- 5
+	mem %B 24 <- 5
+	%newVar13 <- 0
+	%newVar15 <- mem %A 24
+	%newVar17 <- 1
+	%newVar16 <- %newVar15
+	%newVar16 >>= 1
+	%newVar17 *= %newVar16
+	%newVar18 <- 0
+	%newVar18 *= %newVar17
+	%newVar13 += %newVar18
+	%newVar12 <- %newVar13
+	%newVar12 *= 8
+	%newVar12 += 32
+	%newVar19 <- %A
+	%newVar19 += %newVar12
+	mem %newVar19 0 <- 5
+	%newVar21 <- 0
+	%newVar23 <- mem %A 24
+	%newVar25 <- 1
+	%newVar24 <- %newVar23
+	%newVar24 >>= 1
+	%newVar25 *= %newVar24
+	%newVar26 <- 0
+	%newVar26 *= %newVar25
+	%newVar21 += %newVar26
+	%newVar21 += 1
+	%newVar20 <- %newVar21
+	%newVar20 *= 8
+	%newVar20 += 32
+	%newVar27 <- %A
+	%newVar27 += %newVar20
+	mem %newVar27 0 <- 5
+	%newVar29 <- 0
+	%newVar31 <- mem %A 24
+	%newVar33 <- 1
+	%newVar32 <- %newVar31
+	%newVar32 >>= 1
+	%newVar33 *= %newVar32
+	%newVar29 @ %newVar29 %newVar33 1
+	%newVar28 <- %newVar29
+	%newVar28 *= 8
+	%newVar28 += 32
+	%newVar35 <- %A
+	%newVar35 += %newVar28
+	mem %newVar35 0 <- 5
+	%newVar37 <- 0
+	%newVar39 <- mem %A 24
+	%newVar41 <- 1
+	%newVar40 <- %newVar39
+	%newVar40 >>= 1
+	%newVar41 *= %newVar40
+	%newVar37 @ %newVar37 %newVar41 1
+	%newVar37 += 1
+	%newVar36 <- %newVar37
+	%newVar36 *= 8
+	%newVar36 += 32
+	%newVar43 <- %A
+	%newVar43 += %newVar36
+	mem %newVar43 0 <- 5
+	%newVar45 <- 0
+	%newVar47 <- mem %B 24
+	%newVar49 <- 1
+	%newVar48 <- %newVar47
+	%newVar48 >>= 1
+	%newVar49 *= %newVar48
+	%newVar50 <- 0
+	%newVar50 *= %newVar49
+	%newVar45 += %newVar50
+	%newVar44 <- %newVar45
+	%newVar44 *= 8
+	%newVar44 += 32
+	%newVar51 <- %B
+	%newVar51 += %newVar44
+	mem %newVar51 0 <- 5
+	%newVar53 <- 0
+	%newVar55 <- mem %B 24
+	%newVar57 <- 1
+	%newVar56 <- %newVar55
+	%newVar56 >>= 1
+	%newVar57 *= %newVar56
+	%newVar58 <- 0
+	%newVar58 *= %newVar57
+	%newVar53 += %newVar58
+	%newVar53 += 1
+	%newVar52 <- %newVar53
+	%newVar52 *= 8
+	%newVar52 += 32
+	%newVar59 <- %B
+	%newVar59 += %newVar52
+	mem %newVar59 0 <- 5
+	%newVar61 <- 0
+	%newVar63 <- mem %B 24
+	%newVar65 <- 1
+	%newVar64 <- %newVar63
+	%newVar64 >>= 1
+	%newVar65 *= %newVar64
+	%newVar61 @ %newVar61 %newVar65 1
+	%newVar60 <- %newVar61
+	%newVar60 *= 8
+	%newVar60 += 32
+	%newVar67 <- %B
+	%newVar67 += %newVar60
+	mem %newVar67 0 <- 5
+	%newVar69 <- 0
+	%newVar71 <- mem %B 24
+	%newVar73 <- 1
+	%newVar72 <- %newVar71
+	%newVar72 >>= 1
+	%newVar73 *= %newVar72
+	%newVar69 @ %newVar69 %newVar73 1
+	%newVar69 += 1
+	%newVar68 <- %newVar69
+	%newVar68 *= 8
+	%newVar68 += 32
+	%newVar75 <- %B
+	%newVar75 += %newVar68
+	mem %newVar75 0 <- 5
+	%newVar76 <- 1
+	%newVar76 *= 8
+	%newVar77 <- %newVar76
+	%newVar77 += 16
+	%newVar78 <- %A
+	%newVar78 += %newVar77
+	%Asize <- mem %newVar78 0
+	%newVar79 <- 1
+	%newVar79 *= 8
+	%newVar80 <- %newVar79
+	%newVar80 += 16
+	%newVar81 <- %B
+	%newVar81 += %newVar80
+	%Bsize <- mem %newVar81 0
+	%Asize >>= 1
+	%Bsize >>= 1
+	%temp <- -1
+	goto :call_label1
+	:call_label1
+	%temp += 1
+	%temp2 <- 0
+	%check1 <- %temp = %Asize
+	cjump %check1 = 1 :call_label4
+	goto :call_label2
+	:call_label2
+	%check2 <- %temp2 = %Bsize
+	cjump %check2 = 1 :call_label1
+	goto :call_label3
+	:call_label3
+	%newVar83 <- 0
+	%newVar85 <- mem %A 24
+	%newVar87 <- 1
+	%newVar86 <- %newVar85
+	%newVar86 >>= 1
+	%newVar87 *= %newVar86
+	%newVar88 <- %temp
+	%newVar88 *= %newVar87
+	%newVar83 += %newVar88
+	%newVar83 += %temp2
+	%newVar82 <- %newVar83
+	%newVar82 *= 8
+	%newVar82 += 32
+	%newVar89 <- %A
+	%newVar89 += %newVar82
+	%v1 <- mem %newVar89 0
+	%newVar91 <- 0
+	%newVar93 <- mem %B 24
+	%newVar95 <- 1
+	%newVar94 <- %newVar93
+	%newVar94 >>= 1
+	%newVar95 *= %newVar94
+	%newVar96 <- %temp
+	%newVar96 *= %newVar95
+	%newVar91 += %newVar96
+	%newVar91 += %temp2
+	%newVar90 <- %newVar91
+	%newVar90 *= 8
+	%newVar90 += 32
+	%newVar97 <- %B
+	%newVar97 += %newVar90
+	%v2 <- mem %newVar97 0
+	%newVar99 <- 0
+	%newVar101 <- mem %A 24
+	%newVar103 <- 1
+	%newVar102 <- %newVar101
+	%newVar102 >>= 1
+	%newVar103 *= %newVar102
+	%newVar104 <- %temp
+	%newVar104 *= %newVar103
+	%newVar99 += %newVar104
+	%newVar99 += %temp2
+	%newVar98 <- %newVar99
+	%newVar98 *= 8
+	%newVar98 += 32
+	%newVar105 <- %A
+	%newVar105 += %newVar98
+	%v3 <- %v1
+	%v3 += %v2
+	mem %newVar105 0 <- %v3
+	%temp2 += 1
+	goto :call_label2
+	:call_label4
+	%newVar107 <- 0
+	%newVar109 <- mem %A 24
+	%newVar111 <- 1
+	%newVar110 <- %newVar109
+	%newVar110 >>= 1
+	%newVar111 *= %newVar110
+	%newVar112 <- 0
+	%newVar112 *= %newVar111
+	%newVar107 += %newVar112
+	%newVar106 <- %newVar107
+	%newVar106 *= 8
+	%newVar106 += 32
+	%newVar113 <- %A
+	%newVar113 += %newVar106
+	%temp <- mem %newVar113 0
+	%temp <<= 1
+	%temp += 1
+	rdi <- %temp
+	call print 1
+	%newVar115 <- 0
+	%newVar117 <- mem %A 24
+	%newVar119 <- 1
+	%newVar118 <- %newVar117
+	%newVar118 >>= 1
+	%newVar119 *= %newVar118
+	%newVar120 <- 0
+	%newVar120 *= %newVar119
+	%newVar115 += %newVar120
+	%newVar115 += 1
+	%newVar114 <- %newVar115
+	%newVar114 *= 8
+	%newVar114 += 32
+	%newVar121 <- %A
+	%newVar121 += %newVar114
+	%temp <- mem %newVar121 0
+	%temp <<= 1
+	%temp += 1
+	rdi <- %temp
+	call print 1
+	%newVar123 <- 0
+	%newVar125 <- mem %A 24
+	%newVar127 <- 1
+	%newVar126 <- %newVar125
+	%newVar126 >>= 1
+	%newVar127 *= %newVar126
+	%newVar123 @ %newVar123 %newVar127 1
+	%newVar122 <- %newVar123
+	%newVar122 *= 8
+	%newVar122 += 32
+	%newVar129 <- %A
+	%newVar129 += %newVar122
+	%temp <- mem %newVar129 0
+	%temp <<= 1
+	%temp += 1
+	rdi <- %temp
+	call print 1
+	%newVar131 <- 0
+	%newVar133 <- mem %A 24
+	%newVar135 <- 1
+	%newVar134 <- %newVar133
+	%newVar134 >>= 1
+	%newVar135 *= %newVar134
+	%newVar131 @ %newVar131 %newVar135 1
+	%newVar131 += 1
+	%newVar130 <- %newVar131
+	%newVar130 *= 8
+	%newVar130 += 32
+	%newVar137 <- %A
+	%newVar137 += %newVar130
+	%temp <- mem %newVar137 0
+	%temp <<= 1
+	%temp += 1
+	rdi <- %temp
+	call print 1
+	return
+)

@@ -1,0 +1,37 @@
+(@main
+	0
+	:call_label_ciao__ciao_8
+	goto :call_label_ciao__ciao_12
+	:call_label_ciao__ciao_9
+	return
+	:call_label_ciao__ciao_10
+	%tmp_r12 <- %i
+	%rsp_16 <- %tmp_r12
+	%tmp_r12 += 1
+	rdi <- 1
+	rsi <- 2
+	rdx <- 3
+	rcx <- 4
+	r8 <- 5
+	r9 <- 6
+	mem rsp -16 <- %rsp_16
+	mem rsp -8 <- :call_label_ciao__ciao_13
+	call @sum_to 7
+	:call_label_ciao__ciao_13
+	%tmp_rax <- rax
+	%tmp_rax <<= %sft
+	%tmp_rax += %sft
+	%tmp_rdi <- %tmp_rax
+	rdi <- %tmp_rdi
+	call print 1
+	%i <- %tmp_r12
+	goto :call_label_ciao__ciao_11
+	:call_label_ciao__ciao_11
+	%icmp <- %i <= 20
+	cjump %icmp = 1 :call_label_ciao__ciao_10
+	goto :call_label_ciao__ciao_9
+	:call_label_ciao__ciao_12
+	%i <- 0
+	%sft <- 1
+	goto :call_label_ciao__ciao_11
+)

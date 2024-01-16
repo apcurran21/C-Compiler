@@ -1,0 +1,116 @@
+(@go
+(@go
+	0 0
+	rdi <- 30030
+	mem rsp -8 <- :go_ret0
+	call @gpf 1
+	:go_ret0
+	rdi <- rax
+	rdi <<= 1
+	rdi += 1
+	call print 1
+	return
+)
+
+(@gpf
+	1 2
+	rsi <- rdi
+	mem rsp 0 <- rsi
+	mem rsp -8 <- :gpf_ret0
+	call @prime 1
+	:gpf_ret0
+	cjump rax = 0 :not_itself
+	rdi <- mem rsp 0
+	rax <- rdi
+	goto :gpf_done
+	:not_itself
+	rdi <- mem rsp 0
+	rdi <- rdi
+	mem rsp 8 <- rdi
+	rdi <- mem rsp 8
+	rdi >>= 1
+	mem rsp 8 <- rdi
+	rdi <- mem rsp 8
+	rdi += 1
+	mem rsp 8 <- rdi
+	:gpf_loop
+	rdi <- mem rsp 8
+	cjump rdi < 2 :gpf_done_sad
+	rdi <- mem rsp 8
+	rdi -= 1
+	mem rsp 8 <- rdi
+	rdi <- mem rsp 0
+	rdi <- rdi
+	rsi <- mem rsp 8
+	rsi <- rsi
+	mem rsp -8 <- :gpf_ret1
+	call @mod 2
+	:gpf_ret1
+	cjump rax = 0 :gpf_loop
+	rdi <- mem rsp 8
+	rdi <- rdi
+	mem rsp -8 <- :gpf_ret2
+	call @prime 1
+	:gpf_ret2
+	cjump rax = 0 :gpf_loop
+	rdi <- mem rsp 8
+	rax <- rdi
+	goto :gpf_done
+	:gpf_done_sad
+	rax <- -1
+	:gpf_done
+	return
+)
+
+(@mod
+	2 0
+	cjump rdi = 0 :mgood
+	:misneg
+	cjump -1 < rdi :mloop
+	rax <- 0
+	return
+	:mloop
+	rdi -= rsi
+	cjump rdi = 0 :mgood
+	goto :misneg
+	:mgood
+	rax <- 1
+	return
+)
+
+(@prime
+	1 3
+	cjump rdi = 2 :is_prime
+	rsi <- rdi
+	mem rsp 0 <- rsi
+	rdi <- rdi
+	mem rsp 8 <- rdi
+	rdi <- mem rsp 0
+	rdi >>= 1
+	mem rsp 0 <- rdi
+	rdi <- 1
+	mem rsp 16 <- rdi
+	:prime_loop
+	rdi <- mem rsp 16
+	rdi += 1
+	mem rsp 16 <- rdi
+	rdi <- mem rsp 8
+	rdi <- rdi
+	rsi <- mem rsp 16
+	rsi <- rsi
+	mem rsp -8 <- :prime_ret0
+	call @mod 2
+	:prime_ret0
+	cjump rax = 1 :not_prime
+	rdi <- mem rsp 0
+	rsi <- mem rsp 16
+	cjump rsi <= rdi :prime_loop
+	:is_prime
+	rax <- 1
+	return
+	:not_prime
+	rax <- 0
+	return
+)
+
+)

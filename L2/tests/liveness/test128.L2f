@@ -1,0 +1,10 @@
+(@sum
+	6
+	rdi += rsi
+	rdx += rcx
+	r8 += r9
+	rdx += r8
+	rdi += rdx
+	rax <- rdi
+	return
+)

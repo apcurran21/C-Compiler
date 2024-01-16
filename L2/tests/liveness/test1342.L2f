@@ -1,0 +1,19 @@
+(@findDist
+	4
+	%x1 <- rdi
+	%x2 <- rsi
+	%y1 <- rdx
+	%y2 <- rcx
+	%xDist <- %x2
+	%xDist -= %x1
+	%yDist <- %y2
+	%yDist -= %y1
+	%sqX <- %xDist
+	%sqX *= %xDist
+	%sqY <- %yDist
+	%sqY *= %yDist
+	%sqDist <- %sqX
+	%sqDist += %sqY
+	rax <- %sqDist
+	return
+)

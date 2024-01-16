@@ -1,0 +1,22 @@
+%abc %c r12 r13 r14 r15 rbp rbx
+%c %abc %newVar0 %newVar1 %ptr r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx rsi %size %x
+%newVar0 %c r12 r13 r14 r15 rbp rbx %size
+%newVar1 %c r12 r13 r14 r15 rbp rbx %size
+%ptr %c r12 r13 r14 r15 rbp rbx %size
+r10 %c r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx rsi %size
+r11 %c r10 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx rsi %size
+r12 %abc %c %newVar0 %newVar1 %ptr r10 r11 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx rsi %size %x
+r13 %abc %c %newVar0 %newVar1 %ptr r10 r11 r12 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx rsi %size %x
+r14 %abc %c %newVar0 %newVar1 %ptr r10 r11 r12 r13 r15 r8 r9 rax rbp rbx rcx rdi rdx rsi %size %x
+r15 %abc %c %newVar0 %newVar1 %ptr r10 r11 r12 r13 r14 r8 r9 rax rbp rbx rcx rdi rdx rsi %size %x
+r8 %c r10 r11 r12 r13 r14 r15 r9 rax rbp rbx rcx rdi rdx rsi %size
+r9 %c r10 r11 r12 r13 r14 r15 r8 rax rbp rbx rcx rdi rdx rsi %size
+rax %c r10 r11 r12 r13 r14 r15 r8 r9 rbp rbx rcx rdi rdx rsi %size
+rbp %abc %c %newVar0 %newVar1 %ptr r10 r11 r12 r13 r14 r15 r8 r9 rax rbx rcx rdi rdx rsi %size %x
+rbx %abc %c %newVar0 %newVar1 %ptr r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rcx rdi rdx rsi %size %x
+rcx %c r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rdi rdx rsi %size
+rdi %c r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdx rsi %size
+rdx %c r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rsi %size
+rsi %c r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx %size
+%size %c %newVar0 %newVar1 %ptr r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx rsi
+%x %c r12 r13 r14 r15 rbp rbx

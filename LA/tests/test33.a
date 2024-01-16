@@ -1,0 +1,66 @@
+void main(){
+    int64 loop
+    loop <- 111110
+    :BEGIN
+    int64 cmp
+    cmp <- loop < 1
+    br cmp :END :START
+    :START
+    int64 my_var1
+    my_var1 <- 1
+    print(my_var1)
+    int64 my_var2
+    my_var2 <- 11
+     print(my_var2)
+    int64 my_var3
+    my_var3 <- 111
+     print(my_var3)
+    int64 my_var4
+    my_var4 <- 1111
+     print(my_var4)
+    int64 my_var5
+    my_var5 <- 11111
+    print(my_var5)
+    my_var4 <- 1111
+    print(my_var4)
+    my_var3 <- 111
+    print(my_var3)
+    my_var2 <- 11
+    print(my_var2)
+    my_var1 <- 1
+    print(my_var1)
+    loop <- loop - 1
+    br:BEGIN
+    :END
+    int64 mult
+    mult <- 4 * 4
+    mult <- mult + 3
+    meh()
+    print(mult)
+    return
+
+}
+
+void meh(){
+    :NEW
+    int64 memmy
+    int64[] thing
+    memmy <- 34
+    thing <- new Array(memmy)
+    int64 i
+    int64 cond
+    int64 lengtharr
+    lengtharr <- 34
+    i <- 0
+    br :ENTER
+    :ENTER
+    cond <- i < 34
+    br cond :LOOP :END
+    :LOOP
+    thing[i] <- 1
+    i <- i + 1
+    br :ENTER
+    :END
+    print(thing)
+    return
+}

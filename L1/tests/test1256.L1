@@ -1,0 +1,56 @@
+(@entrance
+(@entrance
+	0 0
+	rdi <- 41
+	rsi <- 3
+	rdx <- 41
+	rcx <- 5
+	mem rsp -8 <- :create_arr_ret
+	call @create_arr 4
+	:create_arr_ret
+	return
+)
+
+(@create_arr
+	4 3
+	rdx <- rdx
+	mem rsp 0 <- rdx
+	rdx <- rcx
+	mem rsp 8 <- rdx
+	call allocate 2
+	:loop
+	rdi <- mem rsp 8
+	cjump rdi <= 0 :loopexit
+	rdi <- mem rsp 8
+	rdi @ rax rdi 8
+	rsi <- mem rsp 0
+	mem rdi 0 <- rsi
+	rdi <- mem rsp 8
+	rdi -= 1
+	mem rsp 8 <- rdi
+	goto :loop
+	:loopexit
+	rdi <- rax
+	mem rsp 16 <- rdi
+	rdi <- rax
+	call print 1
+	rdi <- mem rsp 16
+	rdi <- rdi
+	mem rsp -8 <- :sq_arr_return
+	call @sq_arr_length 1
+	:sq_arr_return
+	return
+)
+
+(@sq_arr_length
+	1 0
+	rdi <- mem rdi 0
+	rdi *= rdi
+	rdi *= 2
+	rdi += 1
+	rdi <- rdi
+	call print 1
+	return
+)
+
+)

@@ -1,0 +1,24 @@
+(@sumArr
+	1
+	%arr <- rdi
+	%len <- mem %arr 0
+	%sum <- 0
+	%count <- 0
+	%curr <- %arr
+	:call_label_ciao__ciao_5
+	%curr += 8
+	%temp1 <- mem %curr 0
+	%sum += %temp1
+	%sumP <- %sum
+	%sumP <<= 1
+	%sumP += 1
+	rdi <- %sumP
+	call print 1
+	%count += 1
+	%cont <- %count < %len
+	cjump %cont = 1 :call_label_ciao__ciao_5
+	goto :call_label_ciao__ciao_6
+	:call_label_ciao__ciao_6
+	rax <- %sum
+	return
+)

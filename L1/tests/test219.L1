@@ -1,0 +1,75 @@
+(@main
+(@isDivisible
+	2 0
+	rdx <- rdi
+	rdi <- rsi
+	:check1
+	cjump rdx < rdi :ret0
+	goto :check2
+	:check2
+	cjump rdx = rdi :ret1
+	goto :subtract
+	:subtract
+	rdx++
+	rdx -= rdi
+	goto :check1
+	:ret0
+	rax <- 1
+	return
+	:ret1
+	rax <- 3
+	return
+	return
+)
+
+(@isPrime
+	1 2
+	mem rsp 8 <- r13
+	mem rsp 0 <- r12
+	r12 <- rdi
+	r13 <- 5
+	cjump r12 <= 3 :return0
+	goto :loop
+	:loop
+	rdi <- r12
+	rsi <- r13
+	r13 += 2
+	mem rsp -8 <- :isDivisible_ret
+	call @isDivisible 2
+	:isDivisible_ret
+	cjump rax = 3 :return0
+	goto :checkdone
+	:checkdone
+	cjump r12 <= r13 :return1
+	goto :loop
+	:return0
+	rax <- 1
+	r12 <- mem rsp 0
+	r13 <- mem rsp 8
+	return
+	:return1
+	rax <- 3
+	r12 <- mem rsp 0
+	r13 <- mem rsp 8
+	return
+)
+
+(@main
+	0 0
+	rdi <- 3027
+	rsi <- 35
+	mem rsp -8 <- :r1
+	call @isDivisible 2
+	:r1
+	rdi <- rax
+	call print 1
+	rdi <- 35
+	mem rsp -8 <- :r2
+	call @isPrime 1
+	:r2
+	rdi <- rax
+	call print 1
+	return
+)
+
+)

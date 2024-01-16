@@ -1,0 +1,60 @@
+(@main
+  (@main
+    0
+    %len <- 5
+    rdi <- %len
+
+mem rsp -8 <- :call_label0
+    call @encode 1
+
+:call_label0
+    %encoded_len <- rax
+    rdi <- %encoded_len
+    rsi <- 3
+    call allocate 2
+    %ptr <- rax
+    %pos <- %ptr
+    %pos += 16
+    mem %pos 0 <- 9
+    %pos <- %pos
+    %pos += 8
+    mem %pos 0 <- 19
+    %pos <- %pos
+    %pos += 8
+    mem %pos 0 <- 33
+    %pos <- %pos
+    %pos += 8
+    mem %pos 0 <- 51
+    rdi <- %ptr
+    call print 1
+    rdi <- %encoded_len
+    rsi <- 51
+    call allocate 2
+    %ptr <- rax
+    %pos <- %ptr
+    %pos += 16
+    mem %pos 0 <- 33
+    %pos <- %pos
+    %pos += 8
+    mem %pos 0 <- 19
+    %pos <- %pos
+    %pos += 8
+    mem %pos 0 <- 9
+    %pos <- %pos
+    %pos += 8
+    mem %pos 0 <- 3
+    rdi <- %ptr
+    call print 1
+    return
+  )
+  (@encode
+    1
+    %tmp <- rdi
+    %tmp <- %tmp
+    %tmp <<= 1
+    %tmp <- %tmp
+    %tmp += 1
+    rax <- %tmp
+    return
+  )
+)

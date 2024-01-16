@@ -1,0 +1,51 @@
+// gcd
+
+void main() {
+    int64 res
+    res <- gcd(541, 7919)
+
+    // 1
+    print(res) 
+    return
+}
+
+int64 gcd(int64 a, int64 b) {
+    int64 if
+    if <- b = 0
+    br if :initialConditionTrue :initialConditionFalse
+    
+    :initialConditionFalse
+    int64 aModB
+    int64 res
+    aModB <- mod(a, b)
+    res <- gcd(b, aModB)
+    return res
+    
+    :initialConditionTrue
+    return a
+}
+
+int64 mod(int64 a, int64 b) {
+    int64 i
+    int64 res
+    i <- 0
+    res <- a
+    
+    :while
+
+        int64 if
+        int64 bi
+        bi <- b * i
+        if <- bi <= a
+        br if :whileInto :whileBreak
+        
+        :whileBreak
+        return res
+        
+        :whileInto
+        res <- a
+        res <- res - bi
+        
+        i <- i + 1
+        br :while
+}

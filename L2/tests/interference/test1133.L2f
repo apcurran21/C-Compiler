@@ -1,0 +1,30 @@
+(@compute_many_tns
+	1
+	%nums <- rdi
+	:call_label_ciao__ciao_6
+	goto :call_label_ciao__ciao_11
+	:call_label_ciao__ciao_7
+	return
+	:call_label_ciao__ciao_8
+	%nth_tn += 1
+	goto :call_label_ciao__ciao_9
+	:call_label_ciao__ciao_9
+	%cond <- %decoded_nums < %nth_tn
+	cjump %cond = 1 :call_label_ciao__ciao_7
+	goto :call_label_ciao__ciao_10
+	:call_label_ciao__ciao_10
+	%call_nth_tn <- %nth_tn
+	%call_nth_tn <<= 1
+	%call_nth_tn += 1
+	rdi <- %call_nth_tn
+	mem rsp -8 <- :call_label_ciao__ciao_12
+	call @compute_triangular_num 1
+	:call_label_ciao__ciao_12
+	goto :call_label_ciao__ciao_8
+	:call_label_ciao__ciao_11
+	%decoded_nums <- %nums
+	%decoded_nums >>= 1
+	%nth_tn <- 3
+	%nth_tn >>= 1
+	goto :call_label_ciao__ciao_9
+)

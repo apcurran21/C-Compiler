@@ -1,0 +1,11 @@
+(@encode_and_print
+	1
+	%v <- rdi
+	%v_shifted <- %v
+	%v_shifted <<= 1
+	%v_encoded <- %v_shifted
+	%v_encoded += 1
+	rdi <- %v_encoded
+	call print 1
+	return
+)

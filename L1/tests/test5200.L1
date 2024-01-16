@@ -1,0 +1,13 @@
+(@main
+
+  (@main
+  0 0
+
+  // Call tensor-error
+  rdi <- 5
+  call tensor-error 1
+
+  return
+  )
+
+)

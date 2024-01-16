@@ -1,0 +1,22 @@
+(@divisible
+	2
+	%dividend <- rdi
+	%divisor <- rsi
+	:call_label_ciao__ciao__ciao_15
+	%i <- %dividend < %divisor
+	cjump %i = 1 :call_label_ciao__ciao__ciao_16
+	goto :call_label_ciao__ciao__ciao_17
+	:call_label_ciao__ciao__ciao_16
+	rax <- 0
+	return
+	:call_label_ciao__ciao__ciao_17
+	%i <- %divisor = %dividend
+	cjump %i = 1 :call_label_ciao__ciao__ciao_18
+	goto :call_label_ciao__ciao__ciao_19
+	:call_label_ciao__ciao__ciao_18
+	rax <- 1
+	return
+	:call_label_ciao__ciao__ciao_19
+	%dividend -= %divisor
+	goto :call_label_ciao__ciao__ciao_15
+)

@@ -1,0 +1,41 @@
+(@go
+        (@go
+        0 0
+        rdi <- 12
+        rsi <- 1
+        rdx <- 1
+        // counter
+        rcx <- 3
+        r8 <- 0
+        r9 <- 0
+        mem rsp -8 <- :fibonacci_ret
+        call @fibonacci 6
+        :fibonacci_ret
+        rdi <- rax
+        rdi <<= 1
+        rdi ++
+        call print 1
+        return
+        )
+
+        (@fibonacci
+        6 0
+        :forLoop
+        cjump rcx < 3 :lessthanthree
+        cjump rdi < rcx :endcondition
+        r8 <- 0
+        r8 += rsi
+        r8 += rdx
+        rsi <- rdx
+        rdx <- r8
+        rcx ++
+        goto :forLoop
+
+        :lessthanthree
+        r8 <- 1
+        rax <- 1
+        :endcondition
+        rax <- r8
+        return
+        )
+)

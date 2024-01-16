@@ -1,0 +1,25 @@
+(@initArray
+	1
+	%A <- rdi
+	:call_label_ciao_7
+	goto :call_label_ciao_8
+	:call_label_ciao_8
+	%newVar1 <- 0
+	%newVar2 <- %A
+	%newVar2 += 24
+	%newVar3 <- mem %newVar2 0
+	%newVar5 <- 1
+	%newVar4 <- %newVar3
+	%newVar4 >>= 1
+	%newVar5 *= %newVar4
+	%newVar6 <- 1
+	%newVar6 *= %newVar5
+	%newVar1 += %newVar6
+	%newVar0 <- %newVar1
+	%newVar0 *= 8
+	%newVar0 += 32
+	%newVar7 <- %A
+	%newVar7 += %newVar0
+	mem %newVar7 0 <- 9
+	return
+)

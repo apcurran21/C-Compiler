@@ -1,0 +1,41 @@
+(@max
+	1
+	%array <- rdi
+	:call_label_ciao_2
+	%max <- 0
+	%index <- 1
+	goto :call_label_ciao_3
+	:call_label_ciao_3
+	%currMultFactor <- %index
+	%currMultFactor *= 8
+	%newVar4 <- 0
+	%newVar4 += %currMultFactor
+	%newVar3 <- %newVar4
+	%newVar3 *= 8
+	%newVar3 += 24
+	%newVar6 <- %array
+	%newVar6 += %newVar3
+	%temp <- mem %newVar6 0
+	%newMax <- %temp
+	%newMax -= %max
+	cjump %newMax = 1 :call_label_ciao_5
+	goto :call_label_ciao_4
+	:call_label_ciao_4
+	%newVar7 <- 0
+	%newVar7 *= 8
+	%newVar8 <- %newVar7
+	%newVar8 += 16
+	%newVar9 <- %array
+	%newVar9 += %newVar8
+	%size <- mem %newVar9 0
+	%continue <- %size
+	%continue -= %index
+	cjump %continue = 1 :call_label_ciao_3
+	goto :call_label_ciao_5
+	:call_label_ciao_5
+	goto :call_label_ciao_6
+	:call_label_ciao_6
+	%max <- 1
+	rax <- %max
+	return
+)

@@ -1,0 +1,88 @@
+(@main
+(@main
+	0 2
+	mem rsp 8 <- r13
+	mem rsp 0 <- r12
+	:call_label_ciao_9
+	goto :call_label_ciao_14
+	:call_label_ciao_10
+	r13 <<= 1
+	r13 += 1
+	rdi <- r13
+	call print 1
+	r12 <- mem rsp 0
+	r13 <- mem rsp 8
+	return
+	:call_label_ciao_11
+	r13 <- r12
+	goto :call_label_ciao_12
+	:call_label_ciao_12
+	r12 += 1
+	rdi <- 1000000 <= r12
+	cjump rdi = 1 :call_label_ciao_10
+	goto :call_label_ciao_13
+	:call_label_ciao_13
+	rdi <- r12
+	rsi <- 1
+	mem rsp -8 <- :call_label_ciao_15
+	call @collatz 2
+	:call_label_ciao_15
+	rdi <- rax
+	rdi <- r13 < rdi
+	cjump rdi = 1 :call_label_ciao_11
+	goto :call_label_ciao_12
+	:call_label_ciao_14
+	rdi <- 400
+	rsi <- 1
+	mem rsp -8 <- :call_label_ciao_16
+	call @collatz 2
+	:call_label_ciao_16
+	rdi <- rax
+	rdi <<= 1
+	rdi += 1
+	call print 1
+	r13 <- 0
+	r12 <- 0
+	goto :call_label_ciao_12
+)
+
+(@collatz
+	2 0
+	rdx <- rdi
+	:call_label0
+	goto :call_label7
+	:call_label1
+	rax <- rsi
+	return
+	:call_label2
+	rdi <- rdx
+	mem rsp -8 <- :call_label8
+	call @collatz 2
+	:call_label8
+	rdi <- rax
+	rax <- rdi
+	return
+	:call_label3
+	rdi <- rdx = 1
+	rsi += 1
+	cjump rdi = 1 :call_label1
+	goto :call_label2
+	:call_label4
+	rdx *= 3
+	rdx += 1
+	goto :call_label3
+	:call_label5
+	rdx >>= 1
+	goto :call_label3
+	:call_label6
+	rdi <- rdx
+	rdi &= 1
+	cjump rdi = 1 :call_label4
+	goto :call_label5
+	:call_label7
+	rdi <- rdx = 1
+	cjump rdi = 1 :call_label1
+	goto :call_label6
+)
+
+)

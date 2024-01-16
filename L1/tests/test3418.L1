@@ -1,0 +1,64 @@
+(@main
+(@main
+	0 4
+	mem rsp 24 <- r15
+	mem rsp 16 <- r14
+	mem rsp 8 <- r13
+	mem rsp 0 <- r12
+	r12 <- 5
+	r15 <- 10
+	r14 <- 15
+	rdi <- 5
+	rsi <- 3
+	r13 <- 20
+	mem rsp -8 <- :call_label2
+	call @myTest3Helper 2
+	:call_label2
+	rdi <- rax
+	rdi <- rdi = 0
+	cjump rdi = 1 :call_label0
+	rsi <- @retFun
+	goto :call_label1
+	:call_label0
+	rsi <- @altRetFun
+	:call_label1
+	rdi <- r12
+	rdi += r15
+	rdi -= r14
+	rdi += r13
+	mem rsp -8 <- :call_label3
+	call rsi 1
+	:call_label3
+	rdi <- rax
+	rdi <<= 1
+	rdi += 1
+	call print 1
+	r12 <- mem rsp 0
+	r13 <- mem rsp 8
+	r14 <- mem rsp 16
+	r15 <- mem rsp 24
+	return
+)
+
+(@myTest3Helper
+	2 0
+	rdi <- rdi < rsi
+	rax <- rdi
+	return
+)
+
+(@retFun
+	1 0
+	rdi += 10
+	rax <- rdi
+	return
+)
+
+(@altRetFun
+	1 0
+	rdi -= 10
+	rax <- rdi
+	return
+)
+
+)

@@ -1,0 +1,79 @@
+//returns the cirumference and area of a circle with the given radius
+//then returns the surface area and volume of a sphere with the given radius
+//note pi is approximated to 3 and 4/3 * pi is approximated to 4
+
+define void @main()
+{
+   :function0
+   int64 %radius
+   int64 %value
+   %radius <- 5
+   %value <- call @circ(%radius)
+   %value <- %value << 1
+   %value <- %value + 1
+   call print (%value)
+   %value <- call @area(%radius)
+   %value <- %value << 1
+   %value <- %value + 1
+   call print (%value)
+   %value <- call @SA(%radius)
+   %value <- %value << 1
+   %value <- %value + 1
+   call print (%value)
+   %value <- call @vol(%radius)
+   %value <- %value << 1
+   %value <- %value + 1
+   call print (%value)
+   return
+}
+
+define int64 @circ(int64 %r)
+{
+   :function1
+   int64 %pi
+   int64 %d
+   int64 %c
+   %pi <- 3
+   %d <- 2 * %r
+   %c <- %d * %pi
+   return %c
+}
+
+define int64 @area(int64 %r)
+{
+   :function2
+   int64 %pi
+   int64 %r2
+   int64 %a
+   %pi <- 3
+   %r2 <- %r * %r
+   %a <- %r2 * %pi
+   return %a
+}
+
+define int64 @SA(int64 %r)
+{
+   :function3
+   int64 %pi
+   int64 %r2
+   int64 %sa
+   %pi <- 3
+   %r2 <- %r * %r
+   %r2 <- %r2 * 4
+   %sa <- %r2 * %pi
+   return %sa
+}
+
+define int64 @vol(int64 %r)
+{
+   :function4
+   int64 %factor
+   int64 %r2
+   int64 %r3
+   int64 %v
+   %factor <- 4
+   %r2 <- %r * %r
+   %r3 <- %r2 * %r
+   %v <- %r3 * %factor
+   return %v
+}

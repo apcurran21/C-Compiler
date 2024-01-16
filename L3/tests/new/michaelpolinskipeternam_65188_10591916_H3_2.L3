@@ -1,0 +1,61 @@
+define :main (){
+  %target <- call input()
+  %target <- %target - 1
+  %target <- %target >> 1
+  %arr <- call allocate(21, 1)
+  %count <- 0
+  %arr_filler <- %arr + 8
+  :FILL_LOOP
+  store %arr_filler <- %count
+  %count <- %count + 1
+  %arr_filler <- %arr_filler + 8
+  %loopCond <- %count < 10
+  br %loopCond :FILL_LOOP
+
+  %left <- 0
+  %right <- load %arr
+  %right <- %right - 1
+
+  :BIN_SEARCH
+  %searchEndCond <- %right < %left
+  br %searchEndCond :NOT_FOUND
+  %mid <- %left
+  %mid <- %mid + %right
+  %mid <- %mid >> 1
+
+  %arr_idx <- %arr
+  %arr_idx <- %arr_idx + 8
+  %v1 <- %mid * 8
+  %arr_idx <- %arr_idx + %v1 
+
+  %value <- load %arr_idx
+
+  %foundCond <- %value = %target 
+  %greaterCond <- %value < %target
+  br %foundCond :FOUND
+  br %greaterCond :GREATER
+
+  %mid <- %mid - 1
+  %right <- %mid
+  br :BIN_SEARCH
+
+  :GREATER
+  %mid <- %mid + 1
+  %left <- %mid
+  br :BIN_SEARCH
+
+  :NOT_FOUND
+  %result <- -1
+  %v1 <- %result << 1
+  %v1 <- %v1 + 1
+  call print(%v1)
+  return %result
+
+  :FOUND
+  %result <- %mid
+  %v1 <- %result
+  %v1 <- %v1 << 1
+  %v1 <- %v1 + 1
+  call print(%v1)
+  return %result
+}

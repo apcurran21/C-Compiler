@@ -1,0 +1,45 @@
+// calculates (and prints) the first 20 terms of the fibonacci sequence
+// with fib(0) = fib(1) = 1
+
+define void @main() {
+        :entry
+        int64 %i_sub_2
+        int64 %fib_sub_2
+        int64 %loop_done
+        int64 %i_sub_1
+        int64 %fib_sub_1
+        int64[] %fib_arr
+        int64 %fib_i
+        // 21 << 1 + 1
+        %fib_arr <- new Array(43)
+        // f(0) = 1
+        %fib_arr[0] <- 1
+        // f(1) = 1
+        %fib_arr[1] <- 1
+        // 1 << 1 + 1
+        call print(3)
+        call print(3)
+        int64 %i
+        %i <- 2
+        br :loop_start
+
+        :loop_start
+        %loop_done <- %i >= 21
+        br %loop_done :loop_end :loop_body
+
+        :loop_body
+        %i_sub_2 <- %i - 2
+        %fib_sub_2 <- %fib_arr[%i_sub_2]
+        %i_sub_1 <- %i - 1
+        %fib_sub_1 <- %fib_arr[%i_sub_1]
+        %fib_i <- %fib_sub_2 + %fib_sub_1
+        %fib_arr[%i] <- %fib_i
+        %fib_i <- %fib_i << 1
+        %fib_i <- %fib_i + 1
+        call print(%fib_i)
+        %i <- %i + 1
+        br :loop_start
+
+        :loop_end
+    return
+}

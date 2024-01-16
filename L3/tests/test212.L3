@@ -1,0 +1,266 @@
+define @encode (%i) {
+ 
+:NNNNNN
+ br :entry
+ 
+:entry
+ %i <- %i << 1
+ %i <- %i + 1
+ return %i
+}
+
+define @decode (%i) {
+ 
+:NNNNNN
+ br :entry
+ 
+:entry
+ %i <- %i >> 1
+ return %i
+}
+
+define @main () {
+ 
+:NNNNNN
+ br :entry
+ 
+:entry
+ %newVar1 <- 5 >> 1
+ %newVar0 <- %newVar1
+ %newVar2 <- 5 >> 1
+ %newVar0 <- %newVar0 * %newVar2
+ %newVar0 <- %newVar0 << 1
+ %newVar0 <- %newVar0 + 1
+ %newVar0 <- %newVar0 + 6
+ %m1 <- call allocate (%newVar0, 1)
+ %newVar3 <- %m1 + 8
+ store %newVar3 <- 5
+ %newVar4 <- %m1 + 16
+ store %newVar4 <- 5
+ %newVar5 <- %m1 + 24
+ store %newVar5 <- 5
+ %newVar7 <- 0
+ %newVar8 <- %m1 + 24
+ %newVar9 <- load %newVar8
+ %newVar10 <- %newVar9 >> 1
+ %newVar11 <- 1
+ %newVar11 <- %newVar10 * %newVar11
+ %newVar12 <- 0 * %newVar11
+ %newVar7 <- %newVar12 + %newVar7
+ %newVar7 <- %newVar7 + 0
+ %newVar6 <- %newVar7 * 8
+ %newVar6 <- %newVar6 + 32
+ %newVar13 <- %m1 + %newVar6
+ store %newVar13 <- 3
+ %newVar15 <- 0
+ %newVar16 <- %m1 + 24
+ %newVar17 <- load %newVar16
+ %newVar18 <- %newVar17 >> 1
+ %newVar19 <- 1
+ %newVar19 <- %newVar18 * %newVar19
+ %newVar20 <- 0 * %newVar19
+ %newVar15 <- %newVar20 + %newVar15
+ %newVar15 <- %newVar15 + 1
+ %newVar14 <- %newVar15 * 8
+ %newVar14 <- %newVar14 + 32
+ %newVar21 <- %m1 + %newVar14
+ store %newVar21 <- 1
+ %newVar23 <- 0
+ %newVar24 <- %m1 + 24
+ %newVar25 <- load %newVar24
+ %newVar26 <- %newVar25 >> 1
+ %newVar27 <- 1
+ %newVar27 <- %newVar26 * %newVar27
+ %newVar28 <- 1 * %newVar27
+ %newVar23 <- %newVar28 + %newVar23
+ %newVar23 <- %newVar23 + 0
+ %newVar22 <- %newVar23 * 8
+ %newVar22 <- %newVar22 + 32
+ %newVar29 <- %m1 + %newVar22
+ store %newVar29 <- 1
+ %newVar31 <- 0
+ %newVar32 <- %m1 + 24
+ %newVar33 <- load %newVar32
+ %newVar34 <- %newVar33 >> 1
+ %newVar35 <- 1
+ %newVar35 <- %newVar34 * %newVar35
+ %newVar36 <- 1 * %newVar35
+ %newVar31 <- %newVar36 + %newVar31
+ %newVar31 <- %newVar31 + 1
+ %newVar30 <- %newVar31 * 8
+ %newVar30 <- %newVar30 + 32
+ %newVar37 <- %m1 + %newVar30
+ store %newVar37 <- 3
+ call print (%m1)
+ %newVar39 <- 5 >> 1
+ %newVar38 <- %newVar39
+ %newVar40 <- 5 >> 1
+ %newVar38 <- %newVar38 * %newVar40
+ %newVar38 <- %newVar38 << 1
+ %newVar38 <- %newVar38 + 1
+ %newVar38 <- %newVar38 + 6
+ %m2 <- call allocate (%newVar38, 1)
+ %newVar41 <- %m2 + 8
+ store %newVar41 <- 5
+ %newVar42 <- %m2 + 16
+ store %newVar42 <- 5
+ %newVar43 <- %m2 + 24
+ store %newVar43 <- 5
+ %newVar45 <- 0
+ %newVar46 <- %m2 + 24
+ %newVar47 <- load %newVar46
+ %newVar48 <- %newVar47 >> 1
+ %newVar49 <- 1
+ %newVar49 <- %newVar48 * %newVar49
+ %newVar50 <- 0 * %newVar49
+ %newVar45 <- %newVar50 + %newVar45
+ %newVar45 <- %newVar45 + 0
+ %newVar44 <- %newVar45 * 8
+ %newVar44 <- %newVar44 + 32
+ %newVar51 <- %m2 + %newVar44
+ store %newVar51 <- 3
+ %newVar53 <- 0
+ %newVar54 <- %m2 + 24
+ %newVar55 <- load %newVar54
+ %newVar56 <- %newVar55 >> 1
+ %newVar57 <- 1
+ %newVar57 <- %newVar56 * %newVar57
+ %newVar58 <- 0 * %newVar57
+ %newVar53 <- %newVar58 + %newVar53
+ %newVar53 <- %newVar53 + 1
+ %newVar52 <- %newVar53 * 8
+ %newVar52 <- %newVar52 + 32
+ %newVar59 <- %m2 + %newVar52
+ store %newVar59 <- 3
+ %i <- call @encode (7)
+ %newVar61 <- 0
+ %newVar62 <- %m2 + 24
+ %newVar63 <- load %newVar62
+ %newVar64 <- %newVar63 >> 1
+ %newVar65 <- 1
+ %newVar65 <- %newVar64 * %newVar65
+ %newVar66 <- 1 * %newVar65
+ %newVar61 <- %newVar66 + %newVar61
+ %newVar61 <- %newVar61 + 0
+ %newVar60 <- %newVar61 * 8
+ %newVar60 <- %newVar60 + 32
+ %newVar67 <- %m2 + %newVar60
+ store %newVar67 <- %i
+ %i <- call @encode (-2)
+ %newVar69 <- 0
+ %newVar70 <- %m2 + 24
+ %newVar71 <- load %newVar70
+ %newVar72 <- %newVar71 >> 1
+ %newVar73 <- 1
+ %newVar73 <- %newVar72 * %newVar73
+ %newVar74 <- 1 * %newVar73
+ %newVar69 <- %newVar74 + %newVar69
+ %newVar69 <- %newVar69 + 1
+ %newVar68 <- %newVar69 * 8
+ %newVar68 <- %newVar68 + 32
+ %newVar75 <- %m2 + %newVar68
+ store %newVar75 <- %i
+ call print (%m2)
+ %out <- call @multiply (2, %m1, %m2)
+ call print (%out)
+ return 
+}
+
+define @multiply (%n, %m1, %m2) {
+ 
+:NNNNNNNNNNNNNNNN
+ br :entry
+ 
+:return
+ return %out
+ 
+:finished_column
+ %i <- %i + 1
+ %continue <- %i < %n
+ br %continue :row_loop 
+ br :return
+ 
+:row_loop
+ %j <- 0
+ br :column_loop
+ 
+:column_loop
+ %accum <- 0
+ %k <- %n
+ br :dot_loop
+ 
+:dot_loop
+ %newVar1 <- 0
+ %newVar2 <- %m1 + 24
+ %newVar3 <- load %newVar2
+ %newVar4 <- %newVar3 >> 1
+ %newVar5 <- 1
+ %newVar5 <- %newVar4 * %newVar5
+ %newVar6 <- %i * %newVar5
+ %newVar1 <- %newVar6 + %newVar1
+ %newVar1 <- %newVar1 + %k
+ %newVar0 <- %newVar1 * 8
+ %newVar0 <- %newVar0 + 32
+ %newVar7 <- %m1 + %newVar0
+ %m1entry <- load %newVar7
+ %m1entry <- call @decode (%m1entry)
+ %newVar9 <- 0
+ %newVar10 <- %m2 + 24
+ %newVar11 <- load %newVar10
+ %newVar12 <- %newVar11 >> 1
+ %newVar13 <- 1
+ %newVar13 <- %newVar12 * %newVar13
+ %newVar14 <- %k * %newVar13
+ %newVar9 <- %newVar14 + %newVar9
+ %newVar9 <- %newVar9 + %j
+ %newVar8 <- %newVar9 * 8
+ %newVar8 <- %newVar8 + 32
+ %newVar15 <- %m2 + %newVar8
+ %m2entry <- load %newVar15
+ %m2entry <- call @decode (%m2entry)
+ %m1entry <- %m1entry + %m2entry
+ %m1entry <- call @encode (%m1entry)
+ %newVar17 <- 0
+ %newVar18 <- %out + 24
+ %newVar19 <- load %newVar18
+ %newVar20 <- %newVar19 >> 1
+ %newVar21 <- 1
+ %newVar21 <- %newVar20 * %newVar21
+ %newVar22 <- %i * %newVar21
+ %newVar17 <- %newVar22 + %newVar17
+ %newVar17 <- %newVar17 + %j
+ %newVar16 <- %newVar17 * 8
+ %newVar16 <- %newVar16 + 32
+ %newVar23 <- %out + %newVar16
+ store %newVar23 <- %m1entry
+ %k <- %k + 1
+ %continue <- %k < %n
+ br %k :dot_loop 
+ br :finished_dot
+ 
+:finished_dot
+ %j <- %j + 1
+ %continue <- %j < %n
+ br %continue :column_loop 
+ br :finished_column
+ 
+:entry
+ %n_enc <- call @encode (%n)
+ %newVar25 <- %n_enc >> 1
+ %newVar24 <- %newVar25
+ %newVar26 <- %n_enc >> 1
+ %newVar24 <- %newVar24 * %newVar26
+ %newVar24 <- %newVar24 << 1
+ %newVar24 <- %newVar24 + 1
+ %newVar24 <- %newVar24 + 6
+ %out <- call allocate (%newVar24, 1)
+ %newVar27 <- %out + 8
+ store %newVar27 <- 5
+ %newVar28 <- %out + 16
+ store %newVar28 <- %n_enc
+ %newVar29 <- %out + 24
+ store %newVar29 <- %n_enc
+ %i <- 0
+ br :row_loop
+}
+

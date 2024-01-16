@@ -1,0 +1,10 @@
+(@f2
+	1
+	%newVariable12 <- rdx
+	%value <- %newVariable12
+	%value <<= 1
+	%value++
+	rdi <- %value
+	call print 1
+	return
+)

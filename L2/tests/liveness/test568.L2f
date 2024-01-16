@@ -1,0 +1,32 @@
+(@main
+	0
+	%periods <- 10
+	:call_label0
+	%line <- 0
+	%restart <- 31
+	:call_label1
+	rdi <- 18
+	rsi <- 30
+	rdx <- %line
+	mem rsp -8 <- :call_label2
+	call @a_times_sine_bth_x_pi 3
+	:call_label2
+	%x <- rax
+	rdi <- 10
+	rsi <- %x
+	mem rsp -8 <- :call_label3
+	call @pow 2
+	:call_label3
+	%out <- rax
+	rdi <- %out
+	mem rsp -8 <- :call_label4
+	call @encode_and_print 1
+	:call_label4
+	%line += 1
+	%cont <- %line < %restart
+	cjump %cont = 1 :call_label1
+	%periods -= 1
+	%cont <- 0 < %periods
+	cjump %cont = 1 :call_label0
+	return
+)

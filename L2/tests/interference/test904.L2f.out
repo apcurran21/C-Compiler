@@ -1,0 +1,32 @@
+%count %more_to_fib %next_sum %queue_ptr r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx rsi %stack_ptr
+%dequeue_package %dequeueped_loc %dequeueped_val r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx rsi %stack_pop_package %stack_ptr
+%dequeueped_loc %dequeue_package r12 r13 r14 r15 rbp rbx %stack_pop_package
+%dequeueped_queue_ptr_ptr %dequeueped_val r12 r13 r14 r15 rbp rbx %stack_pop_package
+%dequeueped_val %dequeue_package %dequeueped_queue_ptr_ptr %queue_ptr r12 r13 r14 r15 rbp rbx %stack_pop_package
+%encoded_sevens %queue_ptr r12 r13 r14 r15 rbp rbx %stack_ptr
+%more_to_dequeue %queue_ptr r12 r13 r14 r15 rax rbp rbx %stack_ptr
+%more_to_fib %count %queue_ptr r12 r13 r14 r15 rbp rbx %stack_ptr
+%next_sum %count %queue_ptr r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx rsi %stack_ptr
+%popped_loc %queue_ptr r12 r13 r14 r15 rbp rbx %stack_pop_package
+%popped_stack_ptr_ptr %queue_ptr r12 r13 r14 r15 rbp rbx
+%popped_val %queue_ptr r12 r13 r14 r15 rbp rbx %stack_pop_package
+%queue_ptr %count %dequeueped_val %encoded_sevens %more_to_dequeue %more_to_fib %next_sum %popped_loc %popped_stack_ptr_ptr %popped_val %queue_size r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx rsi %sevens %stack_pop_package %stack_ptr
+%queue_size %queue_ptr r12 r13 r14 r15 rax rbp rbx %stack_ptr
+r10 %count %dequeue_package %next_sum %queue_ptr r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx rsi %stack_pop_package %stack_ptr
+r11 %count %dequeue_package %next_sum %queue_ptr r10 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx rsi %stack_pop_package %stack_ptr
+r12 %count %dequeue_package %dequeueped_loc %dequeueped_queue_ptr_ptr %dequeueped_val %encoded_sevens %more_to_dequeue %more_to_fib %next_sum %popped_loc %popped_stack_ptr_ptr %popped_val %queue_ptr %queue_size r10 r11 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx rsi %sevens %stack_pop_package %stack_ptr
+r13 %count %dequeue_package %dequeueped_loc %dequeueped_queue_ptr_ptr %dequeueped_val %encoded_sevens %more_to_dequeue %more_to_fib %next_sum %popped_loc %popped_stack_ptr_ptr %popped_val %queue_ptr %queue_size r10 r11 r12 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx rsi %sevens %stack_pop_package %stack_ptr
+r14 %count %dequeue_package %dequeueped_loc %dequeueped_queue_ptr_ptr %dequeueped_val %encoded_sevens %more_to_dequeue %more_to_fib %next_sum %popped_loc %popped_stack_ptr_ptr %popped_val %queue_ptr %queue_size r10 r11 r12 r13 r15 r8 r9 rax rbp rbx rcx rdi rdx rsi %sevens %stack_pop_package %stack_ptr
+r15 %count %dequeue_package %dequeueped_loc %dequeueped_queue_ptr_ptr %dequeueped_val %encoded_sevens %more_to_dequeue %more_to_fib %next_sum %popped_loc %popped_stack_ptr_ptr %popped_val %queue_ptr %queue_size r10 r11 r12 r13 r14 r8 r9 rax rbp rbx rcx rdi rdx rsi %sevens %stack_pop_package %stack_ptr
+r8 %count %dequeue_package %next_sum %queue_ptr r10 r11 r12 r13 r14 r15 r9 rax rbp rbx rcx rdi rdx rsi %stack_pop_package %stack_ptr
+r9 %count %dequeue_package %next_sum %queue_ptr r10 r11 r12 r13 r14 r15 r8 rax rbp rbx rcx rdi rdx rsi %stack_pop_package %stack_ptr
+rax %count %dequeue_package %more_to_dequeue %next_sum %queue_ptr %queue_size r10 r11 r12 r13 r14 r15 r8 r9 rbp rbx rcx rdi rdx rsi %stack_pop_package %stack_ptr
+rbp %count %dequeue_package %dequeueped_loc %dequeueped_queue_ptr_ptr %dequeueped_val %encoded_sevens %more_to_dequeue %more_to_fib %next_sum %popped_loc %popped_stack_ptr_ptr %popped_val %queue_ptr %queue_size r10 r11 r12 r13 r14 r15 r8 r9 rax rbx rcx rdi rdx rsi %sevens %stack_pop_package %stack_ptr
+rbx %count %dequeue_package %dequeueped_loc %dequeueped_queue_ptr_ptr %dequeueped_val %encoded_sevens %more_to_dequeue %more_to_fib %next_sum %popped_loc %popped_stack_ptr_ptr %popped_val %queue_ptr %queue_size r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rcx rdi rdx rsi %sevens %stack_pop_package %stack_ptr
+rcx %count %dequeue_package %next_sum %queue_ptr r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rdi rdx rsi %stack_pop_package %stack_ptr
+rdi %count %dequeue_package %next_sum %queue_ptr r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdx rsi %stack_pop_package %stack_ptr
+rdx %count %dequeue_package %next_sum %queue_ptr r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rsi %stack_pop_package %stack_ptr
+rsi %count %dequeue_package %next_sum %queue_ptr r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx %stack_pop_package %stack_ptr
+%sevens %queue_ptr r12 r13 r14 r15 rbp rbx %stack_ptr
+%stack_pop_package %dequeue_package %dequeueped_loc %dequeueped_queue_ptr_ptr %dequeueped_val %popped_loc %popped_val %queue_ptr r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx rsi
+%stack_ptr %count %dequeue_package %encoded_sevens %more_to_dequeue %more_to_fib %next_sum %queue_ptr %queue_size r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx rsi %sevens

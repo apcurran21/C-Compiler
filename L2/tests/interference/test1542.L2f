@@ -1,0 +1,52 @@
+(@vec_ctor
+	0
+	:call_label0
+	goto :call_label1
+	:call_label1
+	rdi <- 7
+	rsi <- 1
+	call allocate 2
+	%res <- rax
+	%newVar1 <- 0
+	%newVar1 *= 8
+	%newVar0 <- %newVar1
+	%newVar0 += 8
+	%newVar2 <- %res
+	%newVar2 += %newVar0
+	mem %newVar2 0 <- 0
+	%newVar4 <- 1
+	%newVar4 *= 8
+	%newVar3 <- %newVar4
+	%newVar3 += 8
+	%newVar5 <- %res
+	%newVar5 += %newVar3
+	mem %newVar5 0 <- 1
+	%newVar7 <- 5
+	%newVar7 >>= 1
+	%newVar6 <- %newVar7
+	%newVar8 <- 5
+	%newVar8 >>= 1
+	%newVar6 *= %newVar8
+	%newVar6 <<= 1
+	%newVar6 += 1
+	%newVar6 += 4
+	rdi <- %newVar6
+	rsi <- 1
+	call allocate 2
+	%buf <- rax
+	%newVar9 <- %buf
+	%newVar9 += 8
+	mem %newVar9 0 <- 5
+	%newVar10 <- %buf
+	%newVar10 += 16
+	mem %newVar10 0 <- 5
+	%newVar12 <- 2
+	%newVar12 *= 8
+	%newVar11 <- %newVar12
+	%newVar11 += 8
+	%newVar13 <- %res
+	%newVar13 += %newVar11
+	mem %newVar13 0 <- %buf
+	rax <- %res
+	return
+)

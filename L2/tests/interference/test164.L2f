@@ -1,0 +1,25 @@
+(@fib
+	1
+	cjump rdi = 1 :BASE_0
+	cjump rdi = 3 :BASE_1
+	rdi -= 2
+	%rdi_backup <- rdi
+	mem rsp -8 <- :fib_ret1
+	call @fib 1
+	:fib_ret1
+	rdi <- %rdi_backup
+	rdi -= 2
+	%rax_backup <- rax
+	mem rsp -8 <- :fib_ret2
+	call @fib 1
+	:fib_ret2
+	rax += %rax_backup
+	rax -= 1
+	return
+	:BASE_0
+	rax <- 1
+	return
+	:BASE_1
+	rax <- 3
+	return
+)

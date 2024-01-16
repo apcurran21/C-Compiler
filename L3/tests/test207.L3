@@ -1,0 +1,56 @@
+define @main () {
+ 
+:NNNNNNNNNNNNNN
+ br :entry
+ 
+:whileBreak
+ %res <- %res << 1
+ %res <- %res + 1
+ call print (%res)
+ return 
+ 
+:whileContinue
+ %i <- %i + 1
+ br :while
+ 
+:while
+ %if <- %i <= %n
+ br %if :whileInto 
+ br :whileBreak
+ 
+:whileInto
+ %if <- call @isOdd (%i)
+ %if <- %if = 1
+ br %if :count 
+ br :whileContinue
+ 
+:count
+ %res <- %res + 1
+ br :whileContinue
+ 
+:entry
+ %n <- 120
+ %res <- 0
+ %i <- 0
+ br :while
+}
+
+define @isOdd (%a) {
+ 
+:NNNNNN
+ br :entry
+ 
+:yes
+ return 1
+ 
+:no
+ return 0
+ 
+:entry
+ %a <- %a >> 1
+ %a <- %a & 1
+ %if <- %a = 1
+ br %if :yes 
+ br :no
+}
+

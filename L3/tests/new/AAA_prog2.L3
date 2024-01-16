@@ -1,0 +1,27 @@
+
+define :main() {
+  %arr <- call allocate(5, 0)
+  %arr <- call :set_array(%arr)
+  call :print_array(%arr)
+  return
+}
+
+define :set_array(%arr) {
+  %x <- call input()
+  %y <- call input()
+  %s <- %arr + 8
+  store %s <- %x
+  %s <- %s + 8
+  store %s <- %y
+  return %arr
+}
+
+define :print_array(%arr) {
+  %s <- %arr + 8
+  %x <- load %s
+  $s <- %s + 8
+  %y <- load %s
+  call print(%x)
+  call print(%y)
+  return
+}

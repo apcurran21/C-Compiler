@@ -1,0 +1,7 @@
+(@int_print
+	1
+	rdi <<= 1
+	rdi++
+	call print 1
+	return
+)

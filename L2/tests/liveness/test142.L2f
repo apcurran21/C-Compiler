@@ -1,0 +1,28 @@
+(@printArray
+	1
+	%a <- rdi
+	%check_array <- %a
+	%check_array &= 1
+	cjump %check_array = 1 :not_array
+	goto :array
+	:array
+	%c <- 0
+	%array_length <- mem rdi 0
+	:startLoop
+	cjump %c < %array_length :loopBody
+	goto :return
+	:loopBody
+	rdi <- %a
+	rsi <- %c
+	mem rsp -8 <- :printArrayElement_ret
+	call @printArrayElement 2
+	:printArrayElement_ret
+	%c++
+	goto :startLoop
+	:return
+	rax <- 1
+	return
+	:not_array
+	rax <- 0
+	return
+)

@@ -1,0 +1,30 @@
+(
+(in
+(r12 r13 r14 r15 rbp rbx rdi)
+(%arg r12 r13 r14 r15 rbp rbx)
+(%arg r12 r13 r14 r15 rbp rbx %value)
+(%arg r12 r13 r14 r15 rbp rbx %value)
+(%arg r12 r13 r14 r15 rbp rbx %value)
+(%arg r12 r13 r14 r15 rbp rbx %value)
+(%arg %isDone r12 r13 r14 r15 rbp rbx %value)
+(%arg r12 r13 r14 r15 rbp rbx %value)
+(r12 r13 r14 r15 rbp rbx %value)
+(r12 r13 r14 r15 rbp rbx %value)
+(r12 r13 r14 r15 rax rbp rbx)
+)
+
+(out
+(%arg r12 r13 r14 r15 rbp rbx)
+(%arg r12 r13 r14 r15 rbp rbx %value)
+(%arg r12 r13 r14 r15 rbp rbx %value)
+(%arg r12 r13 r14 r15 rbp rbx %value)
+(%arg r12 r13 r14 r15 rbp rbx %value)
+(%arg %isDone r12 r13 r14 r15 rbp rbx %value)
+(%arg r12 r13 r14 r15 rbp rbx %value)
+(%arg r12 r13 r14 r15 rbp rbx %value)
+(r12 r13 r14 r15 rbp rbx %value)
+(r12 r13 r14 r15 rax rbp rbx)
+()
+)
+
+)

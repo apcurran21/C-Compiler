@@ -1,0 +1,51 @@
+(@main
+	0
+	mem rsp -8 <- :call_label_ciao__ciao__ciao__ciao__ciao__ciao_21
+	call @new_stack 0
+	:call_label_ciao__ciao__ciao__ciao__ciao__ciao_21
+	%stack_ptr <- rax
+	rdi <- %stack_ptr
+	rsi <- 0
+	mem rsp -8 <- :call_label_ciao__ciao__ciao__ciao__ciao__ciao_22
+	call @push 2
+	:call_label_ciao__ciao__ciao__ciao__ciao__ciao_22
+	%stack_ptr <- rax
+	rdi <- %stack_ptr
+	rsi <- 1
+	mem rsp -8 <- :call_label_ciao__ciao__ciao__ciao__ciao__ciao_23
+	call @push 2
+	:call_label_ciao__ciao__ciao__ciao__ciao__ciao_23
+	%stack_ptr <- rax
+	rdi <- %stack_ptr
+	rsi <- 2
+	mem rsp -8 <- :call_label_ciao__ciao__ciao__ciao__ciao__ciao_24
+	call @push 2
+	:call_label_ciao__ciao__ciao__ciao__ciao__ciao_24
+	%stack_ptr <- rax
+	rdi <- %stack_ptr
+	rsi <- 3
+	mem rsp -8 <- :call_label_ciao__ciao__ciao__ciao__ciao__ciao_25
+	call @push 2
+	:call_label_ciao__ciao__ciao__ciao__ciao__ciao_25
+	%stack_ptr <- rax
+	rdi <- %stack_ptr
+	call print 1
+	:call_label_ciao__ciao__ciao__ciao__ciao__ciao_19
+	rdi <- %stack_ptr
+	mem rsp -8 <- :call_label_ciao__ciao__ciao__ciao__ciao__ciao_26
+	call @pop 1
+	:call_label_ciao__ciao__ciao__ciao__ciao__ciao_26
+	%pop_package <- rax
+	%popped_val <- mem %pop_package 8
+	rdi <- %popped_val
+	call print 1
+	%stack_ptr <- mem %pop_package 16
+	rdi <- %stack_ptr
+	call print 1
+	%stack_size <- mem %stack_ptr 0
+	%more_to_pop <- 0 < %stack_size
+	cjump %more_to_pop = 1 :call_label_ciao__ciao__ciao__ciao__ciao__ciao_19
+	goto :call_label_ciao__ciao__ciao__ciao__ciao__ciao_20
+	:call_label_ciao__ciao__ciao__ciao__ciao__ciao_20
+	return
+)

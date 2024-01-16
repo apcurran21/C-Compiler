@@ -1,0 +1,14 @@
+(@checkArray
+	1
+	%array <- rdi
+	%tempArrayPointer <- %array
+	%tempArrayPointer &= 1
+	cjump %tempArrayPointer = 0 :isAnArray
+	goto :isAnInt
+	:isAnInt
+	rax <- 0
+	return
+	:isAnArray
+	rax <- 1
+	return
+)

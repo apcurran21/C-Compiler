@@ -1,0 +1,2918 @@
+(@main
+(@main
+	0 8
+	:call_label0
+	goto :call_label7
+	:call_label1
+	return
+	:call_label2
+	rdi <- mem rsp 16
+	rsi <- rdi
+	rsi <- rsi
+	rsi >>= 1
+	rdx <- 3
+	rdx <- rdx
+	rdx >>= 1
+	rdi <- rsi
+	mem rsp 16 <- rdi
+	rdi <- mem rsp 16
+	rdi += rdx
+	mem rsp 16 <- rdi
+	rdi <- mem rsp 16
+	rdi <- rdi
+	mem rsp 16 <- rdi
+	rdi <- mem rsp 16
+	rdi <<= 1
+	mem rsp 16 <- rdi
+	rdi <- mem rsp 16
+	rdi <- rdi
+	mem rsp 16 <- rdi
+	rdi <- mem rsp 16
+	rdi += 1
+	mem rsp 16 <- rdi
+	goto :call_label3
+	:call_label3
+	rdi <- mem rsp 16
+	rsi <- rdi
+	rsi <- rsi
+	rsi >>= 1
+	rdi <- mem rsp 8
+	rdx <- rdi
+	rdx <- rdx
+	rdx >>= 1
+	rdi <- rsi < rdx
+	rdi <- rdi
+	rdi <<= 1
+	rdi <- rdi
+	rdi += 1
+	rsi <- rdi
+	rsi <- rsi
+	rsi >>= 1
+	cjump rsi = 1 :call_label4
+	goto :call_label1
+	:call_label4
+	rdi <- 1
+	mem rsp 24 <- rdi
+	goto :call_label5
+	:call_label5
+	rdi <- mem rsp 24
+	rsi <- rdi
+	rsi <- rsi
+	rsi >>= 1
+	rdi <- mem rsp 32
+	rdx <- rdi
+	rdx <- rdx
+	rdx >>= 1
+	rdi <- rsi < rdx
+	rdi <- rdi
+	rdi <<= 1
+	rdi <- rdi
+	rdi += 1
+	rsi <- rdi
+	rsi <- rsi
+	rsi >>= 1
+	cjump rsi = 1 :call_label6
+	goto :call_label2
+	:call_label6
+	rdi <- mem rsp 40
+	rdi <- rdi
+	rsi <- mem rsp 48
+	rsi <- rsi
+	rdx <- mem rsp 56
+	rdx <- rdx
+	rcx <- mem rsp 16
+	rcx <- rcx
+	r8 <- mem rsp 24
+	r8 <- r8
+	mem rsp -8 <- :call_label8
+	call @computeAndPrint 5
+	:call_label8
+	rdi <- mem rsp 24
+	rsi <- rdi
+	rsi <- rsi
+	rsi >>= 1
+	rdx <- 3
+	rdx <- rdx
+	rdx >>= 1
+	rdi <- rsi
+	mem rsp 24 <- rdi
+	rdi <- mem rsp 24
+	rdi += rdx
+	mem rsp 24 <- rdi
+	rdi <- mem rsp 24
+	rdi <- rdi
+	mem rsp 24 <- rdi
+	rdi <- mem rsp 24
+	rdi <<= 1
+	mem rsp 24 <- rdi
+	rdi <- mem rsp 24
+	rdi <- rdi
+	mem rsp 24 <- rdi
+	rdi <- mem rsp 24
+	rdi += 1
+	mem rsp 24 <- rdi
+	goto :call_label5
+	:call_label7
+	rdi <- 0
+	mem rsp 56 <- rdi
+	rdi <- 0
+	mem rsp 48 <- rdi
+	rdi <- 0
+	mem rsp 40 <- rdi
+	rdi <- 601
+	mem rsp 0 <- rdi
+	rdi <- mem rsp 0
+	rdi <- rdi
+	rdi >>= 1
+	rsi <- rdi
+	rdi <- mem rsp 0
+	rdi <- rdi
+	rdi >>= 1
+	rsi <- rsi
+	rsi *= rdi
+	rsi <- rsi
+	rsi <<= 1
+	rsi <- rsi
+	rsi += 1
+	rsi <- rsi
+	rsi += 4
+	rdi <- rsi
+	rsi <- 1
+	call allocate 2
+	rdi <- rax
+	mem rsp 40 <- rdi
+	rdi <- mem rsp 40
+	rdi <- rdi
+	rdi += 8
+	rsi <- mem rsp 0
+	mem rdi 0 <- rsi
+	rdi <- mem rsp 40
+	rsi <- rdi
+	rsi += 16
+	rdi <- mem rsp 0
+	mem rsi 0 <- rdi
+	rdi <- mem rsp 0
+	rdi <- rdi
+	rdi >>= 1
+	rsi <- rdi
+	rdi <- mem rsp 0
+	rdi <- rdi
+	rdi >>= 1
+	rsi <- rsi
+	rsi *= rdi
+	rsi <- rsi
+	rsi <<= 1
+	rsi <- rsi
+	rsi += 1
+	rsi <- rsi
+	rsi += 4
+	rdi <- rsi
+	rsi <- 1
+	call allocate 2
+	rdi <- rax
+	mem rsp 48 <- rdi
+	rdi <- mem rsp 48
+	rsi <- rdi
+	rsi += 8
+	rdi <- mem rsp 0
+	mem rsi 0 <- rdi
+	rdi <- mem rsp 48
+	rdi <- rdi
+	rdi += 16
+	rsi <- mem rsp 0
+	mem rdi 0 <- rsi
+	rdi <- mem rsp 0
+	rdi <- rdi
+	rdi >>= 1
+	rsi <- rdi
+	rdi <- mem rsp 0
+	rdi <- rdi
+	rdi >>= 1
+	rsi <- rsi
+	rsi *= rdi
+	rsi <- rsi
+	rsi <<= 1
+	rsi <- rsi
+	rsi += 1
+	rsi <- rsi
+	rsi += 4
+	rdi <- rsi
+	rsi <- 1
+	call allocate 2
+	rdi <- rax
+	mem rsp 56 <- rdi
+	rdi <- mem rsp 56
+	rsi <- rdi
+	rsi += 8
+	rdi <- mem rsp 0
+	mem rsi 0 <- rdi
+	rdi <- mem rsp 56
+	rsi <- rdi
+	rsi += 16
+	rdi <- mem rsp 0
+	mem rsi 0 <- rdi
+	rdi <- 9
+	mem rsp 8 <- rdi
+	rdi <- 9
+	mem rsp 32 <- rdi
+	rdi <- 1
+	mem rsp 16 <- rdi
+	goto :call_label3
+)
+
+(@computeAndPrint
+	5 4
+	rdi <- rdi
+	mem rsp 24 <- rdi
+	rdi <- rsi
+	mem rsp 16 <- rdi
+	rdi <- rdx
+	mem rsp 0 <- rdi
+	rsi <- rcx
+	rdi <- r8
+	mem rsp 8 <- rdi
+	:call_label_ciao_9
+	goto :call_label_ciao_10
+	:call_label_ciao_10
+	rdi <- mem rsp 24
+	rdi <- rdi
+	rsi <- rsi
+	mem rsp -8 <- :call_label_ciao_11
+	call @initMatrix 2
+	:call_label_ciao_11
+	rdi <- mem rsp 16
+	rdi <- rdi
+	rsi <- mem rsp 8
+	rsi <- rsi
+	mem rsp -8 <- :call_label_ciao_12
+	call @initMatrix 2
+	:call_label_ciao_12
+	rdi <- mem rsp 24
+	rdi <- rdi
+	rsi <- mem rsp 16
+	rsi <- rsi
+	rdx <- mem rsp 0
+	rdx <- rdx
+	mem rsp -8 <- :call_label_ciao_13
+	call @matrixMultiplication 3
+	:call_label_ciao_13
+	rdi <- mem rsp 24
+	rdi <- rdi
+	mem rsp -8 <- :call_label_ciao_14
+	call @totalSum 1
+	:call_label_ciao_14
+	rdi <- rax
+	rdi <- rdi
+	call print 1
+	rdi <- mem rsp 16
+	rdi <- rdi
+	mem rsp -8 <- :call_label_ciao_15
+	call @totalSum 1
+	:call_label_ciao_15
+	rdi <- rax
+	rdi <- rdi
+	call print 1
+	rdi <- mem rsp 0
+	rdi <- rdi
+	mem rsp -8 <- :call_label_ciao_16
+	call @totalSum 1
+	:call_label_ciao_16
+	rdi <- rax
+	rdi <- rdi
+	call print 1
+	return
+)
+
+(@initMatrix
+	2 39
+	rdi <- rdi
+	mem rsp 48 <- rdi
+	rdi <- rsi
+	mem rsp 16 <- rdi
+	:call_label_ciao__ciao_17
+	goto :call_label_ciao__ciao_29
+	:call_label_ciao__ciao_18
+	return
+	:call_label_ciao__ciao_19
+	rdi <- mem rsp 8
+	rdi <- rdi
+	mem rsp 72 <- rdi
+	rdi <- mem rsp 72
+	rdi <- rdi
+	mem rsp 72 <- rdi
+	rdi <- mem rsp 72
+	rdi >>= 1
+	mem rsp 72 <- rdi
+	rdi <- 3
+	mem rsp 80 <- rdi
+	rdi <- mem rsp 80
+	rdi <- rdi
+	mem rsp 80 <- rdi
+	rdi <- mem rsp 80
+	rdi >>= 1
+	mem rsp 80 <- rdi
+	rdi <- mem rsp 72
+	rdi <- rdi
+	mem rsp 8 <- rdi
+	rdi <- mem rsp 8
+	rsi <- mem rsp 80
+	rdi += rsi
+	mem rsp 8 <- rdi
+	rdi <- mem rsp 8
+	rdi <- rdi
+	mem rsp 8 <- rdi
+	rdi <- mem rsp 8
+	rdi <<= 1
+	mem rsp 8 <- rdi
+	rdi <- mem rsp 8
+	rdi <- rdi
+	mem rsp 8 <- rdi
+	rdi <- mem rsp 8
+	rdi += 1
+	mem rsp 8 <- rdi
+	goto :call_label_ciao__ciao_20
+	:call_label_ciao__ciao_20
+	rdi <- mem rsp 8
+	rdi <- rdi
+	mem rsp 72 <- rdi
+	rdi <- mem rsp 72
+	rdi <- rdi
+	mem rsp 72 <- rdi
+	rdi <- mem rsp 72
+	rdi >>= 1
+	mem rsp 72 <- rdi
+	rdi <- mem rsp 192
+	rdi <- rdi
+	mem rsp 80 <- rdi
+	rdi <- mem rsp 80
+	rdi <- rdi
+	mem rsp 80 <- rdi
+	rdi <- mem rsp 80
+	rdi >>= 1
+	mem rsp 80 <- rdi
+	rdi <- mem rsp 72
+	rsi <- mem rsp 80
+	rdi <- rdi < rsi
+	mem rsp 200 <- rdi
+	rdi <- mem rsp 200
+	rdi <- rdi
+	mem rsp 200 <- rdi
+	rdi <- mem rsp 200
+	rdi <<= 1
+	mem rsp 200 <- rdi
+	rdi <- mem rsp 200
+	rdi <- rdi
+	mem rsp 200 <- rdi
+	rdi <- mem rsp 200
+	rdi += 1
+	mem rsp 200 <- rdi
+	rdi <- mem rsp 200
+	rdi <- rdi
+	mem rsp 72 <- rdi
+	rdi <- mem rsp 72
+	rdi <- rdi
+	mem rsp 72 <- rdi
+	rdi <- mem rsp 72
+	rdi >>= 1
+	mem rsp 72 <- rdi
+	rdi <- mem rsp 72
+	cjump rdi = 1 :call_label_ciao__ciao_21
+	goto :call_label_ciao__ciao_18
+	:call_label_ciao__ciao_21
+	rdi <- 1
+	mem rsp 56 <- rdi
+	goto :call_label_ciao__ciao_22
+	:call_label_ciao__ciao_22
+	rdi <- mem rsp 56
+	rdi <- rdi
+	mem rsp 72 <- rdi
+	rdi <- mem rsp 72
+	rdi <- rdi
+	mem rsp 72 <- rdi
+	rdi <- mem rsp 72
+	rdi >>= 1
+	mem rsp 72 <- rdi
+	rdi <- mem rsp 168
+	rdi <- rdi
+	mem rsp 80 <- rdi
+	rdi <- mem rsp 80
+	rdi <- rdi
+	mem rsp 80 <- rdi
+	rdi <- mem rsp 80
+	rdi >>= 1
+	mem rsp 80 <- rdi
+	rdi <- mem rsp 72
+	rsi <- mem rsp 80
+	rdi <- rdi < rsi
+	mem rsp 176 <- rdi
+	rdi <- mem rsp 176
+	rdi <- rdi
+	mem rsp 176 <- rdi
+	rdi <- mem rsp 176
+	rdi <<= 1
+	mem rsp 176 <- rdi
+	rdi <- mem rsp 176
+	rdi <- rdi
+	mem rsp 176 <- rdi
+	rdi <- mem rsp 176
+	rdi += 1
+	mem rsp 176 <- rdi
+	rdi <- mem rsp 176
+	rdi <- rdi
+	mem rsp 72 <- rdi
+	rdi <- mem rsp 72
+	rdi <- rdi
+	mem rsp 72 <- rdi
+	rdi <- mem rsp 72
+	rdi >>= 1
+	mem rsp 72 <- rdi
+	rdi <- mem rsp 72
+	cjump rdi = 1 :call_label_ciao__ciao_23
+	goto :call_label_ciao__ciao_19
+	:call_label_ciao__ciao_23
+	rdi <- mem rsp 16
+	rdi <- rdi
+	mem rsp 72 <- rdi
+	rdi <- mem rsp 72
+	rdi <- rdi
+	mem rsp 72 <- rdi
+	rdi <- mem rsp 72
+	rdi >>= 1
+	mem rsp 72 <- rdi
+	rdi <- mem rsp 8
+	rdi <- rdi
+	mem rsp 80 <- rdi
+	rdi <- mem rsp 80
+	rdi <- rdi
+	mem rsp 80 <- rdi
+	rdi <- mem rsp 80
+	rdi >>= 1
+	mem rsp 80 <- rdi
+	rdi <- mem rsp 72
+	rdi <- rdi
+	mem rsp 0 <- rdi
+	rdi <- mem rsp 0
+	rsi <- mem rsp 80
+	rdi += rsi
+	mem rsp 0 <- rdi
+	rdi <- mem rsp 0
+	rdi <- rdi
+	mem rsp 0 <- rdi
+	rdi <- mem rsp 0
+	rdi <<= 1
+	mem rsp 0 <- rdi
+	rdi <- mem rsp 0
+	rdi <- rdi
+	mem rsp 0 <- rdi
+	rdi <- mem rsp 0
+	rdi += 1
+	mem rsp 0 <- rdi
+	rdi <- mem rsp 0
+	rdi <- rdi
+	mem rsp 72 <- rdi
+	rdi <- mem rsp 72
+	rdi <- rdi
+	mem rsp 72 <- rdi
+	rdi <- mem rsp 72
+	rdi >>= 1
+	mem rsp 72 <- rdi
+	rdi <- mem rsp 56
+	rdi <- rdi
+	mem rsp 80 <- rdi
+	rdi <- mem rsp 80
+	rdi <- rdi
+	mem rsp 80 <- rdi
+	rdi <- mem rsp 80
+	rdi >>= 1
+	mem rsp 80 <- rdi
+	rdi <- mem rsp 72
+	rdi <- rdi
+	mem rsp 0 <- rdi
+	rsi <- mem rsp 0
+	rdi <- mem rsp 80
+	rsi += rdi
+	mem rsp 0 <- rsi
+	rdi <- mem rsp 0
+	rdi <- rdi
+	mem rsp 0 <- rdi
+	rdi <- mem rsp 0
+	rdi <<= 1
+	mem rsp 0 <- rdi
+	rdi <- mem rsp 0
+	rdi <- rdi
+	mem rsp 0 <- rdi
+	rdi <- mem rsp 0
+	rdi += 1
+	mem rsp 0 <- rdi
+	rdi <- mem rsp 8
+	rdi <- rdi
+	mem rsp 160 <- rdi
+	rdi <- mem rsp 160
+	rdi <- rdi
+	mem rsp 160 <- rdi
+	rdi <- mem rsp 160
+	rdi >>= 1
+	mem rsp 160 <- rdi
+	rdi <- mem rsp 56
+	rdi <- rdi
+	mem rsp 64 <- rdi
+	rdi <- mem rsp 64
+	rdi <- rdi
+	mem rsp 64 <- rdi
+	rdi <- mem rsp 64
+	rdi >>= 1
+	mem rsp 64 <- rdi
+	rdi <- 0
+	mem rsp 184 <- rdi
+	rdi <- mem rsp 48
+	rdi <- rdi = 0
+	mem rsp 208 <- rdi
+	rdi <- mem rsp 208
+	cjump rdi = 1 :call_label_ciao__ciao_28
+	goto :call_label_ciao__ciao_24
+	:call_label_ciao__ciao_24
+	rdi <- 0
+	mem rsp 120 <- rdi
+	rdi <- mem rsp 120
+	rdi *= 8
+	mem rsp 120 <- rdi
+	rdi <- mem rsp 120
+	rdi <- rdi
+	mem rsp 40 <- rdi
+	rdi <- mem rsp 40
+	rdi += 8
+	mem rsp 40 <- rdi
+	rdi <- mem rsp 48
+	rdi <- rdi
+	mem rsp 152 <- rdi
+	rsi <- mem rsp 40
+	rdi <- mem rsp 152
+	rdi += rsi
+	mem rsp 152 <- rdi
+	rdi <- mem rsp 152
+	rdi <- mem rdi 0
+	mem rsp 128 <- rdi
+	rdi <- mem rsp 128
+	rdi <- rdi
+	mem rsp 128 <- rdi
+	rdi <- mem rsp 128
+	rdi >>= 1
+	mem rsp 128 <- rdi
+	rdi <- mem rsp 160
+	rdi <- rdi
+	mem rsp 184 <- rdi
+	rdi <- mem rsp 184
+	rdi <- rdi
+	mem rsp 184 <- rdi
+	rdi <- mem rsp 184
+	rdi <<= 1
+	mem rsp 184 <- rdi
+	rdi <- mem rsp 184
+	rdi <- rdi
+	mem rsp 184 <- rdi
+	rdi <- mem rsp 184
+	rdi += 1
+	mem rsp 184 <- rdi
+	rsi <- mem rsp 128
+	rdi <- mem rsp 160
+	rdi <- rdi < rsi
+	mem rsp 136 <- rdi
+	rdi <- mem rsp 136
+	cjump rdi = 1 :call_label_ciao__ciao_25
+	goto :call_label_ciao__ciao_28
+	:call_label_ciao__ciao_25
+	rdi <- 1
+	mem rsp 104 <- rdi
+	rdi <- mem rsp 104
+	rdi *= 8
+	mem rsp 104 <- rdi
+	rdi <- mem rsp 104
+	rdi <- rdi
+	mem rsp 112 <- rdi
+	rdi <- mem rsp 112
+	rdi += 8
+	mem rsp 112 <- rdi
+	rdi <- mem rsp 48
+	rdi <- rdi
+	mem rsp 144 <- rdi
+	rsi <- mem rsp 112
+	rdi <- mem rsp 144
+	rdi += rsi
+	mem rsp 144 <- rdi
+	rdi <- mem rsp 144
+	rdi <- mem rdi 0
+	mem rsp 88 <- rdi
+	rdi <- mem rsp 88
+	rdi <- rdi
+	mem rsp 88 <- rdi
+	rdi <- mem rsp 88
+	rdi >>= 1
+	mem rsp 88 <- rdi
+	rdi <- mem rsp 64
+	rdi <- rdi
+	mem rsp 184 <- rdi
+	rdi <- mem rsp 184
+	rdi <- rdi
+	mem rsp 184 <- rdi
+	rdi <- mem rsp 184
+	rdi <<= 1
+	mem rsp 184 <- rdi
+	rdi <- mem rsp 184
+	rdi <- rdi
+	mem rsp 184 <- rdi
+	rdi <- mem rsp 184
+	rdi += 1
+	mem rsp 184 <- rdi
+	rdi <- mem rsp 64
+	rsi <- mem rsp 88
+	rdi <- rdi < rsi
+	mem rsp 96 <- rdi
+	rdi <- mem rsp 96
+	cjump rdi = 1 :call_label_ciao__ciao_26
+	goto :call_label_ciao__ciao_28
+	:call_label_ciao__ciao_26
+	goto :call_label_ciao__ciao_27
+	:call_label_ciao__ciao_27
+	rdi <- 0
+	mem rsp 216 <- rdi
+	rdi <- mem rsp 48
+	rdi <- rdi
+	mem rsp 224 <- rdi
+	rdi <- mem rsp 224
+	rdi += 16
+	mem rsp 224 <- rdi
+	rdi <- mem rsp 224
+	rdi <- mem rdi 0
+	mem rsp 232 <- rdi
+	rdi <- mem rsp 232
+	rdi <- rdi
+	mem rsp 32 <- rdi
+	rdi <- mem rsp 32
+	rdi >>= 1
+	mem rsp 32 <- rdi
+	rdi <- 1
+	mem rsp 24 <- rdi
+	rdi <- mem rsp 24
+	rdi <- rdi
+	mem rsp 24 <- rdi
+	rdi <- mem rsp 24
+	rsi <- mem rsp 32
+	rdi *= rsi
+	mem rsp 24 <- rdi
+	rdi <- mem rsp 160
+	rdi <- rdi
+	mem rsp 240 <- rdi
+	rsi <- mem rsp 24
+	rdi <- mem rsp 240
+	rdi *= rsi
+	mem rsp 240 <- rdi
+	rdi <- mem rsp 216
+	rdi <- rdi
+	mem rsp 216 <- rdi
+	rsi <- mem rsp 216
+	rdi <- mem rsp 240
+	rsi += rdi
+	mem rsp 216 <- rsi
+	rdi <- mem rsp 216
+	rdi <- rdi
+	mem rsp 216 <- rdi
+	rsi <- mem rsp 64
+	rdi <- mem rsp 216
+	rdi += rsi
+	mem rsp 216 <- rdi
+	rdi <- mem rsp 216
+	rdi <- rdi
+	mem rsp 248 <- rdi
+	rdi <- mem rsp 248
+	rdi *= 8
+	mem rsp 248 <- rdi
+	rdi <- mem rsp 248
+	rdi <- rdi
+	mem rsp 248 <- rdi
+	rdi <- mem rsp 248
+	rdi += 24
+	mem rsp 248 <- rdi
+	rdi <- mem rsp 48
+	rdi <- rdi
+	mem rsp 256 <- rdi
+	rsi <- mem rsp 248
+	rdi <- mem rsp 256
+	rdi += rsi
+	mem rsp 256 <- rdi
+	rdi <- mem rsp 0
+	rsi <- mem rsp 256
+	mem rsi 0 <- rdi
+	rdi <- mem rsp 56
+	rdi <- rdi
+	mem rsp 72 <- rdi
+	rdi <- mem rsp 72
+	rdi <- rdi
+	mem rsp 72 <- rdi
+	rdi <- mem rsp 72
+	rdi >>= 1
+	mem rsp 72 <- rdi
+	rdi <- 3
+	mem rsp 80 <- rdi
+	rdi <- mem rsp 80
+	rdi <- rdi
+	mem rsp 80 <- rdi
+	rdi <- mem rsp 80
+	rdi >>= 1
+	mem rsp 80 <- rdi
+	rdi <- mem rsp 72
+	rdi <- rdi
+	mem rsp 56 <- rdi
+	rdi <- mem rsp 56
+	rsi <- mem rsp 80
+	rdi += rsi
+	mem rsp 56 <- rdi
+	rdi <- mem rsp 56
+	rdi <- rdi
+	mem rsp 56 <- rdi
+	rdi <- mem rsp 56
+	rdi <<= 1
+	mem rsp 56 <- rdi
+	rdi <- mem rsp 56
+	rdi <- rdi
+	mem rsp 56 <- rdi
+	rdi <- mem rsp 56
+	rdi += 1
+	mem rsp 56 <- rdi
+	goto :call_label_ciao__ciao_22
+	:call_label_ciao__ciao_28
+	rdi <- 0
+	call tensor-error 1
+	goto :call_label_ciao__ciao_27
+	:call_label_ciao__ciao_29
+	rdi <- 0
+	mem rsp 264 <- rdi
+	rdi <- mem rsp 264
+	rdi *= 8
+	mem rsp 264 <- rdi
+	rdi <- mem rsp 264
+	rdi <- rdi
+	mem rsp 272 <- rdi
+	rdi <- mem rsp 272
+	rdi += 8
+	mem rsp 272 <- rdi
+	rdi <- mem rsp 48
+	rdi <- rdi
+	mem rsp 280 <- rdi
+	rsi <- mem rsp 272
+	rdi <- mem rsp 280
+	rdi += rsi
+	mem rsp 280 <- rdi
+	rdi <- mem rsp 280
+	rdi <- mem rdi 0
+	mem rsp 192 <- rdi
+	rdi <- 1
+	mem rsp 288 <- rdi
+	rdi <- mem rsp 288
+	rdi *= 8
+	mem rsp 288 <- rdi
+	rdi <- mem rsp 288
+	rdi <- rdi
+	mem rsp 296 <- rdi
+	rdi <- mem rsp 296
+	rdi += 8
+	mem rsp 296 <- rdi
+	rdi <- mem rsp 48
+	rdi <- rdi
+	mem rsp 304 <- rdi
+	rsi <- mem rsp 296
+	rdi <- mem rsp 304
+	rdi += rsi
+	mem rsp 304 <- rdi
+	rdi <- mem rsp 304
+	rdi <- mem rdi 0
+	mem rsp 168 <- rdi
+	rdi <- 1
+	mem rsp 8 <- rdi
+	goto :call_label_ciao__ciao_20
+)
+
+(@matrixMultiplication
+	3 158
+	rdi <- rdi
+	mem rsp 80 <- rdi
+	rdi <- rsi
+	mem rsp 48 <- rdi
+	rdi <- rdx
+	mem rsp 40 <- rdi
+	:call_label_ciao__ciao__ciao_30
+	goto :call_label_ciao__ciao__ciao_77
+	:call_label_ciao__ciao__ciao_31
+	return
+	:call_label_ciao__ciao__ciao_32
+	rdi <- mem rsp 8
+	rdi <- rdi
+	mem rsp 96 <- rdi
+	rdi <- mem rsp 96
+	rdi <- rdi
+	mem rsp 96 <- rdi
+	rdi <- mem rsp 96
+	rdi >>= 1
+	mem rsp 96 <- rdi
+	rdi <- 3
+	mem rsp 88 <- rdi
+	rdi <- mem rsp 88
+	rdi <- rdi
+	mem rsp 88 <- rdi
+	rdi <- mem rsp 88
+	rdi >>= 1
+	mem rsp 88 <- rdi
+	rdi <- mem rsp 96
+	rdi <- rdi
+	mem rsp 8 <- rdi
+	rdi <- mem rsp 8
+	rsi <- mem rsp 88
+	rdi += rsi
+	mem rsp 8 <- rdi
+	rdi <- mem rsp 8
+	rdi <- rdi
+	mem rsp 8 <- rdi
+	rdi <- mem rsp 8
+	rdi <<= 1
+	mem rsp 8 <- rdi
+	rdi <- mem rsp 8
+	rdi <- rdi
+	mem rsp 8 <- rdi
+	rdi <- mem rsp 8
+	rdi += 1
+	mem rsp 8 <- rdi
+	goto :call_label_ciao__ciao__ciao_33
+	:call_label_ciao__ciao__ciao_33
+	rdi <- mem rsp 8
+	rdi <- rdi
+	mem rsp 96 <- rdi
+	rdi <- mem rsp 96
+	rdi <- rdi
+	mem rsp 96 <- rdi
+	rdi <- mem rsp 96
+	rdi >>= 1
+	mem rsp 96 <- rdi
+	rdi <- mem rsp 32
+	rdi <- rdi
+	mem rsp 88 <- rdi
+	rdi <- mem rsp 88
+	rdi <- rdi
+	mem rsp 88 <- rdi
+	rdi <- mem rsp 88
+	rdi >>= 1
+	mem rsp 88 <- rdi
+	rsi <- mem rsp 88
+	rdi <- mem rsp 96
+	rdi <- rdi < rsi
+	mem rsp 104 <- rdi
+	rdi <- mem rsp 104
+	rdi <- rdi
+	mem rsp 104 <- rdi
+	rdi <- mem rsp 104
+	rdi <<= 1
+	mem rsp 104 <- rdi
+	rdi <- mem rsp 104
+	rdi <- rdi
+	mem rsp 104 <- rdi
+	rdi <- mem rsp 104
+	rdi += 1
+	mem rsp 104 <- rdi
+	rdi <- mem rsp 104
+	rdi <- rdi
+	mem rsp 96 <- rdi
+	rdi <- mem rsp 96
+	rdi <- rdi
+	mem rsp 96 <- rdi
+	rdi <- mem rsp 96
+	rdi >>= 1
+	mem rsp 96 <- rdi
+	rdi <- mem rsp 96
+	cjump rdi = 1 :call_label_ciao__ciao__ciao_34
+	goto :call_label_ciao__ciao__ciao_31
+	:call_label_ciao__ciao__ciao_34
+	rdi <- 1
+	mem rsp 0 <- rdi
+	goto :call_label_ciao__ciao__ciao_35
+	:call_label_ciao__ciao__ciao_35
+	rdi <- mem rsp 0
+	rdi <- rdi
+	mem rsp 96 <- rdi
+	rdi <- mem rsp 96
+	rdi <- rdi
+	mem rsp 96 <- rdi
+	rdi <- mem rsp 96
+	rdi >>= 1
+	mem rsp 96 <- rdi
+	rdi <- mem rsp 24
+	rdi <- rdi
+	mem rsp 88 <- rdi
+	rdi <- mem rsp 88
+	rdi <- rdi
+	mem rsp 88 <- rdi
+	rdi <- mem rsp 88
+	rdi >>= 1
+	mem rsp 88 <- rdi
+	rdi <- mem rsp 88
+	rsi <- mem rsp 96
+	rdi <- rsi < rdi
+	mem rsp 112 <- rdi
+	rdi <- mem rsp 112
+	rdi <- rdi
+	mem rsp 112 <- rdi
+	rdi <- mem rsp 112
+	rdi <<= 1
+	mem rsp 112 <- rdi
+	rdi <- mem rsp 112
+	rdi <- rdi
+	mem rsp 112 <- rdi
+	rdi <- mem rsp 112
+	rdi += 1
+	mem rsp 112 <- rdi
+	rdi <- mem rsp 112
+	rdi <- rdi
+	mem rsp 96 <- rdi
+	rdi <- mem rsp 96
+	rdi <- rdi
+	mem rsp 96 <- rdi
+	rdi <- mem rsp 96
+	rdi >>= 1
+	mem rsp 96 <- rdi
+	rdi <- mem rsp 96
+	cjump rdi = 1 :call_label_ciao__ciao__ciao_36
+	goto :call_label_ciao__ciao__ciao_32
+	:call_label_ciao__ciao__ciao_36
+	rdi <- 1
+	mem rsp 120 <- rdi
+	goto :call_label_ciao__ciao__ciao_37
+	:call_label_ciao__ciao__ciao_37
+	rdi <- mem rsp 120
+	rdi <- rdi
+	mem rsp 96 <- rdi
+	rdi <- mem rsp 96
+	rdi <- rdi
+	mem rsp 96 <- rdi
+	rdi <- mem rsp 96
+	rdi >>= 1
+	mem rsp 96 <- rdi
+	rdi <- mem rsp 16
+	rdi <- rdi
+	mem rsp 88 <- rdi
+	rdi <- mem rsp 88
+	rdi <- rdi
+	mem rsp 88 <- rdi
+	rdi <- mem rsp 88
+	rdi >>= 1
+	mem rsp 88 <- rdi
+	rdi <- mem rsp 88
+	rsi <- mem rsp 96
+	rdi <- rsi < rdi
+	mem rsp 136 <- rdi
+	rdi <- mem rsp 136
+	rdi <- rdi
+	mem rsp 136 <- rdi
+	rdi <- mem rsp 136
+	rdi <<= 1
+	mem rsp 136 <- rdi
+	rdi <- mem rsp 136
+	rdi <- rdi
+	mem rsp 136 <- rdi
+	rdi <- mem rsp 136
+	rdi += 1
+	mem rsp 136 <- rdi
+	rdi <- mem rsp 136
+	rdi <- rdi
+	mem rsp 96 <- rdi
+	rdi <- mem rsp 96
+	rdi <- rdi
+	mem rsp 96 <- rdi
+	rdi <- mem rsp 96
+	rdi >>= 1
+	mem rsp 96 <- rdi
+	rdi <- mem rsp 96
+	cjump rdi = 1 :call_label_ciao__ciao__ciao_38
+	goto :call_label_ciao__ciao__ciao_55
+	:call_label_ciao__ciao__ciao_38
+	rdi <- mem rsp 8
+	rdi <- rdi
+	mem rsp 144 <- rdi
+	rdi <- mem rsp 144
+	rdi <- rdi
+	mem rsp 144 <- rdi
+	rdi <- mem rsp 144
+	rdi >>= 1
+	mem rsp 144 <- rdi
+	rdi <- mem rsp 120
+	rdi <- rdi
+	mem rsp 152 <- rdi
+	rdi <- mem rsp 152
+	rdi <- rdi
+	mem rsp 152 <- rdi
+	rdi <- mem rsp 152
+	rdi >>= 1
+	mem rsp 152 <- rdi
+	rdi <- 0
+	mem rsp 128 <- rdi
+	rdi <- mem rsp 80
+	rdi <- rdi = 0
+	mem rsp 160 <- rdi
+	rdi <- mem rsp 160
+	cjump rdi = 1 :call_label_ciao__ciao__ciao_59
+	goto :call_label_ciao__ciao__ciao_39
+	:call_label_ciao__ciao__ciao_39
+	rdi <- 0
+	mem rsp 184 <- rdi
+	rdi <- mem rsp 184
+	rdi *= 8
+	mem rsp 184 <- rdi
+	rdi <- mem rsp 184
+	rdi <- rdi
+	mem rsp 192 <- rdi
+	rdi <- mem rsp 192
+	rdi += 8
+	mem rsp 192 <- rdi
+	rdi <- mem rsp 80
+	rdi <- rdi
+	mem rsp 200 <- rdi
+	rdi <- mem rsp 192
+	rsi <- mem rsp 200
+	rsi += rdi
+	mem rsp 200 <- rsi
+	rdi <- mem rsp 200
+	rdi <- mem rdi 0
+	mem rsp 168 <- rdi
+	rdi <- mem rsp 168
+	rdi <- rdi
+	mem rsp 168 <- rdi
+	rdi <- mem rsp 168
+	rdi >>= 1
+	mem rsp 168 <- rdi
+	rdi <- mem rsp 144
+	rdi <- rdi
+	mem rsp 128 <- rdi
+	rdi <- mem rsp 128
+	rdi <- rdi
+	mem rsp 128 <- rdi
+	rdi <- mem rsp 128
+	rdi <<= 1
+	mem rsp 128 <- rdi
+	rdi <- mem rsp 128
+	rdi <- rdi
+	mem rsp 128 <- rdi
+	rdi <- mem rsp 128
+	rdi += 1
+	mem rsp 128 <- rdi
+	rdi <- mem rsp 144
+	rsi <- mem rsp 168
+	rdi <- rdi < rsi
+	mem rsp 176 <- rdi
+	rdi <- mem rsp 176
+	cjump rdi = 1 :call_label_ciao__ciao__ciao_40
+	goto :call_label_ciao__ciao__ciao_59
+	:call_label_ciao__ciao__ciao_40
+	rdi <- 1
+	mem rsp 224 <- rdi
+	rdi <- mem rsp 224
+	rdi *= 8
+	mem rsp 224 <- rdi
+	rdi <- mem rsp 224
+	rdi <- rdi
+	mem rsp 232 <- rdi
+	rdi <- mem rsp 232
+	rdi += 8
+	mem rsp 232 <- rdi
+	rdi <- mem rsp 80
+	rdi <- rdi
+	mem rsp 240 <- rdi
+	rdi <- mem rsp 232
+	rsi <- mem rsp 240
+	rsi += rdi
+	mem rsp 240 <- rsi
+	rdi <- mem rsp 240
+	rdi <- mem rdi 0
+	mem rsp 208 <- rdi
+	rdi <- mem rsp 208
+	rdi <- rdi
+	mem rsp 208 <- rdi
+	rdi <- mem rsp 208
+	rdi >>= 1
+	mem rsp 208 <- rdi
+	rdi <- mem rsp 152
+	rdi <- rdi
+	mem rsp 128 <- rdi
+	rdi <- mem rsp 128
+	rdi <- rdi
+	mem rsp 128 <- rdi
+	rdi <- mem rsp 128
+	rdi <<= 1
+	mem rsp 128 <- rdi
+	rdi <- mem rsp 128
+	rdi <- rdi
+	mem rsp 128 <- rdi
+	rdi <- mem rsp 128
+	rdi += 1
+	mem rsp 128 <- rdi
+	rdi <- mem rsp 152
+	rsi <- mem rsp 208
+	rdi <- rdi < rsi
+	mem rsp 216 <- rdi
+	rdi <- mem rsp 216
+	cjump rdi = 1 :call_label_ciao__ciao__ciao_41
+	goto :call_label_ciao__ciao__ciao_59
+	:call_label_ciao__ciao__ciao_41
+	goto :call_label_ciao__ciao__ciao_42
+	:call_label_ciao__ciao__ciao_42
+	rdi <- 0
+	mem rsp 264 <- rdi
+	rdi <- mem rsp 80
+	rdi <- rdi
+	mem rsp 288 <- rdi
+	rdi <- mem rsp 288
+	rdi += 16
+	mem rsp 288 <- rdi
+	rdi <- mem rsp 288
+	rdi <- mem rdi 0
+	mem rsp 296 <- rdi
+	rdi <- mem rsp 296
+	rdi <- rdi
+	mem rsp 304 <- rdi
+	rdi <- mem rsp 304
+	rdi >>= 1
+	mem rsp 304 <- rdi
+	rdi <- 1
+	mem rsp 312 <- rdi
+	rdi <- mem rsp 312
+	rdi <- rdi
+	mem rsp 312 <- rdi
+	rsi <- mem rsp 304
+	rdi <- mem rsp 312
+	rdi *= rsi
+	mem rsp 312 <- rdi
+	rdi <- mem rsp 144
+	rdi <- rdi
+	mem rsp 320 <- rdi
+	rdi <- mem rsp 312
+	rsi <- mem rsp 320
+	rsi *= rdi
+	mem rsp 320 <- rsi
+	rdi <- mem rsp 264
+	rdi <- rdi
+	mem rsp 264 <- rdi
+	rdi <- mem rsp 264
+	rsi <- mem rsp 320
+	rdi += rsi
+	mem rsp 264 <- rdi
+	rdi <- mem rsp 264
+	rdi <- rdi
+	mem rsp 264 <- rdi
+	rdi <- mem rsp 152
+	rsi <- mem rsp 264
+	rsi += rdi
+	mem rsp 264 <- rsi
+	rdi <- mem rsp 264
+	rdi <- rdi
+	mem rsp 328 <- rdi
+	rdi <- mem rsp 328
+	rdi *= 8
+	mem rsp 328 <- rdi
+	rdi <- mem rsp 328
+	rdi <- rdi
+	mem rsp 328 <- rdi
+	rdi <- mem rsp 328
+	rdi += 24
+	mem rsp 328 <- rdi
+	rdi <- mem rsp 80
+	rdi <- rdi
+	mem rsp 344 <- rdi
+	rsi <- mem rsp 328
+	rdi <- mem rsp 344
+	rdi += rsi
+	mem rsp 344 <- rdi
+	rdi <- mem rsp 344
+	rdi <- mem rdi 0
+	mem rsp 248 <- rdi
+	rdi <- mem rsp 120
+	rdi <- rdi
+	mem rsp 256 <- rdi
+	rdi <- mem rsp 256
+	rdi <- rdi
+	mem rsp 256 <- rdi
+	rdi <- mem rsp 256
+	rdi >>= 1
+	mem rsp 256 <- rdi
+	rdi <- mem rsp 0
+	rdi <- rdi
+	mem rsp 336 <- rdi
+	rdi <- mem rsp 336
+	rdi <- rdi
+	mem rsp 336 <- rdi
+	rdi <- mem rsp 336
+	rdi >>= 1
+	mem rsp 336 <- rdi
+	rdi <- 0
+	mem rsp 352 <- rdi
+	rdi <- mem rsp 48
+	rdi <- rdi = 0
+	mem rsp 360 <- rdi
+	rdi <- mem rsp 360
+	cjump rdi = 1 :call_label_ciao__ciao__ciao_58
+	goto :call_label_ciao__ciao__ciao_43
+	:call_label_ciao__ciao__ciao_43
+	rdi <- 0
+	mem rsp 384 <- rdi
+	rdi <- mem rsp 384
+	rdi *= 8
+	mem rsp 384 <- rdi
+	rdi <- mem rsp 384
+	rdi <- rdi
+	mem rsp 392 <- rdi
+	rdi <- mem rsp 392
+	rdi += 8
+	mem rsp 392 <- rdi
+	rdi <- mem rsp 48
+	rdi <- rdi
+	mem rsp 400 <- rdi
+	rsi <- mem rsp 392
+	rdi <- mem rsp 400
+	rdi += rsi
+	mem rsp 400 <- rdi
+	rdi <- mem rsp 400
+	rdi <- mem rdi 0
+	mem rsp 368 <- rdi
+	rdi <- mem rsp 368
+	rdi <- rdi
+	mem rsp 368 <- rdi
+	rdi <- mem rsp 368
+	rdi >>= 1
+	mem rsp 368 <- rdi
+	rdi <- mem rsp 256
+	rdi <- rdi
+	mem rsp 352 <- rdi
+	rdi <- mem rsp 352
+	rdi <- rdi
+	mem rsp 352 <- rdi
+	rdi <- mem rsp 352
+	rdi <<= 1
+	mem rsp 352 <- rdi
+	rdi <- mem rsp 352
+	rdi <- rdi
+	mem rsp 352 <- rdi
+	rdi <- mem rsp 352
+	rdi += 1
+	mem rsp 352 <- rdi
+	rdi <- mem rsp 256
+	rsi <- mem rsp 368
+	rdi <- rdi < rsi
+	mem rsp 376 <- rdi
+	rdi <- mem rsp 376
+	cjump rdi = 1 :call_label_ciao__ciao__ciao_44
+	goto :call_label_ciao__ciao__ciao_58
+	:call_label_ciao__ciao__ciao_44
+	rdi <- 1
+	mem rsp 424 <- rdi
+	rdi <- mem rsp 424
+	rdi *= 8
+	mem rsp 424 <- rdi
+	rdi <- mem rsp 424
+	rdi <- rdi
+	mem rsp 432 <- rdi
+	rdi <- mem rsp 432
+	rdi += 8
+	mem rsp 432 <- rdi
+	rdi <- mem rsp 48
+	rdi <- rdi
+	mem rsp 440 <- rdi
+	rsi <- mem rsp 432
+	rdi <- mem rsp 440
+	rdi += rsi
+	mem rsp 440 <- rdi
+	rdi <- mem rsp 440
+	rdi <- mem rdi 0
+	mem rsp 408 <- rdi
+	rdi <- mem rsp 408
+	rdi <- rdi
+	mem rsp 408 <- rdi
+	rdi <- mem rsp 408
+	rdi >>= 1
+	mem rsp 408 <- rdi
+	rdi <- mem rsp 336
+	rdi <- rdi
+	mem rsp 352 <- rdi
+	rdi <- mem rsp 352
+	rdi <- rdi
+	mem rsp 352 <- rdi
+	rdi <- mem rsp 352
+	rdi <<= 1
+	mem rsp 352 <- rdi
+	rdi <- mem rsp 352
+	rdi <- rdi
+	mem rsp 352 <- rdi
+	rdi <- mem rsp 352
+	rdi += 1
+	mem rsp 352 <- rdi
+	rdi <- mem rsp 336
+	rsi <- mem rsp 408
+	rdi <- rdi < rsi
+	mem rsp 416 <- rdi
+	rdi <- mem rsp 416
+	cjump rdi = 1 :call_label_ciao__ciao__ciao_45
+	goto :call_label_ciao__ciao__ciao_58
+	:call_label_ciao__ciao__ciao_45
+	goto :call_label_ciao__ciao__ciao_46
+	:call_label_ciao__ciao__ciao_46
+	rdi <- 0
+	mem rsp 464 <- rdi
+	rdi <- mem rsp 48
+	rdi <- rdi
+	mem rsp 472 <- rdi
+	rdi <- mem rsp 472
+	rdi += 16
+	mem rsp 472 <- rdi
+	rdi <- mem rsp 472
+	rdi <- mem rdi 0
+	mem rsp 480 <- rdi
+	rdi <- mem rsp 480
+	rdi <- rdi
+	mem rsp 488 <- rdi
+	rdi <- mem rsp 488
+	rdi >>= 1
+	mem rsp 488 <- rdi
+	rdi <- 1
+	mem rsp 496 <- rdi
+	rdi <- mem rsp 496
+	rdi <- rdi
+	mem rsp 496 <- rdi
+	rsi <- mem rsp 488
+	rdi <- mem rsp 496
+	rdi *= rsi
+	mem rsp 496 <- rdi
+	rdi <- mem rsp 256
+	rdi <- rdi
+	mem rsp 504 <- rdi
+	rsi <- mem rsp 496
+	rdi <- mem rsp 504
+	rdi *= rsi
+	mem rsp 504 <- rdi
+	rdi <- mem rsp 464
+	rdi <- rdi
+	mem rsp 464 <- rdi
+	rsi <- mem rsp 464
+	rdi <- mem rsp 504
+	rsi += rdi
+	mem rsp 464 <- rsi
+	rdi <- mem rsp 464
+	rdi <- rdi
+	mem rsp 464 <- rdi
+	rdi <- mem rsp 336
+	rsi <- mem rsp 464
+	rsi += rdi
+	mem rsp 464 <- rsi
+	rdi <- mem rsp 464
+	rdi <- rdi
+	mem rsp 512 <- rdi
+	rdi <- mem rsp 512
+	rdi *= 8
+	mem rsp 512 <- rdi
+	rdi <- mem rsp 512
+	rdi <- rdi
+	mem rsp 512 <- rdi
+	rdi <- mem rsp 512
+	rdi += 24
+	mem rsp 512 <- rdi
+	rdi <- mem rsp 48
+	rdi <- rdi
+	mem rsp 528 <- rdi
+	rsi <- mem rsp 512
+	rdi <- mem rsp 528
+	rdi += rsi
+	mem rsp 528 <- rdi
+	rdi <- mem rsp 528
+	rdi <- mem rdi 0
+	mem rsp 448 <- rdi
+	rdi <- mem rsp 248
+	rdi <- rdi
+	mem rsp 96 <- rdi
+	rdi <- mem rsp 96
+	rdi <- rdi
+	mem rsp 96 <- rdi
+	rdi <- mem rsp 96
+	rdi >>= 1
+	mem rsp 96 <- rdi
+	rdi <- mem rsp 448
+	rdi <- rdi
+	mem rsp 88 <- rdi
+	rdi <- mem rsp 88
+	rdi <- rdi
+	mem rsp 88 <- rdi
+	rdi <- mem rsp 88
+	rdi >>= 1
+	mem rsp 88 <- rdi
+	rdi <- mem rsp 96
+	rdi <- rdi
+	mem rsp 456 <- rdi
+	rsi <- mem rsp 88
+	rdi <- mem rsp 456
+	rdi *= rsi
+	mem rsp 456 <- rdi
+	rdi <- mem rsp 456
+	rdi <- rdi
+	mem rsp 456 <- rdi
+	rdi <- mem rsp 456
+	rdi <<= 1
+	mem rsp 456 <- rdi
+	rdi <- mem rsp 456
+	rdi <- rdi
+	mem rsp 456 <- rdi
+	rdi <- mem rsp 456
+	rdi += 1
+	mem rsp 456 <- rdi
+	rdi <- mem rsp 8
+	rdi <- rdi
+	mem rsp 520 <- rdi
+	rdi <- mem rsp 520
+	rdi <- rdi
+	mem rsp 520 <- rdi
+	rdi <- mem rsp 520
+	rdi >>= 1
+	mem rsp 520 <- rdi
+	rdi <- mem rsp 0
+	rdi <- rdi
+	mem rsp 536 <- rdi
+	rdi <- mem rsp 536
+	rdi <- rdi
+	mem rsp 536 <- rdi
+	rdi <- mem rsp 536
+	rdi >>= 1
+	mem rsp 536 <- rdi
+	rdi <- 0
+	mem rsp 544 <- rdi
+	rdi <- mem rsp 40
+	rdi <- rdi = 0
+	mem rsp 552 <- rdi
+	rdi <- mem rsp 552
+	cjump rdi = 1 :call_label_ciao__ciao__ciao_57
+	goto :call_label_ciao__ciao__ciao_47
+	:call_label_ciao__ciao__ciao_47
+	rdi <- 0
+	mem rsp 576 <- rdi
+	rdi <- mem rsp 576
+	rdi *= 8
+	mem rsp 576 <- rdi
+	rdi <- mem rsp 576
+	rdi <- rdi
+	mem rsp 584 <- rdi
+	rdi <- mem rsp 584
+	rdi += 8
+	mem rsp 584 <- rdi
+	rdi <- mem rsp 40
+	rdi <- rdi
+	mem rsp 592 <- rdi
+	rsi <- mem rsp 584
+	rdi <- mem rsp 592
+	rdi += rsi
+	mem rsp 592 <- rdi
+	rdi <- mem rsp 592
+	rdi <- mem rdi 0
+	mem rsp 560 <- rdi
+	rdi <- mem rsp 560
+	rdi <- rdi
+	mem rsp 560 <- rdi
+	rdi <- mem rsp 560
+	rdi >>= 1
+	mem rsp 560 <- rdi
+	rdi <- mem rsp 520
+	rdi <- rdi
+	mem rsp 544 <- rdi
+	rdi <- mem rsp 544
+	rdi <- rdi
+	mem rsp 544 <- rdi
+	rdi <- mem rsp 544
+	rdi <<= 1
+	mem rsp 544 <- rdi
+	rdi <- mem rsp 544
+	rdi <- rdi
+	mem rsp 544 <- rdi
+	rdi <- mem rsp 544
+	rdi += 1
+	mem rsp 544 <- rdi
+	rdi <- mem rsp 520
+	rsi <- mem rsp 560
+	rdi <- rdi < rsi
+	mem rsp 568 <- rdi
+	rdi <- mem rsp 568
+	cjump rdi = 1 :call_label_ciao__ciao__ciao_48
+	goto :call_label_ciao__ciao__ciao_57
+	:call_label_ciao__ciao__ciao_48
+	rdi <- 1
+	mem rsp 72 <- rdi
+	rdi <- mem rsp 72
+	rdi *= 8
+	mem rsp 72 <- rdi
+	rdi <- mem rsp 72
+	rdi <- rdi
+	mem rsp 624 <- rdi
+	rdi <- mem rsp 624
+	rdi += 8
+	mem rsp 624 <- rdi
+	rdi <- mem rsp 40
+	rdi <- rdi
+	mem rsp 632 <- rdi
+	rdi <- mem rsp 624
+	rsi <- mem rsp 632
+	rsi += rdi
+	mem rsp 632 <- rsi
+	rdi <- mem rsp 632
+	rdi <- mem rdi 0
+	mem rsp 272 <- rdi
+	rdi <- mem rsp 272
+	rdi <- rdi
+	mem rsp 272 <- rdi
+	rdi <- mem rsp 272
+	rdi >>= 1
+	mem rsp 272 <- rdi
+	rdi <- mem rsp 536
+	rdi <- rdi
+	mem rsp 544 <- rdi
+	rdi <- mem rsp 544
+	rdi <- rdi
+	mem rsp 544 <- rdi
+	rdi <- mem rsp 544
+	rdi <<= 1
+	mem rsp 544 <- rdi
+	rdi <- mem rsp 544
+	rdi <- rdi
+	mem rsp 544 <- rdi
+	rdi <- mem rsp 544
+	rdi += 1
+	mem rsp 544 <- rdi
+	rsi <- mem rsp 272
+	rdi <- mem rsp 536
+	rdi <- rdi < rsi
+	mem rsp 280 <- rdi
+	rdi <- mem rsp 280
+	cjump rdi = 1 :call_label_ciao__ciao__ciao_49
+	goto :call_label_ciao__ciao__ciao_57
+	:call_label_ciao__ciao__ciao_49
+	goto :call_label_ciao__ciao__ciao_50
+	:call_label_ciao__ciao__ciao_50
+	rdi <- 0
+	mem rsp 656 <- rdi
+	rdi <- mem rsp 40
+	rdi <- rdi
+	mem rsp 664 <- rdi
+	rdi <- mem rsp 664
+	rdi += 16
+	mem rsp 664 <- rdi
+	rdi <- mem rsp 664
+	rdi <- mem rdi 0
+	mem rsp 672 <- rdi
+	rdi <- mem rsp 672
+	rdi <- rdi
+	mem rsp 680 <- rdi
+	rdi <- mem rsp 680
+	rdi >>= 1
+	mem rsp 680 <- rdi
+	rdi <- 1
+	mem rsp 688 <- rdi
+	rdi <- mem rsp 688
+	rdi <- rdi
+	mem rsp 688 <- rdi
+	rdi <- mem rsp 680
+	rsi <- mem rsp 688
+	rsi *= rdi
+	mem rsp 688 <- rsi
+	rdi <- mem rsp 520
+	rdi <- rdi
+	mem rsp 696 <- rdi
+	rsi <- mem rsp 688
+	rdi <- mem rsp 696
+	rdi *= rsi
+	mem rsp 696 <- rdi
+	rdi <- mem rsp 656
+	rdi <- rdi
+	mem rsp 656 <- rdi
+	rsi <- mem rsp 656
+	rdi <- mem rsp 696
+	rsi += rdi
+	mem rsp 656 <- rsi
+	rdi <- mem rsp 656
+	rdi <- rdi
+	mem rsp 656 <- rdi
+	rsi <- mem rsp 536
+	rdi <- mem rsp 656
+	rdi += rsi
+	mem rsp 656 <- rdi
+	rdi <- mem rsp 656
+	rdi <- rdi
+	mem rsp 704 <- rdi
+	rdi <- mem rsp 704
+	rdi *= 8
+	mem rsp 704 <- rdi
+	rdi <- mem rsp 704
+	rdi <- rdi
+	mem rsp 704 <- rdi
+	rdi <- mem rsp 704
+	rdi += 24
+	mem rsp 704 <- rdi
+	rdi <- mem rsp 40
+	rdi <- rdi
+	mem rsp 720 <- rdi
+	rdi <- mem rsp 704
+	rsi <- mem rsp 720
+	rsi += rdi
+	mem rsp 720 <- rsi
+	rdi <- mem rsp 720
+	rdi <- mem rdi 0
+	mem rsp 640 <- rdi
+	rdi <- mem rsp 640
+	rdi <- rdi
+	mem rsp 96 <- rdi
+	rdi <- mem rsp 96
+	rdi <- rdi
+	mem rsp 96 <- rdi
+	rdi <- mem rsp 96
+	rdi >>= 1
+	mem rsp 96 <- rdi
+	rdi <- 9
+	mem rsp 88 <- rdi
+	rdi <- mem rsp 88
+	rdi <- rdi
+	mem rsp 88 <- rdi
+	rdi <- mem rsp 88
+	rdi >>= 1
+	mem rsp 88 <- rdi
+	rdi <- mem rsp 96
+	rdi <- rdi
+	mem rsp 640 <- rdi
+	rsi <- mem rsp 88
+	rdi <- mem rsp 640
+	rdi *= rsi
+	mem rsp 640 <- rdi
+	rdi <- mem rsp 640
+	rdi <- rdi
+	mem rsp 640 <- rdi
+	rdi <- mem rsp 640
+	rdi <<= 1
+	mem rsp 640 <- rdi
+	rdi <- mem rsp 640
+	rdi <- rdi
+	mem rsp 640 <- rdi
+	rdi <- mem rsp 640
+	rdi += 1
+	mem rsp 640 <- rdi
+	rdi <- mem rsp 640
+	rdi <- rdi
+	mem rsp 96 <- rdi
+	rdi <- mem rsp 96
+	rdi <- rdi
+	mem rsp 96 <- rdi
+	rdi <- mem rsp 96
+	rdi >>= 1
+	mem rsp 96 <- rdi
+	rdi <- mem rsp 456
+	rdi <- rdi
+	mem rsp 88 <- rdi
+	rdi <- mem rsp 88
+	rdi <- rdi
+	mem rsp 88 <- rdi
+	rdi <- mem rsp 88
+	rdi >>= 1
+	mem rsp 88 <- rdi
+	rdi <- mem rsp 96
+	rdi <- rdi
+	mem rsp 640 <- rdi
+	rdi <- mem rsp 88
+	rsi <- mem rsp 640
+	rsi += rdi
+	mem rsp 640 <- rsi
+	rdi <- mem rsp 640
+	rdi <- rdi
+	mem rsp 640 <- rdi
+	rdi <- mem rsp 640
+	rdi <<= 1
+	mem rsp 640 <- rdi
+	rdi <- mem rsp 640
+	rdi <- rdi
+	mem rsp 640 <- rdi
+	rdi <- mem rsp 640
+	rdi += 1
+	mem rsp 640 <- rdi
+	rdi <- mem rsp 8
+	rdi <- rdi
+	mem rsp 648 <- rdi
+	rdi <- mem rsp 648
+	rdi <- rdi
+	mem rsp 648 <- rdi
+	rdi <- mem rsp 648
+	rdi >>= 1
+	mem rsp 648 <- rdi
+	rdi <- mem rsp 0
+	rdi <- rdi
+	mem rsp 712 <- rdi
+	rdi <- mem rsp 712
+	rdi <- rdi
+	mem rsp 712 <- rdi
+	rdi <- mem rsp 712
+	rdi >>= 1
+	mem rsp 712 <- rdi
+	rdi <- 0
+	mem rsp 728 <- rdi
+	rdi <- mem rsp 40
+	rdi <- rdi = 0
+	mem rsp 736 <- rdi
+	rdi <- mem rsp 736
+	cjump rdi = 1 :call_label_ciao__ciao__ciao_56
+	goto :call_label_ciao__ciao__ciao_51
+	:call_label_ciao__ciao__ciao_51
+	rdi <- 0
+	mem rsp 760 <- rdi
+	rdi <- mem rsp 760
+	rdi *= 8
+	mem rsp 760 <- rdi
+	rdi <- mem rsp 760
+	rdi <- rdi
+	mem rsp 768 <- rdi
+	rdi <- mem rsp 768
+	rdi += 8
+	mem rsp 768 <- rdi
+	rdi <- mem rsp 40
+	rdi <- rdi
+	mem rsp 776 <- rdi
+	rdi <- mem rsp 768
+	rsi <- mem rsp 776
+	rsi += rdi
+	mem rsp 776 <- rsi
+	rdi <- mem rsp 776
+	rdi <- mem rdi 0
+	mem rsp 744 <- rdi
+	rdi <- mem rsp 744
+	rdi <- rdi
+	mem rsp 744 <- rdi
+	rdi <- mem rsp 744
+	rdi >>= 1
+	mem rsp 744 <- rdi
+	rdi <- mem rsp 648
+	rdi <- rdi
+	mem rsp 728 <- rdi
+	rdi <- mem rsp 728
+	rdi <- rdi
+	mem rsp 728 <- rdi
+	rdi <- mem rsp 728
+	rdi <<= 1
+	mem rsp 728 <- rdi
+	rdi <- mem rsp 728
+	rdi <- rdi
+	mem rsp 728 <- rdi
+	rdi <- mem rsp 728
+	rdi += 1
+	mem rsp 728 <- rdi
+	rsi <- mem rsp 648
+	rdi <- mem rsp 744
+	rdi <- rsi < rdi
+	mem rsp 752 <- rdi
+	rdi <- mem rsp 752
+	cjump rdi = 1 :call_label_ciao__ciao__ciao_52
+	goto :call_label_ciao__ciao__ciao_56
+	:call_label_ciao__ciao__ciao_52
+	rdi <- 1
+	mem rsp 800 <- rdi
+	rdi <- mem rsp 800
+	rdi *= 8
+	mem rsp 800 <- rdi
+	rdi <- mem rsp 800
+	rdi <- rdi
+	mem rsp 808 <- rdi
+	rdi <- mem rsp 808
+	rdi += 8
+	mem rsp 808 <- rdi
+	rdi <- mem rsp 40
+	rdi <- rdi
+	mem rsp 816 <- rdi
+	rdi <- mem rsp 808
+	rsi <- mem rsp 816
+	rsi += rdi
+	mem rsp 816 <- rsi
+	rdi <- mem rsp 816
+	rdi <- mem rdi 0
+	mem rsp 784 <- rdi
+	rdi <- mem rsp 784
+	rdi <- rdi
+	mem rsp 784 <- rdi
+	rdi <- mem rsp 784
+	rdi >>= 1
+	mem rsp 784 <- rdi
+	rdi <- mem rsp 712
+	rdi <- rdi
+	mem rsp 728 <- rdi
+	rdi <- mem rsp 728
+	rdi <- rdi
+	mem rsp 728 <- rdi
+	rdi <- mem rsp 728
+	rdi <<= 1
+	mem rsp 728 <- rdi
+	rdi <- mem rsp 728
+	rdi <- rdi
+	mem rsp 728 <- rdi
+	rdi <- mem rsp 728
+	rdi += 1
+	mem rsp 728 <- rdi
+	rdi <- mem rsp 712
+	rsi <- mem rsp 784
+	rdi <- rdi < rsi
+	mem rsp 792 <- rdi
+	rdi <- mem rsp 792
+	cjump rdi = 1 :call_label_ciao__ciao__ciao_53
+	goto :call_label_ciao__ciao__ciao_56
+	:call_label_ciao__ciao__ciao_53
+	goto :call_label_ciao__ciao__ciao_54
+	:call_label_ciao__ciao__ciao_54
+	rdi <- 0
+	mem rsp 824 <- rdi
+	rdi <- mem rsp 40
+	rdi <- rdi
+	mem rsp 832 <- rdi
+	rdi <- mem rsp 832
+	rdi += 16
+	mem rsp 832 <- rdi
+	rdi <- mem rsp 832
+	rdi <- mem rdi 0
+	mem rsp 840 <- rdi
+	rdi <- mem rsp 840
+	rdi <- rdi
+	mem rsp 848 <- rdi
+	rdi <- mem rsp 848
+	rdi >>= 1
+	mem rsp 848 <- rdi
+	rdi <- 1
+	mem rsp 856 <- rdi
+	rdi <- mem rsp 856
+	rdi <- rdi
+	mem rsp 856 <- rdi
+	rsi <- mem rsp 848
+	rdi <- mem rsp 856
+	rdi *= rsi
+	mem rsp 856 <- rdi
+	rdi <- mem rsp 648
+	rdi <- rdi
+	mem rsp 864 <- rdi
+	rdi <- mem rsp 856
+	rsi <- mem rsp 864
+	rsi *= rdi
+	mem rsp 864 <- rsi
+	rdi <- mem rsp 824
+	rdi <- rdi
+	mem rsp 824 <- rdi
+	rdi <- mem rsp 824
+	rsi <- mem rsp 864
+	rdi += rsi
+	mem rsp 824 <- rdi
+	rdi <- mem rsp 824
+	rdi <- rdi
+	mem rsp 824 <- rdi
+	rsi <- mem rsp 712
+	rdi <- mem rsp 824
+	rdi += rsi
+	mem rsp 824 <- rdi
+	rdi <- mem rsp 824
+	rdi <- rdi
+	mem rsp 872 <- rdi
+	rdi <- mem rsp 872
+	rdi *= 8
+	mem rsp 872 <- rdi
+	rdi <- mem rsp 872
+	rdi <- rdi
+	mem rsp 872 <- rdi
+	rdi <- mem rsp 872
+	rdi += 24
+	mem rsp 872 <- rdi
+	rdi <- mem rsp 40
+	rdi <- rdi
+	mem rsp 880 <- rdi
+	rsi <- mem rsp 872
+	rdi <- mem rsp 880
+	rdi += rsi
+	mem rsp 880 <- rdi
+	rdi <- mem rsp 640
+	rsi <- mem rsp 880
+	mem rsi 0 <- rdi
+	rdi <- mem rsp 120
+	rdi <- rdi
+	mem rsp 96 <- rdi
+	rdi <- mem rsp 96
+	rdi <- rdi
+	mem rsp 96 <- rdi
+	rdi <- mem rsp 96
+	rdi >>= 1
+	mem rsp 96 <- rdi
+	rdi <- 3
+	mem rsp 88 <- rdi
+	rdi <- mem rsp 88
+	rdi <- rdi
+	mem rsp 88 <- rdi
+	rdi <- mem rsp 88
+	rdi >>= 1
+	mem rsp 88 <- rdi
+	rdi <- mem rsp 96
+	rdi <- rdi
+	mem rsp 120 <- rdi
+	rdi <- mem rsp 88
+	rsi <- mem rsp 120
+	rsi += rdi
+	mem rsp 120 <- rsi
+	rdi <- mem rsp 120
+	rdi <- rdi
+	mem rsp 120 <- rdi
+	rdi <- mem rsp 120
+	rdi <<= 1
+	mem rsp 120 <- rdi
+	rdi <- mem rsp 120
+	rdi <- rdi
+	mem rsp 120 <- rdi
+	rdi <- mem rsp 120
+	rdi += 1
+	mem rsp 120 <- rdi
+	goto :call_label_ciao__ciao__ciao_37
+	:call_label_ciao__ciao__ciao_55
+	rdi <- mem rsp 0
+	rdi <- rdi
+	mem rsp 96 <- rdi
+	rdi <- mem rsp 96
+	rdi <- rdi
+	mem rsp 96 <- rdi
+	rdi <- mem rsp 96
+	rdi >>= 1
+	mem rsp 96 <- rdi
+	rdi <- 3
+	mem rsp 88 <- rdi
+	rdi <- mem rsp 88
+	rdi <- rdi
+	mem rsp 88 <- rdi
+	rdi <- mem rsp 88
+	rdi >>= 1
+	mem rsp 88 <- rdi
+	rdi <- mem rsp 96
+	rdi <- rdi
+	mem rsp 0 <- rdi
+	rsi <- mem rsp 0
+	rdi <- mem rsp 88
+	rsi += rdi
+	mem rsp 0 <- rsi
+	rdi <- mem rsp 0
+	rdi <- rdi
+	mem rsp 0 <- rdi
+	rdi <- mem rsp 0
+	rdi <<= 1
+	mem rsp 0 <- rdi
+	rdi <- mem rsp 0
+	rdi <- rdi
+	mem rsp 0 <- rdi
+	rdi <- mem rsp 0
+	rdi += 1
+	mem rsp 0 <- rdi
+	goto :call_label_ciao__ciao__ciao_35
+	:call_label_ciao__ciao__ciao_56
+	rdi <- 0
+	call tensor-error 1
+	goto :call_label_ciao__ciao__ciao_54
+	:call_label_ciao__ciao__ciao_57
+	rdi <- 0
+	call tensor-error 1
+	goto :call_label_ciao__ciao__ciao_50
+	:call_label_ciao__ciao__ciao_58
+	rdi <- 0
+	call tensor-error 1
+	goto :call_label_ciao__ciao__ciao_46
+	:call_label_ciao__ciao__ciao_59
+	rdi <- 0
+	call tensor-error 1
+	goto :call_label_ciao__ciao__ciao_42
+	:call_label_ciao__ciao__ciao_60
+	rdi <- 1
+	mem rsp 8 <- rdi
+	goto :call_label_ciao__ciao__ciao_33
+	:call_label_ciao__ciao__ciao_61
+	rdi <- mem rsp 888
+	rdi <- rdi
+	mem rsp 96 <- rdi
+	rdi <- mem rsp 96
+	rdi <- rdi
+	mem rsp 96 <- rdi
+	rdi <- mem rsp 96
+	rdi >>= 1
+	mem rsp 96 <- rdi
+	rdi <- 3
+	mem rsp 88 <- rdi
+	rdi <- mem rsp 88
+	rdi <- rdi
+	mem rsp 88 <- rdi
+	rdi <- mem rsp 88
+	rdi >>= 1
+	mem rsp 88 <- rdi
+	rdi <- mem rsp 96
+	rdi <- rdi
+	mem rsp 888 <- rdi
+	rsi <- mem rsp 88
+	rdi <- mem rsp 888
+	rdi += rsi
+	mem rsp 888 <- rdi
+	rdi <- mem rsp 888
+	rdi <- rdi
+	mem rsp 888 <- rdi
+	rdi <- mem rsp 888
+	rdi <<= 1
+	mem rsp 888 <- rdi
+	rdi <- mem rsp 888
+	rdi <- rdi
+	mem rsp 888 <- rdi
+	rdi <- mem rsp 888
+	rdi += 1
+	mem rsp 888 <- rdi
+	goto :call_label_ciao__ciao__ciao_62
+	:call_label_ciao__ciao__ciao_62
+	rdi <- mem rsp 888
+	rdi <- rdi
+	mem rsp 96 <- rdi
+	rdi <- mem rsp 96
+	rdi <- rdi
+	mem rsp 96 <- rdi
+	rdi <- mem rsp 96
+	rdi >>= 1
+	mem rsp 96 <- rdi
+	rdi <- mem rsp 32
+	rdi <- rdi
+	mem rsp 88 <- rdi
+	rdi <- mem rsp 88
+	rdi <- rdi
+	mem rsp 88 <- rdi
+	rdi <- mem rsp 88
+	rdi >>= 1
+	mem rsp 88 <- rdi
+	rsi <- mem rsp 88
+	rdi <- mem rsp 96
+	rdi <- rdi < rsi
+	mem rsp 896 <- rdi
+	rdi <- mem rsp 896
+	rdi <- rdi
+	mem rsp 896 <- rdi
+	rdi <- mem rsp 896
+	rdi <<= 1
+	mem rsp 896 <- rdi
+	rdi <- mem rsp 896
+	rdi <- rdi
+	mem rsp 896 <- rdi
+	rdi <- mem rsp 896
+	rdi += 1
+	mem rsp 896 <- rdi
+	rdi <- mem rsp 896
+	rdi <- rdi
+	mem rsp 96 <- rdi
+	rdi <- mem rsp 96
+	rdi <- rdi
+	mem rsp 96 <- rdi
+	rdi <- mem rsp 96
+	rdi >>= 1
+	mem rsp 96 <- rdi
+	rdi <- mem rsp 96
+	cjump rdi = 1 :call_label_ciao__ciao__ciao_63
+	goto :call_label_ciao__ciao__ciao_60
+	:call_label_ciao__ciao__ciao_63
+	rdi <- 1
+	mem rsp 904 <- rdi
+	goto :call_label_ciao__ciao__ciao_64
+	:call_label_ciao__ciao__ciao_64
+	rdi <- mem rsp 904
+	rdi <- rdi
+	mem rsp 96 <- rdi
+	rdi <- mem rsp 96
+	rdi <- rdi
+	mem rsp 96 <- rdi
+	rdi <- mem rsp 96
+	rdi >>= 1
+	mem rsp 96 <- rdi
+	rdi <- mem rsp 24
+	rdi <- rdi
+	mem rsp 88 <- rdi
+	rdi <- mem rsp 88
+	rdi <- rdi
+	mem rsp 88 <- rdi
+	rdi <- mem rsp 88
+	rdi >>= 1
+	mem rsp 88 <- rdi
+	rsi <- mem rsp 88
+	rdi <- mem rsp 96
+	rdi <- rdi < rsi
+	mem rsp 912 <- rdi
+	rdi <- mem rsp 912
+	rdi <- rdi
+	mem rsp 912 <- rdi
+	rdi <- mem rsp 912
+	rdi <<= 1
+	mem rsp 912 <- rdi
+	rdi <- mem rsp 912
+	rdi <- rdi
+	mem rsp 912 <- rdi
+	rdi <- mem rsp 912
+	rdi += 1
+	mem rsp 912 <- rdi
+	rdi <- mem rsp 912
+	rdi <- rdi
+	mem rsp 96 <- rdi
+	rdi <- mem rsp 96
+	rdi <- rdi
+	mem rsp 96 <- rdi
+	rdi <- mem rsp 96
+	rdi >>= 1
+	mem rsp 96 <- rdi
+	rdi <- mem rsp 96
+	cjump rdi = 1 :call_label_ciao__ciao__ciao_65
+	goto :call_label_ciao__ciao__ciao_61
+	:call_label_ciao__ciao__ciao_65
+	rdi <- 1
+	mem rsp 920 <- rdi
+	goto :call_label_ciao__ciao__ciao_66
+	:call_label_ciao__ciao__ciao_66
+	rdi <- mem rsp 920
+	rdi <- rdi
+	mem rsp 96 <- rdi
+	rdi <- mem rsp 96
+	rdi <- rdi
+	mem rsp 96 <- rdi
+	rdi <- mem rsp 96
+	rdi >>= 1
+	mem rsp 96 <- rdi
+	rdi <- mem rsp 16
+	rdi <- rdi
+	mem rsp 88 <- rdi
+	rdi <- mem rsp 88
+	rdi <- rdi
+	mem rsp 88 <- rdi
+	rdi <- mem rsp 88
+	rdi >>= 1
+	mem rsp 88 <- rdi
+	rsi <- mem rsp 88
+	rdi <- mem rsp 96
+	rdi <- rdi < rsi
+	mem rsp 928 <- rdi
+	rdi <- mem rsp 928
+	rdi <- rdi
+	mem rsp 928 <- rdi
+	rdi <- mem rsp 928
+	rdi <<= 1
+	mem rsp 928 <- rdi
+	rdi <- mem rsp 928
+	rdi <- rdi
+	mem rsp 928 <- rdi
+	rdi <- mem rsp 928
+	rdi += 1
+	mem rsp 928 <- rdi
+	rdi <- mem rsp 928
+	rdi <- rdi
+	mem rsp 96 <- rdi
+	rdi <- mem rsp 96
+	rdi <- rdi
+	mem rsp 96 <- rdi
+	rdi <- mem rsp 96
+	rdi >>= 1
+	mem rsp 96 <- rdi
+	rdi <- mem rsp 96
+	cjump rdi = 1 :call_label_ciao__ciao__ciao_67
+	goto :call_label_ciao__ciao__ciao_72
+	:call_label_ciao__ciao__ciao_67
+	rdi <- mem rsp 888
+	rdi <- rdi
+	mem rsp 600 <- rdi
+	rdi <- mem rsp 600
+	rdi <- rdi
+	mem rsp 600 <- rdi
+	rdi <- mem rsp 600
+	rdi >>= 1
+	mem rsp 600 <- rdi
+	rdi <- mem rsp 904
+	rdi <- rdi
+	mem rsp 608 <- rdi
+	rdi <- mem rsp 608
+	rdi <- rdi
+	mem rsp 608 <- rdi
+	rdi <- mem rsp 608
+	rdi >>= 1
+	mem rsp 608 <- rdi
+	rdi <- 0
+	mem rsp 936 <- rdi
+	rdi <- mem rsp 40
+	rdi <- rdi = 0
+	mem rsp 616 <- rdi
+	rdi <- mem rsp 616
+	cjump rdi = 1 :call_label_ciao__ciao__ciao_73
+	goto :call_label_ciao__ciao__ciao_68
+	:call_label_ciao__ciao__ciao_68
+	rdi <- 0
+	mem rsp 960 <- rdi
+	rdi <- mem rsp 960
+	rdi *= 8
+	mem rsp 960 <- rdi
+	rdi <- mem rsp 960
+	rdi <- rdi
+	mem rsp 968 <- rdi
+	rdi <- mem rsp 968
+	rdi += 8
+	mem rsp 968 <- rdi
+	rdi <- mem rsp 40
+	rdi <- rdi
+	mem rsp 976 <- rdi
+	rsi <- mem rsp 968
+	rdi <- mem rsp 976
+	rdi += rsi
+	mem rsp 976 <- rdi
+	rdi <- mem rsp 976
+	rdi <- mem rdi 0
+	mem rsp 944 <- rdi
+	rdi <- mem rsp 944
+	rdi <- rdi
+	mem rsp 944 <- rdi
+	rdi <- mem rsp 944
+	rdi >>= 1
+	mem rsp 944 <- rdi
+	rdi <- mem rsp 600
+	rdi <- rdi
+	mem rsp 936 <- rdi
+	rdi <- mem rsp 936
+	rdi <- rdi
+	mem rsp 936 <- rdi
+	rdi <- mem rsp 936
+	rdi <<= 1
+	mem rsp 936 <- rdi
+	rdi <- mem rsp 936
+	rdi <- rdi
+	mem rsp 936 <- rdi
+	rdi <- mem rsp 936
+	rdi += 1
+	mem rsp 936 <- rdi
+	rsi <- mem rsp 600
+	rdi <- mem rsp 944
+	rdi <- rsi < rdi
+	mem rsp 952 <- rdi
+	rdi <- mem rsp 952
+	cjump rdi = 1 :call_label_ciao__ciao__ciao_69
+	goto :call_label_ciao__ciao__ciao_73
+	:call_label_ciao__ciao__ciao_69
+	rdi <- 1
+	mem rsp 1000 <- rdi
+	rdi <- mem rsp 1000
+	rdi *= 8
+	mem rsp 1000 <- rdi
+	rdi <- mem rsp 1000
+	rdi <- rdi
+	mem rsp 1008 <- rdi
+	rdi <- mem rsp 1008
+	rdi += 8
+	mem rsp 1008 <- rdi
+	rdi <- mem rsp 40
+	rdi <- rdi
+	mem rsp 1016 <- rdi
+	rsi <- mem rsp 1008
+	rdi <- mem rsp 1016
+	rdi += rsi
+	mem rsp 1016 <- rdi
+	rdi <- mem rsp 1016
+	rdi <- mem rdi 0
+	mem rsp 984 <- rdi
+	rdi <- mem rsp 984
+	rdi <- rdi
+	mem rsp 984 <- rdi
+	rdi <- mem rsp 984
+	rdi >>= 1
+	mem rsp 984 <- rdi
+	rdi <- mem rsp 608
+	rdi <- rdi
+	mem rsp 936 <- rdi
+	rdi <- mem rsp 936
+	rdi <- rdi
+	mem rsp 936 <- rdi
+	rdi <- mem rsp 936
+	rdi <<= 1
+	mem rsp 936 <- rdi
+	rdi <- mem rsp 936
+	rdi <- rdi
+	mem rsp 936 <- rdi
+	rdi <- mem rsp 936
+	rdi += 1
+	mem rsp 936 <- rdi
+	rdi <- mem rsp 608
+	rsi <- mem rsp 984
+	rdi <- rdi < rsi
+	mem rsp 992 <- rdi
+	rdi <- mem rsp 992
+	cjump rdi = 1 :call_label_ciao__ciao__ciao_70
+	goto :call_label_ciao__ciao__ciao_73
+	:call_label_ciao__ciao__ciao_70
+	goto :call_label_ciao__ciao__ciao_71
+	:call_label_ciao__ciao__ciao_71
+	rdi <- 0
+	mem rsp 1024 <- rdi
+	rdi <- mem rsp 40
+	rdi <- rdi
+	mem rsp 1032 <- rdi
+	rdi <- mem rsp 1032
+	rdi += 16
+	mem rsp 1032 <- rdi
+	rdi <- mem rsp 1032
+	rdi <- mem rdi 0
+	mem rsp 1040 <- rdi
+	rdi <- mem rsp 1040
+	rdi <- rdi
+	mem rsp 64 <- rdi
+	rdi <- mem rsp 64
+	rdi >>= 1
+	mem rsp 64 <- rdi
+	rdi <- 1
+	mem rsp 56 <- rdi
+	rdi <- mem rsp 56
+	rdi <- rdi
+	mem rsp 56 <- rdi
+	rsi <- mem rsp 56
+	rdi <- mem rsp 64
+	rsi *= rdi
+	mem rsp 56 <- rsi
+	rdi <- mem rsp 600
+	rdi <- rdi
+	mem rsp 1048 <- rdi
+	rsi <- mem rsp 56
+	rdi <- mem rsp 1048
+	rdi *= rsi
+	mem rsp 1048 <- rdi
+	rdi <- mem rsp 1024
+	rdi <- rdi
+	mem rsp 1024 <- rdi
+	rdi <- mem rsp 1024
+	rsi <- mem rsp 1048
+	rdi += rsi
+	mem rsp 1024 <- rdi
+	rdi <- mem rsp 1024
+	rdi <- rdi
+	mem rsp 1024 <- rdi
+	rdi <- mem rsp 608
+	rsi <- mem rsp 1024
+	rsi += rdi
+	mem rsp 1024 <- rsi
+	rdi <- mem rsp 1024
+	rdi <- rdi
+	mem rsp 1056 <- rdi
+	rdi <- mem rsp 1056
+	rdi *= 8
+	mem rsp 1056 <- rdi
+	rdi <- mem rsp 1056
+	rdi <- rdi
+	mem rsp 1056 <- rdi
+	rdi <- mem rsp 1056
+	rdi += 24
+	mem rsp 1056 <- rdi
+	rdi <- mem rsp 40
+	rdi <- rdi
+	mem rsp 1064 <- rdi
+	rsi <- mem rsp 1056
+	rdi <- mem rsp 1064
+	rdi += rsi
+	mem rsp 1064 <- rdi
+	rdi <- mem rsp 1064
+	mem rdi 0 <- 1
+	rdi <- mem rsp 920
+	rdi <- rdi
+	mem rsp 96 <- rdi
+	rdi <- mem rsp 96
+	rdi <- rdi
+	mem rsp 96 <- rdi
+	rdi <- mem rsp 96
+	rdi >>= 1
+	mem rsp 96 <- rdi
+	rdi <- 3
+	mem rsp 88 <- rdi
+	rdi <- mem rsp 88
+	rdi <- rdi
+	mem rsp 88 <- rdi
+	rdi <- mem rsp 88
+	rdi >>= 1
+	mem rsp 88 <- rdi
+	rdi <- mem rsp 96
+	rdi <- rdi
+	mem rsp 920 <- rdi
+	rsi <- mem rsp 88
+	rdi <- mem rsp 920
+	rdi += rsi
+	mem rsp 920 <- rdi
+	rdi <- mem rsp 920
+	rdi <- rdi
+	mem rsp 920 <- rdi
+	rdi <- mem rsp 920
+	rdi <<= 1
+	mem rsp 920 <- rdi
+	rdi <- mem rsp 920
+	rdi <- rdi
+	mem rsp 920 <- rdi
+	rdi <- mem rsp 920
+	rdi += 1
+	mem rsp 920 <- rdi
+	goto :call_label_ciao__ciao__ciao_66
+	:call_label_ciao__ciao__ciao_72
+	rdi <- mem rsp 904
+	rdi <- rdi
+	mem rsp 96 <- rdi
+	rdi <- mem rsp 96
+	rdi <- rdi
+	mem rsp 96 <- rdi
+	rdi <- mem rsp 96
+	rdi >>= 1
+	mem rsp 96 <- rdi
+	rdi <- 3
+	mem rsp 88 <- rdi
+	rdi <- mem rsp 88
+	rdi <- rdi
+	mem rsp 88 <- rdi
+	rdi <- mem rsp 88
+	rdi >>= 1
+	mem rsp 88 <- rdi
+	rdi <- mem rsp 96
+	rdi <- rdi
+	mem rsp 904 <- rdi
+	rsi <- mem rsp 88
+	rdi <- mem rsp 904
+	rdi += rsi
+	mem rsp 904 <- rdi
+	rdi <- mem rsp 904
+	rdi <- rdi
+	mem rsp 904 <- rdi
+	rdi <- mem rsp 904
+	rdi <<= 1
+	mem rsp 904 <- rdi
+	rdi <- mem rsp 904
+	rdi <- rdi
+	mem rsp 904 <- rdi
+	rdi <- mem rsp 904
+	rdi += 1
+	mem rsp 904 <- rdi
+	goto :call_label_ciao__ciao__ciao_64
+	:call_label_ciao__ciao__ciao_73
+	rdi <- 0
+	call tensor-error 1
+	goto :call_label_ciao__ciao__ciao_71
+	:call_label_ciao__ciao__ciao_74
+	rdi <- 1
+	mem rsp 888 <- rdi
+	goto :call_label_ciao__ciao__ciao_62
+	:call_label_ciao__ciao__ciao_75
+	rdi <- mem rsp 1072
+	rdi <- rdi
+	mem rsp 96 <- rdi
+	rdi <- mem rsp 96
+	rdi <- rdi
+	mem rsp 96 <- rdi
+	rdi <- mem rsp 96
+	rdi >>= 1
+	mem rsp 96 <- rdi
+	rdi <- mem rsp 24
+	rdi <- rdi
+	mem rsp 88 <- rdi
+	rdi <- mem rsp 88
+	rdi <- rdi
+	mem rsp 88 <- rdi
+	rdi <- mem rsp 88
+	rdi >>= 1
+	mem rsp 88 <- rdi
+	rsi <- mem rsp 88
+	rdi <- mem rsp 96
+	rdi <- rdi = rsi
+	mem rsp 1080 <- rdi
+	rdi <- mem rsp 1080
+	rdi <- rdi
+	mem rsp 1080 <- rdi
+	rdi <- mem rsp 1080
+	rdi <<= 1
+	mem rsp 1080 <- rdi
+	rdi <- mem rsp 1080
+	rdi <- rdi
+	mem rsp 1080 <- rdi
+	rdi <- mem rsp 1080
+	rdi += 1
+	mem rsp 1080 <- rdi
+	rdi <- mem rsp 1080
+	rdi <- rdi
+	mem rsp 96 <- rdi
+	rdi <- mem rsp 96
+	rdi <- rdi
+	mem rsp 96 <- rdi
+	rdi <- mem rsp 96
+	rdi >>= 1
+	mem rsp 96 <- rdi
+	rdi <- mem rsp 96
+	cjump rdi = 1 :call_label_ciao__ciao__ciao_74
+	goto :call_label_ciao__ciao__ciao_31
+	:call_label_ciao__ciao__ciao_76
+	rdi <- mem rsp 1088
+	rdi <- rdi
+	mem rsp 96 <- rdi
+	rdi <- mem rsp 96
+	rdi <- rdi
+	mem rsp 96 <- rdi
+	rdi <- mem rsp 96
+	rdi >>= 1
+	mem rsp 96 <- rdi
+	rdi <- mem rsp 32
+	rdi <- rdi
+	mem rsp 88 <- rdi
+	rdi <- mem rsp 88
+	rdi <- rdi
+	mem rsp 88 <- rdi
+	rdi <- mem rsp 88
+	rdi >>= 1
+	mem rsp 88 <- rdi
+	rdi <- mem rsp 88
+	rsi <- mem rsp 96
+	rdi <- rsi = rdi
+	mem rsp 1096 <- rdi
+	rdi <- mem rsp 1096
+	rdi <- rdi
+	mem rsp 1096 <- rdi
+	rdi <- mem rsp 1096
+	rdi <<= 1
+	mem rsp 1096 <- rdi
+	rdi <- mem rsp 1096
+	rdi <- rdi
+	mem rsp 1096 <- rdi
+	rdi <- mem rsp 1096
+	rdi += 1
+	mem rsp 1096 <- rdi
+	rdi <- mem rsp 1096
+	rdi <- rdi
+	mem rsp 96 <- rdi
+	rdi <- mem rsp 96
+	rdi <- rdi
+	mem rsp 96 <- rdi
+	rdi <- mem rsp 96
+	rdi >>= 1
+	mem rsp 96 <- rdi
+	rdi <- mem rsp 96
+	cjump rdi = 1 :call_label_ciao__ciao__ciao_75
+	goto :call_label_ciao__ciao__ciao_31
+	:call_label_ciao__ciao__ciao_77
+	rdi <- 0
+	mem rsp 1120 <- rdi
+	rdi <- mem rsp 1120
+	rdi *= 8
+	mem rsp 1120 <- rdi
+	rdi <- mem rsp 1120
+	rdi <- rdi
+	mem rsp 1128 <- rdi
+	rdi <- mem rsp 1128
+	rdi += 8
+	mem rsp 1128 <- rdi
+	rdi <- mem rsp 80
+	rdi <- rdi
+	mem rsp 1136 <- rdi
+	rdi <- mem rsp 1128
+	rsi <- mem rsp 1136
+	rsi += rdi
+	mem rsp 1136 <- rsi
+	rdi <- mem rsp 1136
+	rdi <- mem rdi 0
+	mem rsp 32 <- rdi
+	rdi <- 1
+	mem rsp 1144 <- rdi
+	rdi <- mem rsp 1144
+	rdi *= 8
+	mem rsp 1144 <- rdi
+	rdi <- mem rsp 1144
+	rdi <- rdi
+	mem rsp 1152 <- rdi
+	rdi <- mem rsp 1152
+	rdi += 8
+	mem rsp 1152 <- rdi
+	rdi <- mem rsp 80
+	rdi <- rdi
+	mem rsp 1160 <- rdi
+	rdi <- mem rsp 1152
+	rsi <- mem rsp 1160
+	rsi += rdi
+	mem rsp 1160 <- rsi
+	rdi <- mem rsp 1160
+	rdi <- mem rdi 0
+	mem rsp 16 <- rdi
+	rdi <- 0
+	mem rsp 1168 <- rdi
+	rdi <- mem rsp 1168
+	rdi *= 8
+	mem rsp 1168 <- rdi
+	rdi <- mem rsp 1168
+	rdi <- rdi
+	mem rsp 1176 <- rdi
+	rdi <- mem rsp 1176
+	rdi += 8
+	mem rsp 1176 <- rdi
+	rdi <- mem rsp 48
+	rdi <- rdi
+	mem rsp 1184 <- rdi
+	rsi <- mem rsp 1176
+	rdi <- mem rsp 1184
+	rdi += rsi
+	mem rsp 1184 <- rdi
+	rdi <- mem rsp 1184
+	rdi <- mem rdi 0
+	mem rsp 1104 <- rdi
+	rdi <- 1
+	mem rsp 1192 <- rdi
+	rdi <- mem rsp 1192
+	rdi *= 8
+	mem rsp 1192 <- rdi
+	rdi <- mem rsp 1192
+	rdi <- rdi
+	mem rsp 1200 <- rdi
+	rdi <- mem rsp 1200
+	rdi += 8
+	mem rsp 1200 <- rdi
+	rdi <- mem rsp 48
+	rdi <- rdi
+	mem rsp 1208 <- rdi
+	rdi <- mem rsp 1200
+	rsi <- mem rsp 1208
+	rsi += rdi
+	mem rsp 1208 <- rsi
+	rdi <- mem rsp 1208
+	rdi <- mem rdi 0
+	mem rsp 24 <- rdi
+	rdi <- 0
+	mem rsp 1216 <- rdi
+	rdi <- mem rsp 1216
+	rdi *= 8
+	mem rsp 1216 <- rdi
+	rdi <- mem rsp 1216
+	rdi <- rdi
+	mem rsp 1224 <- rdi
+	rdi <- mem rsp 1224
+	rdi += 8
+	mem rsp 1224 <- rdi
+	rdi <- mem rsp 40
+	rdi <- rdi
+	mem rsp 1232 <- rdi
+	rsi <- mem rsp 1224
+	rdi <- mem rsp 1232
+	rdi += rsi
+	mem rsp 1232 <- rdi
+	rdi <- mem rsp 1232
+	rdi <- mem rdi 0
+	mem rsp 1088 <- rdi
+	rdi <- 1
+	mem rsp 1240 <- rdi
+	rdi <- mem rsp 1240
+	rdi *= 8
+	mem rsp 1240 <- rdi
+	rdi <- mem rsp 1240
+	rdi <- rdi
+	mem rsp 1248 <- rdi
+	rdi <- mem rsp 1248
+	rdi += 8
+	mem rsp 1248 <- rdi
+	rdi <- mem rsp 40
+	rdi <- rdi
+	mem rsp 1256 <- rdi
+	rdi <- mem rsp 1248
+	rsi <- mem rsp 1256
+	rsi += rdi
+	mem rsp 1256 <- rsi
+	rdi <- mem rsp 1256
+	rdi <- mem rdi 0
+	mem rsp 1072 <- rdi
+	rdi <- mem rsp 16
+	rdi <- rdi
+	mem rsp 96 <- rdi
+	rdi <- mem rsp 96
+	rdi <- rdi
+	mem rsp 96 <- rdi
+	rdi <- mem rsp 96
+	rdi >>= 1
+	mem rsp 96 <- rdi
+	rdi <- mem rsp 1104
+	rdi <- rdi
+	mem rsp 88 <- rdi
+	rdi <- mem rsp 88
+	rdi <- rdi
+	mem rsp 88 <- rdi
+	rdi <- mem rsp 88
+	rdi >>= 1
+	mem rsp 88 <- rdi
+	rsi <- mem rsp 88
+	rdi <- mem rsp 96
+	rdi <- rdi = rsi
+	mem rsp 1112 <- rdi
+	rdi <- mem rsp 1112
+	rdi <- rdi
+	mem rsp 1112 <- rdi
+	rdi <- mem rsp 1112
+	rdi <<= 1
+	mem rsp 1112 <- rdi
+	rdi <- mem rsp 1112
+	rdi <- rdi
+	mem rsp 1112 <- rdi
+	rdi <- mem rsp 1112
+	rdi += 1
+	mem rsp 1112 <- rdi
+	rdi <- mem rsp 1112
+	rdi <- rdi
+	mem rsp 96 <- rdi
+	rdi <- mem rsp 96
+	rdi <- rdi
+	mem rsp 96 <- rdi
+	rdi <- mem rsp 96
+	rdi >>= 1
+	mem rsp 96 <- rdi
+	rdi <- mem rsp 96
+	cjump rdi = 1 :call_label_ciao__ciao__ciao_76
+	goto :call_label_ciao__ciao__ciao_31
+)
+
+(@totalSum
+	1 2
+	rsi <- rdi
+	:call_label_ciao__ciao__ciao__ciao_78
+	goto :call_label_ciao__ciao__ciao__ciao_90
+	:call_label_ciao__ciao__ciao__ciao_79
+	rax <- rcx
+	return
+	:call_label_ciao__ciao__ciao__ciao_80
+	rax <- r8
+	rax <- rax
+	rax >>= 1
+	rdi <- 3
+	rdi <- rdi
+	rdi >>= 1
+	r8 <- rax
+	r8 += rdi
+	r8 <- r8
+	r8 <<= 1
+	r8 <- r8
+	r8 += 1
+	goto :call_label_ciao__ciao__ciao__ciao_81
+	:call_label_ciao__ciao__ciao__ciao_81
+	rax <- r8
+	rax <- rax
+	rax >>= 1
+	rdi <- rdx
+	rdi <- rdi
+	rdi >>= 1
+	rdi <- rax < rdi
+	rdi <- rdi
+	rdi <<= 1
+	rdi <- rdi
+	rdi += 1
+	rax <- rdi
+	rax <- rax
+	rax >>= 1
+	cjump rax = 1 :call_label_ciao__ciao__ciao__ciao_82
+	goto :call_label_ciao__ciao__ciao__ciao_79
+	:call_label_ciao__ciao__ciao__ciao_82
+	r9 <- 1
+	goto :call_label_ciao__ciao__ciao__ciao_83
+	:call_label_ciao__ciao__ciao__ciao_83
+	rax <- r9
+	rax <- rax
+	rax >>= 1
+	rdi <- mem rsp 0
+	rdi <- rdi
+	rdi <- rdi
+	rdi >>= 1
+	rdi <- rax < rdi
+	rdi <- rdi
+	rdi <<= 1
+	rdi <- rdi
+	rdi += 1
+	rax <- rdi
+	rax <- rax
+	rax >>= 1
+	cjump rax = 1 :call_label_ciao__ciao__ciao__ciao_84
+	goto :call_label_ciao__ciao__ciao__ciao_80
+	:call_label_ciao__ciao__ciao__ciao_84
+	rdi <- r8
+	mem rsp 8 <- rdi
+	rdi <- mem rsp 8
+	rdi <- rdi
+	mem rsp 8 <- rdi
+	rdi <- mem rsp 8
+	rdi >>= 1
+	mem rsp 8 <- rdi
+	rax <- r9
+	rax <- rax
+	rax >>= 1
+	r11 <- 0
+	rdi <- rsi = 0
+	cjump rdi = 1 :call_label_ciao__ciao__ciao__ciao_89
+	goto :call_label_ciao__ciao__ciao__ciao_85
+	:call_label_ciao__ciao__ciao__ciao_85
+	rdi <- 0
+	rdi *= 8
+	rdi <- rdi
+	rdi += 8
+	r10 <- rsi
+	r10 += rdi
+	r10 <- mem r10 0
+	r10 <- r10
+	r10 >>= 1
+	rdi <- mem rsp 8
+	r11 <- rdi
+	r11 <- r11
+	r11 <<= 1
+	r11 <- r11
+	r11 += 1
+	rdi <- mem rsp 8
+	rdi <- rdi < r10
+	cjump rdi = 1 :call_label_ciao__ciao__ciao__ciao_86
+	goto :call_label_ciao__ciao__ciao__ciao_89
+	:call_label_ciao__ciao__ciao__ciao_86
+	rdi <- 1
+	rdi *= 8
+	r10 <- rdi
+	r10 += 8
+	rdi <- rsi
+	rdi += r10
+	rdi <- mem rdi 0
+	rdi <- rdi
+	rdi >>= 1
+	r11 <- rax
+	r11 <- r11
+	r11 <<= 1
+	r11 <- r11
+	r11 += 1
+	rdi <- rax < rdi
+	cjump rdi = 1 :call_label_ciao__ciao__ciao__ciao_87
+	goto :call_label_ciao__ciao__ciao__ciao_89
+	:call_label_ciao__ciao__ciao__ciao_87
+	goto :call_label_ciao__ciao__ciao__ciao_88
+	:call_label_ciao__ciao__ciao__ciao_88
+	r10 <- 0
+	rdi <- rsi
+	rdi += 16
+	rdi <- mem rdi 0
+	r11 <- rdi
+	r11 >>= 1
+	rdi <- 1
+	rdi <- rdi
+	rdi *= r11
+	r11 <- mem rsp 8
+	r11 <- r11
+	r11 *= rdi
+	r10 <- r10
+	r10 += r11
+	r10 <- r10
+	r10 += rax
+	rax <- r10
+	rax *= 8
+	rax <- rax
+	rax += 24
+	rdi <- rsi
+	rdi += rax
+	rdi <- mem rdi 0
+	rax <- rcx
+	rax <- rax
+	rax >>= 1
+	rdi <- rdi
+	rdi <- rdi
+	rdi >>= 1
+	rcx <- rax
+	rcx += rdi
+	rcx <- rcx
+	rcx <<= 1
+	rcx <- rcx
+	rcx += 1
+	rax <- r9
+	rax <- rax
+	rax >>= 1
+	rdi <- 3
+	rdi <- rdi
+	rdi >>= 1
+	r9 <- rax
+	r9 += rdi
+	r9 <- r9
+	r9 <<= 1
+	r9 <- r9
+	r9 += 1
+	goto :call_label_ciao__ciao__ciao__ciao_83
+	:call_label_ciao__ciao__ciao__ciao_89
+	rdi <- 0
+	call tensor-error 1
+	goto :call_label_ciao__ciao__ciao__ciao_88
+	:call_label_ciao__ciao__ciao__ciao_90
+	rdi <- 0
+	rdi *= 8
+	rdx <- rdi
+	rdx += 8
+	rdi <- rsi
+	rdi += rdx
+	rdx <- mem rdi 0
+	rdi <- 1
+	rdi *= 8
+	rcx <- rdi
+	rcx += 8
+	rdi <- rsi
+	rdi += rcx
+	rdi <- mem rdi 0
+	mem rsp 0 <- rdi
+	r8 <- 1
+	rcx <- 1
+	goto :call_label_ciao__ciao__ciao__ciao_81
+)
+
+)

@@ -1,0 +1,107 @@
+(@main
+  (@succ
+    10
+    %uu1 <- rdi
+    %uu2 <- rsi
+    %uu3 <- rdx
+    %uu4 <- rcx
+    %uu5 <- r8
+    %uu6 <- r9
+    %n <- stack-arg 0
+    %uu8 <- stack-arg 8
+    %uu9 <- stack-arg 16
+    %uu10 <- stack-arg 24
+    :call_label0
+    %m <- %n
+    %m += 1
+    rax <- %m
+    return
+  )
+  (@sum_to
+    7
+    %uu1 <- rdi
+    %uu2 <- rsi
+    %uu3 <- rdx
+    %uu4 <- rcx
+    %uu5 <- r8
+    %uu6 <- r9
+    %to <- stack-arg 0
+    :call_label_ciao_1
+    %sum <- 0
+    %from <- 0
+    goto :call_label_ciao_2
+    :call_label_ciao_2
+    %tmp_rdx <- %to
+    %icmp <- %tmp_rdx < %from
+
+    cjump %icmp = 1 :call_label_ciao_4
+    goto :call_label_ciao_3
+    :call_label_ciao_3
+    %sum <- %sum
+    %sum += %from
+    %rsp_16 <- %from
+    rdi <- %uu1
+    rsi <- %uu2
+    rdx <- %uu3
+    rcx <- %uu4
+    r8 <- %uu5
+    r9 <- %uu6
+    mem rsp -40 <- %rsp_16
+    mem rsp -32 <- 8
+    mem rsp -24 <- 9
+    mem rsp -16 <- 10
+
+mem rsp -8 <- :call_label_ciao_5
+    call @succ 10
+
+:call_label_ciao_5
+    %tmp_rax <- rax
+    %from <- %tmp_rax
+    goto :call_label_ciao_2
+    :call_label_ciao_4
+    rax <- %sum
+    return
+  )
+  (@main
+    0
+    :call_label_ciao__ciao_6
+    %i <- 0
+    %sft <- 1
+    goto :call_label_ciao__ciao_7
+    :call_label_ciao__ciao_7
+    %icmp <- %i <= 20
+
+    cjump %icmp = 1 :call_label_ciao__ciao_8
+    goto :call_label_ciao__ciao_9
+    :call_label_ciao__ciao_8
+    %tmp_r12 <- %i
+    %rsp_16 <- %tmp_r12
+    %tmp_r12 <- %tmp_r12
+    %tmp_r12 += 1
+    rdi <- 1
+    rsi <- 2
+    rdx <- 3
+    rcx <- 4
+    r8 <- 5
+    r9 <- 6
+    mem rsp -16 <- %rsp_16
+
+mem rsp -8 <- :call_label_ciao__ciao_10
+    call @sum_to 7
+
+:call_label_ciao__ciao_10
+    %tmp_rax <- rax
+    %tmp_rcx <- 1
+    %tmp_rax <- %tmp_rax
+    %tmp_rax <<= %sft
+    %tmp_rax <- %tmp_rax
+    %tmp_rax += %sft
+    %tmp_rdi <- %tmp_rax
+    rdi <- %tmp_rdi
+    call print 1
+    %i <- %tmp_r12
+    goto :call_label_ciao__ciao_7
+    :call_label_ciao__ciao_9
+    return
+  )
+)

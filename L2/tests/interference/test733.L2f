@@ -1,0 +1,29 @@
+(@PopulateArray1
+	2
+	%arr <- rdi
+	%len <- rsi
+	:call_label_ciao__ciao_8
+	%ind <- 0
+	goto :call_label_ciao__ciao_9
+	:call_label_ciao__ciao_9
+	%stop <- %len <= %ind
+	cjump %stop = 1 :call_label_ciao__ciao_11
+	goto :call_label_ciao__ciao_10
+	:call_label_ciao__ciao_10
+	%value <- %ind
+	%value *= 8
+	%value <<= 1
+	%value += 1
+	%newVar1 <- 0
+	%newVar1 += %ind
+	%newVar0 <- %newVar1
+	%newVar0 *= 8
+	%newVar0 += 24
+	%newVar3 <- %arr
+	%newVar3 += %newVar0
+	mem %newVar3 0 <- %value
+	%ind += 1
+	goto :call_label_ciao__ciao_9
+	:call_label_ciao__ciao_11
+	return
+)

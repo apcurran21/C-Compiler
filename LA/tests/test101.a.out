@@ -1,0 +1,2 @@
+{s:11, 3, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0}
+ERROR: instruction at line 11 attempted to use position 3 in the dimension 0 of a tensor that only has 3 elements in that dimension

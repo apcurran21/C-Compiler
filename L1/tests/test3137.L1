@@ -1,0 +1,157 @@
+(@stub
+(@stub
+	0 0
+	return
+)
+
+(@leftShiftStuff_1
+	3 3
+	rdi <- rdi
+	mem rsp 8 <- rdi
+	rdi <- rsi
+	mem rsp 0 <- rdi
+	rdi <- rdx
+	mem rsp 16 <- rdi
+	rdi <- mem rsp 0
+	rcx <- mem rsp 8
+	rdi <<= rcx
+	mem rsp 0 <- rdi
+	rcx <- mem rsp 0
+	rdi <- mem rsp 16
+	rdi <<= rcx
+	mem rsp 16 <- rdi
+	rdi <- mem rsp 16
+	rax <- rdi
+	rdi <- mem rsp 8
+	rax += rdi
+	rdi <- mem rsp 0
+	rax += rdi
+	return
+)
+
+(@leftShiftStuff_2
+	3 3
+	rdi <- rdi
+	mem rsp 8 <- rdi
+	rdi <- rsi
+	mem rsp 0 <- rdi
+	rdi <- rdx
+	mem rsp 16 <- rdi
+	rcx <- mem rsp 0
+	rdi <- mem rsp 8
+	rdi <<= rcx
+	mem rsp 8 <- rdi
+	rcx <- mem rsp 8
+	rdi <- mem rsp 16
+	rdi <<= rcx
+	mem rsp 16 <- rdi
+	rdi <- mem rsp 16
+	rax <- rdi
+	rdi <- mem rsp 0
+	rax += rdi
+	rdi <- mem rsp 8
+	rax += rdi
+	return
+)
+
+(@leftShiftStuff_3
+	3 3
+	rdi <- rdi
+	mem rsp 16 <- rdi
+	rdi <- rsi
+	mem rsp 8 <- rdi
+	rdi <- rdx
+	mem rsp 0 <- rdi
+	rdi <- mem rsp 0
+	rcx <- mem rsp 16
+	rdi <<= rcx
+	mem rsp 0 <- rdi
+	rcx <- mem rsp 0
+	rdi <- mem rsp 8
+	rdi <<= rcx
+	mem rsp 8 <- rdi
+	rdi <- mem rsp 8
+	rax <- rdi
+	rdi <- mem rsp 16
+	rax += rdi
+	rdi <- mem rsp 0
+	rax += rdi
+	return
+)
+
+(@leftShiftStuff_4
+	3 3
+	rdi <- rdi
+	mem rsp 16 <- rdi
+	rdi <- rsi
+	mem rsp 8 <- rdi
+	rdi <- rdx
+	mem rsp 0 <- rdi
+	rdi <- mem rsp 0
+	rcx <- mem rsp 8
+	rdi <<= rcx
+	mem rsp 0 <- rdi
+	rcx <- mem rsp 0
+	rdi <- mem rsp 16
+	rdi <<= rcx
+	mem rsp 16 <- rdi
+	rdi <- mem rsp 16
+	rax <- rdi
+	rdi <- mem rsp 8
+	rax += rdi
+	rdi <- mem rsp 0
+	rax += rdi
+	return
+)
+
+(@leftShiftStuff_5
+	3 3
+	rdi <- rdi
+	mem rsp 8 <- rdi
+	rdi <- rsi
+	mem rsp 16 <- rdi
+	rdi <- rdx
+	mem rsp 0 <- rdi
+	rcx <- mem rsp 0
+	rdi <- mem rsp 8
+	rdi <<= rcx
+	mem rsp 8 <- rdi
+	rcx <- mem rsp 8
+	rdi <- mem rsp 16
+	rdi <<= rcx
+	mem rsp 16 <- rdi
+	rdi <- mem rsp 16
+	rax <- rdi
+	rdi <- mem rsp 0
+	rax += rdi
+	rdi <- mem rsp 8
+	rax += rdi
+	return
+)
+
+(@leftShiftStuff_6
+	3 3
+	rdi <- rdi
+	mem rsp 16 <- rdi
+	rdi <- rsi
+	mem rsp 8 <- rdi
+	rdi <- rdx
+	mem rsp 0 <- rdi
+	rcx <- mem rsp 0
+	rdi <- mem rsp 8
+	rdi <<= rcx
+	mem rsp 8 <- rdi
+	rcx <- mem rsp 8
+	rdi <- mem rsp 16
+	rdi <<= rcx
+	mem rsp 16 <- rdi
+	rdi <- mem rsp 16
+	rax <- rdi
+	rdi <- mem rsp 0
+	rax += rdi
+	rdi <- mem rsp 8
+	rax += rdi
+	return
+)
+
+)

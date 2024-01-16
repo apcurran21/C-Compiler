@@ -1,0 +1,18 @@
+%arr %len r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx rsi
+%len %arr r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx rsi
+r10 %arr %len r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx rsi
+r11 %arr %len r10 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx rsi
+r12 %arr %len r10 r11 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx %res rsi
+r13 %arr %len r10 r11 r12 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx %res rsi
+r14 %arr %len r10 r11 r12 r13 r15 r8 r9 rax rbp rbx rcx rdi rdx %res rsi
+r15 %arr %len r10 r11 r12 r13 r14 r8 r9 rax rbp rbx rcx rdi rdx %res rsi
+r8 %arr %len r10 r11 r12 r13 r14 r15 r9 rax rbp rbx rcx rdi rdx rsi
+r9 %arr %len r10 r11 r12 r13 r14 r15 r8 rax rbp rbx rcx rdi rdx rsi
+rax %arr %len r10 r11 r12 r13 r14 r15 r8 r9 rbp rbx rcx rdi rdx rsi
+rbp %arr %len r10 r11 r12 r13 r14 r15 r8 r9 rax rbx rcx rdi rdx %res rsi
+rbx %arr %len r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rcx rdi rdx %res rsi
+rcx %arr %len r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rdi rdx rsi
+rdi %arr %len r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdx rsi
+rdx %arr %len r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rsi
+%res r12 r13 r14 r15 rbp rbx
+rsi %arr %len r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx

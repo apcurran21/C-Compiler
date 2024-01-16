@@ -1,0 +1,44 @@
+//comment about what this program does
+(@prog1
+  (@prog1
+    0 0
+    rdi <- 3
+    rsi <- 2
+    rdx <- 5
+    rcx <- 8
+    r8 <- 11
+    r9 <- 15
+    mem rsp -8 <- :func1_ret1
+    mem rsp -16 <- 9
+    call @func1 7
+   :func1_ret1
+    rdi <- rax
+    mem rsp -8 <- rax
+    call print 1
+    rax <- mem rsp -8
+   return
+   )
+  (@func1
+    7 0
+    rax <- 0
+   :label1
+    cjump rdi < 0 :END
+    cjump rcx < 1 :END
+    //0 with encoding
+    rsi <<= 1
+    rcx >>= 1
+    rax @ rax rsi 1
+    rax @ rax rcx 2
+    rax -=r8
+    rax += r9
+    rdi--
+    rax++
+    cjump rdx <=4 :skip
+    rax += mem rsp 0
+    rdx--
+   :skip
+    goto :label1
+   :END
+    return
+  )
+)

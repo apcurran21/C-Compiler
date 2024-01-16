@@ -1,0 +1,20 @@
+(@populate
+	1
+	%size <- rdi
+	%count_to_write <- 1
+	rsi <- %count_to_write
+	rdi <- %size
+	call allocate 2
+	%counter <- 0
+	%write_ptr <- rax
+	:write_val
+	%write_ptr += 8
+	mem %write_ptr 0 <- %counter
+	%counter += 1
+	goto :check_count
+	:check_count
+	cjump %counter <= %size :write_val
+	goto :out
+	:out
+	return
+)

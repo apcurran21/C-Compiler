@@ -1,0 +1,8 @@
+(@fib
+	0
+	rdi <- 10
+	mem rsp -8 <- :arr_rtn
+	call @array 1
+	:arr_rtn
+	return
+)

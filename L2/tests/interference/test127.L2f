@@ -1,0 +1,36 @@
+(@calcs
+	0
+	%var1 <- 5
+	%var2 <- 3
+	%var3 <- 13
+	%var4 <- 17
+	%var5 <- 7
+	%var6 <- 23
+	rdi <- %var1
+	rsi <- %var2
+	rdx <- %var3
+	rcx <- %var4
+	r8 <- %var5
+	r9 <- %var6
+	mem rsp -8 <- :sum_ret
+	call @sum 6
+	:sum_ret
+	rdi <- rax
+	mem rsp -8 <- :int_print_ret
+	call @int_print 1
+	:int_print_ret
+	rdi <- %var1
+	rsi <- %var2
+	rdx <- %var3
+	rcx <- %var4
+	r8 <- %var5
+	r9 <- %var6
+	mem rsp -8 <- :prod_ret
+	call @prod 6
+	:prod_ret
+	rdi <- rax
+	mem rsp -8 <- :int_print_ret_2
+	call @int_print 1
+	:int_print_ret_2
+	return
+)

@@ -1,0 +1,41 @@
+(@test2
+(@test2
+	0 4
+	mem rsp 24 <- r15
+	mem rsp 16 <- r14
+	mem rsp 8 <- r13
+	mem rsp 0 <- r12
+	r12 <- 0
+	r15 <- 2
+	r14 <- 2
+	r13 <- 1
+	rdi <- r13
+	call print 1
+	rdi <- 3
+	rdi <- r13
+	r13 <- 900099
+	r13 >>= 5
+	r13 -= 78
+	r13 <- rdi
+	:fibonacci
+	rdi <- r13
+	call print 1
+	r13 <- r12
+	r13 += r15
+	r13 += 1
+	r13 -= 1
+	r13 += 1
+	r12 <- r15
+	r15 <- r13
+	r15 -= 1
+	r14 += 2
+	rdi <- r13
+	cjump r14 <= 22 :fibonacci
+	r12 <- mem rsp 0
+	r13 <- mem rsp 8
+	r14 <- mem rsp 16
+	r15 <- mem rsp 24
+	return
+)
+
+)

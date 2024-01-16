@@ -1,0 +1,52 @@
+define :main() {
+    // get input
+    // input "1": error from no allocation
+    // input "2": error from out of bounds access
+    // input "3": print array with second element changed
+    // input anything else: print array twice
+    %var1 <- call input()
+    %var4 <- %var1 = 3
+    br %var4 :skipAlloc
+
+    %var5 <- 15
+    %var6 <- 3
+    %var7 <- call allocate(%var5,%var6)
+    call print(%var7)
+
+    :skipAlloc
+    // Get size of allocation
+    %var2 <- load %var7
+    %var8 <- %var2 < 7
+    br %var8 :error1
+
+    %var3 <- 9
+    %var9 <- %var1 = 5
+    br %var9 :skipAccessFix
+    %var3 <- %var3 - 3
+    :skipAccessFix
+    %var10 <- %var2 <= %var3
+    br %var10 :error2
+
+    %var11 <- %var1 = 7
+    br %var11 :changeSecond
+    :jumpBack
+
+    call print(%var7)
+    return
+
+    :changeSecond
+    %var12 <- %var7 + 16
+    store %var12 <- 5
+//    mem rbp 16 <- 5
+    br :jumpBack
+  
+
+    :error1
+    %var13 <- 5
+    call tensor-error(%var13)
+    :error2
+    %var14 <- 3
+    %var15 <- 3
+    %var16 <- 3
+    call tensor-error(%var14,%var15,%var16)
+}

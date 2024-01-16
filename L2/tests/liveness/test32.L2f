@@ -1,0 +1,15 @@
+(@arrayprint
+	1
+	%my_V1 <- rdi
+	%my_V2 <- mem %my_V1 8
+	rdi <- mem %my_V2 8
+	call print 1
+	rdi <- mem %my_V2 16
+	call print 1
+	%my_V2 <- mem %my_V1 16
+	rdi <- mem %my_V2 8
+	call print 1
+	rdi <- mem %my_V2 16
+	call print 1
+	return
+)

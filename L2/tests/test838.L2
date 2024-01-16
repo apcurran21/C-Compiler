@@ -1,0 +1,26 @@
+(@stub
+ (@stub
+   0
+   return
+ )
+
+ (@leftShiftStuff_1
+   3
+    %v1 <- rdi
+    %v2 <- rsi
+    %v3 <- rdx
+
+    cjump %v1 = 0 :WORK
+    return
+
+    :WORK
+    %v2 <<= %v1
+    %v3 <<= %v2
+
+    rax <- %v3
+    rax += %v1
+    rax += %v2
+    return
+  )
+
+)

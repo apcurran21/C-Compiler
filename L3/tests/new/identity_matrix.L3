@@ -1,0 +1,40 @@
+// Create a 3 by 3 identity matrix
+// output: {s:3, {s:3, 1, 0, 0}, {s:3, 0, 1, 0}, {s:3, 0, 0, 1}}
+
+define :main() {
+	%length <- 7
+	%num <- 1
+	%firstRow <- call allocate(%length, %num)
+
+	%firstSlotMem <- %firstRow + 8
+	%firstSlot <- load %firstSlotMem
+	%firstSlot <- %firstSlot + 2
+	store %firstSlotMem <- %firstSlot
+
+	%secondRow <- call allocate(%length, %num)
+
+	%secondSlotMem <- %secondRow + 16
+	%secondSlot <- load %secondSlotMem
+	%secondSlot <- %secondSlot + 2
+	store %secondSlotMem <- %secondSlot
+
+	%thirdRow <- call allocate(%length, %num)
+
+	%thirdSlotMem <- %thirdRow + 24
+	%thirdSlot <- load %thirdSlotMem
+	%thirdSlot <- %thirdSlot + 2
+	store %thirdSlotMem <- %thirdSlot
+
+	%array <- call allocate(%length, %num)
+
+	%arrayFirst <- %array + 8
+	%arraySecond <- %array + 16
+	%arrayThird <- %array + 24
+
+	store %arrayFirst <- %firstRow
+	store %arraySecond <- %secondRow
+	store %arrayThird <- %thirdRow
+
+	call print(%array)
+	return 
+}

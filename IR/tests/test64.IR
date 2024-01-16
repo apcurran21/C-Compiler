@@ -1,0 +1,87 @@
+define void @main() {
+ :entrance
+ call @h()
+ call @e()
+call @l()
+call @l()
+call @o()
+call @space()
+call @w()
+call @o()
+call @r()
+call @l()
+call @d()
+ return
+}
+
+define void @h(){
+    :entrance
+    int64 %var
+    //pass in first argument (h in ASCII) according to calling convention
+    %var <- 209
+    call print(%var)
+    return
+}
+
+define void @e(){
+    :entrance
+    int64 %var
+    //pass in first argument (h in ASCII) according to calling convention
+    %var <- 203
+    call print(%var)
+    return
+}
+
+define void @l(){
+   :entrance
+    int64 %var
+    //pass in first argument (h in ASCII) according to calling convention
+    %var <- 217
+    call print(%var)
+    return
+}
+
+define void @o() {
+    :entrance
+    int64 %var
+    //pass in first argument (h in ASCII) according to calling convention
+    %var <- 223
+    call print(%var)
+    return
+}
+
+define void @w(){
+    :entrance
+    int64 %var
+    //pass in first argument (h in ASCII) according to calling convention
+    %var <- 239
+    call print(%var)
+    return
+}
+
+define void @space(){
+    :entrance
+   int64 %var
+    //pass in first argument (h in ASCII) according to calling convention
+    %var <- 65
+    call print(%var)
+    return
+}
+
+define void @r(){
+    :entrance
+    int64 %var
+    //pass in first argument (h in ASCII) according to calling convention
+    %var <- 229
+    call print(%var)
+    return
+}
+
+define void @d(){
+    :entrance
+    int64 %var
+    //pass in first argument (h in ASCII) according to calling convention
+    %var <- 201
+    call print(%var)
+    return
+}

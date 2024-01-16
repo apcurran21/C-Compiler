@@ -1,0 +1,28 @@
+%argClosure %arityOfC %c %checkArgs %fp %newVar0 %newVar1 %newVar2 %newVar3 %newVar4 %newVar5 r12 r13 r14 r15 rbp rbx rdi
+%arityOfC %argClosure %c %fp r12 r13 r14 r15 rbp rbx
+%c %argClosure %arityOfC %checkArgs %fp %newVar0 %newVar1 %newVar2 %newVar3 %newVar4 %newVar5 r12 r13 r14 r15 rbp rbx rsi
+%checkArgs %argClosure %c %fp r12 r13 r14 r15 rbp rbx
+%finalResultEncoded %finalResult r12 r13 r14 r15 rbp rbx
+%finalResult %finalResultEncoded r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx rsi
+%fp %argClosure %arityOfC %c %checkArgs %newVar3 %newVar4 %newVar5 r12 r13 r14 r15 rbp rbx rdi rsi
+%newVar0 %argClosure %c %newVar2 r12 r13 r14 r15 rbp rbx
+%newVar1 %argClosure %c r12 r13 r14 r15 rbp rbx
+%newVar2 %argClosure %c %newVar0 r12 r13 r14 r15 rbp rbx
+%newVar3 %argClosure %c %fp %newVar5 r12 r13 r14 r15 rbp rbx
+%newVar4 %argClosure %c %fp r12 r13 r14 r15 rbp rbx
+%newVar5 %argClosure %c %fp %newVar3 r12 r13 r14 r15 rbp rbx
+r10 %finalResult r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx rsi
+r11 %finalResult r10 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx rsi
+r12 %argClosure %arityOfC %c %checkArgs %finalResult %finalResultEncoded %fp %newVar0 %newVar1 %newVar2 %newVar3 %newVar4 %newVar5 r10 r11 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx rsi
+r13 %argClosure %arityOfC %c %checkArgs %finalResult %finalResultEncoded %fp %newVar0 %newVar1 %newVar2 %newVar3 %newVar4 %newVar5 r10 r11 r12 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx rsi
+r14 %argClosure %arityOfC %c %checkArgs %finalResult %finalResultEncoded %fp %newVar0 %newVar1 %newVar2 %newVar3 %newVar4 %newVar5 r10 r11 r12 r13 r15 r8 r9 rax rbp rbx rcx rdi rdx rsi
+r15 %argClosure %arityOfC %c %checkArgs %finalResult %finalResultEncoded %fp %newVar0 %newVar1 %newVar2 %newVar3 %newVar4 %newVar5 r10 r11 r12 r13 r14 r8 r9 rax rbp rbx rcx rdi rdx rsi
+r8 %finalResult r10 r11 r12 r13 r14 r15 r9 rax rbp rbx rcx rdi rdx rsi
+r9 %finalResult r10 r11 r12 r13 r14 r15 r8 rax rbp rbx rcx rdi rdx rsi
+rax %finalResult r10 r11 r12 r13 r14 r15 r8 r9 rbp rbx rcx rdi rdx rsi
+rbp %argClosure %arityOfC %c %checkArgs %finalResult %finalResultEncoded %fp %newVar0 %newVar1 %newVar2 %newVar3 %newVar4 %newVar5 r10 r11 r12 r13 r14 r15 r8 r9 rax rbx rcx rdi rdx rsi
+rbx %argClosure %arityOfC %c %checkArgs %finalResult %finalResultEncoded %fp %newVar0 %newVar1 %newVar2 %newVar3 %newVar4 %newVar5 r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rcx rdi rdx rsi
+rcx %finalResult r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rdi rdx rsi
+rdi %argClosure %finalResult %fp r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdx rsi
+rdx %finalResult r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rsi
+rsi %c %finalResult %fp r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx

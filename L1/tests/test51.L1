@@ -1,0 +1,42 @@
+(@go
+(@fib
+	1 2
+	cjump 1 < rdi :recurse
+	rax <- 1
+	return
+	:recurse
+	rsi <- rdi
+	mem rsp 0 <- rsi
+	rdi -= 1
+	mem rsp -8 <- :f_n1
+	call @fib 1
+	:f_n1
+	rdi <- rax
+	mem rsp 8 <- rdi
+	rdi <- mem rsp 0
+	rdi <- rdi
+	rdi -= 2
+	mem rsp -8 <- :f_n2
+	call @fib 1
+	:f_n2
+	rdi <- mem rsp 8
+	rax += rdi
+	rdi <- mem rsp 0
+	rdi <- rdi
+	return
+)
+
+(@go
+	0 0
+	rdi <- 20
+	mem rsp -8 <- :fib_ret
+	call @fib 1
+	:fib_ret
+	rdi <- rax
+	rdi <<= 1
+	rdi += 1
+	call print 1
+	return
+)
+
+)

@@ -1,0 +1,28 @@
+define :main() {
+	%layers <- 9
+	%fill <- 11
+	%cur <- 3
+
+	%tst <- %layers < 3
+	br %tst :end_early
+
+	:start_loop
+	%st <- call allocate(%cur, %fill)
+	call print(%st)
+
+	%cur <- %cur + 2
+
+	%ts <- %cur <= %layers
+	br %ts :start_loop
+
+	:start_loop_2
+	%st2 <- call allocate(%cur, %fill)
+	call print(%st2)
+
+	%cur <- %cur - 2
+	%ts <- %cur > 2
+	br %ts :start_loop_2
+
+	:end_early
+	return
+}

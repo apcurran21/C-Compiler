@@ -1,0 +1,152 @@
+(@main
+(@newmat
+	2 4
+	mem rsp 24 <- r15
+	mem rsp 16 <- r14
+	mem rsp 8 <- r13
+	mem rsp 0 <- r12
+	rdx <- rdi
+	rsi <- rsi
+	r13 <- rdx
+	rdx <- rdx
+	rdx += rdx
+	rdx <- rdx
+	rdx += 1
+	r14 <- rdx
+	rdx <- rdx
+	rdx += 4
+	rsi <- rsi
+	rsi += rsi
+	rsi <- rsi
+	rsi += 1
+	r12 <- rsi
+	rsi <- 1
+	rdi <- rdx
+	rsi <- rsi
+	call allocate 2
+	rdi <- rax
+	mem rdi 8 <- r14
+	mem rdi 16 <- r12
+	r15 <- rdi
+	r14 <- 0
+	:call_label0
+	rdx <- r12
+	rsi <- 1
+	rdi <- rdx
+	rsi <- rsi
+	call allocate 2
+	rdi <- rax
+	rdx <- r14
+	rdx *= 8
+	rdx <- rdx
+	rdx += r15
+	mem rdx 24 <- rdi
+	r14 <- r14
+	r14 += 1
+	rdi <- r14 < r13
+	cjump rdi = 1 :call_label0
+	rax <- r15
+	r12 <- mem rsp 0
+	r13 <- mem rsp 8
+	r14 <- mem rsp 16
+	r15 <- mem rsp 24
+	return
+)
+
+(@matset
+	4 0
+	r8 <- rdi
+	rdi <- rsi
+	rsi <- rdx
+	rdx <- rcx
+	rdi <- rdi
+	rdi *= 8
+	rdi <- rdi
+	rdi += r8
+	r8 <- mem rdi 24
+	rdi <- rsi
+	rdi *= 8
+	rdi <- rdi
+	rdi += r8
+	mem rdi 8 <- rdx
+	return
+)
+
+(@main
+	0 1
+	mem rsp 0 <- r12
+	rdi <- 2
+	rsi <- 5
+	rdi <- rdi
+	rsi <- rsi
+	mem rsp -8 <- :call_label_ciao_1
+	call @newmat 2
+	:call_label_ciao_1
+	rdi <- rax
+	r12 <- rdi
+	rdi <- r12
+	rdi <- rdi
+	call print 1
+	rdi <- r12
+	rsi <- 0
+	rdx <- 1
+	rcx <- 3
+	rdi <- rdi
+	rsi <- rsi
+	rdx <- rdx
+	rcx <- rcx
+	mem rsp -8 <- :call_label_ciao_2
+	call @matset 4
+	:call_label_ciao_2
+	rdi <- r12
+	rsi <- 0
+	rdx <- 2
+	rcx <- 5
+	rdi <- rdi
+	rsi <- rsi
+	rdx <- rdx
+	rcx <- rcx
+	mem rsp -8 <- :call_label_ciao_3
+	call @matset 4
+	:call_label_ciao_3
+	rdi <- r12
+	rsi <- 0
+	rdx <- 3
+	rcx <- 7
+	rdi <- rdi
+	rsi <- rsi
+	rdx <- rdx
+	rcx <- rcx
+	mem rsp -8 <- :call_label_ciao_4
+	call @matset 4
+	:call_label_ciao_4
+	rdi <- r12
+	rsi <- 1
+	rdx <- 3
+	rcx <- 9
+	rdi <- rdi
+	rsi <- rsi
+	rdx <- rdx
+	rcx <- rcx
+	mem rsp -8 <- :call_label_ciao_5
+	call @matset 4
+	:call_label_ciao_5
+	rdi <- r12
+	rsi <- 1
+	rdx <- 0
+	rcx <- -1
+	rdi <- rdi
+	rsi <- rsi
+	rdx <- rdx
+	rcx <- rcx
+	mem rsp -8 <- :call_label_ciao_6
+	call @matset 4
+	:call_label_ciao_6
+	rdi <- r12
+	rdi <- rdi
+	call print 1
+	r12 <- mem rsp 0
+	return
+)
+
+)

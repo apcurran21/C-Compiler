@@ -1,0 +1,9 @@
+(:go
+
+(:go
+  0 2
+  mem rsp 2 <- 1
+  return 
+)
+
+)

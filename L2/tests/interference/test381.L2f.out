@@ -1,0 +1,24 @@
+%addr r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx %refcount %res rsi %s %switch %val1 %val2 %w
+%n r12 r13 r14 r15 rbp rbx rdx %s %w
+r10 %addr r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx %refcount rsi %s %switch
+r11 %addr r10 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx %refcount rsi %s %switch
+r12 %addr %n r10 r11 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx %refcount %res rsi %s %switch %val1 %val2 %w
+r13 %addr %n r10 r11 r12 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx %refcount %res rsi %s %switch %val1 %val2 %w
+r14 %addr %n r10 r11 r12 r13 r15 r8 r9 rax rbp rbx rcx rdi rdx %refcount %res rsi %s %switch %val1 %val2 %w
+r15 %addr %n r10 r11 r12 r13 r14 r8 r9 rax rbp rbx rcx rdi rdx %refcount %res rsi %s %switch %val1 %val2 %w
+r8 %addr r10 r11 r12 r13 r14 r15 r9 rax rbp rbx rcx rdi rdx %refcount rsi %s %switch
+r9 %addr r10 r11 r12 r13 r14 r15 r8 rax rbp rbx rcx rdi rdx %refcount rsi %s %switch
+rax %addr r10 r11 r12 r13 r14 r15 r8 r9 rbp rbx rcx rdi rdx %refcount rsi %s %switch
+rbp %addr %n r10 r11 r12 r13 r14 r15 r8 r9 rax rbx rcx rdi rdx %refcount %res rsi %s %switch %val1 %val2 %w
+rbx %addr %n r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rcx rdi rdx %refcount %res rsi %s %switch %val1 %val2 %w
+rcx %addr r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rdi rdx %refcount rsi %s %switch
+rdi %addr r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdx %refcount rsi %s %switch
+rdx %addr %n r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi %refcount rsi %s %switch
+%refcount %addr r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx %res rsi %s %switch %val1 %val2 %w
+%res %addr r12 r13 r14 r15 rbp rbx %refcount %s %switch
+rsi %addr r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx %refcount %s %switch
+%s %addr %n r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx %refcount %res rsi %switch %val1 %val2 %w
+%switch %addr r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx %refcount %res rsi %s %val1 %val2
+%val1 %addr r12 r13 r14 r15 rbp rbx %refcount %s %switch %val2
+%val2 %addr r12 r13 r14 r15 rbp rbx %refcount %s %switch %val1
+%w %addr %n r12 r13 r14 r15 rbp rbx %refcount %s

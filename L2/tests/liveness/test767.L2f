@@ -1,0 +1,41 @@
+(@dot_product
+	3
+	%v1 <- rdi
+	%v2 <- rsi
+	%n <- rdx
+	:call_label_ciao_2
+	%n_decoded <- %n
+	%n_decoded >>= 1
+	%prod <- 0
+	%idx <- 0
+	goto :call_label_ciao_3
+	:call_label_ciao_3
+	%loop_cond <- %idx < %n_decoded
+	cjump %loop_cond = 1 :call_label_ciao_4
+	goto :call_label_ciao_5
+	:call_label_ciao_4
+	%newVar1 <- 0
+	%newVar1 += %idx
+	%newVar0 <- %newVar1
+	%newVar0 *= 8
+	%newVar0 += 24
+	%newVar3 <- %v1
+	%newVar3 += %newVar0
+	%tmp1 <- mem %newVar3 0
+	%newVar5 <- 0
+	%newVar5 += %idx
+	%newVar4 <- %newVar5
+	%newVar4 *= 8
+	%newVar4 += 24
+	%newVar7 <- %v2
+	%newVar7 += %newVar4
+	%tmp2 <- mem %newVar7 0
+	%tmp3 <- %tmp1
+	%tmp3 *= %tmp2
+	%prod += %tmp3
+	%idx += 1
+	goto :call_label_ciao_3
+	:call_label_ciao_5
+	rax <- %prod
+	return
+)

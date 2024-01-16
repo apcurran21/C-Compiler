@@ -1,0 +1,20 @@
+(@foo
+	6
+	%newVariable12 <- rdi
+	%newVariable12 += rsi
+	%newVariable12 += rdx
+	%newVariable12 += rcx
+	%newVariable12 += r8
+	%newVariable12 += r9
+	rdi <- %newVariable12
+	rsi <- 2
+	rdx <- 3
+	rcx <- 4
+	r8 <- 5
+	r9 <- 6
+	mem rsp -8 <- :bar_ret
+	mem rsp -16 <- 7
+	call @bar 7
+	:bar_ret
+	return
+)

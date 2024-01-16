@@ -1,0 +1,21 @@
+%cont %line %periods r12 r13 r14 r15 rax rbp rbx %restart
+%line %cont %out %periods r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx %restart rsi %x
+%out %line %periods r12 r13 r14 r15 rbp rbx %restart
+%periods %cont %line %out r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx %restart rsi %x
+r10 %line %periods r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx %restart rsi
+r11 %line %periods r10 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx %restart rsi
+r12 %cont %line %out %periods r10 r11 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx %restart rsi %x
+r13 %cont %line %out %periods r10 r11 r12 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx %restart rsi %x
+r14 %cont %line %out %periods r10 r11 r12 r13 r15 r8 r9 rax rbp rbx rcx rdi rdx %restart rsi %x
+r15 %cont %line %out %periods r10 r11 r12 r13 r14 r8 r9 rax rbp rbx rcx rdi rdx %restart rsi %x
+r8 %line %periods r10 r11 r12 r13 r14 r15 r9 rax rbp rbx rcx rdi rdx %restart rsi
+r9 %line %periods r10 r11 r12 r13 r14 r15 r8 rax rbp rbx rcx rdi rdx %restart rsi
+rax %cont %line %periods r10 r11 r12 r13 r14 r15 r8 r9 rbp rbx rcx rdi rdx %restart rsi
+rbp %cont %line %out %periods r10 r11 r12 r13 r14 r15 r8 r9 rax rbx rcx rdi rdx %restart rsi %x
+rbx %cont %line %out %periods r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rcx rdi rdx %restart rsi %x
+rcx %line %periods r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rdi rdx %restart rsi
+rdi %line %periods r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdx %restart rsi %x
+rdx %line %periods r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi %restart rsi
+%restart %cont %line %out %periods r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx rsi %x
+rsi %line %periods r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx %restart
+%x %line %periods r12 r13 r14 r15 rbp rbx rdi %restart

@@ -1,0 +1,79 @@
+(@main
+  (@encode
+    1
+    %n <- rdi
+    %res <- %n
+    %res <<= 1
+    %res <- %res
+    %res += 1
+    rax <- %res
+    return
+  )
+  (@encoded_add
+    2
+    %a <- rdi
+    %b <- rsi
+    %a <- %a
+    %a += %b
+    %a <- %a
+    %a -= 1
+    rax <- %a
+    return
+  )
+  (@fib_impl
+    3
+    %a <- rdi
+    %b <- rsi
+    %count <- rdx
+    :call_label0
+    %count_lt_5 <- %count < 5
+    
+    cjump %count_lt_5 = 1 :call_label1
+    goto :call_label2
+    :call_label1
+    rax <- %b
+    return
+    :call_label2
+    rdi <- %a
+    rsi <- %b
+    mem rsp -8 <- :call_label3
+    call @encoded_add 2
+    :call_label3
+    %new_b <- rax
+    %a <- %b
+    %b <- %new_b
+    %count <- %count
+    %count -= 2
+    goto :call_label0
+  )
+  (@fib
+    1
+    %count <- rdi
+    rdi <- 3
+    rsi <- 3
+    rdx <- %count
+    mem rsp -8 <- :call_label_ciao_4
+    call @fib_impl 3
+    :call_label_ciao_4
+    %res <- rax
+    rax <- %res
+    return
+  )
+  (@main
+    0
+    %fib_arg <- 4
+    rdi <- %fib_arg
+    mem rsp -8 <- :call_label_ciao__ciao_5
+    call @encode 1
+    :call_label_ciao__ciao_5
+    %encoded_fib_arg <- rax
+    rdi <- %encoded_fib_arg
+    mem rsp -8 <- :call_label_ciao__ciao_6
+    call @fib 1
+    :call_label_ciao__ciao_6
+    %fib_res <- rax
+    rdi <- %fib_res
+    call print 1
+    return
+  )
+)

@@ -1,0 +1,24 @@
+(@go
+(@go
+	0 1
+	rdi <- r12
+	mem rsp 0 <- rdi
+	r12 <- 1
+	rdi <- r12
+	call print 1
+	r12 <- 5
+	mem rsp -8 <- :myF_ret
+	call @myF 0
+	:myF_ret
+	r12++
+	rdi <- mem rsp 0
+	r12 <- rdi
+	return
+)
+
+(@myF
+	0 0
+	return
+)
+
+)

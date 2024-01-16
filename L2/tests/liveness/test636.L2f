@@ -1,0 +1,37 @@
+(@sum_to
+	7
+	%uu1 <- rdi
+	%uu2 <- rsi
+	%uu3 <- rdx
+	%uu4 <- rcx
+	%uu5 <- r8
+	%uu6 <- r9
+	%to <- stack-arg 0
+	%sum <- 0
+	%from <- 0
+	:call_label0
+	%tmp_rdx <- %to
+	%icmp <- %tmp_rdx < %from
+	cjump %icmp = 1 :call_label1
+	%sum += %from
+	%rsp_16 <- %from
+	rdi <- %uu1
+	rsi <- %uu2
+	rdx <- %uu3
+	rcx <- %uu4
+	r8 <- %uu5
+	r9 <- %uu6
+	mem rsp -40 <- %rsp_16
+	mem rsp -32 <- 8
+	mem rsp -24 <- 9
+	mem rsp -16 <- 10
+	mem rsp -8 <- :call_label2
+	call @succ 10
+	:call_label2
+	%tmp_rax <- rax
+	%from <- %tmp_rax
+	goto :call_label0
+	:call_label1
+	rax <- %sum
+	return
+)

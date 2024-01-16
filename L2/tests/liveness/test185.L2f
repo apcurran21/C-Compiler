@@ -1,0 +1,38 @@
+(@main
+	0
+	%size <- 41
+	rdi <- %size
+	rsi <- 1
+	call allocate 2
+	%array <- rax
+	mem %array 8 <- 35
+	mem %array 16 <- 15
+	mem %array 24 <- 13
+	mem %array 32 <- 19
+	mem %array 40 <- 51
+	mem %array 48 <- 27
+	mem %array 56 <- 49
+	mem %array 64 <- 57
+	mem %array 72 <- 9
+	mem %array 80 <- 63
+	mem %array 88 <- 81
+	mem %array 96 <- 97
+	mem %array 104 <- 11
+	mem %array 112 <- 11
+	mem %array 120 <- 13
+	mem %array 128 <- 7
+	mem %array 136 <- 33
+	mem %array 144 <- 37
+	mem %array 152 <- 27
+	mem %array 160 <- 51
+	rdi <- %array
+	call print 1
+	rdi <- %array
+	mem rsp -8 <- :call_label_ciao_7
+	call @insertionSort 1
+	:call_label_ciao_7
+	%sortedArray <- rax
+	rdi <- %sortedArray
+	call print 1
+	return
+)

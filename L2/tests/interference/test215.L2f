@@ -1,0 +1,20 @@
+(@getfreq
+	6
+	%var <- rdi
+	%c1 <- rsi
+	%c2 <- rdx
+	%c3 <- rcx
+	%c4 <- r8
+	%c5 <- r9
+	%ret <- %c1 = %var
+	%ret2 <- %c2 = %var
+	%ret += %ret2
+	%ret3 <- %c3 = %var
+	%ret += %ret3
+	%ret4 <- %c4 = %var
+	%ret += %ret4
+	%ret5 <- %c5 = %var
+	%ret += %ret5
+	rax <- %ret
+	return
+)

@@ -1,0 +1,45 @@
+(@main
+(@main
+	0 0
+	:call_label0
+	rsi <- 0
+	rdi <- 43
+	rsi <- rsi
+	rsi += rdi
+	rdi <- 55
+	rsi <- rsi
+	rsi += rdi
+	rdi <- 32
+	rsi <- rsi
+	rsi += rdi
+	rdi <- 74
+	rsi <- rsi
+	rsi += rdi
+	rdi <- 67
+	rsi <- rsi
+	rsi += rdi
+	rdi <- 83
+	rsi <- rsi
+	rsi += rdi
+	rdi <- 39
+	rsi <- rsi
+	rsi += rdi
+	rdi <- 45
+	rsi <- rsi
+	rsi += rdi
+	rdi <- 22
+	rsi <- rsi
+	rsi += rdi
+	rdi <- 41
+	rsi <- rsi
+	rsi += rdi
+	rsi <- rsi
+	rsi <<= 1
+	rsi <- rsi
+	rsi += 1
+	rdi <- rsi
+	call print 1
+	return
+)
+
+)

@@ -1,0 +1,36 @@
+(@main
+	0
+	rdi <- 15
+	rsi <- 5
+	rdx <- 0
+	rcx <- 10
+	r8 <- -25
+	r9 <- 90
+	mem rsp -24 <- 2
+	mem rsp -16 <- 1
+	mem rsp -8 <- :call_label0
+	call @max 8
+	:call_label0
+	%ret <- rax
+	%ret <<= 1
+	%ret += 1
+	rdi <- %ret
+	call print 1
+	rdi <- -13
+	rsi <- 6
+	rdx <- 77
+	rcx <- 15
+	r8 <- -2
+	r9 <- 54
+	mem rsp -24 <- 1
+	mem rsp -16 <- 0
+	mem rsp -8 <- :call_label1
+	call @max 8
+	:call_label1
+	%ret <- rax
+	%ret <<= 1
+	%ret += 1
+	rdi <- %ret
+	call print 1
+	return
+)

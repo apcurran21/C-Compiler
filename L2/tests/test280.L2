@@ -1,0 +1,87 @@
+(@main
+  (@main
+    0
+    :call_label0
+    goto :call_label10
+    :call_label1
+    return
+    :call_label2
+    %newVar_ciao_1 <- %newVar1
+    %newVar_ciao_1 *= 8
+    %newVar_ciao_0 <- %newVar_ciao_1
+    %newVar_ciao_0 += 8
+    %newVar_ciao_2 <- %p
+    %newVar_ciao_2 += %newVar_ciao_0
+    mem %newVar_ciao_2 0  <- 43
+    return
+    :call_label3
+    rdi <- %newVar2
+    rsi <- %newVar4
+    rdx <- %newVar3
+    rcx <- %newVar5
+    call tensor-error 4
+    goto :call_label2
+    :call_label4
+    rdi <- %newVar2
+    rsi <- %newVar3
+    rdx <- %newVar5
+    call tuple-error 3
+    goto :call_label3
+    :call_label5
+    rdi <- %newVar2
+    rsi <- %newVar3
+    rdx <- %newVar5
+    call tensor-error 3
+    goto :call_label4
+    :call_label6
+    rdi <- %newVar2
+    call tensor-error 1
+    goto :call_label5
+    :call_label7
+    goto :call_label2
+    :call_label8
+    %newVar9 <- %newVar1 < %newVar7
+    
+    cjump %newVar9 = 1 :call_label7
+    goto :call_label4
+    :call_label9
+    %newVar_ciao_3 <- %p
+    %newVar_ciao_3 += 0
+    %newVar7 <- mem %newVar_ciao_3 0 
+    %newVar7 <- %newVar7
+    %newVar7 <<= 1
+    %newVar7 <- %newVar7
+    %newVar7 += 1
+    %newVar3 <- %newVar7
+    %newVar7 <- %newVar7
+    %newVar7 >>= 1
+    %newVar5 <- %newVar1
+    %newVar5 <- %newVar5
+    %newVar5 <<= 1
+    %newVar5 <- %newVar5
+    %newVar5 += 1
+    %newVar8 <- 0 <= %newVar1
+    
+    cjump %newVar8 = 1 :call_label8
+    goto :call_label4
+    :call_label10
+    %p <- 0
+    rdi <- 7
+    rsi <- 1
+    call allocate 2
+    %p <- rax
+    %newVar0 <- 1
+    %newVar1 <- 1
+    %newVar1 <- 25
+    %newVar1 <- %newVar1
+    %newVar1 >>= 1
+    %newVar2 <- 13
+    %newVar3 <- 1
+    %newVar4 <- 1
+    %newVar5 <- 1
+    %newVar6 <- %p = 0
+    
+    cjump %newVar6 = 1 :call_label6
+    goto :call_label9
+  )
+)

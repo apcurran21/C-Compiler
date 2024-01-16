@@ -1,0 +1,24 @@
+(@myF
+0
+
+  %myVar <- 0
+  %myVar += 3
+  %myVar += 3
+  %myVar += 5
+  cjump %myVar <= 1 :true 
+  goto :false
+
+
+  :true
+  rdi <- %myVar
+  mem rsp -8 <- :f1_ret
+  call @myF2 0
+  :f1_ret
+
+  :false
+  return
+)
+
+%myVar
+
+%S

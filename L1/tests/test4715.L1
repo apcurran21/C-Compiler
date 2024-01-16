@@ -1,0 +1,137 @@
+(@main
+(@main
+	0 2
+	mem rsp 8 <- r13
+	mem rsp 0 <- r12
+	:call_label0
+	goto :call_label1
+	:call_label1
+	r12 <- 10
+	rdi <- r12
+	mem rsp -8 <- :call_label2
+	call @GetArray 1
+	:call_label2
+	r13 <- rax
+	rdi <- r13
+	mem rsp -8 <- :call_label3
+	call @PrintArray 1
+	:call_label3
+	rdi <- 100
+	rsi <- r13
+	rdx <- r12
+	mem rsp -8 <- :call_label4
+	call @FindElement 3
+	:call_label4
+	rdi <- rax
+	rdi <- rdi
+	rdi <<= 1
+	rdi <- rdi
+	rdi += 1
+	rdi <- rdi
+	call print 1
+	r12 <- mem rsp 0
+	r13 <- mem rsp 8
+	return
+)
+
+(@GetArray
+	1 1
+	mem rsp 0 <- r12
+	r12 <- rdi
+	:call_label_ciao_5
+	goto :call_label_ciao_6
+	:call_label_ciao_6
+	r12 <- r12
+	r12 <<= 1
+	r12 <- r12
+	r12 += 1
+	rdi <- r12
+	rdi >>= 1
+	rdi <- rdi
+	rdi <- rdi
+	rdi <<= 1
+	rdi <- rdi
+	rdi += 1
+	rdi <- rdi
+	rdi += 2
+	rdi <- rdi
+	rsi <- 1
+	call allocate 2
+	rcx <- rax
+	rdi <- rcx
+	rdi += 8
+	mem rdi 0 <- r12
+	rdx <- 100
+	rdx <- rdx
+	rdx <<= 1
+	rdx <- rdx
+	rdx += 1
+	rsi <- 0
+	rdi <- 1
+	rdi <- 2
+	rsi <- rsi
+	rsi += rdi
+	rsi <- rsi
+	rsi *= 8
+	rsi <- rsi
+	rsi += 16
+	rdi <- rcx
+	rdi += rsi
+	mem rdi 0 <- rdx
+	rax <- rcx
+	r12 <- mem rsp 0
+	return
+)
+
+(@PrintArray
+	1 0
+	rdi <- rdi
+	:call_label_ciao__ciao__ciao_13
+	goto :call_label_ciao__ciao__ciao_14
+	:call_label_ciao__ciao__ciao_14
+	rdi <- rdi
+	call print 1
+	return
+)
+
+(@FindElement
+	3 0
+	rcx <- rdi
+	rsi <- rsi
+	rdx <- rdx
+	:call_label_ciao__ciao_7
+	goto :call_label_ciao__ciao_12
+	:call_label_ciao__ciao_8
+	rax <- r8
+	return
+	:call_label_ciao__ciao_9
+	r8 <- r8
+	r8 += 1
+	goto :call_label_ciao__ciao_10
+	:call_label_ciao__ciao_10
+	rdi <- r8 = rdx
+	cjump rdi = 1 :call_label_ciao__ciao_8
+	goto :call_label_ciao__ciao_11
+	:call_label_ciao__ciao_11
+	r9 <- 0
+	rdi <- 1
+	r9 <- r9
+	r9 += r8
+	rdi <- r9
+	rdi *= 8
+	rdi <- rdi
+	rdi += 16
+	r9 <- rsi
+	r9 += rdi
+	rdi <- mem r9 0
+	rdi <- rdi
+	rdi >>= 1
+	rdi <- rdi = rcx
+	cjump rdi = 1 :call_label_ciao__ciao_8
+	goto :call_label_ciao__ciao_9
+	:call_label_ciao__ciao_12
+	r8 <- 0
+	goto :call_label_ciao__ciao_10
+)
+
+)

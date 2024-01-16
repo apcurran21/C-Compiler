@@ -1,0 +1,49 @@
+define :main(){
+    // Lets check our instructions
+    // Store 3 into rax
+    %var1 <- 5
+    %var2 <- :my_label1
+    %var3 <- 3
+    %var1 <- %var1 + %var3
+    // Should jump
+    %var11 <- %var1 = 8
+    br %var11 :my_label1
+
+    :my_label2
+    // more math
+    %var1 <- %var1 - 4
+    %var1 <- %var1 * 3
+    %var1 <- %var1 << 1
+    %var1 <- %var1 + 1
+    // Should print 12
+    %var7 <- call print(%var1)
+
+    %var8 <- %var7 * 4
+    %var4 <- %var3 + %var8
+    // Allocate array of size 2 with value 3
+    %var9 <- 5
+    %var10 <- 7
+    // Discarding our rax value
+    %var5 <- call allocate(%var9,%var10)
+    // Encode
+    %var3 <- %var3 << 1
+    %var3 <- %var3 + 1
+    // Should print 4
+    call print(%var3)
+
+    // Should be false
+    %var6 <- %var3 < 2
+    %var6 <- %var6 << 1 
+    %var6 <- %var6 + 1
+    call print(%var6)
+
+    // Now lets check out array
+    call print(%var5)
+    return
+
+    :my_label1
+    // increment to 4
+    %var3 <- %var3 + 1
+    br :my_label2
+    return 
+}

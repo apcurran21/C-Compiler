@@ -1,0 +1,20 @@
+%check %cprime %n r12 r13 r14 r15 rbp rbx
+%cprime %check %n r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx rsi %v
+%n %check %cprime r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx rsi %v
+%p r12 r13 r14 r15 rbp rbx
+r10 %cprime %n r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx rsi
+r11 %cprime %n r10 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx rsi
+r12 %check %cprime %n %p r10 r11 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx rsi %v
+r13 %check %cprime %n %p r10 r11 r12 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx rsi %v
+r14 %check %cprime %n %p r10 r11 r12 r13 r15 r8 r9 rax rbp rbx rcx rdi rdx rsi %v
+r15 %check %cprime %n %p r10 r11 r12 r13 r14 r8 r9 rax rbp rbx rcx rdi rdx rsi %v
+r8 %cprime %n r10 r11 r12 r13 r14 r15 r9 rax rbp rbx rcx rdi rdx rsi
+r9 %cprime %n r10 r11 r12 r13 r14 r15 r8 rax rbp rbx rcx rdi rdx rsi
+rax %cprime %n r10 r11 r12 r13 r14 r15 r8 r9 rbp rbx rcx rdi rdx rsi
+rbp %check %cprime %n %p r10 r11 r12 r13 r14 r15 r8 r9 rax rbx rcx rdi rdx rsi %v
+rbx %check %cprime %n %p r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rcx rdi rdx rsi %v
+rcx %cprime %n r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rdi rdx rsi
+rdi %cprime %n r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdx rsi
+rdx %cprime %n r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rsi
+rsi %cprime %n r10 r11 r12 r13 r14 r15 r8 r9 rax rbp rbx rcx rdi rdx
+%v %cprime %n r12 r13 r14 r15 rbp rbx

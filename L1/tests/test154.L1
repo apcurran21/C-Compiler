@@ -1,0 +1,83 @@
+(@go
+(@go
+	0 3
+	rdi <- 1
+	mem rsp 16 <- rdi
+	rdi <- 1
+	mem rsp 8 <- rdi
+	rdi <- 1
+	mem rsp 0 <- rdi
+	:BEGIN
+	rdi <- mem rsp 0
+	cjump 21 <= rdi :END
+	rdi <- mem rsp 0
+	rdi >>= 1
+	mem rsp 0 <- rdi
+	rdi <- mem rsp 16
+	rdi >>= 1
+	mem rsp 16 <- rdi
+	rdi <- mem rsp 0
+	rsi <- mem rsp 16
+	rsi += rdi
+	mem rsp 16 <- rsi
+	rdi <- mem rsp 16
+	rdi <<= 1
+	mem rsp 16 <- rdi
+	rdi <- mem rsp 0
+	rdi <<= 1
+	mem rsp 0 <- rdi
+	rdi <- mem rsp 16
+	rdi += 1
+	mem rsp 16 <- rdi
+	rdi <- mem rsp 0
+	rdi += 1
+	mem rsp 0 <- rdi
+	rdi <- mem rsp 16
+	cjump 21 <= rdi :BOTTOM
+	rdi <- 21
+	:WHILE
+	cjump rdi < 2 :ALMOST
+	rdi -= 2
+	goto :WHILE
+	:ALMOST
+	rdi <- mem rsp 8
+	rdi += 2
+	mem rsp 8 <- rdi
+	:BOTTOM
+	rdi <- mem rsp 0
+	rdi += 2
+	mem rsp 0 <- rdi
+	goto :BEGIN
+	:END
+	rdi <- mem rsp 16
+	rdi <- rdi
+	call print 1
+	rdi <- mem rsp 8
+	rdi <- rdi
+	call print 1
+	rdi <- mem rsp 0
+	rdi <- rdi
+	call print 1
+	rdi <- mem rsp 16
+	rdi >>= 1
+	mem rsp 16 <- rdi
+	rdi <- mem rsp 8
+	rdi >>= 1
+	mem rsp 8 <- rdi
+	rdi <- mem rsp 0
+	rdi >>= 1
+	mem rsp 0 <- rdi
+	rdi <- mem rsp 0
+	rdi <- rdi
+	rsi <- mem rsp 8
+	rdi += rsi
+	rsi <- mem rsp 16
+	rdi += rsi
+	rdi <<= 1
+	rdi += 1
+	rdi += 20
+	call print 1
+	return
+)
+
+)

@@ -1,0 +1,26 @@
+(@fibo
+	1
+	%n <- rdi
+	cjump %n <= 2 :leq_2
+	rdi -= 2
+	mem rsp -8 <- :callfibo_1_finish
+	call @fibo 1
+	:callfibo_1_finish
+	%res <- rax
+	rdi <- %n
+	rdi -= 1
+	mem rsp -8 <- :callfibo_2_finish
+	call @fibo 1
+	:callfibo_2_finish
+	%res += rax
+	goto :done
+	:leq_2
+	cjump %n <= 0 :less_0
+	%res <- 1
+	goto :done
+	:less_0
+	%res <- 0
+	:done
+	rax <- %res
+	return
+)

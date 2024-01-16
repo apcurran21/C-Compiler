@@ -1,0 +1,76 @@
+// Computes dot product of two vectors of <input> length of form 
+// [-1,1,3,...] and [0, 2, 4,...]
+
+define :dotProd(%len){                       
+                
+    %allocate_arg <- %len << 1                              
+    %allocate_arg <- %allocate_arg + 1                      //convert to L1 convention                        
+
+    %odd_arr  <- call allocate (%allocate_arg, 0)
+    %even_arr <- call allocate (%allocate_arg, 0)
+
+                                                            //for (int i = 0; i < len; i++)
+    %i <-  0                                    
+    :loop1_begin
+    
+        %i_cmp <- %len <= %i
+        br %i_cmp :loop1_exit                               // enter loop if %i < %len
+
+        %offset <- %i + 1                                      // increase one for eight bytes at the beginning of allocate array which indicate the length of the array.
+        %offset <- %offset * 8
+
+        %toAssign <- %i                                         // %odd_arr[i] = 2 * i - 1;
+        %toAssign <- %toAssign * 2
+        %toAssign <- %toAssign - 1
+
+        %oddAddrStore <- %odd_arr + %offset                          
+        store %oddAddrStore <- %toAssign                                   
+                                                    
+        %toAssign <- %i                                         // %even_arr[i] = 2 * i;
+        %toAssign <- %toAssign * 2
+
+        %evenAddrStore <- %even_arr + %offset                          
+        store %evenAddrStore <- %toAssign
+
+        %i <- %i + 1
+
+    br :loop1_begin
+    :loop1_exit
+
+    %res <- 0
+
+                                                //for (int i = 0; i < len; i++)
+    %i <-  0                                   //r10 caller saved, int i
+    :loop2_begin
+
+        %i_cmp <- %len <= %i
+        br %i_cmp :loop2_exit                               // enter loop if %i < %len 
+
+        %offset <- %i + 1                                      // increase one for eight bytes at the beginning of allocate array which indicate the length of the array.
+        %offset <- %offset * 8
+
+        %oddAddrLoad <- %odd_arr + %offset                              // %res += odd[i] * even[i]
+        %oddVal <- load %oddAddrLoad
+        %evenAddrLoad <- %even_arr + %offset                              
+        %evenVal <- load %evenAddrLoad                                 
+        %prod  <- %oddVal * %evenVal
+        
+        %res <- %res + %prod
+        
+        %i <- %i + 1
+
+    br :loop2_begin
+    :loop2_exit
+    
+    return %res
+}
+
+define :main(){
+    %myRes <- call :dotProd(11)
+
+    %toPrint <- %myRes << 1
+    %toPrint <- %toPrint +  1
+    call print(%toPrint)
+    
+    return %toPrint
+}

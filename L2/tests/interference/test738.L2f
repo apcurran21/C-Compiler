@@ -1,0 +1,10 @@
+(@PrintArg
+	1
+	%arg <- rdi
+	:call_label_ciao__ciao__ciao_6
+	%arg <<= 1
+	%arg += 1
+	rdi <- %arg
+	call print 1
+	return
+)

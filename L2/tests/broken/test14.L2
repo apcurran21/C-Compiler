@@ -1,0 +1,32 @@
+(@go
+  (@go
+0
+
+    // Use %newVariable
+%variable4B1MBE1NBG <- %newVariable
+    %newVariable <- 1
+
+    // Print %newVariable
+    rdi <- %newVariable
+    call print 1
+
+    %var1 <- 5
+    mem rsp -8 <- :myF_ret
+    call @myF 0
+    :myF_ret
+
+    %var1++
+
+    // Restore %newVariable
+%newVariable <- %variable4B1MBE1NBG
+
+    return
+  )
+
+  (@myF
+0
+
+    return
+  )
+
+)

@@ -1,0 +1,7 @@
+(@salamiChoice
+	0
+	:call_label_ciao__ciao__ciao__ciao_15
+	rdi <- 3
+	call print 1
+	return
+)

@@ -1,0 +1,10 @@
+(:go
+
+(:go
+  0 0
+  rdi <- 1
+  rsi <- mem rdi 0
+  return 
+)
+
+)

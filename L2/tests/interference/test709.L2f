@@ -1,0 +1,9 @@
+(@succ
+	10
+	%n <- stack-arg 0
+	:call_label0
+	%m <- %n
+	%m += 1
+	rax <- %m
+	return
+)

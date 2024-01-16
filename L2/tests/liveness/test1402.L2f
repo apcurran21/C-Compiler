@@ -1,0 +1,32 @@
+(@modulo
+	2
+	%a <- rdi
+	%b <- rsi
+	%result <- %a
+	%isBLessThanZero <- %b <= 1
+	cjump %isBLessThanZero = 1 :call_label_ciao__ciao_14
+	goto :call_label_ciao__ciao_15
+	:call_label_ciao__ciao_14
+	rax <- -1
+	return
+	:call_label_ciao__ciao_15
+	%isALessThanB <- %a < %b
+	cjump %isALessThanB = 1 :call_label_ciao__ciao_16
+	goto :call_label_ciao__ciao_17
+	:call_label_ciao__ciao_16
+	rax <- %result
+	return
+	:call_label_ciao__ciao_17
+	%result -= 1
+	%result >>= 1
+	%b -= 1
+	%b >>= 1
+	%result -= %b
+	%result <<= 1
+	%result += 1
+	%b <<= 1
+	%b += 1
+	%isResultLessThanB <- %result < %b
+	cjump %isResultLessThanB = 1 :call_label_ciao__ciao_16
+	goto :call_label_ciao__ciao_17
+)

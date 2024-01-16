@@ -1,0 +1,59 @@
+void main(){
+    int64 y
+    int64 c
+    int64 x
+    int64 var21
+    int64 var33
+    int64 var45
+    int64 cheese
+    int64 z
+    y <- 0
+    c <- 0
+    x <- 0
+    br :BEGIN
+    :BEGIN
+    
+    var21 <- 10 <= x
+    br var21 :END :START
+    :START
+    y <- y + x
+   
+    
+    var33 <- 10 <= y
+    br var33 :BOTTOM :NEXT
+    :NEXT
+    
+    z <- 10
+    br :WHILE
+    :WHILE
+    
+    var45 <- z < 0
+    br var45 :ALMOST :CLOSE
+    :CLOSE
+    z <- z - 1
+    br :WHILE
+    :ALMOST
+    c <- c + 1
+    br :BOTTOM
+    :BOTTOM
+    x <- x + 1
+    br :BEGIN
+    :END
+    print(y)
+    print(c)
+    print(x)
+
+    y <- y >> 1
+    c <- c >> 1
+    x <- x >> 1
+    
+    cheese <- x
+    cheese <- cheese + c
+    cheese <- cheese + y
+    cheese <- cheese << 1
+    cheese <- cheese + 1
+    cheese <- cheese + 10
+    print(cheese)
+
+    return
+}

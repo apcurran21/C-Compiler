@@ -1,0 +1,10 @@
+(@encode
+	1
+	%unencoded <- rdi
+	%shifted <- %unencoded
+	%shifted <<= 1
+	%encoded <- %shifted
+	%encoded += 1
+	rax <- %encoded
+	return
+)

@@ -1,0 +1,45 @@
+(@printData
+	2
+	%array <- rdi
+	%indexToPrintEncoded <- rsi
+	rdi <- %indexToPrintEncoded
+	call print 1
+	%arrayLength <- mem %array 0
+	%arrayLengthEncoded <- %arrayLength
+	%arrayLengthEncoded <<= 1
+	%arrayLengthEncoded += 1
+	cjump %indexToPrintEncoded < %arrayLengthEncoded :correct
+	goto :wrong
+	:wrong
+	rdi <- %array
+	rsi <- %indexToPrintEncoded
+	rdi <- 0
+	call tensor-error 1
+	:correct
+	%offset <- %indexToPrintEncoded
+	%offset >>= 1
+	%offset *= 8
+	%offset += 8
+	%offsetEncoded <- %offset
+	%offsetEncoded <<= 1
+	%offsetEncoded += 1
+	rdi <- %offsetEncoded
+	call print 1
+	%arrayElementAddress <- %offset
+	%arrayElementAddress += %array
+	%arrayElement <- mem %arrayElementAddress 0
+	%isArrayElementAnInt <- %arrayElement
+	%isArrayElementAnInt &= 1
+	cjump %isArrayElementAnInt = 0 :isAnArray2
+	goto :isAnInt2
+	:isAnInt2
+	rdi <- %arrayElement
+	call print 1
+	goto :exitFunction
+	:isAnArray2
+	mem rsp -8 <- :exitFunction
+	rdi <- %arrayElement
+	call @printArray 1
+	:exitFunction
+	return
+)

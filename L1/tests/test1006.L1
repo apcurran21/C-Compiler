@@ -1,0 +1,70 @@
+(@main
+(@buildASandwich
+	2 1
+	mem rsp 0 <- r12
+	r12 <- rsi
+	rdi <- rdi = 1
+	cjump rdi = 1 :call_label_ciao_1
+	mem rsp -8 <- :call_label_ciao_5
+	call @swissChoice 0
+	:call_label_ciao_5
+	goto :call_label_ciao_2
+	:call_label_ciao_1
+	mem rsp -8 <- :call_label_ciao_6
+	call @havartiChoice 0
+	:call_label_ciao_6
+	:call_label_ciao_2
+	rdi <- r12 = 1
+	cjump rdi = 1 :call_label_ciao_3
+	mem rsp -8 <- :call_label_ciao_7
+	call @turkeyChoice 0
+	:call_label_ciao_7
+	goto :call_label_ciao_4
+	:call_label_ciao_3
+	mem rsp -8 <- :call_label_ciao_8
+	call @salamiChoice 0
+	:call_label_ciao_8
+	:call_label_ciao_4
+	r12 <- mem rsp 0
+	return
+)
+
+(@havartiChoice
+	0 0
+	rdi <- 3
+	call print 1
+	return
+)
+
+(@main
+	0 0
+	rdi <- 1
+	rsi <- 0
+	mem rsp -8 <- :call_label0
+	call @buildASandwich 2
+	:call_label0
+	return
+)
+
+(@salamiChoice
+	0 0
+	rdi <- 3
+	call print 1
+	return
+)
+
+(@swissChoice
+	0 0
+	rdi <- 1
+	call print 1
+	return
+)
+
+(@turkeyChoice
+	0 0
+	rdi <- 1
+	call print 1
+	return
+)
+
+)

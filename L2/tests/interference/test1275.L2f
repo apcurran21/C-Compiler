@@ -1,0 +1,10 @@
+(@PrintResult
+	1
+	%res <- rdi
+	:call_label_ciao__ciao__ciao_14
+	goto :call_label_ciao__ciao__ciao_15
+	:call_label_ciao__ciao__ciao_15
+	rdi <- %res
+	call print 1
+	return
+)

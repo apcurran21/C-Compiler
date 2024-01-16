@@ -1,0 +1,29 @@
+// Prints out the first 10 square numbers
+// (see line 12)
+(@main
+ (@main
+  0
+  %x <- 0
+  :loop
+  rdi <- %x
+  mem rsp -8 <- :ret1
+  call @square 1
+  :ret1
+  cjump 11 < %x :return
+  %x += 1
+  rdi <- rax
+  rdi <<= 1
+  rdi += 1
+  call print 1
+  goto :loop
+  :return
+  return)
+ (@square
+  1
+  %n <- 0
+  rax <- 0
+  :loop2
+  rax += rdi
+  %n += 1
+  cjump %n < rdi :loop2
+  return))

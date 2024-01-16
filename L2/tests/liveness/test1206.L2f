@@ -1,0 +1,18 @@
+(@main
+	0
+	:call_label0
+	goto :call_label1
+	:call_label1
+	mem rsp -8 <- :call_label2
+	call @myF 0
+	:call_label2
+	%callerFP <- rax
+	rdi <- 2
+	mem rsp -8 <- :call_label3
+	call %callerFP 1
+	:call_label3
+	%v <- rax
+	rdi <- %v
+	call print 1
+	return
+)

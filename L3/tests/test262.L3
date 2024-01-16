@@ -1,0 +1,10 @@
+define @main () {
+ 
+:NNNNNN
+ br :entry
+ 
+:entry
+ %v1 <- call input ()
+ return 
+}
+
