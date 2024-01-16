@@ -756,10 +756,24 @@ namespace L1 {
     throw std::runtime_error("Unknown register name: " + str);
   }
 
-  /* Simone's Original actions*/
-
   template< typename Rule >
   struct action : pegtl::nothing< Rule > {};
+
+  /*
+  * Rules for debugging
+    - Eg a strategy is to set an action for the entry point rule,
+      which will trigger at the end of a successful program
+  */
+  template<> struct action < entry_point_rule> {
+    template< typename Input >
+    static void apply( const Input & in, Program & p){
+      if (debug) std::cerr << "Recognized a complete entry point rule, done !" << std::endl;
+
+      // set a breakpoint here to examine the structure of the program at the end of parsing
+    }
+  };
+
+  /* Simone's Original actions*/
 
   template<> struct action < I_rule > {
     template< typename Input >
@@ -777,7 +791,6 @@ namespace L1 {
       // note that there will be an '@' token on the parsed stack, need to remove
       // NOTE - not necessarily, in the very first line of a program (ie the beginning of the entry point rule),
       //   then this will be popping from an empty vector which is undefined behavior
-
     }
   }; 
 
@@ -822,17 +835,17 @@ namespace L1 {
     }
   };
 
-//   template<> struct action < w_register_rule > {
-//     template< typename Input >
-//     static void apply( const Input & in, Program & p) {
-//       if (debug) std::cerr << "Recognized a 'w' register: " << in.string() << std::endl;
+  template<> struct action < w_register_rule > {
+    template< typename Input >
+    static void apply( const Input & in, Program & p) {
+      if (debug) std::cerr << "Recognized a 'w' register: " << in.string() << std::endl;
 
-//       auto str = in.string();
-//       RegisterID regId = stringToRegisterID(str);
-//       auto r = new Register(regId);
-//       parsed_items.push_back(r);
-//     }
-// };
+      auto str = in.string();
+      RegisterID regId = stringToRegisterID(str);
+      auto r = new Register(regId);
+      parsed_items.push_back(r);
+    }
+};
 //   template<> struct action < a_register_rule > {
 //     template< typename Input >
 //     static void apply( const Input & in, Program & p){
