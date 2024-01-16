@@ -30,6 +30,10 @@
 #include <L1.h>
 #include <parser.h>
 
+// print debugging global var (1 for printing, 0 for not)
+int debug = 1;
+
+
 namespace pegtl = TAO_PEGTL_NAMESPACE;
 
 using namespace pegtl;
@@ -776,6 +780,8 @@ namespace L1 {
   template<> struct action < label_rule > { //Don't we handle basically exactly like I_rule?
     template< typename Input >
 	  static void apply( const Input & in, Program & p){
+        if (debug) std::cerr << "Recognized a label" << std::endl;
+
         auto label = new String(in.string());
         parsed_items.push_back(label);
       }
@@ -784,6 +790,8 @@ namespace L1 {
   template<> struct action < argument_number > {
     template< typename Input >
 	  static void apply( const Input & in, Program & p){
+      if (debug) std::cerr << "Recognized an arg number" << std::endl;
+
       auto currentF = p.functions.back();
       currentF->arguments = std::stoll(in.string());
     }
@@ -792,6 +800,8 @@ namespace L1 {
   template<> struct action < local_number > {
     template< typename Input >
 	  static void apply( const Input & in, Program & p){
+      if (debug) std::cerr << "Recognized a local numbers" << std::endl;
+
       auto currentF = p.functions.back();
       currentF->locals = std::stoll(in.string());
     }
@@ -800,48 +810,57 @@ namespace L1 {
   template<> struct action < str_return > {
     template< typename Input >
 	  static void apply( const Input & in, Program & p){
+      if (debug) std::cerr << "Recognized a return string" << std::endl;
+
       auto currentF = p.functions.back();
       auto i = new Instruction_ret();
       currentF->instructions.push_back(i);
     }
   };
 
-  template<> struct action < register_rdi_rule > {
-    template< typename Input >
-    static void apply( const Input & in, Program & p){
-      auto r = new Register(RegisterID::rdi);
-      parsed_items.push_back(r);
-    }
-  };
+  // template<> struct action < register_rdi_rule > {
+  //   template< typename Input >
+  //   static void apply( const Input & in, Program & p){
+  //     auto r = new Register(RegisterID::rdi);
+  //     parsed_items.push_back(r);
+  //   }
+  // };
 
-  template<> struct action < register_rax_rule > {
-    template< typename Input >
-    static void apply( const Input & in, Program & p){
-      auto r = new Register(RegisterID::rax);
-      parsed_items.push_back(r);
-    }
-  };
+  // template<> struct action < register_rax_rule > {
+  //   template< typename Input >
+  //   static void apply( const Input & in, Program & p){
+  //     auto r = new Register(RegisterID::rax);
+  //     parsed_items.push_back(r);
+  //   }
+  // };
+
   template<> struct action < w_register_rule > {
     template< typename Input >
     static void apply( const Input & in, Program & p) {
-        auto str = in.string();
-        RegisterID regId = stringToRegisterID(str);
-        auto r = new Register(regId);
-        parsed_items.push_back(r);
+      if (debug) std::cerr << "Recognized a 'w' register: " << in.string() << std::endl;
+
+      auto str = in.string();
+      RegisterID regId = stringToRegisterID(str);
+      auto r = new Register(regId);
+      parsed_items.push_back(r);
     }
 };
   template<> struct action < a_register_rule > {
     template< typename Input >
     static void apply( const Input & in, Program & p){
-        auto str = in.string();
-        RegisterID regId = stringToRegisterID(str);
-        auto r = new Register(regId);
-        parsed_items.push_back(r);
+      if (debug) std::cerr << "Recognized an 'a' register: " << in.string() << std::endl;
+      
+      auto str = in.string();
+      RegisterID regId = stringToRegisterID(str);
+      auto r = new Register(regId);
+      parsed_items.push_back(r);
     }
   };
   template<> struct action < sx_register_rule > {
     template< typename Input >
     static void apply( const Input & in, Program & p){
+      if (debug) std::cerr << "Recognized an 'sx' register: " << in.string() << std::endl;
+
       auto r = new Register(RegisterID::rcx);
       parsed_items.push_back(r);
     }
@@ -849,6 +868,8 @@ namespace L1 {
   template<> struct action < x_register_rule > {
     template< typename Input >
     static void apply( const Input & in, Program & p){
+      if (debug) std::cerr << "Recognized an 'x' register: " << in.string() << std::endl;
+
       auto str = in.string();
       RegisterID regId = stringToRegisterID(str);
       auto r = new Register(regId);
@@ -859,6 +880,8 @@ namespace L1 {
     // N rule 
     template< typename Input >
     static void apply( const Input & in, Program & p){
+      if (debug) std::cerr << "Recognized an number N: " << in.string() << std::endl;
+
       auto r = new Integer(std::stoi(in.string()));//No error handling needed; we know N will be a number
       parsed_items.push_back(r);
     }
@@ -868,6 +891,8 @@ namespace L1 {
     // goto 
     template< typename Input >
     static void apply( const Input & in, Program & p){
+      if (debug) std::cerr << "Recognized a 'goto' string: " << in.string() << std::endl;
+
       auto r = new String(in.string());
       parsed_items.push_back(r);
     }
@@ -876,6 +901,8 @@ namespace L1 {
     // E rule 
     template< typename Input >
     static void apply( const Input & in, Program & p){
+      if (debug) std::cerr << "Recognized an 'E' number: " << in.string() << std::endl;
+
       auto r = new Integer(std::stoi(in.string()));
       parsed_items.push_back(r);
     }
@@ -884,6 +911,8 @@ namespace L1 {
     // F Rule 
     template< typename Input >
     static void apply( const Input & in, Program & p){
+      if (debug) std::cerr << "Recognized an 'F' number: " << in.string() << std::endl;
+
       auto r = new Integer(std::stoi(in.string()));
       parsed_items.push_back(r);
     }
@@ -892,6 +921,7 @@ namespace L1 {
     // M rule
     template< typename Input >
     static void apply( const Input & in, Program & p){
+      if (debug) std::cerr << "Recognized an 'M' number:  " << in.string() << std::endl;
       auto r = new Integer(std::stoi(in.string()));
       parsed_items.push_back(r);
     }
@@ -966,6 +996,9 @@ namespace L1 {
   template<> struct action < Instruction_assignment_rule > {
     template< typename Input >
 	  static void apply( const Input & in, Program & p){
+
+      if (debug) std::cerr << "Recognized 'w <- s'" << std::endl;
+      
       /* 
        * Fetch the current function.
        */ 
@@ -1043,6 +1076,9 @@ namespace L1 {
     template< typename Input >
 	  static void apply( const Input & in, Program & p){
       // mem x M <- s
+
+      if (debug) std::cerr << "Recognized 'mem x M <- s'" << std::endl;
+
       auto currentF = p.functions.back();
 
       auto s = parsed_items.back();
