@@ -770,10 +770,14 @@ namespace L1 {
         auto newF = new Function();
         newF->name = in.string();
         p.functions.push_back(newF);
+        // bugfix, see explanation below
+        parsed_items.pop_back();
       }
 
       // note that there will be an '@' token on the parsed stack, need to remove
-      parsed_items.pop_back();
+      // NOTE - not necessarily, in the very first line of a program (ie the beginning of the entry point rule),
+      //   then this will be popping from an empty vector which is undefined behavior
+
     }
   }; 
 
@@ -818,53 +822,37 @@ namespace L1 {
     }
   };
 
-  // template<> struct action < register_rdi_rule > {
-  //   template< typename Input >
-  //   static void apply( const Input & in, Program & p){
-  //     auto r = new Register(RegisterID::rdi);
-  //     parsed_items.push_back(r);
-  //   }
-  // };
+//   template<> struct action < w_register_rule > {
+//     template< typename Input >
+//     static void apply( const Input & in, Program & p) {
+//       if (debug) std::cerr << "Recognized a 'w' register: " << in.string() << std::endl;
 
-  // template<> struct action < register_rax_rule > {
-  //   template< typename Input >
-  //   static void apply( const Input & in, Program & p){
-  //     auto r = new Register(RegisterID::rax);
-  //     parsed_items.push_back(r);
-  //   }
-  // };
-
-  template<> struct action < w_register_rule > {
-    template< typename Input >
-    static void apply( const Input & in, Program & p) {
-      if (debug) std::cerr << "Recognized a 'w' register: " << in.string() << std::endl;
-
-      auto str = in.string();
-      RegisterID regId = stringToRegisterID(str);
-      auto r = new Register(regId);
-      parsed_items.push_back(r);
-    }
-};
-  template<> struct action < a_register_rule > {
-    template< typename Input >
-    static void apply( const Input & in, Program & p){
-      if (debug) std::cerr << "Recognized an 'a' register: " << in.string() << std::endl;
+//       auto str = in.string();
+//       RegisterID regId = stringToRegisterID(str);
+//       auto r = new Register(regId);
+//       parsed_items.push_back(r);
+//     }
+// };
+//   template<> struct action < a_register_rule > {
+//     template< typename Input >
+//     static void apply( const Input & in, Program & p){
+//       if (debug) std::cerr << "Recognized an 'a' register: " << in.string() << std::endl;
       
-      auto str = in.string();
-      RegisterID regId = stringToRegisterID(str);
-      auto r = new Register(regId);
-      parsed_items.push_back(r);
-    }
-  };
-  template<> struct action < sx_register_rule > {
-    template< typename Input >
-    static void apply( const Input & in, Program & p){
-      if (debug) std::cerr << "Recognized an 'sx' register: " << in.string() << std::endl;
+//       auto str = in.string();
+//       RegisterID regId = stringToRegisterID(str);
+//       auto r = new Register(regId);
+//       parsed_items.push_back(r);
+//     }
+//   };
+//   template<> struct action < sx_register_rule > {
+//     template< typename Input >
+//     static void apply( const Input & in, Program & p){
+//       if (debug) std::cerr << "Recognized an 'sx' register: " << in.string() << std::endl;
 
-      auto r = new Register(RegisterID::rcx);
-      parsed_items.push_back(r);
-    }
-  };
+//       auto r = new Register(RegisterID::rcx);
+//       parsed_items.push_back(r);
+//     }
+//   };
   template<> struct action < x_register_rule > {
     template< typename Input >
     static void apply( const Input & in, Program & p){
