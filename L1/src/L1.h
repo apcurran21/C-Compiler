@@ -80,24 +80,24 @@ namespace L1 {
 
   class incdec_instruction : public Instruction{
     public:
-      incdec_instruction(Item *reg, String method);
+      incdec_instruction(Item *reg, Item *method);
     private:
       Item *reg; 
-      String method;
+      Item *method;
   };
 
   class label_Instruction : public Instruction{
     public:
-      label_Instruction(String *label);
+      label_Instruction(Item *label);
     private:
-      String *label; 
+      Item *label; 
   };
 
   class goto_label_instruction : public label_Instruction {
     public:
-      goto_label_instruction(String *method, String *label);
+      goto_label_instruction(Item *method, Item *label);
     private:
-      String *method;
+      Item *method;
   };
 
   class Call_Instruction : public Instruction {
@@ -109,16 +109,16 @@ namespace L1 {
     //   String instruction;
     //   String symbol;
     public:
-      Call_Instruction(String *method);
+      Call_Instruction(Item *method);
     private:
-      String *method;
+      Item *method;
   };
 
   class Call_tenserr_Instruction: public Instruction {
     public:
-      Call_tenserr_Instruction(Integer *F);
+      Call_tenserr_Instruction(Item *F);
     private:
-      Integer *F;
+      Item *F;
   };
   
   class Call_uN_Instruction : public Instruction {
@@ -151,40 +151,40 @@ namespace L1 {
 
   class w_increment_decrement : public Instruction {
     public:
-      w_increment_decrement(RegisterID r, String *symbol);
+      w_increment_decrement(Item *r, Item *symbol);
     private:
-      RegisterID r;
-      String *symbol;
+      Item *r;
+      Item *symbol;
   };
 
   class w_atreg_assignment : public Instruction {
     public:
-      w_atreg_assignment(RegisterID r1, RegisterID r2, RegisterID r3, Integer *E);
+      w_atreg_assignment(Item *r1, Item *r2, Item *r3, Item *E);
     private:
-      RegisterID r1;
-      RegisterID r2; 
-      RegisterID r3; 
-      Integer *E; 
+      Item *r1;
+      Item *r2; 
+      Item *r3; 
+      Item *E; 
   };
 
   class Memory_assignment : public Instruction {
     public:
-      Memory_assignment(Item *dst, String *method, Item *x, Item *M);
+      Memory_assignment(Item *dst, Item *method, Item *x, Item *M);
     private:
       Item *dst;
-      String *method;
+      Item *method;
       Item *x;
       Item *M;
   };
 
   class Memory_arithmetic : public Instruction {
     public:
-      Memory_arithmetic(Item *dst, String *method, Item *x, String *instruction, Item *M);
+      Memory_arithmetic(Item *dst, Item *method, Item *x, Item *instruction, Item *M);
     private: 
       Item *dst;
-      String *method;
+      Item *method;
       Item *x;
-      String *instruction;
+      Item *instruction;
       Item *M;
   };
 
@@ -201,12 +201,12 @@ namespace L1 {
 
   class cjump_cmp_Instruction : public Instruction {
     public:
-      cjump_cmp_Instruction(Item *t1, String *method, Item *t2, String *label);
+      cjump_cmp_Instruction(Item *t1, Item *method, Item *t2, Item *label);
     private:
       Item *t1;
-      String *method;
+      Item *method;
       Item *t2;
-      String *label;
+      Item *label;
   };
 
   

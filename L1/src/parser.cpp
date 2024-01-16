@@ -1127,7 +1127,7 @@ namespace L1 {
       auto x = parsed_items.back();
       parsed_items.pop_back();
       auto method = new String("mem");
-      auto instruction = new Strint("+=");
+      auto instruction = new String("+=");
       auto w = parsed_items.back();
       parsed_items.pop_back();
       /* 
@@ -1274,9 +1274,8 @@ namespace L1 {
     static void apply( const Input & in, Program & p) {
       auto currentF = p.functions.back();
 
-      auto label = p.functions.back();
+      auto label = parsed_items.back();
       p.functions.pop_back();
-
       auto t1 = parsed_items.back();
       parsed_items.pop_back();
       auto cmp = parsed_items.back();
@@ -1402,7 +1401,7 @@ namespace L1 {
       parsed_items.pop_back();
       auto r = parsed_items.back();
       parsed_items.pop_back();
-      auto  = new w_increment_decrement(r, symbol);
+      auto i = new w_increment_decrement(r, symbol);
       currentF->instructions.push_back(i);
     }
   };
@@ -1416,7 +1415,7 @@ namespace L1 {
       parsed_items.pop_back();
       auto r = parsed_items.back();
       parsed_items.pop_back();
-      auto  = new w_increment_decrement(r, symbol);
+      auto i = new w_increment_decrement(r, symbol);
       currentF->instructions.push_back(i);
     }
   };
@@ -1434,11 +1433,10 @@ namespace L1 {
       parsed_items.pop_back();
       auto w3 = parsed_items.back();
       parsed_items.pop_back();
-      auto  = new w_atreg_(w3,w2,w1,E);
+      auto i = new w_atreg_assignment(w3,w2,w1,E);
       currentF->instructions.push_back(i);
     }
   };
-
 
   Program parse_file (char *fileName){
 
