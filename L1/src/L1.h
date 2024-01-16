@@ -5,6 +5,10 @@
 
 namespace L1 {
 
+  // Forward declaration of the Function class
+  class Function;
+
+
   enum RegisterID {   // this list currently corresponds with L1 grammar definition 'x' 
     rdi,
     rsi,
@@ -82,29 +86,18 @@ namespace L1 {
       String method;
   };
 
-  class at_instruction : public Instruction{
-    //@ instruction
-    public:
-      at_instruction(Item *reg1, Item *reg2, Item *reg3, Integer num);
-    private:
-      Item *reg1;
-      Item *reg2; 
-      Item *reg3;
-      Integer num;
-  };
-
   class label_Instruction : public Instruction{
     public:
-      label_Instruction(String label);
+      label_Instruction(String *label);
     private:
-      String label; 
+      String *label; 
   };
 
   class goto_label_instruction : public label_Instruction {
     public:
       goto_label_instruction(String *method, String *label);
     private:
-      String method;
+      String *method;
   };
 
   class Call_Instruction : public Instruction {
@@ -116,89 +109,82 @@ namespace L1 {
     //   String instruction;
     //   String symbol;
     public:
-      Call_Instruction(String method);
+      Call_Instruction(String *method);
     private:
-      String method;
+      String *method;
   };
 
-  class Call_tenserr_Instruction{
+  class Call_tenserr_Instruction: public Instruction {
     public:
-      Call_tenserr_Instruction(Integer F);
+      Call_tenserr_Instruction(Integer *F);
     private:
-      Integer F;
+      Integer *F;
   };
   
   class Call_uN_Instruction : public Instruction {
-    // call u N 
-    // public:
-    //   Call_uN_Instruction(String method,String u, String N);
-    // private:
-    //   String method;
-    //   String u;
-    //   String N;
     public:
       Call_uN_Instruction(Item *u, Item *N);
     private:
       Item *u;
       Item *N;
   };
-  class Call_print_Instruction {
+  class Call_print_Instruction : public Instruction {
     // call print 1 
     public:
       Call_print_Instruction();
   };
-  class Call_input_Instruction {
+  class Call_input_Instruction : public Instruction {
     // call input 0 
     public:
       Call_input_Instruction();
   };
-  class Call_allocate_Instruction {
+  class Call_allocate_Instruction : public Instruction {
     // call allocate 2
     public:
       Call_allocate_Instruction();
   };
-  class Call_tuple_Instruction {
+  class Call_tuple_Instruction : public Instruction {
     // call tuple-error 3
     public:
       Call_tuple_Instruction();
   };
 
-  class w_increment_decrement{
+  class w_increment_decrement : public Instruction {
     public:
-      w_increment_decrement(RegisterID r,String symbol);
+      w_increment_decrement(RegisterID r, String *symbol);
     private:
       RegisterID r;
-      String symbol;
+      String *symbol;
   };
 
-  class w_atreg_assignment{
+  class w_atreg_assignment : public Instruction {
     public:
-      w_atreg_assignment(RegisterID r1, RegisterID r2, RegisterID r3, Integer E);
+      w_atreg_assignment(RegisterID r1, RegisterID r2, RegisterID r3, Integer *E);
     private:
       RegisterID r1;
       RegisterID r2; 
       RegisterID r3; 
-      Integer E; 
+      Integer *E; 
   };
 
   class Memory_assignment : public Instruction {
     public:
-      Memory_assignment(Item *dst, String method, Item *x, Item *M);
+      Memory_assignment(Item *dst, String *method, Item *x, Item *M);
     private:
       Item *dst;
-      String method;
+      String *method;
       Item *x;
       Item *M;
   };
 
   class Memory_arithmetic : public Instruction {
     public:
-      Memory_arithmetic(Item *dst, String method, Item *x, String instruction, Item *M);
+      Memory_arithmetic(Item *dst, String *method, Item *x, String *instruction, Item *M);
     private: 
       Item *dst;
-      String method;
+      String *method;
       Item *x;
-      String instruction;
+      String *instruction;
       Item *M;
   };
 
@@ -215,12 +201,12 @@ namespace L1 {
 
   class cjump_cmp_Instruction : public Instruction {
     public:
-      cjump_cmp_Instruction(Item *t1, String method, Item *t2, String label);
+      cjump_cmp_Instruction(Item *t1, String *method, Item *t2, String *label);
     private:
       Item *t1;
-      String method;
+      String *method;
       Item *t2;
-      String label;
+      String *label;
   };
 
   

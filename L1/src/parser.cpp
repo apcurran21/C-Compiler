@@ -767,17 +767,19 @@ namespace L1 {
         newF->name = in.string();
         p.functions.push_back(newF);
       }
+
+      // note that there will be an '@' token on the parsed stack, need to remove
+      parsed_items.pop_back();
     }
   }; 
+
   template<> struct action < label_rule > { //Don't we handle basically exactly like I_rule?
     template< typename Input >
 	  static void apply( const Input & in, Program & p){
-        auto newF = new Function();
-        newF->name = in.string();
-        p.functions.push_back(newF);
+        auto label = new String(in.string());
+        parsed_items.push_back(label);
       }
   };
-
 
   template<> struct action < argument_number > {
     template< typename Input >
@@ -844,17 +846,12 @@ namespace L1 {
       parsed_items.push_back(r);
     }
   };
-  template<> struct action < s_rule > {
-    template< typename Input >
-    static void apply( const Input & in, Program & p){
-      auto r = new Register(RegisterID::rax);
-      parsed_items.push_back(r);
-    }
-  };
   template<> struct action < x_register_rule > {
     template< typename Input >
     static void apply( const Input & in, Program & p){
-      auto r = new Register(RegisterID::rax);
+      auto str = in.string();
+      RegisterID regId = stringToRegisterID(str);
+      auto r = new Register(regId);
       parsed_items.push_back(r);
     }
   };
@@ -964,9 +961,7 @@ namespace L1 {
     }
   };
 
-
-
-
+///////////////
 
   template<> struct action < Instruction_assignment_rule > {
     template< typename Input >
@@ -1007,7 +1002,7 @@ namespace L1 {
       parsed_items.pop_back();
       auto x = parsed_items.back();
       parsed_items.pop_back();
-      std::string method = "mem";
+      auto method = new String("mem");
       auto w = parsed_items.back();
       parsed_items.pop_back();
       /* 
@@ -1024,15 +1019,18 @@ namespace L1 {
   template<> struct action < Inst_goto_rule > {
     template< typename Input >
 	  static void apply( const Input & in, Program & p){
-      // goto label 
-      auto label = p.functions.back();
+      // goto label
+      auto currentF = p.functions.back();
+
+      auto label = parsed_items.back();
+      parsed_items.pop_back();
 
       auto go_to = parsed_items.back();
       parsed_items.pop_back();
       /* 
        * Create the instruction.
        */ 
-      auto i = new goto_label_instruction(go_to,label);
+      auto i = new goto_label_instruction(go_to, label);
 
       /* 
        * Add the just-created instruction to the current function.
@@ -1051,7 +1049,7 @@ namespace L1 {
       parsed_items.pop_back();
       auto M = parsed_items.back();
       parsed_items.pop_back();
-      std::string method = "mem";
+      auto method = new String("mem");
       auto x = parsed_items.back();
       parsed_items.pop_back();
       /* 
@@ -1074,10 +1072,10 @@ namespace L1 {
 
       auto t = parsed_items.back();
       parsed_items.pop_back();
-      std::string instruction = "+=";
+      auto instruction = new String("+=");
       auto M = parsed_items.back();
       parsed_items.pop_back();
-      std::string method = "mem";
+      auto method = new String("mem");
       auto x = parsed_items.back();
       parsed_items.pop_back();
       /* 
@@ -1100,10 +1098,10 @@ namespace L1 {
 
       auto t = parsed_items.back();
       parsed_items.pop_back();
-      std::string instruction = "-=";
+      auto instruction = new String("-=");
       auto M = parsed_items.back();
       parsed_items.pop_back();
-      std::string method = "mem";
+      auto method = new String("mem");
       auto x = parsed_items.back();
       parsed_items.pop_back();
       /* 
@@ -1128,8 +1126,8 @@ namespace L1 {
       parsed_items.pop_back();
       auto x = parsed_items.back();
       parsed_items.pop_back();
-      std::string method = "mem";
-      std::string instruction = "+=";
+      auto method = new String("mem");
+      auto instruction = new Strint("+=");
       auto w = parsed_items.back();
       parsed_items.pop_back();
       /* 
@@ -1154,8 +1152,8 @@ namespace L1 {
       parsed_items.pop_back();
       auto x = parsed_items.back();
       parsed_items.pop_back();
-      std::string method = "mem";
-      std::string instruction = "-=";
+      auto method = new String("mem");
+      auto instruction = new String("-=");
       auto w = parsed_items.back();
       parsed_items.pop_back();
       /* 
@@ -1270,11 +1268,14 @@ namespace L1 {
       currentF->instructions.push_back(i);
     }
   };
+
   template<> struct action < Inst_cjump_rule > {
     template< typename Input >
     static void apply( const Input & in, Program & p) {
+      auto currentF = p.functions.back();
 
       auto label = p.functions.back();
+      p.functions.pop_back();
 
       auto t1 = parsed_items.back();
       parsed_items.pop_back();
@@ -1293,9 +1294,25 @@ namespace L1 {
       currentF->instructions.push_back(i);
     }
   };
+
+  template<> struct action < Inst_label_rule > {
+    template< typename Input >
+    static void apply( const Input & in, Program & p) {
+      auto currentF = p.functions.back();
+
+      auto label = parsed_items.back();
+      parsed_items.pop_back();
+
+      auto i = new label_Instruction(label);
+      currentF->instructions.push_back(i);
+    }
+  };
+
   template<> struct action < call_uN_rule > {
     template< typename Input >
     static void apply( const Input & in, Program & p) {
+      auto currentF = p.functions.back();
+
       // call u N
       auto N = parsed_items.back();
       parsed_items.pop_back();
@@ -1314,6 +1331,8 @@ namespace L1 {
   template<> struct action < call_print_rule > {
     template< typename Input >
     static void apply( const Input & in, Program & p) {
+      auto currentF = p.functions.back();
+
       // call print 1 
       auto i = new Call_print_Instruction();
       /* 
@@ -1325,6 +1344,8 @@ namespace L1 {
   template<> struct action < call_input_rule > {
     template< typename Input >
     static void apply( const Input & in, Program & p) {
+      auto currentF = p.functions.back();
+
       // call input 0 
       auto i = new Call_input_Instruction();
       /* 
@@ -1336,6 +1357,8 @@ namespace L1 {
   template<> struct action < call_allocate_rule > {
     template< typename Input >
     static void apply( const Input & in, Program & p) {
+      auto currentF = p.functions.back();
+
       // call allocate 2
       auto i = new Call_allocate_Instruction();
       /* 
@@ -1348,6 +1371,8 @@ namespace L1 {
     // call tuple-error 3
     template< typename Input >
     static void apply( const Input & in, Program & p) {
+      auto currentF = p.functions.back();
+
       auto i = new Call_tuple_Instruction();
       /* 
        * Add the just-created instruction to the current function.
@@ -1359,6 +1384,8 @@ namespace L1 {
     // call tensor-error F 
     template< typename Input >
     static void apply( const Input & in, Program & p) {
+      auto currentF = p.functions.back();
+
       auto F = parsed_items.back();
       parsed_items.pop_back();
       auto i = new Call_tenserr_Instruction(F);
@@ -1369,11 +1396,13 @@ namespace L1 {
     // w ++  
     template< typename Input >
     static void apply( const Input & in, Program & p) {
+      auto currentF = p.functions.back();
+
       auto symbol = parsed_items.back();
       parsed_items.pop_back();
       auto r = parsed_items.back();
       parsed_items.pop_back();
-      auto  = new w_increment_decrement(r,symbol);
+      auto  = new w_increment_decrement(r, symbol);
       currentF->instructions.push_back(i);
     }
   };
@@ -1381,11 +1410,13 @@ namespace L1 {
     // w --  
     template< typename Input >
     static void apply( const Input & in, Program & p) {
+      auto currentF = p.functions.back();
+      
       auto symbol = parsed_items.back();
       parsed_items.pop_back();
       auto r = parsed_items.back();
       parsed_items.pop_back();
-      auto  = new w_increment_decrement(r,symbol);
+      auto  = new w_increment_decrement(r, symbol);
       currentF->instructions.push_back(i);
     }
   };
@@ -1393,6 +1424,8 @@ namespace L1 {
     // w @ w w E   
     template< typename Input >
     static void apply( const Input & in, Program & p) {
+      auto currentF = p.functions.back();
+
       auto E = parsed_items.back();
       parsed_items.pop_back();
       auto w1 = parsed_items.back();
