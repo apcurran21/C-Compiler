@@ -158,6 +158,8 @@ namespace L1 {
 
   //we need to add struct for all of them
 
+  struct str_mem_rule: str_mem {};
+
   /* BEGINNING OF REGISTER RULES  */
   struct sx_register_rule:
     pegtl::seq<
@@ -384,17 +386,17 @@ namespace L1 {
       spaces,
       str_arrow,
       spaces,
-      str_mem,
+      str_mem_rule,
       spaces,
       x_register_rule,
       spaces,
       M_rule
-    > { };
+    > {};
 
   struct Inst_storemem_rule:
   // mem x M <- s
     pegtl::seq<
-      str_mem,
+      str_mem_rule,
       spaces,
       x_register_rule,
       spaces,
@@ -438,7 +440,7 @@ namespace L1 {
   struct Inst_mem_plus_rule:
   // mem x M += t
     pegtl::seq<
-      str_mem,
+      str_mem_rule,
       spaces,
       x_register_rule,
       spaces,
@@ -452,7 +454,7 @@ namespace L1 {
   struct Inst_mem_minus_rule:
   // mem x M -= t
     pegtl::seq<
-      str_mem,
+      str_mem_rule,
       spaces,
       x_register_rule,
       spaces,
@@ -470,7 +472,7 @@ namespace L1 {
       spaces,
       str_pluseq,
       spaces,
-      str_mem,
+      str_mem_rule,
       spaces,
       x_register_rule,
       spaces,
@@ -484,7 +486,7 @@ namespace L1 {
       spaces,
       str_minuseq,
       spaces,
-      str_mem,
+      str_mem_rule,
       spaces,
       x_register_rule,
       spaces,
@@ -663,9 +665,9 @@ namespace L1 {
       pegtl::seq< pegtl::at<Inst_dec_rule>, Inst_dec_rule >,
       pegtl::seq< pegtl::at<Inst_atreg_rule>, Inst_atreg_rule >,
       // simone's defined rules
-      pegtl::seq< pegtl::at<Instruction_assignment_rule>        , Instruction_assignment_rule         >,
-      pegtl::seq< pegtl::at<Instruction_return_rule>            , Instruction_return_rule             >,
-      pegtl::seq< pegtl::at<comment>                            , comment>
+      pegtl::seq< pegtl::at<Instruction_assignment_rule>, Instruction_assignment_rule         >,
+      pegtl::seq< pegtl::at<Instruction_return_rule>, Instruction_return_rule             >,
+      pegtl::seq< pegtl::at<comment>, comment>
     > { };
 
   struct Instructions_rule:
@@ -679,7 +681,7 @@ namespace L1 {
       >
     > { };
 
-  #pragma endregion Instruction_return_rule, Instruction_assignment_rule, Instruction_rule, Instruction_rules
+  #pragma endregion Instruction_return_rule, Instruction_assignment_rule, Instruction_rule, Instruction_rules, Inst_loadmem_rule
 
 
   /*
@@ -817,6 +819,12 @@ namespace L1 {
       currentF->instructions.push_back(i);
     }
   };
+  template<> struct action < str_mem_rule > {
+    template< typename Input >
+	  static void apply( const Input & in, Program & p){
+      if (debug) std::cerr << "Recognized a mem string" << std::endl;
+    }
+  };
 
   // template<> struct action < register_rdi_rule > {
   //   template< typename Input >
@@ -837,23 +845,25 @@ namespace L1 {
   template<> struct action < w_register_rule > {
     template< typename Input >
     static void apply( const Input & in, Program & p) {
-      if (debug) std::cerr << "Recognized a 'w' register: " << in.string() << std::endl;
-
       auto str = in.string();
-      RegisterID regId = stringToRegisterID(str);
-      auto r = new Register(regId);
-      parsed_items.push_back(r);
+      if (str != "rdi" && str != "rsi" && str != "rdx" && str != "r8" && str != "r9"){
+        if (debug) std::cerr << "Recognized an 'w' register: " << in.string() << std::endl;
+        RegisterID regId = stringToRegisterID(str);
+        auto r = new Register(regId);
+        parsed_items.push_back(r);
+      } 
     }
-};
+  };
   template<> struct action < a_register_rule > {
     template< typename Input >
     static void apply( const Input & in, Program & p){
-      if (debug) std::cerr << "Recognized an 'a' register: " << in.string() << std::endl;
-      
       auto str = in.string();
-      RegisterID regId = stringToRegisterID(str);
-      auto r = new Register(regId);
-      parsed_items.push_back(r);
+      if (str != "rcx"){
+        if (debug) std::cerr << "Recognized an 'a' register: " << in.string() << std::endl;
+        RegisterID regId = stringToRegisterID(str);
+        auto r = new Register(regId);
+        parsed_items.push_back(r);
+      } 
     }
   };
   template<> struct action < sx_register_rule > {
@@ -868,12 +878,13 @@ namespace L1 {
   template<> struct action < x_register_rule > {
     template< typename Input >
     static void apply( const Input & in, Program & p){
-      if (debug) std::cerr << "Recognized an 'x' register: " << in.string() << std::endl;
-
       auto str = in.string();
-      RegisterID regId = stringToRegisterID(str);
-      auto r = new Register(regId);
-      parsed_items.push_back(r);
+      if (str != "rax" && str != "rbx" && str != "rbp" && str != "r10" && str != "r11" && str != "r12" && str != "r13" && str != "r14" && str != "r15" && str != "rdi" && str != "rsi" && str != "rdx" && str != "r8" && str != "r9" && str != "rcx"){
+        if (debug) std::cerr << "Recognized an 'x' register: " << in.string() << std::endl;     
+        RegisterID regId = stringToRegisterID(str);
+        auto r = new Register(regId);
+        parsed_items.push_back(r);
+      }
     }
   };
   template<> struct action < N_rule > {
@@ -1029,6 +1040,8 @@ namespace L1 {
     template< typename Input >
 	  static void apply( const Input & in, Program & p){
       // w <- mem x M
+      if (debug) std::cerr << "Recognized 'w <- mem x M'" << std::endl;
+
       auto currentF = p.functions.back();
 
       auto M = parsed_items.back();
