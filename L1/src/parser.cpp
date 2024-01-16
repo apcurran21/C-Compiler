@@ -871,11 +871,10 @@ namespace L1 {
     template< typename Input >
     static void apply( const Input & in, Program & p){
       if (debug) std::cerr << "Recognized an 'sx' register: " << in.string() << std::endl;
-
-//       auto r = new Register(RegisterID::rcx);
-//       parsed_items.push_back(r);
-//     }
-//   };
+      auto r = new Register(RegisterID::rcx);
+      parsed_items.push_back(r);
+    }
+  };
   template<> struct action < x_register_rule > {
     template< typename Input >
     static void apply( const Input & in, Program & p){
