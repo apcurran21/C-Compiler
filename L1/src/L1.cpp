@@ -2,21 +2,25 @@
 
 namespace L1 {
 
-    // Item Destructor
-    Item::~Item() {}
-
     // Register, derived from Item
     Register::Register(RegisterID r) : ID(r) {}
     Register::~Register() {}
     void Register::print() {
         std::cout << "found the register's override of Item::print!" << std::endl;
     }
+    int Register::give_status() {
+        return 0;
+    }
+
 
     // Integer, derived from Item
     Integer::Integer(int value) : value(value) {}
     Integer::~Integer() {}
     void Integer::print() {
         std::cout << "found the integer's override of Item::print!" << std::endl;
+    }
+    int Integer::give_status() {
+        return 1;
     }
 
     // String, derived from Item
@@ -25,9 +29,18 @@ namespace L1 {
     void String::print() {
         std::cout << "found the string's override of Item::print!" << std::endl;
     }
+    int String::give_status() {
+        return 2;
+    }
+
 
     // Instruction_assignment Constructor
     Instruction_assignment::Instruction_assignment(Item *dst, Item *src) : s(src), d(dst) {}
+    void Instruction_assignment::gen() {
+        // dst should always be a register
+
+        // src can be a register, number, function name
+    }
 
     // incdec_instruction Constructor
     incdec_instruction::incdec_instruction(Item *reg, Item *method) : reg(reg), method(method) {}
