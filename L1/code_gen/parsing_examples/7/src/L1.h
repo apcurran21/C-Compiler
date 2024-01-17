@@ -63,14 +63,16 @@ namespace L1 {
    * Instruction interface.
    */
   class Instruction{
-    virtual void gen(Program &p, std::ofstream &outputFile) = 0;
+    public:
+      virtual void gen(Program &p, std::ofstream &outputFile) = 0;
   };
 
   /*
    * Instructions.
    */
   class Instruction_ret : public Instruction{
-    void gen(Program &p, std::ofstream &outputFile) override;
+    public:
+      void gen(Program &p, std::ofstream &outputFile) override;
   };
 
   class Instruction_assignment : public Instruction{

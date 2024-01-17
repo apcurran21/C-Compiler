@@ -14,10 +14,15 @@ namespace L1{
   */
   void Instruction_ret::gen(Program &p, std::ofstream &outputFile) {
     // return translates to retq
+
+    std::cout << "gen method called for an Instruction_ret instance!" << std::endl;
+
     outputFile << "retq\n";
   }
 
   void Instruction_assignment::gen(Program &p, std::ofstream &outputFile) {
+    std::cout << "gen method called for an Instruction_assignment class!" << std::endl;
+
     Register *dreg = dynamic_cast< Register * >(this->d);
     std::string dreg_ID = dreg->get_ID();
     int src_code = this->s->translate();
@@ -58,6 +63,8 @@ namespace L1{
 
   void generate_code(Program p){
 
+    std::cout << "Beginning the code generation process." << std::endl;
+
     /* 
      * Open the output file.
      */ 
@@ -73,6 +80,20 @@ namespace L1{
     std::string entry_lab = p.entryPointLabel;
     outputFile << "call " << entry_lab.replace(0, 1, "_") << "\n";
     outputFile << "popq %r15\npopq %r14\npopq %r13\npopq %r12\npopq %rbp\npopq %rbx\nretq\n";
+
+    // main loop
+    for (Function *fptr : p.functions) {
+      std::string fname = fptr->name;
+
+      std::cout << "Currently generating for function" << fname << std::endl;
+
+      outputFile << fname.replace(0, 1, "_");
+      for (Instruction *iptr : fptr->instructions) {
+        std::cout << "Currently generating an instruction:" << std::endl;
+
+        iptr->gen(p, outputFile);
+      }
+    }
 
     /* 
      * Close the output file.
