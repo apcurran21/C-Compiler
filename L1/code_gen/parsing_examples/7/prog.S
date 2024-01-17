@@ -15,3 +15,8 @@ popq %r12
 popq %rbp
 popq %rbx
 retq
+_go:
+movq %rdi, %rax
+retq
+_testFunction:
+retq

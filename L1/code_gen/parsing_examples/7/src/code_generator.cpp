@@ -85,9 +85,9 @@ namespace L1{
     for (Function *fptr : p.functions) {
       std::string fname = fptr->name;
 
-      std::cout << "Currently generating for function" << fname << std::endl;
+      std::cout << "Currently generating for function " << fname << std::endl;
 
-      outputFile << fname.replace(0, 1, "_");
+      outputFile << fname.replace(0, 1, "_") << ":\n";
       for (Instruction *iptr : fptr->instructions) {
         std::cout << "Currently generating an instruction:" << std::endl;
 
