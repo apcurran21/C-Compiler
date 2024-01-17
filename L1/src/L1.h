@@ -2,6 +2,7 @@
 
 #include <vector>
 #include <string>
+#include <variant>
 
 namespace L1 {
 
@@ -27,8 +28,15 @@ namespace L1 {
     r15,
     rsp   // note - i'm not sure if the stack pointer register should belong here
   };
+  using ItemValue = std::variant<int, std::string, RegisterID>; // Example using variant
 
   class Item {
+    public:
+        virtual ~Item() {}  // Virtual destructor
+        virtual ItemValue getValue() const { return value; }
+        virtual void setValue(const ItemValue& newValue) { value = newValue; }
+    protected:
+      ItemValue value;
   };
 
   class Register : public Item {
