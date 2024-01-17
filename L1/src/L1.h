@@ -3,6 +3,7 @@
 #include <vector>
 #include <string>
 #include <variant>
+#include <iostream>
 
 namespace L1 {
 
@@ -32,17 +33,19 @@ namespace L1 {
 
   class Item {
     public:
-        virtual ~Item() {}  // Virtual destructor
-        virtual ItemValue getValue() const { return value; }
-        virtual void setValue(const ItemValue& newValue) { value = newValue; }
+      virtual ~Item() {}  // Virtual destructor
+      virtual ItemValue getValue() const { return value; }
+      virtual void setValue(const ItemValue& newValue) { value = newValue; }
     protected:
       ItemValue value;
+      virtual void print() = 0;
   };
 
   class Register : public Item {
     public:
       Register (RegisterID r);
-
+      ~Register();
+      void print() override;
     private:
       RegisterID ID;
   };
@@ -50,13 +53,17 @@ namespace L1 {
   class Integer : public Item {
     public:
       Integer(int value);
+      ~Integer();
+      void print() override;
     private:
-        int value;
+      int value;
   };
 
   class String : public Item {
     public:
       String(const std::string& value);
+      ~String();
+      void print() override;
     private:
       std::string value;
   };
