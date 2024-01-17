@@ -1,0 +1,228 @@
+(@go
+(@go
+0 6
+
+// read in the array from the user
+rsi <- 0
+mem rsp -8 <- :READ_RET
+mem rsp -16 <- rsi
+call @read_array 0
+:READ_RET
+rdi <- rax
+rsi <- mem rsp -16
+
+
+
+////////////////////////////////////////
+// sorting alg
+
+// use callee-saved registers for this section
+mem rsp 0 <- r12
+mem rsp 8 <- r13
+mem rsp 16 <- r14
+mem rsp 24 <- r15
+mem rsp 32 <- rbp
+mem rsp 40 <- rbx
+
+// store the length of the array
+r12 <- mem rdi 0
+// store a pointer to the first element of the array
+r13 <- rax
+r13 += 8
+// store the outer loop index variable i, initialized to the length minus 1
+r14 <- r12
+r14--
+// store the inner loop index variable j, initialized to zero
+r15 <- 0
+// set aside a register to hold the contents of index j
+rbp <- 0
+// set aside a register to hold the contents of index j+1
+rbx <- 0
+
+// iterate over the main array
+:FORL_OUTER
+// exit if i (r14) is less than or equal to 0
+cjump r14 <= 0 :ENDL_OUTER
+
+// iterate over a sub array to check for swaps
+:FORL_INNER
+// exit if j (r15) is greater than or equal to i (r14)
+cjump r14 <= r15 :ENDL_INNER
+
+// get the addresses of elements j and j+1 from the array
+rbp @ r13 r15 8
+r15++
+rbx @ r13 r15 8
+r15--
+
+// get the values from the addresses
+r10 <- mem rbp 0
+r11 <- mem rbx 0
+
+// we want to swap if the left num is smaller than the right
+cjump r11 <= r10 :SKIP
+
+// place the arguments for swap
+rdi <- rbp
+rsi <- rbx
+mem rsp -8 <- :SWAP_RET
+mem rsp -16 <- rdi
+mem rsp -24 <- rsi
+call @swap 2
+:SWAP_RET
+rdi <- mem rsp -16
+rsi <- mem rsp -24
+
+:SKIP
+
+r15++
+goto :FORL_INNER
+
+:ENDL_INNER
+r15 <- 0
+
+r14--
+goto :FORL_OUTER
+
+:ENDL_OUTER
+
+////////////////////////////////////////
+
+
+// print out the array
+rdi <- r13
+rdi -= 8
+mem rsp -8 <- :PRINT_RET
+call @print_array 1
+:PRINT_RET
+
+
+// restore callee-saved registers
+r12 <- mem rsp 0
+r13 <- mem rsp 8
+r14 <- mem rsp 16
+r15 <- mem rsp 24
+rbp <- mem rsp 32
+rbx <- mem rsp 40
+
+return
+)
+
+
+(@swap
+    2 1
+    // array
+    rdx <- mem rsi 0
+    r10 <- mem rdi 0
+    mem rsi 0 <- r10
+    mem rdi 0 <- rdx
+    return
+)
+
+
+(@read_array
+0 1
+
+// take in the size of the array
+call input 0
+
+// allocate the array with encoded zeros
+rdi <- rax
+rsi <- 1
+mem rsp -8 <- rdi
+call allocate 2
+rdi <- mem rsp -8
+
+// store the initial pointer returned by allocate so that we can return it later
+mem rsp 0 <- rax
+
+// save the length of the array to a caller-save register
+r10 <- mem rax 0
+
+// initialize a counter in a caller-save register
+r11 <- 0
+
+// initialize a pointer to the first element in the loop
+r8 <- rax
+r8 += 8
+
+// for loop over the initialized array
+:FORL_READ
+// exit loop if the array length is less than or equal to the counter
+cjump r10 <= r11 :ENDL_READ
+
+// advance array pointer to the current index
+r9 @ r8 r11 8
+
+// get the current element input from the user
+mem rsp -8 <- r11
+mem rsp -16 <- r10
+mem rsp -24 <- r8
+call input 0
+r11 <- mem rsp -8
+r10 <- mem rsp -16
+r8 <- mem rsp -24
+
+// store the user's input at the current array pointer
+mem r9 0 <- rax
+
+// increment the counter
+r11++
+
+// loop back to the condition check
+goto :FORL_READ
+
+:ENDL_READ
+
+rax <- mem rsp 0
+return
+)
+
+
+(@print_array
+// takes the pointer to the array as arg 1
+1 0
+
+// save the length of the passed in array to a caller-saved register
+r10 <- mem rdi 0
+
+// initialize a counter in another caller-saved register
+r11 <- 0
+
+// initialize a pointer to the first actual element in the array
+// ie go past the array length entry
+r8 <- rdi
+r8 += 8
+
+// for loop over the array
+:FORL
+// exit loop if the array length is less than or equal to the counter
+cjump r10 <= r11 :ENDL
+
+// advance the array pointer to current element
+// we don't need to save r9 since we always rewrite before using
+r9 @ r8 r11 8
+
+// grab the current array element
+rdi <- mem r9 0
+
+// save all the caller registers and print
+mem rsp -8 <- r11
+mem rsp -16 <- r10
+mem rsp -24 <- r8
+call print 1
+r11 <- mem rsp -8
+r10 <- mem rsp -16
+r8 <- mem rsp -24
+
+// increment the counter
+r11++
+
+// Loop back to the condition check
+goto :FORL
+
+:ENDL
+
+return
+)
+)

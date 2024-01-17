@@ -1,0 +1,16 @@
+(@go
+  (@go
+    0 0
+
+    // This is my comment
+
+    rax <- rdi
+
+    return 
+  )
+
+  (@testFunction
+    1 2
+    return 
+  )
+)

@@ -795,6 +795,10 @@ namespace L1 {
 	  static void apply( const Input & in, Program & p){
       //if (debug) std::cerr << "Recognized an arg number" << std::endl;
 
+      // since argument number gets matched as N first, its token gets put on the stack
+      // ie we should remove here
+      parsed_items.pop_back();
+
       auto currentF = p.functions.back();
       currentF->arguments = std::stoll(in.string());
     }
@@ -804,6 +808,9 @@ namespace L1 {
     template< typename Input >
 	  static void apply( const Input & in, Program & p){
       //if (debug) std::cerr << "Recognized a local numbers" << std::endl;
+
+      // same deal as the argument number case
+      parsed_items.pop_back();
 
       auto currentF = p.functions.back();
       currentF->locals = std::stoll(in.string());
