@@ -211,21 +211,11 @@ namespace L1 {
       w_register_rule,
       I_rule
     >{};
-    // Rule to match an optional negative sign
+  struct integer : pegtl::star< digit > {};
+  struct sign : pegtl::opt< one< '+', '-' > > {};
 
-  struct M_rule
-  {
-    template <typename ParseInput>
-    static bool match(ParseInput& in)
-    {
-        int num = std::stoi(in.current());
-        if (num % 8 == 0) {
-          return true;
-        }
-        return false;
-    }
-  };
-
+  struct M_rule:
+    pegtl::seq< sign, integer > {};
   struct N_rule:
     pegtl::sor<
       pegtl::seq<
@@ -763,7 +753,7 @@ namespace L1 {
   template<> struct action < entry_point_rule> {
     template< typename Input >
     static void apply( const Input & in, Program & p){
-      if (debug) std::cerr << "Recognized a complete entry point rule, done !" << std::endl;
+      //if (debug) std::cerr << "Recognized a complete entry point rule, done !" << std::endl;
     }
   };
 
@@ -772,7 +762,7 @@ namespace L1 {
   template<> struct action < I_rule > {
     template< typename Input >
 	  static void apply( const Input & in, Program & p){
-      if (debug) std::cerr << "Recognized I rule" << std::endl;
+      //if (debug) std::cerr << "Recognized I rule" << std::endl;
 
       if (p.entryPointLabel.empty()){
         p.entryPointLabel = in.string(); //This matches it with whatever our entry point function name is (in string gives u the string matched by the rule)
@@ -793,7 +783,7 @@ namespace L1 {
   template<> struct action < label_rule > { //Don't we handle basically exactly like I_rule?
     template< typename Input >
 	  static void apply( const Input & in, Program & p){
-        if (debug) std::cerr << "Recognized a label" << std::endl;
+        //if (debug) std::cerr << "Recognized a label" << std::endl;
 
         auto label = new String(in.string());
         parsed_items.push_back(label);
@@ -803,7 +793,7 @@ namespace L1 {
   template<> struct action < argument_number > {
     template< typename Input >
 	  static void apply( const Input & in, Program & p){
-      if (debug) std::cerr << "Recognized an arg number" << std::endl;
+      //if (debug) std::cerr << "Recognized an arg number" << std::endl;
 
       auto currentF = p.functions.back();
       currentF->arguments = std::stoll(in.string());
@@ -813,7 +803,7 @@ namespace L1 {
   template<> struct action < local_number > {
     template< typename Input >
 	  static void apply( const Input & in, Program & p){
-      if (debug) std::cerr << "Recognized a local numbers" << std::endl;
+      //if (debug) std::cerr << "Recognized a local numbers" << std::endl;
 
       auto currentF = p.functions.back();
       currentF->locals = std::stoll(in.string());
@@ -823,7 +813,7 @@ namespace L1 {
   template<> struct action < str_return > {
     template< typename Input >
 	  static void apply( const Input & in, Program & p){
-      if (debug) std::cerr << "Recognized a return string" << std::endl;
+      //if (debug) std::cerr << "Recognized a return string" << std::endl;
 
       auto currentF = p.functions.back();
       auto i = new Instruction_ret();
@@ -833,7 +823,7 @@ namespace L1 {
   template<> struct action < str_mem_rule > {
     template< typename Input >
 	  static void apply( const Input & in, Program & p){
-      if (debug) std::cerr << "Recognized a mem string" << std::endl;
+      //if (debug) std::cerr << "Recognized a mem string" << std::endl;
     }
   };
 
@@ -842,7 +832,7 @@ namespace L1 {
     static void apply( const Input & in, Program & p) {
       auto str = in.string();
       if (str != "rdi" && str != "rsi" && str != "rdx" && str != "r8" && str != "r9" && str != "rcx"){
-        if (debug) std::cerr << "Recognized an 'w' register: " << in.string() << std::endl;
+        //if (debug) std::cerr << "Recognized an 'w' register: " << in.string() << std::endl;
         RegisterID regId = stringToRegisterID(str);
         auto r = new Register(regId);
         parsed_items.push_back(r);
@@ -854,7 +844,7 @@ namespace L1 {
     static void apply( const Input & in, Program & p){
       auto str = in.string();
       if (str != "rcx"){
-        if (debug) std::cerr << "Recognized an 'a' register: " << in.string() << std::endl;
+        //if (debug) std::cerr << "Recognized an 'a' register: " << in.string() << std::endl;
         RegisterID regId = stringToRegisterID(str);
         auto r = new Register(regId);
         parsed_items.push_back(r);
@@ -864,7 +854,7 @@ namespace L1 {
   template<> struct action < sx_register_rule > {
     template< typename Input >
     static void apply( const Input & in, Program & p){
-      if (debug) std::cerr << "Recognized an 'sx' register: " << in.string() << std::endl;
+      //if (debug) std::cerr << "Recognized an 'sx' register: " << in.string() << std::endl;
       auto r = new Register(RegisterID::rcx);
       parsed_items.push_back(r);
     }
@@ -873,7 +863,7 @@ namespace L1 {
     template< typename Input >
     static void apply( const Input & in, Program & p){
       auto str = in.string();
-      if (debug) std::cerr << "Recognized an 'x' register: " << in.string() << std::endl;     
+      //if (debug) std::cerr << "Recognized an 'x' register: " << in.string() << std::endl;     
 
       if (str != "rax" && str != "rbx" && str != "rbp" && str != "r10" && str != "r11" && str != "r12" && str != "r13" && str != "r14" && str != "r15" && str != "rdi" && str != "rsi" && str != "rdx" && str != "r8" && str != "r9" && str != "rcx"){
         auto r = new Register(RegisterID::rsp);
@@ -885,14 +875,20 @@ namespace L1 {
     // cmp debug 
     template< typename Input >
     static void apply( const Input & in, Program & p){
-      if (debug) std::cerr << "Recognized a str_cjump " << in.string() << std::endl;
+      //if (debug) std::cerr << "Recognized a str_cjump " << in.string() << std::endl;
     }
   };
   template<> struct action <M_rule> {
     // M rule
     template< typename Input >
     static void apply( const Input & in, Program & p){
-      if (debug) std::cerr << "Recognized an 'M' number:  " << in.string() << std::endl;
+      long number = std::stol(in.string());
+
+        // Check if the number is divisible by 8.
+      if (number % 8 != 0) {
+          throw pegtl::parse_error("Number is not divisible by 8", in);
+      }
+      //if (debug) std::cerr << "Recognized an 'M' number:  " << in.string() << std::endl;
       auto r = new String(in.string());
       parsed_items.push_back(r);
     }
@@ -901,7 +897,7 @@ namespace L1 {
     // N rule 
     template< typename Input >
     static void apply( const Input & in, Program & p){
-      if (debug) std::cerr << "Recognized a number N: " << in.string() << std::endl;
+      //if (debug) std::cerr << "Recognized a number N: " << in.string() << std::endl;
 
       auto r = new String(in.string());//No error handling needed; we know N will be a number
       parsed_items.push_back(r);
@@ -912,7 +908,7 @@ namespace L1 {
     // goto 
     template< typename Input >
     static void apply( const Input & in, Program & p){
-      if (debug) std::cerr << "Recognized a 'goto' string: " << in.string() << std::endl;
+      //if (debug) std::cerr << "Recognized a 'goto' string: " << in.string() << std::endl;
 
       auto r = new String(in.string());
       parsed_items.push_back(r);
@@ -922,7 +918,7 @@ namespace L1 {
     // E rule 
     template< typename Input >
     static void apply( const Input & in, Program & p){
-      if (debug) std::cerr << "Recognized an 'E' number: " << in.string() << std::endl;
+      //if (debug) std::cerr << "Recognized an 'E' number: " << in.string() << std::endl;
 
       auto r = new Integer(std::stoi(in.string()));
       parsed_items.push_back(r);
@@ -932,7 +928,7 @@ namespace L1 {
     // F Rule 
     template< typename Input >
     static void apply( const Input & in, Program & p){
-      if (debug) std::cerr << "Recognized an 'F' number: " << in.string() << std::endl;
+      //if (debug) std::cerr << "Recognized an 'F' number: " << in.string() << std::endl;
 
       auto r = new Integer(std::stoi(in.string()));
       parsed_items.push_back(r);
@@ -1009,7 +1005,7 @@ namespace L1 {
     template< typename Input >
 	  static void apply( const Input & in, Program & p){
 
-      if (debug) std::cerr << "Recognized 'w <- s'" << std::endl;
+      //if (debug) std::cerr << "Recognized 'w <- s'" << std::endl;
       // Fetch the current function.
       auto currentF = p.functions.back();
       if (parsed_items.size() > 2){
@@ -1030,7 +1026,7 @@ namespace L1 {
 	  static void apply( const Input & in, Program & p){
       // mem x M <- s
 
-      if (debug) std::cerr << "Recognized 'mem x M <- s'" << std::endl;
+      //if (debug) std::cerr << "Recognized 'mem x M <- s'" << std::endl;
 
       auto currentF = p.functions.back();
 
@@ -1056,7 +1052,7 @@ namespace L1 {
     template< typename Input >
 	  static void apply( const Input & in, Program & p){
       // w <- mem x M
-      if (debug) std::cerr << "Recognized 'w <- mem x M'" << std::endl;
+      //if (debug) std::cerr << "Recognized 'w <- mem x M'" << std::endl;
 
       auto currentF = p.functions.back();
 
@@ -1210,7 +1206,7 @@ namespace L1 {
   template<> struct action < Inst_arith_rule > {
     template< typename Input >
 	  static void apply( const Input & in, Program & p){
-      if (debug) std::cerr << "Recognized aop rule'" << std::endl;
+      //if (debug) std::cerr << "Recognized aop rule'" << std::endl;
 
       // w aop t
       auto currentF = p.functions.back();
@@ -1314,7 +1310,7 @@ namespace L1 {
     template< typename Input >
     static void apply( const Input & in, Program & p) {
       // cjump t cmp t label
-      if (debug) std::cerr << "Cjump Rule Seen! " << in.string() << std::endl;
+      //if (debug) std::cerr << "Cjump Rule Seen! " << in.string() << std::endl;
       auto currentF = p.functions.back();
 
       auto label = parsed_items.back();
@@ -1374,7 +1370,7 @@ namespace L1 {
     template< typename Input >
     static void apply( const Input & in, Program & p) {
       auto currentF = p.functions.back();
-      if (debug) std::cerr << "Call Print 1 Instruction" << std::endl;
+      //if (debug) std::cerr << "Call Print 1 Instruction" << std::endl;
 
       // call print 1 
       auto i = new Call_print_Instruction();
@@ -1400,7 +1396,7 @@ namespace L1 {
   template<> struct action < call_allocate_rule > {
     template< typename Input >
     static void apply( const Input & in, Program & p) {
-      if (debug) std::cerr << "Recognized call allocate rule" << std::endl;
+      //if (debug) std::cerr << "Recognized call allocate rule" << std::endl;
       auto currentF = p.functions.back();
       // call allocate 2
       auto i = new Call_allocate_Instruction();
@@ -1439,7 +1435,7 @@ namespace L1 {
     // w ++  
     template< typename Input >
     static void apply( const Input & in, Program & p) {
-      if (debug) std::cerr << "Recognized a w++ rule " << std::endl;
+      //if (debug) std::cerr << "Recognized a w++ rule " << std::endl;
 
       auto currentF = p.functions.back();
 
@@ -1505,3 +1501,4 @@ namespace L1 {
   }
 
 }
+
