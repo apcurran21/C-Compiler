@@ -2,6 +2,7 @@
 
 #include <vector>
 #include <string>
+#include <iostream>
 
 namespace L1 {
 
@@ -29,12 +30,16 @@ namespace L1 {
   };
 
   class Item {
+    public:
+      virtual ~Item();
+      virtual void print() = 0;
   };
 
   class Register : public Item {
     public:
       Register (RegisterID r);
-
+      ~Register();
+      void print() override;
     private:
       RegisterID ID;
   };
@@ -42,13 +47,17 @@ namespace L1 {
   class Integer : public Item {
     public:
       Integer(int value);
+      ~Integer();
+      void print() override;
     private:
-        int value;
+      int value;
   };
 
   class String : public Item {
     public:
       String(const std::string& value);
+      ~String();
+      void print() override;
     private:
       std::string value;
   };

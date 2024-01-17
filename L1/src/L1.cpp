@@ -2,12 +2,29 @@
 
 namespace L1 {
 
-    // Register Constructor
+    // Item Destructor
+    Item::~Item() {}
+
+    // Register, derived from Item
     Register::Register(RegisterID r) : ID(r) {}
+    Register::~Register() {}
+    void Register::print() {
+        std::cout << "found the register's override of Item::print!" << std::endl;
+    }
 
+    // Integer, derived from Item
     Integer::Integer(int value) : value(value) {}
+    Integer::~Integer() {}
+    void Integer::print() {
+        std::cout << "found the integer's override of Item::print!" << std::endl;
+    }
 
+    // String, derived from Item
     String::String(const std::string& value) : value(value) {}
+    String::~String() {}
+    void String::print() {
+        std::cout << "found the string's override of Item::print!" << std::endl;
+    }
 
     // Instruction_assignment Constructor
     Instruction_assignment::Instruction_assignment(Item *dst, Item *src) : s(src), d(dst) {}
