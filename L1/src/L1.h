@@ -7,78 +7,131 @@
 
 namespace L1 {
 
-  // Forward declaration of the Function class
-  class Function;
+  extern const int debug;
 
-  enum RegisterID {   // this list currently corresponds with L1 grammar definition 'x' 
-    rdi,
-    rsi,
-    rdx,
-    rcx,
-    r8,
-    r9,
-    rax,
-    rbx,
-    rbp,
-    r10,
-    r11,
-    r12,
-    r13,
-    r14,
-    r15,
-    rsp   // note - i'm not sure if the stack pointer register should belong here
-  };
-  using ItemValue = std::variant<int, std::string, RegisterID>; // Example using variant
+
+  // Forward declarations
+  class Function;
+  class Program;
+
+  // enum RegisterID {   // this list currently corresponds with L1 grammar definition 'x' 
+  //   rdi,
+  //   rsi,
+  //   rdx,
+  //   rcx,
+  //   r8,
+  //   r9,
+  //   rax,
+  //   rbx,
+  //   rbp,
+  //   r10,
+  //   r11,
+  //   r12,
+  //   r13,
+  //   r14,
+  //   r15,
+  //   rsp   // note - i'm not sure if the stack pointer register should belong here
+  // };
+  // using ItemValue = std::variant<int, std::string, RegisterID>; // Example using variant
 
   class Item {
     public:
-      virtual ~Item() {};  // Virtual destructor
-      virtual ItemValue getValue() const { return value; }
-      virtual void setValue(const ItemValue& newValue) { value = newValue; }
+
+      virtual std::string translate() = 0;
+
+
+      // virtual ~Item() {};  // Virtual destructor
+      // virtual ItemValue getValue() const { return value; }
+      // virtual void setValue(const ItemValue& newValue) { value = newValue; }
       
       // each derived class returns a unique integer which we can condition check in the code generator
-      virtual int give_status();
-    protected:
-      ItemValue value;
-      virtual void print() = 0;
+    //   virtual int give_status();
+    // protected:
+    //   ItemValue value;
+    //   virtual void print() = 0;
   };
 
   // Register = 0
   // Integer = 1
   // String = 2
 
+  /*
+  Register = 0
+  Number = 1
+  Name = 2
+  Label = 3
+  */
+
   class Register : public Item {
-    // for things like r9
     public:
-      Register (RegisterID r);
-      ~Register();
-      void print() override;
-      int give_status() override;
+      Register (const std::string &value);
+      std::string translate() override;
+      std::string get_ID();
+
+      // ~Register();
+      // void print() override;
+      // int give_status() override;
     private:
-      RegisterID ID;
+      std::string ID;
   };
 
-  class Integer : public Item {
-    // for things like 21
+  class Number : public Item {
     public:
-      Integer(int value);
-      ~Integer();
-      void print() override;
-      int give_status() override;
+      Number (int64_t n);
+      std::string translate() override;
+      int64_t get_value();
     private:
-      int value;
+      int64_t value;
   };
 
-  class String : public Item {
-    // for things like @name
+  class Name : public Item {
     public:
-      String(const std::string& value);
-      ~String();
-      void print() override;
-      int give_status() override;
+      Name (const std::string &value);
+      std::string translate() override;
+      std::string get_value();
     private:
       std::string value;
   };
+
+  class Label : public Item {
+    public:
+      Label (const std::string &value);
+      std::string translate() override;
+      std::string get_value();
+    private:
+      std::string value;
+  };
+
+  class Operator : public Item {
+    public:
+      Operator (const std::string &sign);
+      std::string translate() override;
+      // std::string get_value();
+    private:
+      std::string sign;
+  };
+
+  // class Integer : public Item {
+  //   // for things like 21
+  //   public:
+  //     Integer(int value);
+  //     ~Integer();
+  //     void print() override;
+  //     int give_status() override;
+  //   private:
+  //     int value;
+  // };
+
+  // class String : public Item {
+  //   // for things like @name
+  //   public:
+  //     String(const std::string& value);
+  //     ~String();
+  //     void print() override;
+  //     int give_status() override;
+  //   private:
+  //     std::string value;
+  // };
   // We honestly should write classes for methods/instructions that can be inherited from Item instead of using std::string
 
   /*
@@ -86,20 +139,23 @@ namespace L1 {
    */
   class Instruction{
     public:
-      void virtual gen() = 0; // pure virtual function
+      virtual void gen(Program &p, std::ofstream &outputFile) = 0;
   };
 
   /*
    * Instructions.
    */
   class Instruction_ret : public Instruction{
+    public:
+      // Instruction_ret ();
+      void gen(Program &p, std::ofstream &outputFile) override;
   };
 
   class Instruction_assignment : public Instruction{
     public:
       Instruction_assignment (Item *dst, Item *src);
-      void gen() override;
-    private:
+      void gen(Program &p, std::ofstream &outputFile) override;
+    protected:
       Item *s;
       Item *d;
   };
@@ -110,7 +166,7 @@ namespace L1 {
   class incdec_instruction : public Instruction{
     public:
       incdec_instruction(Item *reg, Item *method);
-      void gen() override;
+      void gen(Program &p, std::ofstream &outputFile) override;
     private:
       Item *reg; 
       Item *method;
@@ -119,18 +175,25 @@ namespace L1 {
   class label_Instruction : public Instruction{
     public:
       label_Instruction(Item *label);
-      void gen() override;
-    private:
+      void gen(Program &p, std::ofstream &outputFile) override;
+      void gen(Program &p, std::ofstream &outputFile) override;
+    protected:
       Item *label; 
   };
 
   class goto_label_instruction : public label_Instruction {
     public:
-      goto_label_instruction(Item *method, Item *label);
-      void gen() override;
-    private:
-      Item *method;
+      goto_label_instruction(Item *label);
+      void gen(Program &p, std::ofstream &outputFile) override;
   };
+
+  // class goto_label_instruction : public label_Instruction {
+  //   public:
+  //     goto_label_instruction(Item *method, Item *label);
+  //     void gen(Program &p, std::ofstream &outputFile) override;
+  //   private:
+  //     Item *method;
+  // };
 
   class Call_Instruction : public Instruction {
     // // all call functions except call u N and call tensor-erro
@@ -142,7 +205,7 @@ namespace L1 {
     //   String symbol;
     public:
       Call_Instruction(Item *method);
-      void gen() override;
+      void gen(Program &p, std::ofstream &outputFile) override;
     private:
       Item *method;
   };
@@ -150,7 +213,7 @@ namespace L1 {
   class Call_tenserr_Instruction: public Instruction {
     public:
       Call_tenserr_Instruction(Item *F);
-      void gen() override;
+      void gen(Program &p, std::ofstream &outputFile) override;
     private:
       Item *F;
   };
@@ -158,7 +221,7 @@ namespace L1 {
   class Call_uN_Instruction : public Instruction {
     public:
       Call_uN_Instruction(Item *u, Item *N);
-      void gen() override;
+      void gen(Program &p, std::ofstream &outputFile) override;
     private:
       Item *u;
       Item *N;
@@ -167,31 +230,31 @@ namespace L1 {
     // call print 1 
     public:
       Call_print_Instruction();
-      void gen() override;
+      void gen(Program &p, std::ofstream &outputFile) override;
   };
   class Call_input_Instruction : public Instruction {
     // call input 0 
     public:
       Call_input_Instruction();
-      void gen() override;
+      void gen(Program &p, std::ofstream &outputFile) override;
   };
   class Call_allocate_Instruction : public Instruction {
     // call allocate 2
     public:
       Call_allocate_Instruction();
-      void gen() override;
+      void gen(Program &p, std::ofstream &outputFile) override;
   };
   class Call_tuple_Instruction : public Instruction {
     // call tuple-error 3
     public:
       Call_tuple_Instruction();
-      void gen() override;
+      void gen(Program &p, std::ofstream &outputFile) override;
   };
 
   class w_increment_decrement : public Instruction {
     public:
       w_increment_decrement(Item *r, Item *symbol);
-      void gen() override;
+      void gen(Program &p, std::ofstream &outputFile) override;
     private:
       Item *r;
       Item *symbol;
@@ -200,7 +263,7 @@ namespace L1 {
   class w_atreg_assignment : public Instruction {
     public:
       w_atreg_assignment(Item *r1, Item *r2, Item *r3, Item *E);
-      void gen() override;
+      void gen(Program &p, std::ofstream &outputFile) override;
     private:
       Item *r1;
       Item *r2; 
@@ -211,7 +274,7 @@ namespace L1 {
   class Memory_assignment : public Instruction {
     public:
       Memory_assignment(Item *dst, Item *method, Item *x, Item *M);
-      void gen() override;
+      void gen(Program &p, std::ofstream &outputFile) override;
     private:
       Item *dst;
       Item *method;
@@ -222,7 +285,7 @@ namespace L1 {
   class Memory_arithmetic : public Instruction {
     public:
       Memory_arithmetic(Item *dst, Item *method, Item *x, Item *instruction, Item *M);
-      void gen() override;
+      void gen(Program &p, std::ofstream &outputFile) override;
     private: 
       Item *dst;
       Item *method;
@@ -235,7 +298,7 @@ namespace L1 {
     // w <- t cmp t 
     public:
       cmp_Instruction(Item *dst, Item *t1, Item *method, Item *t2);
-      void gen() override;
+      void gen(Program &p, std::ofstream &outputFile) override;
     private:
       Item *dst;
       Item *t1;
@@ -246,7 +309,7 @@ namespace L1 {
   class cjump_cmp_Instruction : public Instruction {
     public:
       cjump_cmp_Instruction(Item *t1, Item *method, Item *t2, Item *label);
-      void gen() override;
+      void gen(Program &p, std::ofstream &outputFile) override;
     private:
       Item *t1;
       Item *method;
@@ -258,7 +321,7 @@ namespace L1 {
   class AOP_assignment : public Instruction_assignment {
     public:
       AOP_assignment(Item *method, Item *dst, Item *src);
-      void gen() override;
+      void gen(Program &p, std::ofstream &outputFile) override;
     private:
       Item *method;
   };
@@ -266,32 +329,11 @@ namespace L1 {
   class SOP_assignment : public Instruction_assignment {
     public:
       SOP_assignment(Item *method, Item *dst, Item *src);
-      void gen() override;
+      void gen(Program &p, std::ofstream &outputFile) override;
     private:
       Item *method;
   };
   
-  // class String_Instruction_Assignment : public Instruction_assignment {
-  //   public:
-  //     String_Instruction_Assignment(String method, Item *dst, Item *src);
-    
-  //   private:
-  //     Item *s;
-  //     Item *d;
-  //     String method;
-  // };
-
-  // class AOP_assignment : public String_Instruction_Assignment {
-  //   public:
-  //     AOP_assignment(Item *method, Item *dst, Item *src);
-  // };
-
-  // class SOP_assignment : public String_Instruction_Assignment {
-  //   public:
-  //     SOP_assignment(Item *method, Item *dst, Item *src);
-  // };
-
-
 // OUR OWN FUNCTIONs
 
   /*

@@ -23,41 +23,10 @@ namespace L1{
   void Instruction_assignment::gen(Program &p, std::ofstream &outputFile) {
     std::cout << "gen method called for an Instruction_assignment class!" << std::endl;
 
-    Register *dreg = dynamic_cast< Register * >(this->d);
-    std::string dreg_ID = dreg->get_ID();
-    int src_code = this->s->translate();
-    switch(src_code) {
-      case 0:
-        {
-          Register *sreg = dynamic_cast< Register * >(this->s);
-          outputFile << "movq %" << sreg->get_ID();
-          break;
-        }
-      case 1:
-        {
-          Number *num = dynamic_cast< Number * >(this->s);
-          outputFile << "movq $" << num->get_value();
-          break;
-        }
-      case 2:
-        {
-          Name *name = dynamic_cast< Name * >(this->s);
-          outputFile << "movq $_" << name->get_value();
-          break;
-        }
-      case 3:
-        {
-          Label *labl = dynamic_cast< Label * >(this->s);
-          outputFile << "movq $" << labl->get_value();
-          break;
-        }
-      default:
-        {
-          std::cerr << "something went wrong in instruction_assignment gen";
-        }
-    }
-
-    outputFile << ", %" << dreg_ID << "\n";
+    std::string dreg = this->d->translate();
+    std::string sreg = this->s->translate();
+    
+    outputFile << "movq " << sreg << ", " << dreg << "\n";
   }
 
 

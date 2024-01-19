@@ -9,11 +9,9 @@ namespace L1 {
   // forward declaration of Program
   class Program;
 
-  enum RegisterID {rdi, rax};
-
   class Item {
     public:
-      virtual int translate() = 0;
+      virtual std::string translate() = 0;  // remove pureness for now
   };
 
   /*
@@ -26,7 +24,7 @@ namespace L1 {
   class Register : public Item {
     public:
       Register (std::string r);
-      int translate() override;
+      std::string translate() override;
       std::string get_ID();
     private:
       std::string ID;
@@ -35,7 +33,7 @@ namespace L1 {
   class Number : public Item {
     public:
       Number (int n);
-      int translate() override;
+      std::string translate() override;
       int get_value();
     private:
       int value;
@@ -44,7 +42,7 @@ namespace L1 {
   class Name : public Item {
     public:
       Name (const std::string &value);
-      int translate() override;
+      std::string translate() override;
       std::string get_value();
     private:
       std::string value;
@@ -53,7 +51,7 @@ namespace L1 {
   class Label : public Item {
     public:
       Label (const std::string &value);
-      int translate() override;
+      std::string translate() override;
       std::string get_value();
     private:
       std::string value;

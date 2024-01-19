@@ -9,8 +9,8 @@ Register::Register (std::string r)
   : ID {r}{
   return ;
 }
-int Register::translate() {
-  return 0;
+std::string Register::translate() {
+  return "%" + this->ID;
 }
 std::string Register::get_ID() {
   return this->ID;
@@ -20,8 +20,8 @@ Number::Number (int n)
   : value {n}{
   return ;
 }
-int Number::translate () {
-  return 1;
+std::string Number::translate () {
+  return "$" + this->value;
 }
 int Number::get_value() {
   return this->value;
@@ -31,8 +31,8 @@ Name::Name (const std::string &value)
   : value {value}{
   return ;    
 }
-int Name::translate () {
-  return 2;
+std::string Name::translate () {
+  return "$_" + this->value;
 }
 std::string Name::get_value() {
   return this->value;
@@ -42,13 +42,12 @@ Label::Label (const std::string &value)
   : value {value}{
   return ;
 }
-int Label::translate () {
-  return 3;
+std::string Label::translate () {
+  return "$" + this->value;
 }
 std::string Label::get_value() {
   return this->value;
 }
-
 
 
 Instruction_assignment::Instruction_assignment (Item *dst, Item *src)

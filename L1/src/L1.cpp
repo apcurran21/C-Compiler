@@ -1,46 +1,116 @@
 #include "L1.h"
 
 namespace L1 {
+    /*
+    Token class extensions
+    */
 
     // Register, derived from Item
-    Register::Register(RegisterID r) : ID(r) {}
-    Register::~Register() {}
-    void Register::print() {
-        std::cout << "found the register's override of Item::print!" << std::endl;
+    Register::Register(const std::string &r)
+        : ID {r}{
+        return ;
     }
-    int Register::give_status() {
-        return 0;
+    std::string Register::translate() {
+        return "%" + this->ID;
+    }
+    std::string Register::get_ID() {
+        return this->ID;
+    }
+
+    Number::Number (int64_t n)
+        : value {n}{
+        return ;
+    }
+    std::string Number::translate () {
+        return "$" + this->value;
+    }
+    int64_t Number::get_value() {
+        return this->value;
+    }
+
+    Name::Name (const std::string &value)
+        : value {value}{
+        return ;    
+    }
+    std::string Name::translate () {
+        return "$_" + this->value;
+    }
+    std::string Name::get_value() {
+        return this->value;
+    }
+
+    Label::Label (const std::string &value)
+        : value {value}{
+        return ;
+    }
+    std::string Label::translate () {
+        return "$" + this->value;
+    }
+    std::string Label::get_value() {
+        return this->value;
+    }
+
+    Operator::Operator (const std::string &sign)
+        : sign {sign} {
+        return;
+    }
+    std::string Operator::translate() {
+        std::string v = this->sign;
+        if (v == "+=") {return "addq";}
+        else if (v == "-=") {return "subq";}
+        else if (v == "*=") {return "imulq";}
+        else if (v == "&=") {return "andq";}
+        // else if (v == "<<=") {return ""}
+        else {
+            std::cerr << "invalid operator" << v << "found." << std::endl;
+            return "STOP";
+        }
     }
 
 
-    // Integer, derived from Item
-    Integer::Integer(int value) : value(value) {}
-    Integer::~Integer() {}
-    void Integer::print() {
-        std::cout << "found the integer's override of Item::print!" << std::endl;
-    }
-    int Integer::give_status() {
-        return 1;
-    }
+    // Register::~Register() {}
+    // void Register::print() {
+    //     std::cout << "found the register's override of Item::print!" << std::endl;
+    // }
+    // int Register::give_status() {
+    //     return 0;
+    // }
 
-    // String, derived from Item
-    String::String(const std::string& value) : value(value) {}
-    String::~String() {}
-    void String::print() {
-        std::cout << "found the string's override of Item::print!" << std::endl;
-    }
-    int String::give_status() {
-        return 2;
-    }
+    // // Integer, derived from Item
+    // Integer::Integer(int value) : value(value) {}
+    // Integer::~Integer() {}
+    // void Integer::print() {
+    //     std::cout << "found the integer's override of Item::print!" << std::endl;
+    // }
+    // int Integer::give_status() {
+    //     return 1;
+    // }
 
+    // // String, derived from Item
+    // String::String(const std::string& value) : value(value) {}
+    // String::~String() {}
+    // void String::print() {
+    //     std::cout << "found the string's override of Item::print!" << std::endl;
+    // }
+    // int String::give_status() {
+    //     return 2;
+    // }
+
+
+    /*
+    Instruction class extensions
+    */
+
+    // Instruction_ret::Instruction_ret() {}
 
     // Instruction_assignment Constructor
-    Instruction_assignment::Instruction_assignment(Item *dst, Item *src) : s(src), d(dst) {}
-    void Instruction_assignment::gen() {
-        // dst should always be a register
-
-        // src can be a register, number, function name
+    // Instruction_assignment::Instruction_assignment(Item *dst, Item *src) : s(src), d(dst) {}
+    Instruction_assignment::Instruction_assignment (Item *dst, Item *src)
+        : s { src },
+        d { dst } {
+        return ;
     }
+
 
     // incdec_instruction Constructor
     incdec_instruction::incdec_instruction(Item *reg, Item *method) : reg(reg), method(method) {}
@@ -52,7 +122,8 @@ namespace L1 {
     label_Instruction::label_Instruction(Item *label) : label(label) {}
 
     // goto_label_instruction Constructor
-    goto_label_instruction::goto_label_instruction(Item *method, Item *label) : label_Instruction(label), method(method) {}
+    goto_label_instruction::goto_label_instruction(Item *label) : label_Instruction(label) {}
+    // goto_label_instruction::goto_label_instruction(Item *method, Item *label) : label_Instruction(label), method(method) {}
 
     // Call_Instruction Constructor
     Call_Instruction::Call_Instruction(Item *method) : method(method) {}
@@ -101,13 +172,7 @@ namespace L1 {
     w_atreg_assignment::w_atreg_assignment(Item *r1, Item *r2, Item *r3, Item *E) 
         : r1(r1), r2(r2), r3(r3), E(E) {
     }
-    // // String_Instruction_Assignment Constructor
-    // // String_Instruction_Assignment::String_Instruction_Assignment(std::string method, Item *dst, Item *src) : Instruction_assignment(dst, src), method(method) {}
+   
 
-    // // AOP_assignment Constructor
-    // AOP_assignment::AOP_assignment(Item *method, Item *dst, Item *src) : String_Instruction_Assignment(method, dst, src) {}
-
-    // // SOP_assignment Constructor
-    // SOP_assignment::SOP_assignment(Item *method, Item *dst, Item *src) : String_Instruction_Assignment(method, dst, src) {}
-
-} // namespace L1
+   
+}
