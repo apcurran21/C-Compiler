@@ -1,0 +1,111 @@
+(@go
+    (@go
+    0 
+    // read in the array from the user
+    rsi <- 0
+    mem rsp -8 <- :READ_RET
+    mem rsp -16 <- rsi
+    call @read_array 0
+    :READ_RET
+    rdi <- rax
+    rsi <- mem rsp -16
+    ////////////////////////////////////////
+
+    // store the length of the array
+    %r12 <- mem rdi 0
+    // store a pointer to the first element of the array
+    %r10 <- rax
+    %r10 += 8
+    // store the outer loop index variable i, initialized to the length minus 1
+    %i <- %r12
+    %i--
+    mem rsp -24 <- rdi
+    call input 0
+    rdi <- mem rsp -24
+    %target <- rax  
+    %ret <- 0
+
+    :FORL_OUTER
+    // exit if i (r14) is less than or equal to 0
+    cjump %i < 0 :ENDL_OUTER
+    //mem rsp -24 <- rdi
+    %curr <- mem %r10 0
+
+    cjump %curr = %target :FOUND
+      
+    // Increment loop index
+    %r10+=8
+    %i -=1 
+    goto :FORL_OUTER
+
+    :FOUND
+    %ret <- 1
+    goto :END
+      
+    :ENDL_OUTER
+    :END
+    rdi <- %ret
+    rdi <<= 1
+    rdi++
+    call print 1
+    return
+    )
+(@read_array
+    0 
+
+    // take in the size of the array
+    call input 0
+
+    // allocate the array with encoded zeros
+    rdi <- rax
+    rsi <- 1
+    mem rsp -8 <- rdi
+    call allocate 2
+    rdi <- mem rsp -8
+
+    // store the initial pointer returned by allocate so that we can return it later
+    mem rsp -8 <- rax
+
+    // save the length of the array to a caller-save register
+    %r10 <- mem rax 0
+
+    // initialize a counter in a caller-save register
+    %r11 <- 0
+
+    // initialize a pointer to the first element in the loop
+    %r8 <- rax
+    %r8 += 8
+
+    // for loop over the initialized array
+    :FORL_READ
+    // exit loop if the array length is less than or equal to the counter
+    cjump %r10 <= %r11 :ENDL_READ
+
+    // advance array pointer to the current index
+    %r9 @ %r8 %r11 8
+
+    // get the current element input from the user
+    mem rsp -16 <- %r11
+    mem rsp -24 <- %r10
+    mem rsp -32 <- %r8
+    call input 0
+    %r11 <- mem rsp -16
+    %r10 <- mem rsp -24
+    %r8 <- mem rsp -32
+
+    // store the user's input at the current array pointer
+    mem %r9 0 <- rax
+
+    // increment the counter
+    %r11++
+
+    // loop back to the condition check
+    goto :FORL_READ
+
+    :ENDL_READ
+
+    rax <- mem rsp -8
+    return
+    )
+
+)
