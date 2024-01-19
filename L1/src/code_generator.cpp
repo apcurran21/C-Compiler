@@ -43,9 +43,9 @@ namespace L1{
 
   }
 
-  void Call_Instruction::gen(Program &p, std::ofstream &outputFile) {
+  // void Call_Instruction::gen(Program &p, std::ofstream &outputFile) {
 
-  }
+  // }
 
   void Call_tenserr_Instruction::gen(Program &p, std::ofstream &outputFile) {
 

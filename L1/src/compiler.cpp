@@ -71,9 +71,11 @@ int main(
    * Print the source program.
    */
   if (verbose){
-    // for (auto f : p.functions){
-    //   //TODO
-    // }
+    for (auto f : p.functions){
+      for (auto i : f->instructions) {
+        
+      }
+    }
   }
 
   /*
