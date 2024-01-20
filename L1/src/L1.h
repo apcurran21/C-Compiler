@@ -37,8 +37,8 @@ namespace L1 {
   class Item {
     public:
 
-      virtual std::string translate() = 0;
-
+      virtual std::string translate() = 0;    // returns string with the x86 conventions attached
+      virtual std::string print() = 0;        // returns the value as is
 
       // virtual ~Item() {};  // Virtual destructor
       // virtual ItemValue getValue() const { return value; }
@@ -66,7 +66,7 @@ namespace L1 {
     public:
       Register (const std::string &value);
       std::string translate() override;
-      std::string get_ID();
+      std::string print() override;
 
       // ~Register();
       // void print() override;
@@ -79,7 +79,7 @@ namespace L1 {
     public:
       Number (int64_t n);
       std::string translate() override;
-      int64_t get_value();
+      std::string print() override;
     private:
       int64_t value;
   };
@@ -88,7 +88,7 @@ namespace L1 {
     public:
       Name (const std::string &value);
       std::string translate() override;
-      std::string get_value();
+      std::string print() override;
     private:
       std::string value;
   };
@@ -97,7 +97,7 @@ namespace L1 {
     public:
       Label (const std::string &value);
       std::string translate() override;
-      std::string get_value();
+      std::string print() override;
     private:
       std::string value;
   };
@@ -106,7 +106,7 @@ namespace L1 {
     public:
       Operator (const std::string &sign);
       std::string translate() override;
-      // std::string get_value();
+      std::string print() override;
     private:
       std::string sign;
   };
@@ -139,7 +139,7 @@ namespace L1 {
    */
   class Instruction{
     public:
-      virtual void gen(Program &p, std::ofstream &outputFile) = 0;
+      virtual void gen(Function *f, std::ofstream &outputFile) = 0;
       virtual void printMe() = 0;
   };
 
@@ -149,14 +149,14 @@ namespace L1 {
   class Instruction_ret : public Instruction{
     public:
       Instruction_ret ();
-      void gen(Program &p, std::ofstream &outputFile) override;
+      void gen(Function *f, std::ofstream &outputFile) override;
       void printMe() override;
   };
 
   class Instruction_assignment : public Instruction{
     public:
       Instruction_assignment (Item *dst, Item *src);
-      void gen(Program &p, std::ofstream &outputFile) override;
+      void gen(Function *f, std::ofstream &outputFile) override;
       void printMe() override;
     protected:
       Item *s;
@@ -166,22 +166,23 @@ namespace L1 {
 
  // OUR OWN CLASSES 
 
-  class incdec_instruction : public Instruction{
-    public:
-      incdec_instruction(Item *reg, Item *method);
-      void gen(Program &p, std::ofstream &outputFile) override;
-      void printMe() override;
-    private:
-      Item *reg; 
-      Item *method;
-  };
+  // // I don't think this instruction is being used
+  // class incdec_instruction : public Instruction{
+  //   public:
+  //     incdec_instruction(Item *reg, Item *method);
+  //     void gen(Function *f, std::ofstream &outputFile) override;
+  //     void printMe() override;
+  //   private:
+  //     Item *reg; 
+  //     Item *method;
+  // };
 
   class label_Instruction : public Instruction{
     public:
       label_Instruction(Item *label);
-      void gen(Program &p, std::ofstream &outputFile) override;
+      void gen(Function *f, std::ofstream &outputFile) override;
       void printMe() override;
-      // void gen(Program &p, std::ofstream &outputFile) override;
+      // void gen(Function *f, std::ofstream &outputFile) override;
     protected:
       Item *label; 
   };
@@ -189,14 +190,14 @@ namespace L1 {
   class goto_label_instruction : public label_Instruction {
     public:
       goto_label_instruction(Item *label);
-      void gen(Program &p, std::ofstream &outputFile) override;
+      void gen(Function *f, std::ofstream &outputFile) override;
       void printMe() override;
   };
 
   // class goto_label_instruction : public label_Instruction {
   //   public:
   //     goto_label_instruction(Item *method, Item *label);
-  //     void gen(Program &p, std::ofstream &outputFile) override;
+  //     void gen(Function *f, std::ofstream &outputFile) override;
   //   private:
   //     Item *method;
   // };
@@ -212,7 +213,7 @@ namespace L1 {
   //   //   String symbol;
   //   public:
   //     Call_Instruction(Item *method);
-  //     void gen(Program &p, std::ofstream &outputFile) override;
+  //     void gen(Function *f, std::ofstream &outputFile) override;
   //     void printMe() override;
   //   private:
   //     Item *method;
@@ -221,7 +222,7 @@ namespace L1 {
   class Call_tenserr_Instruction: public Instruction {
     public:
       Call_tenserr_Instruction(Item *F);
-      void gen(Program &p, std::ofstream &outputFile) override;
+      void gen(Function *f, std::ofstream &outputFile) override;
       void printMe() override;
     private:
       Item *F;
@@ -230,7 +231,7 @@ namespace L1 {
   class Call_uN_Instruction : public Instruction {
     public:
       Call_uN_Instruction(Item *u, Item *N);
-      void gen(Program &p, std::ofstream &outputFile) override;
+      void gen(Function *f, std::ofstream &outputFile) override;
       void printMe() override;
     private:
       Item *u;
@@ -240,35 +241,35 @@ namespace L1 {
     // call print 1 
     public:
       Call_print_Instruction();
-      void gen(Program &p, std::ofstream &outputFile) override;
+      void gen(Function *f, std::ofstream &outputFile) override;
       void printMe() override;
   };
   class Call_input_Instruction : public Instruction {
     // call input 0 
     public:
       Call_input_Instruction();
-      void gen(Program &p, std::ofstream &outputFile) override;
+      void gen(Function *f, std::ofstream &outputFile) override;
       void printMe() override;
   };
   class Call_allocate_Instruction : public Instruction {
     // call allocate 2
     public:
       Call_allocate_Instruction();
-      void gen(Program &p, std::ofstream &outputFile) override;
+      void gen(Function *f, std::ofstream &outputFile) override;
       void printMe() override;
   };
   class Call_tuple_Instruction : public Instruction {
     // call tuple-error 3
     public:
       Call_tuple_Instruction();
-      void gen(Program &p, std::ofstream &outputFile) override;
+      void gen(Function *f, std::ofstream &outputFile) override;
       void printMe() override;
   };
 
   class w_increment_decrement : public Instruction {
     public:
       w_increment_decrement(Item *r, Item *symbol);
-      void gen(Program &p, std::ofstream &outputFile) override;
+      void gen(Function *f, std::ofstream &outputFile) override;
       void printMe() override;
     private:
       Item *r;
@@ -276,9 +277,10 @@ namespace L1 {
   };
 
   class w_atreg_assignment : public Instruction {
+    // w1 @ w2 w3 E   
     public:
       w_atreg_assignment(Item *r1, Item *r2, Item *r3, Item *E);
-      void gen(Program &p, std::ofstream &outputFile) override;
+      void gen(Function *f, std::ofstream &outputFile) override;
       void printMe() override;
     private:
       Item *r1;
@@ -287,27 +289,49 @@ namespace L1 {
       Item *E; 
   };
 
-  class Memory_assignment : public Instruction {
+  class Memory_assignment_store : public Instruction {
     public:
-      Memory_assignment(Item *dst, Item *method, Item *x, Item *M);
-      void gen(Program &p, std::ofstream &outputFile) override;
+      Memory_assignment_store(Item *dst, Item *s, Item *M);
+      void gen(Function *f, std::ofstream &outputFile) override;
       void printMe() override;
     private:
       Item *dst;
-      Item *method;
+      Item *s;
+      Item *M;
+  };
+
+
+  class Memory_assignment_load : public Instruction {
+    public:
+      Memory_assignment_load(Item *dst, Item *x, Item *M);
+      void gen(Function *f, std::ofstream &outputFile) override;
+      void printMe() override;
+    private:
+      Item *dst;
       Item *x;
       Item *M;
   };
 
-  class Memory_arithmetic : public Instruction {
+  class Memory_arithmetic_load : public Instruction {
     public:
-      Memory_arithmetic(Item *dst, Item *method, Item *x, Item *instruction, Item *M);
-      void gen(Program &p, std::ofstream &outputFile) override;
+      Memory_arithmetic_load(Item *dst, Item *x, Item *instruction, Item *M);
+      void gen(Function *f, std::ofstream &outputFile) override;
+      void printMe() override;
+    private: 
+      Item *dst;  // w
+      Item *x;
+      Item *instruction;
+      Item *M;
+  };
+
+  class Memory_arithmetic_store : public Instruction {
+    public:
+      Memory_arithmetic_store(Item *dst, Item *t, Item *instruction, Item *M);
+      void gen(Function *f, std::ofstream &outputFile) override;
       void printMe() override;
     private: 
       Item *dst;
-      Item *method;
-      Item *x;
+      Item *t;
       Item *instruction;
       Item *M;
   };
@@ -316,7 +340,7 @@ namespace L1 {
     // w <- t cmp t 
     public:
       cmp_Instruction(Item *dst, Item *t1, Item *method, Item *t2);
-      void gen(Program &p, std::ofstream &outputFile) override;
+      void gen(Function *f, std::ofstream &outputFile) override;
       void printMe() override;
     private:
       Item *dst;
@@ -328,7 +352,7 @@ namespace L1 {
   class cjump_cmp_Instruction : public Instruction {
     public:
       cjump_cmp_Instruction(Item *t1, Item *method, Item *t2, Item *label);
-      void gen(Program &p, std::ofstream &outputFile) override;
+      void gen(Function *f, std::ofstream &outputFile) override;
       void printMe() override;
     private:
       Item *t1;
@@ -341,7 +365,7 @@ namespace L1 {
   class AOP_assignment : public Instruction_assignment {
     public:
       AOP_assignment(Item *method, Item *dst, Item *src);
-      void gen(Program &p, std::ofstream &outputFile) override;
+      void gen(Function *f, std::ofstream &outputFile) override;
       void printMe() override;
     private:
       Item *method;
@@ -350,7 +374,7 @@ namespace L1 {
   class SOP_assignment : public Instruction_assignment {
     public:
       SOP_assignment(Item *method, Item *dst, Item *src);
-      void gen(Program &p, std::ofstream &outputFile) override;
+      void gen(Function *f, std::ofstream &outputFile) override;
       void printMe() override;
     private:
       Item *method;

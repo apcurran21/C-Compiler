@@ -1,11 +1,26 @@
 (@go
     (@go
         0 0
-        rsi <- rdi
-        rsi += rax
-        rsi -= rdi
-        rsi *= rax
+        rsi <- 5
+        rdi <- 200
+
+        :test_label
+
+        rsi += rsi
+        rsi -= rsi
+        rsi *= 5
         rsi &= rdi
+
+        rsi++
+        rsi--
+
+        mem rsi 16 <- 10000
+
+        mem rsi 16 += 15
+        mem rsi 16 -= rdi
+        rdi += mem rsi 0
+        rdi -= mem rsi 0
+
         return
     )
 )

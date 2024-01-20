@@ -13,7 +13,7 @@ namespace L1 {
     std::string Register::translate() {
         return "%" + this->ID;
     }
-    std::string Register::get_ID() {
+    std::string Register::print() {
         return this->ID;
     }
 
@@ -22,10 +22,10 @@ namespace L1 {
         return ;
     }
     std::string Number::translate () {
-        return "$" + this->value;
+        return "$" + std::to_string(this->value);
     }
-    int64_t Number::get_value() {
-        return this->value;
+    std::string Number::print() {
+        return std::to_string(this->value);
     }
 
     Name::Name (const std::string &value)
@@ -35,7 +35,7 @@ namespace L1 {
     std::string Name::translate () {
         return "$_" + this->value;
     }
-    std::string Name::get_value() {
+    std::string Name::print() {
         return this->value;
     }
 
@@ -46,7 +46,7 @@ namespace L1 {
     std::string Label::translate () {
         return "$" + this->value;
     }
-    std::string Label::get_value() {
+    std::string Label::print() {
         return this->value;
     }
 
@@ -60,11 +60,20 @@ namespace L1 {
         else if (v == "-=") {return "subq";}
         else if (v == "*=") {return "imulq";}
         else if (v == "&=") {return "andq";}
-        // else if (v == "<<=") {return ""}
+        else if (v == "--") {return "dec";}
+        else if (v == "++") {return "inc";}
+        else if (v == "<<=") {return "salq";}
+        else if (v == ">>=") {return "sarq";}
+        else if (v == "<") {return "setl";}
+        else if (v == "<=") {return "setle";}
+        else if (v == "=") {return "sete";}
         else {
             std::cerr << "invalid operator" << v << "found." << std::endl;
             return "STOP";
         }
+    }
+    std::string Operator::print() {
+        return this->sign;
     }
 
 
@@ -103,7 +112,7 @@ namespace L1 {
 
     Instruction_ret::Instruction_ret() {}
     void Instruction_ret::printMe() {
-
+        std::cout << "Instruction_ret:    return" << std::endl;
     }
 
     // Instruction_assignment Constructor
@@ -114,14 +123,15 @@ namespace L1 {
         return ;
     }
     void Instruction_assignment::printMe() {
-
+        std::cout << "Instruction_assignment:    " << this->d->translate() << " <- " << this->s->translate() << std::endl;
     }
 
-    // incdec_instruction Constructor
-    incdec_instruction::incdec_instruction(Item *reg, Item *method) : reg(reg), method(method) {}
-    void incdec_instruction::printMe() {
+    // // I don't think this instruction is being used
+    // // incdec_instruction Constructor
+    // incdec_instruction::incdec_instruction(Item *reg, Item *method) : reg(reg), method(method) {}
+    // void incdec_instruction::printMe() {
 
-    }
+    // }
 
     // at_instruction Constructor
     // at_instruction::at_instruction(Item *reg1, Item *reg2, Item *reg3, Integer *num) : reg1(reg1), reg2(reg2), reg3(reg3), num(num) {}
@@ -158,17 +168,27 @@ namespace L1 {
 
     }
 
-    // Memory_assignment Constructor
-    Memory_assignment::Memory_assignment(Item *dst, Item *method, Item *x, Item *M) : dst(dst), method(method), x(x), M(M) {}
-    void Memory_assignment::printMe() {
+    Memory_assignment_store::Memory_assignment_store(Item *dst, Item *s, Item *M) : dst(dst), s(s), M(M) {}
+    void Memory_assignment_store::printMe() {
+        std::cout << "Memory_assignment_store:    " << "dst = " << this->dst->translate() << ", M = " << this->M->translate() << ", s = " << this->s->translate() << std::endl;
+    }
 
+    Memory_assignment_load::Memory_assignment_load(Item *dst, Item *x, Item *M) : dst(dst), x(x), M(M) {}
+    void Memory_assignment_load::printMe() {
+        std::cout << "Memory_assignment_load:    " << "dst = " << this->dst->translate() << ", M = " << this->M->translate() << ", x = " << this->x->translate() << std::endl;
     }
 
     // Memory_arithmetic Constructor
-    Memory_arithmetic::Memory_arithmetic(Item *dst, Item *method, Item *x, Item *instruction, Item *M) 
-    : dst(dst), method(method), x(x), instruction(instruction), M(M) {}
-    void Memory_arithmetic::printMe() {
+    Memory_arithmetic_load::Memory_arithmetic_load(Item *dst, Item *x, Item *instruction, Item *M) 
+    : dst(dst), x(x), instruction(instruction), M(M) {}
+    void Memory_arithmetic_load::printMe() {
+        std::cout << "Memory_assignment_load:    " << "dst = " << this->dst->translate() << ", M = " << this->M->translate() << ", x = " << this->x->translate() << ", instruction = " << this->instruction->translate() << std::endl;
+    }
 
+    Memory_arithmetic_store::Memory_arithmetic_store(Item *dst, Item *t, Item *instruction, Item *M) 
+    : dst(dst), t(t), instruction(instruction), M(M) {}
+    void Memory_arithmetic_store::printMe() {
+        std::cout << "Memory_assignment_load:    " << "dst = " << this->dst->translate() << ", M = " << this->M->translate() << ", t = " << this->t->translate() << ", instruction = " << this->instruction->translate() << std::endl;
     }
     
     // cmp_Instruction Constructor
@@ -186,13 +206,13 @@ namespace L1 {
     // AOP_assignment Constructor
     AOP_assignment::AOP_assignment(Item *method, Item *dst, Item *src) : Instruction_assignment(dst, src), method(method) {}
     void AOP_assignment::printMe() {
-
+        std::cout << "AOP_assignment:    " << "d = " << this->d->translate() << ", method = " << this->method->translate() << ", s = " << this->s->translate() << std::endl;
     }
 
     // SOP_assignment Constructor
     SOP_assignment::SOP_assignment(Item *method, Item *dst, Item *src) : Instruction_assignment(dst, src), method(method) {}
     void SOP_assignment::printMe() {
-
+        std::cout << "SOP_assignment:    " << "d = " << this->d->print() << ", method = " << this->method->print() << ", s = " << this->s->print() << std::endl;
     }
 
     Call_print_Instruction::Call_print_Instruction() {}
@@ -219,14 +239,14 @@ namespace L1 {
         : r(r), symbol(symbol) {
     }
     void w_increment_decrement::printMe() {
-
+        std::cout << "w_increment_decrement:    " << "r = " << this->r->translate() << ", symbol = " << this->symbol->translate() << std::endl;
     }
 
     w_atreg_assignment::w_atreg_assignment(Item *r1, Item *r2, Item *r3, Item *E) 
         : r1(r1), r2(r2), r3(r3), E(E) {
     }
     void w_atreg_assignment::printMe() {
-        
+
     }
    
 
