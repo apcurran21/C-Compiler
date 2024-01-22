@@ -65,12 +65,14 @@ namespace L1{
 
   void label_Instruction::gen(Function *f, std::ofstream &outputFile) {
     if (debug) std::cerr << "gen method called for a label_Instruction instance!" << std::endl;
-    outputFile << "_" << this->label->print() << ":\n";
+    std::string new_label = this->label->print().replace(0, 1, "_");
+    outputFile << new_label << ":\n";
   }
 
   void goto_label_instruction::gen(Function *f, std::ofstream &outputFile) {
     if (debug) std::cerr << "gen method called for a goto_label_instruction instance!" << std::endl;
-    outputFile << "jmp _" << this->label->print() << "\n";
+    std::string new_label = this->label->print().replace(0, 1, "_");
+    outputFile << "jmp " << new_label << "\n";
   }
 
   // void Call_Instruction::gen(Function *f, std::ofstream &outputFile) {
@@ -251,8 +253,13 @@ namespace L1{
 
   void SOP_assignment::gen(Function *f, std::ofstream &outputFile) {
     if (debug) std::cerr << "gen method called for a SOP_assignment instance!" << std::endl;
-
-    outputFile << this->method->translate() << " " << convert_reg(this->s->print()) << ", " << this->d->translate() << "\n";
+    outputFile << this->method->translate() << " ";
+    if (dynamic_cast< Register* >(this->s)) {
+      outputFile << convert_reg(this->s->print());
+    } else {
+      outputFile << this->s->translate();
+    }
+    outputFile << ", " << this->d->translate() << "\n";
   }
 
 

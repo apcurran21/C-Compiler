@@ -1049,17 +1049,18 @@ namespace L1 {
       // mem x M <- s
 
       if (debug) std::cerr << "Recognized 'mem x M <- s'" << std::endl;
-
+      if (debug) std::cerr << "the size of the functions vec is " << p.functions.size() << std::endl;
       auto currentF = p.functions.back();
+      if (debug) std::cerr << "the size after grabbing current vec " << p.functions.size() << std::endl;
 
+      if (debug) std::cerr << "the size of parsed_items is " << parsed_items.size() << std::endl;
       auto s = parsed_items.back();
       parsed_items.pop_back();
       auto M = parsed_items.back();
       parsed_items.pop_back();
-      // auto method = new String("mem");
-      // auto method = new Operator("store");
       auto x = parsed_items.back();
       parsed_items.pop_back();
+      if (debug) std::cerr << "the size of parsed_items after popping is " << parsed_items.size() << std::endl;
 
       auto i = new Memory_assignment_store(x, s, M);
       // auto i = new Memory_assignment(x, method, s, M); // this is gonna be weird need to handle
@@ -1376,13 +1377,18 @@ namespace L1 {
   template<> struct action < call_uN_rule > {
     template< typename Input >
     static void apply( const Input & in, Program & p) {
+      if (debug) std::cerr << "the size of the functions vec is " << p.functions.size() << std::endl;
       auto currentF = p.functions.back();
+      if (debug) std::cerr << "the size after grabbing current vec " << p.functions.size() << std::endl;
 
       // call u N
+       if (debug) std::cerr << "the size of parsed_items is " << parsed_items.size() << std::endl;
       auto N = parsed_items.back();
       parsed_items.pop_back();
       auto u = parsed_items.back();
       parsed_items.pop_back();
+      if (debug) std::cerr << "the size of parsed_items after popping is " << parsed_items.size() << std::endl;
+
       /* 
        * Create the instruction.
        */ 

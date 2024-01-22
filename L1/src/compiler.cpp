@@ -28,7 +28,7 @@ int main(
   ){
   auto enable_code_generator = true;
   int32_t optLevel = 0;
-  bool verbose = true;
+  bool verbose;
 
   /* 
    * Check the compiler arguments.

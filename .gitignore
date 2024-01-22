@@ -1,2 +1,5 @@
 # vscode configs
 .vscode/*
+
+# ran testing files
+*.tmp
