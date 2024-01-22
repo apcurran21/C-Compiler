@@ -255,7 +255,7 @@ namespace L1{
     if (debug) std::cerr << "gen method called for a SOP_assignment instance!" << std::endl;
     outputFile << this->method->translate() << " ";
     if (dynamic_cast< Register* >(this->s)) {
-      outputFile << convert_reg(this->s->print());
+      outputFile << "%" << convert_reg(this->s->print());
     } else {
       outputFile << this->s->translate();
     }

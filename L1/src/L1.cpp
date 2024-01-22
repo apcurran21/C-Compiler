@@ -34,7 +34,7 @@ namespace L1 {
     }
     std::string Name::translate () {
         std::string fname = this->value.replace(0, 1, "_");
-        return "$" + fname;
+        return fname;
     }
     std::string Name::print() {
         return this->value;

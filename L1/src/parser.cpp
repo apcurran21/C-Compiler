@@ -161,12 +161,12 @@ namespace L1 {
         >
       >
     > { };
-  struct Function_Def_rule:
-    pegtl::seq<
-      pegtl::seq<spaces, pegtl::one< '(' >>,
-      seps_with_comments,
-      pegtl::seq<spaces, str_at, name>
-    > { };
+  // struct Function_Def_rule:
+  //   pegtl::seq<
+  //     pegtl::seq<spaces, pegtl::one< '(' >>,
+  //     seps_with_comments,
+  //     pegtl::seq<spaces, str_at, name>
+  //   > { };
 
 
   /*
@@ -672,7 +672,10 @@ namespace L1 {
 
   struct Function_rule:
     pegtl::seq<
-      Function_Def_rule,
+      // Function_Def_rule,
+      pegtl::seq<spaces, pegtl::one< '(' >>,
+      seps_with_comments,
+      pegtl::seq<spaces, I_rule>,
       seps_with_comments,
       pegtl::seq<spaces, argument_number>,
       seps_with_comments,
@@ -740,22 +743,22 @@ namespace L1 {
   template< typename Rule >
   struct action : pegtl::nothing< Rule > {};
 
-  template<> struct action < Function_Def_rule > {
-    template< typename Input >
-    static void apply ( const Input & in, Program & p) {
-      if (debug) std::cerr << "recognized a Function_Def_rule" << std::endl;
+  // template<> struct action < Function_Def_rule > {
+  //   template< typename Input >
+  //   static void apply ( const Input & in, Program & p) {
+  //     if (debug) std::cerr << "recognized a Function_Def_rule" << std::endl;
 
-      // adding to the function list only here
-      if (p.entryPointLabel.empty()){
-        p.entryPointLabel = in.string(); //This matches it with whatever our entry point function name is (in string gives u the string matched by the rule)
-      } else {
-        auto newF = new Function();
-        newF->name = in.string();
-        p.functions.push_back(newF);
-      }
+  //     // adding to the function list only here
+  //     if (p.entryPointLabel.empty()){
+  //       p.entryPointLabel = in.string(); //This matches it with whatever our entry point function name is (in string gives u the string matched by the rule)
+  //     } else {
+  //       auto newF = new Function();
+  //       newF->name = in.string();
+  //       p.functions.push_back(newF);
+  //     }
 
-    }
-  };
+  //   }
+  // };
 
   /*
   * Rules for debugging
@@ -775,24 +778,19 @@ namespace L1 {
     template< typename Input >
 	  static void apply( const Input & in, Program & p){
       if (debug) std::cerr << "Recognized I rule" << std::endl;
- 
-      auto n = new Name(in.string());
-      parsed_items.push_back(n);
-      
 
-      // if (p.entryPointLabel.empty()){
-      //   p.entryPointLabel = in.string(); //This matches it with whatever our entry point function name is (in string gives u the string matched by the rule)
-      // } else {
-      //   auto newF = new Function();
-      //   newF->name = in.string();
-      //   p.functions.push_back(newF);
-      //   // bugfix, see explanation below
-      //   // parsed_items.pop_back();
-      // }
-
-      // note that there will be an '@' token on the parsed stack, need to remove
-      // NOTE - not necessarily, in the very first line of a program (ie the beginning of the entry point rule),
-      //   then this will be popping from an empty vector which is undefined behavior
+      if (p.entryPointLabel.empty()){
+        p.entryPointLabel = in.string();
+      }
+      else if (p.functions.empty() || dynamic_cast<Instruction_ret*>(p.functions.back()->instructions.back())) {
+        auto newF = new Function();
+        newF->name = in.string();
+        p.functions.push_back(newF);
+      }
+      else {
+        auto name = new Name(in.string());
+        parsed_items.push_back(name); 
+      }
     }
   }; 
 
@@ -1278,16 +1276,16 @@ namespace L1 {
       // w sop sx
       auto currentF = p.functions.back();
 
-      auto sx = parsed_items.back();
+      auto src = parsed_items.back();
       parsed_items.pop_back();
       auto method = parsed_items.back();
       parsed_items.pop_back();  
-      auto w = parsed_items.back();
+      auto dst = parsed_items.back();
       parsed_items.pop_back();
       /* 
        * Create the instruction.
        */ 
-      auto i = new SOP_assignment(method, sx, w); // this is gonna be weird need to handle
+      auto i = new SOP_assignment(method, dst, src); // this is gonna be weird need to handle
 
       /* 
        * Add the just-created instruction to the current function.
