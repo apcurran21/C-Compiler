@@ -68,6 +68,14 @@ namespace L1 {
       >
     > {};
 
+     struct comment: 
+    pegtl::disable< 
+      TAO_PEGTL_STRING( "//" ), 
+      pegtl::until< pegtl::eolf > 
+    > {};
+
+  #pragma endregion Registers, Names, Numbers, etc.
+
   //////////////////////////////////////////////////////////
   /* 
    * Keywords.
@@ -123,14 +131,43 @@ namespace L1 {
   struct str_neg_80 : TAO_PEGTL_STRING( "-80" ) {};
   struct str_neg_88 : TAO_PEGTL_STRING( "-88" ) {};
 
-
-
   //sx 
   struct str_rcx : TAO_PEGTL_STRING( "rcx" ) {};
   //rsp struct 
   struct str_rsp : TAO_PEGTL_STRING( "rsp" ) {};
-
   #pragma endregion
+
+  struct spaces :
+    pegtl::star< 
+      pegtl::sor<
+        pegtl::one< ' ' >,
+        pegtl::one< '\t'>
+      >
+    > { };
+  struct seps : 
+    pegtl::star<
+      pegtl::seq<
+        spaces,
+        pegtl::eol
+      >
+    > { };
+  struct seps_with_comments : 
+    pegtl::star< 
+      pegtl::seq<
+        spaces,
+        pegtl::sor<
+          pegtl::eol,
+          comment
+        >
+      >
+    > { };
+  struct Function_Def_rule:
+    pegtl::seq<
+      pegtl::seq<spaces, pegtl::one< '(' >>,
+      seps_with_comments,
+      pegtl::seq<spaces, str_at, name>
+    > { };
+
 
   /*
    * General Rules
@@ -312,47 +349,6 @@ namespace L1 {
 
   struct local_number:
     N_rule {} ;
-
-  struct comment: 
-    pegtl::disable< 
-      TAO_PEGTL_STRING( "//" ), 
-      pegtl::until< pegtl::eolf > 
-    > {};
-
-  #pragma endregion Registers, Names, Numbers, etc.
-
-  /*
-   * Separators.
-   */
-  #pragma region Separators
-
-  struct spaces :
-    pegtl::star< 
-      pegtl::sor<
-        pegtl::one< ' ' >,
-        pegtl::one< '\t'>
-      >
-    > { };
-
-  struct seps : 
-    pegtl::star<
-      pegtl::seq<
-        spaces,
-        pegtl::eol
-      >
-    > { };
-  struct seps_with_comments : 
-    pegtl::star< 
-      pegtl::seq<
-        spaces,
-        pegtl::sor<
-          pegtl::eol,
-          comment
-        >
-      >
-    > { };
-  
-  #pragma endregion spaces, seps, seps_with_comments
 
   /*
   * Instructions.
@@ -676,9 +672,7 @@ namespace L1 {
 
   struct Function_rule:
     pegtl::seq<
-      pegtl::seq<spaces, pegtl::one< '(' >>,
-      seps_with_comments,
-      pegtl::seq<spaces, I_rule>,
+      Function_Def_rule,
       seps_with_comments,
       pegtl::seq<spaces, argument_number>,
       seps_with_comments,
@@ -746,6 +740,23 @@ namespace L1 {
   template< typename Rule >
   struct action : pegtl::nothing< Rule > {};
 
+  template<> struct action < Function_Def_rule > {
+    template< typename Input >
+    static void apply ( const Input & in, Program & p) {
+      if (debug) std::cerr << "recognized a Function_Def_rule" << std::endl;
+
+      // adding to the function list only here
+      if (p.entryPointLabel.empty()){
+        p.entryPointLabel = in.string(); //This matches it with whatever our entry point function name is (in string gives u the string matched by the rule)
+      } else {
+        auto newF = new Function();
+        newF->name = in.string();
+        p.functions.push_back(newF);
+      }
+
+    }
+  };
+
   /*
   * Rules for debugging
     - Eg a strategy is to set an action for the entry point rule,
@@ -764,16 +775,20 @@ namespace L1 {
     template< typename Input >
 	  static void apply( const Input & in, Program & p){
       if (debug) std::cerr << "Recognized I rule" << std::endl;
+ 
+      auto n = new Name(in.string());
+      parsed_items.push_back(n);
+      
 
-      if (p.entryPointLabel.empty()){
-        p.entryPointLabel = in.string(); //This matches it with whatever our entry point function name is (in string gives u the string matched by the rule)
-      } else {
-        auto newF = new Function();
-        newF->name = in.string();
-        p.functions.push_back(newF);
-        // bugfix, see explanation below
-        // parsed_items.pop_back();
-      }
+      // if (p.entryPointLabel.empty()){
+      //   p.entryPointLabel = in.string(); //This matches it with whatever our entry point function name is (in string gives u the string matched by the rule)
+      // } else {
+      //   auto newF = new Function();
+      //   newF->name = in.string();
+      //   p.functions.push_back(newF);
+      //   // bugfix, see explanation below
+      //   // parsed_items.pop_back();
+      // }
 
       // note that there will be an '@' token on the parsed stack, need to remove
       // NOTE - not necessarily, in the very first line of a program (ie the beginning of the entry point rule),
@@ -1377,6 +1392,7 @@ namespace L1 {
   template<> struct action < call_uN_rule > {
     template< typename Input >
     static void apply( const Input & in, Program & p) {
+      if (debug) std::cerr << "recognized a call_uN_rule!" << std::endl;
       if (debug) std::cerr << "the size of the functions vec is " << p.functions.size() << std::endl;
       auto currentF = p.functions.back();
       if (debug) std::cerr << "the size after grabbing current vec " << p.functions.size() << std::endl;
