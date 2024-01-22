@@ -97,7 +97,13 @@ namespace L1{
   }
 
   void Call_uN_Instruction::gen(Function *f, std::ofstream &outputFile) {
-    // calls to L1 functions : we have to store the return address
+    if (debug) std::cerr << "gen method called for a Call_uN_Instruction instance!" << std::endl;
+    int64_t space = 8;
+    int64_t num_args = std::stoll(this->N->print());
+    if (num_args > 6) space += ((num_args - 6) * 8);
+    Number stack_space = Number(space);
+    outputFile << "subq " << stack_space.translate() << ", %rsp\n";
+    outputFile << "jmp " << this->u->translate() << "\n";
   }
 
   void Call_print_Instruction::gen(Function *f, std::ofstream &outputFile) {
@@ -274,14 +280,13 @@ namespace L1{
       std::cout << "Currently generating for function " << fname << std::endl;
 
       outputFile << fname.replace(0, 1, "_") << ":\n";
-      bool c = fptr->locals > 0
+      bool c = fptr->locals > 0;
       if (c) {
         outputFile << "subq $" << (fptr->locals * 8) << ", %rsp\n";
       }
 
       for (Instruction *iptr : fptr->instructions) {
         std::cout << "Currently generating an instruction:" << std::endl;
-
         iptr->gen(fptr, outputFile);
       }
     }

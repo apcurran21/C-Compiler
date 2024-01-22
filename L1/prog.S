@@ -16,5 +16,7 @@ popq %rbp
 popq %rbx
 retq
 _go:
-movq $17, %rdi
+movq $7, %rdi
+sarq STOP, %rdi
+call print
 retq
