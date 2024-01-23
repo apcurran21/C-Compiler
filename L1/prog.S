@@ -1,47 +1,81 @@
-   .text
-   .globl go
-
+.text
+.globl go
 go:
-   # save callee-saved registers
-   pushq %rbx
-   pushq %rbp
-   pushq %r12
-   pushq %r13
-   pushq %r14
-   pushq %r15
-
-   call _go
-
-   # restore callee-saved registers and return
-   popq %r15
-   popq %r14
-   popq %r13
-   popq %r12
-   popq %rbp
-   popq %rbx
-   retq
-
-
-_funct:
-   movq 8(%rsp), %rax
-   addq $16, %rsp # Free stack locations
-   retq
-
-
-_go:
-   movq $_funct_ret, -8(%rsp)
-   movq $3, %rdi
-   movq $5, %rsi
-   movq $7, %rdx
-   movq $9, %rcx
-   movq $11, %r8
-   movq $13, %r9
-   movq $15, -16(%rsp)
-   movq $-17, -24(%rsp)
-   subq $24, %rsp      # Allocate extra arguments on the stack as well as the return address 
-   jmp _funct        # Call to @funct
-_funct_ret:
-   movq %rax, %rdi
-   call print # runtime system call
-   retq
-
+pushq %rbx
+pushq %rbx
+pushq %r12
+pushq %r13
+pushq %r14
+pushq %r15
+call _main
+popq %r15
+popq %r14
+popq %r13
+popq %r12
+popq %rbp
+popq %rbx
+retq
+_main:
+subq $8, %rsp
+movq %r12, 0(%rsp)
+movq $50, %rdi
+salq $1, %rdi
+addq $1, %rdi
+movq $1, %rsi
+call allocate
+movq %rax, %r12
+movq %r12, %rdi
+addq $8, %rdi
+movq %r12, %rsi
+addq $16, %rsi
+movq $3, 0(%rdi)
+movq $3, 0(%rsi)
+movq $1, %rsi
+movq $1, %rax
+movq $2, %r8
+_call_label0:
+addq $1, %r8
+movq %rsi, %rdx
+addq %rax, %rdx
+movq %rdx, %rdi
+salq $1, %rdi
+addq $1, %rdi
+movq %r8, %r9
+imulq $8, %r9
+movq %r12, %rcx
+addq %r9, %rcx
+movq %rdi, 0(%rcx)
+movq %rax, %rsi
+movq %rdx, %rax
+cmpq $50, %r8
+setl %dil
+movzbq %dil, %rdi
+cmpq $1, %rdi
+je _call_label0
+movq %r12, %rdi
+call print
+movq $0, %rsi
+movq $0, %r8
+_call_label1:
+cmpq $50, %r8
+setge %dil
+movzbq %dil, %rdi
+cmpq $1, %rdi
+je _call_label2
+movq %r8, %r9
+imulq $8, %r9
+movq %r9, %rcx
+addq %r12, %rcx
+movq 0(%rcx), %rdi
+sarq $1, %rdi
+addq %rdi, %rsi
+addq $1, %r8
+jmp _call_label1
+_call_label2:
+salq $1, %rsi
+addq $1, %rsi
+movq %rsi, %rdi
+call print
+movq 0(%rsp), %r12
+addq $8, %rsp
+retq

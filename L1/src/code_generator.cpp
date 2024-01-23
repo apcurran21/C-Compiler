@@ -43,8 +43,12 @@ namespace L1{
   */
   void Instruction_ret::gen(Function *f, std::ofstream &outputFile) {
     if (debug) std::cerr << "gen method called for an Instruction_ret instance!" << std::endl;
-    if (f->locals > 0) {
-      outputFile << "addq $" << (f->locals * 8) << ", %rsp\n";
+    int req_bytes = f->locals;
+    if (f->arguments > 6) {
+      req_bytes += (f->arguments-6);
+    }
+    if (req_bytes > 0) {
+      outputFile << "addq $" << (req_bytes * 8) << ", %rsp\n";
     }
     outputFile << "retq\n";
   }
@@ -297,6 +301,8 @@ namespace L1{
         iptr->gen(fptr, outputFile);
       }
     }
+
+    if (debug) std::cerr << "Finished code generator!" << std::endl;
 
     /* 
      * Close the output file.
