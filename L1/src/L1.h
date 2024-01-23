@@ -337,9 +337,9 @@ namespace L1 {
   };
 
   class cmp_Instruction : public Instruction {
-    // w <- t cmp t 
+    // w <- t2 cmp t1
     public:
-      cmp_Instruction(Item *dst, Item *t1, Item *method, Item *t2);
+      cmp_Instruction(Item *dst, Item *t2, Item *method, Item *t1);
       void gen(Function *f, std::ofstream &outputFile) override;
       void printMe() override;
     private:

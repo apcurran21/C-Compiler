@@ -51,7 +51,11 @@ namespace L1{
 
   void Instruction_assignment::gen(Function *f, std::ofstream &outputFile) {
     if (debug) std::cerr << "gen method called for an Instruction_assignment instance!" << std::endl;
-    outputFile << "movq " << this->s->translate() << ", " << this->d->translate() << "\n";
+    outputFile << "movq ";
+    if (dynamic_cast<Name*>(this->s)) {
+      outputFile << "$";
+    }
+    outputFile << this->s->translate() << ", " << this->d->translate() << "\n";
   }
 
 
@@ -156,26 +160,26 @@ namespace L1{
   }
 
   void cmp_Instruction::gen(Function *f, std::ofstream &outputFile) {
-    // w <- t1 cmp t2
+    // w <- t2 cmp t1
     // also note - I don't 
     if (debug) std::cerr << "gen method called for a cmp_Instruction instance!" << std::endl;
     
-    if (dynamic_cast<Number*>(this->t1)) {
-      if (dynamic_cast<Number*>(this->t2)) {
+    if (dynamic_cast<Number*>(this->t2)) {
+      if (dynamic_cast<Number*>(this->t1)) {
         long long t1_val = std::stoll(this->t1->print());
         long long t2_val = std::stoll(this->t2->print());
         int64_t res = 0;
-        if (this->method->print() == "<") {res = t1_val < t2_val; }
-        else if (this->method->print() == "<=") {res = t1_val <= t2_val; }
-        else if (this->method->print() == "=") {res = t1_val == t2_val; }
+        if (this->method->print() == "<") {res = t2_val < t1_val; }
+        else if (this->method->print() == "<=") {res = t2_val <= t1_val; }
+        else if (this->method->print() == "=") {res = t2_val == t1_val; }
         else {std::cerr << "Didn't recognize as a valid operator: " << this->method->print() << std::endl; }
         Number ans = Number(res);
         Number *ansptr = &ans;
         outputFile << "movq " << ansptr->translate() << ", " << this->dst->translate() << "\n";
       }
       else {
-        // t1 is a number, so we need to flip the positions of t1 and t2 in the cmpq
-        outputFile << "cmpq " << this->t1->translate() << ", " << this->t2->translate() << "\n";
+        // t2 is a number, so we need to flip the positions of t1 and t2 in the cmpq
+        outputFile << "cmpq " << this->t2->translate() << ", " << this->t1->translate() << "\n";
         std::string c = this->method->print();
         std::string res = "STOP";
         if (c == "<") {res = "setg";}
@@ -187,7 +191,7 @@ namespace L1{
       }
     }
     else {
-      outputFile << "cmpq " << t2->translate() << ", " << this->t1->translate() << "\n";
+      outputFile << "cmpq " << t1->translate() << ", " << this->t2->translate() << "\n";
       outputFile << this->method->translate() << " %" << convert_reg(this->dst->print()) << "\n";
       outputFile << "movzbq %" << convert_reg(this->dst->print()) << ", " << this->dst->translate() << "\n";
     }
@@ -202,9 +206,9 @@ namespace L1{
         long long t1_val = std::stoll(this->t1->print());
         long long t2_val = std::stoll(this->t2->print());
         int64_t res = 0;
-        if (this->cmp->print() == "<") {res = t1_val < t2_val; }
-        else if (this->cmp->print() == "<=") {res = t1_val <= t2_val; }
-        else if (this->cmp->print() == "=") {res = t1_val == t2_val; }
+        if (this->cmp->print() == "<") {res = t2_val < t1_val; }
+        else if (this->cmp->print() == "<=") {res = t2_val <= t1_val; }
+        else if (this->cmp->print() == "=") {res = t2_val == t1_val; }
         else {std::cerr << "Didn't recognize as a valid operator: " << this->cmp->print() << std::endl; }
         if (res) {
           outputFile << "jmp " << this->label->translate() << "\n";

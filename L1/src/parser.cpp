@@ -1323,27 +1323,29 @@ namespace L1 {
     }
   };
   
-  // matches w <- t cmp t
   // use naming convention w <- t1 cmp t2
   template<> struct action < Inst_cmp_assign_rule > {
     template< typename Input >
     static void apply( const Input & in, Program & p) {
+      
+      // matches w <- t2 cmp t1
+      
       auto currentF = p.functions.back(); // pass by reference means that we access member with dot
 
       // need to fetch the last three tokens on the stack
       // NOTE - need to define actions for w, t, cmp that place them onto the parsed_items stack
-      auto t2 = parsed_items.back();
+      auto t1 = parsed_items.back();
       parsed_items.pop_back();
       auto cmp = parsed_items.back();
       parsed_items.pop_back();
-      auto t1 = parsed_items.back();
+      auto t2 = parsed_items.back();
       parsed_items.pop_back();
       auto w = parsed_items.back();
       parsed_items.pop_back();
       /* 
        * Create the instruction.
        */ 
-      auto i = new cmp_Instruction(w, t1, cmp, t2);
+      auto i = new cmp_Instruction(w, t2, cmp, t1);
 
       /* 
        * Add the just-created instruction to the current function.

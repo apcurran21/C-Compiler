@@ -193,7 +193,7 @@ namespace L1 {
     }
     
     // cmp_Instruction Constructor
-    cmp_Instruction::cmp_Instruction(Item *dst, Item *t1, Item *method, Item *t2) : dst(dst), t1(t1), method(method), t2(t2) {}
+    cmp_Instruction::cmp_Instruction(Item *dst, Item *t2, Item *method, Item *t1) : dst(dst), t1(t1), method(method), t2(t2) {}
     void cmp_Instruction::printMe() {
 
     }
