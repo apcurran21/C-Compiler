@@ -964,6 +964,13 @@ namespace L1 {
       parsed_items.push_back(r);
     }
   };
+  template<> struct action < str_pluseq > {
+    // debugging rule for test57
+    template< typename Input >
+    static void apply( const Input & in, Program & p){
+      if (debug) std::cerr << "recognized a str_pluseq rule" << std::endl;
+    }
+  };
   template<> struct action < aop_rule > {
     // AOP Rule
     template< typename Input >
@@ -1149,8 +1156,9 @@ namespace L1 {
 
       auto t = parsed_items.back();
       parsed_items.pop_back();
-      auto instruction = parsed_items.back();
-      parsed_items.pop_back();
+      auto instruction = new Operator("+=");
+      // auto instruction = parsed_it
+      
       auto M = parsed_items.back();
       parsed_items.pop_back();
       auto x = parsed_items.back();
@@ -1175,9 +1183,9 @@ namespace L1 {
 
       auto t = parsed_items.back();
       parsed_items.pop_back();
-      // auto instruction = new String("-=");
-      auto instruction = parsed_items.back();
-      parsed_items.pop_back();
+      auto instruction = new Operator("-=");
+      // auto instruction = parsed_items.back();
+      // parsed_items.pop_back();
       auto M = parsed_items.back();
       parsed_items.pop_back();
       auto x = parsed_items.back();
@@ -1198,17 +1206,19 @@ namespace L1 {
     template< typename Input >
 	  static void apply( const Input & in, Program & p){
       // w += mem x M
+      if (debug) std::cerr << "Recognized 'w += mem x M'" << std::endl;
       auto currentF = p.functions.back();
-
+      if (debug) std::cerr << "parsed_items is " << parsed_items.size() << " elements long" << std::endl;
       auto M = parsed_items.back();
       parsed_items.pop_back();
       auto x = parsed_items.back();
       parsed_items.pop_back();
-      // auto instruction = new String("+=");
-      auto instruction = parsed_items.back();
-      parsed_items.pop_back();
+      auto instruction = new Operator("+=");
+      // auto instruction = parsed_items.back();
+      // parsed_items.pop_back();
       auto w = parsed_items.back();
       parsed_items.pop_back();
+      if (debug) std::cerr << "parsed_items is " << parsed_items.size() << " elements long after popping" << std::endl;
 
       auto i = new Memory_arithmetic_load(w, x, instruction, M);
       currentF->instructions.push_back(i);
@@ -1219,15 +1229,16 @@ namespace L1 {
     template< typename Input >
 	  static void apply( const Input & in, Program & p){
       // w -= mem x M
+      if (debug) std::cerr << "Recognized 'w += mem x M'" << std::endl;
       auto currentF = p.functions.back();
 
       auto M = parsed_items.back();
       parsed_items.pop_back();
       auto x = parsed_items.back();
       parsed_items.pop_back();
-      // auto instruction = new String("-=");
-      auto instruction = parsed_items.back();
-      parsed_items.pop_back();
+      auto instruction = new Operator("-=");
+      // auto instruction = parsed_items.back();
+      // parsed_items.pop_back();
       auto w = parsed_items.back();
       parsed_items.pop_back();
       /* 
@@ -1254,9 +1265,6 @@ namespace L1 {
 
       // w aop t
       auto currentF = p.functions.back();
-
-
-
       auto t = parsed_items.back();
       parsed_items.pop_back();
       auto method = parsed_items.back();
