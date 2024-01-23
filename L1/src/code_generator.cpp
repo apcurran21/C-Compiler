@@ -43,10 +43,6 @@ namespace L1{
   */
   void Instruction_ret::gen(Function *f, std::ofstream &outputFile) {
     if (debug) std::cerr << "gen method called for an Instruction_ret instance!" << std::endl;
-    
-    // if ((f->arguments > 6) && (f->locals > 0)) {
-    //   outputFile << "addq $" << (((f->arguments - 6) + f->locals) * 8) << ", %rsp\n";
-    // }
     if (f->locals > 0) {
       outputFile << "addq $" << (f->locals * 8) << ", %rsp\n";
     }
@@ -58,10 +54,6 @@ namespace L1{
     outputFile << "movq " << this->s->translate() << ", " << this->d->translate() << "\n";
   }
 
-  // I don't think this instruction is being used
-  // void incdec_instruction::gen(Function *f, std::ofstream &outputFile) {
-    
-  // }
 
   void label_Instruction::gen(Function *f, std::ofstream &outputFile) {
     if (debug) std::cerr << "gen method called for a label_Instruction instance!" << std::endl;
@@ -74,10 +66,6 @@ namespace L1{
     std::string new_label = this->label->print().replace(0, 1, "_");
     outputFile << "jmp " << new_label << "\n";
   }
-
-  // void Call_Instruction::gen(Function *f, std::ofstream &outputFile) {
-
-  // }
 
   void Call_tenserr_Instruction::gen(Function *f, std::ofstream &outputFile) {
     if (debug) std::cerr << "gen method called for a Call_tenserr_instruction instance!" << std::endl;
@@ -105,7 +93,11 @@ namespace L1{
     if (num_args > 6) space += ((num_args - 6) * 8);
     Number stack_space = Number(space);
     outputFile << "subq " << stack_space.translate() << ", %rsp\n";
-    outputFile << "jmp " << this->u->translate() << "\n";
+    outputFile << "jmp ";
+    if (dynamic_cast<Register*>(this->u)) {
+      outputFile << "*";
+    }
+    outputFile << this->u->translate() << "\n";
   }
 
   void Call_print_Instruction::gen(Function *f, std::ofstream &outputFile) {
@@ -141,7 +133,11 @@ namespace L1{
 
   void Memory_assignment_store::gen(Function *f, std::ofstream &outputFile) {
     if (debug) std:cerr << "gen method called for a Memory_assignment_store instance!" << std::endl;
-    outputFile << "movq " << this->s->translate() << ", " << this->M->print() << "(" << this->dst->translate() << ")\n";
+    outputFile << "movq ";
+    if (dynamic_cast<Label*>(this->s)) {
+      outputFile << "$";
+    }
+    outputFile << this->s->translate() << ", " << this->M->print() << "(" << this->dst->translate() << ")\n";
   }
 
   void Memory_assignment_load::gen(Function *f, std::ofstream &outputFile) {
@@ -211,7 +207,7 @@ namespace L1{
         else if (this->method->print() == "=") {res = t1_val == t2_val; }
         else {std::cerr << "Didn't recognize as a valid operator: " << this->method->print() << std::endl; }
         if (res) {
-          outputFile << "jump " << this->label->translate() << "\n";
+          outputFile << "jmp " << this->label->translate() << "\n";
         }
       }
       else {

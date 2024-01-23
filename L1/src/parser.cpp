@@ -161,13 +161,6 @@ namespace L1 {
         >
       >
     > { };
-  // struct Function_Def_rule:
-  //   pegtl::seq<
-  //     pegtl::seq<spaces, pegtl::one< '(' >>,
-  //     seps_with_comments,
-  //     pegtl::seq<spaces, str_at, name>
-  //   > { };
-
 
   /*
    * General Rules
@@ -180,11 +173,23 @@ namespace L1 {
       name
     > {};
 
-  struct I_rule:
+  struct at_name_rule:
     pegtl::seq<
       str_at,
       name
     > {};
+
+  struct function_name_rule:
+    at_name_rule {};
+
+  struct I_rule:
+    at_name_rule {};
+
+  // struct I_rule:
+  //   pegtl::seq<
+  //     str_at,
+  //     name
+  //   > {};
 
   // register rules
   struct register_rdi_rule: str_rdi {};
@@ -284,7 +289,6 @@ namespace L1 {
       I_rule
     >{};
   
-  //THIS IS WHAT THE PROFESSOR GAVE IT IS USELESS
   struct register_rule:
     pegtl::sor<
       register_rdi_rule,
@@ -340,9 +344,6 @@ namespace L1 {
       str_multeq,
       str_ampeq
     >{};
-  
-  struct function_name:
-    label_rule {};
 
   struct argument_number:
     N_rule {};
@@ -675,7 +676,8 @@ namespace L1 {
       // Function_Def_rule,
       pegtl::seq<spaces, pegtl::one< '(' >>,
       seps_with_comments,
-      pegtl::seq<spaces, I_rule>,
+      // pegtl::seq<spaces, I_rule>,
+      pegtl::seq<spaces, function_name_rule>,
       seps_with_comments,
       pegtl::seq<spaces, argument_number>,
       seps_with_comments,
@@ -700,7 +702,8 @@ namespace L1 {
       seps_with_comments,
       pegtl::seq<spaces, pegtl::one< '(' >>,
       seps_with_comments,
-      I_rule,
+      // I_rule,
+      function_name_rule,
       seps_with_comments,
       Functions_rule,
       seps_with_comments,
@@ -772,34 +775,36 @@ namespace L1 {
     }
   };
 
-  /* Simone's Original actions*/
+  template<> struct action < function_name_rule > {
+    template< typename Input>
+    static void apply( const Input & in, Program & p) {
+      if (debug) std::cerr << "Recognized a function_name rule" << std::endl;
+    
+      if (p.entryPointLabel.empty()){
+        p.entryPointLabel = in.string();
+      }
+      else {
+        auto newF = new Function();
+        newF->name = in.string();
+        p.functions.push_back(newF);
+      }
+    }
+  };
 
   template<> struct action < I_rule > {
     template< typename Input >
 	  static void apply( const Input & in, Program & p){
       if (debug) std::cerr << "Recognized I rule" << std::endl;
 
-      if (p.entryPointLabel.empty()){
-        p.entryPointLabel = in.string();
-      }
-      else if (p.functions.empty() || dynamic_cast<Instruction_ret*>(p.functions.back()->instructions.back())) {
-        auto newF = new Function();
-        newF->name = in.string();
-        p.functions.push_back(newF);
-      }
-      else {
-        auto name = new Name(in.string());
-        parsed_items.push_back(name); 
-      }
+      auto name = new Name(in.string());
+      parsed_items.push_back(name); 
     }
   }; 
 
-  template<> struct action < label_rule > { //Don't we handle basically exactly like I_rule?
+  template<> struct action < label_rule > {
     template< typename Input >
 	  static void apply( const Input & in, Program & p){
         if (debug) std::cerr << "Recognized a label" << std::endl;
-
-        // auto label = new String(in.string());
         auto label = new Label(in.string());
         parsed_items.push_back(label);
       }

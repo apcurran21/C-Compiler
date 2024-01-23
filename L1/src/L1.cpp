@@ -45,7 +45,7 @@ namespace L1 {
         return ;
     }
     std::string Label::translate () {
-        return "$" + this->value.replace(0, 1, "_");
+        return this->value.replace(0, 1, "_");
     }
     std::string Label::print() {
         return this->value;
