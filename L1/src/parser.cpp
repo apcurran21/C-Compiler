@@ -1229,7 +1229,7 @@ namespace L1 {
     template< typename Input >
 	  static void apply( const Input & in, Program & p){
       // w -= mem x M
-      if (debug) std::cerr << "Recognized 'w += mem x M'" << std::endl;
+      if (debug) std::cerr << "Recognized 'w -= mem x M'" << std::endl;
       auto currentF = p.functions.back();
 
       auto M = parsed_items.back();
