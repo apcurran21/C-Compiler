@@ -1370,7 +1370,7 @@ namespace L1 {
       /* 
        * Create the instruction.
        */ 
-      auto i = new cjump_cmp_Instruction(t1, cmp, t2, label);
+      auto i = new cjump_cmp_Instruction(t2, cmp, t1, label);
 
       /* 
        * Add the just-created instruction to the current function.

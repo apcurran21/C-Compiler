@@ -197,39 +197,39 @@ namespace L1{
     // cjump t2 cmp t1 label
     if (debug) std::cerr << "gen method called for a cjump_cmp_Instruction instance!" << std::endl;
 
-    if (dynamic_cast<Number*>(this->t1)) {
-      if (dynamic_cast<Number*>(this->t2)) {
+    if (dynamic_cast<Number*>(this->t2)) {
+      if (dynamic_cast<Number*>(this->t1)) {
         long long t1_val = std::stoll(this->t1->print());
         long long t2_val = std::stoll(this->t2->print());
         int64_t res = 0;
-        if (this->method->print() == "<") {res = t1_val < t2_val; }
-        else if (this->method->print() == "<=") {res = t1_val <= t2_val; }
-        else if (this->method->print() == "=") {res = t1_val == t2_val; }
-        else {std::cerr << "Didn't recognize as a valid operator: " << this->method->print() << std::endl; }
+        if (this->cmp->print() == "<") {res = t1_val < t2_val; }
+        else if (this->cmp->print() == "<=") {res = t1_val <= t2_val; }
+        else if (this->cmp->print() == "=") {res = t1_val == t2_val; }
+        else {std::cerr << "Didn't recognize as a valid operator: " << this->cmp->print() << std::endl; }
         if (res) {
           outputFile << "jmp " << this->label->translate() << "\n";
         }
       }
       else {
-        // t1 is a number, so we need to flip the positions of t1 and t2 in the cmpq
-        outputFile << "cmpq " << this->t1->translate() << ", " << this->t2->translate() << "\n";
-        std::string c = this->method->print();
+        // t2 is a number, so we need to flip the positions of t1 and t2 in the cmpq
+        outputFile << "cmpq " << this->t2->translate() << ", " << this->t1->translate() << "\n";
+        std::string c = this->cmp->print();
         std::string res = "STOP";
         if (c == "<") {res = "jg";}
         if (c == "<=") {res = "jge";}
         if (c == "=") {res = "je";}
-        else {std::cerr << "Didn't recognize as a valid operator: " << this->method->print() << std::endl; }
+        else {std::cerr << "Didn't recognize as a valid operator: " << this->cmp->print() << std::endl; }
         outputFile << res << " " << this->label->translate() << "\n";
       }
     }
     else {
       std::string res1 = "STOP";
-      std::string c1 = this->method->print();
-      if (c1 == "<") {res1 = "jg";}
-      if (c1 == "<=") {res1 = "jge";}
+      std::string c1 = this->cmp->print();
+      if (c1 == "<") {res1 = "jl";}
+      if (c1 == "<=") {res1 = "jle";}
       if (c1 == "=") {res1 = "je";}
-      else {std::cerr << "Didn't recognize as a valid operator: " << this->method->print() << std::endl; }
-      outputFile << "cmpq " << t2->translate() << ", " << this->t1->translate() << "\n";
+      else {std::cerr << "Didn't recognize as a valid operator: " << this->cmp->print() << std::endl; }
+      outputFile << "cmpq " << t1->translate() << ", " << this->t2->translate() << "\n";
       outputFile << res1 << " " << this->label->translate() << "\n";
     }
   }

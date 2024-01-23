@@ -351,13 +351,13 @@ namespace L1 {
 
   class cjump_cmp_Instruction : public Instruction {
     public:
-      cjump_cmp_Instruction(Item *t1, Item *method, Item *t2, Item *label);
+      cjump_cmp_Instruction(Item *t2, Item *cmp, Item *t1, Item *label);
       void gen(Function *f, std::ofstream &outputFile) override;
       void printMe() override;
     private:
-      Item *t1;
-      Item *method;
       Item *t2;
+      Item *cmp;
+      Item *t1;
       Item *label;
   };
 

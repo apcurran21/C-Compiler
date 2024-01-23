@@ -199,7 +199,7 @@ namespace L1 {
     }
 
     // cjump_cmp_Instruction Constructor
-    cjump_cmp_Instruction::cjump_cmp_Instruction(Item *t1, Item *method, Item *t2, Item *label) : t1(t1), method(method), t2(t2), label(label) {}
+    cjump_cmp_Instruction::cjump_cmp_Instruction(Item *t2, Item *cmp, Item *t1, Item *label) : t2(t2), cmp(cmp), t1(t1), label(label) {}
     void cjump_cmp_Instruction::printMe() {
 
     }
