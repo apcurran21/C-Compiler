@@ -56,7 +56,7 @@ namespace L1{
   void Instruction_assignment::gen(Function *f, std::ofstream &outputFile) {
     if (debug) std::cerr << "gen method called for an Instruction_assignment instance!" << std::endl;
     outputFile << "movq ";
-    if (dynamic_cast<Name*>(this->s)) {
+    if (dynamic_cast<Name*>(this->s) || dynamic_cast<Label*>(this->s)) {
       outputFile << "$";
     }
     outputFile << this->s->translate() << ", " << this->d->translate() << "\n";
@@ -125,7 +125,7 @@ namespace L1{
 
   void Call_tuple_Instruction::gen(Function *f, std::ofstream &outputFile) {
     if (debug) std::cerr << "gen method called for a Call_tuple_instruction instance!" << std::endl;
-    outputFile << "call tuple-error\n";
+    outputFile << "call tuple_error\n";
   }
 
   void w_increment_decrement::gen(Function *f, std::ofstream &outputFile) {
@@ -279,7 +279,7 @@ namespace L1{
      * Generate target code
      */ 
     // boilerplate
-    outputFile << ".text\n.globl go\ngo:\npushq %rbx\npushq %rbx\npushq %r12\npushq %r13\npushq %r14\npushq %r15\n";
+    outputFile << ".text\n.globl go\ngo:\npushq %rbx\npushq %rbp\npushq %r12\npushq %r13\npushq %r14\npushq %r15\n";
     std::string entry_lab = p.entryPointLabel;
     outputFile << "call " << entry_lab.replace(0, 1, "_") << "\n";
     outputFile << "popq %r15\npopq %r14\npopq %r13\npopq %r12\npopq %rbp\npopq %rbx\nretq\n";
