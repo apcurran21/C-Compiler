@@ -40,7 +40,7 @@ using namespace std;
 
 namespace L1 {
 
-  const int debug = 1;
+  const int debug = 10;
 
   /* 
    * Tokens parsed
@@ -74,13 +74,10 @@ namespace L1 {
       pegtl::until< pegtl::eolf > 
     > {};
 
-  #pragma endregion Registers, Names, Numbers, etc.
-
   //////////////////////////////////////////////////////////
   /* 
    * Keywords.
    */
-  #pragma region Keywords
   
   // simone's original keywords
   struct str_return : TAO_PEGTL_STRING( "return" ) {};
@@ -165,7 +162,6 @@ namespace L1 {
   /*
    * General Rules
    */ 
-  #pragma region General Rules
 
   struct label_rule:
     pegtl::seq<
@@ -185,12 +181,6 @@ namespace L1 {
   struct I_rule:
     at_name_rule {};
 
-  // struct I_rule:
-  //   pegtl::seq<
-  //     str_at,
-  //     name
-  //   > {};
-
   // register rules
   struct register_rdi_rule: str_rdi {};
   struct register_rax_rule: str_rax {};
@@ -208,8 +198,6 @@ namespace L1 {
   struct register_r14_rule: str_r14 {};
   struct register_r15_rule: str_r15 {};
   struct register_rsp_rule: str_rsp {};
-
-  //we need to add struct for all of them
 
   struct str_mem_rule: str_mem {};
 
@@ -323,7 +311,6 @@ namespace L1 {
       pegtl::string<'8'>
     >{};
 
-  //May conflict with the SOP rule
   struct cmp_rule:
     pegtl::sor<
       str_lesseq,
@@ -353,10 +340,6 @@ namespace L1 {
 
   /*
   * Instructions.
-  */
-  #pragma region Instruction Rules
-
-  /* Isaac/Andy new rules 
   */
 
   struct Inst_loadmem_rule:
@@ -601,10 +584,6 @@ namespace L1 {
       E_rule
     > { };
 
-  /*
-  * Simone's originals
-  */
-
   struct Instruction_return_rule:
     pegtl::seq<
       str_return
@@ -663,13 +642,9 @@ namespace L1 {
       >
     > { };
 
-  #pragma endregion Instruction_return_rule, Instruction_assignment_rule, Instruction_rule, Instruction_rules, Inst_loadmem_rule
-
-
   /*
   * Functions.
   */
-  #pragma region Function Rules
 
   struct Function_rule:
     pegtl::seq<
@@ -695,14 +670,11 @@ namespace L1 {
       seps_with_comments
     > {};
 
-  #pragma endregion Function_rule, Functions_rule
-
   struct entry_point_rule:
     pegtl::seq<
       seps_with_comments,
       pegtl::seq<spaces, pegtl::one< '(' >>,
       seps_with_comments,
-      // I_rule,
       function_name_rule,
       seps_with_comments,
       Functions_rule,
@@ -721,53 +693,10 @@ namespace L1 {
    */
 
 
-  // HELPER FUNCTION TO GET REGISTER ID
-  // RegisterID stringToRegisterID(const std::string& str) {
-  //   if (str == "rdi") return RegisterID::rdi;
-  //   if (str == "rsi") return RegisterID::rsi;
-  //   if (str == "rdx") return RegisterID::rdx;
-  //   if (str == "rcx") return RegisterID::rcx;
-  //   if (str == "r8")  return RegisterID::r8;
-  //   if (str == "r9")  return RegisterID::r9;
-  //   if (str == "rax") return RegisterID::rax;
-  //   if (str == "rbx") return RegisterID::rbx;
-  //   if (str == "rbp") return RegisterID::rbp;
-  //   if (str == "r10") return RegisterID::r10;
-  //   if (str == "r11") return RegisterID::r11;
-  //   if (str == "r12") return RegisterID::r12;
-  //   if (str == "r13") return RegisterID::r13;
-  //   if (str == "r14") return RegisterID::r14;
-  //   if (str == "r15") return RegisterID::r15;
-  //   if (str == "rsp") return RegisterID::rsp;
-
-  //   throw std::runtime_error("Unknown register name: " + str);
-  // }
 
   template< typename Rule >
   struct action : pegtl::nothing< Rule > {};
 
-  // template<> struct action < Function_Def_rule > {
-  //   template< typename Input >
-  //   static void apply ( const Input & in, Program & p) {
-  //     if (debug) std::cerr << "recognized a Function_Def_rule" << std::endl;
-
-  //     // adding to the function list only here
-  //     if (p.entryPointLabel.empty()){
-  //       p.entryPointLabel = in.string(); //This matches it with whatever our entry point function name is (in string gives u the string matched by the rule)
-  //     } else {
-  //       auto newF = new Function();
-  //       newF->name = in.string();
-  //       p.functions.push_back(newF);
-  //     }
-
-  //   }
-  // };
-
-  /*
-  * Rules for debugging
-    - Eg a strategy is to set an action for the entry point rule,
-      which will trigger at the end of a successful program
-  */
   template<> struct action < entry_point_rule> {
     template< typename Input >
     static void apply( const Input & in, Program & p){
@@ -815,10 +744,6 @@ namespace L1 {
 	  static void apply( const Input & in, Program & p){
       if (debug) std::cerr << "Recognized an arg number" << std::endl;
 
-      // since argument number gets matched as N first, its token gets put on the stack
-      // ie we should remove here
-      // parsed_items.pop_back();
-
       auto currentF = p.functions.back();
       currentF->arguments = std::stoll(in.string());
     }
@@ -828,9 +753,6 @@ namespace L1 {
     template< typename Input >
 	  static void apply( const Input & in, Program & p){
       if (debug) std::cerr << "Recognized a local numbers" << std::endl;
-
-      // same deal as the argument number case
-      // parsed_items.pop_back();
 
       auto currentF = p.functions.back();
       currentF->locals = std::stoll(in.string());
@@ -847,12 +769,6 @@ namespace L1 {
       currentF->instructions.push_back(i);
     }
   };
-  // template<> struct action < str_mem_rule > {
-  //   template< typename Input >
-	//   static void apply( const Input & in, Program & p){
-  //     //if (debug) std::cerr << "Recognized a mem string" << std::endl;
-  //   }
-  // };
 
   template<> struct action < w_register_rule > {
     template< typename Input >
@@ -865,6 +781,7 @@ namespace L1 {
       } 
     }
   };
+
   template<> struct action < a_register_rule > {
     template< typename Input >
     static void apply( const Input & in, Program & p){
@@ -876,6 +793,7 @@ namespace L1 {
       } 
     }
   };
+
   template<> struct action < sx_register_rule > {
     template< typename Input >
     static void apply( const Input & in, Program & p){
@@ -884,6 +802,7 @@ namespace L1 {
       parsed_items.push_back(r);
     }
   };
+
   template<> struct action < x_register_rule > {
     template< typename Input >
     static void apply( const Input & in, Program & p){
@@ -896,13 +815,7 @@ namespace L1 {
       }
     }
   };
-  // template<> struct action < str_cjump > {
-  //   // cmp debug 
-  //   template< typename Input >
-  //   static void apply( const Input & in, Program & p){
-  //     //if (debug) std::cerr << "Recognized a str_cjump " << in.string() << std::endl;
-  //   }
-  // };
+
   template<> struct action <M_rule> {
     // M rule
     template< typename Input >
@@ -914,7 +827,6 @@ namespace L1 {
           throw pegtl::parse_error("Number is not divisible by 8", in);
       }
       if (debug) std::cerr << "Recognized an 'M' number:  " << in.string() << std::endl;
-      // auto r = new String(in.string());
       auto N = new Number(number);
       parsed_items.push_back(N);
     }
@@ -924,53 +836,43 @@ namespace L1 {
     template< typename Input >
     static void apply( const Input & in, Program & p){
       if (debug) std::cerr << "Recognized a number N: " << in.string() << std::endl;
-      // auto r = new String(in.string());//No error handling needed; we know N will be a number
-      
+
       long long number = std::stoll(in.string());
       auto N = new Number(number);
       parsed_items.push_back(N);
     }
   };
 
-  // template<> struct action < str_goto > {
-  //   // goto 
-  //   template< typename Input >
-  //   static void apply( const Input & in, Program & p){
-  //     if (debug) std::cerr << "Recognized a 'goto' string: " << in.string() << std::endl;
-
-  //     auto r = new String(in.string());
-  //     parsed_items.push_back(r);
-  //   }
-  // };
   template<> struct action <E_rule> {
     // E rule 
     template< typename Input >
     static void apply( const Input & in, Program & p){
       if (debug) std::cerr << "Recognized an 'E' number: " << in.string() << std::endl;
 
-      // auto r = new Integer(std::stoi(in.string()));
       auto r = new Number(std::stoll(in.string()));
       parsed_items.push_back(r);
     }
   };
+
   template<> struct action <F_rule> {
     // F Rule 
     template< typename Input >
     static void apply( const Input & in, Program & p){
       if (debug) std::cerr << "Recognized an 'F' number: " << in.string() << std::endl;
 
-      // auto r = new Integer(std::stoi(in.string()));
       auto r = new Number(std::stoll(in.string()));
       parsed_items.push_back(r);
     }
   };
-  template<> struct action < str_pluseq > {
-    // debugging rule for test57
-    template< typename Input >
-    static void apply( const Input & in, Program & p){
-      if (debug) std::cerr << "recognized a str_pluseq rule" << std::endl;
-    }
-  };
+
+  // template<> struct action < str_pluseq > {
+  //   // debugging rule for test57
+  //   template< typename Input >
+  //   static void apply( const Input & in, Program & p){
+  //     if (debug) std::cerr << "recognized a str_pluseq rule" << std::endl;
+  //   }
+  // };
+
   template<> struct action < aop_rule > {
     // AOP Rule
     template< typename Input >
@@ -981,69 +883,43 @@ namespace L1 {
       parsed_items.push_back(r);
     }
   };
+
   template<> struct action < sop_rule > {
     // SOP Rule
     template< typename Input >
     static void apply( const Input & in, Program & p){
-      // auto r = new String(in.string());
       auto r = new Operator(in.string());
       parsed_items.push_back(r);
     }
   };
+
   template<> struct action < cmp_rule > {
     // CMP Rule
     template< typename Input >
     static void apply( const Input & in, Program & p){
-      // auto r = new String(in.string());
       auto r = new Operator(in.string());
       parsed_items.push_back(r);
     }
   };
-  // template<> struct action < str_call > {
-  //   // call action
-  //   template< typename Input >
-  //   static void apply( const Input & in, Program & p){
-  //     // auto r = new String(in.string());
-  //     auto r = new Operator(in.string());
-  //     parsed_items.push_back(r);
-  //   }
-  // };
-  // template<> struct action < str_print > {
-  //   // print action
-  //   template< typename Input >
-  //   static void apply( const Input & in, Program & p){
-  //     auto r = new String(in.string());
-  //     parsed_items.push_back(r);
-  //   }
-  // };
+ 
   template<> struct action < str_inc > {
     // ++ 
     template< typename Input >
     static void apply( const Input & in, Program & p){
-      // auto r = new String(in.string());
       auto r = new Operator(in.string());
       parsed_items.push_back(r);
     }
   };
+
   template<> struct action < str_dec > {
     // --
     template< typename Input >
     static void apply( const Input & in, Program & p){
-      // auto r = new String(in.string());
+
       auto r = new Operator(in.string());
       parsed_items.push_back(r);
     }
   };
-  // template<> struct action < str_at > {
-  //   //@ 
-  //   template< typename Input >
-  //   static void apply( const Input & in, Program & p){
-      
-
-  //     auto r = new String(in.string());
-  //     parsed_items.push_back(r);
-  //   }
-  // };
 
 ///////////////
 
@@ -1053,22 +929,17 @@ namespace L1 {
 
       if (debug) std::cerr << "Recognized 'w <- s'" << std::endl;
       if (debug) std::cerr << "The size of parsed_items is " << parsed_items.size() << std::endl; 
-      // Fetch the current function.
       auto currentF = p.functions.back();
-      // if (parsed_items.size() > 2){   // why?
       auto src = parsed_items.back();
       parsed_items.pop_back();
       auto dst = parsed_items.back();
       parsed_items.pop_back();
       auto i = new Instruction_assignment(dst, src);
       currentF->instructions.push_back(i);
-      // }
-      
     }
   };
 
-  /* Isaac/Andy actions*/
-    template<> struct action < Inst_storemem_rule > {
+  template<> struct action < Inst_storemem_rule > {
     template< typename Input >
 	  static void apply( const Input & in, Program & p){
       // mem x M <- s
@@ -1088,11 +959,6 @@ namespace L1 {
       if (debug) std::cerr << "the size of parsed_items after popping is " << parsed_items.size() << std::endl;
 
       auto i = new Memory_assignment_store(x, s, M);
-      // auto i = new Memory_assignment(x, method, s, M); // this is gonna be weird need to handle
-
-      /* 
-       * Add the just-created instruction to the current function.
-       */ 
       currentF->instructions.push_back(i);
     }
   };
@@ -1108,17 +974,12 @@ namespace L1 {
       parsed_items.pop_back();
       auto x = parsed_items.back();
       parsed_items.pop_back();
-      // auto method = new String("mem");
+
       auto method = new Operator("mem");
       auto w = parsed_items.back();
       parsed_items.pop_back();
 
       auto i = new Memory_assignment_load(w, x, M);
-      // auto i = new Memory_assignment(w, method, x, M);
-
-      /* 
-       * Add the just-created instruction to the current function.
-       */ 
       currentF->instructions.push_back(i);
     }
   };
@@ -1131,17 +992,7 @@ namespace L1 {
       auto label = parsed_items.back();
       parsed_items.pop_back();
 
-      // auto go_to = parsed_items.back();
-      // parsed_items.pop_back();
-      /* 
-       * Create the instruction.
-       */ 
       auto i = new goto_label_instruction(label);
-      // auto i = new goto_label_instruction(go_to, label);
-
-      /* 
-       * Add the just-created instruction to the current function.
-       */ 
       currentF->instructions.push_back(i);
     }
   };
@@ -1157,20 +1008,11 @@ namespace L1 {
       auto t = parsed_items.back();
       parsed_items.pop_back();
       auto instruction = new Operator("+=");
-      // auto instruction = parsed_it
-      
       auto M = parsed_items.back();
       parsed_items.pop_back();
       auto x = parsed_items.back();
       parsed_items.pop_back();
-      /* 
-       * Create the instruction.
-       */ 
-      auto i = new Memory_arithmetic_store(x, t, instruction, M); // this is gonna be weird need to handle
-
-      /* 
-       * Add the just-created instruction to the current function.
-       */ 
+      auto i = new Memory_arithmetic_store(x, t, instruction, M);
       currentF->instructions.push_back(i);
     }
   };
@@ -1184,20 +1026,11 @@ namespace L1 {
       auto t = parsed_items.back();
       parsed_items.pop_back();
       auto instruction = new Operator("-=");
-      // auto instruction = parsed_items.back();
-      // parsed_items.pop_back();
       auto M = parsed_items.back();
       parsed_items.pop_back();
       auto x = parsed_items.back();
       parsed_items.pop_back();
-      /* 
-       * Create the instruction.
-       */ 
       auto i = new Memory_arithmetic_store(x, t, instruction, M);
-
-      /* 
-       * Add the just-created instruction to the current function.
-       */ 
       currentF->instructions.push_back(i);
     }
   };
@@ -1214,12 +1047,9 @@ namespace L1 {
       auto x = parsed_items.back();
       parsed_items.pop_back();
       auto instruction = new Operator("+=");
-      // auto instruction = parsed_items.back();
-      // parsed_items.pop_back();
       auto w = parsed_items.back();
       parsed_items.pop_back();
       if (debug) std::cerr << "parsed_items is " << parsed_items.size() << " elements long after popping" << std::endl;
-
       auto i = new Memory_arithmetic_load(w, x, instruction, M);
       currentF->instructions.push_back(i);
     }
@@ -1237,18 +1067,9 @@ namespace L1 {
       auto x = parsed_items.back();
       parsed_items.pop_back();
       auto instruction = new Operator("-=");
-      // auto instruction = parsed_items.back();
-      // parsed_items.pop_back();
       auto w = parsed_items.back();
       parsed_items.pop_back();
-      /* 
-       * Create the instruction.
-       */ 
-      auto i = new Memory_arithmetic_load(w, x, instruction, M); // this is gonna be weird need to handle
-
-      /* 
-       * Add the just-created instruction to the current function.
-       */ 
+      auto i = new Memory_arithmetic_load(w, x, instruction, M);
       currentF->instructions.push_back(i);
     }
   };
@@ -1271,14 +1092,8 @@ namespace L1 {
       parsed_items.pop_back();  
       auto w = parsed_items.back();
       parsed_items.pop_back();
-      /* 
-       * Create the instruction.
-       */ 
-      auto i = new AOP_assignment(method, w, t); // this is gonna be weird need to handle
 
-      /* 
-       * Add the just-created instruction to the current function.
-       */ 
+      auto i = new AOP_assignment(method, w, t);
       currentF->instructions.push_back(i);
     }
   };
@@ -1295,14 +1110,8 @@ namespace L1 {
       parsed_items.pop_back();  
       auto dst = parsed_items.back();
       parsed_items.pop_back();
-      /* 
-       * Create the instruction.
-       */ 
-      auto i = new SOP_assignment(method, dst, src); // this is gonna be weird need to handle
 
-      /* 
-       * Add the just-created instruction to the current function.
-       */ 
+      auto i = new SOP_assignment(method, dst, src);
       currentF->instructions.push_back(i);
     }
   };
@@ -1319,14 +1128,8 @@ namespace L1 {
       parsed_items.pop_back();  
       auto w = parsed_items.back();
       parsed_items.pop_back();
-      /* 
-       * Create the instruction.
-       */ 
-      auto i = new SOP_assignment(method, w,N); // this is gonna be weird need to handle
 
-      /* 
-       * Add the just-created instruction to the current function.
-       */ 
+      auto i = new SOP_assignment(method, w,N);
       currentF->instructions.push_back(i);
     }
   };
@@ -1335,13 +1138,8 @@ namespace L1 {
   template<> struct action < Inst_cmp_assign_rule > {
     template< typename Input >
     static void apply( const Input & in, Program & p) {
-      
       // matches w <- t2 cmp t1
-      
-      auto currentF = p.functions.back(); // pass by reference means that we access member with dot
-
-      // need to fetch the last three tokens on the stack
-      // NOTE - need to define actions for w, t, cmp that place them onto the parsed_items stack
+      auto currentF = p.functions.back();
       auto t1 = parsed_items.back();
       parsed_items.pop_back();
       auto cmp = parsed_items.back();
@@ -1350,14 +1148,8 @@ namespace L1 {
       parsed_items.pop_back();
       auto w = parsed_items.back();
       parsed_items.pop_back();
-      /* 
-       * Create the instruction.
-       */ 
-      auto i = new cmp_Instruction(w, t2, cmp, t1);
 
-      /* 
-       * Add the just-created instruction to the current function.
-       */ 
+      auto i = new cmp_Instruction(w, t2, cmp, t1);
       currentF->instructions.push_back(i);
     }
   };
@@ -1377,14 +1169,8 @@ namespace L1 {
       parsed_items.pop_back();
       auto t2 = parsed_items.back();
       parsed_items.pop_back();
-      /* 
-       * Create the instruction.
-       */ 
-      auto i = new cjump_cmp_Instruction(t2, cmp, t1, label);
 
-      /* 
-       * Add the just-created instruction to the current function.
-       */ 
+      auto i = new cjump_cmp_Instruction(t2, cmp, t1, label);
       currentF->instructions.push_back(i);
     }
   };
@@ -1418,13 +1204,7 @@ namespace L1 {
       parsed_items.pop_back();
       if (debug) std::cerr << "the size of parsed_items after popping is " << parsed_items.size() << std::endl;
 
-      /* 
-       * Create the instruction.
-       */ 
       auto i = new Call_uN_Instruction(u,N);
-      /* 
-       * Add the just-created instruction to the current function.
-       */ 
       currentF->instructions.push_back(i);
     }
   };
@@ -1433,12 +1213,8 @@ namespace L1 {
     static void apply( const Input & in, Program & p) {
       auto currentF = p.functions.back();
       if (debug) std::cerr << "Call Print 1 Instruction" << std::endl;
-
       // call print 1 
       auto i = new Call_print_Instruction();
-      /* 
-       * Add the just-created instruction to the current function.
-       */ 
       currentF->instructions.push_back(i);
     }
   };
@@ -1449,9 +1225,6 @@ namespace L1 {
 
       // call input 0 
       auto i = new Call_input_Instruction();
-      /* 
-       * Add the just-created instruction to the current function.
-       */ 
       currentF->instructions.push_back(i);
     }
   };
@@ -1462,9 +1235,6 @@ namespace L1 {
       auto currentF = p.functions.back();
       // call allocate 2
       auto i = new Call_allocate_Instruction();
-      /* 
-       * Add the just-created instruction to the current function.
-       */ 
       currentF->instructions.push_back(i);
     }
   };
@@ -1475,9 +1245,6 @@ namespace L1 {
       auto currentF = p.functions.back();
 
       auto i = new Call_tuple_Instruction();
-      /* 
-       * Add the just-created instruction to the current function.
-       */ 
       currentF->instructions.push_back(i);
     }
   };

@@ -14,47 +14,13 @@ namespace L1 {
   class Function;
   class Program;
 
-  // enum RegisterID {   // this list currently corresponds with L1 grammar definition 'x' 
-  //   rdi,
-  //   rsi,
-  //   rdx,
-  //   rcx,
-  //   r8,
-  //   r9,
-  //   rax,
-  //   rbx,
-  //   rbp,
-  //   r10,
-  //   r11,
-  //   r12,
-  //   r13,
-  //   r14,
-  //   r15,
-  //   rsp   // note - i'm not sure if the stack pointer register should belong here
-  // };
-  // using ItemValue = std::variant<int, std::string, RegisterID>; // Example using variant
-
   class Item {
     public:
 
       virtual std::string translate() = 0;    // returns string with the x86 conventions attached
       virtual std::string print() = 0;        // returns the value as is
 
-      // virtual ~Item() {};  // Virtual destructor
-      // virtual ItemValue getValue() const { return value; }
-      // virtual void setValue(const ItemValue& newValue) { value = newValue; }
-      
-      // each derived class returns a unique integer which we can condition check in the code generator
-    //   virtual int give_status();
-    // protected:
-    //   ItemValue value;
-    //   virtual void print() = 0;
   };
-
-  // Register = 0
-  // Integer = 1
-  // String = 2
-
   /*
   Register = 0
   Number = 1
@@ -67,10 +33,6 @@ namespace L1 {
       Register (const std::string &value);
       std::string translate() override;
       std::string print() override;
-
-      // ~Register();
-      // void print() override;
-      // int give_status() override;
     private:
       std::string ID;
   };
@@ -111,29 +73,6 @@ namespace L1 {
       std::string sign;
   };
 
-  // class Integer : public Item {
-  //   // for things like 21
-  //   public:
-  //     Integer(int value);
-  //     ~Integer();
-  //     void print() override;
-  //     int give_status() override;
-  //   private:
-  //     int value;
-  // };
-
-  // class String : public Item {
-  //   // for things like @name
-  //   public:
-  //     String(const std::string& value);
-  //     ~String();
-  //     void print() override;
-  //     int give_status() override;
-  //   private:
-  //     std::string value;
-  // };
-  // We honestly should write classes for methods/instructions that can be inherited from Item instead of using std::string
-
   /*
    * Instruction interface.
    */
@@ -163,26 +102,11 @@ namespace L1 {
       Item *d;
   };
 
-
- // OUR OWN CLASSES 
-
-  // // I don't think this instruction is being used
-  // class incdec_instruction : public Instruction{
-  //   public:
-  //     incdec_instruction(Item *reg, Item *method);
-  //     void gen(Function *f, std::ofstream &outputFile) override;
-  //     void printMe() override;
-  //   private:
-  //     Item *reg; 
-  //     Item *method;
-  // };
-
   class label_Instruction : public Instruction{
     public:
       label_Instruction(Item *label);
       void gen(Function *f, std::ofstream &outputFile) override;
       void printMe() override;
-      // void gen(Function *f, std::ofstream &outputFile) override;
     protected:
       Item *label; 
   };
@@ -193,31 +117,6 @@ namespace L1 {
       void gen(Function *f, std::ofstream &outputFile) override;
       void printMe() override;
   };
-
-  // class goto_label_instruction : public label_Instruction {
-  //   public:
-  //     goto_label_instruction(Item *method, Item *label);
-  //     void gen(Function *f, std::ofstream &outputFile) override;
-  //   private:
-  //     Item *method;
-  // };
-
-  // // note that this class doesn't seem to be used anywhere
-  // class Call_Instruction : public Instruction {
-  //   // // all call functions except call u N and call tensor-error
-  //   // public:
-  //   //   Call_Instruction(String method,String instruction, String symbol);
-  //   // private:
-  //   //   String method;
-  //   //   String instruction;
-  //   //   String symbol;
-  //   public:
-  //     Call_Instruction(Item *method);
-  //     void gen(Function *f, std::ofstream &outputFile) override;
-  //     void printMe() override;
-  //   private:
-  //     Item *method;
-  // };
 
   class Call_tenserr_Instruction: public Instruction {
     public:
@@ -379,8 +278,6 @@ namespace L1 {
     private:
       Item *method;
   };
-  
-// OUR OWN FUNCTIONs
 
   /*
    * Function.

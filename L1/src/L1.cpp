@@ -77,47 +77,15 @@ namespace L1 {
         return this->sign;
     }
 
-
-    // Register::~Register() {}
-    // void Register::print() {
-    //     std::cout << "found the register's override of Item::print!" << std::endl;
-    // }
-    // int Register::give_status() {
-    //     return 0;
-    // }
-
-    // // Integer, derived from Item
-    // Integer::Integer(int value) : value(value) {}
-    // Integer::~Integer() {}
-    // void Integer::print() {
-    //     std::cout << "found the integer's override of Item::print!" << std::endl;
-    // }
-    // int Integer::give_status() {
-    //     return 1;
-    // }
-
-    // // String, derived from Item
-    // String::String(const std::string& value) : value(value) {}
-    // String::~String() {}
-    // void String::print() {
-    //     std::cout << "found the string's override of Item::print!" << std::endl;
-    // }
-    // int String::give_status() {
-    //     return 2;
-    // }
-
-
     /*
     Instruction class extensions
     */
-
     Instruction_ret::Instruction_ret() {}
     void Instruction_ret::printMe() {
         std::cout << "Instruction_ret:    return" << std::endl;
     }
 
     // Instruction_assignment Constructor
-    // Instruction_assignment::Instruction_assignment(Item *dst, Item *src) : s(src), d(dst) {}
     Instruction_assignment::Instruction_assignment (Item *dst, Item *src)
         : s { src },
         d { dst } {
@@ -126,16 +94,6 @@ namespace L1 {
     void Instruction_assignment::printMe() {
         std::cout << "Instruction_assignment:    " << this->d->translate() << " <- " << this->s->translate() << std::endl;
     }
-
-    // // I don't think this instruction is being used
-    // // incdec_instruction Constructor
-    // incdec_instruction::incdec_instruction(Item *reg, Item *method) : reg(reg), method(method) {}
-    // void incdec_instruction::printMe() {
-
-    // }
-
-    // at_instruction Constructor
-    // at_instruction::at_instruction(Item *reg1, Item *reg2, Item *reg3, Integer *num) : reg1(reg1), reg2(reg2), reg3(reg3), num(num) {}
 
     // label_Instruction Constructor
     label_Instruction::label_Instruction(Item *label) : label(label) {}
@@ -148,14 +106,6 @@ namespace L1 {
     void goto_label_instruction::printMe() {
 
     }
-    // goto_label_instruction::goto_label_instruction(Item *method, Item *label) : label_Instruction(label), method(method) {}
-
-    // // note that this class is never used, also nothing inherits from it 
-    // // Call_Instruction Constructor
-    // Call_Instruction::Call_Instruction(Item *method) : method(method) {}
-    // void Call_Instruction::printMe() {
-
-    // }
 
     // Call_tenserr_Instruction Constructor
     Call_tenserr_Instruction::Call_tenserr_Instruction(Item *F) : F(F) {}
@@ -249,7 +199,4 @@ namespace L1 {
     void w_atreg_assignment::printMe() {
 
     }
-   
-
-   
 }

@@ -165,7 +165,6 @@ namespace L1{
 
   void cmp_Instruction::gen(Function *f, std::ofstream &outputFile) {
     // w <- t2 cmp t1
-    // also note - I don't 
     if (debug) std::cerr << "gen method called for a cmp_Instruction instance!" << std::endl;
     
     if (dynamic_cast<Number*>(this->t2)) {
