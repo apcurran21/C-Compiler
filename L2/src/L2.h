@@ -12,6 +12,7 @@ namespace L2 {
   // Forward declarations
   class Function;
   class Program;
+  class Visitor;
   class Item {
     public:
 
@@ -61,6 +62,9 @@ namespace L2 {
       Label (const std::string &value);
       std::string translate() override;
       std::string print() override;
+      std::string getLabel() const {
+        return value;
+      };
     private:
       std::string value;
   };
@@ -120,7 +124,12 @@ namespace L2 {
       label_Instruction(Item *label);
       void gen(Function *f, std::ofstream &outputFile) override;
       void printMe() override;
-      // void gen(Function *f, std::ofstream &outputFile) override;
+      std::string getLabel() const {
+          const Label *labelPtr = dynamic_cast<const Label*>(label);
+          if (labelPtr) {
+              return labelPtr->getLabel();
+          }
+      }
     protected:
       Item *label; 
   };
@@ -267,6 +276,13 @@ namespace L2 {
       cjump_cmp_Instruction(Item *t2, Item *cmp, Item *t1, Item *label);
       void gen(Function *f, std::ofstream &outputFile) override;
       void printMe() override;
+      std::string getLabel() const {
+          const Label *labelPtr = dynamic_cast<const Label*>(label);
+          if (labelPtr) {
+              return labelPtr->getLabel();
+          }
+          return ""; // Or handle the error as appropriate
+      }
     private:
       Item *t2;
       Item *cmp;
@@ -313,6 +329,7 @@ namespace L2 {
       int64_t arguments;
       int64_t locals;
       std::vector<Instruction *> instructions;
+      void calculateCFG();
   };
 
   class Program{
@@ -322,30 +339,30 @@ namespace L2 {
   };
 
   class Visitor {
-  public:
-    virtual void visit(Function &function) = 0;
-    virtual void visit(Instruction &instruction) = 0;
-    virtual void visit(Instruction_ret &instruction) = 0;
-    virtual void visit(Instruction_assignment &instruction) = 0;
-    virtual void visit(label_Instruction &instruction) = 0;
-    virtual void visit(goto_label_instruction &instruction) = 0;
-    virtual void visit(Call_tenserr_Instruction &instruction) = 0;
-    virtual void visit(Call_uN_Instruction &instruction) = 0;
-    virtual void visit(Call_print_Instruction &instruction) = 0;
-    virtual void visit(Call_input_Instruction &instruction) = 0;
-    virtual void visit(Call_allocate_Instruction &instruction) = 0;
-    virtual void visit(Call_tuple_Instruction &instruction) = 0;
-    virtual void visit(w_increment_decrement &instruction) = 0;
-    virtual void visit(w_atreg_assignment &instruction) = 0;
-    virtual void visit(Memory_assignment_store &instruction) = 0;
-    virtual void visit(Memory_assignment_load &instruction) = 0;
-    virtual void visit(Memory_arithmetic_load &instruction) = 0;
-    virtual void visit(Memory_arithmetic_store &instruction) = 0;
-    virtual void visit(cmp_Instruction &instruction) = 0;
-    virtual void visit(cjump_cmp_Instruction &instruction) = 0;
-    virtual void visit(stackarg_assignment &instruction) = 0;
-    virtual void visit(AOP_assignment &instruction) = 0;
-    virtual void visit(SOP_assignment &instruction) = 0;
+    public:
+      virtual void visit(Function &function) = 0;
+      virtual void visit(Instruction &instruction) = 0;
+      virtual void visit(Instruction_ret &instruction) = 0;
+      virtual void visit(Instruction_assignment &instruction) = 0;
+      virtual void visit(label_Instruction &instruction) = 0;
+      virtual void visit(goto_label_instruction &instruction) = 0;
+      virtual void visit(Call_tenserr_Instruction &instruction) = 0;
+      virtual void visit(Call_uN_Instruction &instruction) = 0;
+      virtual void visit(Call_print_Instruction &instruction) = 0;
+      virtual void visit(Call_input_Instruction &instruction) = 0;
+      virtual void visit(Call_allocate_Instruction &instruction) = 0;
+      virtual void visit(Call_tuple_Instruction &instruction) = 0;
+      virtual void visit(w_increment_decrement &instruction) = 0;
+      virtual void visit(w_atreg_assignment &instruction) = 0;
+      virtual void visit(Memory_assignment_store &instruction) = 0;
+      virtual void visit(Memory_assignment_load &instruction) = 0;
+      virtual void visit(Memory_arithmetic_load &instruction) = 0;
+      virtual void visit(Memory_arithmetic_store &instruction) = 0;
+      virtual void visit(cmp_Instruction &instruction) = 0;
+      virtual void visit(cjump_cmp_Instruction &instruction) = 0;
+      virtual void visit(stackarg_assignment &instruction) = 0;
+      virtual void visit(AOP_assignment &instruction) = 0;
+      virtual void visit(SOP_assignment &instruction) = 0;
   };
   class LiveAnalysisVisitor : public Visitor {
   public:
@@ -376,21 +393,4 @@ namespace L2 {
     std::vector<std::set<std::string>> IN;
     std::vector<std::set<std::string>> OUT;
   };
-  class CFG {
-  public:
-      struct Node {
-          Instruction* instr;
-          std::set<int> predecessors;
-          std::set<int> successors;
-      };
-
-      Function* function; // Reference to the function the CFG belongs to.
-      std::vector<Node> nodes; // Nodes of the CFG, could correspond to instructions or basic blocks.
-
-      CFG(Function* f);
-      void buildCFG();
-      
-  };
-
-
 }
