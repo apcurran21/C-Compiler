@@ -1,0 +1,17 @@
+(@go
+    (@go
+        0 
+        rsi <- 0
+        mem rsp -8 <- :READ_RET
+        mem rsp -16 <- rsi
+        call @read_array 0
+        :READ_RET
+        rdi <- rax
+        rsi <- mem rsp -16
+        // Store the length of the array
+        %r12 <- mem rdi 0
+        rdi <- %r12
+        call print 1
+        return       
+    )
+)
