@@ -85,6 +85,10 @@ namespace L2 {
       virtual void accept(Visitor &visitor) = 0; // Accept a visitor
       virtual void gen(Function *f, std::ofstream &outputFile) = 0;
       virtual void printMe() = 0;
+      std::set<Instruction *> predecessors;
+      std::set<Instruction *> successors;
+      std::set<Variable *> used;
+      std::set<Variable *> defined;
 
   };
 

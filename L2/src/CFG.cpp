@@ -57,24 +57,8 @@ namespace L2{
 
     void LiveAnalysisVisitor::visit(SOP_assignment &instruction){};
 
-    void liveness_analysis(){
-        std::cout << "(in\n";
-        for (auto &inSet : IN) {
-            std::cout << "(";
-            for (auto &reg : inSet) {
-                std::cout << reg << " ";
-            }
-            std::cout << ")\n";
-        }
-        std::cout << ")\n\n(out\n";
-        for (auto &outSet : OUT) {
-            std::cout << "(";
-            for (auto &reg : outSet) {
-                std::cout << reg << " ";
-            }
-            std::cout << ")\n";
-        }
-        std::cout << ")\n\n";
+    void computeCFG(void){
+        
     }
 
 }
