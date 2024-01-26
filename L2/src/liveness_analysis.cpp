@@ -12,7 +12,7 @@ using namespace std;
 
 namespace L2{
     void LiveAnalysisVisitor::visit(Function &function){};
-
+        
     void LiveAnalysisVisitor::visit(Instruction &instruction){};
 
     void LiveAnalysisVisitor::visit(Instruction_ret &instruction){};

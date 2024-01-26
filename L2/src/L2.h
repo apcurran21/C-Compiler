@@ -19,12 +19,21 @@ namespace L2 {
       virtual std::string print() = 0;        // returns the value as is
 
   };
-
-  class Register : public Item {
+  class Variable : public Item {
     public:
-      Register (const std::string &value);
+      Variable (std::string name);
       std::string translate() override;
       std::string print() override;
+    private:
+      std::string name;
+  };
+  class Register : public Variable {
+    public:
+      Register (const std::string &value);
+      std::string getID() const {
+        return ID;
+      };
+      bool operator==(const Register &other) const;
     private:
       std::string ID;
   };
@@ -61,6 +70,9 @@ namespace L2 {
       Operator (const std::string &sign);
       std::string translate() override;
       std::string print() override;
+      bool operator==(const Operator &other) const {
+        return this->sign == other.sign;
+      }
     private:
       std::string sign;
   };
