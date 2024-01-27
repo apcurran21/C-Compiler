@@ -78,35 +78,6 @@ namespace L2 {
     }
 
 
-    // Register::~Register() {}
-    // void Register::print() {
-    //     std::cout << "found the register's override of Item::print!" << std::endl;
-    // }
-    // int Register::give_status() {
-    //     return 0;
-    // }
-
-    // // Integer, derived from Item
-    // Integer::Integer(int value) : value(value) {}
-    // Integer::~Integer() {}
-    // void Integer::print() {
-    //     std::cout << "found the integer's override of Item::print!" << std::endl;
-    // }
-    // int Integer::give_status() {
-    //     return 1;
-    // }
-
-    // // String, derived from Item
-    // String::String(const std::string& value) : value(value) {}
-    // String::~String() {}
-    // void String::print() {
-    //     std::cout << "found the string's override of Item::print!" << std::endl;
-    // }
-    // int String::give_status() {
-    //     return 2;
-    // }
-
-
     /*
     Instruction class extensions
     */

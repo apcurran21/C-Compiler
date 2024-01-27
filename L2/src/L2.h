@@ -12,6 +12,19 @@ namespace L2 {
   // Forward declarations
   class Function;
   class Program;
+  class Item;
+
+  /*
+  Liveness Analysis Results
+  */
+  class In_Out_Store {
+    public:
+      In_Out_Store(int num_functions, int num_instructions);
+    private:
+      std::vector<std::vector<std::set<Item*>>> In_Set;
+      std::vector<std::vector<std::set<Item*>>> Out_Set;
+  };
+
   class Item {
     public:
 
@@ -89,7 +102,6 @@ namespace L2 {
       std::set<Instruction *> successors;
       std::set<Variable *> used;
       std::set<Variable *> defined;
-
   };
 
   /*
@@ -98,6 +110,7 @@ namespace L2 {
   class Instruction_ret : public Instruction{
     public:
       Instruction_ret ();
+      void accept(Visitor &visitor)
       void gen(Function *f, std::ofstream &outputFile) override;
       void printMe() override;
   };
@@ -373,8 +386,6 @@ namespace L2 {
     void visit(AOP_assignment &instruction) override {}
     void visit(SOP_assignment &instruction) override {}
     void liveness_analysis();
-    std::vector<std::set<std::string>> IN;
-    std::vector<std::set<std::string>> OUT;
   };
   class CFG {
   public:
