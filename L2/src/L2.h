@@ -16,75 +16,7 @@ namespace L2 {
   class Item;
   class Instruction;
   class Variable;
-
-
-  // class In_Out_Store {
-  //   public:
-  //     In_Out_Store(int num_functions, std::vector<int> nums_instructions);
-  //     int get_size(SetType from_where, int function_index, int instruction_index);
-  //   private:
-  //     std::vector<std::vector<std::set<Variable*>>> In_Set;
-  //     std::vector<std::vector<std::set<Variable*>>> Out_Set;
-  // };
-
-  // class Gen_Kill_Store {
-  //   public:
-  //     Gen_Kill_Store(int num_functions, std::vector<int> nums_instructions);
-  //     int get_size(SetType from_where, int function_index, int instruction_index);
-  //   private:
-  //     std::vector<std::vector<std::set<Variable*>>> Gen_Set;
-  //     std::vector<std::vector<std::set<Variable*>>> Kill_Set;
-  // };
-
-  /*
-  CFG Class
-  */
-  class CFG {
-    public:
-        struct Node {
-            Instruction* instr;
-            std::set<int> predecessors;
-            std::set<int> successors;
-        };
-
-        Function* function; // Reference to the function the CFG belongs to.
-        std::vector<Node> nodes; // Nodes of the CFG, could correspond to instructions or basic blocks.
-
-        CFG(Function* f);
-        void buildCFG();
-        
-  };
-
-  /*
-  Liveness Analysis Visitor Class
-  */
-  // class LiveAnalysisVisitor : public Visitor {
-  // public:
-  //   void visit(Function &function) override {}
-  //   void visit(Instruction &instruction) override {}
-  //   void visit(Instruction_ret &instruction) override {}
-  //   void visit(Instruction_assignment &instruction) override {}
-  //   void visit(label_Instruction &instruction) override {}
-  //   void visit(goto_label_instruction &instruction) override {}
-  //   void visit(Call_tenserr_Instruction &instruction) override {}
-  //   void visit(Call_uN_Instruction &instruction) override {}
-  //   void visit(Call_print_Instruction &instruction) override {}
-  //   void visit(Call_input_Instruction &instruction) override {}
-  //   void visit(Call_allocate_Instruction &instruction) override {}
-  //   void visit(Call_tuple_Instruction &instruction) override {}
-  //   void visit(w_increment_decrement &instruction) override {}
-  //   void visit(w_atreg_assignment &instruction) override {}
-  //   void visit(Memory_assignment_store &instruction) override {}
-  //   void visit(Memory_assignment_load &instruction) override {}
-  //   void visit(Memory_arithmetic_load &instruction) override {}
-  //   void visit(Memory_arithmetic_store &instruction) override {}
-  //   void visit(cmp_Instruction &instruction) override {}
-  //   void visit(cjump_cmp_Instruction &instruction) override {}
-  //   void visit(stackarg_assignment &instruction) override {}
-  //   void visit(AOP_assignment &instruction) override {}
-  //   void visit(SOP_assignment &instruction) override {}
-  //   void liveness_analysis();
-  // };
+  class Visitor;
 
 
   /*
@@ -92,10 +24,8 @@ namespace L2 {
   */
   class Item {
     public:
-
       virtual std::string translate() = 0;    // returns string with the x86 conventions attached
       virtual std::string print() = 0;        // returns the value as is
-
   };
   class Variable : public Item {
     public:
@@ -192,7 +122,7 @@ namespace L2 {
       Item *s;
       Item *d;
   };
-class stackarg_assignment : public Instruction{
+  class stackarg_assignment : public Instruction{ 
     public:
       Instruction_assignment (Item *dst, Item *src);
       void gen(Function *f, std::ofstream &outputFile) override;
@@ -200,6 +130,16 @@ class stackarg_assignment : public Instruction{
       virtual void accept(Visitor &visitor) = 0; // Accept a visitor
       Item *s;
       Item *d;
+  };
+    class stackarg_assignment: public Instruction_assignment {
+    public:
+      stackarg_assignment(Item *w,Item *op, Item *M);
+      virtual void accept(Visitor &visitor) = 0; // Accept a visitor
+      void gen(Function *f, std::ofstream &outputFile) override;
+      void printMe() override;
+      Item *w;
+      Item *op;
+      Item *M;
   };
 
  // OUR OWN CLASSES 
@@ -375,16 +315,16 @@ class stackarg_assignment : public Instruction{
       Item *label;
   };
 
-  class stackarg_assignment: public Instruction_assignment {
-    public:
-      stackarg_assignment(Item *w,Item *op, Item *M);
-      virtual void accept(Visitor &visitor) = 0; // Accept a visitor
-      void gen(Function *f, std::ofstream &outputFile) override;
-      void printMe() override;
-      Item *w;
-      Item *op;
-      Item *M;
-  };
+  // class stackarg_assignment: public Instruction_assignment {
+  //   public:
+  //     stackarg_assignment(Item *w,Item *op, Item *M);
+  //     virtual void accept(Visitor &visitor) = 0; // Accept a visitor
+  //     void gen(Function *f, std::ofstream &outputFile) override;
+  //     void printMe() override;
+  //     Item *w;
+  //     Item *op;
+  //     Item *M;
+  // };
   class AOP_assignment : public Instruction_assignment {
     public:
       AOP_assignment(Item *method, Item *dst, Item *src);
@@ -420,7 +360,6 @@ class stackarg_assignment : public Instruction{
       std::vector<Instruction *> instructions;
       void calculateCFG();
       void calculateUseDefs(UseDefVisitor * v);
-      void calculateUseDefs();
   }; 
 
   class Program{
@@ -497,7 +436,7 @@ class stackarg_assignment : public Instruction{
     public:
       In_Out_Store(Program *p);
     private:
-      std::vector<std::unordered_map<Instruction*, std::set<Variable*>> In_Set;
-      std::vector<std::unordered_map<Instruction*, std::set<Variable*>> Out_Set;
+      std::vector<std::unordered_map<Instruction*, std::set<Variable*>>> In_Set;
+      std::vector<std::unordered_map<Instruction*, std::set<Variable*>>> Out_Set;
   };
 }
