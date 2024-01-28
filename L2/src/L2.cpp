@@ -5,16 +5,20 @@ namespace L2 {
     Token class extensions
     */
 
-    // Register, derived from Item
-    Register::Register(const std::string &r)
-        : ID {r}{
-        return ;
+    // Register, derived from Variable
+    Variable::Variable(std::string name) : name(name) { 
+   
     }
-    std::string Register::translate() {
-        return "%" + this->ID;
+    Register::Register(const std::string &r) : Variable(r), ID(r) {
+
     }
-    std::string Register::print() {
-        return this->ID;
+    std::string Variable::translate() {
+    // implement later 
+    return name;
+    }
+    std::string Variable::print() {
+    //implement later
+    return name;
     }
 
     Number::Number (int64_t n)
@@ -220,6 +224,55 @@ namespace L2 {
     void w_atreg_assignment::printMe() {
 
     }
+    
+    void Function::calculateCFG(void){
+        /*
+        1. We need to first clear the previous predecessors/successors
+        2. We then need to collect all of the jump function within this->instructions
+        3. Find the predecessors 
+        4. Find the successors 
+        */
+        std::set<cjump_cmp_Instruction *> total_cjump_instructions{};
+        for (auto instruction : this->instructions){
+            auto cast_instruction = dynamic_cast<cjump_cmp_Instruction *>(instruction);
+            instruction->predecessors.clear(); // clearing out the predecessors
+            instruction->successors.clear(); //clearing out the successors
+            if (cast_instruction){
+                total_cjump_instructions.insert(cast_instruction);
+            };
+        }
+        // Find the predecessors
+        Instruction *prev = nullptr;
+        for (auto& instruction : instructions) {
+            auto jumpInst = dynamic_cast<cjump_cmp_Instruction *>(instruction);
+            auto gotoInst = dynamic_cast<goto_label_instruction *>(instruction);
+            auto labelInst = dynamic_cast<label_Instruction *>(instruction);
 
+            // If the instruction is a jump or goto, set the predecessor
+            if (jumpInst || gotoInst) {
+                if (prev) {
+                    instruction->predecessors.insert(prev);
+                }
+            }
+
+            // If the instruction is not a label, then it can be a predecessor
+            if (!labelInst) {
+                prev = instruction;
+            } else {  // If it is a label, check for jumps that target this label
+                auto label = labelInst->getLabel();
+                for (auto& jumpInst : total_cjump_instructions) {
+                    if (jumpInst->getLabel() == label) {
+                        instruction->predecessors.insert(jumpInst);
+                    }
+                }
+            }
+        }
+        for (auto instruction:this->instructions){
+            for (auto predecessor: instruction->predecessors){
+                predecessor->successors.insert(instruction);
+            }
+        }
+        return;
+    }   
    
 }
