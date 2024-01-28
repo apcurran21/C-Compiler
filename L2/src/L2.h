@@ -122,16 +122,9 @@ namespace L2 {
       Item *s;
       Item *d;
   };
-  class stackarg_assignment : public Instruction{ 
-    public:
-      Instruction_assignment (Item *dst, Item *src);
-      void gen(Function *f, std::ofstream &outputFile) override;
-      void printMe() override;
-      virtual void accept(Visitor &visitor) = 0; // Accept a visitor
-      Item *s;
-      Item *d;
-  };
-    class stackarg_assignment: public Instruction_assignment {
+  class stackarg_assignment: public Instruction_assignment {
+          // w <- stack-arg M 
+
     public:
       stackarg_assignment(Item *w,Item *op, Item *M);
       virtual void accept(Visitor &visitor) = 0; // Accept a visitor
@@ -359,7 +352,7 @@ namespace L2 {
       int64_t locals;
       std::vector<Instruction *> instructions;
       void calculateCFG();
-      void calculateUseDefs(UseDefVisitor * v);
+      void calculateUseDefs();
   }; 
 
   class Program{

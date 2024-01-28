@@ -12,57 +12,6 @@ using namespace std;
 // int debug = 1;
 
 namespace L2{
-
-    /*
-    Going to try not using the visitor pattern for liveness
-    */
-
-    // void LiveAnalysisVisitor::visit(Function &function){};
-        
-    // void LiveAnalysisVisitor::visit(Instruction &instruction){};
-
-    // void LiveAnalysisVisitor::visit(Instruction_ret &instruction){};
-
-    // void LiveAnalysisVisitor::visit(Instruction_assignment &instruction){};
-
-    // void LiveAnalysisVisitor::visit(label_Instruction &instruction){};
-
-    // void LiveAnalysisVisitor::visit(goto_label_instruction &instruction){};
-
-    // void LiveAnalysisVisitor::visit(Call_tenserr_Instruction &instruction){};
-
-    // void LiveAnalysisVisitor::visit(Call_uN_Instruction &instruction){};
-
-    // void LiveAnalysisVisitor::visit(Call_print_Instruction &instruction){};
-
-    // void LiveAnalysisVisitor::visit(Call_input_Instruction &instruction){};
-
-    // void LiveAnalysisVisitor::visit(Call_allocate_Instruction &instruction){};
-
-    // void LiveAnalysisVisitor::visit(Call_tuple_Instruction &instruction){};
-
-    // void LiveAnalysisVisitor::visit(w_increment_decrement &instruction){};
-
-    // void LiveAnalysisVisitor::visit(w_atreg_assignment &instruction){};
-
-    // void LiveAnalysisVisitor::visit(Memory_assignment_store &instruction){};
-
-    // void LiveAnalysisVisitor::visit(Memory_assignment_load &instruction){};
-
-    // void LiveAnalysisVisitor::visit(Memory_arithmetic_load &instruction){};
-
-    // void LiveAnalysisVisitor::visit(Memory_arithmetic_store &instruction){};
-
-    // void LiveAnalysisVisitor::visit(cmp_Instruction &instruction){};
-
-    // void LiveAnalysisVisitor::visit(cjump_cmp_Instruction &instruction){};
-
-    // void LiveAnalysisVisitor::visit(stackarg_assignment &instruction){};
-
-    // void LiveAnalysisVisitor::visit(AOP_assignment &instruction){};
-
-    // void LiveAnalysisVisitor::visit(SOP_assignment &instruction){};
-
     /*
     In and Out Sets
     */
@@ -232,7 +181,7 @@ namespace L2{
         Print the contents of our freshly computed In and Out sets to the file
         */
 
-        for (int f = 0; p->functions.size(); i++) {
+        for (int f = 0; f<p->functions.size(); f++) {
             std::cout << "(\n";
             Function* fptr = p->functions[f];
             std::unordered_map<Instruction*, Variable*> in_map = in_out_sets.In_Set[f];
@@ -250,14 +199,14 @@ namespace L2{
             std::cout << "(out\n";
             for (auto iptr : fptr->instructions) {
                 std::cout << "(";
-                for (auto variable = out_map[iptr].begin(); variable != out_map[iptr].end(); variable++) {
+                for (auto variable = out_map[iptr]->begin(); variable != out_map[iptr]->end(); variable++) {
                     std::cout << *variable << " ";
                 }
-                std::cout << ")"
+                std::cout << ")";
             }
             std::cout << ")\n";
             
-            std::cout << ")\n"
+            std::cout << ")\n";
         }
     }
 
