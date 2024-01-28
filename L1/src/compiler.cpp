@@ -26,7 +26,7 @@ int main(
   int argc, 
   char **argv
   ){
-  auto enable_code_generator = false;
+  auto enable_code_generator = true;
   int32_t optLevel = 0;
   bool verbose;
 
@@ -71,9 +71,14 @@ int main(
    * Print the source program.
    */
   if (verbose){
+    std::cout << "\n\n" << std::endl;
+    std::cout << "Verbose mode selected, check output to verify the parsed program.\n------------------------------" << std::endl;
     for (auto f : p.functions){
-      //TODO
+      for (auto i : f->instructions) {
+        i->printMe();
+      }
     }
+    std::cout << "Done.\n\n" << std::endl;
   }
 
   /*
