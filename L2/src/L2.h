@@ -15,16 +15,25 @@ namespace L2 {
   class Item;
 
   /*
-  Liveness Analysis Results
+  Liveness Analysis Storage Class
   */
+  enum SetType {
+    in,
+    out
+  };
   class In_Out_Store {
     public:
-      In_Out_Store(int num_functions, int num_instructions);
+      In_Out_Store(int num_functions, std::vector<int> nums_instructions);
+      int get_size(SetType from_where, int function_index, int instruction_index);
     private:
-      std::vector<std::vector<std::set<Item*>>> In_Set;
-      std::vector<std::vector<std::set<Item*>>> Out_Set;
+      std::vector<std::vector<std::set<Variable*>>> In_Set;
+      std::vector<std::vector<std::set<Variable*>>> Out_Set;
   };
 
+
+  /*
+  Object Classes
+  */
   class Item {
     public:
 
@@ -110,7 +119,6 @@ namespace L2 {
   class Instruction_ret : public Instruction{
     public:
       Instruction_ret ();
-      void accept(Visitor &visitor)
       void gen(Function *f, std::ofstream &outputFile) override;
       void printMe() override;
   };
