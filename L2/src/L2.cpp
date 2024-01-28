@@ -153,7 +153,15 @@ namespace L2 {
     void Memory_assignment_load::printMe() {
         std::cout << "Memory_assignment_load:    " << "dst = " << this->dst->translate() << ", M = " << this->M->translate() << ", x = " << this->x->translate() << std::endl;
     }
-
+    class Memory_assignment_store : public Instruction {
+        public:
+        Memory_assignment_store(Item *dst, Item *s, Item *M);
+        void gen(Function *f, std::ofstream &outputFile) override;
+        void printMe() override;
+        Item *dst;
+        Item *s;
+        Item *M;
+    };
     // Memory_arithmetic Constructor
     Memory_arithmetic_load::Memory_arithmetic_load(Item *dst, Item *x, Item *instruction, Item *M) 
     : dst(dst), x(x), instruction(instruction), M(M) {}
@@ -274,5 +282,98 @@ namespace L2 {
         }
         return;
     }   
+    void UseDefVisitor::visit(Instruction_ret *instruction){
+        Variable* var1 = new Variable("rax");
+        Variable* var2 = new Variable("r12");
+        Variable* var3 = new Variable("r13");
+        Variable* var4 = new Variable("r14");
+        Variable* var5 = new Variable("r15");
+        Variable* var6 = new Variable("rbp");
+        Variable* var7 = new Variable("rbx");
+        instruction->used.insert(var1);
+        instruction->used.insert(var2);
+        instruction->used.insert(var3);
+        instruction->used.insert(var4);
+        instruction->used.insert(var5);
+        instruction->used.insert(var6);
+        instruction->used.insert(var7);
+    };
+    void visit(Instruction_assignment *instruction) {
+        instruction->used.insert(dynamic_cast<Variable*>(instruction->s));
+        instruction->defined.insert(dynamic_cast<Variable*>(instruction->d));
+    };
+
+    void visit(Call_uN_Instruction *instruction) {
+        Variable* var = dynamic_cast<Variable*>(instruction->u);
+        if (var){
+            instruction->used.insert(var);
+        };
+    };
+
+    void visit(w_increment_decrement *instruction) {
+        instruction->used.insert(dynamic_cast<Variable*>(instruction->r));
+        instruction->defined.insert(dynamic_cast<Variable*>(instruction->r));
+    };
+
+    void visit(w_atreg_assignment *instruction) {
+        // last two W's are going to be gen
+        // the first w is going to be kill
+        instruction->used.insert(dynamic_cast<Variable*>(instruction->r3));
+        instruction->used.insert(dynamic_cast<Variable*>(instruction->r2));
+        instruction->defined.insert(dynamic_cast<Variable*>(instruction->r1));
+    };
+    void visit(Memory_assignment_store *instruction) {
+        instruction->used.insert(dynamic_cast<Variable*>(instruction->s));
+        instruction->used.insert(dynamic_cast<Variable*>(instruction->dst));
+    };
+
+    void visit(Memory_assignment_load *instruction) { // I'm not sure if this one is wrong 
+        instruction->used.insert(dynamic_cast<Variable*>(instruction->x));
+        instruction->defined.insert(dynamic_cast<Variable*>(instruction->dst));
+    };
+    void visit(Memory_arithmetic_load *instruction) {
+        instruction->used.insert(dynamic_cast<Variable*>(instruction->x));
+        instruction->defined.insert(dynamic_cast<Variable*>(instruction->dst));
+    };
+
+    void visit(Memory_arithmetic_store *instruction) {
+        instruction->used.insert(dynamic_cast<Variable*>(instruction->t)); // Is t correct here?
+        instruction->defined.insert(dynamic_cast<Variable*>(instruction->dst));  
+    };
+    void visit(cmp_Instruction *instruction) {
+        Variable* var1 = dynamic_cast<Variable*>(instruction->t1);
+        Variable* var2 = dynamic_cast<Variable*>(instruction->t2);
+        if (var1){
+            instruction->used.insert(dynamic_cast<Variable*>(instruction->t1)); 
+        }
+        if (var2){
+            instruction->used.insert(dynamic_cast<Variable*>(instruction->t2)); 
+        }
+        instruction->defined.insert(dynamic_cast<Variable*>(instruction->dst));
+    };
+    void visit(cjump_cmp_Instruction *instruction) {
+        instruction->used.insert(dynamic_cast<Variable*>(instruction->t1)); 
+        instruction->used.insert(dynamic_cast<Variable*>(instruction->t2)); 
+    };
+    void visit(stackarg_assignment *instruction) {
+        instruction->defined.insert(dynamic_cast<Variable*>(instruction->w)); 
+    };
+    void visit(AOP_assignment *instruction) {
+        instruction->used.insert(dynamic_cast<Variable*>(instruction->src));
+        instruction->defined.insert(dynamic_cast<Variable*>(instruction->dst));
+    };
+    void visit(Memory_assignment_store *instruction){};
+
+    void visit(SOP_assignment *instruction){
+        instruction->used.insert(dynamic_cast<Variable*>(instruction->src));
+        instruction->used.insert(dynamic_cast<Variable*>(instruction->dst));
+    };     
+    void Function::calculateUseDefs(){
+        UseDefVisitor visitor;
+        for (auto instruction: this->instructions){
+            visitor.visit(instruction);
+        };
+    }
    
+
 }
