@@ -1,6 +1,7 @@
 #pragma once
 #include <set>
 #include <vector>
+#include <unordered_map>
 #include <string>
 #include <variant>
 #include <iostream>
@@ -13,34 +14,27 @@ namespace L2 {
   class Function;
   class Program;
   class Item;
+  class Instruction;
+  class Variable;
 
-  /*
-  Liveness Analysis Storage Classes
-  */
-  enum SetType {
-    in,
-    out,
-    gen,
-    kill
-  };
 
-  class In_Out_Store {
-    public:
-      In_Out_Store(int num_functions, std::vector<int> nums_instructions);
-      int get_size(SetType from_where, int function_index, int instruction_index);
-    private:
-      std::vector<std::vector<std::set<Variable*>>> In_Set;
-      std::vector<std::vector<std::set<Variable*>>> Out_Set;
-  };
+  // class In_Out_Store {
+  //   public:
+  //     In_Out_Store(int num_functions, std::vector<int> nums_instructions);
+  //     int get_size(SetType from_where, int function_index, int instruction_index);
+  //   private:
+  //     std::vector<std::vector<std::set<Variable*>>> In_Set;
+  //     std::vector<std::vector<std::set<Variable*>>> Out_Set;
+  // };
 
-  class Gen_Kill_Store {
-    public:
-      Gen_Kill_Store(int num_functions, std::vector<int> nums_instructions);
-      int get_size(SetType from_where, int function_index, int instruction_index);
-    private:
-      std::vector<std::vector<std::set<Variable*>>> Gen_Set;
-      std::vector<std::vector<std::set<Variable*>>> Kill_Set;
-  };
+  // class Gen_Kill_Store {
+  //   public:
+  //     Gen_Kill_Store(int num_functions, std::vector<int> nums_instructions);
+  //     int get_size(SetType from_where, int function_index, int instruction_index);
+  //   private:
+  //     std::vector<std::vector<std::set<Variable*>>> Gen_Set;
+  //     std::vector<std::vector<std::set<Variable*>>> Kill_Set;
+  // };
 
   /*
   CFG Class
@@ -169,7 +163,7 @@ namespace L2 {
    */
   class Instruction{
     public:
-      virtual void accept(Visitor &visitor) = 0; // Accept a visitor
+      // virtual void accept(Visitor &visitor) = 0; // Accept a visitor
       virtual void gen(Function *f, std::ofstream &outputFile) = 0;
       virtual void printMe() = 0;
 
@@ -486,5 +480,24 @@ class stackarg_assignment : public Instruction{
       virtual void visit(stackarg_assignment *instruction) override;
       virtual void visit(AOP_assignment *instruction) override;
       virtual void visit(SOP_assignment *instruction) override;  
+  };
+
+
+  /*
+  Liveness Analysis Storage Classes
+  */
+  enum SetType {
+    in,
+    out,
+    gen,
+    kill
+  };
+
+  class In_Out_Store {
+    public:
+      In_Out_Store(Program *p);
+    private:
+      std::vector<std::unordered_map<Instruction*, std::set<Variable*>> In_Set;
+      std::vector<std::unordered_map<Instruction*, std::set<Variable*>> Out_Set;
   };
 }
