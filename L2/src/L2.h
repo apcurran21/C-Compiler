@@ -15,12 +15,15 @@ namespace L2 {
   class Item;
 
   /*
-  Liveness Analysis Storage Class
+  Liveness Analysis Storage Classes
   */
   enum SetType {
     in,
-    out
+    out,
+    gen,
+    kill
   };
+
   class In_Out_Store {
     public:
       In_Out_Store(int num_functions, std::vector<int> nums_instructions);
@@ -29,6 +32,65 @@ namespace L2 {
       std::vector<std::vector<std::set<Variable*>>> In_Set;
       std::vector<std::vector<std::set<Variable*>>> Out_Set;
   };
+
+  class Gen_Kill_Store {
+    public:
+      Gen_Kill_Store(int num_functions, std::vector<int> nums_instructions);
+      int get_size(SetType from_where, int function_index, int instruction_index);
+    private:
+      std::vector<std::vector<std::set<Variable*>>> Gen_Set;
+      std::vector<std::vector<std::set<Variable*>>> Kill_Set;
+  };
+
+  /*
+  CFG Class
+  */
+  class CFG {
+    public:
+        struct Node {
+            Instruction* instr;
+            std::set<int> predecessors;
+            std::set<int> successors;
+        };
+
+        Function* function; // Reference to the function the CFG belongs to.
+        std::vector<Node> nodes; // Nodes of the CFG, could correspond to instructions or basic blocks.
+
+        CFG(Function* f);
+        void buildCFG();
+        
+  };
+
+  /*
+  Liveness Analysis Visitor Class
+  */
+  // class LiveAnalysisVisitor : public Visitor {
+  // public:
+  //   void visit(Function &function) override {}
+  //   void visit(Instruction &instruction) override {}
+  //   void visit(Instruction_ret &instruction) override {}
+  //   void visit(Instruction_assignment &instruction) override {}
+  //   void visit(label_Instruction &instruction) override {}
+  //   void visit(goto_label_instruction &instruction) override {}
+  //   void visit(Call_tenserr_Instruction &instruction) override {}
+  //   void visit(Call_uN_Instruction &instruction) override {}
+  //   void visit(Call_print_Instruction &instruction) override {}
+  //   void visit(Call_input_Instruction &instruction) override {}
+  //   void visit(Call_allocate_Instruction &instruction) override {}
+  //   void visit(Call_tuple_Instruction &instruction) override {}
+  //   void visit(w_increment_decrement &instruction) override {}
+  //   void visit(w_atreg_assignment &instruction) override {}
+  //   void visit(Memory_assignment_store &instruction) override {}
+  //   void visit(Memory_assignment_load &instruction) override {}
+  //   void visit(Memory_arithmetic_load &instruction) override {}
+  //   void visit(Memory_arithmetic_store &instruction) override {}
+  //   void visit(cmp_Instruction &instruction) override {}
+  //   void visit(cjump_cmp_Instruction &instruction) override {}
+  //   void visit(stackarg_assignment &instruction) override {}
+  //   void visit(AOP_assignment &instruction) override {}
+  //   void visit(SOP_assignment &instruction) override {}
+  //   void liveness_analysis();
+  // };
 
 
   /*
@@ -368,48 +430,4 @@ namespace L2 {
     virtual void visit(AOP_assignment &instruction) = 0;
     virtual void visit(SOP_assignment &instruction) = 0;
   };
-  class LiveAnalysisVisitor : public Visitor {
-  public:
-    void visit(Function &function) override {}
-    void visit(Instruction &instruction) override {}
-    void visit(Instruction_ret &instruction) override {}
-    void visit(Instruction_assignment &instruction) override {}
-    void visit(label_Instruction &instruction) override {}
-    void visit(goto_label_instruction &instruction) override {}
-    void visit(Call_tenserr_Instruction &instruction) override {}
-    void visit(Call_uN_Instruction &instruction) override {}
-    void visit(Call_print_Instruction &instruction) override {}
-    void visit(Call_input_Instruction &instruction) override {}
-    void visit(Call_allocate_Instruction &instruction) override {}
-    void visit(Call_tuple_Instruction &instruction) override {}
-    void visit(w_increment_decrement &instruction) override {}
-    void visit(w_atreg_assignment &instruction) override {}
-    void visit(Memory_assignment_store &instruction) override {}
-    void visit(Memory_assignment_load &instruction) override {}
-    void visit(Memory_arithmetic_load &instruction) override {}
-    void visit(Memory_arithmetic_store &instruction) override {}
-    void visit(cmp_Instruction &instruction) override {}
-    void visit(cjump_cmp_Instruction &instruction) override {}
-    void visit(stackarg_assignment &instruction) override {}
-    void visit(AOP_assignment &instruction) override {}
-    void visit(SOP_assignment &instruction) override {}
-    void liveness_analysis();
-  };
-  class CFG {
-  public:
-      struct Node {
-          Instruction* instr;
-          std::set<int> predecessors;
-          std::set<int> successors;
-      };
-
-      Function* function; // Reference to the function the CFG belongs to.
-      std::vector<Node> nodes; // Nodes of the CFG, could correspond to instructions or basic blocks.
-
-      CFG(Function* f);
-      void buildCFG();
-      
-  };
-
-
 }

@@ -84,17 +84,45 @@ namespace L2{
                 break;
         }
     }
+    /*
+    Gen and Kill Sets
+    */
+    Gen_Kill_Store::Gen_Kill_Store(int num_functions, std::vector<int> nums_instructions) : 
+        Gen_Set(num_functions),
+        Kill_Set(num_functions)
+    {
+        for (int i = 0; i < num_functions; i++) {
+            Gen_Set[i].resize(nums_instructions[i]);
+            Kill_Set[i].resize(nums_instructions[i]);
+        }
+    };
+    int Gen_Kill_Store::get_size(SetType from_where, int function_index, int instruction_index) {
+        switch (from_where) {
+            case in:
+                return Gen_Set[function_index][instruction_index].size();
+                break;
+            case out:
+                return Kill_Set[function_index][instruction_index].size();
+                break;
+        }
+    }
+
 
     void liveness_analysis(Program p){
 
+
         /*
-        Create objects to store the In and Out sets for our program.
+        Create objects to store the Gen and Kill sets for our program.
         */
         std::vector<int> num_instructions_per_function(p.functions.size());
         for (int i = 0; i < p.functions.size(); i++) {
             num_instructions_per_function[i] = p.functions[i]->instructions.size();
         }
-        In_Out_Store sets = In_Out_Store(p.functions.size(), num_instructions_per_function);
+        Gen_Kill_Store gen_kill_sets = Gen_Kill_Store(p.functions.size(), num_instructions_per_function);
+        /*
+        Create objects to store the In and Out sets for our program.
+        */
+        In_Out_Store in_out_sets = In_Out_Store(p.functions.size(), num_instructions_per_function);
 
         /*
         Run the liveness analysis algorithm
@@ -117,13 +145,17 @@ namespace L2{
                     auto iptr = fptr->instructions[j];
                     if (debug) std::cerr << "computing In and Out sets for the current instruction..." << std::endl;
 
-                    int In_size_prev = sets.get_size(in, i, j);
-                    int Out_size_prev = sets.get_size(out, i, j);
+                    /*
+                        Define state of the sets before any potential changes are made
+                    */
 
-                    std::set<Variable*> In_union_set;
-                    std::set_union(
-                    )
+                    /*
+                        Do the set operations
+                    */
 
+                   /*
+                        Check against the initial state after performing the operations.
+                   */
                 }
             } while (changed);
             
