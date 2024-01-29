@@ -18,6 +18,5 @@ namespace L2 {
             return new_var;     // new_var is a pointer 
         }
     }
-
-
+    
 }

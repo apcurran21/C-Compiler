@@ -1,0 +1,30 @@
+s_rule
+----------------------
+pegtl::sor<
+    register_rule,
+    number,
+    label_rule,
+    I_rule
+>
+
+
+t_rule
+------------------------
+pegtl::sor<
+    register_rule,
+    number
+>
+
+sx_rule
+-------------------------
+pegtl::sor<
+    register_rule,
+    variable_rule
+>
+
+u_rule
+-------------------------
+pegtl::sor<
+    register_rule,
+    I_rule
+>
