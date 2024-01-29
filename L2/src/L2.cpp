@@ -223,7 +223,18 @@ namespace L2 {
     }
     void w_atreg_assignment::printMe() {
     }
-    // Inside the Instruction_ret class
+
+    stackarg_assignment::stackarg_assignment(Item *w, Item *M)
+        : w(w), M(M) {
+    }
+    void stackarg_assignment::printMe()
+    {
+    };
+
+
+    /*
+    Instruction Class accept definitions
+    */
     void Instruction_ret::accept(Visitor *visitor) {
         visitor->visit(this);
     }
@@ -318,13 +329,6 @@ namespace L2 {
         visitor->visit(this);
     }
 
-    void stackarg_assignment::printMe()
-    {
-    };
-    void stackarg_assignment::gen(Function *f, std::ofstream &outputFile)
-    {
-    };
-
     // Inside the AOP_assignment class
     void AOP_assignment::accept(Visitor *visitor) {
         visitor->visit(this);
@@ -335,7 +339,7 @@ namespace L2 {
         visitor->visit(this);
     }
     
-    void Function::calculateCFG(void){
+    void Function::calculateCFG(){
         /*
         1. We need to first clear the previous predecessors/successors
         2. We then need to collect all of the jump function within this->instructions

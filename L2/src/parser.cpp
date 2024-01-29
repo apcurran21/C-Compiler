@@ -1085,7 +1085,7 @@ namespace L2 {
   };
 
   /* Isaac/Andy actions*/
-    template<> struct action < Inst_storemem_rule > {
+  template<> struct action < Inst_storemem_rule > {
     template< typename Input >
 	  static void apply( const Input & in, Program & p){
       // mem x M <- s

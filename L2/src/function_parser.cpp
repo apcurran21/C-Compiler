@@ -77,7 +77,7 @@ namespace L2 {
 
 
   /*
-  Grammar rules
+  General Rules!
   */
   struct name:
     pegtl::seq<
@@ -445,7 +445,7 @@ namespace L2 {
       spaces,
       str_print,
       spaces,
-      number
+      pegtl::one<'1'>
     > {};
 
   struct call_input_rule:
@@ -455,7 +455,7 @@ namespace L2 {
       spaces,
       str_input,
       spaces,
-      number
+      pegtl::one<'0'>
     > {};
 
   struct call_allocate_rule:
@@ -465,7 +465,7 @@ namespace L2 {
       spaces,
       str_allocate,
       spaces,
-      number
+      pegtl::one<'2'>
     > {};
 
   struct call_tuperr_rule:
@@ -475,7 +475,7 @@ namespace L2 {
       spaces,
       str_tuperr,
       spaces,
-      number
+      pegtl::one<'3'>
     > {};
 
   struct call_tenserr_rule:
@@ -579,18 +579,109 @@ namespace L2 {
 
   
   /*
-  Function Actions!
+  General Actions!
   */
-  template<> struct action < function_name_rule > {
-    template< typename Input>
+  template< typename Rule >
+  struct action : pegtl::nothing< Rule > {};
+
+  template<> struct action < I_rule > {
+    template< typename Input >
     static void apply( const Input & in, Program & p) {
-      if (debug) std::cerr << "Recognized a function_name rule" << std::endl;
+      if (debug) std::cerr << "Recognized an I_rule" << std::endl;
 
-      // HEY!!! we should probably do something like initializing a new VariableAllocator or something.
+      auto name = new Name(in.string());
+      parsed_items.push_back(name);
+    }
+  };
 
-      auto newF = new Function();
-      newF->name = in.string();
-      p.functions.push_back(newF);
+  template<> struct action < variable_rule > {
+    template< typename Input >
+    static void apply( const Input & in, Program & p) {
+      if (debug) std::cerr << "Recognized variable_rule"<< std::endl;
+
+      // 'query' the variable database basically
+      // - note we should probably split this up for debugging
+      auto var = p.functions.back()->variable_allocator.allocate_variable(in.string());
+      parsed_items.push_back(var);
+    }
+  };
+
+  template<> struct action < label_rule > {
+    template< typename Input >
+	  static void apply( const Input & in, Program & p) {
+      if (debug) std::cerr << "Recognized a label" << std::endl;
+
+      auto label = new Label(in.string());
+      parsed_items.push_back(label);
+    }
+  };
+
+  template<> struct action < register_rule > {
+    template< typename Input >
+    static void apply( const Input & in, Program & p) {
+      if (debug) std::cerr << "Recognized a register rule" << std::endl;
+
+      // note that if the register is already in the database, then we will receive a base Variable pointer.
+      // If the register has not been seen yet, then we receive a specific Register pointer.
+      // Basically, at some point we will need to dynamic cast so that we can properly code generate.
+      auto r = p.functions.back()->variable_allocator.allocate_variable(in.string());
+      parsed_items.push_back(r);
+    }
+  };
+
+  template<> struct action  < number > {
+    template< typename Input >
+    static void apply( const Input & in, Program & p) {
+      if (debug) std::cerr << "Recognized a number rule" << std::endl;
+
+      auto n = new Number(in.string);
+      parsed_items.push_back(n);
+    }
+  };
+
+  // note that the following three actions are basically identical. how can we combine?
+  template<> struct action < aop_rule > {
+    template< typename Input >
+    static void apply( const Input & in, Program & p){
+      if (debug) std::cerr << "Recognized an aop rule" << std::endl;
+      auto op = new Operator(in.string());
+      parsed_items.push_back(op);
+    }
+  };
+
+  template<> struct action < sop_rule > {
+    template< typename Input >
+    static void apply( const Input & in, Program & p){
+      if (debug) std::cerr << "Recognized an sop rule" << std::endl;
+      auto op = new Operator(in.string());
+      parsed_items.push_back(op);
+    }
+  };
+
+  template<> struct action < cmp_rule > {
+    template< typename Input >
+    static void apply( const Input & in, Program & p){
+      if (debug) std::cerr << "Recognized a cmp rule" << std::endl;
+      auto op = new Operator(in.string());
+      parsed_items.push_back(op);
+    }
+  };
+
+  template<> struct action < str_inc > {
+    template< typename Input >
+    static void apply( const Input & in, Program & p){
+      if (debug) std::cerr << "Recognized a str_inc rule" << std::endl;
+      auto op = new Operator(in.string());
+      parsed_items.push_back(op);
+    }
+  };
+
+  template<> struct action < str_dec > {
+    template< typename Input >
+    static void apply( const Input & in, Program & p){
+      if (debug) std::cerr << "Recognized an str_dec rule" << std::endl;
+      auto op = new Operator(in.string());
+      parsed_items.push_back(op);
     }
   };
 
@@ -598,13 +689,444 @@ namespace L2 {
   /*
   Instruction Actions!
   */
-  template< typename Rule >
-  struct action : pegtl::nothing< Rule > {};
+  template<> struct action < Instruction_assignment_rule > {
+    template< typename Input >
+	  static void apply( const Input & in, Program & p) {
+      // w <- s
+      if (debug) std::cerr << "Recognized w <- s" << std::endl;
+
+      auto currentF = p.functions.back();
+      auto src = parsed_items.back();
+      parsed_items.pop_back();
+      auto dst = parsed_items.back();
+      parsed_items.pop_back();
+      auto i = new Instruction_assignment(dst, src);
+      currentF->instructions.push_back(i);
+    }
+  };
+
+  template<> struct action < Inst_loadmem_rule > {
+    template< typename Input >
+    static void apply( const Input & in, Program & p) {
+      // w <- mem x M
+      if (debug) std::cerr << "Recognized w <- mem x M" << std::endl;
+
+      auto currentF = p.functions.back();
+      auto M = parsed_items.back();
+      parsed_items.pop_back();
+      auto x = parsed_items.back();
+      parsed_items.pop_back();
+      auto w = parsed_items.back();
+      parsed_items.pop_back();
+      auto i = new Memory_assignment_load(w, x, M);
+      currentF->instructions.push_back(i);
+    }
+  };
+
+  template<> struct action < Inst_storemem_rule > {
+    template< typename Input >
+	  static void apply( const Input & in, Program & p) {
+      // mem x M <- s
+      if (debug) std::cerr << "Recognized mem x M <- s" << std::endl;
+
+      auto currentF = p.functions.back();
+      auto s = parsed_items.back();
+      parsed_items.pop_back();
+      auto M = parsed_items.back();
+      parsed_items.pop_back();
+      auto x = parsed_items.back();
+      parsed_items.pop_back();
+      auto i = new Memory_assignment_store(x, s, M);
+      currentF->instructions.push_back(i);
+    }
+  };
+
+  template<> struct action < Inst_stackarg_rule > {
+    template< typename Input >
+	  static void apply( const Input & in, Program & p) {
+      // w <- stack-arg M 
+      if (debug) std::cerr << "Recognized w <- stack-arg M" << std::endl;
+
+      auto currentF = p.functions.back();
+      auto M = parsed_items.back();
+      parsed_items.pop_back();
+      auto w = parsed_items.back();
+      parsed_items.pop_back();
+      auto i = new stackarg_assignment(w, M);
+      currentF->instructions.push_back(i);
+    }
+  };
+
+  template<> struct action < Inst_aop_rule > {
+    template< typename Input >
+    static void apply( const Input & in, Program & p) {
+      // w aop t
+      if (debug) std::cerr << "Recognized w aop t" << std::endl;
+
+      auto currentF = p.functions.back();
+      auto t = parsed_items.back();
+      parsed_items.pop_back();
+      auto method = parsed_items.back();
+      parsed_items.pop_back();  
+      auto w = parsed_items.back();
+      parsed_items.pop_back();
+      auto i = new AOP_assignment(method, w, t);
+      currentF->instructions.push_back(i);
+    }
+  };
+
+  template<> struct action < Inst_sop_sx_rule > {
+    template< typename Input >
+	  static void apply( const Input & in, Program & p) {
+      // w sop sx
+      if (debug) std::cerr << "Recognized w sop sx" << std::endl;
+
+      auto currentF = p.functions.back();
+      auto src = parsed_items.back();
+      parsed_items.pop_back();
+      auto method = parsed_items.back();
+      parsed_items.pop_back();  
+      auto w = parsed_items.back();
+      parsed_items.pop_back();
+      auto i = new SOP_assignment(method, w, src);
+      currentF->instructions.push_back(i);
+    }
+  };
+
+  template<> struct action < Inst_sop_N_rule > {
+    template< typename Input >
+	  static void apply( const Input & in, Program & p) {
+      // w sop N
+      if (debug) std::cerr << "Recognized w sop N" << std::endl;
+
+      auto currentF = p.functions.back();
+      auto N = parsed_items.back();
+      parsed_items.pop_back();
+      auto method = parsed_items.back();
+      parsed_items.pop_back();  
+      auto w = parsed_items.back();
+      parsed_items.pop_back();
+      auto i = new SOP_assignment(method, w, N);
+      currentF->instructions.push_back(i);
+    }
+  };
+
+  template<> struct action < Inst_mem_plus_rule > {
+    template< typename Input >
+	  static void apply( const Input & in, Program & p){
+      // mem x M += t
+      if (debug) std::cerr << "Recognized mem x M += t" << std::endl;
+
+      auto currentF = p.functions.back();
+      auto t = parsed_items.back();
+      parsed_items.pop_back();
+      auto instruction = new Operator("+=");
+      auto M = parsed_items.back();
+      parsed_items.pop_back();
+      auto x = parsed_items.back();
+      parsed_items.pop_back();
+      auto i = new Memory_arithmetic_store(x, t, instruction, M);
+      currentF->instructions.push_back(i);
+    }
+  };
+  
+  template<> struct action < Inst_mem_minus_rule > {
+    template< typename Input >
+	  static void apply( const Input & in, Program & p){
+      // mem x M -= t
+      if (debug) std::cerr << "Recognized mem x M -= t" << std::endl;
+
+      auto currentF = p.functions.back();
+      auto t = parsed_items.back();
+      parsed_items.pop_back();
+      auto instruction = new Operator("-=");
+      auto M = parsed_items.back();
+      parsed_items.pop_back();
+      auto x = parsed_items.back();
+      parsed_items.pop_back();
+      auto i = new Memory_arithmetic_store(x, t, instruction, M);
+      currentF->instructions.push_back(i);
+    }
+  };
+
+  template<> struct action < Inst_plus_mem_rule > {
+    template< typename Input >
+	  static void apply( const Input & in, Program & p){
+      // w += mem x M
+      if (debug) std::cerr << "Recognized w += mem x M" << std::endl;
+
+      auto currentF = p.functions.back();
+      auto M = parsed_items.back();
+      parsed_items.pop_back();
+      auto x = parsed_items.back();
+      parsed_items.pop_back();
+      auto instruction = new Operator("+=");
+      auto w = parsed_items.back();
+      parsed_items.pop_back();
+      auto i = new Memory_arithmetic_load(w, x, instruction, M);
+      currentF->instructions.push_back(i);
+    }
+  };
+
+  template<> struct action < Inst_minus_mem_rule > {
+    template< typename Input >
+	  static void apply( const Input & in, Program & p){
+      // w -= mem x M
+      if (debug) std::cerr << "Recognized w -= mem x M" << std::endl;
+
+      auto currentF = p.functions.back();
+      auto M = parsed_items.back();
+      parsed_items.pop_back();
+      auto x = parsed_items.back();
+      parsed_items.pop_back();
+      auto instruction = new Operator("-=");
+      auto w = parsed_items.back();
+      parsed_items.pop_back();
+      auto i = new Memory_arithmetic_load(w, x, instruction, M);
+      currentF->instructions.push_back(i);
+    }
+  };
+
+  template<> struct action < Inst_cmp_assign_rule > {
+    template< typename Input >
+    static void apply( const Input & in, Program & p) {
+      // w <- t2 cmp t1
+      if (debug) std::cerr << "Recognized w <- t2 cmp t1" << std::endl;
+      
+      auto currentF = p.functions.back();
+      auto t1 = parsed_items.back();
+      parsed_items.pop_back();
+      auto cmp = parsed_items.back();
+      parsed_items.pop_back();
+      auto t2 = parsed_items.back();
+      parsed_items.pop_back();
+      auto w = parsed_items.back();
+      parsed_items.pop_back();
+      auto i = new cmp_Instruction(w, t2, cmp, t1);
+      currentF->instructions.push_back(i);
+    }
+  };
+
+  template<> struct action < Inst_cjump_rule > {
+    template< typename Input >
+    static void apply( const Input & in, Program & p) {
+      // cjump t2 cmp t1 label
+      if (debug) std::cerr << "Recognized cjump t2 cmp t1 label" << std::endl;
+
+      auto currentF = p.functions.back();
+      auto label = parsed_items.back();
+      parsed_items.pop_back();
+      auto t1 = parsed_items.back();
+      parsed_items.pop_back();
+      auto cmp = parsed_items.back();
+      parsed_items.pop_back();
+      auto t2 = parsed_items.back();
+      parsed_items.pop_back();
+      auto i = new cjump_cmp_Instruction(t2, cmp, t1, label);
+      currentF->instructions.push_back(i);
+    }
+  };
+
+  template<> struct action < Inst_label_rule > {
+    template< typename Input >
+    static void apply( const Input & in, Program & p) {
+      // label
+      if (debug) std::cerr << "Recognized label" << std::endl;
+
+      auto currentF = p.functions.back();
+      auto label = parsed_items.back();
+      parsed_items.pop_back();
+      auto i = new label_Instruction(label);
+      currentF->instructions.push_back(i);
+    }
+  };
+
+  template<> struct action < Inst_goto_rule > {
+    template< typename Input >
+	  static void apply( const Input & in, Program & p){
+      // goto label
+      if (debug) std::cerr << "Recognized goto label" << std::endl;
+
+      auto currentF = p.functions.back();
+      auto label = parsed_items.back();
+      parsed_items.pop_back();
+      auto i = new goto_label_instruction(label);
+      currentF->instructions.push_back(i);
+    }
+  };
+
+  template<> struct action < str_return > {
+    template< typename Input >
+	  static void apply( const Input & in, Program & p){
+      // return
+      if (debug) std::cerr << "Recognized return" << std::endl;
+
+      auto currentF = p.functions.back();
+      auto i = new Instruction_ret();
+      currentF->instructions.push_back(i);
+    }
+  };
+
+  template<> struct action < call_uN_rule > {
+    template< typename Input >
+    static void apply( const Input & in, Program & p) {
+      // call u N
+      if (debug) std::cerr << "Recognized call u N" << std::endl;
+
+      auto currentF = p.functions.back();
+      auto N = parsed_items.back();
+      parsed_items.pop_back();
+      auto u = parsed_items.back();
+      parsed_items.pop_back();
+      auto i = new Call_uN_Instruction(u,N);
+      currentF->instructions.push_back(i);
+    }
+  };
+
+  template<> struct action < call_print_rule > {
+    template< typename Input >
+    static void apply( const Input & in, Program & p) {
+      // call print 1 
+      if (debug) std::cerr << "Recognized call print 1" << std::endl;
+
+      auto currentF = p.functions.back();
+      auto i = new Call_print_Instruction();
+      currentF->instructions.push_back(i);
+    }
+  };
+
+  template<> struct action < call_input_rule > {
+    template< typename Input >
+    static void apply( const Input & in, Program & p) {
+      // call input 0
+      if (debug) std::cerr << "Recognized call input 0" << std::endl;
+
+      auto currentF = p.functions.back();
+      auto i = new Call_input_Instruction();
+      currentF->instructions.push_back(i);
+    }
+  };
+
+  template<> struct action < call_allocate_rule > {
+    template< typename Input >
+    static void apply( const Input & in, Program & p) {
+      // call allocate 2
+      if (debug) std::cerr << "Recognized call allocate 2" << std::endl;
+
+      auto currentF = p.functions.back();
+      auto i = new Call_allocate_Instruction();
+      currentF->instructions.push_back(i);
+    }
+  };
+
+  template<> struct action < call_tuperr_rule > {
+    template< typename Input >
+    static void apply( const Input & in, Program & p) {
+      // call tuple-error 3
+      if (debug) std::cerr << "Recognized call tuple-error 3" << std::endl;
+
+      auto currentF = p.functions.back();
+      auto i = new Call_tuple_Instruction();
+      currentF->instructions.push_back(i);
+    }
+  };
+
+  template<> struct action < call_tenserr_rule > {
+    template< typename Input >
+    static void apply( const Input & in, Program & p) {
+      // call tensor-error F
+      if (debug) std::cerr << "Recognized call tensor-error F" << std::endl;
+
+      auto currentF = p.functions.back();
+      auto F = parsed_items.back();
+      parsed_items.pop_back();
+      auto i = new Call_tenserr_Instruction(F);
+      currentF->instructions.push_back(i);
+    }
+  };
+
+  template<> struct action < Inst_inc_rule > {
+    template< typename Input >
+    static void apply( const Input & in, Program & p) {
+      // w ++
+      if (debug) std::cerr << "Recognized w ++" << std::endl;
+
+      auto currentF = p.functions.back();
+      auto op = parsed_items.back();
+      parsed_items.pop_back();
+      auto w = parsed_items.back();
+      parsed_items.pop_back();
+      auto i = new w_increment_decrement(w, op);
+      currentF->instructions.push_back(i);
+    }
+  };
+  // bruh these are identical
+  template<> struct action < Inst_dec_rule > {
+    template< typename Input >
+    static void apply( const Input & in, Program & p) {
+      // w --  
+      if (debug) std::cerr << "Recognized w --" << std::endl;
+
+      auto currentF = p.functions.back();
+      auto op = parsed_items.back();
+      parsed_items.pop_back();
+      auto w = parsed_items.back();
+      parsed_items.pop_back();
+      auto i = new w_increment_decrement(w, symbol);
+      currentF->instructions.push_back(i);
+    }
+  };
+
+  template<> struct action < Inst_atreg_rule > {
+    template< typename Input >
+    static void apply( const Input & in, Program & p) {
+      // w1 @ w2 w3 E
+      if (debug) std::cerr << "Recognized w1 @ w2 w3 E" << std::endl;
+
+      auto currentF = p.functions.back();
+      auto E = parsed_items.back();
+      parsed_items.pop_back();
+      auto w3 = parsed_items.back();
+      parsed_items.pop_back();
+      auto w2 = parsed_items.back();
+      parsed_items.pop_back();
+      auto w1 = parsed_items.back();
+      parsed_items.pop_back();
+      auto i = new w_atreg_assignment(w1,w2,w3,E);
+      currentF->instructions.push_back(i);
+    }
+  };
 
 
+  /*
+  Function Actions!
+  */
+  template<> struct action < function_name_rule > {
+    template< typename Input>
+    static void apply( const Input & in, Program & p) {
+      if (debug) std::cerr << "Recognized a function_name rule" << std::endl;
 
+      auto newF = new Function();
+      newF->name = in.string();
+      p.functions.push_back(newF);
+    }
+  };
 
+  template<> struct action < argument_number > {
+    template< typename Input >
+	  static void apply( const Input & in, Program & p) {
+      if (debug) std::cerr << "Recognized an arg number" << std::endl;
 
+      // since argument number gets matched as N first, its token gets put on the stack
+      // ie we should remove here
+      // parsed_items.pop_back();
+
+      // ^ actually idk if this gets matched as 'number' first?
+
+      auto currentF = p.functions.back();
+      currentF->arguments = std::stoll(in.string());
+    }
+  };
 
 
   /*

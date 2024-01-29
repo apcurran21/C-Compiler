@@ -7,6 +7,7 @@
 #include <algorithm>
 #include <iostream>
 
+#include "variable_allocator.h"
 
 namespace L2 {
 
@@ -125,19 +126,18 @@ namespace L2 {
       Item *s;
       Item *d;
   };
-  class stackarg_assignment: public Instruction_assignment {
+  class stackarg_assignment: public Instruction {
     public:
-      stackarg_assignment(Item *w,Item *op, Item *M);
+      stackarg_assignment(Item *w, Item *M);
       void accept(Visitor *visitor) override;
       void gen(Function *f, std::ofstream &outputFile) override;
       void printMe() override;
       Item *w;
-      Item *op;
       Item *M;
   };
 
- // OUR OWN CLASSES 
 
+ // OUR OWN CLASSES 
   class label_Instruction : public Instruction{
     public:
       label_Instruction(Item *label);
@@ -357,6 +357,7 @@ namespace L2 {
       int64_t arguments;
       int64_t locals;
       std::vector<Instruction *> instructions;
+      VariableAllocator variable_allocator;
       void calculateCFG();
       void calculateUseDefs();
   }; 

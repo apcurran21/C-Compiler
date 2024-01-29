@@ -4,6 +4,11 @@
 
 ## Notes
 Overall, we need to make sure that the parser is consistent somehow with the singleton approach to variables that is used in liveness analysis. Worst case, we just do string compare in the liveness analysis.
+* Our main parser will probably fail, in most of the instruction rules involving the phrase *mem* it expects an extra *Operator* instance to be on the *parsed_items* stack, and grabbing its value and then popping. We shouldn't mess with it now, but if we experience issues then this is the likely cause.
+    * Actually nvm its all good we don't actually pull or pop from the stack for a *mem* tag
+* there might be an error with how we defined the stackarg_rules and instructions in the parser.cpp file
+    * NOTE - I changed the definition of the stackarg_assignment class in L2.cpp/h to get rid of the method attribute, this was unneccessary since we have a specific stackarg instruction class (no need to put the *stackarg* tag onto parsed items)
+        * I also made it inherit from the base Instruction class instead of Instruction_assignment, since it wasn't doing anything and just redefining the source and destination attributes
 
 ### Gen, Kill, In, Out
 * I think its best to have these each get their own classes etc because the rules about how they are defined could change later, and we don't want to have to go in and change everything in each instructions class etc in this case.
