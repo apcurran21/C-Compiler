@@ -1,7 +1,7 @@
 #include <string>
 #include <iostream>
 #include <fstream>
-
+#include <algorithm>
 #include <liveness_analysis.h>
 #include "L2.h"
 
@@ -40,8 +40,8 @@ namespace L2{
     */
     In_Out_Store::In_Out_Store(Program *p) {
         for (auto fptr : p->functions) {
-            std::unordered_map<Instruction*>, std::set<Variable*> in_set_map;
-            std::unordered_map<Instruction*>, std::set<Variable*> out_set_map;
+            std::unordered_map<Instruction*, std::set<Variable*>> in_set_map;
+            std::unordered_map<Instruction*, std::set<Variable*>> out_set_map;
             for (auto iptr : fptr->instructions) {
                 in_set_map[iptr] = std::set<Variable*>();
                 out_set_map[iptr] = std::set<Variable*>();
@@ -92,13 +92,13 @@ namespace L2{
         */
         // In_Out_Store in_out_sets = In_Out_Store(p.functions.size(), num_instructions_per_function);
 
-        In_Out_Store in_out_sets = In_Out_Store();
+        In_Out_Store in_out_sets = In_Out_Store(p);
 
         /*
         Run the liveness analysis algorithm
         */
-        for (int i = 0; i < p.functions.size(); i++) {
-            auto fptr = p.functions[i];
+        for (int i = 0; i < p->functions.size(); i++) {
+            auto fptr = p->functions[i];
             if (debug) std::cerr << "Running liveness analysis on a new function..." << std::endl;
 
             bool changed;
@@ -129,8 +129,8 @@ namespace L2{
                     */
                     // std::set<Variable>* in_ptr = &in_out_sets.In_Set[i][j];
                     // std::set<Variable>* out_ptr = &in_out_sets.Out_Set[i][j];
-                    std::set<Variable>* in_ptr = &in_out_sets.In_Set[i][iptr];
-                    std::set<Variable>* out_ptr = &in_out_sets.Out_Set[i][iptr];
+                    std::set<Variable*>* in_ptr = &in_out_sets.In_Set[i][iptr];
+                    std::set<Variable*>* out_ptr = &in_out_sets.Out_Set[i][iptr];
 
                     /*
                         Do the set operations
@@ -139,7 +139,7 @@ namespace L2{
                     std::set<Variable*> Out_Kill_Diff;
                     std::set_difference(
                         out_ptr->begin(), out_ptr->end(),
-                        Kill_Set.begin(), Kill_Set->end(),
+                        Kill_Set.begin(), Kill_Set.end(),
                         std::inserter(Out_Kill_Diff, Out_Kill_Diff.begin())
                     );
                     std::set_union(
@@ -154,11 +154,11 @@ namespace L2{
                         std::set<Variable*> successor_in_set = in_out_sets.In_Set[i][successor];
                         std::set<Variable*> temp_union_set;
                         std::set_union(
-                            Out_Union_Result.begin(), Out_Union_Result.end(),
+                            Out_Result.begin(), Out_Result.end(),
                             successor_in_set.begin(), successor_in_set.end(),
-                            std::inserter(temp_union_set, temp_union_set.begin());
-                        )
-                        Out_Union_Result = std::move(temp_union_set);
+                            std::inserter(temp_union_set, temp_union_set.begin())
+                        );
+                        Out_Result = std::move(temp_union_set);
                     }
 
                     *in_ptr = In_Result;
@@ -181,10 +181,10 @@ namespace L2{
         Print the contents of our freshly computed In and Out sets to the file
         */
 
-        for (int f = 0; f<p->functions.size(); f++) {
+        for (int f = 0; f < p->functions.size(); f++) {
             std::cout << "(\n";
             Function* fptr = p->functions[f];
-            std::unordered_map<Instruction*, Variable*> in_map = in_out_sets.In_Set[f];
+            std::unordered_map<Instruction*, std::set<Variable*>> in_map = in_out_sets.In_Set[f];
             std::cout << "(in\n";
             for (auto iptr : fptr->instructions) {
                 std::cout << "(";
@@ -195,11 +195,11 @@ namespace L2{
             }
             std::cout << ")\n\n";
 
-            std::unordered_map<Instruction*, Variable*> out_map = in_out_sets.Out_Set[f];
+            std::unordered_map<Instruction*, std::set<Variable*>> out_map = in_out_sets.Out_Set[f];
             std::cout << "(out\n";
             for (auto iptr : fptr->instructions) {
                 std::cout << "(";
-                for (auto variable = out_map[iptr]->begin(); variable != out_map[iptr]->end(); variable++) {
+                for (auto variable = out_map[iptr].begin(); variable != out_map[iptr].end(); variable++) {
                     std::cout << *variable << " ";
                 }
                 std::cout << ")";

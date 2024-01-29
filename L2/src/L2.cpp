@@ -222,7 +222,117 @@ namespace L2 {
         : r1(r1), r2(r2), r3(r3), E(E) {
     }
     void w_atreg_assignment::printMe() {
+    }
+    // Inside the Instruction_ret class
+    void Instruction_ret::accept(Visitor *visitor) {
+        visitor->visit(this);
+    }
 
+    // Inside the Instruction_assignment class
+    void Instruction_assignment::accept(Visitor *visitor) {
+        visitor->visit(this);
+    }
+
+    // Inside the label_Instruction class
+    void label_Instruction::accept(Visitor *visitor) {
+        visitor->visit(this);
+    }
+
+    // Inside the goto_label_instruction class
+    void goto_label_instruction::accept(Visitor *visitor) {
+        visitor->visit(this);
+    }
+
+    // Inside the Call_tenserr_Instruction class
+    void Call_tenserr_Instruction::accept(Visitor *visitor) {
+        visitor->visit(this);
+    }
+
+    // Inside the Call_uN_Instruction class
+    void Call_uN_Instruction::accept(Visitor *visitor) {
+        visitor->visit(this);
+    }
+
+    // Inside the Call_print_Instruction class
+    void Call_print_Instruction::accept(Visitor *visitor) {
+        visitor->visit(this);
+    }
+
+    // Inside the Call_input_Instruction class
+    void Call_input_Instruction::accept(Visitor *visitor) {
+        visitor->visit(this);
+    }
+
+    // Inside the Call_allocate_Instruction class
+    void Call_allocate_Instruction::accept(Visitor *visitor) {
+        visitor->visit(this);
+    }
+
+    // Inside the Call_tuple_Instruction class
+    void Call_tuple_Instruction::accept(Visitor *visitor) {
+        visitor->visit(this);
+    }
+
+    // Inside the w_increment_decrement class
+    void w_increment_decrement::accept(Visitor *visitor) {
+        visitor->visit(this);
+    }
+
+    // Inside the w_atreg_assignment class
+    void w_atreg_assignment::accept(Visitor *visitor) {
+        visitor->visit(this);
+    }
+
+    // Inside the Memory_assignment_store class
+    void Memory_assignment_store::accept(Visitor *visitor) {
+        visitor->visit(this);
+    }
+
+    // Inside the Memory_assignment_load class
+    void Memory_assignment_load::accept(Visitor *visitor) {
+        visitor->visit(this);
+    }
+
+    // Inside the Memory_arithmetic_load class
+    void Memory_arithmetic_load::accept(Visitor *visitor) {
+        visitor->visit(this);
+    }
+
+    // Inside the Memory_arithmetic_store class
+    void Memory_arithmetic_store::accept(Visitor *visitor) {
+        visitor->visit(this);
+    }
+
+    // Inside the cmp_Instruction class
+    void cmp_Instruction::accept(Visitor *visitor) {
+        visitor->visit(this);
+    }
+
+    // Inside the cjump_cmp_Instruction class
+    void cjump_cmp_Instruction::accept(Visitor *visitor) {
+        visitor->visit(this);
+    }
+
+    // Inside the stackarg_assignment class
+    void stackarg_assignment::accept(Visitor *visitor) {
+        visitor->visit(this);
+    }
+
+    void stackarg_assignment::printMe()
+    {
+    };
+    void stackarg_assignment::gen(Function *f, std::ofstream &outputFile)
+    {
+    };
+
+    // Inside the AOP_assignment class
+    void AOP_assignment::accept(Visitor *visitor) {
+        visitor->visit(this);
+    }
+
+    // Inside the SOP_assignment class
+    void SOP_assignment::accept(Visitor *visitor) {
+        visitor->visit(this);
     }
     
     void Function::calculateCFG(void){
@@ -274,7 +384,8 @@ namespace L2 {
         }
         return;
     }   
-    void UseDefVisitor::visit(Instruction_ret *instruction){
+
+    void UseDefVisitor::visit(Instruction_ret * instruction){
         Variable* var1 = new Variable("rax");
         Variable* var2 = new Variable("r12");
         Variable* var3 = new Variable("r13");
@@ -290,49 +401,74 @@ namespace L2 {
         instruction->used.insert(var6);
         instruction->used.insert(var7);
     }
-    void visit(Instruction_assignment *instruction) {
+    void UseDefVisitor::visit(Instruction_assignment * instruction) {
         instruction->used.insert(dynamic_cast<Variable*>(instruction->s));
         instruction->defined.insert(dynamic_cast<Variable*>(instruction->d));
     }
+    void UseDefVisitor::visit(label_Instruction *instruction) {
+        
+    };
+    void UseDefVisitor::visit(goto_label_instruction *instruction) {
 
-    void visit(Call_uN_Instruction *instruction) {
+    };
+    void UseDefVisitor::visit(Call_tenserr_Instruction *instruction) {
+        
+    };
+   
+    void UseDefVisitor::visit(Call_print_Instruction *instruction) {
+
+    };
+    void UseDefVisitor::visit(Call_input_Instruction *instruction) {
+
+    };
+    void UseDefVisitor::visit(Call_allocate_Instruction *instruction) {
+        
+    };
+    void UseDefVisitor::visit(Call_tuple_Instruction *instruction) {
+        
+    };
+
+
+    void UseDefVisitor::visit(Call_uN_Instruction * instruction) {
         Variable* var = dynamic_cast<Variable*>(instruction->u);
         if (var){
             instruction->used.insert(var);
         };
     }
 
-    void visit(w_increment_decrement *instruction) {
+
+
+    void UseDefVisitor::visit(w_increment_decrement *instruction) {
         instruction->used.insert(dynamic_cast<Variable*>(instruction->r));
         instruction->defined.insert(dynamic_cast<Variable*>(instruction->r));
     }
 
-    void visit(w_atreg_assignment *instruction) {
+    void UseDefVisitor::visit(w_atreg_assignment *instruction) {
         // last two W's are going to be gen
         // the first w is going to be kill
         instruction->used.insert(dynamic_cast<Variable*>(instruction->r3));
         instruction->used.insert(dynamic_cast<Variable*>(instruction->r2));
         instruction->defined.insert(dynamic_cast<Variable*>(instruction->r1));
     }
-    void visit(Memory_assignment_store *instruction) {
+    void UseDefVisitor::visit(Memory_assignment_store *instruction) {
         instruction->used.insert(dynamic_cast<Variable*>(instruction->s));
         instruction->used.insert(dynamic_cast<Variable*>(instruction->dst));
     }
 
-    void visit(Memory_assignment_load *instruction) { // I'm not sure if this one is wrong 
+    void UseDefVisitor::visit(Memory_assignment_load *instruction) { // I'm not sure if this one is wrong 
         instruction->used.insert(dynamic_cast<Variable*>(instruction->x));
         instruction->defined.insert(dynamic_cast<Variable*>(instruction->dst));
     }
-    void visit(Memory_arithmetic_load *instruction) {
+    void UseDefVisitor::visit(Memory_arithmetic_load *instruction) {
         instruction->used.insert(dynamic_cast<Variable*>(instruction->x));
         instruction->defined.insert(dynamic_cast<Variable*>(instruction->dst));
     }
 
-    void visit(Memory_arithmetic_store *instruction) {
+    void UseDefVisitor::visit(Memory_arithmetic_store *instruction) {
         instruction->used.insert(dynamic_cast<Variable*>(instruction->t)); // Is t correct here?
         instruction->defined.insert(dynamic_cast<Variable*>(instruction->dst));  
     }
-    void visit(cmp_Instruction *instruction) {
+    void UseDefVisitor::visit(cmp_Instruction *instruction) {
         Variable* var1 = dynamic_cast<Variable*>(instruction->t1);
         Variable* var2 = dynamic_cast<Variable*>(instruction->t2);
         if (var1){
@@ -343,26 +479,26 @@ namespace L2 {
         }
         instruction->defined.insert(dynamic_cast<Variable*>(instruction->dst));
     }
-    void visit(cjump_cmp_Instruction *instruction) {
+    void UseDefVisitor::visit(cjump_cmp_Instruction *instruction) {
         instruction->used.insert(dynamic_cast<Variable*>(instruction->t1)); 
         instruction->used.insert(dynamic_cast<Variable*>(instruction->t2)); 
     }
-    void visit(stackarg_assignment *instruction) {
+    void UseDefVisitor::visit(stackarg_assignment *instruction) {
         instruction->defined.insert(dynamic_cast<Variable*>(instruction->w)); 
     }
-    void visit(AOP_assignment *instruction) {
+    void UseDefVisitor::visit(AOP_assignment * instruction) {
         instruction->used.insert(dynamic_cast<Variable*>(instruction->src));
         instruction->defined.insert(dynamic_cast<Variable*>(instruction->dst));
     }
 
-    void visit(SOP_assignment *instruction){
+    void UseDefVisitor::visit(SOP_assignment *instruction){
         instruction->used.insert(dynamic_cast<Variable*>(instruction->src));
         instruction->used.insert(dynamic_cast<Variable*>(instruction->dst));
     }    
     void Function::calculateUseDefs(){
         UseDefVisitor visitor;
         for (auto instruction: this->instructions){
-            visitor.visit(instruction);
+            instruction->accept(&visitor);
         };
     }
    

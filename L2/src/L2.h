@@ -4,7 +4,9 @@
 #include <unordered_map>
 #include <string>
 #include <variant>
+#include <algorithm>
 #include <iostream>
+
 
 namespace L2 {
 
@@ -93,7 +95,7 @@ namespace L2 {
    */
   class Instruction{
     public:
-      // virtual void accept(Visitor &visitor) = 0; // Accept a visitor
+      virtual void accept(Visitor *visitor) = 0; 
       virtual void gen(Function *f, std::ofstream &outputFile) = 0;
       virtual void printMe() = 0;
 
@@ -111,6 +113,7 @@ namespace L2 {
       Instruction_ret ();
       void gen(Function *f, std::ofstream &outputFile) override;
       void printMe() override;
+      void accept(Visitor *visitor) override;
   };
 
   class Instruction_assignment : public Instruction{
@@ -118,16 +121,14 @@ namespace L2 {
       Instruction_assignment (Item *dst, Item *src);
       void gen(Function *f, std::ofstream &outputFile) override;
       void printMe() override;
-      virtual void accept(Visitor &visitor) = 0; // Accept a visitor
+      void accept(Visitor *visitor) override;
       Item *s;
       Item *d;
   };
   class stackarg_assignment: public Instruction_assignment {
-          // w <- stack-arg M 
-
     public:
       stackarg_assignment(Item *w,Item *op, Item *M);
-      virtual void accept(Visitor &visitor) = 0; // Accept a visitor
+      void accept(Visitor *visitor) override;
       void gen(Function *f, std::ofstream &outputFile) override;
       void printMe() override;
       Item *w;
@@ -140,13 +141,12 @@ namespace L2 {
   class label_Instruction : public Instruction{
     public:
       label_Instruction(Item *label);
+      void accept(Visitor *visitor) override;
       void gen(Function *f, std::ofstream &outputFile) override;
       void printMe() override;
       std::string getLabel() const {
-          const Label *labelPtr = dynamic_cast<const Label*>(label);
-          if (labelPtr) {
-              return labelPtr->getLabel();
-          }
+          Label *labelPtr = dynamic_cast<Label*>(label);
+          return labelPtr->getLabel();
       }
     protected:
       Item *label; 
@@ -154,6 +154,7 @@ namespace L2 {
 
   class goto_label_instruction : public label_Instruction {
     public:
+      void accept(Visitor *visitor) override;
       goto_label_instruction(Item *label);
       void gen(Function *f, std::ofstream &outputFile) override;
       void printMe() override;
@@ -161,6 +162,7 @@ namespace L2 {
 
   class Call_tenserr_Instruction: public Instruction {
     public:
+      void accept(Visitor *visitor) override;
       Call_tenserr_Instruction(Item *F);
       void gen(Function *f, std::ofstream &outputFile) override;
       void printMe() override;
@@ -173,13 +175,14 @@ namespace L2 {
       Call_uN_Instruction(Item *u, Item *N);
       void gen(Function *f, std::ofstream &outputFile) override;
       void printMe() override;
-      virtual void accept(Visitor &visitor) = 0; // Accept a visitor
+      void accept(Visitor *visitor) override;
       Item *u;
       Item *N;
   };
   class Call_print_Instruction : public Instruction {
     // call print 1 
     public:
+      void accept(Visitor *visitor) override;
       Call_print_Instruction();
       void gen(Function *f, std::ofstream &outputFile) override;
       void printMe() override;
@@ -188,6 +191,7 @@ namespace L2 {
     // call input 0 
     public:
       Call_input_Instruction();
+      void accept(Visitor *visitor) override;
       void gen(Function *f, std::ofstream &outputFile) override;
       void printMe() override;
   };
@@ -195,6 +199,7 @@ namespace L2 {
     // call allocate 2
     public:
       Call_allocate_Instruction();
+      void accept(Visitor *visitor) override;
       void gen(Function *f, std::ofstream &outputFile) override;
       void printMe() override;
   };
@@ -202,6 +207,7 @@ namespace L2 {
     // call tuple-error 3
     public:
       Call_tuple_Instruction();
+      void accept(Visitor *visitor) override;
       void gen(Function *f, std::ofstream &outputFile) override;
       void printMe() override;
   };
@@ -211,7 +217,7 @@ namespace L2 {
       w_increment_decrement(Item *r, Item *symbol);
       void gen(Function *f, std::ofstream &outputFile) override;
       void printMe() override;
-      virtual void accept(Visitor &visitor) = 0; // Accept a visitor
+      void accept(Visitor *visitor) override;
       Item *r;
       Item *symbol;
   };
@@ -222,7 +228,7 @@ namespace L2 {
       w_atreg_assignment(Item *r1, Item *r2, Item *r3, Item *E);
       void gen(Function *f, std::ofstream &outputFile) override;
       void printMe() override;
-      virtual void accept(Visitor &visitor) = 0; // Accept a visitor
+      void accept(Visitor *visitor) override;
       Item *r1;
       Item *r2; 
       Item *r3; 
@@ -234,7 +240,7 @@ namespace L2 {
       Memory_assignment_store(Item *dst, Item *s, Item *M);
       void gen(Function *f, std::ofstream &outputFile) override;
       void printMe() override;
-      virtual void accept(Visitor &visitor) = 0; // Accept a visitor
+      void accept(Visitor *visitor) override;
       Item *dst;
       Item *s;
       Item *M;
@@ -246,7 +252,7 @@ namespace L2 {
       Memory_assignment_load(Item *dst, Item *x, Item *M);
       void gen(Function *f, std::ofstream &outputFile) override;
       void printMe() override;
-      virtual void accept(Visitor &visitor) = 0; // Accept a visitor
+      void accept(Visitor *visitor) override;
       Item *dst;
       Item *x;
       Item *M;
@@ -257,7 +263,7 @@ namespace L2 {
       Memory_arithmetic_load(Item *dst, Item *x, Item *instruction, Item *M);
       void gen(Function *f, std::ofstream &outputFile) override;
       void printMe() override;
-      virtual void accept(Visitor &visitor) = 0; // Accept a visitor
+      void accept(Visitor *visitor) override;
       Item *dst;  // w
       Item *x;
       Item *instruction;
@@ -269,7 +275,7 @@ namespace L2 {
       Memory_arithmetic_store(Item *dst, Item *t, Item *instruction, Item *M);
       void gen(Function *f, std::ofstream &outputFile) override;
       void printMe() override;
-      virtual void accept(Visitor &visitor) = 0; // Accept a visitor
+      void accept(Visitor *visitor) override;
       Item *dst;
       Item *t;
       Item *instruction;
@@ -282,7 +288,7 @@ namespace L2 {
       cmp_Instruction(Item *dst, Item *t2, Item *method, Item *t1);
       void gen(Function *f, std::ofstream &outputFile) override;
       void printMe() override;
-      virtual void accept(Visitor &visitor) = 0; // Accept a visitor
+      void accept(Visitor *visitor) override;
       Item *dst;
       Item *t1;
       Item *method;
@@ -294,7 +300,7 @@ namespace L2 {
       cjump_cmp_Instruction(Item *t2, Item *cmp, Item *t1, Item *label);
       void gen(Function *f, std::ofstream &outputFile) override;
       void printMe() override;
-      virtual void accept(Visitor &visitor) = 0; // Accept a visitor
+      void accept(Visitor *visitor) override;
       std::string getLabel() const {
           const Label *labelPtr = dynamic_cast<const Label*>(label);
           if (labelPtr) {
@@ -311,7 +317,7 @@ namespace L2 {
   // class stackarg_assignment: public Instruction_assignment {
   //   public:
   //     stackarg_assignment(Item *w,Item *op, Item *M);
-  //     virtual void accept(Visitor &visitor) = 0; // Accept a visitor
+  //     virtual void accept(Visitor *visitor) = 0; // Accept a visitor
   //     void gen(Function *f, std::ofstream &outputFile) override;
   //     void printMe() override;
   //     Item *w;
@@ -323,7 +329,7 @@ namespace L2 {
       AOP_assignment(Item *method, Item *dst, Item *src);
       void gen(Function *f, std::ofstream &outputFile) override;
       void printMe() override;
-      virtual void accept(Visitor &visitor) = 0; // Accept a visitor
+      void accept(Visitor *visitor) override;
       Item *method;
       Item *dst;
       Item *src;
@@ -334,7 +340,7 @@ namespace L2 {
       SOP_assignment(Item *method, Item *dst, Item *src);
       void gen(Function *f, std::ofstream &outputFile) override;
       void printMe() override;
-      virtual void accept(Visitor &visitor) = 0; // Accept a visitor
+      void accept(Visitor *visitor) override;
       Item *method;
       Item *dst;
       Item *src;
@@ -363,8 +369,8 @@ namespace L2 {
 
   class Visitor {
     public:
-      virtual void visit(Function function) = 0;
-      virtual void visit(Instruction *instruction) = 0;
+      // virtual void visit(Function function) = 0;
+      // virtual void visit(Instruction *instruction) = 0;
       virtual void visit(Instruction_ret *instruction) = 0;
       virtual void visit(Instruction_assignment *instruction) = 0;
       virtual void visit(label_Instruction *instruction) = 0;
@@ -387,31 +393,31 @@ namespace L2 {
       virtual void visit(AOP_assignment *instruction) = 0;
       virtual void visit(SOP_assignment *instruction) = 0;
   };
-  class UseDefVisitor: Visitor {
+  class UseDefVisitor: public Visitor {
     public:
-      virtual void visit(Function function) override;
-      virtual void visit(Instruction *instruction) override;
-      virtual void visit(Instruction_ret *instruction) override;
-      virtual void visit(Instruction_assignment *instruction) override;
-      virtual void visit(label_Instruction *instruction) override;
-      virtual void visit(goto_label_instruction *instruction) override;
-      virtual void visit(Call_tenserr_Instruction *instruction) override;
-      virtual void visit(Call_uN_Instruction *instruction) override;
-      virtual void visit(Call_print_Instruction *instruction) override;
-      virtual void visit(Call_input_Instruction *instruction) override;
-      virtual void visit(Call_allocate_Instruction *instruction) override;
-      virtual void visit(Call_tuple_Instruction *instruction) override;
-      virtual void visit(w_increment_decrement *instruction) override;
-      virtual void visit(w_atreg_assignment *instruction) override;
-      virtual void visit(Memory_assignment_store *instruction) override;
-      virtual void visit(Memory_assignment_load *instruction) override;
-      virtual void visit(Memory_arithmetic_load *instruction) override;
-      virtual void visit(Memory_arithmetic_store *instruction) override;
-      virtual void visit(cmp_Instruction *instruction) override;
-      virtual void visit(cjump_cmp_Instruction *instruction) override;
-      virtual void visit(stackarg_assignment *instruction) override;
-      virtual void visit(AOP_assignment *instruction) override;
-      virtual void visit(SOP_assignment *instruction) override;  
+      // void visit(Function function) override;
+      // void visit(Instruction *instruction) override;
+      void visit(Instruction_ret *instruction) override;
+      void visit(Instruction_assignment *instruction) override;
+      void visit(label_Instruction *instruction) override;
+      void visit(goto_label_instruction *instruction) override;
+      void visit(Call_tenserr_Instruction *instruction) override;
+      void visit(Call_uN_Instruction *instruction) override;
+      void visit(Call_print_Instruction *instruction) override;
+      void visit(Call_input_Instruction *instruction) override;
+      void visit(Call_allocate_Instruction *instruction) override;
+      void visit(Call_tuple_Instruction *instruction) override;
+      void visit(w_increment_decrement *instruction) override;
+      void visit(w_atreg_assignment *instruction) override;
+      void visit(Memory_assignment_store *instruction) override;
+      void visit(Memory_assignment_load *instruction) override;
+      void visit(Memory_arithmetic_load *instruction) override;
+      void visit(Memory_arithmetic_store *instruction) override;
+      void visit(cmp_Instruction *instruction) override;
+      void visit(cjump_cmp_Instruction *instruction) override;
+      void visit(stackarg_assignment *instruction) override;
+      void visit(AOP_assignment *instruction) override;
+      void visit(SOP_assignment *instruction) override;  
   };
 
 
@@ -428,7 +434,6 @@ namespace L2 {
   class In_Out_Store {
     public:
       In_Out_Store(Program *p);
-    private:
       std::vector<std::unordered_map<Instruction*, std::set<Variable*>>> In_Set;
       std::vector<std::unordered_map<Instruction*, std::set<Variable*>>> Out_Set;
   };
