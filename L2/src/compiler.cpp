@@ -12,8 +12,8 @@
 #include <unistd.h>
 #include <iostream>
 #include <assert.h>
-#include <parser.h>
-#include <code_generator.h>
+
+#include "L2.h"
 
 void print_help (char *progName){
   std::cerr << "Usage: " << progName << " [-v] [-g 0|1] [-O 0|1|2] [-s] [-l] [-i] SOURCE" << std::endl;
@@ -76,27 +76,27 @@ int main(
   /*
    * Parse the input file.
    */
-  auto p = L2::parse_file(argv[optind]);
+  L2::Program p;
   if (spill_only){
 
     /* 
      * Parse an L2 function and the spill arguments.
      */
-    // p = L2::parse_spill_file(argv[optind]);
+    p = L2::parse_spill_file(argv[optind]);
  
   } else if (liveness_only){
 
     /*
      * Parse an L2 function.
      */
-    // p = L2::parse_function_file(argv[optind]);
+    p = L2::parse_function_file(argv[optind]);
 
   } else if (interference_only){
 
     /*
      * Parse an L2 function.
      */
-    // p = L2::parse_function_file(argv[optind]);
+    p = L2::parse_function_file(argv[optind]);
 
   } else {
 
@@ -139,16 +139,7 @@ int main(
     //TODO
     return 0;
   }
-  if (verbose){
-    std::cout << "\n\n" << std::endl;
-    std::cout << "Verbose mode selected, check output to verify the parsed program.\n------------------------------" << std::endl;
-    for (auto f : p.functions){
-      for (auto i : f->instructions) {
-        i->printMe();
-      }
-    }
-    std::cout << "Done.\n\n" << std::endl;
-  }
+
   /*
    * Generate the target code.
    */
@@ -158,4 +149,3 @@ int main(
 
   return 0;
 }
-
