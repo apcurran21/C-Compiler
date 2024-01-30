@@ -79,19 +79,6 @@ namespace L2{
     void liveness_analysis(Program *p){
         
 
-        /*
-        Create objects to store the Gen and Kill sets for our program.
-        */
-        // std::vector<int> num_instructions_per_function(p.functions.size());
-        // for (int i = 0; i < p.functions.size(); i++) {
-        //     num_instructions_per_function[i] = p.functions[i]->instructions.size();
-        // }
-        // Gen_Kill_Store gen_kill_sets = Gen_Kill_Store(p.functions.size(), num_instructions_per_function);
-        /*
-        Create objects to store the In and Out sets for our program.
-        */
-        // In_Out_Store in_out_sets = In_Out_Store(p.functions.size(), num_instructions_per_function);
-        
         if (debug) std::cerr << "Entered LiveAnalysisVisitor" << std::endl;
 
         In_Out_Store in_out_sets = In_Out_Store(p);
@@ -105,16 +92,15 @@ namespace L2{
             fptr->calculateUseDefs();
             fptr->calculateCFG();
             if (debug) std::cerr << "CFG brrrr" << std::endl;
-
+            int instruction_number;  
             bool changed;
             do {
                 changed = false;
+                instruction_number = 0;
                 // for (int j = 0; j < fptr->instructions.size(); j++) {
                 for (auto iptr : fptr->instructions) {
                     // note that iptr should be of type Instruction*
                     // auto iptr = fptr->instructions[j];
-                    if (debug) std::cerr << "computing In and Out sets for the current instruction..." << std::endl;
-
                     /*
                         Define the Gen and Kill sets for the current instruction
                     */
@@ -126,8 +112,7 @@ namespace L2{
                     /*
                         Define state of the sets before any potential changes are made
                     */
-                    // std::set<Variable*> in_set_prev = in_out_sets.In_Set[i][j];
-                    // std::set<Variable*> out_set_prev = in_out_sets.Out_Set[i][j];
+
                     std::set<Variable*> in_set_prev = in_out_sets.In_Set[i][iptr];
                     std::set<Variable*> out_set_prev = in_out_sets.Out_Set[i][iptr];
 
@@ -174,8 +159,8 @@ namespace L2{
                     /*
                         Check against the initial state after performing the operations.
                     */
-
-                    changed = (in_set_prev != *in_ptr) || (out_set_prev != *out_ptr);
+                    instruction_number++;
+                    changed = changed || ((in_set_prev != *in_ptr) || (out_set_prev != *out_ptr));
                 }
             } while (changed);
             
@@ -198,8 +183,10 @@ namespace L2{
                 for (auto variable = in_map[iptr].begin(); variable != in_map[iptr].end(); variable++) {
                     auto print = *variable;
                     std::cout << print->print() << " ";
+                    std::cout<<"in ";
+
                 }
-                std::cout << ")";
+                //std::cout << ")";
             }
             std::cout << ")\n\n";
 
@@ -210,8 +197,9 @@ namespace L2{
                 for (auto variable = out_map[iptr].begin(); variable != out_map[iptr].end(); variable++) {
                     auto print = *variable;
                     std::cout << print->print() << " ";
+                    std::cout<<"out ";
                 }
-                std::cout << ")";
+                //std::cout << ")";
             }
             std::cout << ")\n";
             

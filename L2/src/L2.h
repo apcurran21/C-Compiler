@@ -48,7 +48,6 @@ namespace L2 {
       Number (int64_t n);
       std::string translate() override;
       std::string print() override;
-    private:
       int64_t value;
   };
 
@@ -160,7 +159,6 @@ namespace L2 {
       Call_tenserr_Instruction(Item *F);
       void gen(Function *f, std::ofstream &outputFile) override;
       void printMe() override;
-    private:
       Item *F;
   };
   

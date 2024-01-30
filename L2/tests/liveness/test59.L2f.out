@@ -5,7 +5,9 @@
 (r12 r13 r14 r15 rbp rbx rdi rsi)
 (%firstNum r12 r13 r14 r15 rbp rbx rdi rsi)
 (%firstNum r12 r13 r14 r15 rbp rbx rdi rsi %secondNum)
+
 (%firstNum r12 r13 r14 r15 rbp rbx rdi rsi %secondNum)
+
 (%firstNum r12 r13 r14 r15 rax rbp rbx %secondNum)
 (%firstNum r12 r13 r14 r15 rax rbp rbx %secondNum)
 (%denom %firstNum r12 r13 r14 r15 rbp rbx %secondNum)
@@ -29,7 +31,9 @@
 (%firstNum r12 r13 r14 r15 rbp rbx rdi rsi)
 (%firstNum r12 r13 r14 r15 rbp rbx rdi rsi %secondNum)
 (%firstNum r12 r13 r14 r15 rbp rbx rdi rsi %secondNum)
+
 (%firstNum r12 r13 r14 r15 rax rbp rbx %secondNum)
+
 (%firstNum r12 r13 r14 r15 rax rbp rbx %secondNum)
 (%denom %firstNum r12 r13 r14 r15 rbp rbx %secondNum)
 (%denom r12 r13 r14 r15 rbp rbx rdi %secondNum)
