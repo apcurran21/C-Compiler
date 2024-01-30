@@ -35,18 +35,12 @@ namespace L2 {
       Variable (std::string name);
       std::string translate() override;
       std::string print() override;
-    private:
       std::string name;
   };
   class Register : public Variable {
     public:
-      Register (const std::string &value);
-      std::string getID() const {
-        return ID;
-      };
-      bool operator==(const Register &other) const;
-    private:
-      std::string ID;
+      Register (std::string value);
+      std::string name;
   };
 
   class Number : public Item {
