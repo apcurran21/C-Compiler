@@ -967,7 +967,7 @@ namespace L2 {
     }
   };
 
-  template<> struct action < str_return > {
+  template<> struct action < Inst_return_rule > {
     template< typename Input >
 	  static void apply( const Input & in, Program & p){
       // return

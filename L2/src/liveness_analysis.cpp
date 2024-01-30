@@ -9,7 +9,7 @@
 using namespace std;
 
 // use 1 for debug statements, 0 for no printing
-// int debug = 1;
+int debug = 1;
 
 namespace L2{
     /*
@@ -77,7 +77,7 @@ namespace L2{
 
 
     void liveness_analysis(Program *p){
-
+        
 
         /*
         Create objects to store the Gen and Kill sets for our program.
@@ -91,6 +91,8 @@ namespace L2{
         Create objects to store the In and Out sets for our program.
         */
         // In_Out_Store in_out_sets = In_Out_Store(p.functions.size(), num_instructions_per_function);
+        
+        if (debug) std::cerr << "Entered LiveAnalysisVisitor" << std::endl;
 
         In_Out_Store in_out_sets = In_Out_Store(p);
 
@@ -100,7 +102,8 @@ namespace L2{
         for (int i = 0; i < p->functions.size(); i++) {
             auto fptr = p->functions[i];
             if (debug) std::cerr << "Running liveness analysis on a new function..." << std::endl;
-
+            fptr->calculateUseDefs();
+            fptr->calculateCFG();
             bool changed;
             do {
                 changed = false;
@@ -114,6 +117,8 @@ namespace L2{
                         Define the Gen and Kill sets for the current instruction
                     */
                     std::set<Variable*> Gen_Set = iptr->used;
+                    if (debug) std::cerr << "computing In and Out sets for the current instruction..." << std::endl;
+
                     std::set<Variable*> Kill_Set = iptr->defined;
 
                     /*

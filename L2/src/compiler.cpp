@@ -14,6 +14,7 @@
 #include <assert.h>
 
 #include <parser.h>
+#include "liveness_analysis.h"
 // #include <function_parser.h>
 // #include <spill_parser.h>
 
@@ -30,7 +31,7 @@ int main(
   auto enable_code_generator = true;
   auto spill_only = false;
   auto interference_only = false;
-  auto liveness_only = false;
+  auto liveness_only = true;
   int32_t optLevel = 3;
 
   /* 
@@ -92,8 +93,9 @@ int main(
     /*
      * Parse an L2 function.
      */
+    std::cerr << "Entered LiveAnalysisVisitor" << std::endl;
     p = L2::parse_function_file(argv[optind]);
-
+    L2::liveness_analysis(&p);
   } else if (interference_only){
 
     /*

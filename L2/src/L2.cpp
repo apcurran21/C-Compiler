@@ -406,7 +406,10 @@ namespace L2 {
         instruction->used.insert(var7);
     }
     void UseDefVisitor::visit(Instruction_assignment * instruction) {
-        instruction->used.insert(dynamic_cast<Variable*>(instruction->s));
+        Variable* var = dynamic_cast<Variable*>(instruction->s);
+        if (var){
+            instruction->used.insert(dynamic_cast<Variable*>(instruction->s));
+        }
         instruction->defined.insert(dynamic_cast<Variable*>(instruction->d));
     }
     void UseDefVisitor::visit(label_Instruction *instruction) {
