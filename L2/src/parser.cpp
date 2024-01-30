@@ -1140,7 +1140,7 @@ namespace L2 {
     }
   };
 
-  template<> struct action < argument_number > {
+  template<> struct action < Function_rule > {
     template< typename Input >
 	  static void apply( const Input & in, Program & p) {
       if (debug) std::cerr << "Recognized a Function!" << std::endl;
