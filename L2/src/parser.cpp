@@ -1137,7 +1137,13 @@ namespace L2 {
 
       auto currentF = p.functions.back();
       currentF->arguments = std::stoll(in.string());
-      currentF->
+    }
+  };
+
+  template<> struct action < argument_number > {
+    template< typename Input >
+	  static void apply( const Input & in, Program & p) {
+      if (debug) std::cerr << "Recognized a Function!" << std::endl;
     }
   };
 
