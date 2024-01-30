@@ -279,52 +279,50 @@ namespace L2{
             bool changed;
             do {
                 changed = false;
-                instruction_number = 0;
-                // for (int j = 0; j < fptr->instructions.size(); j++) {
-                for (auto iptr : fptr->instructions) {
-                    // note that iptr should be of type Instruction*
-                    // auto iptr = fptr->instructions[j];
+                for (auto instruction_ptr : fptr->instructions) {
+
                     /*
-                        Define the Gen and Kill sets for the current instruction
+                        Define pointers to the Gen, Kill, In, Out sets for the current instruction
                     */
-                    std::set<Variable*> Gen_Set = iptr->used;
+                    std::set<Variable*>* gen_set_ptr = &gen_kill_sets.Gen_Set[function_index][instruction_ptr];
+                    std::set<Variable*>* kill_set_ptr = &gen_kill_sets.Kill_Set[function_index][instruction_ptr];
+                    std::set<Variable*>* in_set_ptr = &in_out_sets.In_Set[function_index][instruction_ptr];
+                    std::set<Variable*>* out_set_ptr = &in_out_sets.Out_Set[function_index][instruction_ptr];
+
+
                     if (debug) std::cerr << "computing In and Out sets for the current instruction..." << std::endl;
 
-                    std::set<Variable*> Kill_Set = iptr->defined;
-
                     /*
-                        Define state of the sets before any potential changes are made
+                        Define state of the In set before any potential changes are made
                     */
-
-                    std::set<Variable*> in_set_prev = in_out_sets.In_Set[function_index][iptr];
-                    std::set<Variable*> out_set_prev = in_out_sets.Out_Set[function_index][iptr];
+                    std::set<Variable*> in_set_prev = *in_set_ptr;
 
                     /*
-                        Get pointers to the sets so that we don't have to keep array accessing
-                    */
-                    // std::set<Variable>* in_ptr = &in_out_sets.In_Set[i][j];
-                    // std::set<Variable>* out_ptr = &in_out_sets.Out_Set[i][j];
-                    std::set<Variable*>* in_ptr = &in_out_sets.In_Set[function_index][iptr];
-                    std::set<Variable*>* out_ptr = &in_out_sets.Out_Set[function_index][iptr];
-
-                    /*
-                        Do the set operations
+                        Do the In set operations
                     */
                     std::set<Variable*> In_Result;
                     std::set<Variable*> Out_Kill_Diff;
                     std::set_difference(
-                        out_ptr->begin(), out_ptr->end(),
-                        Kill_Set.begin(), Kill_Set.end(),
+                        out_set_ptr->begin(), out_set_ptr->end(),
+                        kill_set_ptr->begin(), kill_set_ptr->end(),
                         std::inserter(Out_Kill_Diff, Out_Kill_Diff.begin())
                     );
                     std::set_union(
-                        Gen_Set.begin(), Gen_Set.end(),
+                        gen_set_ptr->begin(), gen_set_ptr->end(),
                         Out_Kill_Diff.begin(), Out_Kill_Diff.end(),
                         std::inserter(In_Result, In_Result.begin())
                     );
 
+                    /*
+                        Define state of the Out set before any potential changes are made
+                    */
+                    std::set<Variable*> out_set_prev = *out_set_ptr;
+
+                    /*
+                        Do the In set operations
+                    */
                     std::set<Variable*> Out_Result;
-                    for (auto successor : iptr->successors) {
+                    for (auto successor : instruction_ptr->successors) {
                         // note that successor should be of type Instruction*
                         std::set<Variable*> successor_in_set = in_out_sets.In_Set[function_index][successor];
                         std::set<Variable*> temp_union_set;
@@ -336,14 +334,14 @@ namespace L2{
                         Out_Result = std::move(temp_union_set);
                     }
 
-                    *in_ptr = In_Result;
-                    *out_ptr = Out_Result;
+                    *in_set_ptr = In_Result;
+                    *out_set_ptr = Out_Result;
 
                     /*
                         Check against the initial state after performing the operations.
                     */
                     instruction_number++;
-                    changed = changed || ((in_set_prev != *in_ptr) || (out_set_prev != *out_ptr));
+                    changed = changed || ((in_set_prev != *in_set_ptr) || (out_set_prev != *out_set_ptr));
                 }
             } while (changed);
             
@@ -374,7 +372,7 @@ namespace L2{
                 std::cout << ")\n";
             }
             std::cout << ")";
-            std::cout << ")";
+            std::cout << ")\n";
         }
 
 
