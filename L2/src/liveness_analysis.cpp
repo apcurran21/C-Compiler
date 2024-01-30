@@ -353,39 +353,64 @@ namespace L2{
         /*
         Print the contents of our freshly computed In and Out sets to the file
         */
-
-        for (int f = 0; f < p->functions.size(); f++) {
-            std::cout << "(\n";
-            Function* fptr = p->functions[f];
-            std::unordered_map<Instruction*, std::set<Variable*>> in_map = in_out_sets.In_Set[f];
+        for (int function_index = 0; function_index < p->functions.size(); function_index++) {
+            std::cout << "(";
+            Function* function_ptr = p->functions[function_index];
             std::cout << "(in\n";
-            for (auto iptr : fptr->instructions) {
+            for (auto instruction_ptr : function_ptr->instructions) {
                 std::cout << "(";
-                for (auto variable = in_map[iptr].begin(); variable != in_map[iptr].end(); variable++) {
-                    auto print = *variable;
-                    std::cout << print->print() << " ";
-                    std::cout<<"in ";
-
+                for (auto variable_ptr : in_out_sets.In_Set[function_index][instruction_ptr]) {
+                    std::cout << variable_ptr->print() << " ";
                 }
-                //std::cout << ")";
+                std::cout << ")\n";
             }
-            std::cout << ")\n\n";
-
-            std::unordered_map<Instruction*, std::set<Variable*>> out_map = in_out_sets.Out_Set[f];
+            std::cout << ")";
             std::cout << "(out\n";
-            for (auto iptr : fptr->instructions) {
+            for (auto instruction_ptr : function_ptr->instructions) {
                 std::cout << "(";
-                for (auto variable = out_map[iptr].begin(); variable != out_map[iptr].end(); variable++) {
-                    auto print = *variable;
-                    std::cout << print->print() << " ";
-                    std::cout<<"out ";
+                for (auto variable_ptr : in_out_sets.Out_Set[function_index][instruction_ptr]) {
+                    std::cout << variable_ptr->print() << " ";
                 }
-                //std::cout << ")";
+                std::cout << ")\n";
             }
-            std::cout << ")\n";
-            
-            std::cout << ")\n";
+            std::cout << ")";
+            std::cout << ")";
         }
+
+
+
+        // for (int f = 0; f < p->functions.size(); f++) {
+        //     std::cout << "(\n";
+        //     Function* fptr = p->functions[f];
+        //     std::unordered_map<Instruction*, std::set<Variable*>> in_map = in_out_sets.In_Set[f];
+        //     std::cout << "(in\n";
+        //     for (auto iptr : fptr->instructions) {
+        //         std::cout << "(";
+        //         for (auto variable = in_map[iptr].begin(); variable != in_map[iptr].end(); variable++) {
+        //             auto print = *variable;
+        //             std::cout << print->print() << " ";
+        //             std::cout<<"in ";
+
+        //         }
+        //         //std::cout << ")";
+        //     }
+        //     std::cout << ")\n\n";
+
+        //     std::unordered_map<Instruction*, std::set<Variable*>> out_map = in_out_sets.Out_Set[f];
+        //     std::cout << "(out\n";
+        //     for (auto iptr : fptr->instructions) {
+        //         std::cout << "(";
+        //         for (auto variable = out_map[iptr].begin(); variable != out_map[iptr].end(); variable++) {
+        //             auto print = *variable;
+        //             std::cout << print->print() << " ";
+        //             std::cout<<"out ";
+        //         }
+        //         //std::cout << ")";
+        //     }
+        //     std::cout << ")\n";
+            
+        //     std::cout << ")\n";
+        // }
     }
 
 }
