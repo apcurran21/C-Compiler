@@ -95,7 +95,6 @@ int main(
      */
     std::cerr << "Entered LiveAnalysisVisitor" << std::endl;
     p = L2::parse_function_file(argv[optind]);
-    L2::liveness_analysis(&p);
   } else if (interference_only){
 
     /*
@@ -133,7 +132,7 @@ int main(
    * Liveness test.
    */
   if (liveness_only){
-    //TODO
+    L2::liveness_analysis(&p);
     return 0;
   }
 

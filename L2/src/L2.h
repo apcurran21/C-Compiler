@@ -430,4 +430,12 @@ namespace L2 {
       std::vector<std::unordered_map<Instruction*, std::set<Variable*>>> In_Set;
       std::vector<std::unordered_map<Instruction*, std::set<Variable*>>> Out_Set;
   };
+
+  class Gen_Kill_Store {
+    public:
+    Gen_Kill_Store(Program *p);
+    std::vector<std::unordered_map<Instruction*, std::set<Variable*>>> Gen_Set;
+    std::vector<std::unordered_map<Instruction*, std::set<Variable*>>> Kill_Set;
+  };
+  
 }

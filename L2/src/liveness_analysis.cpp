@@ -12,85 +12,238 @@ using namespace std;
 int debug = 1;
 
 namespace L2{
-    /*
-    In and Out Sets
-    */
-    // In_Out_Store::In_Out_Store(int num_functions, std::vector<int> nums_instructions) : 
-    //     In_Set(num_functions),
-    //     Out_Set(num_functions)
-    // {
-    //     for (int i = 0; i < num_functions; i++) {
-    //         In_Set[i].resize(nums_instructions[i]);
-    //         Out_Set[i].resize(nums_instructions[i]);
-    //     }
-    // };
-    // int In_Out_Store::get_size(SetType from_where, int function_index, int instruction_index) {
-    //     switch (from_where) {
-    //         case in:
-    //             return In_Set[function_index][instruction_index].size();
-    //             break;
-    //         case out:
-    //             return Out_Set[function_index][instruction_index].size();
-    //             break;
-    //     }
-    // }
 
     /*
-    New In and Out Set Storage
+    Utility vectors for calling convention checks
+    */
+    std::vector<std::string> arguments_vec{
+            "rdi",
+            "rsi",
+            "rdx",
+            "rcx",
+            "r8",
+            "r9"
+    };
+    std::vector<std::string> caller_save_vec{
+            "r10",
+            "r11",
+            "r8",
+            "r9",
+            "rax",
+            "rcx",
+            "rdi",
+            "rdx",
+            "rsi"
+    };
+    std::vector<std::string> callee_save_vec{
+            "r12",
+            "r13",
+            "r14",
+            "r15",
+            "rbp",
+            "rbx"
+    };
+
+    /*
+    In and Out Set Storage
     */
     In_Out_Store::In_Out_Store(Program *p) {
-        for (auto fptr : p->functions) {
+        for (auto functionptr : p->functions) {
             std::unordered_map<Instruction*, std::set<Variable*>> in_set_map;
             std::unordered_map<Instruction*, std::set<Variable*>> out_set_map;
-            for (auto iptr : fptr->instructions) {
-                in_set_map[iptr] = std::set<Variable*>();
-                out_set_map[iptr] = std::set<Variable*>();
+            for (auto instructionptr : functionptr->instructions) {
+                in_set_map[instructionptr] = std::set<Variable*>();
+                out_set_map[instructionptr] = std::set<Variable*>();
             }
             In_Set.push_back(in_set_map);
             Out_Set.push_back(out_set_map);
         }
     }
+
+    /*
+    Gen and Kill Set Storage
+    */
+    Gen_Kill_Store::Gen_Kill_Store(Program *p) {
+        for (auto functionptr : p->functions) {
+            std::unordered_map<Instruction*, std::set<Variable*>> gen_set_map;
+            std::unordered_map<Instruction*, std::set<Variable*>> kill_set_map;
+            for (auto instructionptr : functionptr->instructions) {
+                gen_set_map[instructionptr] = std::set<Variable*>();
+                kill_set_map[instructionptr] = std::set<Variable*>();
+            }
+            Gen_Set.push_back(gen_set_map);
+            Kill_Set.push_back(kill_set_map);
+        }
+    }
     
 
-    /* 
-    Gen and Kill Sets - Note that we aren't really using this class anymore
+    /*
+    Full Liveness Analysis
     */
-    // Gen_Kill_Store::Gen_Kill_Store(int num_functions, std::vector<int> nums_instructions) : 
-    //     Gen_Set(num_functions),
-    //     Kill_Set(num_functions)
-    // {
-    //     for (int i = 0; i < num_functions; i++) {
-    //         Gen_Set[i].resize(nums_instructions[i]);
-    //         Kill_Set[i].resize(nums_instructions[i]);
-    //     }
-    // };
-    // int Gen_Kill_Store::get_size(SetType from_where, int function_index, int instruction_index) {
-    //     switch (from_where) {
-    //         case in:
-    //             return Gen_Set[function_index][instruction_index].size();
-    //             break;
-    //         case out:
-    //             return Kill_Set[function_index][instruction_index].size();
-    //             break;
-    //     }
-    // }
-
-
     void liveness_analysis(Program *p){
         
 
-        if (debug) std::cerr << "Entered LiveAnalysisVisitor" << std::endl;
+        if (debug) std::cerr << "Running Liveness Analysis..." << std::endl;
 
+        /*
+        Initialize empty Gen, Kill, In, and Out sets
+        */
+        Gen_Kill_Store gen_kill_sets = Gen_Kill_Store(p);
         In_Out_Store in_out_sets = In_Out_Store(p);
 
         /*
         Run the liveness analysis algorithm
         */
-        for (int i = 0; i < p->functions.size(); i++) {
-            auto fptr = p->functions[i];
+        for (int function_index = 0; function_index < p->functions.size(); function_index++) {
+            Function* fptr = p->functions[function_index];
             if (debug) std::cerr << "Running liveness analysis on a new function..." << std::endl;
+            
+            /*
+            Calculate Uses and Defs sets for each instruction in the current function (calls UseDefs Visitor)
+            */
             fptr->calculateUseDefs();
+
+            /*
+            Calcuate Gen and Kill sets for each instruction in the current function using the Uses/Defs sets and calling convention rules
+            */
+            for (auto instruction_ptr : fptr->instructions) {
+                /*
+                Define pointer references to the current instruction's Gen/Kill sets for convenience
+                */
+                std::set<Variable*>* gen_set_ptr = &gen_kill_sets.Gen_Set[i][instruction_ptr];
+                std::set<Variable*>* kill_set_ptr = &gen_kill_sets.Kill_Set[i][instruction_ptr];
+                /*
+                Place Uses into Gen
+                */
+                for (auto variable_ptr : instruction_ptr->used) {
+                    gen_set_ptr->insert(variable_ptr);
+                }
+                /*
+                Place Defs into Kill
+                */
+                for (auto variable_ptr : instruction_ptr->defined) {
+                    gen_set_ptr->insert(variable_ptr);
+                }
+                /*
+                Dynamic cast to check for special calling convention cases
+                */
+                Call_uN_Instruction* call_uN_instruction_ptr = dynamic_cast<Call_uN_Instruction*>(instruction_ptr);
+                if (call_uN_instruction_ptr) {
+                    /*
+                    --- call u N ---
+                    Gen <- {u, args used}
+                    Kill <- {caller-saved}
+                    */
+                    // Gen, finding 'u' 
+                    Variable* variable_ptr = dynamic_cast<Variable*>(call_uN_instruction_ptr->u);
+                    if (variable_ptr) {
+                        Register* register_ptr = dynamic_cast<Register*>(variable_ptr);
+                        if (register_ptr) {
+                            gen_set_ptr->insert(fptr->variable_allocator.allocate_variable(register_ptr->name, VariableType::reg));
+                        } else {
+                            gen_set_ptr->insert(fptr->variable_allocator.allocate_variable(variable_ptr->name, VariableType::var));
+                        }
+                    }
+                    // Gen, finding 'args used'
+                    for (int i = 0; i < fptr->arguments->value) {
+                        gen_set_ptr->insert(fptr->variable_allocator.allocate_variable(arguments_vec[i], VariableType::reg));
+                    }
+                    // Kill, finding 'caller-saved'
+                    for (auto register_string : caller_save_vec) {
+                        kill_set_ptr->insert(fptr->variable_allocator.allocate_variable(register_string, VariableType::reg));
+                    }
+                }
+                /*
+                --- call RUNTIME N ---
+                Gen <- {args used}
+                Kill <- {caller-saved}
+                */
+                Call_print_Instruction* call_print_instruction_ptr = dynamic_cast<Call_print_Instruction*>(instruction_ptr);
+                if (call_print_instruction_ptr) {
+                    /*
+                    call print 1
+                    */
+                    // Gen, finding 'args used'
+                    gen_set_ptr->insert(fptr-variable_allocator.allocate_variable(arguments_vec[0], VariableType::reg));
+                    // Kill, finding 'caller-saved'
+                    for (auto register_string : caller_save_vec) {
+                        kill_set_ptr->insert(fptr->variable_allocator.allocate_variable(register_string, VariableType::reg));
+                    }
+                }
+                Call_input_Instruction* call_input_instruction_ptr = dynamic_cast<Call_input_Instruction*>(instruction_ptr);
+                if (call_input_instruction_ptr) {
+                    /*
+                    call input 1
+                    */
+                    // Kill, finding 'caller-saved'
+                    for (auto register_string : caller_save_vec) {
+                        kill_set_ptr->insert(fptr->variable_allocator.allocate_variable(register_string, VariableType::reg));
+                    }
+                }
+                Call_allocate_Instruction* call_allocate_instruction_ptr = dynamic_cast<Call_allocate_Instruction*>(instruction_ptr);
+                if (call_allocate_instruction_ptr) {
+                    /*
+                    call allocate 2
+                    */
+                    // Gen, finding 'args used'
+                    for (int i = 0; i < 2; i++) {
+                        gen_set_ptr->insert(fptr->variable_allocator.allocate_variable(arguments_vec[i], VariableType::reg));
+                    }
+                    // Kill, finding 'caller-saved'
+                    for (auto register_string : caller_save_vec) {
+                        kill_set_ptr->insert(fptr->variable_allocator.allocate_variable(register_string, VariableType::reg));
+                    }
+                }
+                Call_tuple_Instruction* call_tuple_instruction_ptr = dynamic_cast<Call_tuple_Instruction*>(instruction_ptr);
+                if (call_tuple_instruction_ptr) {
+                    /*
+                    call tuple-error 3
+                    */
+                    // Gen, finding 'args used'
+                    for (int i = 0; i < 3; i++) {
+                        gen_set_ptr->insert(fptr->variable_allocator.allocate_variable(arguments_vec[i], VariableType::reg));
+                    }
+                    // Kill, finding 'caller-saved'
+                    for (auto register_string : caller_save_vec) {
+                        kill_set_ptr->insert(fptr->variable_allocator.allocate_variable(register_string, VariableType::reg));
+                    }
+                }
+                Call_tenserr_Instruction* call_tenserr_instruction_ptr = dynamic_cast<Call_tenserr_Instruction*>(instruction_ptr);
+                if (call_tenserr_instruction_ptr) {
+                    /*
+                    call tensor-error F
+                    */
+                    // Gen, finding 'args used'
+                    for (int i = 0; i < call_tenserr_instruction_ptr->F->value; i++) {
+                        gen_set_ptr->insert(fptr->variable_allocator.allocate_variable(arguments_vec[i], VariableType::reg));
+                    }
+                    // Kill, finding 'caller-saved'
+                    for (auto register_string : caller_save_vec) {
+                        kill_set_ptr->insert(fptr->variable_allocator.allocate_variable(register_string, VariableType::reg));
+                    }
+                }
+                Instruction_ret* return_instruction_ptr = dynamic_cast<Instruction_ret*>(instruction_ptr);
+                if (return_instruction_ptr) {
+                    /*
+                    --- return ---
+                    Gen <- {rax, callee-saved}
+                    Kill <- {}
+                    */
+                    // Gen, finding 'rax'
+                    gen_set_ptr->insert(fptr->variable_allocator.allocate_variable('rax', VariableType::reg));
+                    // Gen, finding 'callee-saved'
+                    for (auto register_string : callee_save_vec) {
+                        gen_set_ptr->insert(fptr->variable_allocator.allocate_variable(register_string, VariableType::reg));
+                    }
+                }
+            }   // finished with Gen and Kill
+            
+            /*
+            Calcuate Predeccesors and Successors sets for each instruction in the current function with our algorithm
+            */
             fptr->calculateCFG();
+
+
             if (debug) std::cerr << "CFG brrrr" << std::endl;
             int instruction_number;  
             bool changed;
