@@ -110,8 +110,8 @@ namespace L2{
                 /*
                 Define pointer references to the current instruction's Gen/Kill sets for convenience
                 */
-                std::set<Variable*>* gen_set_ptr = &gen_kill_sets.Gen_Set[i][instruction_ptr];
-                std::set<Variable*>* kill_set_ptr = &gen_kill_sets.Kill_Set[i][instruction_ptr];
+                std::set<Variable*>* gen_set_ptr = &gen_kill_sets.Gen_Set[function_index][instruction_ptr];
+                std::set<Variable*>* kill_set_ptr = &gen_kill_sets.Kill_Set[function_index][instruction_ptr];
                 /*
                 Place Uses into Gen
                 */
@@ -242,9 +242,8 @@ namespace L2{
             Calcuate Predeccesors and Successors sets for each instruction in the current function with our algorithm
             */
             fptr->calculateCFG();
-
-
             if (debug) std::cerr << "CFG brrrr" << std::endl;
+            
             int instruction_number;  
             bool changed;
             do {

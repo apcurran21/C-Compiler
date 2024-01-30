@@ -396,22 +396,22 @@ namespace L2 {
     }   
 
     void UseDefVisitor::visit(Instruction_ret * instruction){
-        // ONE BIG PROBLEM IS THAT WE'RE GONNA HAVE TO MAKE SURE THAT VARIABLES GET COUNTED SOMEHOW 
-        // This will be an annoying bug to fix...need some sort of counter 
-        Variable* var1 = new Variable("r12");
-        Variable* var2 = new Variable("r13");
-        Variable* var3 = new Variable("r14");
-        Variable* var4 = new Variable("r15");
-        Variable* var5 = new Variable("rax");
-        Variable* var6 = new Variable("rbp");
-        Variable* var7 = new Variable("rbx");
-        instruction->used.insert(var1);
-        instruction->used.insert(var2);
-        instruction->used.insert(var3);
-        instruction->used.insert(var4);
-        instruction->used.insert(var5);
-        instruction->used.insert(var6);
-        instruction->used.insert(var7);
+        // // ONE BIG PROBLEM IS THAT WE'RE GONNA HAVE TO MAKE SURE THAT VARIABLES GET COUNTED SOMEHOW 
+        // // This will be an annoying bug to fix...need some sort of counter 
+        // Variable* var1 = new Variable("r12");
+        // Variable* var2 = new Variable("r13");
+        // Variable* var3 = new Variable("r14");
+        // Variable* var4 = new Variable("r15");
+        // Variable* var5 = new Variable("rax");
+        // Variable* var6 = new Variable("rbp");
+        // Variable* var7 = new Variable("rbx");
+        // instruction->used.insert(var1);
+        // instruction->used.insert(var2);
+        // instruction->used.insert(var3);
+        // instruction->used.insert(var4);
+        // instruction->used.insert(var5);
+        // instruction->used.insert(var6);
+        // instruction->used.insert(var7);
     }
     void UseDefVisitor::visit(Instruction_assignment * instruction) {
         Variable* var = dynamic_cast<Variable*>(instruction->s);
@@ -427,160 +427,160 @@ namespace L2 {
 
     };
     void UseDefVisitor::visit(Call_tenserr_Instruction *instruction) {
-        Variable* rdi = new Variable("rdi");
-        Variable* rsi = new Variable("rsi");
-        Variable* rdx = new Variable("rdx");
-        Variable* rcx = new Variable("rcx");
-        Variable* r8 = new Variable("r8");
-        Variable* r9 = new Variable("r9 ");
-        Variable* r10 = new Variable("r10");
-        Variable* r11 = new Variable("r11");
-        Variable* rax = new Variable("rax");
+        // Variable* rdi = new Variable("rdi");
+        // Variable* rsi = new Variable("rsi");
+        // Variable* rdx = new Variable("rdx");
+        // Variable* rcx = new Variable("rcx");
+        // Variable* r8 = new Variable("r8");
+        // Variable* r9 = new Variable("r9 ");
+        // Variable* r10 = new Variable("r10");
+        // Variable* r11 = new Variable("r11");
+        // Variable* rax = new Variable("rax");
 
-        Number* count = dynamic_cast<Number*>(instruction->F);
-        int value = count->value;
-        if (value >= 8) instruction->used.insert(rdi);
-        if (value >= 16) instruction->used.insert(rsi);
-        if (value >= 24) instruction->used.insert(rdx);
-        if (value >= 32) instruction->used.insert(rcx);
-        if (value >= 40) instruction->used.insert(r8);
-        if (value >= 48) instruction->used.insert(r9);
-        // Caller Saved
-        instruction->defined.insert(r10);
-        instruction->defined.insert(r11);
-        instruction->defined.insert(r8);
-        instruction->defined.insert(r9);
-        instruction->defined.insert(rax);
-        instruction->defined.insert(rcx);
-        instruction->defined.insert(rdi);
-        instruction->defined.insert(rdx);
-        instruction->defined.insert(rsi);
+        // Number* count = dynamic_cast<Number*>(instruction->F);
+        // int value = count->value;
+        // if (value >= 8) instruction->used.insert(rdi);
+        // if (value >= 16) instruction->used.insert(rsi);
+        // if (value >= 24) instruction->used.insert(rdx);
+        // if (value >= 32) instruction->used.insert(rcx);
+        // if (value >= 40) instruction->used.insert(r8);
+        // if (value >= 48) instruction->used.insert(r9);
+        // // Caller Saved
+        // instruction->defined.insert(r10);
+        // instruction->defined.insert(r11);
+        // instruction->defined.insert(r8);
+        // instruction->defined.insert(r9);
+        // instruction->defined.insert(rax);
+        // instruction->defined.insert(rcx);
+        // instruction->defined.insert(rdi);
+        // instruction->defined.insert(rdx);
+        // instruction->defined.insert(rsi);
     };
    
     void UseDefVisitor::visit(Call_print_Instruction *instruction) {
-        Variable* rdi = new Variable("rdi");
-        Variable* rsi = new Variable("rsi");
-        Variable* rdx = new Variable("rdx");
-        Variable* rcx = new Variable("rcx");
-        Variable* r8 = new Variable("r8");
-        Variable* r9 = new Variable("r9 ");
-        Variable* r10 = new Variable("r10");
-        Variable* r11 = new Variable("r11");
-        Variable* rax = new Variable("rax");
-        instruction->used.insert(rdi);
-        // Caller Saved
-        instruction->defined.insert(r10);
-        instruction->defined.insert(r11);
-        instruction->defined.insert(r8);
-        instruction->defined.insert(r9);
-        instruction->defined.insert(rax);
-        instruction->defined.insert(rcx);
-        instruction->defined.insert(rdi);
-        instruction->defined.insert(rdx);
-        instruction->defined.insert(rsi);
+        // Variable* rdi = new Variable("rdi");
+        // Variable* rsi = new Variable("rsi");
+        // Variable* rdx = new Variable("rdx");
+        // Variable* rcx = new Variable("rcx");
+        // Variable* r8 = new Variable("r8");
+        // Variable* r9 = new Variable("r9 ");
+        // Variable* r10 = new Variable("r10");
+        // Variable* r11 = new Variable("r11");
+        // Variable* rax = new Variable("rax");
+        // instruction->used.insert(rdi);
+        // // Caller Saved
+        // instruction->defined.insert(r10);
+        // instruction->defined.insert(r11);
+        // instruction->defined.insert(r8);
+        // instruction->defined.insert(r9);
+        // instruction->defined.insert(rax);
+        // instruction->defined.insert(rcx);
+        // instruction->defined.insert(rdi);
+        // instruction->defined.insert(rdx);
+        // instruction->defined.insert(rsi);
     };
     void UseDefVisitor::visit(Call_input_Instruction *instruction) {
-        Variable* rdi = new Variable("rdi");
-        Variable* rsi = new Variable("rsi");
-        Variable* rdx = new Variable("rdx");
-        Variable* rcx = new Variable("rcx");
-        Variable* r8 = new Variable("r8");
-        Variable* r9 = new Variable("r9 ");
-        Variable* r10 = new Variable("r10");
-        Variable* r11 = new Variable("r11");
-        Variable* rax = new Variable("rax");
-        // Caller Saved
-        instruction->defined.insert(r10);
-        instruction->defined.insert(r11);
-        instruction->defined.insert(r8);
-        instruction->defined.insert(r9);
-        instruction->defined.insert(rax);
-        instruction->defined.insert(rcx);
-        instruction->defined.insert(rdi);
-        instruction->defined.insert(rdx);
-        instruction->defined.insert(rsi);
+        // Variable* rdi = new Variable("rdi");
+        // Variable* rsi = new Variable("rsi");
+        // Variable* rdx = new Variable("rdx");
+        // Variable* rcx = new Variable("rcx");
+        // Variable* r8 = new Variable("r8");
+        // Variable* r9 = new Variable("r9 ");
+        // Variable* r10 = new Variable("r10");
+        // Variable* r11 = new Variable("r11");
+        // Variable* rax = new Variable("rax");
+        // // Caller Saved
+        // instruction->defined.insert(r10);
+        // instruction->defined.insert(r11);
+        // instruction->defined.insert(r8);
+        // instruction->defined.insert(r9);
+        // instruction->defined.insert(rax);
+        // instruction->defined.insert(rcx);
+        // instruction->defined.insert(rdi);
+        // instruction->defined.insert(rdx);
+        // instruction->defined.insert(rsi);
     };
     void UseDefVisitor::visit(Call_allocate_Instruction *instruction) {
-        Variable* rdi = new Variable("rdi");
-        Variable* rsi = new Variable("rsi");
-        Variable* rdx = new Variable("rdx");
-        Variable* rcx = new Variable("rcx");
-        Variable* r8 = new Variable("r8");
-        Variable* r9 = new Variable("r9 ");
-        Variable* r10 = new Variable("r10");
-        Variable* r11 = new Variable("r11");
-        Variable* rax = new Variable("rax");
-        instruction->used.insert(rdi);
-        instruction->used.insert(rsi);
-        // Caller Saved
-        instruction->defined.insert(r10);
-        instruction->defined.insert(r11);
-        instruction->defined.insert(r8);
-        instruction->defined.insert(r9);
-        instruction->defined.insert(rax);
-        instruction->defined.insert(rcx);
-        instruction->defined.insert(rdi);
-        instruction->defined.insert(rdx);
-        instruction->defined.insert(rsi);
+        // Variable* rdi = new Variable("rdi");
+        // Variable* rsi = new Variable("rsi");
+        // Variable* rdx = new Variable("rdx");
+        // Variable* rcx = new Variable("rcx");
+        // Variable* r8 = new Variable("r8");
+        // Variable* r9 = new Variable("r9 ");
+        // Variable* r10 = new Variable("r10");
+        // Variable* r11 = new Variable("r11");
+        // Variable* rax = new Variable("rax");
+        // instruction->used.insert(rdi);
+        // instruction->used.insert(rsi);
+        // // Caller Saved
+        // instruction->defined.insert(r10);
+        // instruction->defined.insert(r11);
+        // instruction->defined.insert(r8);
+        // instruction->defined.insert(r9);
+        // instruction->defined.insert(rax);
+        // instruction->defined.insert(rcx);
+        // instruction->defined.insert(rdi);
+        // instruction->defined.insert(rdx);
+        // instruction->defined.insert(rsi);
     };
     void UseDefVisitor::visit(Call_tuple_Instruction *instruction) {
-        Variable* rdi = new Variable("rdi");
-        Variable* rsi = new Variable("rsi");
-        Variable* rdx = new Variable("rdx");
-        Variable* rcx = new Variable("rcx");
-        Variable* r8 = new Variable("r8");
-        Variable* r9 = new Variable("r9 ");
-        Variable* r10 = new Variable("r10");
-        Variable* r11 = new Variable("r11");
-        Variable* rax = new Variable("rax");
-        instruction->used.insert(rdi);
-        instruction->used.insert(rsi);
-        instruction->used.insert(rdx);
-        // Caller Saved
-        instruction->defined.insert(r10);
-        instruction->defined.insert(r11);
-        instruction->defined.insert(r8);
-        instruction->defined.insert(r9);
-        instruction->defined.insert(rax);
-        instruction->defined.insert(rcx);
-        instruction->defined.insert(rdi);
-        instruction->defined.insert(rdx);
-        instruction->defined.insert(rsi);
+        // Variable* rdi = new Variable("rdi");
+        // Variable* rsi = new Variable("rsi");
+        // Variable* rdx = new Variable("rdx");
+        // Variable* rcx = new Variable("rcx");
+        // Variable* r8 = new Variable("r8");
+        // Variable* r9 = new Variable("r9 ");
+        // Variable* r10 = new Variable("r10");
+        // Variable* r11 = new Variable("r11");
+        // Variable* rax = new Variable("rax");
+        // instruction->used.insert(rdi);
+        // instruction->used.insert(rsi);
+        // instruction->used.insert(rdx);
+        // // Caller Saved
+        // instruction->defined.insert(r10);
+        // instruction->defined.insert(r11);
+        // instruction->defined.insert(r8);
+        // instruction->defined.insert(r9);
+        // instruction->defined.insert(rax);
+        // instruction->defined.insert(rcx);
+        // instruction->defined.insert(rdi);
+        // instruction->defined.insert(rdx);
+        // instruction->defined.insert(rsi);
     };
 
     void UseDefVisitor::visit(Call_uN_Instruction * instruction) {
-        Variable* rdi = new Variable("rdi");
-        Variable* rsi = new Variable("rsi");
-        Variable* rdx = new Variable("rdx");
-        Variable* rcx = new Variable("rcx");
-        Variable* r8 = new Variable("r8");
-        Variable* r9 = new Variable("r9 ");
-        Variable* r10 = new Variable("r10");
-        Variable* r11 = new Variable("r11");
-        Variable* rax = new Variable("rax");
+        // Variable* rdi = new Variable("rdi");
+        // Variable* rsi = new Variable("rsi");
+        // Variable* rdx = new Variable("rdx");
+        // Variable* rcx = new Variable("rcx");
+        // Variable* r8 = new Variable("r8");
+        // Variable* r9 = new Variable("r9 ");
+        // Variable* r10 = new Variable("r10");
+        // Variable* r11 = new Variable("r11");
+        // Variable* rax = new Variable("rax");
 
-        Variable* var = dynamic_cast<Variable*>(instruction->u);
-        if (var){
-            instruction->used.insert(var);
-        };
-        Number* count = dynamic_cast<Number*>(instruction->N);
-        int value = count->value;
-        if (value >= 8) instruction->used.insert(rdi);
-        if (value >= 16) instruction->used.insert(rsi);
-        if (value >= 24) instruction->used.insert(rdx);
-        if (value >= 32) instruction->used.insert(rcx);
-        if (value >= 40) instruction->used.insert(r8);
-        if (value >= 48) instruction->used.insert(r9);
-        // Caller Saved
-        instruction->defined.insert(r10);
-        instruction->defined.insert(r11);
-        instruction->defined.insert(r8);
-        instruction->defined.insert(r9);
-        instruction->defined.insert(rax);
-        instruction->defined.insert(rcx);
-        instruction->defined.insert(rdi);
-        instruction->defined.insert(rdx);
-        instruction->defined.insert(rsi);
+        // Variable* var = dynamic_cast<Variable*>(instruction->u);
+        // if (var){
+        //     instruction->used.insert(var);
+        // };
+        // Number* count = dynamic_cast<Number*>(instruction->N);
+        // int value = count->value;
+        // if (value >= 8) instruction->used.insert(rdi);
+        // if (value >= 16) instruction->used.insert(rsi);
+        // if (value >= 24) instruction->used.insert(rdx);
+        // if (value >= 32) instruction->used.insert(rcx);
+        // if (value >= 40) instruction->used.insert(r8);
+        // if (value >= 48) instruction->used.insert(r9);
+        // // Caller Saved
+        // instruction->defined.insert(r10);
+        // instruction->defined.insert(r11);
+        // instruction->defined.insert(r8);
+        // instruction->defined.insert(r9);
+        // instruction->defined.insert(rax);
+        // instruction->defined.insert(rcx);
+        // instruction->defined.insert(rdi);
+        // instruction->defined.insert(rdx);
+        // instruction->defined.insert(rsi);
     }
 
 
