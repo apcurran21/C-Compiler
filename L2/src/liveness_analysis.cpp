@@ -59,6 +59,17 @@ namespace L2{
             Out_Set.push_back(out_set_map);
         }
     }
+    void In_Out_Store::print_sets(int function_index, Instruction* instruction_ptr) {
+        std::cerr << "In Set: ";
+        for (auto variable_ptr : In_Set[function_index][instruction_ptr]) {
+            std::cerr << variable_ptr->print() << ", ";
+        }
+        std::cerr << std::endl << "Out Set: ";
+        for (auto variable_ptr : Out_Set[function_index][instruction_ptr]) {
+            std::cerr << variable_ptr->print() << ", ";
+        }
+        std::cerr << std::endl;
+    }
 
     /*
     Gen and Kill Set Storage
@@ -74,6 +85,17 @@ namespace L2{
             Gen_Set.push_back(gen_set_map);
             Kill_Set.push_back(kill_set_map);
         }
+    }
+    void Gen_Kill_Store::print_sets(int function_index, Instruction* instruction_ptr) {
+        std::cerr << "Gen Set: ";
+        for (auto variable_ptr : Gen_Set[function_index][instruction_ptr]) {
+            std::cerr << variable_ptr->print() << ", ";
+        }
+        std::cerr << std::endl << "Kill Set: ";
+        for (auto variable_ptr : Kill_Set[function_index][instruction_ptr]) {
+            std::cerr << variable_ptr->print() << ", ";
+        }
+        std::cerr << std::endl;
     }
     
 
@@ -145,7 +167,7 @@ namespace L2{
                         }
                     }
                     // Gen, finding 'args used'
-                    for (int i = 0; i < fptr->arguments->value) {
+                    for (int i = 0; i < fptr->arguments; i++) {
                         gen_set_ptr->insert(fptr->variable_allocator.allocate_variable(arguments_vec[i], VariableType::reg));
                     }
                     // Kill, finding 'caller-saved'
@@ -164,7 +186,7 @@ namespace L2{
                     call print 1
                     */
                     // Gen, finding 'args used'
-                    gen_set_ptr->insert(fptr-variable_allocator.allocate_variable(arguments_vec[0], VariableType::reg));
+                    gen_set_ptr->insert(fptr->variable_allocator.allocate_variable(arguments_vec[0], VariableType::reg));
                     // Kill, finding 'caller-saved'
                     for (auto register_string : caller_save_vec) {
                         kill_set_ptr->insert(fptr->variable_allocator.allocate_variable(register_string, VariableType::reg));
@@ -214,8 +236,11 @@ namespace L2{
                     call tensor-error F
                     */
                     // Gen, finding 'args used'
-                    for (int i = 0; i < call_tenserr_instruction_ptr->F->value; i++) {
-                        gen_set_ptr->insert(fptr->variable_allocator.allocate_variable(arguments_vec[i], VariableType::reg));
+                    Number* number_ptr = dynamic_cast<Number*>(call_tenserr_instruction_ptr->F);
+                    if (number_ptr) {
+                        for (int i = 0; i < number_ptr->value; i++) {
+                            gen_set_ptr->insert(fptr->variable_allocator.allocate_variable(arguments_vec[i], VariableType::reg));
+                        }
                     }
                     // Kill, finding 'caller-saved'
                     for (auto register_string : caller_save_vec) {
@@ -230,12 +255,18 @@ namespace L2{
                     Kill <- {}
                     */
                     // Gen, finding 'rax'
-                    gen_set_ptr->insert(fptr->variable_allocator.allocate_variable('rax', VariableType::reg));
+                    gen_set_ptr->insert(fptr->variable_allocator.allocate_variable("rax", VariableType::reg));
                     // Gen, finding 'callee-saved'
                     for (auto register_string : callee_save_vec) {
                         gen_set_ptr->insert(fptr->variable_allocator.allocate_variable(register_string, VariableType::reg));
                     }
                 }
+
+                /*
+                Verify Gen and Kill sets by printing
+                */
+                if (debug) gen_kill_sets.print_sets(function_index, instruction_ptr);
+
             }   // finished with Gen and Kill
             
             /*
@@ -243,7 +274,7 @@ namespace L2{
             */
             fptr->calculateCFG();
             if (debug) std::cerr << "CFG brrrr" << std::endl;
-            
+
             int instruction_number;  
             bool changed;
             do {
@@ -265,16 +296,16 @@ namespace L2{
                         Define state of the sets before any potential changes are made
                     */
 
-                    std::set<Variable*> in_set_prev = in_out_sets.In_Set[i][iptr];
-                    std::set<Variable*> out_set_prev = in_out_sets.Out_Set[i][iptr];
+                    std::set<Variable*> in_set_prev = in_out_sets.In_Set[function_index][iptr];
+                    std::set<Variable*> out_set_prev = in_out_sets.Out_Set[function_index][iptr];
 
                     /*
                         Get pointers to the sets so that we don't have to keep array accessing
                     */
                     // std::set<Variable>* in_ptr = &in_out_sets.In_Set[i][j];
                     // std::set<Variable>* out_ptr = &in_out_sets.Out_Set[i][j];
-                    std::set<Variable*>* in_ptr = &in_out_sets.In_Set[i][iptr];
-                    std::set<Variable*>* out_ptr = &in_out_sets.Out_Set[i][iptr];
+                    std::set<Variable*>* in_ptr = &in_out_sets.In_Set[function_index][iptr];
+                    std::set<Variable*>* out_ptr = &in_out_sets.Out_Set[function_index][iptr];
 
                     /*
                         Do the set operations
@@ -295,7 +326,7 @@ namespace L2{
                     std::set<Variable*> Out_Result;
                     for (auto successor : iptr->successors) {
                         // note that successor should be of type Instruction*
-                        std::set<Variable*> successor_in_set = in_out_sets.In_Set[i][successor];
+                        std::set<Variable*> successor_in_set = in_out_sets.In_Set[function_index][successor];
                         std::set<Variable*> temp_union_set;
                         std::set_union(
                             Out_Result.begin(), Out_Result.end(),
@@ -317,8 +348,6 @@ namespace L2{
             } while (changed);
             
         }
-
-
 
 
         /*

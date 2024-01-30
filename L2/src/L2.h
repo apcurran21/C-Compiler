@@ -427,6 +427,7 @@ namespace L2 {
   class In_Out_Store {
     public:
       In_Out_Store(Program *p);
+      void print_sets(int function_index, Instruction* instruction_ptr);
       std::vector<std::unordered_map<Instruction*, std::set<Variable*>>> In_Set;
       std::vector<std::unordered_map<Instruction*, std::set<Variable*>>> Out_Set;
   };
@@ -434,6 +435,7 @@ namespace L2 {
   class Gen_Kill_Store {
     public:
     Gen_Kill_Store(Program *p);
+    void print_sets(int function_index, Instruction* instruction_ptr);
     std::vector<std::unordered_map<Instruction*, std::set<Variable*>>> Gen_Set;
     std::vector<std::unordered_map<Instruction*, std::set<Variable*>>> Kill_Set;
   };
