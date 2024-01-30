@@ -1,8 +1,16 @@
 #pragma once
 
-#include <L2.h>
+#include <unordered_map>
+#include <string>
+// #include "L2.h"
 
 namespace L2 {
+
+    /*
+    Forward declaration of Variable and Register classes help avoid cyclic dependencies.
+    */
+    class Variable;
+    class Register;
 
     /*
     Utility class that stores Variable instances, and lets clients

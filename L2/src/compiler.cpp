@@ -13,7 +13,10 @@
 #include <iostream>
 #include <assert.h>
 
-#include "L2.h"
+#include <parser.h>
+// #include <function_parser.h>
+// #include <spill_parser.h>
+
 
 void print_help (char *progName){
   std::cerr << "Usage: " << progName << " [-v] [-g 0|1] [-O 0|1|2] [-s] [-l] [-i] SOURCE" << std::endl;

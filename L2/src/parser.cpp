@@ -819,15 +819,17 @@ namespace L2 {
       parsed_items.push_back(name); 
     }
   }; 
-  template<> struct action < str_stackarg > {
-    template< typename Input >
-	  static void apply( const Input & in, Program & p){
-      if (debug) std::cerr << "Recognized stackarg " << std::endl;
 
-      auto op = new Operator(in.string());
-      parsed_items.push_back(op); 
-    }
-  }; 
+  // this seems pretty uneccessary to include
+  // template<> struct action < str_stackarg > {
+  //   template< typename Input >
+	//   static void apply( const Input & in, Program & p){
+  //     if (debug) std::cerr << "Recognized stackarg " << std::endl;
+
+  //     auto op = new Operator(in.string());
+  //     parsed_items.push_back(op); 
+  //   }
+  // }; 
 
 
   template<> struct action < label_rule > {
@@ -1173,12 +1175,16 @@ namespace L2 {
       auto M = parsed_items.back();
       parsed_items.pop_back();
       //pop off the string stack-arg from the stack
-      auto method = new Operator("stack-arg");
-      parsed_items.pop_back();
+      /*
+      NOTE - leaving out this stack-arg tag, uneccessary
+      */
+      // auto method = new Operator("stack-arg");
+      // parsed_items.pop_back();
       auto w = parsed_items.back();
       parsed_items.pop_back();
 
-      auto i = new stackarg_assignment(w, method, M);
+      // auto i = new stackarg_assignment(w, method, M);
+      auto i = new stackarg_assignment(w, M);
       currentF->instructions.push_back(i);
     }
   };
@@ -1597,5 +1603,53 @@ namespace L2 {
     return p;
   }
 
-}
 
+  struct function_grammar :
+    pegtl::must< 
+      Function_rule
+    > {};
+
+  Program parse_function_file (char *fileName) {
+    /* 
+     * Check the grammar for some possible issues.
+     */
+    if (pegtl::analyze< function_grammar >() != 0){
+      std::cerr << "There are problems with the grammar" << std::endl;
+      exit(1);
+    }
+
+    /*
+     * Parse.
+     */
+    file_input< > fileInput(fileName);
+    Program p;
+    parse< function_grammar, action >(fileInput, p);
+
+    return p;
+  }
+
+  struct spill_grammar :
+    pegtl::must<
+      entry_point_rule
+    > {};
+
+  Program parse_spill_file(char *fileName) {
+    /* 
+     * Check the grammar for some possible issues.
+     */
+    if (pegtl::analyze< spill_grammar >() != 0){
+      std::cerr << "There are problems with the grammar" << std::endl;
+      exit(1);
+    }
+
+    /*
+     * Parse.
+     */
+    file_input< > fileInput(fileName);
+    Program p;
+    parse< spill_grammar, action >(fileInput, p);
+
+    return p;
+  }
+
+}

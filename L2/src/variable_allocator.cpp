@@ -1,5 +1,6 @@
 // #include <variable_allocator.h>
 #include "variable_allocator.h"
+#include "L2.h"
 
 namespace L2 {
 
@@ -16,18 +17,18 @@ namespace L2 {
         }
         else {
             // Variable was not allocated, need to create
+            Variable* new_variable;
             switch (type) {
                 case var:
-                    auto new_var = new Variable(name);
-                    variable_database[name] = new_var;
-                    return new_var;
+                    new_variable = new Variable(name);
+                    variable_database[name] = new_variable;
                     break;
                 case reg:
-                    auto new_reg = new Register(name);
-                    variable_database[name] = new_reg;
-                    return new_reg;
+                    new_variable = new Register(name);
+                    variable_database[name] = new_variable;
                     break;
             }
+            return new_variable;
         }
     }
     
