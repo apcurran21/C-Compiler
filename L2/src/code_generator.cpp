@@ -266,6 +266,12 @@ namespace L2{
     outputFile << ", " << this->d->translate() << "\n";
   }
 
+  void stackarg_assignment::gen(Function *f, std::ofstream &outputFile) {
+    /*
+    TODO - implement
+    */
+  }
+
 
   void generate_code(Program p){
 
