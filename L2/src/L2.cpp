@@ -9,7 +9,7 @@ namespace L2 {
     Variable::Variable(std::string name) : name(name) { 
    
     }
-    Register::Register(const std::string &r) : Variable(r), ID(r) {
+    Register::Register(std::string r) : Variable(r), name(r) {
 
     }
     std::string Variable::translate() {
@@ -339,7 +339,7 @@ namespace L2 {
         visitor->visit(this);
     }
     
-    void Function::calculateCFG(){
+    void Function::calculateCFG(void){
         /*
         1. We need to first clear the previous predecessors/successors
         2. We then need to collect all of the jump function within this->instructions
@@ -355,38 +355,44 @@ namespace L2 {
                 total_cjump_instructions.insert(cast_instruction);
             };
         }
-        // Find the predecessors
         Instruction *prev = nullptr;
-        for (auto& instruction : instructions) {
-            auto jumpInst = dynamic_cast<cjump_cmp_Instruction *>(instruction);
-            auto gotoInst = dynamic_cast<goto_label_instruction *>(instruction);
-            auto labelInst = dynamic_cast<label_Instruction *>(instruction);
-
-            // If the instruction is a jump or goto, set the predecessor
-            if (jumpInst || gotoInst) {
-                if (prev) {
-                    instruction->predecessors.insert(prev);
-                }
-            }
-
-            // If the instruction is not a label, then it can be a predecessor
-            if (!labelInst) {
+        for (auto instruction: this->instructions){
+            // this handles the predecessors where we have to move through different characters 
+            auto jump_cast = dynamic_cast<cjump_cmp_Instruction *>(prev);
+            auto goto_cast = dynamic_cast<goto_label_instruction *>(prev);
+            if (!prev){
+                std::cerr<<"oogga loooga"<<std::endl;
+            } else if (!jump_cast && !goto_cast){
+                instruction->predecessors.insert(prev);
+            };
+            auto label_cast = dynamic_cast<label_Instruction *>(instruction);
+            // Clarified in OH: basically we know that up to this point, the insturciton is not a label, or a jump instruction
+            // or a goto instruction. This means that the previous instruction 
+            if (!label_cast){
                 prev = instruction;
-            } else {  // If it is a label, check for jumps that target this label
-                auto label = labelInst->getLabel();
-                for (auto& jumpInst : total_cjump_instructions) {
-                    if (jumpInst->getLabel() == label) {
-                        instruction->predecessors.insert(jumpInst);
-                    }
+                continue;
+            }
+            auto label = label_cast->getLabel();
+            for (auto jump_label : total_cjump_instructions){
+                auto compare_label = jump_label->getLabel();
+                // string comparisons are slow -> we want to do something more efficient 
+                if (compare_label == label){ 
+                    instruction->predecessors.insert(jump_label);
                 }
             }
-        }
-        for (auto instruction:this->instructions){
+            prev = instruction;
+        };
+        std::cerr << "CFG brrrr" << std::endl;
+        for (auto instruction: this->instructions){
+            std::cerr << "oink" << std::endl;
             for (auto predecessor: instruction->predecessors){
+                std::cerr << "piggy" << std::endl;
                 predecessor->successors.insert(instruction);
+                std::cerr << "big yums" << std::endl;
+
             }
         }
-        return;
+        std::cerr << "finished" << std::endl;
     }   
 
     void UseDefVisitor::visit(Instruction_ret * instruction){
@@ -511,3 +517,5 @@ namespace L2 {
    
 
 }
+
+

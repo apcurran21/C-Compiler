@@ -104,6 +104,8 @@ namespace L2{
             if (debug) std::cerr << "Running liveness analysis on a new function..." << std::endl;
             fptr->calculateUseDefs();
             fptr->calculateCFG();
+            if (debug) std::cerr << "CFG brrrr" << std::endl;
+
             bool changed;
             do {
                 changed = false;
@@ -194,7 +196,8 @@ namespace L2{
             for (auto iptr : fptr->instructions) {
                 std::cout << "(";
                 for (auto variable = in_map[iptr].begin(); variable != in_map[iptr].end(); variable++) {
-                    std::cout << *variable << " ";
+                    auto print = *variable;
+                    std::cout << print->print() << " ";
                 }
                 std::cout << ")";
             }
@@ -205,7 +208,8 @@ namespace L2{
             for (auto iptr : fptr->instructions) {
                 std::cout << "(";
                 for (auto variable = out_map[iptr].begin(); variable != out_map[iptr].end(); variable++) {
-                    std::cout << *variable << " ";
+                    auto print = *variable;
+                    std::cout << print->print() << " ";
                 }
                 std::cout << ")";
             }
