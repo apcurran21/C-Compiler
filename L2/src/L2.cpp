@@ -357,7 +357,7 @@ namespace L2 {
         }
         // Find the predecessors
         Instruction *prev = nullptr;
-        for (auto& instruction : instructions) {
+        for (auto instruction : instructions) {
             auto jumpInst = dynamic_cast<cjump_cmp_Instruction *>(instruction);
             auto gotoInst = dynamic_cast<goto_label_instruction *>(instruction);
             auto labelInst = dynamic_cast<label_Instruction *>(instruction);

@@ -93,9 +93,8 @@ int main(
     /*
      * Parse an L2 function.
      */
-    std::cerr << "Entered LiveAnalysisVisitor" << std::endl;
+    std::cerr << "Parsing a function file ..." << std::endl;
     p = L2::parse_function_file(argv[optind]);
-    L2::liveness_analysis(&p);
   } else if (interference_only){
 
     /*
@@ -133,7 +132,8 @@ int main(
    * Liveness test.
    */
   if (liveness_only){
-    //TODO
+    std::cerr << "Running a liveness analysis ..." << std::endl;
+    L2::liveness_analysis(&p);
     return 0;
   }
 
