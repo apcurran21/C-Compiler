@@ -229,7 +229,7 @@ namespace L2 {
     }
     void stackarg_assignment::printMe()
     {
-    };
+    }
 
 
     /*
@@ -371,15 +371,20 @@ namespace L2 {
                 prev = instruction;
                 continue;
             }
-            auto label = label_cast->getLabel();
+            std::cerr << "Current instruction: " << typeid(*instruction).name() << "\n";
+            std::cerr << "Label cast result: " << label_cast << "\n";       
+            auto label = label_cast->label;
             for (auto jump_label : total_cjump_instructions){
-                auto compare_label = jump_label->getLabel();
-                // string comparisons are slow -> we want to do something more efficient 
+                auto compare_label = jump_label->label;
+                // string comparisons are slow -> we want to do something more efficient hi isaac u are doing compliers but im doing ur dad
                 if (compare_label == label){ 
                     instruction->predecessors.insert(jump_label);
                 }
             }
+            std::cerr<<"post label cast";
+
             prev = instruction;
+            
         };
         for (auto instruction: this->instructions){
             for (auto predecessor: instruction->predecessors){
@@ -415,10 +420,10 @@ namespace L2 {
     }
     void UseDefVisitor::visit(label_Instruction *instruction) {
         
-    };
+    }
     void UseDefVisitor::visit(goto_label_instruction *instruction) {
 
-    };
+    }
     void UseDefVisitor::visit(Call_tenserr_Instruction *instruction) {
         // Variable* rdi = new Variable("rdi");
         // Variable* rsi = new Variable("rsi");
@@ -448,7 +453,7 @@ namespace L2 {
         // instruction->defined.insert(rdi);
         // instruction->defined.insert(rdx);
         // instruction->defined.insert(rsi);
-    };
+    }
    
     void UseDefVisitor::visit(Call_print_Instruction *instruction) {
         // Variable* rdi = new Variable("rdi");
@@ -471,7 +476,7 @@ namespace L2 {
         // instruction->defined.insert(rdi);
         // instruction->defined.insert(rdx);
         // instruction->defined.insert(rsi);
-    };
+    }
     void UseDefVisitor::visit(Call_input_Instruction *instruction) {
         // Variable* rdi = new Variable("rdi");
         // Variable* rsi = new Variable("rsi");
@@ -492,7 +497,7 @@ namespace L2 {
         // instruction->defined.insert(rdi);
         // instruction->defined.insert(rdx);
         // instruction->defined.insert(rsi);
-    };
+    }
     void UseDefVisitor::visit(Call_allocate_Instruction *instruction) {
         // Variable* rdi = new Variable("rdi");
         // Variable* rsi = new Variable("rsi");
@@ -515,7 +520,7 @@ namespace L2 {
         // instruction->defined.insert(rdi);
         // instruction->defined.insert(rdx);
         // instruction->defined.insert(rsi);
-    };
+    }
     void UseDefVisitor::visit(Call_tuple_Instruction *instruction) {
         // Variable* rdi = new Variable("rdi");
         // Variable* rsi = new Variable("rsi");
@@ -539,7 +544,7 @@ namespace L2 {
         // instruction->defined.insert(rdi);
         // instruction->defined.insert(rdx);
         // instruction->defined.insert(rsi);
-    };
+    }
 
     void UseDefVisitor::visit(Call_uN_Instruction * instruction) {
         // Variable* rdi = new Variable("rdi");

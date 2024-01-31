@@ -56,7 +56,6 @@ namespace L2 {
       Name (const std::string &value);
       std::string translate() override;
       std::string print() override;
-    private:
       std::string value;
   };
 
@@ -68,7 +67,6 @@ namespace L2 {
       std::string getLabel() const {
         return value;
       };
-    private:
       std::string value;
   };
 
@@ -80,7 +78,6 @@ namespace L2 {
       bool operator==(const Operator &other) const {
         return this->sign == other.sign;
       }
-    private:
       std::string sign;
   };
 
@@ -138,10 +135,9 @@ namespace L2 {
       void gen(Function *f, std::ofstream &outputFile) override;
       void printMe() override;
       std::string getLabel() const {
-          Label *labelPtr = dynamic_cast<Label*>(label);
+          Label* labelPtr = dynamic_cast<Label*>(label);
           return labelPtr->getLabel();
       }
-    protected:
       Item *label; 
   };
 
