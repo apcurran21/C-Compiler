@@ -393,24 +393,13 @@ namespace L2 {
         }
     }   
 
+    /*
+    Use/Def Set Visitor methods
+    */
     void UseDefVisitor::visit(Instruction_ret * instruction){
-        // // ONE BIG PROBLEM IS THAT WE'RE GONNA HAVE TO MAKE SURE THAT VARIABLES GET COUNTED SOMEHOW 
-        // // This will be an annoying bug to fix...need some sort of counter 
-        // Variable* var1 = new Variable("r12");
-        // Variable* var2 = new Variable("r13");
-        // Variable* var3 = new Variable("r14");
-        // Variable* var4 = new Variable("r15");
-        // Variable* var5 = new Variable("rax");
-        // Variable* var6 = new Variable("rbp");
-        // Variable* var7 = new Variable("rbx");
-        // instruction->used.insert(var1);
-        // instruction->used.insert(var2);
-        // instruction->used.insert(var3);
-        // instruction->used.insert(var4);
-        // instruction->used.insert(var5);
-        // instruction->used.insert(var6);
-        // instruction->used.insert(var7);
+
     }
+
     void UseDefVisitor::visit(Instruction_assignment * instruction) {
         Variable* var = dynamic_cast<Variable*>(instruction->s);
         if (var){
@@ -418,170 +407,41 @@ namespace L2 {
         }
         instruction->defined.insert(dynamic_cast<Variable*>(instruction->d));
     }
+
     void UseDefVisitor::visit(label_Instruction *instruction) {
         
     }
+
     void UseDefVisitor::visit(goto_label_instruction *instruction) {
 
     }
-    void UseDefVisitor::visit(Call_tenserr_Instruction *instruction) {
-        // Variable* rdi = new Variable("rdi");
-        // Variable* rsi = new Variable("rsi");
-        // Variable* rdx = new Variable("rdx");
-        // Variable* rcx = new Variable("rcx");
-        // Variable* r8 = new Variable("r8");
-        // Variable* r9 = new Variable("r9 ");
-        // Variable* r10 = new Variable("r10");
-        // Variable* r11 = new Variable("r11");
-        // Variable* rax = new Variable("rax");
 
-        // Number* count = dynamic_cast<Number*>(instruction->F);
-        // int value = count->value;
-        // if (value >= 8) instruction->used.insert(rdi);
-        // if (value >= 16) instruction->used.insert(rsi);
-        // if (value >= 24) instruction->used.insert(rdx);
-        // if (value >= 32) instruction->used.insert(rcx);
-        // if (value >= 40) instruction->used.insert(r8);
-        // if (value >= 48) instruction->used.insert(r9);
-        // // Caller Saved
-        // instruction->defined.insert(r10);
-        // instruction->defined.insert(r11);
-        // instruction->defined.insert(r8);
-        // instruction->defined.insert(r9);
-        // instruction->defined.insert(rax);
-        // instruction->defined.insert(rcx);
-        // instruction->defined.insert(rdi);
-        // instruction->defined.insert(rdx);
-        // instruction->defined.insert(rsi);
+    void UseDefVisitor::visit(Call_tenserr_Instruction *instruction) {
+
     }
    
     void UseDefVisitor::visit(Call_print_Instruction *instruction) {
-        // Variable* rdi = new Variable("rdi");
-        // Variable* rsi = new Variable("rsi");
-        // Variable* rdx = new Variable("rdx");
-        // Variable* rcx = new Variable("rcx");
-        // Variable* r8 = new Variable("r8");
-        // Variable* r9 = new Variable("r9 ");
-        // Variable* r10 = new Variable("r10");
-        // Variable* r11 = new Variable("r11");
-        // Variable* rax = new Variable("rax");
-        // instruction->used.insert(rdi);
-        // // Caller Saved
-        // instruction->defined.insert(r10);
-        // instruction->defined.insert(r11);
-        // instruction->defined.insert(r8);
-        // instruction->defined.insert(r9);
-        // instruction->defined.insert(rax);
-        // instruction->defined.insert(rcx);
-        // instruction->defined.insert(rdi);
-        // instruction->defined.insert(rdx);
-        // instruction->defined.insert(rsi);
+
     }
+
     void UseDefVisitor::visit(Call_input_Instruction *instruction) {
-        // Variable* rdi = new Variable("rdi");
-        // Variable* rsi = new Variable("rsi");
-        // Variable* rdx = new Variable("rdx");
-        // Variable* rcx = new Variable("rcx");
-        // Variable* r8 = new Variable("r8");
-        // Variable* r9 = new Variable("r9 ");
-        // Variable* r10 = new Variable("r10");
-        // Variable* r11 = new Variable("r11");
-        // Variable* rax = new Variable("rax");
-        // // Caller Saved
-        // instruction->defined.insert(r10);
-        // instruction->defined.insert(r11);
-        // instruction->defined.insert(r8);
-        // instruction->defined.insert(r9);
-        // instruction->defined.insert(rax);
-        // instruction->defined.insert(rcx);
-        // instruction->defined.insert(rdi);
-        // instruction->defined.insert(rdx);
-        // instruction->defined.insert(rsi);
+
     }
+
     void UseDefVisitor::visit(Call_allocate_Instruction *instruction) {
-        // Variable* rdi = new Variable("rdi");
-        // Variable* rsi = new Variable("rsi");
-        // Variable* rdx = new Variable("rdx");
-        // Variable* rcx = new Variable("rcx");
-        // Variable* r8 = new Variable("r8");
-        // Variable* r9 = new Variable("r9 ");
-        // Variable* r10 = new Variable("r10");
-        // Variable* r11 = new Variable("r11");
-        // Variable* rax = new Variable("rax");
-        // instruction->used.insert(rdi);
-        // instruction->used.insert(rsi);
-        // // Caller Saved
-        // instruction->defined.insert(r10);
-        // instruction->defined.insert(r11);
-        // instruction->defined.insert(r8);
-        // instruction->defined.insert(r9);
-        // instruction->defined.insert(rax);
-        // instruction->defined.insert(rcx);
-        // instruction->defined.insert(rdi);
-        // instruction->defined.insert(rdx);
-        // instruction->defined.insert(rsi);
+
     }
+
     void UseDefVisitor::visit(Call_tuple_Instruction *instruction) {
-        // Variable* rdi = new Variable("rdi");
-        // Variable* rsi = new Variable("rsi");
-        // Variable* rdx = new Variable("rdx");
-        // Variable* rcx = new Variable("rcx");
-        // Variable* r8 = new Variable("r8");
-        // Variable* r9 = new Variable("r9 ");
-        // Variable* r10 = new Variable("r10");
-        // Variable* r11 = new Variable("r11");
-        // Variable* rax = new Variable("rax");
-        // instruction->used.insert(rdi);
-        // instruction->used.insert(rsi);
-        // instruction->used.insert(rdx);
-        // // Caller Saved
-        // instruction->defined.insert(r10);
-        // instruction->defined.insert(r11);
-        // instruction->defined.insert(r8);
-        // instruction->defined.insert(r9);
-        // instruction->defined.insert(rax);
-        // instruction->defined.insert(rcx);
-        // instruction->defined.insert(rdi);
-        // instruction->defined.insert(rdx);
-        // instruction->defined.insert(rsi);
+
     }
 
     void UseDefVisitor::visit(Call_uN_Instruction * instruction) {
-        // Variable* rdi = new Variable("rdi");
-        // Variable* rsi = new Variable("rsi");
-        // Variable* rdx = new Variable("rdx");
-        // Variable* rcx = new Variable("rcx");
-        // Variable* r8 = new Variable("r8");
-        // Variable* r9 = new Variable("r9 ");
-        // Variable* r10 = new Variable("r10");
-        // Variable* r11 = new Variable("r11");
-        // Variable* rax = new Variable("rax");
-
-        // Variable* var = dynamic_cast<Variable*>(instruction->u);
-        // if (var){
-        //     instruction->used.insert(var);
-        // };
-        // Number* count = dynamic_cast<Number*>(instruction->N);
-        // int value = count->value;
-        // if (value >= 8) instruction->used.insert(rdi);
-        // if (value >= 16) instruction->used.insert(rsi);
-        // if (value >= 24) instruction->used.insert(rdx);
-        // if (value >= 32) instruction->used.insert(rcx);
-        // if (value >= 40) instruction->used.insert(r8);
-        // if (value >= 48) instruction->used.insert(r9);
-        // // Caller Saved
-        // instruction->defined.insert(r10);
-        // instruction->defined.insert(r11);
-        // instruction->defined.insert(r8);
-        // instruction->defined.insert(r9);
-        // instruction->defined.insert(rax);
-        // instruction->defined.insert(rcx);
-        // instruction->defined.insert(rdi);
-        // instruction->defined.insert(rdx);
-        // instruction->defined.insert(rsi);
+        Variable* var = dynamic_cast<Variable*>(instruction->u);
+        if (var){
+            instruction->used.insert(var);
+        };
     }
-
-
 
     void UseDefVisitor::visit(w_increment_decrement *instruction) {
         instruction->used.insert(dynamic_cast<Variable*>(instruction->r));
@@ -595,6 +455,7 @@ namespace L2 {
         instruction->used.insert(dynamic_cast<Variable*>(instruction->r2));
         instruction->defined.insert(dynamic_cast<Variable*>(instruction->r1));
     }
+
     void UseDefVisitor::visit(Memory_assignment_store *instruction) {
         // src is of type s, which can be either a variable, register, number, lable, or I name
         Variable* s_cast = dynamic_cast<Variable*>(instruction->s);
@@ -602,19 +463,22 @@ namespace L2 {
         instruction->used.insert(dynamic_cast<Variable*>(instruction->dst));
     }
 
-    void UseDefVisitor::visit(Memory_assignment_load *instruction) { // I'm not sure if this one is wrong 
+    void UseDefVisitor::visit(Memory_assignment_load *instruction) {
         instruction->used.insert(dynamic_cast<Variable*>(instruction->x));
         instruction->defined.insert(dynamic_cast<Variable*>(instruction->dst));
     }
+
     void UseDefVisitor::visit(Memory_arithmetic_load *instruction) {
         instruction->used.insert(dynamic_cast<Variable*>(instruction->x));
         instruction->defined.insert(dynamic_cast<Variable*>(instruction->dst));
     }
 
     void UseDefVisitor::visit(Memory_arithmetic_store *instruction) {
-        instruction->used.insert(dynamic_cast<Variable*>(instruction->t)); // Is t correct here?
+        Variable* t_cast = dynamic_cast<Variable*>(instruction->t);
+        if (t_cast) instruction->used.insert(t_cast);
         instruction->defined.insert(dynamic_cast<Variable*>(instruction->dst));  
     }
+
     void UseDefVisitor::visit(cmp_Instruction *instruction) {
         Variable* var1 = dynamic_cast<Variable*>(instruction->t1);
         Variable* var2 = dynamic_cast<Variable*>(instruction->t2);
@@ -626,22 +490,39 @@ namespace L2 {
         }
         instruction->defined.insert(dynamic_cast<Variable*>(instruction->dst));
     }
+
     void UseDefVisitor::visit(cjump_cmp_Instruction *instruction) {
-        instruction->used.insert(dynamic_cast<Variable*>(instruction->t1)); 
-        instruction->used.insert(dynamic_cast<Variable*>(instruction->t2)); 
+        Variable* var1 = dynamic_cast<Variable*>(instruction->t1);
+        Variable* var2 = dynamic_cast<Variable*>(instruction->t2);
+        if (var1){
+            instruction->used.insert(dynamic_cast<Variable*>(instruction->t1)); 
+        }
+        if (var2){
+            instruction->used.insert(dynamic_cast<Variable*>(instruction->t2)); 
+        }
+
     }
+
     void UseDefVisitor::visit(stackarg_assignment *instruction) {
         instruction->defined.insert(dynamic_cast<Variable*>(instruction->w)); 
     }
+
     void UseDefVisitor::visit(AOP_assignment * instruction) {
-        instruction->used.insert(dynamic_cast<Variable*>(instruction->src));
+        Variable* src_cast = dynamic_cast<Variable*>(instruction->src);
+        if (src_cast) instruction->used.insert(src_cast);
         instruction->defined.insert(dynamic_cast<Variable*>(instruction->dst));
     }
 
     void UseDefVisitor::visit(SOP_assignment *instruction){
-        instruction->used.insert(dynamic_cast<Variable*>(instruction->src));
+        Variable* src_cast = dynamic_cast<Variable*>(instruction->src);
+        if (src_cast) instruction->used.insert(src_cast);
         instruction->used.insert(dynamic_cast<Variable*>(instruction->dst));
-    }    
+    }
+
+
+    /*
+    Calculate the Use/Def sets by running over each instruction's visit method
+    */
     void Function::calculateUseDefs(){
         UseDefVisitor visitor;
         for (auto instruction: this->instructions){
