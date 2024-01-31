@@ -3,3 +3,6 @@
 
 # ran testing files
 *.tmp
+
+# binaries
+*.o
