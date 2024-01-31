@@ -12,7 +12,7 @@ using namespace std;
 
 namespace L2 {
 
-  const int debug = 1;
+  const int debug = 0;
 
   /*
   Parsed items stack
@@ -405,7 +405,9 @@ namespace L2 {
 
   struct Inst_label_rule:
     // label
-    label_rule {};
+    pegtl::seq<
+      label_rule
+    > {};
 
   struct Inst_goto_rule:
     // goto label
@@ -417,7 +419,9 @@ namespace L2 {
 
   struct Inst_return_rule:
     // return
-    str_return {};
+    pegtl::seq<
+      str_return
+    > {};
 
   struct call_uN_rule:
     // call u N
@@ -1131,12 +1135,6 @@ namespace L2 {
     template< typename Input >
 	  static void apply( const Input & in, Program & p) {
       if (debug) std::cerr << "Recognized an arg number" << std::endl;
-
-      // since argument number gets matched as N first, its token gets put on the stack
-      // ie we should remove here
-      // parsed_items.pop_back();
-
-      // ^ actually idk if this gets matched as 'number' first?
 
       auto currentF = p.functions.back();
       currentF->arguments = std::stoll(in.string());

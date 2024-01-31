@@ -1,0 +1,5 @@
+(@testing
+	0
+	rdi <- 5
+	mem rsp -8 <- :myfunc_ret
+)
