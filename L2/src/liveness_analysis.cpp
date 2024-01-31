@@ -9,7 +9,7 @@
 using namespace std;
 
 // use 1 for debug statements, 0 for no printing
-int debug = 1;
+int debug = 0;
 
 namespace L2{
 
@@ -144,7 +144,7 @@ namespace L2{
                 Place Defs into Kill
                 */
                 for (auto variable_ptr : instruction_ptr->defined) {
-                    gen_set_ptr->insert(variable_ptr);
+                    kill_set_ptr->insert(variable_ptr);
                 }
                 /*
                 Dynamic cast to check for special calling convention cases
@@ -277,6 +277,7 @@ namespace L2{
 
             int instruction_number;  
             bool changed;
+            instruction_number = 0;
             do {
                 changed = false;
                 for (auto instruction_ptr : fptr->instructions) {
@@ -352,7 +353,7 @@ namespace L2{
         Print the contents of our freshly computed In and Out sets to the file
         */
         for (int function_index = 0; function_index < p->functions.size(); function_index++) {
-            std::cout << "(";
+            std::cout << "(\n";
             Function* function_ptr = p->functions[function_index];
             std::cout << "(in\n";
             for (auto instruction_ptr : function_ptr->instructions) {
@@ -362,7 +363,7 @@ namespace L2{
                 }
                 std::cout << ")\n";
             }
-            std::cout << ")";
+            std::cout << ")\n\n";
             std::cout << "(out\n";
             for (auto instruction_ptr : function_ptr->instructions) {
                 std::cout << "(";
@@ -371,7 +372,7 @@ namespace L2{
                 }
                 std::cout << ")\n";
             }
-            std::cout << ")";
+            std::cout << ")\n\n";
             std::cout << ")\n";
         }
 

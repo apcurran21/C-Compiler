@@ -361,7 +361,6 @@ namespace L2 {
             auto jump_cast = dynamic_cast<cjump_cmp_Instruction *>(prev);
             auto goto_cast = dynamic_cast<goto_label_instruction *>(prev);
             if (!prev){
-                std::cerr<<"oogga loooga"<<std::endl;
             } else if (!jump_cast && !goto_cast){
                 instruction->predecessors.insert(prev);
             };
@@ -382,17 +381,11 @@ namespace L2 {
             }
             prev = instruction;
         };
-        std::cerr << "CFG brrrr" << std::endl;
         for (auto instruction: this->instructions){
-            std::cerr << "oink" << std::endl;
             for (auto predecessor: instruction->predecessors){
-                std::cerr << "piggy" << std::endl;
                 predecessor->successors.insert(instruction);
-                std::cerr << "big yums" << std::endl;
-
             }
         }
-        std::cerr << "finished" << std::endl;
     }   
 
     void UseDefVisitor::visit(Instruction_ret * instruction){
