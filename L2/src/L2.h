@@ -11,7 +11,7 @@
 
 namespace L2 {
 
-  extern const int debug;
+  extern int const debug;
 
   // Forward declarations
   class Function;
