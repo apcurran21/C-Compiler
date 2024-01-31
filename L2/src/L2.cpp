@@ -591,7 +591,9 @@ namespace L2 {
         instruction->defined.insert(dynamic_cast<Variable*>(instruction->r1));
     }
     void UseDefVisitor::visit(Memory_assignment_store *instruction) {
-        instruction->used.insert(dynamic_cast<Variable*>(instruction->s));
+        // src is of type s, which can be either a variable, register, number, lable, or I name
+        Variable* s_cast = dynamic_cast<Variable*>(instruction->s);
+        if (s_cast) instruction->used.insert(s_cast);
         instruction->used.insert(dynamic_cast<Variable*>(instruction->dst));
     }
 
