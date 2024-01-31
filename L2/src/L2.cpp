@@ -371,8 +371,8 @@ namespace L2 {
                 prev = instruction;
                 continue;
             }
-            std::cerr << "Current instruction: " << typeid(*instruction).name() << "\n";
-            std::cerr << "Label cast result: " << label_cast << "\n";       
+            if (debug) std::cerr << "Current instruction: " << typeid(*instruction).name() << "\n";
+            if (debug) std::cerr << "Label cast result: " << label_cast << "\n";       
             auto label = label_cast->label;
             for (auto jump_label : total_cjump_instructions){
                 auto compare_label = jump_label->label;
@@ -381,7 +381,7 @@ namespace L2 {
                     instruction->predecessors.insert(jump_label);
                 }
             }
-            std::cerr<<"post label cast";
+            if (debug) std::cerr<<"post label cast";
 
             prev = instruction;
             
