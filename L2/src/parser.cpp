@@ -12,7 +12,7 @@ using namespace std;
 
 namespace L2 {
 
-  const int debug = 0;
+  const int debug = 1;
 
   /*
   Parsed items stack

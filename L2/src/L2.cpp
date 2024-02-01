@@ -460,7 +460,10 @@ namespace L2 {
         // src is of type s, which can be either a variable, register, number, lable, or I name
         Variable* s_cast = dynamic_cast<Variable*>(instruction->s);
         if (s_cast) instruction->used.insert(s_cast);
-        instruction->used.insert(dynamic_cast<Variable*>(instruction->dst));
+        Variable* d_cast = dynamic_cast<Variable*>(instruction->dst);
+        if (d_cast->name != "rsp"){
+            instruction->used.insert(d_cast);
+        }
     }
 
     void UseDefVisitor::visit(Memory_assignment_load *instruction) {
@@ -516,7 +519,7 @@ namespace L2 {
     void UseDefVisitor::visit(SOP_assignment *instruction){
         Variable* src_cast = dynamic_cast<Variable*>(instruction->src);
         if (src_cast) instruction->used.insert(src_cast);
-        instruction->used.insert(dynamic_cast<Variable*>(instruction->dst));
+        instruction->defined.insert(dynamic_cast<Variable*>(instruction->dst));
     }
 
 

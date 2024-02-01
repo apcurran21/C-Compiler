@@ -167,7 +167,8 @@ namespace L2{
                         }
                     }
                     // Gen, finding 'args used'
-                    for (int i = 0; i < fptr->arguments; i++) {
+                    Number* num = dynamic_cast<Number*>(call_uN_instruction_ptr->N);
+                    for (int i = 0; i < num->value; i++) {
                         gen_set_ptr->insert(fptr->variable_allocator.allocate_variable(arguments_vec[i], VariableType::reg));
                     }
                     // Kill, finding 'caller-saved'
