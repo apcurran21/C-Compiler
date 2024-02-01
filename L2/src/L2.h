@@ -314,7 +314,7 @@ namespace L2 {
   //     Item *op;
   //     Item *M;
   // };
-  class AOP_assignment : public Instruction_assignment {
+  class AOP_assignment : public Instruction {
     public:
       AOP_assignment(Item *method, Item *dst, Item *src);
       void gen(Function *f, std::ofstream &outputFile) override;
@@ -325,7 +325,7 @@ namespace L2 {
       Item *src;
   };
 
-  class SOP_assignment : public Instruction_assignment {
+  class SOP_assignment : public Instruction {
     public:
       SOP_assignment(Item *method, Item *dst, Item *src);
       void gen(Function *f, std::ofstream &outputFile) override;

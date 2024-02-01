@@ -288,7 +288,10 @@ namespace L2 {
       spaces,
       sop_rule,
       spaces,
-      var_reg_rule
+      pegtl::sor<
+        str_rcx,
+        variable_rule
+      >
     > {};
 
   struct Inst_sop_N_rule:
@@ -820,13 +823,18 @@ namespace L2 {
 
       auto currentF = p.functions.back();
       auto N = parsed_items.back();
+      if (debug) std::cerr << "N = " << N->print() << std::endl;
       parsed_items.pop_back();
       auto method = parsed_items.back();
       parsed_items.pop_back();  
       auto w = parsed_items.back();
+      if (debug) std::cerr << "w = " << w->print() << std::endl;
       parsed_items.pop_back();
       auto i = new SOP_assignment(method, w, N);
+      if (debug) std::cerr << "printing the instruction fields ..." << std::endl;
+      if (debug) std::cerr << "w = "  << i->dst->print() << ", N = " << i->src->print() << std::endl;
       currentF->instructions.push_back(i);
+
     }
   };
 

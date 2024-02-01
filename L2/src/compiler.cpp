@@ -31,7 +31,7 @@ int main(
   auto enable_code_generator = true;
   auto spill_only = false;
   auto interference_only = false;
-  auto liveness_only = true;
+  auto liveness_only = false;
   int32_t optLevel = 3;
 
   /* 
