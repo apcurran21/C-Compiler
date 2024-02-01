@@ -12,7 +12,7 @@ using namespace std;
 
 namespace L2 {
 
-  const int debug = 1;
+  const int debug = 0;
 
   /*
   Parsed items stack
@@ -834,7 +834,7 @@ namespace L2 {
       if (debug) std::cerr << "printing the instruction fields ..." << std::endl;
       if (debug) std::cerr << "w = "  << i->dst->print() << ", N = " << i->src->print() << std::endl;
       currentF->instructions.push_back(i);
-      
+
     }
   };
 
