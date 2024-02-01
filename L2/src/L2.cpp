@@ -365,19 +365,28 @@ namespace L2 {
                 instruction->predecessors.insert(prev);
             };
             auto label_cast = dynamic_cast<label_Instruction *>(instruction);
+            auto cjump_cast = dynamic_cast<cjump_cmp_Instruction *>(instruction);
             // Clarified in OH: basically we know that up to this point, the insturciton is not a label, or a jump instruction
             // or a goto instruction. This means that the previous instruction 
-            if (!label_cast){
+            if (cjump_cast){
+            }
+            else if (!label_cast){
                 prev = instruction;
-                continue;
+                continue;  
             }
             if (debug) std::cerr << "Current instruction: " << typeid(*instruction).name() << "\n";
-            if (debug) std::cerr << "Label cast result: " << label_cast << "\n";       
-            auto label = label_cast->label;
+            if (debug) std::cerr << "Label cast result: " << label_cast << "\n";    
+            Item* label = nullptr; // Initialize to nullptr to avoid undefined behavior
+
+            if (cjump_cast) {
+                label = cjump_cast->label; // Assign to the outer label
+            } else {
+                label = label_cast->label; // Assign to the outer label
+            }
+
             for (auto jump_label : total_cjump_instructions){
                 auto compare_label = jump_label->label;
-                // string comparisons are slow -> we want to do something more efficient hi isaac u are doing compliers but im doing ur dad
-                if (compare_label == label){ 
+                if (compare_label->print() == label->print()){ 
                     instruction->predecessors.insert(jump_label);
                 }
             }
@@ -389,6 +398,12 @@ namespace L2 {
         for (auto instruction: this->instructions){
             for (auto predecessor: instruction->predecessors){
                 predecessor->successors.insert(instruction);
+            }
+        }
+        for (auto instruction: this->instructions){
+            if (debug) std::cerr<<"printing successors"<<std::endl;
+            for (auto successor : instruction->successors) {
+                successor->printMe();
             }
         }
     }   
@@ -473,6 +488,7 @@ namespace L2 {
 
     void UseDefVisitor::visit(Memory_arithmetic_load *instruction) {
         instruction->used.insert(dynamic_cast<Variable*>(instruction->x));
+        instruction->used.insert(dynamic_cast<Variable*>(instruction->dst));
         instruction->defined.insert(dynamic_cast<Variable*>(instruction->dst));
     }
 
@@ -513,12 +529,14 @@ namespace L2 {
     void UseDefVisitor::visit(AOP_assignment * instruction) {
         Variable* src_cast = dynamic_cast<Variable*>(instruction->src);
         if (src_cast) instruction->used.insert(src_cast);
+        instruction->used.insert(dynamic_cast<Variable*>(instruction->dst));
         instruction->defined.insert(dynamic_cast<Variable*>(instruction->dst));
     }
 
     void UseDefVisitor::visit(SOP_assignment *instruction){
         Variable* src_cast = dynamic_cast<Variable*>(instruction->src);
         if (src_cast) instruction->used.insert(src_cast);
+        instruction->used.insert(dynamic_cast<Variable*>(instruction->dst));
         instruction->defined.insert(dynamic_cast<Variable*>(instruction->dst));
     }
 

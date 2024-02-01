@@ -211,6 +211,25 @@ namespace L2 {
   /*
   Instruction Rules!
   */
+  struct Inst_cmp_assign_rule:
+      // w <- t cmp t
+      pegtl::seq<
+        var_reg_rule,
+        spaces,
+        str_arrow,
+        spaces,
+        pegtl::sor<
+          var_reg_rule,
+          number
+        >,
+        spaces,
+        cmp_rule,
+        spaces,
+        pegtl::sor<
+          var_reg_rule,
+          number
+        >
+      > {};
   struct Instruction_assignment_rule:
     // w <- s
     pegtl::seq<
@@ -366,25 +385,6 @@ namespace L2 {
       number
     > {};
 
-  struct Inst_cmp_assign_rule:
-    // w <- t cmp t
-    pegtl::seq<
-      var_reg_rule,
-      spaces,
-      str_arrow,
-      spaces,
-      pegtl::sor<
-        var_reg_rule,
-        number
-      >,
-      spaces,
-      cmp_rule,
-      spaces,
-      pegtl::sor<
-        var_reg_rule,
-        number
-      >
-    > {};
 
   struct Inst_cjump_rule:
     // cjump t cmp t label
@@ -521,6 +521,7 @@ namespace L2 {
 
   struct Instruction_rule:
     pegtl::sor<
+      pegtl::seq< pegtl::at<Inst_cmp_assign_rule>, Inst_cmp_assign_rule >,
       pegtl::seq< pegtl::at<Instruction_assignment_rule>, Instruction_assignment_rule >,
       pegtl::seq< pegtl::at<Inst_loadmem_rule>, Inst_loadmem_rule >,
       pegtl::seq< pegtl::at<Inst_storemem_rule>, Inst_storemem_rule >,
@@ -532,7 +533,6 @@ namespace L2 {
       pegtl::seq< pegtl::at<Inst_mem_minus_rule>, Inst_mem_minus_rule >,
       pegtl::seq< pegtl::at<Inst_plus_mem_rule>, Inst_plus_mem_rule >,
       pegtl::seq< pegtl::at<Inst_minus_mem_rule>, Inst_minus_mem_rule >,
-      pegtl::seq< pegtl::at<Inst_cmp_assign_rule>, Inst_cmp_assign_rule >,
       pegtl::seq< pegtl::at<Inst_cjump_rule>, Inst_cjump_rule >,
       pegtl::seq< pegtl::at<Inst_label_rule>, Inst_label_rule >,
       pegtl::seq< pegtl::at<Inst_goto_rule>, Inst_goto_rule >,
@@ -711,6 +711,27 @@ namespace L2 {
   /*
   Instruction Actions!
   */
+
+  template<> struct action < Inst_cmp_assign_rule > {
+      template< typename Input >
+      static void apply( const Input & in, Program & p) {
+        // w <- t2 cmp t1
+        if (debug) std::cerr << "Recognized w <- t2 cmp t1" << std::endl;
+        
+        auto currentF = p.functions.back();
+        auto t1 = parsed_items.back();
+        parsed_items.pop_back();
+        auto cmp = parsed_items.back();
+        parsed_items.pop_back();
+        auto t2 = parsed_items.back();
+        parsed_items.pop_back();
+        auto w = parsed_items.back();
+        parsed_items.pop_back();
+        auto i = new cmp_Instruction(w, t2, cmp, t1);
+        currentF->instructions.push_back(i);
+      }
+    };
+
   template<> struct action < Instruction_assignment_rule > {
     template< typename Input >
 	  static void apply( const Input & in, Program & p) {
@@ -914,25 +935,6 @@ namespace L2 {
     }
   };
 
-  template<> struct action < Inst_cmp_assign_rule > {
-    template< typename Input >
-    static void apply( const Input & in, Program & p) {
-      // w <- t2 cmp t1
-      if (debug) std::cerr << "Recognized w <- t2 cmp t1" << std::endl;
-      
-      auto currentF = p.functions.back();
-      auto t1 = parsed_items.back();
-      parsed_items.pop_back();
-      auto cmp = parsed_items.back();
-      parsed_items.pop_back();
-      auto t2 = parsed_items.back();
-      parsed_items.pop_back();
-      auto w = parsed_items.back();
-      parsed_items.pop_back();
-      auto i = new cmp_Instruction(w, t2, cmp, t1);
-      currentF->instructions.push_back(i);
-    }
-  };
 
   template<> struct action < Inst_cjump_rule > {
     template< typename Input >

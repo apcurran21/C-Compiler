@@ -1,7 +1,10 @@
 (@testing
-	0
-	rdi <<= 1
-	rdi += 1
-    call print 1
-	return
+	1
+    %queue_ptr <- rdi
+	%old_size <- mem %queue_ptr 0
+	%not_empty <- 0 < %old_size
+	cjump %not_empty = 1 :call_label_ciao__ciao__ciao__ciao__ciao_17
+    rdi <- 1
+    :call_label_ciao__ciao__ciao__ciao__ciao_17
+    return 
 )
