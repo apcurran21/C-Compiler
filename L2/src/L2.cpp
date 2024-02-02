@@ -357,6 +357,12 @@ namespace L2 {
         }
         Instruction *prev = nullptr;
         for (auto instruction: this->instructions){
+            auto tenserr_cast = dynamic_cast<Call_tenserr_Instruction *>(prev);
+            auto ret_cast = dynamic_cast<Instruction_ret*>(prev);
+            if (tenserr_cast || ret_cast) {
+                prev = instruction;
+                continue; // Skip successor assignment
+            }
             // this handles the predecessors where we have to move through different characters 
             auto jump_cast = dynamic_cast<cjump_cmp_Instruction *>(prev);
             auto goto_cast = dynamic_cast<goto_label_instruction *>(prev);
@@ -368,9 +374,7 @@ namespace L2 {
             auto cjump_cast = dynamic_cast<cjump_cmp_Instruction *>(instruction);
             // Clarified in OH: basically we know that up to this point, the insturciton is not a label, or a jump instruction
             // or a goto instruction. This means that the previous instruction 
-            if (cjump_cast){
-            }
-            else if (!label_cast){
+            if (!label_cast){
                 prev = instruction;
                 continue;  
             }
@@ -397,7 +401,12 @@ namespace L2 {
         };
         for (auto instruction: this->instructions){
             for (auto predecessor: instruction->predecessors){
-                predecessor->successors.insert(instruction);
+                auto tenserr_cast = dynamic_cast<Call_tenserr_Instruction *>(predecessor);
+                auto ret_cast = dynamic_cast<Instruction_ret*>(predecessor);
+                if (tenserr_cast || ret_cast) {
+                } else {
+                    predecessor->successors.insert(instruction);
+                }
             }
         }
         for (auto instruction: this->instructions){

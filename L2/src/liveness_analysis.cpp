@@ -279,11 +279,12 @@ namespace L2{
             int instruction_number;  
             bool changed;
             instruction_number = 0;
+            bool tensor_error_encountered = false;
+            std::set<Instruction*> sealed_instructions;
             do {
                 changed = false;
                 for (auto instruction_ptr : fptr->instructions) {
-
-                    /*
+                                        /*
                         Define pointers to the Gen, Kill, In, Out sets for the current instruction
                     */
                     std::set<Variable*>* gen_set_ptr = &gen_kill_sets.Gen_Set[function_index][instruction_ptr];
@@ -339,9 +340,6 @@ namespace L2{
                     *in_set_ptr = In_Result;
                     *out_set_ptr = Out_Result;
 
-                    /*
-                        Check against the initial state after performing the operations.
-                    */
                     instruction_number++;
                     changed = changed || ((in_set_prev != *in_set_ptr) || (out_set_prev != *out_set_ptr));
                 }
