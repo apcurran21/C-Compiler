@@ -9,7 +9,7 @@
 using namespace std;
 
 // use 1 for debug statements, 0 for no printing
-int debug = 0;
+int debug = 1;
 
 namespace L2{
 

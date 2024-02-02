@@ -12,7 +12,7 @@ using namespace std;
 
 namespace L2 {
 
-  const int debug = 0;
+  const int debug = 1;
 
   /*
   Parsed items stack
@@ -419,12 +419,17 @@ namespace L2 {
       spaces,
       label_rule
     > {};
-
+  struct Inst_stackarg:
+      // return
+      pegtl::seq<
+        str_stackarg
+      > {};
   struct Inst_return_rule:
     // return
     pegtl::seq<
       str_return
     > {};
+
 
   struct call_uN_rule:
     // call u N
@@ -983,7 +988,17 @@ namespace L2 {
       currentF->instructions.push_back(i);
     }
   };
+  template<> struct action < Inst_stackarg > {
+    template< typename Input >
+	  static void apply( const Input & in, Program & p){
+      // return
+      if (debug) std::cerr << "Recognized stackarg" << std::endl;
 
+      auto currentF = p.functions.back();
+      auto i = new Instruction_ret();
+      currentF->instructions.push_back(i);
+    }
+  };
   template<> struct action < Inst_return_rule > {
     template< typename Input >
 	  static void apply( const Input & in, Program & p){

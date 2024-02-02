@@ -1,15 +1,4 @@
 (@testing
 	1
-    %queue_ptr <- rdi
-	%old_size <- mem %queue_ptr 0
-	%not_empty <- 0 < %old_size
-	cjump %not_empty = 1 :call_label_ciao__ciao__ciao__ciao__ciao_17
-	goto :call_label_ciao__ciao__ciao__ciao__ciao_16
-	:call_label_ciao__ciao__ciao__ciao__ciao_16
-	rdi <- 1
-	call tensor-error 1
-	rax <- %queue_ptr
-	return
-    :call_label_ciao__ciao__ciao__ciao__ciao_17
-   	%dequeue_loc <- %queue_ptr
+    %v7 <- stack-arg 0
 )
