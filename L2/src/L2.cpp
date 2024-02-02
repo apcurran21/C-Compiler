@@ -346,75 +346,86 @@ namespace L2 {
         3. Find the predecessors 
         4. Find the successors 
         */
-        std::set<cjump_cmp_Instruction *> total_cjump_instructions{};
+        std::set<Instruction *> total_cjump_instructions{};
         for (auto instruction : this->instructions){
             auto cast_instruction = dynamic_cast<cjump_cmp_Instruction *>(instruction);
+            auto goto_instruction = dynamic_cast<goto_label_instruction*>(instruction);
             instruction->predecessors.clear(); // clearing out the predecessors
             instruction->successors.clear(); //clearing out the successors
             if (cast_instruction){
                 total_cjump_instructions.insert(cast_instruction);
-            };
+            }
+            if (goto_instruction){
+                total_cjump_instructions.insert(goto_instruction);
+            }
+            ;
         }
         Instruction *prev = nullptr;
         for (auto instruction: this->instructions){
+            // if (debug) std::cerr<<"we iterating";
             auto tenserr_cast = dynamic_cast<Call_tenserr_Instruction *>(prev);
             auto ret_cast = dynamic_cast<Instruction_ret*>(prev);
-            if (tenserr_cast || ret_cast) {
-                prev = instruction;
-                continue; // Skip successor assignment
-            }
-            // this handles the predecessors where we have to move through different characters 
-            auto jump_cast = dynamic_cast<cjump_cmp_Instruction *>(prev);
-            auto goto_cast = dynamic_cast<goto_label_instruction *>(prev);
+            auto tuple_err = dynamic_cast<Call_tuple_Instruction*>(prev);
+            auto goto_cast = dynamic_cast<goto_label_instruction*>(prev);
+            auto cjump_cast = dynamic_cast<cjump_cmp_Instruction *>(prev);
             if (!prev){
-            } else if (!jump_cast && !goto_cast){
+                prev = instruction;
+                continue;
+            }
+            if (tenserr_cast || ret_cast || tuple_err || goto_cast){
+            } else{
                 instruction->predecessors.insert(prev);
-            };
-            auto label_cast = dynamic_cast<label_Instruction *>(instruction);
-            auto cjump_cast = dynamic_cast<cjump_cmp_Instruction *>(instruction);
-            // Clarified in OH: basically we know that up to this point, the insturciton is not a label, or a jump instruction
-            // or a goto instruction. This means that the previous instruction 
+            }
+            auto check_goto_cast = dynamic_cast<goto_label_instruction*>(instruction);
+            if (check_goto_cast){
+                prev = instruction;
+                continue;
+            }
+            // everything that the previous one WILL be this instruciton predecessor 
+            auto label_cast = dynamic_cast<label_Instruction*>(instruction);
+            // essentially we know that if the instruction is NOT A LABEL that everything before it 
+            // will be a predecessor
             if (!label_cast){
                 prev = instruction;
-                continue;  
-            }
-            if (debug) std::cerr << "Current instruction: " << typeid(*instruction).name() << "\n";
-            if (debug) std::cerr << "Label cast result: " << label_cast << "\n";    
-            Item* label = nullptr; // Initialize to nullptr to avoid undefined behavior
-
-            if (cjump_cast) {
-                label = cjump_cast->label; // Assign to the outer label
-            } else {
-                label = label_cast->label; // Assign to the outer label
-            }
-
+                continue;
+            };
             for (auto jump_label : total_cjump_instructions){
-                auto compare_label = jump_label->label;
-                if (compare_label->print() == label->print()){ 
+                auto cast_label = dynamic_cast<cjump_cmp_Instruction *>(jump_label);
+                auto goto_label = dynamic_cast<goto_label_instruction*>(jump_label);
+                Label* compare_label = nullptr; // Initialize to nullptr
+                std::string compare;
+                
+                if (cast_label){
+                    compare_label = dynamic_cast<Label *>(cast_label->label);
+                    if (compare_label) { // Make sure the dynamic_cast was successful
+                        compare = compare_label->value;
+                    }
+                } else if (goto_label) {
+                    compare_label = dynamic_cast<Label *>(goto_label->label);
+                    if (compare_label) { // Make sure the dynamic_cast was successful
+                        compare = compare_label->value;
+                    }
+                }
+                if (compare_label && compare == label_cast->getLabel()){ 
                     instruction->predecessors.insert(jump_label);
                 }
             }
-            if (debug) std::cerr<<"post label cast";
+            // if (debug) std::cerr<<"post label cast";
 
             prev = instruction;
             
         };
         for (auto instruction: this->instructions){
             for (auto predecessor: instruction->predecessors){
-                auto tenserr_cast = dynamic_cast<Call_tenserr_Instruction *>(predecessor);
-                auto ret_cast = dynamic_cast<Instruction_ret*>(predecessor);
-                if (tenserr_cast || ret_cast) {
-                } else {
-                    predecessor->successors.insert(instruction);
-                }
+                predecessor->successors.insert(instruction);
             }
         }
-        for (auto instruction: this->instructions){
-            if (debug) std::cerr<<"printing successors"<<std::endl;
-            for (auto successor : instruction->successors) {
-                successor->printMe();
-            }
-        }
+        // for (auto instruction: this->instructions){
+        //     // if (debug) std::cerr<<"printing successors"<<std::endl;
+        //     for (auto successor : instruction->successors) {
+        //         successor->printMe();
+        //     }
+        // }
     }   
 
     /*

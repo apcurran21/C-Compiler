@@ -9,7 +9,7 @@
 using namespace std;
 
 // use 1 for debug statements, 0 for no printing
-int debug = 1;
+int debug = 0;
 
 namespace L2{
 
@@ -266,15 +266,16 @@ namespace L2{
                 /*
                 Verify Gen and Kill sets by printing
                 */
-                if (debug) gen_kill_sets.print_sets(function_index, instruction_ptr);
+                // if (debug) gen_kill_sets.print_sets(function_index, instruction_ptr);
 
             }   // finished with Gen and Kill
             
             /*
             Calcuate Predeccesors and Successors sets for each instruction in the current function with our algorithm
             */
+
             fptr->calculateCFG();
-            if (debug) std::cerr << "CFG brrrr" << std::endl;
+            // if (debug) std::cerr << "CFG brrrr" << std::endl;
 
             int instruction_number;  
             bool changed;
@@ -284,6 +285,8 @@ namespace L2{
             do {
                 changed = false;
                 for (auto instruction_ptr : fptr->instructions) {
+                    instruction_number++;
+
                                         /*
                         Define pointers to the Gen, Kill, In, Out sets for the current instruction
                     */
@@ -293,7 +296,7 @@ namespace L2{
                     std::set<Variable*>* out_set_ptr = &in_out_sets.Out_Set[function_index][instruction_ptr];
 
 
-                    if (debug) std::cerr << "computing In and Out sets for the current instruction..." << std::endl;
+                    // if (debug) std::cerr << "computing In and Out sets for the current instruction..." << std::endl;
 
                     /*
                         Define state of the In set before any potential changes are made
@@ -324,6 +327,7 @@ namespace L2{
                     /*
                         Do the In set operations
                     */
+                   //
                     std::set<Variable*> Out_Result;
                     for (auto successor : instruction_ptr->successors) {
                         // note that successor should be of type Instruction*
@@ -339,8 +343,6 @@ namespace L2{
 
                     *in_set_ptr = In_Result;
                     *out_set_ptr = Out_Result;
-
-                    instruction_number++;
                     changed = changed || ((in_set_prev != *in_set_ptr) || (out_set_prev != *out_set_ptr));
                 }
             } while (changed);
