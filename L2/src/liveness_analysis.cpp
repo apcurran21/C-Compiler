@@ -9,7 +9,7 @@
 using namespace std;
 
 // use 1 for debug statements, 0 for no printing
-int debug = 1;
+int debug = 0;
 
 namespace L2{
 
@@ -129,6 +129,7 @@ namespace L2{
             Calcuate Gen and Kill sets for each instruction in the current function using the Uses/Defs sets and calling convention rules
             */
             for (auto instruction_ptr : fptr->instructions) {
+                if (debug) std::cerr << "ENTERED" << std::endl;
                 /*
                 Define pointer references to the current instruction's Gen/Kill sets for convenience
                 */
@@ -169,6 +170,9 @@ namespace L2{
                     // Gen, finding 'args used'
                     Number* num = dynamic_cast<Number*>(call_uN_instruction_ptr->N);
                     for (int i = 0; i < num->value; i++) {
+                        if (i>5){
+                            break;
+                        }
                         gen_set_ptr->insert(fptr->variable_allocator.allocate_variable(arguments_vec[i], VariableType::reg));
                     }
                     // Kill, finding 'caller-saved'
@@ -273,9 +277,9 @@ namespace L2{
             /*
             Calcuate Predeccesors and Successors sets for each instruction in the current function with our algorithm
             */
-
+            if (debug) std::cerr << "pre CFG brrrr" << std::endl;
             fptr->calculateCFG();
-            // if (debug) std::cerr << "CFG brrrr" << std::endl;
+            if (debug) std::cerr << "CFG brrrr" << std::endl;
 
             int instruction_number;  
             bool changed;
@@ -374,7 +378,7 @@ namespace L2{
                 std::cout << ")\n";
             }
             std::cout << ")\n\n";
-            std::cout << ")\n";
+            std::cout << ")\n\n";
         }
 
 

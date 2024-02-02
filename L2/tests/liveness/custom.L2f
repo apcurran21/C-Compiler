@@ -1,4 +1,5 @@
 (@testing
-	1
-    %v7 <- stack-arg 0
+	0
+	call @bar 7
+
 )
