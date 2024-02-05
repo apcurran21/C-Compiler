@@ -4,9 +4,7 @@
 (%n r12 r13 r14 r15 rbp rbx)
 (%div %n r12 r13 r14 r15 rbp rbx)
 (%div %n r12 r13 r14 r15 rbp rbx rdi)
-
 (%div %n r12 r13 r14 r15 rbp rbx rdi)
-
 (%div %n r12 r13 r14 r15 rax rbp rbx)
 (%div %n r12 r13 r14 r15 rax rbp rbx)
 (%div %n r12 r13 r14 r15 rbp rbx %sqrt_n)
@@ -14,9 +12,7 @@
 (%div %n r12 r13 r14 r15 rbp rbx %sqrt_n)
 (%div %n r12 r13 r14 r15 rbp rbx rdi %sqrt_n)
 (%div %n r12 r13 r14 r15 rbp rbx rdi rsi %sqrt_n)
-
 (%div %n r12 r13 r14 r15 rbp rbx rdi rsi %sqrt_n)
-
 (%div %n r12 r13 r14 r15 rax rbp rbx %sqrt_n)
 (%div %n r12 r13 r14 r15 rax rbp rbx %sqrt_n)
 (%div %n r12 r13 r14 r15 rbp rbx %sqrt_n)
@@ -47,9 +43,7 @@
 (%div %n r12 r13 r14 r15 rbp rbx rdi %sqrt_n)
 (%div %n r12 r13 r14 r15 rbp rbx rdi rsi %sqrt_n)
 (%div %n r12 r13 r14 r15 rbp rbx rdi rsi %sqrt_n)
-
 (%div %n r12 r13 r14 r15 rax rbp rbx %sqrt_n)
-
 (%div %n r12 r13 r14 r15 rax rbp rbx %sqrt_n)
 (%div %n r12 r13 r14 r15 rbp rbx %sqrt_n)
 (%div %n r12 r13 r14 r15 rbp rbx %sqrt_n)

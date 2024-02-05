@@ -12,7 +12,7 @@ using namespace std;
 
 namespace L2 {
 
-  const int debug = 1;
+  const int debug = 0;
 
   /*
   Parsed items stack
@@ -283,9 +283,12 @@ namespace L2 {
     pegtl::seq<
       var_reg_rule,
       spaces,
+      spaces,
       str_arrow,
       spaces,
+      spaces,
       str_stackarg,
+      spaces,
       spaces,
       number
     > {};
@@ -422,11 +425,7 @@ namespace L2 {
       spaces,
       label_rule
     > {};
-  // struct Inst_stackarg:
-  //     // return
-  //     pegtl::seq<
-  //       str_stackarg
-  //     > {};
+
   struct Inst_return_rule:
     // return
     pegtl::seq<
@@ -529,11 +528,11 @@ namespace L2 {
 
   struct Instruction_rule:
     pegtl::sor<
+      pegtl::seq< pegtl::at<Inst_stackarg_rule>, Inst_stackarg_rule >,
       pegtl::seq< pegtl::at<Inst_cmp_assign_rule>, Inst_cmp_assign_rule >,
       pegtl::seq< pegtl::at<Instruction_assignment_rule>, Instruction_assignment_rule >,
       pegtl::seq< pegtl::at<Inst_loadmem_rule>, Inst_loadmem_rule >,
       pegtl::seq< pegtl::at<Inst_storemem_rule>, Inst_storemem_rule >,
-      pegtl::seq< pegtl::at<Inst_stackarg_rule>, Inst_stackarg_rule >,
       pegtl::seq< pegtl::at<Inst_aop_rule>, Inst_aop_rule >,
       pegtl::seq< pegtl::at<Inst_sop_sx_rule>, Inst_sop_sx_rule >,
       pegtl::seq< pegtl::at<Inst_sop_N_rule>, Inst_sop_N_rule >,
@@ -991,17 +990,6 @@ namespace L2 {
       currentF->instructions.push_back(i);
     }
   };
-  // template<> struct action < Inst_stackarg > {
-  //   template< typename Input >
-	//   static void apply( const Input & in, Program & p){
-  //     // return
-  //     if (debug) std::cerr << "Recognized stackarg" << std::endl;
-
-  //     auto currentF = p.functions.back();
-  //     auto i = new Instruction_ret();
-  //     currentF->instructions.push_back(i);
-  //   }
-  // };
   template<> struct action < Inst_return_rule > {
     template< typename Input >
 	  static void apply( const Input & in, Program & p){

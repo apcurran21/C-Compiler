@@ -1,31 +1,9 @@
 (
 (in
-(rdi)
-(%queue_ptr)
-(%old_size %queue_ptr)
-(%not_empty %queue_ptr)
-()
-()
-()
-(rdi)
-(%queue_ptr r12 r13 r14 r15 rbp rbx)
-(r12 r13 r14 r15 rax rbp rbx)
-(%queue_ptr)
-(%queue_ptr)
+(r8 r9 rcx rdi rdx rsi)
 )
 
 (out
-(%queue_ptr)
-(%old_size %queue_ptr)
-(%not_empty %queue_ptr)
-(%queue_ptr)
-()
-()
-(rdi)
-()
-(r12 r13 r14 r15 rax rbp rbx)
-()
-(%queue_ptr)
 ()
 )
 
