@@ -247,9 +247,9 @@ namespace L2{
 
     std::string op = this->method->translate();
     if (debug) std::cerr << "op = " << op << std::endl;
-    std::string dest = this->d->translate();
+    std::string dest = this->dst->translate();
     if (debug) std::cerr << "dest = " << dest << std::endl;
-    std::string src = this->s->translate();
+    std::string src = this->src->translate();
     if (debug) std::cerr << "src = " << src << std::endl;
 
     outputFile << op << " " << src << ", " << dest << "\n";
@@ -258,12 +258,12 @@ namespace L2{
   void SOP_assignment::gen(Function *f, std::ofstream &outputFile) {
     if (debug) std::cerr << "gen method called for a SOP_assignment instance!" << std::endl;
     outputFile << this->method->translate() << " ";
-    if (dynamic_cast< Register* >(this->s)) {
-      outputFile << "%" << convert_reg(this->s->print());
+    if (dynamic_cast< Register* >(this->src)) {
+      outputFile << "%" << convert_reg(this->src->print());
     } else {
-      outputFile << this->s->translate();
+      outputFile << this->src->translate();
     }
-    outputFile << ", " << this->d->translate() << "\n";
+    outputFile << ", " << this->dst->translate() << "\n";
   }
 
   void stackarg_assignment::gen(Function *f, std::ofstream &outputFile) {

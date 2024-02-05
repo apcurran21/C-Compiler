@@ -12,7 +12,7 @@ using namespace std;
 
 namespace L2 {
 
-  const int debug = 1;
+  const int debug = 0;
 
   /*
   Parsed items stack
@@ -164,6 +164,12 @@ namespace L2 {
       str_rsp
     > {};
 
+  struct var_reg_rule:
+    pegtl::sor<
+      variable_rule,
+      register_rule
+    > {};
+
   struct cmp_rule:
     pegtl::sor<
       str_lesseq,
@@ -205,15 +211,34 @@ namespace L2 {
   /*
   Instruction Rules!
   */
+  struct Inst_cmp_assign_rule:
+      // w <- t cmp t
+      pegtl::seq<
+        var_reg_rule,
+        spaces,
+        str_arrow,
+        spaces,
+        pegtl::sor<
+          var_reg_rule,
+          number
+        >,
+        spaces,
+        cmp_rule,
+        spaces,
+        pegtl::sor<
+          var_reg_rule,
+          number
+        >
+      > {};
   struct Instruction_assignment_rule:
     // w <- s
     pegtl::seq<
-      register_rule,
+      var_reg_rule,
       spaces,
       str_arrow,
       spaces,
       pegtl::sor<
-        register_rule,
+        var_reg_rule,
         number,
         label_rule,
         I_rule
@@ -223,13 +248,13 @@ namespace L2 {
   struct Inst_loadmem_rule:
     // w <- mem x M
     pegtl::seq<
-      register_rule,
+      var_reg_rule,
       spaces,
       str_arrow,
       spaces,
       str_mem,
       spaces,
-      register_rule,
+      var_reg_rule,
       spaces,
       number
     > {};
@@ -239,14 +264,14 @@ namespace L2 {
     pegtl::seq<
       str_mem,
       spaces,
-      register_rule,
+      var_reg_rule,
       spaces,
       number,
       spaces,
       str_arrow,
       spaces,
       pegtl::sor<
-        register_rule,
+        var_reg_rule,
         number,
         label_rule,
         I_rule
@@ -256,21 +281,24 @@ namespace L2 {
   struct Inst_stackarg_rule:
     // w <- stack-arg M
     pegtl::seq<
-      register_rule,
+      var_reg_rule,
+      spaces,
       str_arrow,
+      spaces,
       str_stackarg,
+      spaces,
       number
     > {};
 
   struct Inst_aop_rule:
     // w aop t
     pegtl::seq<
-      register_rule,
+      var_reg_rule,
       spaces,
       aop_rule,
       spaces,
       pegtl::sor<
-        register_rule,
+        var_reg_rule,
         number
       >
     > {};
@@ -278,12 +306,12 @@ namespace L2 {
   struct Inst_sop_sx_rule:
     // w sop sx
     pegtl::seq<
-      register_rule,
+      var_reg_rule,
       spaces,
       sop_rule,
       spaces,
       pegtl::sor<
-        register_rule,
+        str_rcx,
         variable_rule
       >
     > {};
@@ -291,7 +319,7 @@ namespace L2 {
   struct Inst_sop_N_rule:
     // w sop N
     pegtl::seq<
-      register_rule,
+      var_reg_rule,
       spaces,
       sop_rule,
       spaces,
@@ -303,14 +331,14 @@ namespace L2 {
     pegtl::seq<
       str_mem,
       spaces,
-      register_rule,
+      var_reg_rule,
       spaces,
       number,
       spaces,
       str_pluseq,
       spaces,
       pegtl::sor<
-        register_rule,
+        var_reg_rule,
         number
       >
     > {};
@@ -320,14 +348,14 @@ namespace L2 {
     pegtl::seq<
       str_mem,
       spaces,
-      register_rule,
+      var_reg_rule,
       spaces,
       number,
       spaces,
       str_minuseq,
       spaces,
       pegtl::sor<
-        register_rule,
+        var_reg_rule,
         number
       >
     > {};
@@ -335,13 +363,13 @@ namespace L2 {
   struct Inst_plus_mem_rule:
     // w += mem x M
     pegtl::seq<
-      register_rule,
+      var_reg_rule,
       spaces,
       str_pluseq,
       spaces,
       str_mem,
       spaces,
-      register_rule,
+      var_reg_rule,
       spaces,
       number
     > {};
@@ -349,36 +377,17 @@ namespace L2 {
   struct Inst_minus_mem_rule:
     // w -= mem x M
     pegtl::seq<
-      register_rule,
+      var_reg_rule,
       spaces,
       str_minuseq,
       spaces,
       str_mem,
       spaces,
-      register_rule,
+      var_reg_rule,
       spaces,
       number
     > {};
 
-  struct Inst_cmp_assign_rule:
-    // w <- t cmp t
-    pegtl::seq<
-      register_rule,
-      spaces,
-      str_arrow,
-      spaces,
-      pegtl::sor<
-        register_rule,
-        number
-      >,
-      spaces,
-      cmp_rule,
-      spaces,
-      pegtl::sor<
-        register_rule,
-        number
-      >
-    > {};
 
   struct Inst_cjump_rule:
     // cjump t cmp t label
@@ -386,14 +395,14 @@ namespace L2 {
       str_cjump,
       spaces,
       pegtl::sor<
-        register_rule,
+        var_reg_rule,
         number
       >,
       spaces,
       cmp_rule,
       spaces,
       pegtl::sor<
-        register_rule,
+        var_reg_rule,
         number
       >,
       spaces,
@@ -402,7 +411,9 @@ namespace L2 {
 
   struct Inst_label_rule:
     // label
-    label_rule {};
+    pegtl::seq<
+      label_rule
+    > {};
 
   struct Inst_goto_rule:
     // goto label
@@ -414,7 +425,10 @@ namespace L2 {
 
   struct Inst_return_rule:
     // return
-    str_return {};
+    pegtl::seq<
+      str_return
+    > {};
+
 
   struct call_uN_rule:
     // call u N
@@ -422,7 +436,7 @@ namespace L2 {
       str_call,
       spaces,
       pegtl::sor<
-        register_rule,
+        var_reg_rule,
         I_rule
       >,
       spaces,
@@ -482,7 +496,7 @@ namespace L2 {
   struct Inst_inc_rule:
   // w ++
     pegtl::seq<
-      register_rule,
+      var_reg_rule,
       spaces,
       str_inc
     > {};
@@ -490,7 +504,7 @@ namespace L2 {
   struct Inst_dec_rule:
   // w --
     pegtl::seq<
-      register_rule,
+      var_reg_rule,
       spaces,
       str_dec
     > {};
@@ -498,23 +512,24 @@ namespace L2 {
   struct Inst_atreg_rule:
   // w @ w w E
     pegtl::seq<
-      register_rule,
+      var_reg_rule,
       spaces,
       str_at,
       spaces,
-      register_rule,
+      var_reg_rule,
       spaces,
-      register_rule,
+      var_reg_rule,
       spaces,
       number
     > {};
 
   struct Instruction_rule:
     pegtl::sor<
+      pegtl::seq< pegtl::at<Inst_stackarg_rule>, Inst_stackarg_rule >,
+      pegtl::seq< pegtl::at<Inst_cmp_assign_rule>, Inst_cmp_assign_rule >,
       pegtl::seq< pegtl::at<Instruction_assignment_rule>, Instruction_assignment_rule >,
       pegtl::seq< pegtl::at<Inst_loadmem_rule>, Inst_loadmem_rule >,
       pegtl::seq< pegtl::at<Inst_storemem_rule>, Inst_storemem_rule >,
-      pegtl::seq< pegtl::at<Inst_stackarg_rule>, Inst_stackarg_rule >,
       pegtl::seq< pegtl::at<Inst_aop_rule>, Inst_aop_rule >,
       pegtl::seq< pegtl::at<Inst_sop_sx_rule>, Inst_sop_sx_rule >,
       pegtl::seq< pegtl::at<Inst_sop_N_rule>, Inst_sop_N_rule >,
@@ -522,7 +537,6 @@ namespace L2 {
       pegtl::seq< pegtl::at<Inst_mem_minus_rule>, Inst_mem_minus_rule >,
       pegtl::seq< pegtl::at<Inst_plus_mem_rule>, Inst_plus_mem_rule >,
       pegtl::seq< pegtl::at<Inst_minus_mem_rule>, Inst_minus_mem_rule >,
-      pegtl::seq< pegtl::at<Inst_cmp_assign_rule>, Inst_cmp_assign_rule >,
       pegtl::seq< pegtl::at<Inst_cjump_rule>, Inst_cjump_rule >,
       pegtl::seq< pegtl::at<Inst_label_rule>, Inst_label_rule >,
       pegtl::seq< pegtl::at<Inst_goto_rule>, Inst_goto_rule >,
@@ -621,7 +635,7 @@ namespace L2 {
   template<> struct action < label_rule > {
     template< typename Input >
 	  static void apply( const Input & in, Program & p) {
-      if (debug) std::cerr << "Recognized a label" << std::endl;
+      if (debug) std::cerr << "Recognized a label rule" << std::endl;
 
       auto label = new Label(in.string());
       parsed_items.push_back(label);
@@ -701,6 +715,27 @@ namespace L2 {
   /*
   Instruction Actions!
   */
+
+  template<> struct action < Inst_cmp_assign_rule > {
+      template< typename Input >
+      static void apply( const Input & in, Program & p) {
+        // w <- t2 cmp t1
+        if (debug) std::cerr << "Recognized w <- t2 cmp t1" << std::endl;
+        
+        auto currentF = p.functions.back();
+        auto t1 = parsed_items.back();
+        parsed_items.pop_back();
+        auto cmp = parsed_items.back();
+        parsed_items.pop_back();
+        auto t2 = parsed_items.back();
+        parsed_items.pop_back();
+        auto w = parsed_items.back();
+        parsed_items.pop_back();
+        auto i = new cmp_Instruction(w, t2, cmp, t1);
+        currentF->instructions.push_back(i);
+      }
+    };
+
   template<> struct action < Instruction_assignment_rule > {
     template< typename Input >
 	  static void apply( const Input & in, Program & p) {
@@ -813,13 +848,18 @@ namespace L2 {
 
       auto currentF = p.functions.back();
       auto N = parsed_items.back();
+      if (debug) std::cerr << "N = " << N->print() << std::endl;
       parsed_items.pop_back();
       auto method = parsed_items.back();
       parsed_items.pop_back();  
       auto w = parsed_items.back();
+      if (debug) std::cerr << "w = " << w->print() << std::endl;
       parsed_items.pop_back();
       auto i = new SOP_assignment(method, w, N);
+      if (debug) std::cerr << "printing the instruction fields ..." << std::endl;
+      if (debug) std::cerr << "w = "  << i->dst->print() << ", N = " << i->src->print() << std::endl;
       currentF->instructions.push_back(i);
+
     }
   };
 
@@ -899,25 +939,6 @@ namespace L2 {
     }
   };
 
-  template<> struct action < Inst_cmp_assign_rule > {
-    template< typename Input >
-    static void apply( const Input & in, Program & p) {
-      // w <- t2 cmp t1
-      if (debug) std::cerr << "Recognized w <- t2 cmp t1" << std::endl;
-      
-      auto currentF = p.functions.back();
-      auto t1 = parsed_items.back();
-      parsed_items.pop_back();
-      auto cmp = parsed_items.back();
-      parsed_items.pop_back();
-      auto t2 = parsed_items.back();
-      parsed_items.pop_back();
-      auto w = parsed_items.back();
-      parsed_items.pop_back();
-      auto i = new cmp_Instruction(w, t2, cmp, t1);
-      currentF->instructions.push_back(i);
-    }
-  };
 
   template<> struct action < Inst_cjump_rule > {
     template< typename Input >
@@ -943,7 +964,7 @@ namespace L2 {
     template< typename Input >
     static void apply( const Input & in, Program & p) {
       // label
-      if (debug) std::cerr << "Recognized label" << std::endl;
+      if (debug) std::cerr << "Recognized label instruction" << std::endl;
 
       auto currentF = p.functions.back();
       auto label = parsed_items.back();
@@ -966,7 +987,6 @@ namespace L2 {
       currentF->instructions.push_back(i);
     }
   };
-
   template<> struct action < Inst_return_rule > {
     template< typename Input >
 	  static void apply( const Input & in, Program & p){
@@ -1128,12 +1148,6 @@ namespace L2 {
     template< typename Input >
 	  static void apply( const Input & in, Program & p) {
       if (debug) std::cerr << "Recognized an arg number" << std::endl;
-
-      // since argument number gets matched as N first, its token gets put on the stack
-      // ie we should remove here
-      // parsed_items.pop_back();
-
-      // ^ actually idk if this gets matched as 'number' first?
 
       auto currentF = p.functions.back();
       currentF->arguments = std::stoll(in.string());

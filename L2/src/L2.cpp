@@ -179,16 +179,16 @@ namespace L2 {
 
     }
 
-    // AOP_assignment Constructor
-    AOP_assignment::AOP_assignment(Item *method, Item *dst, Item *src) : Instruction_assignment(dst, src), method(method) {}
+    // AOP_assignment ConstructorInstruction_assignment(dst, src),
+    AOP_assignment::AOP_assignment(Item *method, Item *dst, Item *src) : src(src), dst(dst), method(method) {}
     void AOP_assignment::printMe() {
-        std::cout << "AOP_assignment:    " << "d = " << this->d->translate() << ", method = " << this->method->translate() << ", s = " << this->s->translate() << std::endl;
+        std::cout << "AOP_assignment:    " << "d = " << this->dst->translate() << ", method = " << this->method->translate() << ", s = " << this->src->translate() << std::endl;
     }
 
     // SOP_assignment Constructor
-    SOP_assignment::SOP_assignment(Item *method, Item *dst, Item *src) : Instruction_assignment(dst, src), method(method) {}
+    SOP_assignment::SOP_assignment(Item *method, Item *dst, Item *src) : src(src), dst(dst), method(method) {}
     void SOP_assignment::printMe() {
-        std::cout << "SOP_assignment:    " << "d = " << this->d->print() << ", method = " << this->method->print() << ", s = " << this->s->print() << std::endl;
+        std::cout << "SOP_assignment:    " << "d = " << this->dst->print() << ", method = " << this->method->print() << ", s = " << this->src->print() << std::endl;
     }
 
     Call_print_Instruction::Call_print_Instruction() {}
@@ -229,7 +229,7 @@ namespace L2 {
     }
     void stackarg_assignment::printMe()
     {
-    };
+    }
 
 
     /*
@@ -346,71 +346,95 @@ namespace L2 {
         3. Find the predecessors 
         4. Find the successors 
         */
-        std::set<cjump_cmp_Instruction *> total_cjump_instructions{};
+        std::set<Instruction *> total_cjump_instructions{};
         for (auto instruction : this->instructions){
             auto cast_instruction = dynamic_cast<cjump_cmp_Instruction *>(instruction);
+            auto goto_instruction = dynamic_cast<goto_label_instruction*>(instruction);
             instruction->predecessors.clear(); // clearing out the predecessors
             instruction->successors.clear(); //clearing out the successors
             if (cast_instruction){
                 total_cjump_instructions.insert(cast_instruction);
-            };
+            }
+            if (goto_instruction){
+                total_cjump_instructions.insert(goto_instruction);
+            }
+            ;
         }
         Instruction *prev = nullptr;
         for (auto instruction: this->instructions){
-            // this handles the predecessors where we have to move through different characters 
-            auto jump_cast = dynamic_cast<cjump_cmp_Instruction *>(prev);
-            auto goto_cast = dynamic_cast<goto_label_instruction *>(prev);
-            if (!prev){
-                std::cerr<<"oogga loooga"<<std::endl;
-            } else if (!jump_cast && !goto_cast){
-                instruction->predecessors.insert(prev);
-            };
-            auto label_cast = dynamic_cast<label_Instruction *>(instruction);
-            // Clarified in OH: basically we know that up to this point, the insturciton is not a label, or a jump instruction
-            // or a goto instruction. This means that the previous instruction 
-            if (!label_cast){
+            // if (debug) std::cerr<<"we iterating";
+            auto tenserr_cast = dynamic_cast<Call_tenserr_Instruction *>(prev);
+            auto ret_cast = dynamic_cast<Instruction_ret*>(prev);
+            auto tuple_err = dynamic_cast<Call_tuple_Instruction*>(prev);
+            auto goto_cast = dynamic_cast<goto_label_instruction*>(prev);
+            auto cjump_cast = dynamic_cast<cjump_cmp_Instruction *>(prev);
+            auto label_cast = dynamic_cast<label_Instruction*>(instruction);
+            if (!prev && !label_cast){
                 prev = instruction;
                 continue;
             }
-            auto label = label_cast->getLabel();
+            if (tenserr_cast || ret_cast || tuple_err || goto_cast||!prev){
+            } else{
+                instruction->predecessors.insert(prev);
+            }
+            auto check_goto_cast = dynamic_cast<goto_label_instruction*>(instruction);
+            if (check_goto_cast){
+                prev = instruction;
+                continue;
+            }
+            // everything that the previous one WILL be this instruciton predecessor 
+            // essentially we know that if the instruction is NOT A LABEL that everything before it 
+            // will be a predecessor
+            if (!label_cast){
+                prev = instruction;
+                continue;
+            };
             for (auto jump_label : total_cjump_instructions){
-                auto compare_label = jump_label->getLabel();
-                // string comparisons are slow -> we want to do something more efficient 
-                if (compare_label == label){ 
+                auto cast_label = dynamic_cast<cjump_cmp_Instruction *>(jump_label);
+                auto goto_label = dynamic_cast<goto_label_instruction*>(jump_label);
+                Label* compare_label = nullptr; // Initialize to nullptr
+                std::string compare;
+                
+                if (cast_label){
+                    compare_label = dynamic_cast<Label *>(cast_label->label);
+                    if (compare_label) { // Make sure the dynamic_cast was successful
+                        compare = compare_label->value;
+                    }
+                } else if (goto_label) {
+                    compare_label = dynamic_cast<Label *>(goto_label->label);
+                    if (compare_label) { // Make sure the dynamic_cast was successful
+                        compare = compare_label->value;
+                    }
+                }
+                if (compare_label && compare == label_cast->getLabel()){ 
                     instruction->predecessors.insert(jump_label);
                 }
             }
-            prev = instruction;
-        };
-        std::cerr << "CFG brrrr" << std::endl;
-        for (auto instruction: this->instructions){
-            std::cerr << "oink" << std::endl;
-            for (auto predecessor: instruction->predecessors){
-                std::cerr << "piggy" << std::endl;
-                predecessor->successors.insert(instruction);
-                std::cerr << "big yums" << std::endl;
+            // if (debug) std::cerr<<"post label cast";
 
+            prev = instruction;
+            
+        };
+        for (auto instruction: this->instructions){
+            for (auto predecessor: instruction->predecessors){
+                predecessor->successors.insert(instruction);
             }
         }
-        std::cerr << "finished" << std::endl;
+        // for (auto instruction: this->instructions){
+        //     // if (debug) std::cerr<<"printing successors"<<std::endl;
+        //     for (auto successor : instruction->successors) {
+        //         successor->printMe();
+        //     }
+        // }
     }   
 
+    /*
+    Use/Def Set Visitor methods
+    */
     void UseDefVisitor::visit(Instruction_ret * instruction){
-        Variable* var1 = new Variable("rax");
-        Variable* var2 = new Variable("r12");
-        Variable* var3 = new Variable("r13");
-        Variable* var4 = new Variable("r14");
-        Variable* var5 = new Variable("r15");
-        Variable* var6 = new Variable("rbp");
-        Variable* var7 = new Variable("rbx");
-        instruction->used.insert(var1);
-        instruction->used.insert(var2);
-        instruction->used.insert(var3);
-        instruction->used.insert(var4);
-        instruction->used.insert(var5);
-        instruction->used.insert(var6);
-        instruction->used.insert(var7);
+
     }
+
     void UseDefVisitor::visit(Instruction_assignment * instruction) {
         Variable* var = dynamic_cast<Variable*>(instruction->s);
         if (var){
@@ -418,29 +442,34 @@ namespace L2 {
         }
         instruction->defined.insert(dynamic_cast<Variable*>(instruction->d));
     }
+
     void UseDefVisitor::visit(label_Instruction *instruction) {
         
-    };
+    }
+
     void UseDefVisitor::visit(goto_label_instruction *instruction) {
 
-    };
+    }
+
     void UseDefVisitor::visit(Call_tenserr_Instruction *instruction) {
-        
-    };
+
+    }
    
     void UseDefVisitor::visit(Call_print_Instruction *instruction) {
 
-    };
+    }
+
     void UseDefVisitor::visit(Call_input_Instruction *instruction) {
 
-    };
-    void UseDefVisitor::visit(Call_allocate_Instruction *instruction) {
-        
-    };
-    void UseDefVisitor::visit(Call_tuple_Instruction *instruction) {
-        
-    };
+    }
 
+    void UseDefVisitor::visit(Call_allocate_Instruction *instruction) {
+
+    }
+
+    void UseDefVisitor::visit(Call_tuple_Instruction *instruction) {
+
+    }
 
     void UseDefVisitor::visit(Call_uN_Instruction * instruction) {
         Variable* var = dynamic_cast<Variable*>(instruction->u);
@@ -448,8 +477,6 @@ namespace L2 {
             instruction->used.insert(var);
         };
     }
-
-
 
     void UseDefVisitor::visit(w_increment_decrement *instruction) {
         instruction->used.insert(dynamic_cast<Variable*>(instruction->r));
@@ -463,24 +490,34 @@ namespace L2 {
         instruction->used.insert(dynamic_cast<Variable*>(instruction->r2));
         instruction->defined.insert(dynamic_cast<Variable*>(instruction->r1));
     }
+
     void UseDefVisitor::visit(Memory_assignment_store *instruction) {
-        instruction->used.insert(dynamic_cast<Variable*>(instruction->s));
-        instruction->used.insert(dynamic_cast<Variable*>(instruction->dst));
+        // src is of type s, which can be either a variable, register, number, lable, or I name
+        Variable* s_cast = dynamic_cast<Variable*>(instruction->s);
+        if (s_cast) instruction->used.insert(s_cast);
+        Variable* d_cast = dynamic_cast<Variable*>(instruction->dst);
+        if (d_cast->name != "rsp"){
+            instruction->used.insert(d_cast);
+        }
     }
 
-    void UseDefVisitor::visit(Memory_assignment_load *instruction) { // I'm not sure if this one is wrong 
+    void UseDefVisitor::visit(Memory_assignment_load *instruction) {
         instruction->used.insert(dynamic_cast<Variable*>(instruction->x));
         instruction->defined.insert(dynamic_cast<Variable*>(instruction->dst));
     }
+
     void UseDefVisitor::visit(Memory_arithmetic_load *instruction) {
         instruction->used.insert(dynamic_cast<Variable*>(instruction->x));
+        instruction->used.insert(dynamic_cast<Variable*>(instruction->dst));
         instruction->defined.insert(dynamic_cast<Variable*>(instruction->dst));
     }
 
     void UseDefVisitor::visit(Memory_arithmetic_store *instruction) {
-        instruction->used.insert(dynamic_cast<Variable*>(instruction->t)); // Is t correct here?
+        Variable* t_cast = dynamic_cast<Variable*>(instruction->t);
+        if (t_cast) instruction->used.insert(t_cast);
         instruction->defined.insert(dynamic_cast<Variable*>(instruction->dst));  
     }
+
     void UseDefVisitor::visit(cmp_Instruction *instruction) {
         Variable* var1 = dynamic_cast<Variable*>(instruction->t1);
         Variable* var2 = dynamic_cast<Variable*>(instruction->t2);
@@ -492,22 +529,41 @@ namespace L2 {
         }
         instruction->defined.insert(dynamic_cast<Variable*>(instruction->dst));
     }
+
     void UseDefVisitor::visit(cjump_cmp_Instruction *instruction) {
-        instruction->used.insert(dynamic_cast<Variable*>(instruction->t1)); 
-        instruction->used.insert(dynamic_cast<Variable*>(instruction->t2)); 
+        Variable* var1 = dynamic_cast<Variable*>(instruction->t1);
+        Variable* var2 = dynamic_cast<Variable*>(instruction->t2);
+        if (var1){
+            instruction->used.insert(dynamic_cast<Variable*>(instruction->t1)); 
+        }
+        if (var2){
+            instruction->used.insert(dynamic_cast<Variable*>(instruction->t2)); 
+        }
+
     }
+
     void UseDefVisitor::visit(stackarg_assignment *instruction) {
         instruction->defined.insert(dynamic_cast<Variable*>(instruction->w)); 
     }
+
     void UseDefVisitor::visit(AOP_assignment * instruction) {
-        instruction->used.insert(dynamic_cast<Variable*>(instruction->src));
+        Variable* src_cast = dynamic_cast<Variable*>(instruction->src);
+        if (src_cast) instruction->used.insert(src_cast);
+        instruction->used.insert(dynamic_cast<Variable*>(instruction->dst));
         instruction->defined.insert(dynamic_cast<Variable*>(instruction->dst));
     }
 
     void UseDefVisitor::visit(SOP_assignment *instruction){
-        instruction->used.insert(dynamic_cast<Variable*>(instruction->src));
+        Variable* src_cast = dynamic_cast<Variable*>(instruction->src);
+        if (src_cast) instruction->used.insert(src_cast);
         instruction->used.insert(dynamic_cast<Variable*>(instruction->dst));
-    }    
+        instruction->defined.insert(dynamic_cast<Variable*>(instruction->dst));
+    }
+
+
+    /*
+    Calculate the Use/Def sets by running over each instruction's visit method
+    */
     void Function::calculateUseDefs(){
         UseDefVisitor visitor;
         for (auto instruction: this->instructions){

@@ -1,0 +1,14 @@
+(
+(in
+(rdi rsi)
+(rdi rsi)
+(rdi rsi)
+)
+
+(out
+(rdi rsi)
+(rdi rsi)
+(rdi rsi)
+)
+
+)

@@ -1,0 +1,6 @@
+(@mod
+	2
+	:divloop
+	cjump rdi < rsi :divend
+	goto :divloop
+)

@@ -77,6 +77,12 @@ test_new: dirs $(COMPILER)
 test_liveness: dirs $(COMPILER)
 	./scripts/testLiveness.sh
 
+test_liveness_batch:
+	@./run_tests_batch.sh $(start)
+
+test_liveness_count:
+	./scripts/testLivenessCount.sh $(START) $(COUNT)
+
 test_spill: dirs $(COMPILER)
 	./scripts/testSpill.sh
 

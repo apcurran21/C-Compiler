@@ -11,7 +11,7 @@
 
 namespace L2 {
 
-  extern const int debug;
+  extern int const debug;
 
   // Forward declarations
   class Function;
@@ -48,7 +48,6 @@ namespace L2 {
       Number (int64_t n);
       std::string translate() override;
       std::string print() override;
-    private:
       int64_t value;
   };
 
@@ -69,7 +68,6 @@ namespace L2 {
       std::string getLabel() const {
         return value;
       };
-    private:
       std::string value;
   };
 
@@ -138,11 +136,10 @@ namespace L2 {
       void accept(Visitor *visitor) override;
       void gen(Function *f, std::ofstream &outputFile) override;
       void printMe() override;
-      std::string getLabel() const {
+      std::string getLabel() {
           Label *labelPtr = dynamic_cast<Label*>(label);
           return labelPtr->getLabel();
       }
-    protected:
       Item *label; 
   };
 
@@ -160,7 +157,6 @@ namespace L2 {
       Call_tenserr_Instruction(Item *F);
       void gen(Function *f, std::ofstream &outputFile) override;
       void printMe() override;
-    private:
       Item *F;
   };
   
@@ -318,7 +314,7 @@ namespace L2 {
   //     Item *op;
   //     Item *M;
   // };
-  class AOP_assignment : public Instruction_assignment {
+  class AOP_assignment : public Instruction {
     public:
       AOP_assignment(Item *method, Item *dst, Item *src);
       void gen(Function *f, std::ofstream &outputFile) override;
@@ -329,7 +325,7 @@ namespace L2 {
       Item *src;
   };
 
-  class SOP_assignment : public Instruction_assignment {
+  class SOP_assignment : public Instruction {
     public:
       SOP_assignment(Item *method, Item *dst, Item *src);
       void gen(Function *f, std::ofstream &outputFile) override;
@@ -429,7 +425,17 @@ namespace L2 {
   class In_Out_Store {
     public:
       In_Out_Store(Program *p);
+      void print_sets(int function_index, Instruction* instruction_ptr);
       std::vector<std::unordered_map<Instruction*, std::set<Variable*>>> In_Set;
       std::vector<std::unordered_map<Instruction*, std::set<Variable*>>> Out_Set;
   };
+
+  class Gen_Kill_Store {
+    public:
+    Gen_Kill_Store(Program *p);
+    void print_sets(int function_index, Instruction* instruction_ptr);
+    std::vector<std::unordered_map<Instruction*, std::set<Variable*>>> Gen_Set;
+    std::vector<std::unordered_map<Instruction*, std::set<Variable*>>> Kill_Set;
+  };
+  
 }
