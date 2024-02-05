@@ -3,3 +3,6 @@
 
 # ran testing files
 *.tmp
+
+# object files causing merge conflicts
+*.0
