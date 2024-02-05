@@ -368,11 +368,12 @@ namespace L2 {
             auto tuple_err = dynamic_cast<Call_tuple_Instruction*>(prev);
             auto goto_cast = dynamic_cast<goto_label_instruction*>(prev);
             auto cjump_cast = dynamic_cast<cjump_cmp_Instruction *>(prev);
-            if (!prev){
+            auto label_cast = dynamic_cast<label_Instruction*>(instruction);
+            if (!prev && !label_cast){
                 prev = instruction;
                 continue;
             }
-            if (tenserr_cast || ret_cast || tuple_err || goto_cast){
+            if (tenserr_cast || ret_cast || tuple_err || goto_cast||!prev){
             } else{
                 instruction->predecessors.insert(prev);
             }
@@ -382,7 +383,6 @@ namespace L2 {
                 continue;
             }
             // everything that the previous one WILL be this instruciton predecessor 
-            auto label_cast = dynamic_cast<label_Instruction*>(instruction);
             // essentially we know that if the instruction is NOT A LABEL that everything before it 
             // will be a predecessor
             if (!label_cast){

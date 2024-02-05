@@ -19,6 +19,7 @@ for i in *.L2f ; do
   if ! test $? -eq 0 ; then
     echo "  Failed" ;
     let failed=$failed+1 ;
+    break
   else
     echo "  Passed" ;
     let passed=$passed+1 ;
@@ -29,3 +30,4 @@ let total=$passed+$failed ;
 
 echo "########## SUMMARY" ;
 echo "Test passed: $passed out of $total"
+
