@@ -282,8 +282,11 @@ namespace L2 {
     // w <- stack-arg M
     pegtl::seq<
       var_reg_rule,
+      spaces,
       str_arrow,
+      spaces,
       str_stackarg,
+      spaces,
       number
     > {};
 
@@ -419,11 +422,11 @@ namespace L2 {
       spaces,
       label_rule
     > {};
-  struct Inst_stackarg:
-      // return
-      pegtl::seq<
-        str_stackarg
-      > {};
+  // struct Inst_stackarg:
+  //     // return
+  //     pegtl::seq<
+  //       str_stackarg
+  //     > {};
   struct Inst_return_rule:
     // return
     pegtl::seq<
@@ -988,17 +991,17 @@ namespace L2 {
       currentF->instructions.push_back(i);
     }
   };
-  template<> struct action < Inst_stackarg > {
-    template< typename Input >
-	  static void apply( const Input & in, Program & p){
-      // return
-      if (debug) std::cerr << "Recognized stackarg" << std::endl;
+  // template<> struct action < Inst_stackarg > {
+  //   template< typename Input >
+	//   static void apply( const Input & in, Program & p){
+  //     // return
+  //     if (debug) std::cerr << "Recognized stackarg" << std::endl;
 
-      auto currentF = p.functions.back();
-      auto i = new Instruction_ret();
-      currentF->instructions.push_back(i);
-    }
-  };
+  //     auto currentF = p.functions.back();
+  //     auto i = new Instruction_ret();
+  //     currentF->instructions.push_back(i);
+  //   }
+  // };
   template<> struct action < Inst_return_rule > {
     template< typename Input >
 	  static void apply( const Input & in, Program & p){
