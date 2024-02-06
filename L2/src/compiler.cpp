@@ -131,7 +131,8 @@ int main(
    * Liveness test.
    */
   if (liveness_only){
-    L2::liveness_analysis(&p);
+    auto In_Out_sets = L2::liveness_analysis(&p);
+    
     return 0;
   }
 

@@ -1,70 +1,178 @@
 #include "L2.h"
 #include "graph_coloring.h"
-
-using namespace L2;
-
-Node::Node(Variable *var) : var(var), degree(0) {
-  // Initialize the Node with a variable and set the degree to 0.
-}
-
-u_int64_t Node::getDegree(void) const {
-  // Return the degree of the node.
-  return degree;
-}
-
-Variable* Node::get(void) const {
-  // Return the variable associated with this node.
-  return var;
-}
-
-void Node::addDegree(int64_t delta) {
-  // Add delta to the degree of the node. This can be a positive or negative number.
-  degree += delta;
-}
-void Graph::addNode(Node *node) {
-  // Add a node to the graph with no connections initially.
-  g[node] = std::set<Node *>();
-  nodes[node->get()] = node;
-}
-
-void Graph::removeNode(Node *node) {
-  // Remove all connections to this node.
-  for (auto &pair : g) {
-    pair.second.erase(node);
+#include "interference_graph.h"
+namespace L2{
+  Node::Node(Variable *var) : var(var), degree(0) {
   }
-  // Remove the node itself.
-  g.erase(node);
-  nodes.erase(node->get());
-}
 
-void Graph::addEdge(Node *src, Node *dst) {
-  // Add an edge between src and dst nodes.
-  g[src].insert(dst);
-  g[dst].insert(src);
-  // Increase the degree of both nodes.
-  src->addDegree(1);
-  dst->addDegree(1);
-}
-
-bool Graph::exists(Variable *var) {
-  // Check if a node for the variable exists in the graph.
-  return nodes.find(var) != nodes.end();
-}
-
-std::vector<Node *> Graph::getNodes(void) const {
-  // Return a vector of all the nodes in the graph.
-  std::vector<Node *> nodeVec;
-  for (const auto &pair : g) {
-    nodeVec.push_back(pair.first);
+  u_int64_t Node::getDegree(void) const {
+    return degree;
   }
-  return nodeVec;
-}
 
-Graph * Graph::clone(void) const {
-  // Implement cloning if necessary. This is a non-trivial operation and requires deep copying.
-}
+  Variable* Node::get(void) const {
+    return this->var;
+  }
 
-int32_t Graph::size(void) const {
-  // Return the size of the graph, i.e., the number of nodes.
-  return g.size();
-}
+  void Node::addDegree(int64_t delta) {
+    degree += delta;
+  }
+
+  void Graph::addNode(Node *node) {
+    // Add a node to the graph with no connections initially.
+    graph[node] = std::set<Node*>();
+    nodes[node->get()] = node; // we essentially want to associate the Variable with the node here 
+  }
+
+  void Graph::removeNode(Node *node) {
+    // Remove all connections to this node.
+    for (auto &pair : graph) {
+      pair.second.erase(node);
+    }
+    // Remove the node itself.
+    graph.erase(node);
+    nodes.erase(node->get());
+  }
+
+  void Graph::addEdge(Node *src, Node *dst) {
+    // Add an edge between src and dst nodes.
+    graph[src].insert(dst);
+    graph[dst].insert(src);
+    src->addDegree(1);
+    dst->addDegree(1);
+  }
+
+  bool Graph::exists(Variable *var) {
+    // Check if a node for the variable exists in the graph.
+    return nodes.find(var) != nodes.end();
+  }
+
+  std::vector<Node *> Graph::getNodes(void) const {
+    // Return a vector of all the nodes in the graph.
+    std::vector<Node *> nodeVec;
+    for (const auto &pair : graph) {
+      nodeVec.push_back(pair.first);
+    }
+    return nodeVec;
+  }
+
+  Graph * Graph::clone(void) const {
+    // Create a new graph instance.
+    auto *newGraph = new Graph();
+
+    // Map to store the correspondence between original and new nodes.
+    std::map<const Node*, Node*> origToNewNodeMap;
+
+    for (const auto &nodePair : this->nodes) {
+      Variable *var = nodePair.first;
+      const Node *origNode = nodePair.second;
+      // Create a new node with the same variable.
+      Node *newNode = new Node(var);
+      // You may want to copy the color or other attributes of Node here.
+      newNode->color = origNode->color;
+      // Add the new node to the new graph.
+      newGraph->addNode(newNode);
+      // Store it in the map.
+      origToNewNodeMap[origNode] = newNode;
+    }
+
+    // Copy edges.
+    for (const auto &edgePair : this->graph) {
+      const Node *origNode = edgePair.first;
+      for (const Node *connectedNode : edgePair.second) {
+        // Find the corresponding new nodes.
+        Node *newNode = origToNewNodeMap[origNode];
+        Node *newConnectedNode = origToNewNodeMap[connectedNode];
+        // Add the edge between the new nodes in the new graph.
+        newGraph->addEdge(newNode, newConnectedNode);
+      }
+    }
+
+    return newGraph;
+  };
+
+  int32_t Graph::size(void) const {
+    // Return the size of the graph, i.e., the number of nodes.
+    return graph.size();
+  }
+  void add_new_var(Graph *graph,std::set<Variable*>gen_kill_sets){
+    for (auto variable: gen_kill_sets){
+      if (graph->exists(variable)){
+        continue;
+      }
+      graph->addNode(new Node(variable));
+    }
+    return;
+  }
+  void add_edges_var(Graph *graph,std::set<Variable*>in_out_sets){
+    for (auto var1:in_out_sets){
+      for (auto var2:in_out_sets){
+        if (var1 == var2){
+          continue;
+        }
+        graph->addEdge(graph->nodes[var1],graph->nodes[var2]);
+      }
+    }
+  }
+  Graph* Graph::build_graph(Program &p, Function *f, In_Out_Store *in_out_sets, Gen_Kill_Store *gen_kill_set ){
+    auto interference_graph = new Graph();
+    std::set<Variable *> registers;
+    // gp registers vector
+    std::vector<std::string> gp_registers{
+        "r10",
+        "r11",
+        "r12",
+        "r13",
+        "r14",
+        "r15",
+        "r8",
+        "r9",
+        "rax",
+        "rbp",
+        "rbx",
+        //"rcx",
+        "rdi",
+        "rdx",
+        "rsi"
+    };
+    //add registers
+    for (auto register_ID : gp_registers){
+        Variable* var = f->variable_allocator.allocate_variable(register_ID, VariableType::reg);
+        registers.insert(var);
+        Node* node = new Node(var); // Assuming Node constructor takes a Variable*
+        interference_graph->addNode(node);
+    }
+    //add nodes and connect variables in Kill[i] with those in OUT[i]
+    for (auto i : f->instructions){
+        add_new_var(interference_graph,gen_kill_set->Gen_Set[0][i]);//hopefully this doesn't cause an error later on 
+        add_new_var(interference_graph,gen_kill_set->Kill_Set[0][i]);
+        add_edges_var(interference_graph,in_out_sets->In_Set[0][i]);
+        add_edges_var(interference_graph,in_out_sets->Out_Set[0][i]);
+        std::set<Variable *> insert_set;
+        insert_set.insert(gen_kill_set->Kill_Set[0][i].begin(),gen_kill_set->Kill_Set[0][i].end());
+        insert_set.insert(in_out_sets->Out_Set[0][i].begin(),in_out_sets->Out_Set[0][i].end());
+        add_edges_var(interference_graph,insert_set);
+    }
+    add_edges_var(interference_graph,registers);
+    for (auto i: f->instructions){
+      auto checker = dynamic_cast<SOP_assignment*>(i);
+      auto source_variable = dynamic_cast<Variable*>(checker->src);
+      if (!i ||! checker||!source_variable){
+        continue;
+      }
+      std::set<Variable*> register_insertions;
+      register_insertions.insert(registers.begin(),registers.end());
+      for (auto variable:registers){
+        auto checking_register = dynamic_cast<Register *>(variable);
+        if (checking_register->name != "rcx"){
+          continue;
+        }
+        register_insertions.erase(checking_register);
+      }
+      register_insertions.insert(source_variable);
+      add_edges_var(interference_graph,register_insertions);
+    }
+    return interference_graph;
+  }
+
+};
+

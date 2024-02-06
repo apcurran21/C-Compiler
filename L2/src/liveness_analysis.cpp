@@ -16,6 +16,7 @@ namespace L2{
     /*
     Utility vectors for calling convention checks
     */
+
     std::vector<std::string> arguments_vec{
             "rdi",
             "rsi",
@@ -102,7 +103,7 @@ namespace L2{
     /*
     Full Liveness Analysis
     */
-    void liveness_analysis(Program *p){
+    In_Out_Store liveness_analysis(Program *p){
         
 
         if (debug) std::cerr << "Running Liveness Analysis..." << std::endl;
