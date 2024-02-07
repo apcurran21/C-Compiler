@@ -32,7 +32,7 @@ namespace L2{
             std::vector<Node *> getNodes(void) const;
             Graph * clone(void) const; //If we ever need to make a clone
             int32_t size(void) const;
-            Graph * build_graph(Program &p, Function *f,In_Out_Store *in_out_sets,Gen_Kill_Store *gen_kill_set);
-
+            Graph * build_graph(Program &p, LivenessResult result);
+            void printGraph() const;
     };
 };

@@ -437,5 +437,9 @@ namespace L2 {
     std::vector<std::unordered_map<Instruction*, std::set<Variable*>>> Gen_Set;
     std::vector<std::unordered_map<Instruction*, std::set<Variable*>>> Kill_Set;
   };
-  
+  struct LivenessResult {
+    Gen_Kill_Store gen_kill_sets;
+    In_Out_Store in_out_sets;
+  };
+
 }

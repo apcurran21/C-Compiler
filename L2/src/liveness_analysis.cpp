@@ -103,7 +103,7 @@ namespace L2{
     /*
     Full Liveness Analysis
     */
-    In_Out_Store liveness_analysis(Program *p){
+    LivenessResult liveness_analysis(Program *p){
         
 
         if (debug) std::cerr << "Running Liveness Analysis..." << std::endl;
@@ -353,7 +353,8 @@ namespace L2{
             } while (changed);
             
         }
-
+        LivenessResult result = {gen_kill_sets, in_out_sets};
+        return result;
 
         /*
         Print the contents of our freshly computed In and Out sets to the file
@@ -381,7 +382,7 @@ namespace L2{
             std::cout << ")\n\n";
             std::cout << ")\n\n";
         }
-
+        
 
 
         // for (int f = 0; f < p->functions.size(); f++) {

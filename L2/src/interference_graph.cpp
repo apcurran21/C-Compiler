@@ -34,12 +34,24 @@ namespace L2{
   }
 
   void Graph::addEdge(Node *src, Node *dst) {
-    // Add an edge between src and dst nodes.
+    // Check for null pointers before using them
+    if (!src || !dst) {
+        std::cerr << "Error: null pointer passed to addEdge" << std::endl;
+        return; // Optionally, throw an exception or handle the error as appropriate
+    }
+
+    // Now it's safe to use src and dst
     graph[src].insert(dst);
     graph[dst].insert(src);
-    src->addDegree(1);
-    dst->addDegree(1);
-  }
+
+    // Check that the nodes exist before calling member functions
+    if (src) {
+        src->addDegree(1);
+    }
+    if (dst) {
+        dst->addDegree(1);
+    }
+}
 
   bool Graph::exists(Variable *var) {
     // Check if a node for the variable exists in the graph.
@@ -113,8 +125,27 @@ namespace L2{
       }
     }
   }
-  Graph* Graph::build_graph(Program &p, Function *f, In_Out_Store *in_out_sets, Gen_Kill_Store *gen_kill_set ){
+  void Graph::printGraph() const {
+    for (const auto& node_pair : graph) {
+        if (node_pair.first && node_pair.first->var) {
+            // Print the name of the root node
+            std::cout << node_pair.first->var->print();
+        }
+        for (const auto& connected_node : node_pair.second) {
+            if (connected_node && connected_node->var) {
+                // Print the connected nodes
+                std::cout << " " << connected_node->var->print();
+            }
+        }
+        std::cout << std::endl; 
+    }
+  }
+  Graph* Graph::build_graph(Program &p, LivenessResult result ){
+  
     auto interference_graph = new Graph();
+    Gen_Kill_Store gen_kill_set = result.gen_kill_sets;
+    In_Out_Store in_out_sets = result.in_out_sets;
+    Function* f = p.functions[0]; // placeholder 
     std::set<Variable *> registers;
     // gp registers vector
     std::vector<std::string> gp_registers{
@@ -129,7 +160,7 @@ namespace L2{
         "rax",
         "rbp",
         "rbx",
-        //"rcx",
+        "rcx",
         "rdi",
         "rdx",
         "rsi"
@@ -141,22 +172,27 @@ namespace L2{
         Node* node = new Node(var); // Assuming Node constructor takes a Variable*
         interference_graph->addNode(node);
     }
+    for (auto i : f->instructions){
+        add_new_var(interference_graph,gen_kill_set.Gen_Set[0][i]);//hopefully this doesn't cause an error later on 
+        add_new_var(interference_graph,gen_kill_set.Kill_Set[0][i]);
+    }
     //add nodes and connect variables in Kill[i] with those in OUT[i]
     for (auto i : f->instructions){
-        add_new_var(interference_graph,gen_kill_set->Gen_Set[0][i]);//hopefully this doesn't cause an error later on 
-        add_new_var(interference_graph,gen_kill_set->Kill_Set[0][i]);
-        add_edges_var(interference_graph,in_out_sets->In_Set[0][i]);
-        add_edges_var(interference_graph,in_out_sets->Out_Set[0][i]);
+        add_edges_var(interference_graph,in_out_sets.In_Set[0][i]);
+        add_edges_var(interference_graph,in_out_sets.Out_Set[0][i]);
         std::set<Variable *> insert_set;
-        insert_set.insert(gen_kill_set->Kill_Set[0][i].begin(),gen_kill_set->Kill_Set[0][i].end());
-        insert_set.insert(in_out_sets->Out_Set[0][i].begin(),in_out_sets->Out_Set[0][i].end());
+        insert_set.insert(gen_kill_set.Kill_Set[0][i].begin(),gen_kill_set.Kill_Set[0][i].end());
+        insert_set.insert(in_out_sets.Out_Set[0][i].begin(),in_out_sets.Out_Set[0][i].end());
         add_edges_var(interference_graph,insert_set);
     }
     add_edges_var(interference_graph,registers);
     for (auto i: f->instructions){
       auto checker = dynamic_cast<SOP_assignment*>(i);
+      if (!i ||! checker){
+        continue;
+      }
       auto source_variable = dynamic_cast<Variable*>(checker->src);
-      if (!i ||! checker||!source_variable){
+      if (!source_variable){
         continue;
       }
       std::set<Variable*> register_insertions;
