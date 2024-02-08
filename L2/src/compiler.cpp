@@ -16,6 +16,7 @@
 #include <parser.h>
 #include "liveness_analysis.h"
 #include "interference_graph.h"
+#include "spill.cpp"
 // #include <function_parser.h>
 // #include <spill_parser.h>
 
@@ -108,24 +109,17 @@ int main(
      * Parse the L2 program.
      */
     p = L2::parse_file(argv[optind]);
+
   }
 
   /*
    * Special cases.
    */
   if (spill_only){
-
-    /*
-     * Spill.
-     */
-    //TODO
-
-    /*
-     * Dump the L2 code.
-     */
-    //TODO
-
-    return 0;
+    p = L2::parse_spill_file(argv[optind]);
+    auto replacementVar = p.variables[p.variables.size() - 2]; 
+    L2::spillForL1(p,replacementVar);
+    L2::generate_code(p);
   }
 
   /*

@@ -356,6 +356,7 @@ namespace L2 {
     public:
       std::string entryPointLabel;
       std::vector<Function *> functions;
+      std::vector<Variable *> variables;
   };
 
   class Visitor {
@@ -410,7 +411,37 @@ namespace L2 {
       void visit(AOP_assignment *instruction) override;
       void visit(SOP_assignment *instruction) override;  
   };
-
+  class SpillVisitor:public Visitor{
+    public:
+      SpillVisitor(Variable* spilledVar, Variable* replacementVar,int count) :
+        spilledVariable(spilledVar), replacementVariable(replacementVar) {}
+      void iterReplacementVariable();
+      bool SpillVisitor::replaceIfSpilled(Item*& item);
+      void visit(Instruction_ret *instruction) override;
+      void visit(Instruction_assignment *instruction) override;
+      void visit(label_Instruction *instruction) override;
+      void visit(goto_label_instruction *instruction) override;
+      void visit(Call_tenserr_Instruction *instruction) override;
+      void visit(Call_uN_Instruction *instruction) override;
+      void visit(Call_print_Instruction *instruction) override;
+      void visit(Call_input_Instruction *instruction) override;
+      void visit(Call_allocate_Instruction *instruction) override;
+      void visit(Call_tuple_Instruction *instruction) override;
+      void visit(w_increment_decrement *instruction) override;
+      void visit(w_atreg_assignment *instruction) override;
+      void visit(Memory_assignment_store *instruction) override;
+      void visit(Memory_assignment_load *instruction) override;
+      void visit(Memory_arithmetic_load *instruction) override;
+      void visit(Memory_arithmetic_store *instruction) override;
+      void visit(cmp_Instruction *instruction) override;
+      void visit(cjump_cmp_Instruction *instruction) override;
+      void visit(stackarg_assignment *instruction) override;
+      void visit(AOP_assignment *instruction) override;
+      void visit(SOP_assignment *instruction) override;  
+      Variable* spilledVariable;
+      Variable* replacementVariable;
+      int count;
+  };
 
   /*
   Liveness Analysis Storage Classes
