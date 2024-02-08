@@ -28,6 +28,7 @@ namespace L2{
                 f->instructions.insert(f->instructions.begin() + i + 1, instruction1);
                 f->instructions.insert(f->instructions.begin() + i + 2, instruction2);
                 i += 2;
+                tempVar = visitor->replacementVariable;
             }
         }
 
