@@ -629,6 +629,7 @@ namespace L2 {
       // - note we should probably split this up for debugging
       auto var = p.functions.back()->variable_allocator.allocate_variable(in.string(), VariableType::var);
       parsed_items.push_back(var);
+      p.variables.push_back(var); // Store the variable in the Program's vector
     }
   };
 
@@ -1175,10 +1176,17 @@ namespace L2 {
       Function_rule
     > {};
 
+
   // still need to actually implement after getting liveness
   struct spill_grammar :
     pegtl::must<
-      Function_rule
+      pegtl::seq<
+        Function_rule,
+        spaces,
+        variable_rule,
+        spaces,
+        variable_rule
+      >
     > {};
 
 
