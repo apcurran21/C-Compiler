@@ -51,18 +51,22 @@ bool Graph::exists(Variable *var) {
   return nodes.find(var) != nodes.end();
 }
 
-std::vector<Node *> Graph::getNodes(void) const {
+std::vector<Node*> Graph::getNodes(void) const {
   // Return a vector of all the nodes in the graph.
-  std::vector<Node *> nodeVec;
+  std::vector<Node*> nodeVec;
   for (const auto &pair : g) {
     nodeVec.push_back(pair.first);
   }
   return nodeVec;
 }
 
-Graph * Graph::clone(void) const {
-  // Implement cloning if necessary. This is a non-trivial operation and requires deep copying.
-}
+/*
+Not implemented, commented out to prevent compiling errors
+*/
+// Graph* Graph::clone(void) const {
+//   // Implement cloning if necessary. This is a non-trivial operation and requires deep copying.
+  
+// }
 
 int32_t Graph::size(void) const {
   // Return the size of the graph, i.e., the number of nodes.

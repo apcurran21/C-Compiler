@@ -8,6 +8,7 @@
 #include <graph_coloring.h>
 
 namespace L2{
+
     // Declare a r
     class Node{
         public:
@@ -20,7 +21,8 @@ namespace L2{
             int64_t degree;
             std::string color;
 
-    }；
+    };
+
     // Generic class declarations for nodes and graph
     class Graph{
         public:
@@ -34,6 +36,8 @@ namespace L2{
             Graph * clone(void) const; //If we ever need to make a clone
             int32_t size(void) const;
     };
-    Graph * build_graph(Program &p, Function *f,Parser values??)
+
+    // Function to build a graph given a program memory representation.
+    // Graph* build_graph(Program &p, Function *f,Parser values??);
 
 }
