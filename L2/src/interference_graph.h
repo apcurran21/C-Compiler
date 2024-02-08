@@ -21,10 +21,6 @@ namespace L2{
             std::string color;
 
     };
-<<<<<<< HEAD
-
-=======
->>>>>>> Isaac-InterferenceGraph
     // Generic class declarations for nodes and graph
     class Graph{
         public:
@@ -40,12 +36,4 @@ namespace L2{
             Graph * build_graph(Program &p, LivenessResult result);
             void printGraph() const;
     };
-<<<<<<< HEAD
-
-    // Function to build a graph given a program memory representation.
-    // Graph* build_graph(Program &p, Function *f,Parser values??);
-
 }
-=======
-};
->>>>>>> Isaac-InterferenceGraph
