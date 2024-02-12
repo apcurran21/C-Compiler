@@ -1179,15 +1179,13 @@ namespace L2 {
 
   // still need to actually implement after getting liveness
   struct spill_grammar :
-    pegtl::must<
       pegtl::seq<
         Function_rule,
         spaces,
         variable_rule,
         spaces,
         variable_rule
-      >
-    > {};
+      > {};
 
 
   /*

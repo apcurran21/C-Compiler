@@ -416,7 +416,7 @@ namespace L2 {
       SpillVisitor(Variable* spilledVar, Variable* replacementVar,int count) :
         spilledVariable(spilledVar), replacementVariable(replacementVar) {}
       void iterReplacementVariable();
-      bool SpillVisitor::replaceIfSpilled(Item*& item);
+      bool replaceIfSpilled(Item*& item);
       void visit(Instruction_ret *instruction) override;
       void visit(Instruction_assignment *instruction) override;
       void visit(label_Instruction *instruction) override;
