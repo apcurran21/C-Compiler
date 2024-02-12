@@ -38,8 +38,6 @@ namespace L2{
             void printGraph() const;
     };
 
-    static bool compare_nodes(Node& a, Node& b);
-    // static bool compare_nodes(Node* a, Node* b);
     std::set<std::string> get_colors(std::vector<Node*> nodes);
 
 }

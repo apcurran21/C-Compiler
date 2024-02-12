@@ -229,24 +229,6 @@ namespace L2{
     return interference_graph;
   }
 
-
-  /*
-  Currently encountering a compiling error regarding this comparator function used by the list sort method
-  -The sort documentation requires args a and b to be pass by reference, however our lists are made up of pointer objects
-  -However in my separate test files a compare function which uses pointers as args is able to sort an arbitrary list.
-  -In order to get our lists of pointer objects to not produce compile errors with the pass by reference compare function however,
-    it seems like we have to iterate these lists and place each dereferenced object in a new list copy so that the compare function is happy.
-      -this fix should be okay if we just get the address of these dereferenced objects before changing their state (ie neighbors, degree, etc),
-        but it's necessary to note because it could cause bugs with out interferece graph not getting updated correctly.
-  */
-  bool compare_nodes(Node& a, Node& b) {
-    // used for node set sorting, we want the node with highest degree at the start
-    return a.degree > b.degree;
-  }
-  // bool compare_nodes(Node* a, Node*b) {
-  //   return a->degree > b->degree;
-  // }
-
   std::set<std::string> get_colors(std::vector<Node*> nodes) {
     std::set<std::string> colors;
     for (auto node : nodes) {

@@ -74,9 +74,9 @@ namespace L2 {
     degree < num registers. If the priority queue empties before we find a node with a small enough degree, then we have already 
     conveniently stored the large-degree nodes with the correct ordering. 
     */
-    std::vector<Node*> depopulate(Graph *g, Graph *orig_g) {
-      std::list<Node*> small_degree_lst;
-      std::list<Node*> big_degree_lst;
+    std::vector<Node*> depopulate(Graph *g) {
+      std::vector<Node*> small_degree_vec;
+      std::vector<Node*> big_degree_vec;
       std::vector<Node*> stack;
 
       // place the vector of nodes into list format before sorting
@@ -85,28 +85,30 @@ namespace L2 {
         if (dynamic_cast<Register*>(node->var)) {}
         // otherwise we put the current node into the corresponding list depending on its number of neighbors
         else if (node->getDegree() < gp_registers.size()) {
-          small_degree_lst.push_back(node);
+          small_degree_vec.push_back(node);
         } else {
-          big_degree_lst.push_back(node);
+          big_degree_vec.push_back(node);
         }
       }
 
-      while ((!small_degree_lst.empty()) && (big_degree_lst.empty())) {
-        small_degree_lst.sort(compare_nodes);
-        big_degree_lst.sort(compare_nodes);
+      while ((!small_degree_vec.empty()) && (big_degree_vec.empty())) {
+        // small_degree_vec.sort(compare_nodes);
+        // big_degree_vec.sort(compare_nodes);
+        std::sort(small_degree_vec.begin(), small_degree_vec.end());
+        std::sort(big_degree_vec.begin(), big_degree_vec.end());
 
         // get the node with the most edges
         Node* curr_node;
-        if (!small_degree_lst.empty()) {
-          curr_node = small_degree_lst.front();
-          small_degree_lst.pop_front();
+        if (!small_degree_vec.empty()) {
+          curr_node = small_degree_vec.back();
+          small_degree_vec.pop_back();
         } else {
-          curr_node = big_degree_lst.front();
-          big_degree_lst.pop_front();
+          curr_node = big_degree_vec.back();
+          big_degree_vec.pop_back();
         }
 
         // remove the edges between the current node and its neighbors
-        for (auto node: small_degree_lst) {
+        for (auto node: small_degree_vec) {
           g->removeEdge(curr_node, node);
         }
 
@@ -173,66 +175,66 @@ namespace L2 {
     }
   }
 
-  /*
-  Parsing utilities, structs, actions for interference graph files
-  */
-  std::vector<Register*> parsed_items;
+  // /*
+  // Parsing utilities, structs, actions for interference graph files
+  // */
+  // std::vector<Register*> parsed_items;
 
-  struct str_percent : TAO_PEGTL_STRING("%") {};
+  // struct str_percent : TAO_PEGTL_STRING("%") {};
 
-  struct spaces :
-    pegtl::star< 
-      pegtl::sor<
-        pegtl::one< ' ' >,
-        pegtl::one< '\t'>
-      >
-    > {};
+  // struct spaces :
+  //   pegtl::star< 
+  //     pegtl::sor<
+  //       pegtl::one< ' ' >,
+  //       pegtl::one< '\t'>
+  //     >
+  //   > {};
 
-  struct seps : 
-    pegtl::star<
-      pegtl::seq<
-        spaces,
-        pegtl::eol
-      >
-    > {};
+  // struct seps : 
+  //   pegtl::star<
+  //     pegtl::seq<
+  //       spaces,
+  //       pegtl::eol
+  //     >
+  //   > {};
 
-  struct node_name:
-    pegtl::seq<
-      pegtl::opt<str_percent>,
-      pegtl::plus<
-        pegtl::alnum
-      >
-    > {};
+  // struct node_name:
+  //   pegtl::seq<
+  //     pegtl::opt<str_percent>,
+  //     pegtl::plus<
+  //       pegtl::alnum
+  //     >
+  //   > {};
 
-  struct nodes_line:
-    pegtl::seq<
-      node_name,
-      pegtl::star<
-        pegtl::seq<
-          pegtl::space,
-          node_name
-        >
-      >
-    > {};
+  // struct nodes_line:
+  //   pegtl::seq<
+  //     node_name,
+  //     pegtl::star<
+  //       pegtl::seq<
+  //         pegtl::space,
+  //         node_name
+  //       >
+  //     >
+  //   > {};
 
-  struct nodes_lines:
-    pegtl::seq<
-      seps,
-      pegtl::plus<nodes_line>,
-      seps
-    > {};
+  // struct nodes_lines:
+  //   pegtl::seq<
+  //     seps,
+  //     pegtl::plus<nodes_line>,
+  //     seps
+  //   > {};
 
-  template< typename Rule >
-  struct action : pegtl::nothing< Rule > {};
+  // template< typename Rule >
+  // struct action : pegtl::nothing< Rule > {};
 
-  // template<> struct action < node_name > {
-  //   template< typename Input >
-  //   static void apply( const Input & in, Graph & g) {
-  //     if (debug) std::cerr << "Recognized a node_name rule" << std::endl;
+  // // template<> struct action < node_name > {
+  // //   template< typename Input >
+  // //   static void apply( const Input & in, Graph & g) {
+  // //     if (debug) std::cerr << "Recognized a node_name rule" << std::endl;
 
-  //     auto var_ptr = 
-  //   }
-  // }
+  // //     auto var_ptr = 
+  // //   }
+  // // }
 
 
 
