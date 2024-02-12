@@ -21,3 +21,19 @@ Overall, we need to make sure that the parser is consistent somehow with the sin
     * public *allocate()* method that takes a string (name of the variable to be allocated), checks in the *allocated_vars* map to see if a variable with this string already exists. If it does, then it just returns the associated pointer to the user. Otherwise it allocates a new variable instance to the heap using *new* and then returns this pointer to the user, making sure to update the map with this new entry.
     * public *is_defined()* method that takes a variable name, then returns whether or not a variable with this name exists in the map. This will probably only be use in debugging.
 * How many instances of this allocator class will exist? Since varaibles have local scope in L2, it might make sense for each function to get its own allocator instance. Is it best for variables with the same name, but encountered/allocated in different functions, to have different instances and therefore pointers?
+
+### Graph Coloring
+During the repopulation stage of our graph, where we assign each node a color one by one, we need to have access to the following information:
+* who the current node is
+* what nodes are already in the graph
+* who that node's neighbors are in the original copy of the graph
+* who that node's neighbors are in the current state of the graph
+  * especially what those neighbors colors are. 
+  * NOTE that during the repopulation algorithm, the current node is not yet
+    in the graph, so it doesn't actually have any neighbors
+    * one way for us to know this set of neighbors (which is likely as subset of
+      the current node's full set of neighbors in the original copy of the graph)
+      is to take the union of the current node's set of neighbors in the original
+      graph with the set of nodes that are currently in the graph.
+* once we know who the current node's neighbors are in the current set of the graph,
+  we can get a list of their colors in some fashion

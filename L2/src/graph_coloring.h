@@ -20,9 +20,18 @@ namespace L2 {
     std::vector<Node*> depopulate(Graph *graph);
 
     /*
+    Chooses colors and places nodes back into the graph
+    */
+    Graph* repopulate(Graph *graph, Graph *orig_graph, std::vector<Node*> node_stack);
+
+    /*
+    Places edges between a given node and its neighbors described in the vector arg 
+    */
+    void add_back_into_graph(Node* node, std::vector<Node*> neighbors, Graph* g);
+
+    /*
     Parses an L2 interference graph file into a graph memory representation
     */
     Graph* parse_graph (char *filename);
-
 
 }

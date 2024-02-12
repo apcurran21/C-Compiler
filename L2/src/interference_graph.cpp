@@ -1,8 +1,8 @@
 #include "L2.h"
-#include "graph_coloring.h"
 #include "interference_graph.h"
+
 namespace L2{
-  Node::Node(Variable *var) : var(var), degree(0) {
+  Node::Node(Variable *var) : var(var), degree(0), color("") {
   }
 
   u_int64_t Node::getDegree(void) const {
@@ -26,7 +26,10 @@ namespace L2{
   void Graph::removeNode(Node *node) {
     // Remove all connections to this node.
     for (auto &pair : graph) {
-      pair.second.erase(node);
+      if (pair.second.erase(node)) {
+        // pair.first is a neighbor of the node, so subtract 1 from its degree
+        pair.first->addDegree(-1);
+      }
     }
     // Remove the node itself.
     graph.erase(node);
@@ -51,7 +54,23 @@ namespace L2{
     if (dst) {
         dst->addDegree(1);
     }
-}
+  }
+
+  void Graph::removeEdge(Node *src, Node *dst) {
+    // assumes that an edge between src and dst exists, but check for null ptrs
+    if (!src || !dst) {
+      std::cerr << "Error: null pointer passed to addEdge" << std::endl;
+      return; // Optionally, throw an exception or handle the error as appropriate
+    }
+
+    // remove the dst node from the src's node set of neighbors and vice versa
+    graph[src].erase(dst);
+    graph[dst].erase(src);
+
+    // update the respective degrees
+    src->addDegree(-1);
+    dst->addDegree(-1);
+  }
 
   bool Graph::exists(Variable *var) {
     // Check if a node for the variable exists in the graph.
@@ -210,5 +229,20 @@ namespace L2{
     return interference_graph;
   }
 
+  bool compare_nodes(Node& a, Node& b) {
+    // used for node set sorting, we want the node with highest degree at the start
+    return a.degree > b.degree;
+  }
+  // bool compare_nodes(Node* a, Node*b) {
+  //   return a->degree > b->degree;
+  // }
+
+  std::set<std::string> get_colors(std::vector<Node*> nodes) {
+    std::set<std::string> colors;
+    for (auto node : nodes) {
+      colors.insert(node->color);
+    }
+    return colors;
+  }
 };
 
