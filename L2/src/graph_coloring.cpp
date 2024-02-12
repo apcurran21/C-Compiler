@@ -81,7 +81,9 @@ namespace L2 {
 
       // place the vector of nodes into list format before sorting
       for (auto& node: g->getNodes()) {
+        // we want to leave all the gp register nodes in the graph
         if (dynamic_cast<Register*>(node->var)) {}
+        // otherwise we put the current node into the corresponding list depending on its number of neighbors
         else if (node->getDegree() < gp_registers.size()) {
           small_degree_lst.push_back(node);
         } else {
@@ -109,18 +111,19 @@ namespace L2 {
         }
 
         // remove the current node from the graph's list of nodes
-        // NOTE - this might not be necessary? -> actually let's leave it in there so we can compare with the original state during repopulation
         // ie we need it so that we can initialize our "already in the graph" set
         g->nodes.erase(curr_node->var);
 
         stack.push_back(curr_node);
       }
 
+      // return the stack of nodes, which are now ordered correctly according to step 1 of the slides coloring alg
       return stack;
     }
 
     /*
     We need to compare the current state of the graph g with the initial state so that we know which edges to add back and when
+    This function is for coloring each node as it comb
     */
     Graph* repopulate(Graph* g, Graph* orig_g, std::vector<Node*> node_stack) {
       // each node in the stack needs to be colored and added back into the stack
