@@ -16,7 +16,8 @@
 #include <parser.h>
 #include "liveness_analysis.h"
 #include "interference_graph.h"
-#include "spill.cpp"
+#include "spill.h"
+#include <code_generator.h>
 // #include <function_parser.h>
 // #include <spill_parser.h>
 
@@ -31,8 +32,8 @@ int main(
   char **argv
   ){
   auto enable_code_generator = false;
-  auto spill_only = false;
-  auto interference_only = true;
+  auto spill_only = true;
+  auto interference_only = false;
   auto liveness_only = false;
   int32_t optLevel = 3;
 
@@ -118,8 +119,8 @@ int main(
   if (spill_only){
     p = L2::parse_spill_file(argv[optind]);
     auto replacementVar = p.variables[p.variables.size() - 2]; 
-    L2::spillForL1(p,replacementVar);
-    L2::generate_code(p);
+    bool changed = L2::spillForL2(p,replacementVar);
+    L2::generate_code(p,changed);
   }
 
   /*

@@ -8,7 +8,7 @@
 #include <interference_graph.h>
 
 namespace L2{
-    void spillForL1(Program &p, Variable* spilledVar){
+    bool spillForL2(Program &p, Variable* spilledVar){
         Function* f = p.functions[0]; 
         std::string temp = "%S";
         int count = 0;
@@ -16,6 +16,7 @@ namespace L2{
         Variable* tempVar = new Variable(result);
         Number* stack = new Number(0);
         SpillVisitor * visitor = new SpillVisitor(spilledVar,tempVar,0);
+        bool changed = false;
         for (size_t i = 0; i < f->instructions.size(); ++i) {
             auto instruction = f->instructions[i];
             instruction->accept(visitor);
@@ -27,8 +28,10 @@ namespace L2{
                 f->instructions.insert(f->instructions.begin() + i + 2, instruction2);
                 i += 2;
                 tempVar = visitor->replacementVariable;
+                changed = true;
             }
         }
+        return changed;
 
     }
 };
