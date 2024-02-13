@@ -103,7 +103,7 @@ namespace L2{
     /*
     Full Liveness Analysis
     */
-    LivenessResult liveness_analysis(Program *p){
+    LivenessResult liveness_analysis(Program *p, bool print){
         
 
         if (debug) std::cerr << "Running Liveness Analysis..." << std::endl;
@@ -354,31 +354,33 @@ namespace L2{
             
         }
 
-        /*
-        Print the contents of our freshly computed In and Out sets to the file
-        */
-        for (int function_index = 0; function_index < p->functions.size(); function_index++) {
-            std::cout << "(\n";
-            Function* function_ptr = p->functions[function_index];
-            std::cout << "(in\n";
-            for (auto instruction_ptr : function_ptr->instructions) {
-                std::cout << "(";
-                for (auto variable_ptr : in_out_sets.In_Set[function_index][instruction_ptr]) {
-                    std::cout << variable_ptr->print() << " ";
+        if (print) {
+            /*
+            Print the contents of our freshly computed In and Out sets to the file
+            */
+            for (int function_index = 0; function_index < p->functions.size(); function_index++) {
+                std::cout << "(\n";
+                Function* function_ptr = p->functions[function_index];
+                std::cout << "(in\n";
+                for (auto instruction_ptr : function_ptr->instructions) {
+                    std::cout << "(";
+                    for (auto variable_ptr : in_out_sets.In_Set[function_index][instruction_ptr]) {
+                        std::cout << variable_ptr->print() << " ";
+                    }
+                    std::cout << ")\n";
                 }
-                std::cout << ")\n";
-            }
-            std::cout << ")\n\n";
-            std::cout << "(out\n";
-            for (auto instruction_ptr : function_ptr->instructions) {
-                std::cout << "(";
-                for (auto variable_ptr : in_out_sets.Out_Set[function_index][instruction_ptr]) {
-                    std::cout << variable_ptr->print() << " ";
+                std::cout << ")\n\n";
+                std::cout << "(out\n";
+                for (auto instruction_ptr : function_ptr->instructions) {
+                    std::cout << "(";
+                    for (auto variable_ptr : in_out_sets.Out_Set[function_index][instruction_ptr]) {
+                        std::cout << variable_ptr->print() << " ";
+                    }
+                    std::cout << ")\n";
                 }
-                std::cout << ")\n";
+                std::cout << ")\n\n";
+                std::cout << ")\n\n";
             }
-            std::cout << ")\n\n";
-            std::cout << ")\n\n";
         }
 
         /*

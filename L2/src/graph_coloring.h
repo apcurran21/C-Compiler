@@ -12,7 +12,8 @@ namespace L2 {
     Outputs:
         Graph* (pointer to the now colored graph, null pointer if unsuccessful)
     */
-    Graph* color_graph (Graph *graph);
+    // ColorResult color_graph(Graph *graph);
+    Graph* color_graph(Graph *graph);
 
     /*
     Repeatedly takes out nodes from the graph and return them in a stack

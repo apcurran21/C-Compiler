@@ -37,3 +37,8 @@ During the repopulation stage of our graph, where we assign each node a color on
       graph with the set of nodes that are currently in the graph.
 * once we know who the current node's neighbors are in the current set of the graph,
   we can get a list of their colors in some fashion
+
+### Interference Graphs
+* The degree fields for graphs are way to high, need to track down this bug first.
+    * Since the output of the interference graph stage doesn't rely on this degree measurement
+    we are able to pass all the test cases, which means we are just double counting neighbors somewhere.

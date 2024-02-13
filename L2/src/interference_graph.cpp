@@ -88,7 +88,7 @@ namespace L2{
 
   Graph * Graph::clone(void) const {
     // Create a new graph instance.
-    auto *newGraph = new Graph();
+    auto newGraph = new Graph();
 
     // Map to store the correspondence between original and new nodes.
     std::map<const Node*, Node*> origToNewNodeMap;
@@ -236,5 +236,13 @@ namespace L2{
     }
     return colors;
   }
-};
+  /*
+  Prints each node in the graph and its assigned color for verification
+  */
+  void Graph::printColors() const {
+    for (auto node : getNodes()) {
+      std::cout << "Name = " << node->var->print() << ", Color = " << node->color << std::endl;
+    }
+  }
+}
 

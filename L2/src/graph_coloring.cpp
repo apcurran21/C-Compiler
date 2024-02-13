@@ -23,7 +23,7 @@ namespace L2 {
         "rcx",
         "rdi",
         "rdx",
-        "rsi"
+        "rsi",
         "r12",
         "r13",
         "r14",
@@ -59,7 +59,10 @@ namespace L2 {
         -Select a color on each node as it comes back into the graph, making sure no adjacent
             nodes have the same color.
         */
-        return repopulate(graph, orig_graph, node_stack);
+        Graph* result_graph = repopulate(graph, orig_graph, node_stack);
+        
+        // ColorResult result = {result_graph, result_graph}
+        return result_graph;
 
     }
 

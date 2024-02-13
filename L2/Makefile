@@ -4,7 +4,9 @@ CPP_FILES_INTERP 	:= $(filter-out src/compiler.cpp,$(CPP_FILES))
 OBJ_FILES			   	:= $(addprefix obj/,$(notdir $(CPP_FILES:.cpp=.o)))
 OBJ_FILES_CC		 	:= $(addprefix obj/,$(notdir $(CPP_FILES_CC:.cpp=.o)))
 OBJ_FILES_INTERP 	:= $(addprefix obj/,$(notdir $(CPP_FILES_INTERP:.cpp=.o)))
-CC_FLAGS			   	:= --std=c++17 -I./src -I../lib/PEGTL/include -I../lib -g3 -DDEBUG -pedantic -pedantic-errors -Werror=pedantic
+#CC_FLAGS			   	:= --std=c++17 -I./src -I../lib/PEGTL/include -I../lib -g3 -DDEBUG -pedantic -pedantic-errors -Werror=pedantic
+CC_FLAGS			   	:= --std=c++17 -I./src -I../lib/PEGTL/include -I../lib -g3 -DDEBUG -pedantic -pedantic-errors -Werror=pedantic -O0
+
 LD_FLAGS		   	 	:= 
 CC								:= g++
 PL_CLASS          := L2

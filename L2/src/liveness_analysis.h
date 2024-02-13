@@ -4,7 +4,7 @@
 
 namespace L2{
 
-  LivenessResult liveness_analysis(Program *p);
+  LivenessResult liveness_analysis(Program *p, bool print);
 
   // probably don't need this actually
   class LiveAnalysisVisitor : public Visitor {

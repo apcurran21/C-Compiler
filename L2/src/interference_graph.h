@@ -36,6 +36,7 @@ namespace L2{
             int32_t size(void) const;
             Graph * build_graph(Program &p, LivenessResult result);
             void printGraph() const;
+            void printColors() const;
     };
 
     std::set<std::string> get_colors(std::vector<Node*> nodes);
