@@ -1,6 +1,7 @@
 #include "L2.h"
 
 namespace L2 {
+    std::map<std::string, bool> seenVariables;
     /*
     Token class extensions
     */
@@ -564,12 +565,16 @@ namespace L2 {
         if (variable) {
             if (variable->name == spilledVariable->name) { //need to fix this lol
                 item = replacementVariable;
+                if (seenVariables[variable->name]){
+                    return 0;
+                }
+                seenVariables[variable->name] = true;
+                return 1;
             }
-            return 1;
         }
         return 0;
     }
-    void SpillVisitor::iterReplacementVariable() {
+    void SpillVisitor::iterReplacementVariable(){
         count++;
         this->replacementVariable = new Variable("%S" + std::to_string(count));
     }
@@ -577,6 +582,7 @@ namespace L2 {
     void SpillVisitor::visit(Instruction_assignment *instruction){
         bool replaceD = replaceIfSpilled(instruction->d);
         bool replaceS = replaceIfSpilled(instruction->s);
+
         if (replaceD || replaceS) {
             iterReplacementVariable();
         }
@@ -604,10 +610,9 @@ namespace L2 {
         }
     };
     void SpillVisitor::visit(Memory_assignment_store *instruction) {
-        bool replaceD = replaceIfSpilled(instruction->dst);
         bool replaceS = replaceIfSpilled(instruction->s);
-        bool replaceM = replaceIfSpilled(instruction->M);    
-        if (replaceD || replaceS || replaceM) {
+        bool replaceDST = replaceIfSpilled(instruction->dst);   
+        if (replaceS || replaceDST) {
             iterReplacementVariable();
         }    
     };
@@ -621,10 +626,9 @@ namespace L2 {
     } ;
     void SpillVisitor::visit(Memory_arithmetic_load *instruction) {
         bool replaceD = replaceIfSpilled(instruction->dst);
-        bool replaceX = replaceIfSpilled(instruction->x);
         bool replaceInstruction = replaceIfSpilled(instruction->instruction);    
         bool replaceM = replaceIfSpilled(instruction->M);  
-        if (replaceD || replaceX || replaceInstruction || replaceM) {
+        if (replaceD || replaceInstruction || replaceM) {
             iterReplacementVariable();
         }         
     };

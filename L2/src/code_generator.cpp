@@ -67,7 +67,7 @@ namespace L2{
   }
 
   void Memory_assignment_store::gen(Function *f, std::ofstream &outputFile) {
-    outputFile << "mem "<<this->s->print()<<" "<<this->M->print()<<" <- "<<this->s->print()<<"\n\t";
+    outputFile << "mem "<<this->dst->print()<<" "<<this->M->print()<<" <- "<<this->s->print()<<"\n\t";
   }
 
   void Memory_assignment_load::gen(Function *f, std::ofstream &outputFile) {

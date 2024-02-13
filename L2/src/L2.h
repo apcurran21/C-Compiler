@@ -6,6 +6,7 @@
 #include <variant>
 #include <algorithm>
 #include <iostream>
+#include <map>
 
 #include "variable_allocator.h"
 
@@ -413,8 +414,8 @@ namespace L2 {
   };
   class SpillVisitor:public Visitor{
     public:
-      SpillVisitor(Variable* spilledVar, Variable* replacementVar,int count) :
-        spilledVariable(spilledVar), replacementVariable(replacementVar) {}
+      SpillVisitor(Variable* spilledVar, Variable* replacementVar,int count = 0) :
+        spilledVariable(spilledVar), replacementVariable(replacementVar),count(count){}
       void iterReplacementVariable();
       bool replaceIfSpilled(Item*& item);
       void visit(Instruction_ret *instruction) override;
@@ -441,6 +442,7 @@ namespace L2 {
       Variable* spilledVariable;
       Variable* replacementVariable;
       int count;
+
   };
 
   /*
