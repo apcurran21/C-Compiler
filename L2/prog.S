@@ -1,11 +1,10 @@
-(@myF
+(@go
 	0 1
-	%S0 <- 0
-	mem %S0 0 <- rsp
+	%S0 <- 1
+	mem rsp 0 <- %S0
 	%S1 <- mem rsp 0
-	rdi <- %S1
-	mem rsp -8 <- :f1_ret
-	call @myF2 0
-	::f1_ret
+	mem %S1 8 <- %S1
+	mem rsp 0 <- %S1
+	%S2 <- mem rsp 0
 	return
-	)
+)

@@ -564,11 +564,17 @@ namespace L2 {
         auto variable = dynamic_cast<Variable*>(item);
         if (variable) {
             if (variable->name == spilledVariable->name) { //need to fix this lol
-                item = replacementVariable;
-                if (seenVariables[variable->name]){
-                    return 0;
-                }
-                seenVariables[variable->name] = true;
+                item = this->replacementVariable;
+                
+                return 1;
+            }
+        }
+        return 0;
+    }
+    bool SpillVisitor::IfSpilled(Item*& item) {
+        auto variable = dynamic_cast<Variable*>(item);
+        if (variable) {
+            if (variable->name == spilledVariable->name) { //need to fix this lol                
                 return 1;
             }
         }
@@ -577,20 +583,30 @@ namespace L2 {
     void SpillVisitor::iterReplacementVariable(){
         count++;
         this->replacementVariable = new Variable("%S" + std::to_string(count));
+        this->spilled = true;
     }
     void SpillVisitor::visit(Instruction_ret *instruction){} ;
     void SpillVisitor::visit(Instruction_assignment *instruction){
-        bool replaceD = replaceIfSpilled(instruction->d);
-        bool replaceS = replaceIfSpilled(instruction->s);
-
-        if (replaceD || replaceS) {
+        bool replaceD = IfSpilled(instruction->d);
+        if (replaceD){
+            if (instruction->d->print() == instruction->s->print()){
+                bool temp = replaceIfSpilled(instruction->d);
+                bool replaceS = replaceIfSpilled(instruction->s);
+                this->spilled = true;
+                return;
+            }
             iterReplacementVariable();
         }
+        bool temp = replaceIfSpilled(instruction->d);
+        bool replaceS = replaceIfSpilled(instruction->s);
+
     };
     void SpillVisitor::visit(label_Instruction *instruction) {};
     void SpillVisitor::visit(goto_label_instruction *instruction) {};
     void SpillVisitor::visit(Call_tenserr_Instruction *instruction) {};
-    void SpillVisitor::visit(Call_uN_Instruction *instruction) {};
+    void SpillVisitor::visit(Call_uN_Instruction *instruction) {
+        bool replaceU = replaceIfSpilled(instruction->u);
+    };
     void SpillVisitor::visit(Call_print_Instruction *instruction) {};
     void SpillVisitor::visit(Call_input_Instruction *instruction) {};
     void SpillVisitor::visit(Call_allocate_Instruction *instruction){} ;
@@ -612,9 +628,7 @@ namespace L2 {
     void SpillVisitor::visit(Memory_assignment_store *instruction) {
         bool replaceS = replaceIfSpilled(instruction->s);
         bool replaceDST = replaceIfSpilled(instruction->dst);   
-        if (replaceS || replaceDST) {
-            iterReplacementVariable();
-        }    
+
     };
     void SpillVisitor::visit(Memory_assignment_load *instruction){
         bool replaceD = replaceIfSpilled(instruction->dst);
@@ -628,7 +642,7 @@ namespace L2 {
         bool replaceD = replaceIfSpilled(instruction->dst);
         bool replaceInstruction = replaceIfSpilled(instruction->instruction);    
         bool replaceM = replaceIfSpilled(instruction->M);  
-        if (replaceD || replaceInstruction || replaceM) {
+        if (replaceD) {
             iterReplacementVariable();
         }         
     };
@@ -636,17 +650,14 @@ namespace L2 {
         bool replaceD = replaceIfSpilled(instruction->dst);
         bool replaceT = replaceIfSpilled(instruction->t);
         bool replaceInstruction = replaceIfSpilled(instruction->instruction);    
-        bool replaceM = replaceIfSpilled(instruction->M); 
-        if (replaceD || replaceT || replaceInstruction || replaceM) {
-            iterReplacementVariable();
-        }              
+        bool replaceM = replaceIfSpilled(instruction->M);              
     };
     void SpillVisitor::visit(cmp_Instruction *instruction){
         bool replaceD = replaceIfSpilled(instruction->dst);
         bool replaceT = replaceIfSpilled(instruction->t1);
         bool replaceM = replaceIfSpilled(instruction->method);    
         bool replaceT2 = replaceIfSpilled(instruction->t2); 
-        if (replaceD || replaceT || replaceM || replaceT2) {
+        if (replaceD) {
             iterReplacementVariable();
         }     
     };
@@ -655,32 +666,32 @@ namespace L2 {
         bool replaceCMP = replaceIfSpilled(instruction->cmp);
         bool replaceT1 = replaceIfSpilled(instruction->t1);    
         bool replaceLabel = replaceIfSpilled(instruction->label);     
-        if (replaceT2 || replaceCMP || replaceT1 || replaceLabel) {
+        if (replaceT2 || replaceT1 ) {
             iterReplacementVariable();
         }          
     } ;
     void SpillVisitor::visit(stackarg_assignment *instruction){
         bool replaceW = replaceIfSpilled(instruction->w);
         bool replaceM = replaceIfSpilled(instruction->M);   
-        if (replaceW || replaceM) {
+        if (replaceW) {
             iterReplacementVariable();
         }          
     };
     void SpillVisitor::visit(AOP_assignment *instruction){
         bool replaceMethod = replaceIfSpilled(instruction->method);
         bool replaceD = replaceIfSpilled(instruction->dst);   
-        bool replaceSrc = replaceIfSpilled(instruction->src);    
-        if (replaceMethod || replaceD || replaceSrc) {
+        bool replaceSrc = replaceIfSpilled(instruction->src);   
+        if (replaceD) {
             iterReplacementVariable();
-        }     
+        }          
     };
     void SpillVisitor::visit(SOP_assignment *instruction) {
         bool replaceMethod = replaceIfSpilled(instruction->method);
         bool replaceDst = replaceIfSpilled(instruction->dst);   
         bool replaceSrc = replaceIfSpilled(instruction->src);  
-        if (replaceMethod || replaceDst || replaceSrc) {
+        if (replaceDst) {
             iterReplacementVariable();
-        }        
+        }          
     };  
 
 
