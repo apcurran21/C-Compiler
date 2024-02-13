@@ -1,0 +1,10 @@
+(@go
+	0 1
+	%S0 <- 1
+	mem rsp 0 <- %S0
+	%S1 <- mem rsp 0
+	mem %S1 8 <- %S1
+	mem rsp 0 <- %S1
+	%S2 <- mem rsp 0
+	return
+)

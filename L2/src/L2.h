@@ -6,6 +6,7 @@
 #include <variant>
 #include <algorithm>
 #include <iostream>
+#include <map>
 
 #include "variable_allocator.h"
 
@@ -111,7 +112,7 @@ namespace L2 {
 
   class Instruction_assignment : public Instruction{
     public:
-      Instruction_assignment (Item *dst, Item *src);
+      Instruction_assignment (Item *d, Item *s);
       void gen(Function *f, std::ofstream &outputFile) override;
       void printMe() override;
       void accept(Visitor *visitor) override;
@@ -356,6 +357,7 @@ namespace L2 {
     public:
       std::string entryPointLabel;
       std::vector<Function *> functions;
+      std::vector<Variable *> variables;
   };
 
   class Visitor {
@@ -410,7 +412,39 @@ namespace L2 {
       void visit(AOP_assignment *instruction) override;
       void visit(SOP_assignment *instruction) override;  
   };
-
+  class SpillVisitor:public Visitor{
+    public:
+      SpillVisitor(Variable* spilledVar, Variable* replacementVar,int count = -1) :
+        spilledVariable(spilledVar), replacementVariable(replacementVar),count(count){}
+      void iterReplacementVariable();
+      bool replaceIfSpilled(Item*& item);
+      bool IfSpilled(Item*& item);
+      void visit(Instruction_ret *instruction) override;
+      void visit(Instruction_assignment *instruction) override;
+      void visit(label_Instruction *instruction) override;
+      void visit(goto_label_instruction *instruction) override;
+      void visit(Call_tenserr_Instruction *instruction) override;
+      void visit(Call_uN_Instruction *instruction) override;
+      void visit(Call_print_Instruction *instruction) override;
+      void visit(Call_input_Instruction *instruction) override;
+      void visit(Call_allocate_Instruction *instruction) override;
+      void visit(Call_tuple_Instruction *instruction) override;
+      void visit(w_increment_decrement *instruction) override;
+      void visit(w_atreg_assignment *instruction) override;
+      void visit(Memory_assignment_store *instruction) override;
+      void visit(Memory_assignment_load *instruction) override;
+      void visit(Memory_arithmetic_load *instruction) override;
+      void visit(Memory_arithmetic_store *instruction) override;
+      void visit(cmp_Instruction *instruction) override;
+      void visit(cjump_cmp_Instruction *instruction) override;
+      void visit(stackarg_assignment *instruction) override;
+      void visit(AOP_assignment *instruction) override;
+      void visit(SOP_assignment *instruction) override;  
+      Variable* spilledVariable;
+      Variable* replacementVariable;
+      int count;
+      bool spilled;
+  };
 
   /*
   Liveness Analysis Storage Classes
@@ -437,5 +471,9 @@ namespace L2 {
     std::vector<std::unordered_map<Instruction*, std::set<Variable*>>> Gen_Set;
     std::vector<std::unordered_map<Instruction*, std::set<Variable*>>> Kill_Set;
   };
-  
+  struct LivenessResult {
+    Gen_Kill_Store gen_kill_sets;
+    In_Out_Store in_out_sets;
+  };
+
 }
