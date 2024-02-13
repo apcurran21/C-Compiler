@@ -581,8 +581,15 @@ namespace L2 {
       seps_with_comments,
       pegtl::seq<spaces, pegtl::one< ')' >>
     > {};
-
-    struct Functions_rule:
+  struct spill_rule:
+    pegtl::seq<
+        Function_rule,
+        seps,
+        variable_rule,
+        seps,
+        variable_rule
+      > {};
+  struct Functions_rule:
       pegtl::plus<
         seps_with_comments,
         Function_rule,
@@ -1179,13 +1186,9 @@ namespace L2 {
 
   // still need to actually implement after getting liveness
   struct spill_grammar :
-      pegtl::seq<
-        Function_rule,
-        spaces,
-        variable_rule,
-        spaces,
-        variable_rule
-      > {};
+      pegtl::must<
+        spill_rule
+        > {};
 
 
   /*
@@ -1238,7 +1241,6 @@ namespace L2 {
       std::cerr << "There are problems with the grammar" << std::endl;
       exit(1);
     }
-
     /*
      * Parse.
      */

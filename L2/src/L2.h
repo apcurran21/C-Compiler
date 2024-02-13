@@ -7,6 +7,7 @@
 #include <algorithm>
 #include <iostream>
 #include <list>
+#include <map>
 
 #include "variable_allocator.h"
 
@@ -113,7 +114,7 @@ namespace L2 {
 
   class Instruction_assignment : public Instruction{
     public:
-      Instruction_assignment (Item *dst, Item *src);
+      Instruction_assignment (Item *d, Item *s);
       void gen(Function *f, std::ofstream &outputFile) override;
       void printMe() override;
       void accept(Visitor *visitor) override;
@@ -415,10 +416,11 @@ namespace L2 {
   };
   class SpillVisitor:public Visitor{
     public:
-      SpillVisitor(Variable* spilledVar, Variable* replacementVar,int count) :
-        spilledVariable(spilledVar), replacementVariable(replacementVar) {}
+      SpillVisitor(Variable* spilledVar, Variable* replacementVar,int count = -1) :
+        spilledVariable(spilledVar), replacementVariable(replacementVar),count(count){}
       void iterReplacementVariable();
       bool replaceIfSpilled(Item*& item);
+      bool IfSpilled(Item*& item);
       void visit(Instruction_ret *instruction) override;
       void visit(Instruction_assignment *instruction) override;
       void visit(label_Instruction *instruction) override;
@@ -443,6 +445,7 @@ namespace L2 {
       Variable* spilledVariable;
       Variable* replacementVariable;
       int count;
+      bool spilled;
   };
 
   /*

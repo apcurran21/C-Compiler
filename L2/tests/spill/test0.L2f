@@ -6,6 +6,7 @@
   rdi <- %myVar
 
   mem rsp -8 <- :f1_ret
+  
   call @myF2 0
   :f1_ret
 
