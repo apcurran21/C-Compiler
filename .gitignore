@@ -4,5 +4,8 @@
 # ran testing files
 *.tmp
 
-# binaries
+# object files
 *.o
+
+# binaries
+**/bin/

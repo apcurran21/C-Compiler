@@ -103,7 +103,7 @@ namespace L2{
     std::cout << this->w->print()<<" <- stack-arg"<<this->M->print()<<"\n\t";
   }
 
-  void generate_code(Program p,bool changed){
+  void generate_code(Program p, bool changed){
 
     /* 
      * Open the output file.

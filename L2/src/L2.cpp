@@ -13,13 +13,16 @@ namespace L2 {
     Register::Register(std::string r) : Variable(r), name(r) {
 
     }
+    std::string Register::print() {
+        return name;
+    }
     std::string Variable::translate() {
-    // implement later 
-    return name;
+        // implement later 
+        return name;
     }
     std::string Variable::print() {
-    //implement later
-    return name;
+        //implement later
+        return name;
     }
 
     Number::Number (int64_t n)

@@ -6,6 +6,7 @@
 #include <variant>
 #include <algorithm>
 #include <iostream>
+#include <list>
 #include <map>
 
 #include "variable_allocator.h"
@@ -35,12 +36,13 @@ namespace L2 {
     public:
       Variable (std::string name);
       std::string translate() override;
-      std::string print() override;
+      virtual std::string print() override;
       std::string name;
   };
   class Register : public Variable {
     public:
       Register (std::string value);
+      std::string print() override;
       std::string name;
   };
 
@@ -475,5 +477,9 @@ namespace L2 {
     Gen_Kill_Store gen_kill_sets;
     In_Out_Store in_out_sets;
   };
+  struct ColorResult {
+    Graph* graph;
+    std::vector<Variable*> spilled;
+  }
 
 }
