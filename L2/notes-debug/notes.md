@@ -57,3 +57,30 @@ During the repopulation stage of our graph, where we assign each node a color on
         * this doesn't seem right! realistically the number of potential neighbors that this node should get is 17 (15 gp registers, &c, and %arr).
 
 **Question** do we add edges between a forbidden node/register and every other node in the graph (slide 9 constraints in interference)
+
+### 2/13 debug notes
+* segfault occurring during the call to repopulate in color_graph, likely during a union operation ... here's the backtrace:
+> #0  __memmove_avx_unaligned_erms () at ../sysdeps/x86_64/multiarch/memmove-vec-unaligned-erms.S:516
+
+> #1  0x0000000000412e84 in std::__copy_move<false, true, std::random_access_iterator_tag>::__copy_m<L2::Node*> (__first=0x4d0860, __last=0x4cf610, __result=0x4d75e0) at /opt/rh/gcc-toolset-11/root/usr/include/c++/11/bits/stl_algobase.h:431
+
+> #2  0x0000000000412829 in std::__copy_move_a2<false, L2::Node**, L2::Node**> (__first=0x4d0860, __last=0x4cf610, __result=0x4d75e0) at /opt/rh/gcc-toolset-11/root/usr/include/c++/11/bits/stl_algobase.h:495
+
+> #3  0x0000000000411fa3 in std::__copy_move_a1<false, L2::Node**, L2::Node**> (__first=0x4d0860, __last=0x4cf610, __result=0x4d75e0) at /opt/rh/gcc-toolset-11/root/usr/include/c++/11/bits/stl_algobase.h:522
+
+> #4  0x000000000041125f in std::__copy_move_a<false, __gnu_cxx::__normal_iterator<L2::Node**, std::vector<L2::Node*, std::allocator<L2::Node*> > >, __gnu_cxx::__normal_iterator<L2::Node**, std::vector<L2::Node*, std::allocator<L2::Node*> > > > (__first=0x0, __last=0x0, __result=0x0) at /opt/rh/gcc-toolset-11/root/usr/include/c++/11/bits/stl_algobase.h:
+
+> #5  0x000000000040f8f9 in std::copy<__gnu_cxx::__normal_iterator<L2::Node**, std::vector<L2::Node*, std::allocator<L2::Node*> > >, __gnu_cxx::__normal_iterator<L2::Node**, std::vector<L2::Node*, std::allocator<L2::Node*> > > > (__first=0x0, __last=0x0, __result=0x0) at /opt/rh/gcc-toolset-11/root/usr/include/c++/11/bits/stl_algobase.h:620
+
+> #6  0x000000000040e412 in std::__set_union<__gnu_cxx::__normal_iterator<L2::Node**, std::vector<L2::Node*, std::allocator<L2::Node*> > >, __gnu_cxx::__normal_iterator<L2::Node**, std::vector<L2::Node*, std::allocator<L2::Node*> > >, __gnu_cxx::__normal_iterator<L2::Node**, std::vector<L2::Node*, std::allocator<L2::Node*> > >, __gnu_cxx::__ops::_Iter_less_iter> (__first1=non-dereferenceable iterator for std::vector, __last1=non-dereferenceable iterator for std::vector, __first2=0x0, __last2=0x0, __result=0x0, __comp=...) at /opt/rh/gcc-toolset-11/root/usr/include/c++/11/bits/stl_algo.h:5125
+
+> #7  0x000000000040d411 in std::set_union<__gnu_cxx::__normal_iterator<L2::Node**, std::vector<L2::Node*, std::allocator<L2::Node*> > >, __gnu_cxx::__normal_iterator<L2::Node**, std::vector<L2::Node*, std::allocator<L2::Node*> > >, __gnu_cxx::__normal_iterator<L2::Node**, std::vector<L2::Node*, std::allocator<L2::Node*> > > > (__first1=non-dereferenceable iterator for std::vector, __last1=non-dereferenceable iterator for std::vector, __first2=0x0, __last2=0x0, __result=0x0) at /opt/rh/gcc-toolset-11/root/usr/include/c++/11/bits/stl_algo.h:5174
+
+> #8  0x000000000040c01f in L2::repopulate (g=0x4da8c0, orig_g=0x4d5ac0, node_stack=std::vector of length 3, capacity 3 = {...}) at src/graph_coloring.cpp:142
+
+> #9  0x000000000040ba2f in L2::color_graph (graph=0x4da8c0) at src/graph_coloring.cpp:62
+
+> #10 0x00000000004075c1 in main (argc=6, argv=0x7fffffffd268) at src/compiler.cpp:161
+
+
+* the '%check' variable now has no neighors in the orig_g graph, which does not seem right at all
