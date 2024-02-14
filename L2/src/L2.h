@@ -477,9 +477,5 @@ namespace L2 {
     Gen_Kill_Store gen_kill_sets;
     In_Out_Store in_out_sets;
   };
-  struct ColorResult {
-    Graph* graph;
-    std::vector<Variable*> spilled;
-  }
-
+  
 }

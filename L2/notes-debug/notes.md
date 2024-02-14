@@ -38,7 +38,22 @@ During the repopulation stage of our graph, where we assign each node a color on
 * once we know who the current node's neighbors are in the current set of the graph,
   we can get a list of their colors in some fashion
 
+### GDB Notes
+* (*interference_graph.nodes.find(var)).first
+    * this allows us to the different parts of a map given the pointer key
+*  **gen_kill_set.Kill_Set[0][i].begin()
+    * this allows us to get variable pointers in the interference_graph.cc:199 forloop
+* \*(\*interference_graph.nodes.find(\*gen_kill_set.Kill_Set[0][i].begin())).second
+    * this allows us to view the degree of the node associated with the given variable pointer
+
 ### Interference Graphs
 * The degree fields for graphs are way to high, need to track down this bug first.
     * Since the output of the interference graph stage doesn't rely on this degree measurement
     we are able to pass all the test cases, which means we are just double counting neighbors somewhere.
+#### Debug
+* In the for loop at interference_graph.cpp:199, we notice at the first iteration:
+    * i corresponds with the first '%check <- 1' instruction
+    * the node corresponding with the variable '%check' has degree of 14 after reaching line 202, then has degree 28 after line 205 runs.
+        * this doesn't seem right! realistically the number of potential neighbors that this node should get is 17 (15 gp registers, &c, and %arr).
+
+**Question** do we add edges between a forbidden node/register and every other node in the graph (slide 9 constraints in interference)

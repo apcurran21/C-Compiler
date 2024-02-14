@@ -169,7 +169,7 @@ int main(
    */
   if (enable_code_generator){
     auto g = new L2:: Graph();
-    // bool changed = false;
+    bool changed = false;
     do {
       /*
       We want to continue our process of generating liveness, creating the
