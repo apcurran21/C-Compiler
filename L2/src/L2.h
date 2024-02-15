@@ -22,7 +22,9 @@ namespace L2 {
   class Instruction;
   class Variable;
   class Visitor;
-
+  // class Node;
+  // class Graph;
+  
 
   /*
   Object Classes

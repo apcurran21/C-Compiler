@@ -4,10 +4,14 @@
 #include <set>
 #include <string>
 
-#include <L2.h>
+// #include <L2.h>
 // #include <graph_coloring.h>
 
 namespace L2{
+
+    // Forward declarations
+    class Program;
+    struct LivenessResult;
 
     // Declare a r
     class Node{

@@ -243,7 +243,7 @@ namespace L2{
   */
   void Graph::printColors() const {
     for (auto node : getNodes()) {
-      std::cout << "Name = " << node->var->print() << ", Color = " << node->color << std::endl;
+      std::cout << "Name = " << node->var->print() << ", Color = " << node->color << "\n";
     }
   }
 }

@@ -159,8 +159,8 @@ int main(
     auto g = new L2::Graph();
     auto interference_graph = g->build_graph(p, liveness);
     auto colored_graph = L2::color_graph(interference_graph);
-    colored_graph->printGraph();
-    // colored_graph->printColors();
+    // colored_graph->printGraph();
+    colored_graph->printColors();
     return 0;
   }
 

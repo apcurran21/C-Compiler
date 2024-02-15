@@ -11,9 +11,6 @@ using namespace std;
 
 namespace L2{
 
-  /*
-  Assembly generating methods
-  */
   void Instruction_ret::gen(Function *f, std::ofstream &outputFile) {
     std::cout << "return\n";
   }
