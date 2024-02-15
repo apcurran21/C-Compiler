@@ -134,21 +134,24 @@ namespace L2 {
       // each node in the stack needs to be colored and added back into the stack
       for (auto& node : node_stack) {
 
-        // get a list of this current node's set of neighbors that are currently in the graph
-        std::vector<Node*> current_neighbors(orig_g->graph[node].size() + g->getNodes().size());
-        std::vector<Node*> current_g_nodes(orig_g->graph[node].begin(), orig_g->graph[node].end());
+        // allocate an empty array to hold the current node's neighors in the current state of the graph
+        std::vector<Node*> node_current_neighbors(orig_g->graph[node].size() + g->getNodes().size());
+        
+        // get a copy of the current node's neighbors set from the original graph
+        std::vector<Node*> node_original_neighbors(orig_g->graph[node].begin(), orig_g->graph[node].end());
 
         // get the the neighbors of the current node which are currently in the graph
-        std::set_union(
-          current_g_nodes.begin(),
-          current_g_nodes.end(),
+        // this is equal to the intersection of the current node's neighbor nodes in the original graph with the set of nodes currently in the graph
+        std::set_intersection(
+          node_original_neighbors.begin(),
+          node_original_neighbors.end(),
           g->getNodes().begin(),
           g->getNodes().end(),
-          current_neighbors.begin()
+          node_current_neighbors.begin()
         );
 
-        // using the above vector, create a set of the current node's neighbors' colors
-        std::set<std::string> neighbors_colors = get_colors(current_neighbors);
+        // using the above vector, create a set of the colors belonging to the neighbors of the current node, in the current graph
+        std::set<std::string> neighbors_colors = get_colors(node_current_neighbors);
 
         // color the current node with the earliest one that doesn't conflict with the colors of the current node's neighbors
         for (auto color : gp_registers) {
@@ -163,7 +166,7 @@ namespace L2 {
         }
 
         // add the node back into the graph (if it wasn't able to be colored, then it still has an empty string and we spill)
-        add_back_into_graph(node, current_neighbors, g);
+        add_back_into_graph(node, node_current_neighbors, g);
       }
 
       // currently just return g - still need to check for the special case where nothing gets colored

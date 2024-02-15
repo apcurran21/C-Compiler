@@ -19,7 +19,7 @@
 #include "spill.h"
 #include "graph_coloring.h"
 #include <code_generator.h>
-
+#include "spill_code_generator.h"
 
 void print_help (char *progName){
   // std::cerr << "Usage: " << progName << " [-v] [-g 0|1] [-O 0|1|2] [-s] [-l] [-i] SOURCE" << std::endl;
@@ -127,7 +127,7 @@ int main(
     p = L2::parse_spill_file(argv[optind]);
     auto replacementVar = p.variables[p.variables.size() - 2]; 
     bool changed = L2::spillForL2(p,replacementVar);
-    L2::generate_code(p,changed);
+    L2::generate_spill_code(p,changed);
   }
 
   /*
@@ -169,7 +169,8 @@ int main(
    */
   if (enable_code_generator){
     auto g = new L2:: Graph();
-    // bool changed = false;
+    bool changed = false;
+    L2::Graph colored_graph;
     do {
       /*
       We want to continue our process of generating liveness, creating the
@@ -179,6 +180,8 @@ int main(
       */
       auto liveness = L2::liveness_analysis(&p, false);
       auto interference_graph = g->build_graph(p, liveness);
+      auto g = new L2::Graph();
+      auto colored_graph = L2::color_graph(interference_graph);
       for (auto var_ptr : interference_graph->spilled_vars) {
         // what is 'changed' for?
         bool changed = L2::spillForL2(p, var_ptr);
@@ -188,7 +191,7 @@ int main(
     // use the interference graph to replace the variables in the program with registers
     
     // run code gen on the updated program
-    L2::generate_code(p,changed); 
+    L2::generate_code(p,colored_graph); 
     return 0;
   }
 

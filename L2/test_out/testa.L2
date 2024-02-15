@@ -1,4 +1,4 @@
-
+(@test
 (@test
 	0
 	%check <- 1
@@ -9,4 +9,5 @@
 	rdi <- %check
 	call print 1
 	return
+)
 )

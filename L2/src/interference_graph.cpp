@@ -43,17 +43,20 @@ namespace L2{
         return; // Optionally, throw an exception or handle the error as appropriate
     }
 
-    // Now it's safe to use src and dst
-    graph[src].insert(dst);
-    graph[dst].insert(src);
+    if (graph[src].find(dst) == graph[src].end()) {
+      // Now it's safe to use src and dst
+      graph[src].insert(dst);
+      graph[dst].insert(src);
 
-    // Check that the nodes exist before calling member functions
-    if (src) {
-        src->addDegree(1);
+      // Check that the nodes exist before calling member functions
+      if (src) {
+          src->addDegree(1);
+      }
+      if (dst) {
+          dst->addDegree(1);
+      }
     }
-    if (dst) {
-        dst->addDegree(1);
-    }
+
   }
 
   void Graph::removeEdge(Node *src, Node *dst) {
@@ -90,7 +93,6 @@ namespace L2{
     // Create a new graph instance.
     auto newGraph = new Graph();
 
-    // Map to store the correspondence between original and new nodes.
     std::map<const Node*, Node*> origToNewNodeMap;
 
     for (const auto &nodePair : this->nodes) {
