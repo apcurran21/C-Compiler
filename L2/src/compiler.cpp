@@ -20,6 +20,7 @@
 #include "graph_coloring.h"
 #include <code_generator.h>
 #include "spill_code_generator.h"
+#include "L2.h"
 
 void print_help (char *progName){
   // std::cerr << "Usage: " << progName << " [-v] [-g 0|1] [-O 0|1|2] [-s] [-l] [-i] SOURCE" << std::endl;
@@ -186,8 +187,8 @@ int main(
     initialize stores for the gen, kill, in, and out sets for each instruction in each function.
     - remember a store has structure vector<map<instruction, set>>
     */
-    Gen_Kill_Store gen_kill_sets = Gen_Kill_Store(p);
-    In_Out_Store in_out_sets = In_Out_Store(p);
+    L2::Gen_Kill_Store gen_kill_sets = L2::Gen_Kill_Store(&p);
+    L2::In_Out_Store in_out_sets = L2::In_Out_Store(&p);
 
     /*
     Create a graph and run the coloring algorithm for each of the program's functions
@@ -196,7 +197,7 @@ int main(
     */
     int f_index = 0;
     for (auto fptr : p.functions) {
-      while (true):
+      while (true){
         /*
         Compute liveness for the current state of the current function
         - ie there might be additional spill instructions from the last iteration of the do-while loop
@@ -247,6 +248,8 @@ int main(
         }
         if (debug) std::cerr << "made it out of the coloring loop for function " << fptr->name << "\n";
       }
+      
+    
 
       /*
       Now that we have all the colored graphs, we can generate the code.

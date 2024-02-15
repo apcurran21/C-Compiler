@@ -147,7 +147,7 @@ namespace L2{
      * Open the output file.
      */ 
     std::ofstream outputFile;
-    outputFile.open("test0.L2f.out2.tmp");
+    outputFile.open("prog.out");
 
     // main loop
     for (Function *fptr : p.functions) {
@@ -167,18 +167,12 @@ namespace L2{
       // std::cout << "Currently generating for function " << fname << std::endl;
 
       outputFile << "(" << fname << "\n\t";
-      int variables = 0;
 
       /*
       theres some weird stuff going on with 'changed' why is everything inconsistent
       just hardcode for now and remove the extra arg so we can at least compile
       */
-      bool changed = 0;
 
-
-      if (changed){
-        variables = 1;
-      }
       int stack_size = 0;
       ColorVariablesVisitor* myColorVisitor = new ColorVariablesVisitor(color_graph,fptr);
       for (Instruction *iptr : fptr->instructions) {
