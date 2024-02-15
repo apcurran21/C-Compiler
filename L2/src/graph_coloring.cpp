@@ -156,6 +156,7 @@ namespace L2 {
     */
     Graph* repopulate(Graph* g, Graph* orig_g, std::vector<Node*> node_stack) {
       bool big_fail = false;
+      std::set<Variable*> newly_spilled;
       
       // each node in the stack needs to be colored and added back into the stack
       for (auto node : node_stack) {
@@ -233,10 +234,10 @@ namespace L2 {
           }
         }
 
-        // spill the variable if it wasn't able to be colored
+        // check for spills
         if (node->color.empty() {
           if (g->spilled_vars.find(node->var) == g->spilled_vars.end())) {
-            g->spilled_vars.insert(node->var);
+            newly_spilled.insert(node->var);
           else {
             big_fail = true;
             break;
@@ -247,7 +248,7 @@ namespace L2 {
         add_back_into_graph(node, node_current_neighbors, g);
       }
 
-      return std::make_tuple(big_fail, g->spilled_vars);
+      return std::make_tuple(big_fail, newly_spilled);
     }
 
 

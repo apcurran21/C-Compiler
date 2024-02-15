@@ -196,7 +196,7 @@ int main(
     */
     int f_index = 0;
     for (auto fptr : p.functions) {
-      do {
+      while (true):
         /*
         Compute liveness for the current state of the current function
         - ie there might be additional spill instructions from the last iteration of the do-while loop
@@ -225,15 +225,37 @@ int main(
         if (big_fail) {
           /*
           Spill everything then do the code generation
+          - this will likely entail adding all variables to the function's spilled vars list then going through this loop one more time.
+          - since spilled variables are guaranteed not to interfere, we could also just color each one of these spilled variables in the
+            updated program representation with "r10" since we know it is highest priority. The loop would then end and we could generate code.
           */
-        } else if (new_spilled_vars != fptr->spilled_variables) {
+          break;
+        } else if (new_spilled_vars.size() == 0) {
           /*
-          The coloring failed but we were able to spill variables, so update the program/liveness and color again.
+          Every variable was able to be colored, meaning we can move onto the code generation track
+          the current state of the graph and move onto code generation.
           */
+          all_graphs[fptr] = graph;
+          break;
+        } else {
+          /*
+          Some variables could not be colored, so we spill each of them and retry coloring in the next while loop iteration.
+          */
+          for (auto var : new_spilled_vars) {
+            L2::spillForL2(p, var);
+          }
         }
-      } while ()
+        if (debug) std::cerr << "made it out of the coloring loop for function " << fptr->name << "\n";
+      }
 
-
+      /*
+      'all_graphs should be fully populated now. we do the following.
+      - Iterate over all function pointers in the program.
+        - Get the function's coresponding color graph from 'all_graphs'. 
+        - Replace all the variables in the current function's instruction vector with the colors assigned in the graph.
+      ...
+      - Generate the code either in the above loop or in a new for loop.
+      */
     }
 
       
