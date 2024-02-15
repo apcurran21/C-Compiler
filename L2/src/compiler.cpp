@@ -249,13 +249,9 @@ int main(
       }
 
       /*
-      'all_graphs should be fully populated now. we do the following.
-      - Iterate over all function pointers in the program.
-        - Get the function's coresponding color graph from 'all_graphs'. 
-        - Replace all the variables in the current function's instruction vector with the colors assigned in the graph.
-      ...
-      - Generate the code either in the above loop or in a new for loop.
+      Now that we have all the colored graphs, we can generate the code.
       */
+      
     }
 
       
