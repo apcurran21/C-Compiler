@@ -34,5 +34,9 @@ namespace L2 {
     Parses an L2 interference graph file into a graph memory representation
     */
     Graph* parse_graph (char *filename);
-
+    
+    /*
+    comparison function for sorting
+    */
+    bool cmp(Node* a, Node* b);
 }

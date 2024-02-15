@@ -94,11 +94,11 @@ namespace L2 {
         }
       }
 
-      while ((!small_degree_vec.empty()) && (big_degree_vec.empty())) {
+      while ((!small_degree_vec.empty()) || (!big_degree_vec.empty())) {
         // small_degree_vec.sort(compare_nodes);
         // big_degree_vec.sort(compare_nodes);
-        std::sort(small_degree_vec.begin(), small_degree_vec.end());
-        std::sort(big_degree_vec.begin(), big_degree_vec.end());
+        std::sort(small_degree_vec.begin(), small_degree_vec.end(), cmp);
+        std::sort(big_degree_vec.begin(), big_degree_vec.end(), cmp);
 
         // get the node with the most edges
         Node* curr_node;
@@ -111,9 +111,18 @@ namespace L2 {
         }
 
         // remove the edges between the current node and its neighbors
-        for (auto node: small_degree_vec) {
-          g->removeEdge(curr_node, node);
+        auto it = g->graph.find(curr_node);
+        if (it != g->graph.end()) {
+          std::set<Node*> curr_node_neighbors = it->second;
+          for (auto neighbor: curr_node_neighbors) {
+            g->removeEdge(curr_node, neighbor);
+          }
+        } else {
+          if (debug) std::cout << "node not found in the graph" << std::endl;
         }
+
+        // remove the current node from the graph
+        g->graph.erase(curr_node);
 
         // remove the current node from the graph's list of nodes
         // ie we need it so that we can initialize our "already in the graph" set
@@ -132,23 +141,56 @@ namespace L2 {
     */
     Graph* repopulate(Graph* g, Graph* orig_g, std::vector<Node*> node_stack) {
       // each node in the stack needs to be colored and added back into the stack
-      for (auto& node : node_stack) {
+      for (auto node : node_stack) {
 
+        int max_number_nodes = 0;
+        auto it1 = orig_g->nodes.find(node->var);
+        if (it1 != orig_g->nodes.end()) {
+          auto it2 = orig_g->graph.find(it1->second);
+          if (it2 != orig_g->graph.end()) {
+              // Key exists, access the size of the set associated with the key
+              max_number_nodes = (std::min(it2->second.size(), g->getNodes().size()));
+          } else {
+            if (debug) std::cout << "the orig_g version of the current node wasn't found in the graph." << std::endl;
+          }
+        } else {
+          if (debug) std::cout << "the current node's variable wasn't found in orig_g's variable-to-node mapping. Terminating." << std::endl;
+          std::terminate();
+        }
+
+        /*
+        Note for debugging - since we terminate if the variable pointer key isn't found in orig_g's , we're safe to use it1 here
+        */
+        
         // allocate an empty array to hold the current node's neighors in the current state of the graph
-        std::vector<Node*> node_current_neighbors(orig_g->graph[node].size() + g->getNodes().size());
+        std::vector<Node*> node_current_neighbors(max_number_nodes);
         
         // get a copy of the current node's neighbors set from the original graph
-        std::vector<Node*> node_original_neighbors(orig_g->graph[node].begin(), orig_g->graph[node].end());
+        std::vector<Node*> node_original_neighbors_cloned_version(orig_g->graph[it1->second].begin(), orig_g->graph[it1->second].end());
 
-        // get the the neighbors of the current node which are currently in the graph
-        // this is equal to the intersection of the current node's neighbor nodes in the original graph with the set of nodes currently in the graph
-        std::set_intersection(
-          node_original_neighbors.begin(),
-          node_original_neighbors.end(),
+        // get the original version of the current node
+        auto it_curr_node_orig_g = orig_g->nodes.find(it1->first);
+        // ^ just assume everything succeeds at this stage of debugging and use the iterator without checking for .end()
+
+        // get a set of the current node's neighbors from the original cloned state
+        auto it_curr_node_neighbors_orig_g = orig_g->graph.find(it_curr_node_orig_g->second);
+
+        // convert each node in the neighbor set to the current graph version and place into a new set
+        std::set<Node*> curr_node_neighbors_g;
+        for (auto n : it_curr_node_neighbors_orig_g->second) {
+          auto it_node = g->nodes.find(n->var);
+          curr_node_neighbors_g.insert(it_node->second);
+        }
+
+        // perform the operations using the current graph state version of the node pointers
+        auto it3 = std::set_intersection(
+          curr_node_neighbors_g.begin(),
+          curr_node_neighbors_g.end(),
           g->getNodes().begin(),
           g->getNodes().end(),
           node_current_neighbors.begin()
         );
+        node_current_neighbors.resize(it3 - node_current_neighbors.begin());
 
         // using the above vector, create a set of the colors belonging to the neighbors of the current node, in the current graph
         std::set<std::string> neighbors_colors = get_colors(node_current_neighbors);
@@ -169,7 +211,6 @@ namespace L2 {
         add_back_into_graph(node, node_current_neighbors, g);
       }
 
-      // currently just return g - still need to check for the special case where nothing gets colored
       return g;
     }
 
@@ -179,6 +220,10 @@ namespace L2 {
     for (auto neighbor : neighbors) {
       g->addEdge(node, neighbor);
     }
+  }
+
+  bool cmp(Node* a, Node* b) {
+    return a->degree < b->degree;
   }
 
   // /*
