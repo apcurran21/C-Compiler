@@ -14,7 +14,7 @@ namespace L2 {
     // list of general purpose registors for convenience
     // manually sorted according to the slides
     // should probably put this in L2 later
-    std::set<std::string> gp_registers{
+    std::vector<std::string> gp_registers{
         "r10",
         "r11",
         "r8",
@@ -47,6 +47,11 @@ namespace L2 {
         Graph* orig_graph = graph->clone();
 
         /*
+        Predefine the colors of all register nodes
+        */
+        color_registers(graph);
+
+        /*
         Call to some depopulate function which implements step 1 of the coloring algorithm:
         -Repeatedly select a node, remove it from the graph, and put on top of a stack
         -Should this function create a new stack and return it, or can we initialize it 
@@ -66,6 +71,19 @@ namespace L2 {
 
     }
 
+    /*
+    Small helper function to go through the nodes in the graph which are actual registers and set thier color fields. 
+    */
+    void color_registers(Graph *g) {
+      for (auto node : g->nodes) {
+        // dynamic cast on the node to check if its variable field contains a Register instance instead of base Variable
+        Register* reg_ptr = dynamic_cast<Register*>(node.first);
+        if (reg_ptr) {
+          // if it is a register, we color the node with its own defined color
+          node.second->color = reg_ptr->name;
+        }
+      }
+    }
 
     /*
     -We'll track the general ordering of the nodes based on their degree in a priority queue data structure. This will be used in tandem
@@ -163,10 +181,7 @@ namespace L2 {
         */
         
         // allocate an empty array to hold the current node's neighors in the current state of the graph
-        std::vector<Node*> node_current_neighbors(max_number_nodes);
-        
-        // get a copy of the current node's neighbors set from the original graph
-        std::vector<Node*> node_original_neighbors_cloned_version(orig_g->graph[it1->second].begin(), orig_g->graph[it1->second].end());
+        // std::vector<Node*> node_current_neighbors(max_number_nodes);
 
         // get the original version of the current node
         auto it_curr_node_orig_g = orig_g->nodes.find(it1->first);
@@ -175,22 +190,38 @@ namespace L2 {
         // get a set of the current node's neighbors from the original cloned state
         auto it_curr_node_neighbors_orig_g = orig_g->graph.find(it_curr_node_orig_g->second);
 
+        /*
+        NOTE!!! lowkey this stage could just be our "set intersection" step
+        the call to find() will fail whenever we try to lookup an orig_g node key in the current graph state g nodes map. 
+        so in this case we just continue, since we only want to include nodes in curr_node_neighbors_g if they exist in 
+        both the it_curr_node_neighbors_orig_g (orig_g versions of the current node's cloned/original neighbors) set and 
+        the set of g version nodes that are included in the state of the current graph
+        */
+
+        
+
         // convert each node in the neighbor set to the current graph version and place into a new set
-        std::set<Node*> curr_node_neighbors_g;
+        std::vector<Node*> node_current_neighbors;
+        // std::set<Node*> curr_node_neighbors_g;
         for (auto n : it_curr_node_neighbors_orig_g->second) {
           auto it_node = g->nodes.find(n->var);
-          curr_node_neighbors_g.insert(it_node->second);
+          if (it_node != g->nodes.end()) {
+            node_current_neighbors.push_back(it_node->second);
+            // curr_node_neighbors_g.insert(it_node->second);
+          }
+          // it's okay to end up here - it only means that the node n isn't in the current state of the graph yet (ie still in the stack)
+          // if (debug) std::cerr << "could not find the equivalent g equivalent for the current neighbor." << std::endl;
         }
 
-        // perform the operations using the current graph state version of the node pointers
-        auto it3 = std::set_intersection(
-          curr_node_neighbors_g.begin(),
-          curr_node_neighbors_g.end(),
-          g->getNodes().begin(),
-          g->getNodes().end(),
-          node_current_neighbors.begin()
-        );
-        node_current_neighbors.resize(it3 - node_current_neighbors.begin());
+        // // perform the operations using the current graph state version of the node pointers
+        // auto it3 = std::set_intersection(
+        //   curr_node_neighbors_g.begin(),
+        //   curr_node_neighbors_g.end(),
+        //   g->getNodes().begin(),
+        //   g->getNodes().end(),
+        //   node_current_neighbors.begin()
+        // );
+        // node_current_neighbors.resize(it3 - node_current_neighbors.begin());
 
         // using the above vector, create a set of the colors belonging to the neighbors of the current node, in the current graph
         std::set<std::string> neighbors_colors = get_colors(node_current_neighbors);
@@ -199,6 +230,7 @@ namespace L2 {
         for (auto color : gp_registers) {
           if (neighbors_colors.find(color) == neighbors_colors.end()) {
             node->color = color;
+            break;
           }
         }
 
@@ -225,71 +257,5 @@ namespace L2 {
   bool cmp(Node* a, Node* b) {
     return a->degree < b->degree;
   }
-
-  // /*
-  // Parsing utilities, structs, actions for interference graph files
-  // */
-  // std::vector<Register*> parsed_items;
-
-  // struct str_percent : TAO_PEGTL_STRING("%") {};
-
-  // struct spaces :
-  //   pegtl::star< 
-  //     pegtl::sor<
-  //       pegtl::one< ' ' >,
-  //       pegtl::one< '\t'>
-  //     >
-  //   > {};
-
-  // struct seps : 
-  //   pegtl::star<
-  //     pegtl::seq<
-  //       spaces,
-  //       pegtl::eol
-  //     >
-  //   > {};
-
-  // struct node_name:
-  //   pegtl::seq<
-  //     pegtl::opt<str_percent>,
-  //     pegtl::plus<
-  //       pegtl::alnum
-  //     >
-  //   > {};
-
-  // struct nodes_line:
-  //   pegtl::seq<
-  //     node_name,
-  //     pegtl::star<
-  //       pegtl::seq<
-  //         pegtl::space,
-  //         node_name
-  //       >
-  //     >
-  //   > {};
-
-  // struct nodes_lines:
-  //   pegtl::seq<
-  //     seps,
-  //     pegtl::plus<nodes_line>,
-  //     seps
-  //   > {};
-
-  // template< typename Rule >
-  // struct action : pegtl::nothing< Rule > {};
-
-  // // template<> struct action < node_name > {
-  // //   template< typename Input >
-  // //   static void apply( const Input & in, Graph & g) {
-  // //     if (debug) std::cerr << "Recognized a node_name rule" << std::endl;
-
-  // //     auto var_ptr = 
-  // //   }
-  // // }
-
-
-
-
-
 
 }

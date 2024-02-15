@@ -16,6 +16,11 @@ namespace L2 {
     Graph* color_graph(Graph *graph);
 
     /*
+    Do the initial step of coloring register nodes with their own colors
+    */
+    void color_registers(Graph *g);
+
+    /*
     Repeatedly takes out nodes from the graph and return them in a stack
     */
     std::vector<Node*> depopulate(Graph *graph);
