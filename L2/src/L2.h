@@ -95,6 +95,7 @@ namespace L2 {
     public:
       virtual void accept(Visitor *visitor) = 0; 
       virtual void gen(Function *f, std::ofstream &outputFile) = 0;
+      virtual void spill_gen(Function *f, std::ofstream &outputFile) = 0;
       virtual void printMe() = 0;
 
       std::set<Instruction *> predecessors;
@@ -110,6 +111,7 @@ namespace L2 {
     public:
       Instruction_ret ();
       void gen(Function *f, std::ofstream &outputFile) override;
+      void spill_gen(Function *f, std::ofstream &outputFile) override;
       void printMe() override;
       void accept(Visitor *visitor) override;
   };
@@ -118,6 +120,7 @@ namespace L2 {
     public:
       Instruction_assignment (Item *d, Item *s);
       void gen(Function *f, std::ofstream &outputFile) override;
+      void spill_gen(Function *f, std::ofstream &outputFile) override;
       void printMe() override;
       void accept(Visitor *visitor) override;
       Item *s;
@@ -128,6 +131,7 @@ namespace L2 {
       stackarg_assignment(Item *w, Item *M);
       void accept(Visitor *visitor) override;
       void gen(Function *f, std::ofstream &outputFile) override;
+      void spill_gen(Function *f, std::ofstream &outputFile) override;
       void printMe() override;
       Item *w;
       Item *M;
@@ -140,6 +144,7 @@ namespace L2 {
       label_Instruction(Item *label);
       void accept(Visitor *visitor) override;
       void gen(Function *f, std::ofstream &outputFile) override;
+      void spill_gen(Function *f, std::ofstream &outputFile) override;
       void printMe() override;
       std::string getLabel() {
           Label *labelPtr = dynamic_cast<Label*>(label);
@@ -153,6 +158,7 @@ namespace L2 {
       void accept(Visitor *visitor) override;
       goto_label_instruction(Item *label);
       void gen(Function *f, std::ofstream &outputFile) override;
+      void spill_gen(Function *f, std::ofstream &outputFile) override;
       void printMe() override;
   };
 
@@ -161,6 +167,7 @@ namespace L2 {
       void accept(Visitor *visitor) override;
       Call_tenserr_Instruction(Item *F);
       void gen(Function *f, std::ofstream &outputFile) override;
+      void spill_gen(Function *f, std::ofstream &outputFile) override;
       void printMe() override;
       Item *F;
   };
@@ -169,6 +176,7 @@ namespace L2 {
     public:
       Call_uN_Instruction(Item *u, Item *N);
       void gen(Function *f, std::ofstream &outputFile) override;
+      void spill_gen(Function *f, std::ofstream &outputFile) override;
       void printMe() override;
       void accept(Visitor *visitor) override;
       Item *u;
@@ -180,6 +188,7 @@ namespace L2 {
       void accept(Visitor *visitor) override;
       Call_print_Instruction();
       void gen(Function *f, std::ofstream &outputFile) override;
+      void spill_gen(Function *f, std::ofstream &outputFile) override;
       void printMe() override;
   };
   class Call_input_Instruction : public Instruction {
@@ -188,6 +197,7 @@ namespace L2 {
       Call_input_Instruction();
       void accept(Visitor *visitor) override;
       void gen(Function *f, std::ofstream &outputFile) override;
+      void spill_gen(Function *f, std::ofstream &outputFile) override;
       void printMe() override;
   };
   class Call_allocate_Instruction : public Instruction {
@@ -196,6 +206,7 @@ namespace L2 {
       Call_allocate_Instruction();
       void accept(Visitor *visitor) override;
       void gen(Function *f, std::ofstream &outputFile) override;
+      void spill_gen(Function *f, std::ofstream &outputFile) override;
       void printMe() override;
   };
   class Call_tuple_Instruction : public Instruction {
@@ -204,6 +215,7 @@ namespace L2 {
       Call_tuple_Instruction();
       void accept(Visitor *visitor) override;
       void gen(Function *f, std::ofstream &outputFile) override;
+      void spill_gen(Function *f, std::ofstream &outputFile) override;
       void printMe() override;
   };
 
@@ -211,6 +223,7 @@ namespace L2 {
     public:
       w_increment_decrement(Item *r, Item *symbol);
       void gen(Function *f, std::ofstream &outputFile) override;
+      void spill_gen(Function *f, std::ofstream &outputFile) override;
       void printMe() override;
       void accept(Visitor *visitor) override;
       Item *r;
@@ -222,6 +235,7 @@ namespace L2 {
     public:
       w_atreg_assignment(Item *r1, Item *r2, Item *r3, Item *E);
       void gen(Function *f, std::ofstream &outputFile) override;
+      void spill_gen(Function *f, std::ofstream &outputFile) override;
       void printMe() override;
       void accept(Visitor *visitor) override;
       Item *r1;
@@ -234,6 +248,7 @@ namespace L2 {
     public:
       Memory_assignment_store(Item *dst, Item *s, Item *M);
       void gen(Function *f, std::ofstream &outputFile) override;
+      void spill_gen(Function *f, std::ofstream &outputFile) override;
       void printMe() override;
       void accept(Visitor *visitor) override;
       Item *dst;
@@ -246,6 +261,7 @@ namespace L2 {
     public:
       Memory_assignment_load(Item *dst, Item *x, Item *M);
       void gen(Function *f, std::ofstream &outputFile) override;
+      void spill_gen(Function *f, std::ofstream &outputFile) override;
       void printMe() override;
       void accept(Visitor *visitor) override;
       Item *dst;
@@ -257,6 +273,7 @@ namespace L2 {
     public:
       Memory_arithmetic_load(Item *dst, Item *x, Item *instruction, Item *M);
       void gen(Function *f, std::ofstream &outputFile) override;
+      void spill_gen(Function *f, std::ofstream &outputFile) override;
       void printMe() override;
       void accept(Visitor *visitor) override;
       Item *dst;  // w
@@ -269,6 +286,7 @@ namespace L2 {
     public:
       Memory_arithmetic_store(Item *dst, Item *t, Item *instruction, Item *M);
       void gen(Function *f, std::ofstream &outputFile) override;
+      void spill_gen(Function *f, std::ofstream &outputFile) override;
       void printMe() override;
       void accept(Visitor *visitor) override;
       Item *dst;
@@ -282,6 +300,7 @@ namespace L2 {
     public:
       cmp_Instruction(Item *dst, Item *t2, Item *method, Item *t1);
       void gen(Function *f, std::ofstream &outputFile) override;
+      void spill_gen(Function *f, std::ofstream &outputFile) override;
       void printMe() override;
       void accept(Visitor *visitor) override;
       Item *dst;
@@ -294,6 +313,7 @@ namespace L2 {
     public:
       cjump_cmp_Instruction(Item *t2, Item *cmp, Item *t1, Item *label);
       void gen(Function *f, std::ofstream &outputFile) override;
+      void spill_gen(Function *f, std::ofstream &outputFile) override;
       void printMe() override;
       void accept(Visitor *visitor) override;
       std::string getLabel() const {
@@ -323,6 +343,7 @@ namespace L2 {
     public:
       AOP_assignment(Item *method, Item *dst, Item *src);
       void gen(Function *f, std::ofstream &outputFile) override;
+      void spill_gen(Function *f, std::ofstream &outputFile) override;
       void printMe() override;
       void accept(Visitor *visitor) override;
       Item *method;
@@ -334,6 +355,7 @@ namespace L2 {
     public:
       SOP_assignment(Item *method, Item *dst, Item *src);
       void gen(Function *f, std::ofstream &outputFile) override;
+      void spill_gen(Function *f, std::ofstream &outputFile) override;
       void printMe() override;
       void accept(Visitor *visitor) override;
       Item *method;

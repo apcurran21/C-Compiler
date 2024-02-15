@@ -124,10 +124,13 @@ int main(
    * Special cases.
    */
   if (spill_only){
-    p = L2::parse_spill_file(argv[optind]);
-    auto replacementVar = p.variables[p.variables.size() - 2]; 
-    bool changed = L2::spillForL2(p,replacementVar);
-    L2::generate_spill_code(p,changed);
+    // p = L2::parse_spill_file(argv[optind]);
+    // auto replacementVar = p.variables[p.variables.size() - 2]; 
+    // bool changed = L2::spillForL2(p,replacementVar);
+    // L2::generate_spill_code(p, changed, );
+
+    // idk how we were testing spill, should fix before submitting
+    // the setup seems super specific to one test case
   }
 
   /*
@@ -191,7 +194,7 @@ int main(
     // use the interference graph to replace the variables in the program with registers
     
     // run code gen on the updated program
-    L2::generate_code(p,colored_graph); 
+    L2::generate_code(p, colored_graph); 
     return 0;
   }
 

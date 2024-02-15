@@ -718,14 +718,14 @@ namespace L2 {
             // theoretically shouldn't get here...
         }
     }
-
+    void ColorVariablesVisitor::visit(Instruction_ret * instruction) {
+    }
     void ColorVariablesVisitor::visit(Instruction_assignment *instruction) {
         auto s = dynamic_cast<Variable*>(instruction->s);
         auto d = dynamic_cast<Variable*>(instruction->s);
         colorVar(s);
         colorVar(d);
     }
-
     void ColorVariablesVisitor::visit(label_Instruction *instruction) {
         auto label = dynamic_cast<Variable*>(instruction->label);
         colorVar(label);

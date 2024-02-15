@@ -140,8 +140,7 @@ namespace L2{
     }
   }
 
-  void generate_spill_code(Program p, bool changed,Graph *color_graph){
-
+  void generate_code(Program p, bool changed, Graph *color_graph){
     /* 
      * Open the output file.
      */ 
@@ -154,7 +153,7 @@ namespace L2{
 
       // std::cout << "Currently generating for function " << fname << std::endl;
 
-      outputFile << "("<<fname<<"\n\t";
+      outputFile << "(" << fname << "\n\t";
       int variables = 0;
       if (changed){
         variables = 1;
@@ -183,7 +182,7 @@ namespace L2{
     }
     outputFile<<")\n";
 
-    if (debug) std::cerr << "Finished code generator!" << std::endl;
+    if (debug) std::cerr << "Finished code generation!" << std::endl;
 
     /* 
      * Close the output file.
