@@ -13,7 +13,12 @@ namespace L2 {
         Graph* (pointer to the now colored graph, null pointer if unsuccessful)
     */
     // ColorResult color_graph(Graph *graph);
-    Graph* color_graph(Graph *graph);
+    // Graph* color_graph(Graph *graph);
+
+    /*
+    Note that this function now returns the full list of variables it has spilled
+    */
+    std::tuple<bool, std::set<Variable*>> color_graph(Graph *graph);
 
     /*
     Do the initial step of coloring register nodes with their own colors

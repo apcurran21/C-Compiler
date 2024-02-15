@@ -8,8 +8,9 @@
 #include <interference_graph.h>
 
 namespace L2{
-    bool spillForL2(Program &p, Variable* spilledVar){
-        Function* f = p.functions[0]; 
+    // bool spillForL2(Program &p, Variable* spilledVar){
+    bool spillForL2(Function* f, Variable* spilledVar) {    
+        // Function* f = p.functions[0]; 
         std::string temp = "%S";
 
         int temp_var = -1;

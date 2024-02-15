@@ -161,12 +161,16 @@ namespace L2{
         std::cout << std::endl; 
     }
   }
-  Graph* Graph::build_graph(Program &p, LivenessResult result ){
-  
+  // Graph* Graph::build_graph(Program &p, LivenessResult result ){
+  // Graph* build_graph(Program &p, LivenessResult result){
+  Graph* build_graph(Function *f, Curr_F_Liveness result) {
     auto interference_graph = new Graph();
-    Gen_Kill_Store gen_kill_set = result.gen_kill_sets;
-    In_Out_Store in_out_sets = result.in_out_sets;
-    Function* f = p.functions[0]; // placeholder 
+
+    /*
+    Add the functions current list of spilled variables to the graph's corresponding field
+    */
+    spilled_vars = f->spilled_variables;
+
     std::set<Variable *> registers;
     // gp registers vector
     std::vector<std::string> gp_registers{
@@ -194,19 +198,25 @@ namespace L2{
         interference_graph->addNode(node);
     }
     for (auto i : f->instructions){
-        add_new_var(interference_graph,gen_kill_set.Gen_Set[0][i]);//hopefully this doesn't cause an error later on 
-        add_new_var(interference_graph,gen_kill_set.Kill_Set[0][i]);
+        // add_new_var(interference_graph,gen_kill_set.Gen_Set[0][i]);//hopefully this doesn't cause an error later on 
+        // add_new_var(interference_graph,gen_kill_set.Kill_Set[0][i]);
+        add_new_var(interference_graph, result.gen[i]);
+        add_new_var(interference_graph, result.kill[i]);
     }
     //add nodes and connect variables in Kill[i] with those in OUT[i]
     for (auto i : f->instructions){
-        add_edges_var(interference_graph,in_out_sets.In_Set[0][i]);
-        add_edges_var(interference_graph,in_out_sets.Out_Set[0][i]);
+        // add_edges_var(interference_graph,in_out_sets.In_Set[0][i]);
+        // add_edges_var(interference_graph,in_out_sets.Out_Set[0][i]);
+        add_edges_var(interference_graph, result.in[i]);
+        add_edges_var(interference_graph, result.out[i]);
         std::set<Variable *> insert_set;
-        insert_set.insert(gen_kill_set.Kill_Set[0][i].begin(),gen_kill_set.Kill_Set[0][i].end());
-        insert_set.insert(in_out_sets.Out_Set[0][i].begin(),in_out_sets.Out_Set[0][i].end());
-        add_edges_var(interference_graph,insert_set);
+        // insert_set.insert(gen_kill_set.Kill_Set[0][i].begin(),gen_kill_set.Kill_Set[0][i].end());
+        // insert_set.insert(in_out_sets.Out_Set[0][i].begin(),in_out_sets.Out_Set[0][i].end());
+        insert_set.insert(result.kill[i].begin(), result.kill[i].end());
+        insert_set.insert(result.out[i].begin(), result.out[i].end());
+        add_edges_var(interference_graph, insert_set);
     }
-    add_edges_var(interference_graph,registers);
+    add_edges_var(interference_graph, registers);
     for (auto i: f->instructions){
       auto checker = dynamic_cast<SOP_assignment*>(i);
       if (!i ||! checker){

@@ -1,7 +1,3 @@
-#include <tao/pegtl.hpp>
-#include <tao/pegtl/contrib/analyze.hpp>
-#include <tao/pegtl/contrib/raw_string.hpp>
-
 #include "graph_coloring.h"
 
 namespace pegtl = TAO_PEGTL_NAMESPACE;
@@ -39,7 +35,8 @@ namespace L2 {
     Outputs:
         Graph* (pointer to the now colored graph, null pointer if unsuccessful)
     */
-    Graph* color_graph(Graph *graph) {
+    // Graph* color_graph(Graph *graph) {
+    std::tuple<bool, std::set<Variable*>> color_graph(Graph *graph) {
         
         /*
         Clone the initial graph in case we need to spill all variables
@@ -158,6 +155,8 @@ namespace L2 {
     This function is for coloring each node as it comb
     */
     Graph* repopulate(Graph* g, Graph* orig_g, std::vector<Node*> node_stack) {
+      bool big_fail = false;
+      
       // each node in the stack needs to be colored and added back into the stack
       for (auto node : node_stack) {
 
@@ -235,15 +234,20 @@ namespace L2 {
         }
 
         // spill the variable if it wasn't able to be colored
-        if (node->color.empty() && (g->spilled_vars.find(node->var) == g->spilled_vars.end())) {
-          g->spilled_vars.insert(node->var);
+        if (node->color.empty() {
+          if (g->spilled_vars.find(node->var) == g->spilled_vars.end())) {
+            g->spilled_vars.insert(node->var);
+          else {
+            big_fail = true;
+            break;
+          }
         }
 
         // add the node back into the graph (if it wasn't able to be colored, then it still has an empty string and we spill)
         add_back_into_graph(node, node_current_neighbors, g);
       }
 
-      return g;
+      return std::make_tuple(big_fail, g->spilled_vars);
     }
 
 

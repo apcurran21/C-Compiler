@@ -8,6 +8,7 @@
 #include <iostream>
 #include <list>
 #include <map>
+#include <tuple>
 
 #include "variable_allocator.h"
 #include "interference_graph.h"
@@ -375,6 +376,7 @@ namespace L2 {
       int64_t locals;
       std::vector<Instruction *> instructions;
       VariableAllocator variable_allocator;
+      std::set<Variable *> spilled_variables;
       void calculateCFG();
       void calculateUseDefs();
   }; 
@@ -522,14 +524,22 @@ namespace L2 {
 
   class Gen_Kill_Store {
     public:
-    Gen_Kill_Store(Program *p);
-    void print_sets(int function_index, Instruction* instruction_ptr);
-    std::vector<std::unordered_map<Instruction*, std::set<Variable*>>> Gen_Set;
-    std::vector<std::unordered_map<Instruction*, std::set<Variable*>>> Kill_Set;
+      Gen_Kill_Store(Program *p);
+      void print_sets(int function_index, Instruction* instruction_ptr);
+      std::vector<std::unordered_map<Instruction*, std::set<Variable*>>> Gen_Set;
+      std::vector<std::unordered_map<Instruction*, std::set<Variable*>>> Kill_Set;
   };
+
   struct LivenessResult {
     Gen_Kill_Store gen_kill_sets;
     In_Out_Store in_out_sets;
+  };
+
+  struct Curr_F_Liveness {
+    std::unordered_map<Instruction*, std::set<Variable*>> gen;
+    std::unordered_map<Instruction*, std::set<Variable*>> kill;
+    std::unordered_map<Instruction*, std::set<Variable*>> in;
+    std::unordered_map<Instruction*, std::set<Variable*>> out;
   };
   
 }

@@ -10,8 +10,10 @@
 namespace L2{
 
     // Forward declarations
+    class Function;
     class Program;
     struct LivenessResult;
+    struct Curr_F_Liveness;
 
     // Declare a r
     class Node{
@@ -38,11 +40,14 @@ namespace L2{
             std::vector<Node *> getNodes(void) const;
             Graph * clone(void) const; //If we ever need to make a clone
             int32_t size(void) const;
-            Graph * build_graph(Program &p, LivenessResult result);
+            // Graph * build_graph(Program &p, LivenessResult result);
             void printGraph() const;
             void printColors() const;
     };
-
+    
+    // Graph * build_graph(Program &p, LivenessResult result);
+    Graph * build_graph(Function *f, Curr_F_Liveness result);
+    
     std::set<std::string> get_colors(std::vector<Node*> nodes);
 
 }

@@ -140,7 +140,9 @@ namespace L2{
     }
   }
 
-  void generate_code(Program p, bool changed, Graph *color_graph){
+  // void generate_code(Program p, bool changed, Graph *color_graph){
+  // void generate_code(Program p, Graph *color_graph) {
+  void generate_code(Program p, std::map<Function*, Graph*> all_graphs) {
     /* 
      * Open the output file.
      */ 
@@ -149,12 +151,31 @@ namespace L2{
 
     // main loop
     for (Function *fptr : p.functions) {
+      /*
+      Grab the graph belonging to the current function
+      */
+      Graph* color_graph;
+      auto it = all_graphs.find(fptr);
+      if (it != all_graphs.end()) {
+        color_graph = it->second;
+      } else {
+        if (debug) std::cerr << "couldn't find a graph for the current function pointer\n";
+      }
+      
       std::string fname = fptr->name;
 
       // std::cout << "Currently generating for function " << fname << std::endl;
 
       outputFile << "(" << fname << "\n\t";
       int variables = 0;
+
+      /*
+      theres some weird stuff going on with 'changed' why is everything inconsistent
+      just hardcode for now and remove the extra arg so we can at least compile
+      */
+      bool changed = 0;
+
+
       if (changed){
         variables = 1;
       }
