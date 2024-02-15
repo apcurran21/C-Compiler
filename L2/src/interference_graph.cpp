@@ -169,7 +169,7 @@ namespace L2{
     /*
     Add the functions current list of spilled variables to the graph's corresponding field
     */
-    spilled_vars = f->spilled_variables;
+    auto spilled_vars = f->spilled_variables;
 
     std::set<Variable *> registers;
     // gp registers vector

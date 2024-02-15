@@ -147,7 +147,13 @@ namespace L2{
      * Open the output file.
      */ 
     std::ofstream outputFile;
-    outputFile.open("prog.out");
+    outputFile.open("prog.L1");
+
+    /*
+    Gen the entry point label
+    */
+    std::string entry_lab = p.entryPointLabel;
+    outputFile << "(" << entry_lab << "\n";
 
     // main loop
     for (Function *fptr : p.functions) {
@@ -195,7 +201,7 @@ namespace L2{
         }
       }
     }
-    outputFile<<")\n";
+    outputFile << ")\n";
 
     if (debug) std::cerr << "Finished code generation!" << std::endl;
 

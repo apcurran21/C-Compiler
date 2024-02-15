@@ -21,6 +21,7 @@
 #include <code_generator.h>
 #include "spill_code_generator.h"
 #include "L2.h"
+#include "spill.h"
 
 void print_help (char *progName){
   // std::cerr << "Usage: " << progName << " [-v] [-g 0|1] [-O 0|1|2] [-s] [-l] [-i] SOURCE" << std::endl;
@@ -207,7 +208,7 @@ int main(
         /*
         Build an interference graph based off of the liveness
         */
-        Graph* graph = L2::build_graph(fptr, liveness_results);
+        L2::Graph* graph = L2::build_graph(fptr, liveness_results);
 
         /*
         Color the interference graph
@@ -221,7 +222,7 @@ int main(
         */
         auto color_result = L2::color_graph(graph);
         bool big_fail = std::get<0>(color_result);
-        std::set<Variable*> new_spilled_vars = std::get<1>(color_result);
+        std::set<L2::Variable*> new_spilled_vars = std::get<1>(color_result);
 
         if (big_fail) {
           /*
@@ -243,120 +244,20 @@ int main(
           Some variables could not be colored, so we spill each of them and retry coloring in the next while loop iteration.
           */
           for (auto var : new_spilled_vars) {
-            L2::spillForL2(p, var);
+            L2::spillForL2(fptr, var);
           }
+          /*
+          Add the newly spilled variables to the function's tracking set. The color graph in the next loop iteration will get this updated set.
+          */
+          fptr->spilled_variables.insert(new_spilled_vars.begin(), new_spilled_vars.end());
         }
-        if (debug) std::cerr << "made it out of the coloring loop for function " << fptr->name << "\n";
+        // if (debug) std::cerr << "made it out of the coloring loop for function " << fptr->name << "\n";
       }
-      
-    
-
-      /*
-      Now that we have all the colored graphs, we can generate the code.
-      */
-      
     }
-
-      
-
-
-
-
-  //     /*
-  //     Create a convenience struct to hold the gen, kill, in, and out sets for the current function.
-  //     */
-  //     L2::Curr_F_Liveness curr_f_liveness = {
-  //       liveness_results.gen_kill_sets.Gen_Set[f_index],
-  //       liveness_results.gen_kill_sets.Kill_Set[f_index],
-  //       liveness_results.in_out_sets.In_Set[f_index],
-  //       liveness_results.in_out_sets.Out_Set[f_index]
-  //     };
-
-  //     // auto g = build_graph(p, liveness_results);
-  //     auto g = L2::build_graph(fptr, curr_f_liveness);
-
-  //     bool changed = false;
-
-
-
-  //     f_index++;
-  //   }
-
-  //   do {
-
-
-
-  //   } while ()
-
-
-
-
-
-
-
-  //   /*
-  //   'liveness_results' holds a Gen_Kill_Store and an In_Out_Store,
-  //   where each store tracks the corresponding sets for each instruction
-  //   within each function of the program.
-  //   */
-  //   auto liveness_results = L2::liveness_analysis(&p, false);
-
-  //   /*
-  //   initialize a map so that we can track the interference graphs for each function
-  //   */
-  //   std::map<L2::Function*, L2::Graph*> all_graphs;
-
-  //   /*
-  //   Create and color a graph for each of the program's functions
-  //   */
-  //   int f_index = 0;
-  //   for (auto fptr : p.functions) {
-  //     /*
-  //     Create a convenience struct to hold the gen, kill, in, and out sets for the current function.
-  //     */
-  //     L2::Curr_F_Liveness curr_f_liveness = {
-  //       liveness_results.gen_kill_sets.Gen_Set[f_index],
-  //       liveness_results.gen_kill_sets.Kill_Set[f_index],
-  //       liveness_results.in_out_sets.In_Set[f_index],
-  //       liveness_results.in_out_sets.Out_Set[f_index]
-  //     };
-
-  //     // auto g = build_graph(p, liveness_results);
-  //     auto g = L2::build_graph(fptr, curr_f_liveness);
-
-  //     bool changed = false;
-
-
-
-  //     f_index++;
-  //   }
-
-  //   auto g = new L2:: Graph();
-  //   bool changed = false;
-  //   // L2::Graph colored_graph;
-  //   // do {
-  //     /*
-  //     We want to continue our process of generating liveness, creating the
-  //     interference graph based on it, and coloring that graph until we are able to
-  //     color all variables. At this point, we can replace all the variables with their
-  //     corresponding colors in the final interference graph.
-  //     */
-  //   //   auto liveness = L2::liveness_analysis(&p, false);
-  //   //   auto interference_graph = g->build_graph(p, liveness);
-  //   //   auto g = new L2::Graph();
-  //   //   auto colored_graph = L2::color_graph(interference_graph);
-  //   //   for (auto var_ptr : interference_graph->spilled_vars) {
-  //   //     // what is 'changed' for?
-  //   //     bool changed = L2::spillForL2(p, var_ptr);
-  //   //   }
-  //   // } while (false); // we should really do while interference graph produces new spilled variables
-
-  //   // use the interference graph to replace the variables in the program with registers
-    
-  //   // run code gen on the updated program
-  //   // L2::generate_code(p, colored_graph); 
-  //   return 0;
+    /*
+    Now that we have all the colored graphs, we can generate the code.
+    */
+    L2::generate_code(p, all_graphs);
   }
-
   return 0;
 }

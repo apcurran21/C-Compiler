@@ -1,8 +1,5 @@
 #include "graph_coloring.h"
 
-namespace pegtl = TAO_PEGTL_NAMESPACE;
-
-using namespace pegtl;
 using namespace std;
 
 namespace L2 {
@@ -37,7 +34,6 @@ namespace L2 {
     */
     // Graph* color_graph(Graph *graph) {
     std::tuple<bool, std::set<Variable*>> color_graph(Graph *graph) {
-        
         /*
         Clone the initial graph in case we need to spill all variables
         */
@@ -61,11 +57,7 @@ namespace L2 {
         -Select a color on each node as it comes back into the graph, making sure no adjacent
             nodes have the same color.
         */
-        Graph* result_graph = repopulate(graph, orig_graph, node_stack);
-        
-        // ColorResult result = {result_graph, result_graph}
-        return result_graph;
-
+        return repopulate(graph, orig_graph, node_stack);
     }
 
     /*
@@ -154,7 +146,7 @@ namespace L2 {
     We need to compare the current state of the graph g with the initial state so that we know which edges to add back and when
     This function is for coloring each node as it comb
     */
-    Graph* repopulate(Graph* g, Graph* orig_g, std::vector<Node*> node_stack) {
+    std::tuple<bool, std::set<Variable*>> repopulate(Graph* g, Graph* orig_g, std::vector<Node*> node_stack) {
       bool big_fail = false;
       std::set<Variable*> newly_spilled;
       
@@ -235,10 +227,10 @@ namespace L2 {
         }
 
         // check for spills
-        if (node->color.empty() {
-          if (g->spilled_vars.find(node->var) == g->spilled_vars.end())) {
+        if (node->color.empty()) {
+          if (g->spilled_vars.find(node->var) == g->spilled_vars.end()) {
             newly_spilled.insert(node->var);
-          else {
+          } else {
             big_fail = true;
             break;
           }

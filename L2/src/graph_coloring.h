@@ -33,7 +33,7 @@ namespace L2 {
     /*
     Chooses colors and places nodes back into the graph
     */
-    Graph* repopulate(Graph *graph, Graph *orig_graph, std::vector<Node*> node_stack);
+    std::tuple<bool, std::set<Variable*>> repopulate(Graph *graph, Graph *orig_graph, std::vector<Node*> node_stack);
 
     /*
     Places edges between a given node and its neighbors described in the vector arg 
