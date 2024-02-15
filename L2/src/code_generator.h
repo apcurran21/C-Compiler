@@ -4,6 +4,6 @@
 
 namespace L2{
 
-  void generate_code(Program p,bool changed);
+  void generate_code(Program p,Graph color_graph);
 
 }

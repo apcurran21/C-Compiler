@@ -93,7 +93,6 @@ namespace L2{
     // Create a new graph instance.
     auto newGraph = new Graph();
 
-    // Map to store the correspondence between original and new nodes.
     std::map<const Node*, Node*> origToNewNodeMap;
 
     for (const auto &nodePair : this->nodes) {
