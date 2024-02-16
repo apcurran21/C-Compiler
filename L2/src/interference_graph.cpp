@@ -21,6 +21,8 @@ namespace L2{
     // Add a node to the graph with no connections initially.
     graph[node] = std::set<Node*>();
     nodes[node->get()] = node; // we essentially want to associate the Variable with the node here 
+    // update the graph size
+    size++;
   }
 
   void Graph::removeNode(Node *node) {
@@ -34,6 +36,7 @@ namespace L2{
     // Remove the node itself.
     graph.erase(node);
     nodes.erase(node->get());
+    size--;
   }
 
   void Graph::addEdge(Node *src, Node *dst) {
@@ -172,6 +175,11 @@ namespace L2{
     */
     auto spilled_vars = f->spilled_variables;
     auto spill_vars = f->spill_variables;
+
+    /*
+    Initialize the graph's size metric.
+    */
+    interference_graph.size = 0;
 
     std::set<Variable *> registers;
     // gp registers vector

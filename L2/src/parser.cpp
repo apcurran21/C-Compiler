@@ -1146,13 +1146,16 @@ namespace L2 {
     static void apply( const Input & in, Program & p) {
       if (debug) std::cerr << "Recognized a function_name rule" << std::endl;
 
-      if (p.entryPointLabel.empty()) {
-        p.entryPointLabel = in.string();
-      } else {
-        auto newF = new Function();
-        newF->name = in.string();
-        p.functions.push_back(newF);
-      }
+      // if (p.entryPointLabel.empty()) {
+      //   p.entryPointLabel = in.string();
+      // } else {
+      //   auto newF = new Function();
+      //   newF->name = in.string();
+      //   p.functions.push_back(newF);
+      // }
+      auto newF = new Function();
+      newF->name = in.string();
+      p.functions.push_back(newF);
     }
   };
 

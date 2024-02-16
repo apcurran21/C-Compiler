@@ -33,6 +33,7 @@ namespace L2{
             std::map<Variable *, Node *> nodes;
             std::set<Variable *> spilled_vars;
             std::set<Variable *> spill_vars;
+            int32_t size;
             void addNode(Node *node);
             void removeNode(Node *node);
             void addEdge(Node *src, Node *dst);

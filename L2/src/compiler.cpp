@@ -155,7 +155,13 @@ int main(
    * Interference graph test.
    */
   if (interference_only){
-    // auto liveness = L2::liveness_analysis(&p, false);
+    L2::Gen_Kill_Store gen_kill_sets = L2::Gen_Kill_Store(&p); 
+    L2::In_Out_Store in_out_sets = L2::In_Out_Store(&p);
+    L2::Curr_F_Liveness liveness_results = L2::liveness_analysis(&p, 0,  gen_kill_sets, in_out_sets, false);
+    auto interference_graph = L2::build_graph(p.functions[0], liveness_results);
+    interference_graph->printGraph();
+
+
     // auto g = new L2::Graph();
     // auto interference_graph = g->build_graph(p, liveness);
     // auto interference_graph = build_graph(p, liveness);
