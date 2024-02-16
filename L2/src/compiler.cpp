@@ -13,7 +13,8 @@
 #include <iostream>
 #include <assert.h>
 
-#include <parser.h>
+// #include "L2/src/parser.h"
+#include "parser.h"
 #include "liveness_analysis.h"
 #include "interference_graph.h"
 #include "spill.h"
@@ -139,11 +140,14 @@ int main(
    * Liveness test.
    */
   if (liveness_only){
+    // std::cerr << "in liveness before" << std::endl;
     // auto In_Out_sets = L2::liveness_analysis(&p, true);
     auto gen_kill_sets = L2::Gen_Kill_Store(&p);
+    // std::cerr << "in liveness befor1e" << std::endl;
     auto in_out_sets = L2::In_Out_Store(&p);
+    // std::cerr << "in liveness befor2e" << std::endl;
     auto curr_f_res = L2::liveness_analysis(&p, 0, gen_kill_sets, in_out_sets, true);
-
+    // std::cerr << "in liveness compiler" << std::endl;
     return 0;
   }
 
@@ -226,11 +230,18 @@ int main(
 
         if (big_fail) {
           /*
-          Spill everything then do the code generation
-          - this will likely entail adding all variables to the function's spilled vars list then going through this loop one more time.
-          - since spilled variables are guaranteed not to interfere, we could also just color each one of these spilled variables in the
-            updated program representation with "r10" since we know it is highest priority. The loop would then end and we could generate code.
+          Spill everything:
           */
+          /*
+          Spill all variables which aren't registers and aren't already spill variables
+          */
+          for (auto& pair : graph->nodes) {
+            auto var = pair.first;
+            auto reg_ptr = dynamic_cast<L2::Register*>(var);
+            if ((!reg_ptr) && (fptr->spill_variables.find(var) == fptr->spill_variables.end())) {
+              L2::spillForL2(fptr, var);
+            }
+          }
           break;
         } else if (new_spilled_vars.size() == 0) {
           /*
@@ -242,14 +253,16 @@ int main(
         } else {
           /*
           Some variables could not be colored, so we spill each of them and retry coloring in the next while loop iteration.
+          - this function should also keep track of the new spill variables so we don't accidentally spill them later
           */
           for (auto var : new_spilled_vars) {
             L2::spillForL2(fptr, var);
           }
           /*
           Add the newly spilled variables to the function's tracking set. The color graph in the next loop iteration will get this updated set.
+          - actually this probably isn't necessary, we only need to track the spill variables
           */
-          fptr->spilled_variables.insert(new_spilled_vars.begin(), new_spilled_vars.end());
+          // fptr->spilled_variables.insert(new_spilled_vars.begin(), new_spilled_vars.end());
         }
         // if (debug) std::cerr << "made it out of the coloring loop for function " << fptr->name << "\n";
       }

@@ -201,7 +201,7 @@ namespace L2{
         }
       }
     }
-    outputFile << ")\n";
+    outputFile << ")\n)\n";
 
     if (debug) std::cerr << "Finished code generation!" << std::endl;
 

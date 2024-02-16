@@ -708,21 +708,40 @@ namespace L2 {
         };
     }
     void ColorVariablesVisitor::colorVar(Variable * &var) {
-        Node* correspondingNode = color_graph->nodes[var];
-        if (correspondingNode) {
+        // Node* correspondingNode = color_graph->nodes[var];
+        // if (correspondingNode) {
+        //     std::string color = correspondingNode->color;
+        //     Variable* new_var = current_function->variable_allocator.allocate_variable(color, VariableType::reg);
+        //     *var = *new_var;
+        // } else {
+        //     // The variable was not found in the graph.
+        //     // theoretically shouldn't get here...
+        // }
+        auto iterator = color_graph->nodes.find(var);
+        if (iterator != color_graph->nodes.end()) {
+            Node* correspondingNode = iterator->second;
             std::string color = correspondingNode->color;
             Variable* new_var = current_function->variable_allocator.allocate_variable(color, VariableType::reg);
             *var = *new_var;
         } else {
-            // The variable was not found in the graph.
-            // theoretically shouldn't get here...
+
         }
+        // auto iterator = color_graph->nodes.find(var);
+        // if (iterator != color_graph->nodes.end()) {
+        //     Node* correspondingNode = iterator->second();
+        //     std::string color = correspondingNode->color;
+        //     Variable* new_var = current_function->variable_allocator.allocate_variable(color, VariableType::reg);
+        //     *var = *new_var;
+        // } else {
+        //     // The variable was not found in the graph.
+        //     // theoretically shouldn't get here...
+        // }
     }
     void ColorVariablesVisitor::visit(Instruction_ret * instruction) {
     }
     void ColorVariablesVisitor::visit(Instruction_assignment *instruction) {
         auto s = dynamic_cast<Variable*>(instruction->s);
-        auto d = dynamic_cast<Variable*>(instruction->s);
+        auto d = dynamic_cast<Variable*>(instruction->d);
         colorVar(s);
         colorVar(d);
     }

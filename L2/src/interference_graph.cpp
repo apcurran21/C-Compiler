@@ -167,9 +167,11 @@ namespace L2{
     auto interference_graph = new Graph();
 
     /*
-    Add the functions current list of spilled variables to the graph's corresponding field
+    Add the functions current list of spill and spilled variables to the graph's corresponding field
+    - spilled variables probably aren't necessary
     */
     auto spilled_vars = f->spilled_variables;
+    auto spill_vars = f->spill_variables;
 
     std::set<Variable *> registers;
     // gp registers vector

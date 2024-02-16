@@ -150,6 +150,7 @@ namespace L2 {
       bool big_fail = false;
       std::set<Variable*> newly_spilled;
       
+      bool failed_to_color = false;
       // each node in the stack needs to be colored and added back into the stack
       for (auto node : node_stack) {
 
@@ -226,18 +227,36 @@ namespace L2 {
           }
         }
 
-        // check for spills
+        /*
+        Checking for spill conditions: if the node's color field is empty coloring failed
+        */
         if (node->color.empty()) {
-          if (g->spilled_vars.find(node->var) == g->spilled_vars.end()) {
+          failed_to_color = true;
+          /*
+          Check if the current node is one of our spill variables
+          */
+          if (g->spill_vars.find(node->var) == g->spill_vars.end()) {
+            /*
+            If it isn't found in this map, we are allowed to spill it.
+            */
             newly_spilled.insert(node->var);
-          } else {
-            big_fail = true;
-            break;
           }
+
+          /*
+          However if it is, we just add it into the graph without a color and hope another variable is able to be spilled so we can recalculate liveness.
+          - ie do nothing here
+          */
         }
 
         // add the node back into the graph (if it wasn't able to be colored, then it still has an empty string and we spill)
         add_back_into_graph(node, node_current_neighbors, g);
+      }
+      /*
+      We know we failed the big condition and have to spill everything if:
+      - we know coloring failed, but no variables are eligible to be spilled
+      */
+      if (failed_to_color && (newly_spilled.size() == 0)) {
+        big_fail = true;
       }
 
       return std::make_tuple(big_fail, newly_spilled);
@@ -250,6 +269,7 @@ namespace L2 {
       g->addEdge(node, neighbor);
     }
   }
+
 
   bool cmp(Node* a, Node* b) {
     return a->degree < b->degree;

@@ -15,7 +15,8 @@ namespace L2{
 
         int temp_var = -1;
         std::string result = temp + std::to_string(temp_var);
-        Variable* initial_replacement = new Variable(result);
+        // Variable* initial_replacement = new Variable(result);
+        Variable* initial_replacement = f->variable_allocator.allocate_variable(result, VariableType::var);
 
         Number* stack = new Number(0);
         SpillVisitor * visitor = new SpillVisitor(spilledVar,initial_replacement);
@@ -96,6 +97,10 @@ namespace L2{
                 visitor->spilled = false;
             }
         }
+
+        // track the spill variable we created so that we don't accidentally spill it later
+        f->spill_variables.insert(initial_replacement);
+
         return changed;
 
     }

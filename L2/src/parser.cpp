@@ -1176,20 +1176,33 @@ namespace L2 {
     }
   };
 
-  template<> struct action < entry_point_rule> {
+  template<> struct action < entry_point_rule > {
     template< typename Input >
     static void apply( const Input & in, Program & p){
       if (debug) std::cerr << "Recognized a complete entry point rule, done !" << std::endl;
     }
   };
 
-  template<> struct action < Functions_rule> {
+  template<> struct action < Functions_rule > {
     template< typename Input >
     static void apply( const Input & in, Program & p){
       if (debug) std::cerr << "Recognized a functions rule" << std::endl;
     }
   };
 
+  template<> struct action < seps_with_comments > {
+    template< typename Input >
+    static void apply( const Input & in, Program & p){
+      if (debug) std::cerr << "Recognized a seps_with_comments rule" << std::endl;
+    }
+  };
+
+  template<> struct action < seps > {
+    template< typename Input >
+    static void apply( const Input & in, Program & p){
+      if (debug) std::cerr << "Recognized a sepsma rule" << std::endl;
+    }
+  };
   
 
 
