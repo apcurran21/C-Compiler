@@ -9,13 +9,14 @@
 
 namespace L2{
     // bool spillForL2(Program &p, Variable* spilledVar){
-    bool spillForL2(Function* f, Variable* spilledVar) {    
+    bool spillForL2(Function* f, Variable* spilledVar, int spill_count) {    
         // Function* f = p.functions[0]; 
         std::string temp = "%S";
 
-        int temp_var = -1;
-        std::string result = temp + std::to_string(temp_var);
-        // Variable* initial_replacement = new Variable(result);
+        // int temp_var = -1;
+        // std::string result = temp + std::to_string(temp_var);
+
+        std::string result = temp + std::to_string(spill_count);
         Variable* initial_replacement = f->variable_allocator.allocate_variable(result, VariableType::var);
 
         Number* stack = new Number(0);
@@ -30,7 +31,7 @@ namespace L2{
             if (visitor->spilled) {
                 if (assignment_instruction){
                     Variable* var = f->variable_allocator.allocate_variable("rsp", VariableType::reg);
-                    Instruction * instruction1 = new Memory_assignment_store(var,visitor->replacementVariable, stack);
+                    Instruction * instruction1 = new Memory_assignment_store(var, visitor->replacementVariable, stack);
                     f->instructions.insert(f->instructions.begin() + i + 1, instruction1);
                     i += 1;
                     

@@ -202,6 +202,7 @@ int main(
     */
     int f_index = 0;
     for (auto fptr : p.functions) {
+      int spill_count = -1;
       while (true){
         /*
         Compute liveness for the current state of the current function
@@ -239,7 +240,8 @@ int main(
             auto var = pair.first;
             auto reg_ptr = dynamic_cast<L2::Register*>(var);
             if ((!reg_ptr) && (fptr->spill_variables.find(var) == fptr->spill_variables.end())) {
-              L2::spillForL2(fptr, var);
+              L2::spillForL2(fptr, var, spill_count);
+              spill_count++;
             }
           }
           break;
@@ -256,7 +258,8 @@ int main(
           - this function should also keep track of the new spill variables so we don't accidentally spill them later
           */
           for (auto var : new_spilled_vars) {
-            L2::spillForL2(fptr, var);
+            L2::spillForL2(fptr, var, spill_count);
+            spill_count++;
           }
           /*
           Add the newly spilled variables to the function's tracking set. The color graph in the next loop iteration will get this updated set.

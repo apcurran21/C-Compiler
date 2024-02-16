@@ -11,5 +11,5 @@ namespace L2 {
      * @param spilledVar The variable to be spilled.
      */
     // bool spillForL2(Program &p, Variable* spilledVar);
-    bool spillForL2(Function* f, Variable* spilledVar);
+    bool spillForL2(Function* f, Variable* spilledVar, int spill_count);
 }
