@@ -41,7 +41,7 @@ namespace L2{
             bool exists(Variable *var);
             std::vector<Node *> getNodes(void) const;
             Graph * clone(void) const; //If we ever need to make a clone
-            int32_t size(void) const;
+            // int32_t size(void);
             // Graph * build_graph(Program &p, LivenessResult result);
             void printGraph() const;
             void printColors() const;

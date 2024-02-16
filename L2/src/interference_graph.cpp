@@ -126,10 +126,10 @@ namespace L2{
     return newGraph;
   };
 
-  int32_t Graph::size(void) const {
-    // Return the size of the graph, i.e., the number of nodes.
-    return graph.size();
-  }
+  // int32_t Graph::size(void) const {
+  //   // Return the size of the graph, i.e., the number of nodes.
+  //   return graph.size();
+  // }
   void add_new_var(Graph *graph,std::set<Variable*>gen_kill_sets){
     for (auto variable: gen_kill_sets){
       if (graph->exists(variable)){
@@ -179,7 +179,7 @@ namespace L2{
     /*
     Initialize the graph's size metric.
     */
-    interference_graph.size = 0;
+    interference_graph->size = 0;
 
     std::set<Variable *> registers;
     // gp registers vector
