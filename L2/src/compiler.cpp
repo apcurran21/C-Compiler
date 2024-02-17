@@ -25,6 +25,11 @@
 #include "L2.h"
 #include "spill.h"
 
+/*
+Debugging
+*/
+int printdebug = 1;
+
 void print_help (char *progName){
   // std::cerr << "Usage: " << progName << " [-v] [-g 0|1] [-O 0|1|2] [-s] [-l] [-i] SOURCE" << std::endl;
   std::cerr << "Usage: " << progName << " [-v] [-g 0|1] [-O 0|1|2] [-s] [-l] [-i] [-c] SOURCE" << std::endl;
@@ -269,10 +274,18 @@ int main(
           Some variables could not be colored, so we spill each of them and retry coloring in the next while loop iteration.
           - this function should also keep track of the new spill variables so we don't accidentally spill them later
           */
-          // for (auto var : new_spilled_vars) {
+          L2::PrintVisitor* myPrintVisitor = new L2::PrintVisitor();
+          if (printdebug) std::cerr << "Printing program before spill:\n\n";
+          for (auto iptr : fptr->instructions) {
+            iptr->accept(myPrintVisitor);
+          }
           for (auto node : nodes_to_spill) {
             L2::spillForL2(fptr, node->var, spill_count);
             spill_count++;
+          }
+          if (printdebug) std::cerr << "Printing program after spill:\n\n";
+          for (auto iptr : fptr->instructions) {
+            iptr->accept(myPrintVisitor);
           }
           /*
           Add the newly spilled variables to the function's tracking set. The color graph in the next loop iteration will get this updated set.

@@ -835,4 +835,71 @@ namespace L2 {
         colorVar(src);
     }
 
+    /*
+    Instruction print visitor.
+    */
+    void PrintVisitor::visit(Instruction_ret *instruction) {
+        std::cerr << "return" << "\n";
+    }
+    void PrintVisitor::visit(Instruction_assignment *instruction) {
+        std::cerr << instruction->d->print() << " <- " << instruction->s->print() << "\n";
+    }
+    void PrintVisitor::visit(label_Instruction *instruction) {
+        std::cerr << instruction->label->print() << "\n";
+    }
+    void PrintVisitor::visit(goto_label_instruction *instruction) {
+        std::cerr << "goto " << instruction->label->print() << "\n";
+    }
+    void PrintVisitor::visit(Call_tenserr_Instruction *instruction) {
+        std::cerr << "call tensor-error " << instruction->F->print() << "\n";
+    }
+    void PrintVisitor::visit(Call_uN_Instruction *instruction) {
+        std::cerr << "call " << instruction->u->print() << " " << instruction->N->print() << "\n";
+    }
+    void PrintVisitor::visit(Call_print_Instruction *instruction) {
+        std::cerr << "call print 1" << "\n";
+    }
+    void PrintVisitor::visit(Call_input_Instruction *instruction) {
+        std::cerr << "call input 0" << "\n";
+    }
+    void PrintVisitor::visit(Call_allocate_Instruction *instruction) {
+        std::cerr << "call allocate 2" << "\n";
+    }
+    void PrintVisitor::visit(Call_tuple_Instruction *instruction) {
+        std::cerr << "call tuple-error 3" << "\n";
+    }
+    void PrintVisitor::visit(w_increment_decrement *instruction) {
+        std::cerr << instruction->r->print() << " " << instruction->symbol->print() << "\n";
+    }
+    void PrintVisitor::visit(w_atreg_assignment *instruction) {
+        std::cerr << instruction->r1->print() << " @ " << instruction->r2->print() << " " << instruction->r3->print() << " " << instruction->E->print() << "\n";
+    }
+    void PrintVisitor::visit(Memory_assignment_store *instruction) {
+        std::cerr << "mem " << instruction->dst->print() << " " << instruction->M->print() << " <- " << instruction->s->print() << "\n";
+    }
+    void PrintVisitor::visit(Memory_assignment_load *instruction) {
+        std::cerr << instruction->dst->print() << " <- mem " << instruction->M->print() << " " << instruction->x->print() << "\n";
+    }
+    void PrintVisitor::visit(Memory_arithmetic_load *instruction) {
+        std::cerr << instruction->dst->print() << " " << instruction->instruction->print() << " mem " << instruction->x->print() << " " << instruction->M->print() << "\n";
+    }
+    void PrintVisitor::visit(Memory_arithmetic_store *instruction) {
+        std::cerr << "mem " << instruction->dst->print() << " " << instruction->M->print() << " " << instruction->instruction->print() << " " << instruction->t->print() << "\n";
+    }
+    void PrintVisitor::visit(cmp_Instruction *instruction) {
+        std::cerr << instruction->dst->print() << " <- " << instruction->t1->print() << " " << instruction->method->print() << " " << instruction->t2->print() << "\n";
+    }
+    void PrintVisitor::visit(cjump_cmp_Instruction *instruction) {
+        std::cerr << "cjump " << instruction->t1->print() << " " << instruction->cmp->print() << " " << instruction->t2->print() << " " << instruction->label->print() << "\n";
+    }
+    void PrintVisitor::visit(stackarg_assignment *instruction) {
+        std::cerr << instruction->w->print() << " <- stack-arg " << instruction->M->print() << "\n";
+    }
+    void PrintVisitor::visit(AOP_assignment *instruction) {
+        std::cerr << instruction->dst->print() << " " << instruction->method->print() << " " << instruction->src->print() << "\n";
+    }
+    void PrintVisitor::visit(SOP_assignment *instruction) {
+        std::cerr << instruction->dst->print() << " " << instruction->method->print() << " " << instruction->src->print() << "\n"; 
+    }
+
 }
