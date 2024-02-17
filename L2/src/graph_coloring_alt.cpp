@@ -37,18 +37,15 @@ namespace L2 {
         Initialize a set for nodes not colored.
         */
         std::vector<Node*> uncolored_nodes;
-
         /*
         Precolor the register nodes.
         */
         color_registers_alt(graph_copy);
-
         /*
         Order the non-register nodes based on degree.
         -This function also removes all these non-register nodes (their respective) edges from the graph_copy.
         */
         std::vector<Node*> node_stack = get_node_order_alt(graph_copy);
-
         /*
         Assign register colors to nodes.
         */
@@ -143,6 +140,12 @@ namespace L2 {
                         everything in the original graph.
                 */
                 if (fptr->spill_variables_set.find(curr_node->var) != fptr->spill_variables_set.end()) {
+                    continue;
+                }
+                // TRY TAKING A LOOK AT THIS ANDY 
+                auto node_name = curr_node->var->name;
+
+                if (node_name[0]=='%' && node_name[1]=='S'){
                     continue;
                 }
                 uncolored_nodes.push_back(curr_node);
@@ -266,20 +269,4 @@ namespace L2 {
         }
     }
     
-    /*
-    Do the initial step of coloring register nodes with their own colors
-    */
-    // old implementation returns 'result_map'
-    // std::map<Variable*, std::string> color_registers(Graph *g) {
-    //     std::map<Variable*, std::string> var_to_color;
-    //     for (auto node : g->nodes) {
-    //         Register* reg_ptr = dynamic_cast<Register*>(node.first);
-    //         if (reg_ptr) {
-    //             var_to_color[node.first] = reg_ptr->name;
-    //         }
-    //     }
-    //     return var_to_color;
-    // }
-
-
 }
