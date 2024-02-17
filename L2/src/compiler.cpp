@@ -133,10 +133,26 @@ int main(
    * Special cases.
    */
   if (spill_only){
-    // p = L2::parse_spill_file(argv[optind]);
-    // auto replacementVar = p.variables[p.variables.size() - 2]; 
-    // bool changed = L2::spillForL2(p,replacementVar);
-    // L2::generate_spill_code(p, changed, );
+    p = L2::parse_spill_file(argv[optind]);
+
+    if (printdebug) {
+      std::cerr << "printing liveness before the spill\n\n";
+      auto gen_kill_sets = L2::Gen_Kill_Store(&p);
+      auto in_out_sets = L2::In_Out_Store(&p);
+      L2::Curr_F_Liveness liveness_results = L2::liveness_analysis(&p, 0, gen_kill_sets, in_out_sets, true);
+    }
+
+    auto replacementVar = p.variables[p.variables.size() - 2]; 
+    bool changed = L2::spillForL2(p.functions[0] ,replacementVar, -1);
+    L2::generate_spill_code(p, changed);
+
+
+    if (printdebug) {
+      std::cerr << "printing liveness after the spill\n\n";
+      auto gen_kill_sets = L2::Gen_Kill_Store(&p);
+      auto in_out_sets = L2::In_Out_Store(&p);
+      L2::Curr_F_Liveness liveness_results = L2::liveness_analysis(&p, 0, gen_kill_sets, in_out_sets, true);
+    }
 
     // idk how we were testing spill, should fix before submitting
     // the setup seems super specific to one test case
@@ -220,12 +236,20 @@ int main(
         Compute liveness for the current state of the current function
         - ie there might be additional spill instructions from the last iteration of the do-while loop
         */
-        L2::Curr_F_Liveness liveness_results = L2::liveness_analysis(&p, f_index, gen_kill_sets, in_out_sets, false);
+        L2::Curr_F_Liveness liveness_results;
+        if (printdebug) std::cerr << "Printing in and out sets:\n";
+        if (printdebug) {
+          liveness_results = L2::liveness_analysis(&p, f_index, gen_kill_sets, in_out_sets, true);
+        } else {
+          liveness_results = L2::liveness_analysis(&p, f_index, gen_kill_sets, in_out_sets, false);
+        }
 
         /*
         Build an interference graph based off of the liveness
         */
         L2::Graph* graph = L2::build_graph(fptr, liveness_results);
+        if (printdebug) std::cerr << "Printing the graph:\n";
+        if (printdebug) graph->printGraph();
 
         /*
         Color the interference graph

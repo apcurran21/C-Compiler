@@ -351,7 +351,8 @@ namespace L2 {
         4. Find the successors 
         */
         std::set<Instruction *> total_cjump_instructions{};
-        for (auto instruction : this->instructions){
+        // for (auto instruction : this->instructions){
+        for (auto instruction : instructions) {
             auto cast_instruction = dynamic_cast<cjump_cmp_Instruction *>(instruction);
             auto goto_instruction = dynamic_cast<goto_label_instruction*>(instruction);
             instruction->predecessors.clear(); // clearing out the predecessors
@@ -506,7 +507,10 @@ namespace L2 {
     }
 
     void UseDefVisitor::visit(Memory_assignment_load *instruction) {
-        instruction->used.insert(dynamic_cast<Variable*>(instruction->x));
+        Variable* x_cast = dynamic_cast<Variable*>(instruction->x);
+        if (x_cast->name != "rsp") {
+            instruction->used.insert(dynamic_cast<Variable*>(instruction->x));
+        }
         instruction->defined.insert(dynamic_cast<Variable*>(instruction->dst));
     }
 
@@ -697,13 +701,13 @@ namespace L2 {
         }          
     };  
 
-
     /*
     Calculate the Use/Def sets by running over each instruction's visit method
     */
     void Function::calculateUseDefs(){
         UseDefVisitor visitor;
-        for (auto instruction: this->instructions){
+        // for (auto instruction: this->instructions){
+        for (auto instruction: instructions) {
             instruction->accept(&visitor);
         };
     }

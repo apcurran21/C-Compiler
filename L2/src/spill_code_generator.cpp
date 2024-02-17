@@ -101,8 +101,8 @@ namespace L2{
     std::cout << this->w->print()<<" <- stack-arg"<<this->M->print()<<"\n\t";
   }
 
-  void generate_spill_code(Program p, bool changed,Graph *color_graph){
-
+  // void generate_spill_code(Program p, bool changed,Graph *color_graph){
+  void generate_spill_code(Program &p, bool changed) {
     /* 
      * Open the output file.
      */ 
@@ -120,10 +120,10 @@ namespace L2{
       if (changed){
         variables = 1;
       }
-      ColorVariablesVisitor* myColorVisitor = new ColorVariablesVisitor(color_graph,fptr);
+      // ColorVariablesVisitor* myColorVisitor = new ColorVariablesVisitor(color_graph,fptr);
       std::cout << fptr->arguments<<" "<<std::to_string(variables)<<"\n\t";
       for (Instruction *iptr : fptr->instructions) {
-        iptr->accept(myColorVisitor);
+        // iptr->accept(myColorVisitor);
         iptr->spill_gen(fptr, outputFile);
       }
     }

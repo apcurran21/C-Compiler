@@ -284,7 +284,7 @@ namespace L2{
             for (auto instruction_ptr : fptr->instructions) {
                 instruction_number++;
 
-                                    /*
+                /*
                     Define pointers to the Gen, Kill, In, Out sets for the current instruction
                 */
                 std::set<Variable*>* gen_set_ptr = &gen_kill_sets.Gen_Set[function_index][instruction_ptr];
@@ -385,5 +385,7 @@ namespace L2{
         };
         return result;
     }
+
+    
 
 }

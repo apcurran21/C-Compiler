@@ -418,3 +418,7 @@ Something that is likely causing the majority of our error is how we wrote *spil
 * The actual error we receive from this is a segfault in the depopulate / get_node_order function. This happens because we call *getVarNodes()* (which returns a vector of all the non Register type nodes from the graph) then call *back()* on its output, which is invalid since the output is a vector of length zero. 
 * So the immediate question is even if the rsp node makes it into interference graph, why does the new spill variable not have node there??
 * Our next step should be to quickly cook up a print program visitor so that we can see the state of the program after spilling.
+
+* calling liveness on a normal function will not put rsp in the in/out sets of an instruction. However calling liveness on a function after spilling results in rsp being in the in/out sets and potentially the gen/kill sets.
+  * there must be some behavior in spillForL2 causing this which i don't understand
+  * spill still passes its test cases though, this is just a side effect
