@@ -92,6 +92,20 @@ namespace L2{
     return nodeVec;
   }
 
+  std::vector<Node *> Graph::getVarNodes(void) const {
+    /*
+    Return a vector of all non-register nodes in the graph.
+    */
+    std::vector<Node *> nodeVec;
+    for (const auto &pair : nodes) {
+      auto reg_ptr = dynamic_cast<Register*>(pair.first);
+      if (!reg_ptr) {
+        nodeVec.push_back(pair.second);
+      }
+    }
+    return nodeVec;
+  }
+
   Graph * Graph::clone(void) const {
     // Create a new graph instance.
     auto newGraph = new Graph();
@@ -265,6 +279,19 @@ namespace L2{
     for (auto node : getNodes()) {
       std::cout << "Name = " << node->var->print() << ", Color = " << node->color << "\n";
     }
+  }
+
+  /*
+  Get's the size of the graph without counting the general purpose registers.
+  - If it returns a negative number, something went wrong.
+  - Also number of gp registers is hardcoded to 15 for now, change later.
+  */
+  int32_t Graph::getSize() {
+    int32_t adj_size = size - 15;
+    if (adj_size < 0) {
+      if (debug) std::cerr << "Something wrong happened to the graph's size and gp register nodes.\n";
+    }
+    return adj_size;
   }
 }
 

@@ -19,6 +19,7 @@
 #include "interference_graph.h"
 #include "spill.h"
 #include "graph_coloring.h"
+#include "graph_coloring_alt.h"
 #include <code_generator.h>
 #include "spill_code_generator.h"
 #include "L2.h"
@@ -198,8 +199,6 @@ int main(
     initialize stores for the gen, kill, in, and out sets for each instruction in each function.
     - remember a store has structure vector<map<instruction, set>>
     */
-    L2::Gen_Kill_Store gen_kill_sets = L2::Gen_Kill_Store(&p);
-    L2::In_Out_Store in_out_sets = L2::In_Out_Store(&p);
 
     /*
     Create a graph and run the coloring algorithm for each of the program's functions
@@ -210,6 +209,8 @@ int main(
     for (auto fptr : p.functions) {
       int spill_count = -1;
       while (true){
+        L2::Gen_Kill_Store gen_kill_sets = L2::Gen_Kill_Store(&p);
+        L2::In_Out_Store in_out_sets = L2::In_Out_Store(&p);
         /*
         Compute liveness for the current state of the current function
         - ie there might be additional spill instructions from the last iteration of the do-while loop
@@ -231,9 +232,13 @@ int main(
           a variable that couldn't be colored or spilled!
             - maybe we could just return a tuple that also contains the big Fail bool for this case
         */
-        auto color_result = L2::color_graph(graph);
-        bool big_fail = std::get<0>(color_result);
-        std::set<L2::Variable*> new_spilled_vars = std::get<1>(color_result);
+        // auto color_result = L2::color_graph(graph);
+        // bool big_fail = std::get<0>(color_result);
+        // std::set<L2::Variable*> new_spilled_vars = std::get<1>(color_result);
+        std::vector<L2::Node*> nodes_to_spill = L2::color_graph_alt(p, graph, fptr);
+        // std::vector<L2::Variable*> new_spilled_vars;
+        bool big_fail = false;
+        
 
         if (big_fail) {
           /*
@@ -251,7 +256,8 @@ int main(
             }
           }
           break;
-        } else if (new_spilled_vars.size() == 0) {
+        // } else if (new_spilled_vars.size() == 0) {
+        } else if (nodes_to_spill.size() == 0) {
           /*
           Every variable was able to be colored, meaning we can move onto the code generation track
           the current state of the graph and move onto code generation.
@@ -263,8 +269,9 @@ int main(
           Some variables could not be colored, so we spill each of them and retry coloring in the next while loop iteration.
           - this function should also keep track of the new spill variables so we don't accidentally spill them later
           */
-          for (auto var : new_spilled_vars) {
-            L2::spillForL2(fptr, var, spill_count);
+          // for (auto var : new_spilled_vars) {
+          for (auto node : nodes_to_spill) {
+            L2::spillForL2(fptr, node->var, spill_count);
             spill_count++;
           }
           /*

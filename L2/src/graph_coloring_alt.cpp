@@ -86,6 +86,7 @@ namespace L2 {
                         /*
                         The current neighbor has not been colored, we continue.
                         */
+                       continue;
                     }
                     // auto it2 = result_map.find(neighbor->var);
                     // if (it2 == result_map.end()) {
@@ -152,41 +153,81 @@ namespace L2 {
         /*
         Iterate until the graph is emptied.
         */
-        while (graph->size > 0) {
+        while (graph->getSize() > 0) {
 
             /*
-            Step 1 of heuristic 1 - remove nodes with degree strictly less than number of colors, decreasing order 
+            Part 1 of the node selection heuristic - find and remove nodes with degree strictly less than number of colors, decreasing order 
             */
-            while (graph->size > 0) {
+            while (graph->getSize() > 0) {
 
-                std::vector<Node*> curr_nodes = graph->getNodes();
-
+                /*
+                Get and sort a list of the current variable nodes in the graph in non-decreasing order 
+                */
+                std::vector<Node*> curr_nodes = graph->getVarNodes();
                 std::sort(curr_nodes.begin(), curr_nodes.end(), cmp_alt);
 
                 /*
-                Step 2 of heuristic 2 - remove nodes with degree greater than or equal to the current node.
+                Initialize a best-so-far variable.
                 */
                 Node* best_node = nullptr;
+                /*
+                Iterate left to right (ie in the order of increasing degree)
+                */
                 for (auto node : curr_nodes) {
                     if (node->degree >= gp_registers_alt.size()) {
+                        /*
+                        If we encounter a node with degree greater than or equal to the number of colors,
+                        then stop searching the list of nodes.
+                        */
                         break;
                     }
                     best_node = node;
                 }
                 if (best_node == nullptr) {
+                    /*
+                    If the best_node is still a nullptr, this means we didn't find any nodes with degree
+                    less than the number of colors. 
+                    */
                     break;
                 }
 
                 /*
-                Remove this best node.
+                If we made it here, it means we were able to find a node with degree less than the
+                number of colors. Push the node onto our stack and remove from the graph.
                 */
                 stack.push_back(best_node);
                 graph->removeNode(best_node);
             }
-        }
 
+            /*
+            By making it here, we know there aren't any more nodes with degree less than number of colors
+            left in the graph. We iterate and try to remove these remaining nodes next.
+            */
+            while (graph->getSize() > 0) {
+                /*
+                Get the current variable nodes in the graph and sort them again in terms of non-decreasing degree.
+                */
+                std::vector<Node*> curr_nodes = graph->getVarNodes();
+                std::sort(curr_nodes.begin(), curr_nodes.end(), cmp_alt);
+
+                /*
+                The largest-degree node will be at the back of 'curr_nodes' vector, so if this number is less
+                than the number of colors we break execution back to part 2 of the node selection heuristic.
+                */
+                if (curr_nodes.back()->degree < gp_registers_alt.size()) {
+                    break;
+                }
+
+                /*
+                Otherwise we know that this is the node with largest degree in the graph, so we add it to
+                the stack and remove from the graph according to part 2 of the node selection heuristic.
+                */
+                stack.push_back(curr_nodes.back());
+                graph->removeNode(curr_nodes.back());
+            }
+        }
         /*
-        Return the populated stack
+        Return the now fully populated stack
         */
         return stack;
     }

@@ -409,3 +409,12 @@ $31 = {
   },
   spilled_vars = std::set with 0 elements
 }
+
+
+### 2/16
+Something that is likely causing the majority of our error is how we wrote *spillForL2*, apparently rsp is **not** supposed to make it into the interference graphs liveness etc. Currently we are manually creating an 'rsp' variable instance in *spillForL2*, which then makes it into the liveness and interference graphs upon the next try at coloring. This is not expected behavior. We have a more specific problem in test849:
+* the first pass of graph coloring goes as expected. There are 16 nodes (15 gp registers and 1 variable), and *my_var_1* has edges with everything, so it must be spilled. The graph color function returns this node in its nodes_to_spill vector output, and *spillForL2* gets called on this singular node/variable.
+* This newly constructed graph still contains 16 nodes as expected (since should still have 15 gp registers, a spill variable 'S-1', and the absence of variable 'my_var_1' since it was spilled.) However, all 16 are Register types, with 'rsp' taking the spot of 'S-1' which doesn't appear in the graph anywhere.
+* The actual error we receive from this is a segfault in the depopulate / get_node_order function. This happens because we call *getVarNodes()* (which returns a vector of all the non Register type nodes from the graph) then call *back()* on its output, which is invalid since the output is a vector of length zero. 
+* So the immediate question is even if the rsp node makes it into interference graph, why does the new spill variable not have node there??
+* Our next step should be to quickly cook up a print program visitor so that we can see the state of the program after spilling.

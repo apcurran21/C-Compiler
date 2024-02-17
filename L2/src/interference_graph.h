@@ -40,7 +40,9 @@ namespace L2{
             void removeEdge(Node *src, Node *dst);
             bool exists(Variable *var);
             std::vector<Node *> getNodes(void) const;
+            std::vector<Node *> getVarNodes(void) const;
             Graph * clone(void) const; //If we ever need to make a clone
+            int32_t getSize();
             // int32_t size(void);
             // Graph * build_graph(Program &p, LivenessResult result);
             void printGraph() const;

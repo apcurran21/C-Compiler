@@ -778,6 +778,7 @@ namespace L1 {
   template<> struct action < function_name_rule > {
     template< typename Input>
     static void apply( const Input & in, Program & p) {
+      if (debug) std::cerr << "hello" << std::endl;
       if (debug) std::cerr << "Recognized a function_name rule" << std::endl;
     
       if (p.entryPointLabel.empty()){
