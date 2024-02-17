@@ -377,7 +377,7 @@ namespace L2 {
       std::vector<Instruction *> instructions;
       VariableAllocator variable_allocator;
       std::set<Variable *> spilled_variables; // for original variables in the L2 program that need to be spilled
-      std::set<Variable *> spill_variables;   // for our custom variables that we replace spilled variables with
+      std::set<Variable *> spill_variables_set;   // for our custom variables that we replace spilled variables with
       void calculateCFG();
       void calculateUseDefs();
   }; 
@@ -473,7 +473,6 @@ namespace L2 {
       Variable* replacementVariable;
       int count;
       bool spilled;
-      std::set<Variable*> spill_variables_set;  // set of the new custom variables that the spiller creates
   };
   class ColorVariablesVisitor: public Visitor {
     public:

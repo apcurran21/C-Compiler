@@ -142,7 +142,7 @@ namespace L2 {
                         alg, the uncolored_nodes set is empty but the uncolored_spill isn't, then we need to spill 
                         everything in the original graph.
                 */
-                if (fptr->spill_variables.find(curr_node->var) != fptr->spill_variables.end()) {
+                if (fptr->spill_variables_set.find(curr_node->var) != fptr->spill_variables_set.end()) {
                     continue;
                 }
                 uncolored_nodes.push_back(curr_node);

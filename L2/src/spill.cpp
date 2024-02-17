@@ -10,6 +10,8 @@
 namespace L2{
     // bool spillForL2(Program &p, Variable* spilledVar){
     bool spillForL2(Function* f, Variable* spilledVar, int spill_count) {    
+        
+
         // Function* f = p.functions[0]; 
         std::string temp = "%S";
 
@@ -102,8 +104,7 @@ namespace L2{
             }
         }
 
-        // track the spill variable we created so that we don't accidentally spill it later
-        f->spill_variables.insert(visitor->spill_variables_set.begin(), visitor->spill_variables_set.end());
+        // track the spill variables we created so that we don't accidentally spill it later
 
         return changed;
 

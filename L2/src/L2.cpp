@@ -572,7 +572,6 @@ namespace L2 {
         if (variable) {
             if (variable->name == spilledVariable->name) { //need to fix this lol
                 item = this->replacementVariable;
-                spillVariables.insert(variable);
                 return 1;
             }
         }

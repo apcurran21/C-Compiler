@@ -188,7 +188,7 @@ namespace L2{
     - spilled variables probably aren't necessary
     */
     auto spilled_vars = f->spilled_variables;
-    auto spill_vars = f->spill_variables;
+    auto spill_vars = f->spill_variables_set;
 
     /*
     Initialize the graph's size metric.

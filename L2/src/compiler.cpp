@@ -279,7 +279,7 @@ int main(
           for (auto& pair : graph->nodes) {
             auto var = pair.first;
             auto reg_ptr = dynamic_cast<L2::Register*>(var);
-            if ((!reg_ptr) && (fptr->spill_variables.find(var) == fptr->spill_variables.end())) {
+            if ((!reg_ptr) && (fptr->spill_variables_set.find(var) == fptr->spill_variables_set.end())) {
               L2::spillForL2(fptr, var, spill_count);
               spill_count++;
             }
