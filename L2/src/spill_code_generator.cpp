@@ -102,7 +102,7 @@ namespace L2{
   }
 
   // void generate_spill_code(Program p, bool changed,Graph *color_graph){
-  void generate_spill_code(Program &p, bool changed) {
+  void generate_spill_code(Program &p,std::set<std::string> changed) {
     /* 
      * Open the output file.
      */ 
@@ -117,7 +117,7 @@ namespace L2{
 
       std::cout << "("<<fname<<"\n\t";
       int variables = 0;
-      if (changed){
+      if (changed.size()>1){
         variables = 1;
       }
       // ColorVariablesVisitor* myColorVisitor = new ColorVariablesVisitor(color_graph,fptr);

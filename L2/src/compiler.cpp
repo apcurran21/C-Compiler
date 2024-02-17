@@ -143,7 +143,7 @@ int main(
     }
 
     auto replacementVar = p.variables[p.variables.size() - 2]; 
-    bool changed = L2::spillForL2(p.functions[0] ,replacementVar, -1);
+    auto changed = L2::spillForL2(p.functions[0] ,replacementVar, -1);
     L2::generate_spill_code(p, changed);
 
 
@@ -304,7 +304,7 @@ int main(
             iptr->accept(myPrintVisitor);
           }
           for (auto node : nodes_to_spill) {
-            L2::spillForL2(fptr, node->var, spill_count);
+            auto spilled_set = L2::spillForL2(fptr, node->var, spill_count);
             spill_count++;
           }
           if (printdebug) std::cerr << "Printing program after spill:\n\n";

@@ -9,7 +9,7 @@
 
 namespace L2{
     // bool spillForL2(Program &p, Variable* spilledVar){
-    bool spillForL2(Function* f, Variable* spilledVar, int spill_count) {    
+    std::set<std::string> spillForL2(Function* f, Variable* spilledVar, int spill_count) {    
         
 
         // Function* f = p.functions[0]; 
@@ -93,20 +93,30 @@ namespace L2{
                             Instruction* instruction2 = new Memory_assignment_load(visitor->replacementVariable, var, stack);
                             f->instructions.insert(f->instructions.begin() + i + 1, instruction2);
                             i +=1;
-
                         }
                     }
                 }
-                
-
                 changed = true;
                 visitor->spilled = false;
             }
+
         }
+        std::set<std::string> spilled_variables_in_spill;
+        std::string s = visitor->replacementVariable->name;
+        int number = std::stoi(s.substr(2));  // Extract the number from the string, assuming it's after "S"
+
+    // Loop from 0 to the extracted number
+        for (int i = 0; i <= number; ++i) {
+        // Generate the string for the current number
+            std::string variableName = "%S" + std::to_string(i);
+        // Insert it into the set
+            spilled_variables_in_spill.insert(variableName);
+        }
+
 
         // track the spill variables we created so that we don't accidentally spill it later
 
-        return changed;
+        return spilled_variables_in_spill;
 
     }
 };
