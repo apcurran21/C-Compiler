@@ -28,7 +28,7 @@
 /*
 Debugging
 */
-int printdebug = 1;
+int printdebug =0;
 
 void print_help (char *progName){
   // std::cerr << "Usage: " << progName << " [-v] [-g 0|1] [-O 0|1|2] [-s] [-l] [-i] SOURCE" << std::endl;

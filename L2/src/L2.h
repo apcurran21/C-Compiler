@@ -473,6 +473,7 @@ namespace L2 {
       Variable* replacementVariable;
       int count;
       bool spilled;
+      std::set<Variable*> spill_variables_set;  // set of the new custom variables that the spiller creates
   };
   class ColorVariablesVisitor: public Visitor {
     public:

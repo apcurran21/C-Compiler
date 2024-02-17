@@ -29,6 +29,9 @@ namespace L2{
             auto cjump_instruction = dynamic_cast<cjump_cmp_Instruction*>(instruction);
             instruction->accept(visitor);
             if (visitor->spilled) {
+                /*
+                Take this to mean that the current instruction contains a variable that needs to be spilled.
+                */
                 if (assignment_instruction){
                     Variable* var = f->variable_allocator.allocate_variable("rsp", VariableType::reg);
                     Instruction * instruction1 = new Memory_assignment_store(var, visitor->replacementVariable, stack);
@@ -100,7 +103,7 @@ namespace L2{
         }
 
         // track the spill variable we created so that we don't accidentally spill it later
-        f->spill_variables.insert(initial_replacement);
+        f->spill_variables.insert(visitor->spill_variables_set.begin(), visitor->spill_variables_set.end());
 
         return changed;
 

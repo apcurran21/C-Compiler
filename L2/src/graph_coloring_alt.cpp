@@ -25,10 +25,11 @@ namespace L2 {
 
     /*
     The main graph coloring function. Returns a vector of nodes that weren't colored (ie need spilling).
+    -NOTE - we still need to make conversions between the cloned and original versions for each node.
     */
     std::vector<Node*> color_graph_alt(Program &p, Graph* graph, Function* fptr) {
         /*
-        Create a copy of the graph to manipulate.
+        Create a copy of the graph to manipulate. We'll update the function to use this graph (this might cause memory leaks).
         */
         Graph* graph_copy = graph->clone();
 
@@ -43,7 +44,8 @@ namespace L2 {
         color_registers_alt(graph_copy);
 
         /*
-        Order the nodes based on degree.
+        Order the non-register nodes based on degree.
+        -This function also removes all these non-register nodes (their respective) edges from the graph_copy.
         */
         std::vector<Node*> node_stack = get_node_order_alt(graph_copy);
 
@@ -58,9 +60,10 @@ namespace L2 {
             node_stack.pop_back();
 
             /*
-            Check if already colored, skip if so.
+            Check if already colored, skip if so. This should happen however.
             */
             if (!curr_node->color.empty()) {
+                if (debug) std::cerr << "Found a colored node in the stack of uncolored nodes?\n";
                 continue;
             }
             // auto it1 = result_map.find(curr_node->var);
@@ -76,15 +79,18 @@ namespace L2 {
                 bool found = false;
 
                 /*
-                Iterate the current node's neighbors to check their colors.
+                Iterate the current node's current neighbors to check their colors.
+                - Since 
                 */
                 for (auto neighbor : graph->graph[curr_node]) {
                     /*
-                    Check if the neighbor has been colored.
+                    Check if the neighbor has a color. 
                     */
                     if (neighbor->color.empty()) {
                         /*
-                        The current neighbor has not been colored, we continue.
+                        The current neighbor does not have a color. This could mean one of two things:
+                        - The neighbor has been seen but could not be colored -> we will try to spill it eventually.
+                        - The neighbor
                         */
                        continue;
                     }
@@ -110,12 +116,9 @@ namespace L2 {
                     } 
                 }
 
-                /*
-                Check if the current color can be used for the current node.
-                */
                 if (!found) {
                     /*
-                    This means we can color this node with this color
+                    If the flag indicates the current color is not found, we use it for this node. 
                     */
                     graph->nodes[curr_node->var]->color = color;
                     break;
@@ -130,14 +133,26 @@ namespace L2 {
             //     uncolored_nodes.push_back(curr_node->var);
             // }
             if (curr_node->color.empty()) {
+                /*
+                Check if the current node is a spill variable - we don't want to spill it again in this case. 
+                - Current behavior is to just avoid placing it into the uncolored_nodes stack.
+                - We'll probably want to come up with a slightly different method for tracking, in case the coloring 
+                    alg finds that no variables can be colored other than spill variables (the bad edge case).
+                    - an idea could be to also keep track of an uncolored spill variable set. if at the end of the  
+                        alg, the uncolored_nodes set is empty but the uncolored_spill isn't, then we need to spill 
+                        everything in the original graph.
+                */
+                if (fptr->spill_variables.find(curr_node->var) != fptr->spill_variables.end()) {
+                    continue;
+                }
                 uncolored_nodes.push_back(curr_node);
             }
         }
 
         /*
-        Having gone through and colored each possible node, we return the ones that had to be spilled.
+        Having gone through and colored each possible node, we return the ones that couldn't be colored and need to be spilled.
         */
-       return uncolored_nodes;
+        return uncolored_nodes;
     }
 
 
