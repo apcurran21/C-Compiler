@@ -51,7 +51,7 @@ namespace L2 {
         */
         while (!node_stack.empty()) {
             /*
-            Get the best node.
+            Get the best node. Remember this node was taken from the copy of the graph.
             */
             Node* curr_node = node_stack.back();
             node_stack.pop_back();
@@ -69,6 +69,34 @@ namespace L2 {
             // }
 
             /*
+            Get a set of the current node's neighbors from the original cloned state
+            */
+            std::set<Node*> full_neighbor_set;
+            auto curr_node_in_original_graph_iterator = graph->nodes.find(curr_node->var);
+            if (curr_node_in_original_graph_iterator != graph->nodes.end()) {
+                Node* n = curr_node_in_original_graph_iterator->second;
+                auto full_neighbor_set_iterator = graph->graph.find(n);
+                if (full_neighbor_set_iterator != graph->graph.end()) {
+                    full_neighbor_set = full_neighbor_set_iterator->second;
+                } else {
+                    if (debug) std::cerr << "Couldn't find this node in the original graph.\n";
+                }
+            } else {
+                if (debug) std::cerr << "Couldn't find this variable in any of the original graph's nodes.\n";
+            }
+
+            /*
+            Get a vector of the current node's original neighbors which exist in the current state of the graph.
+            */
+            std::vector<Node*> neighbors_in_curr_graph;
+            for (auto n : full_neighbor_set) {
+                auto curr_graph_node_iterator = graph_copy->nodes.find(n->var);
+                if (curr_graph_node_iterator != graph_copy->nodes.end()) {
+                    neighbors_in_curr_graph.push_back(curr_graph_node_iterator->second);
+                }
+            }
+
+            /*
             Here, node has not been colored. We look for the best color we are allowed to assign it.
             */
             for (auto color : gp_registers_alt) {
@@ -77,9 +105,9 @@ namespace L2 {
 
                 /*
                 Iterate the current node's current neighbors to check their colors.
-                - Since 
                 */
-                for (auto neighbor : graph->graph[curr_node]) {
+                // for (auto neighbor : graph->graph[curr_node]) {
+                for (auto neighbor : neighbors_in_curr_graph) {
                     /*
                     Check if the neighbor has a color. 
                     */
@@ -117,7 +145,8 @@ namespace L2 {
                     /*
                     If the flag indicates the current color is not found, we use it for this node. 
                     */
-                    graph->nodes[curr_node->var]->color = color;
+                    // graph->nodes[curr_node->var]->color = color;
+                    curr_node->color = color;
                     break;
                 }
             }
@@ -139,15 +168,24 @@ namespace L2 {
                         alg, the uncolored_nodes set is empty but the uncolored_spill isn't, then we need to spill 
                         everything in the original graph.
                 */
-                if (fptr->spill_variables_set.find(curr_node->var) != fptr->spill_variables_set.end()) {
+                // if (fptr->spill_variables_set.find(curr_node->var) != fptr->spill_variables_set.end()) {
+                //     continue;
+                // }
+                if (fptr->string_spill_variables_set.find(curr_node->var->print()) != fptr->string_spill_variables_set.end()) {
                     continue;
                 }
-                // TRY TAKING A LOOK AT THIS ANDY 
-                auto node_name = curr_node->var->name;
 
+                /*
+                This check should have the same behavior as the one above. 
+                */
+                auto node_name = curr_node->var->name;
                 if (node_name[0]=='%' && node_name[1]=='S'){
                     continue;
                 }
+
+                /*
+                Otherwise we are safe to use the node.
+                */
                 uncolored_nodes.push_back(curr_node);
             }
         }

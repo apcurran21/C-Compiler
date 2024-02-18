@@ -191,8 +191,6 @@ namespace L2 {
         the set of g version nodes that are included in the state of the current graph
         */
 
-        
-
         // convert each node in the neighbor set to the current graph version and place into a new set
         std::vector<Node*> node_current_neighbors;
         // std::set<Node*> curr_node_neighbors_g;

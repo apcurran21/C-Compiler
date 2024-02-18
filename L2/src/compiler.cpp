@@ -28,7 +28,7 @@
 /*
 Debugging
 */
-int printdebug =0;
+int printdebug =1;
 
 void print_help (char *progName){
   // std::cerr << "Usage: " << progName << " [-v] [-g 0|1] [-O 0|1|2] [-s] [-l] [-i] SOURCE" << std::endl;
@@ -305,6 +305,7 @@ int main(
           }
           for (auto node : nodes_to_spill) {
             auto spilled_set = L2::spillForL2(fptr, node->var, spill_count);
+            fptr->string_spill_variables_set.insert(spilled_set.begin(), spilled_set.end());
             spill_count++;
           }
           if (printdebug) std::cerr << "Printing program after spill:\n\n";

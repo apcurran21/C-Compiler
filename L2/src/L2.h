@@ -378,6 +378,7 @@ namespace L2 {
       VariableAllocator variable_allocator;
       std::set<Variable *> spilled_variables; // for original variables in the L2 program that need to be spilled
       std::set<Variable *> spill_variables_set;   // for our custom variables that we replace spilled variables with
+      std::set<std::string> string_spill_variables_set;
       void calculateCFG();
       void calculateUseDefs();
   }; 
