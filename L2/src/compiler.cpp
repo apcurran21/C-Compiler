@@ -24,11 +24,12 @@
 #include "spill_code_generator.h"
 #include "L2.h"
 #include "spill.h"
+#include <unordered_map>
 
 /*
 Debugging
 */
-int printdebug =1;
+int printdebug = 1;
 
 void print_help (char *progName){
   // std::cerr << "Usage: " << progName << " [-v] [-g 0|1] [-O 0|1|2] [-s] [-l] [-i] SOURCE" << std::endl;
@@ -227,8 +228,9 @@ int main(
       - it would make sense to keep a set/vector as a field in the current function instance
     */
     int f_index = 0;
-    for (auto fptr : p.functions) {
+    for (auto &fptr : p.functions) {
       int spill_count = -1;
+      std::unordered_map<std::string, int> seenMap;
       while (true){
         L2::Gen_Kill_Store gen_kill_sets = L2::Gen_Kill_Store(&p);
         L2::In_Out_Store in_out_sets = L2::In_Out_Store(&p);
@@ -245,7 +247,6 @@ int main(
         L2::Graph* graph = L2::build_graph(fptr, liveness_results);
         if (printdebug) std::cerr << "Printing the graph:\n";
         if (printdebug) graph->printGraph();
-
         /*
         Color the interference graph
         - if the coloring was successful, then the size of the function's spilled variables set
@@ -262,7 +263,6 @@ int main(
         // std::vector<L2::Node*> nodes_to_spill = L2::color_graph_alt(p, graph, fptr);
         // std::vector<L2::Variable*> new_spilled_vars;
         bool big_fail = false;
-        
 
         if (big_fail) {
           /*
@@ -293,20 +293,32 @@ int main(
           Some variables could not be colored, so we spill each of them and retry coloring in the next while loop iteration.
           - this function should also keep track of the new spill variables so we don't accidentally spill them later
           */
+          bool duplicate_checker =false;
+          for (auto &node : nodes_to_spill) {
+            if (seenMap.find(node->var->name) != seenMap.end()){
+              duplicate_checker = true;
+              break;
+            }
+          }
+          if (duplicate_checker){
+            all_graphs[fptr] = graph;
+            break;
+          }
           L2::PrintVisitor* myPrintVisitor = new L2::PrintVisitor();
           if (printdebug) std::cerr << "Printing program before spill:\n\n";
-          for (auto iptr : fptr->instructions) {
+          for (auto &iptr : fptr->instructions) {
             iptr->accept(myPrintVisitor);
           }
-          for (auto node : nodes_to_spill) {
-            auto spilled_set = L2::spillForL2(fptr, node->var, spill_count);
-            fptr->string_spill_variables_set.insert(spilled_set.begin(), spilled_set.end());
+          for (auto &node : nodes_to_spill) {
+            auto spilled_set = L2::spillForL2(fptr, node->var, 1);
             spill_count++;
+            seenMap[node->var->name] = 1;
           }
           if (printdebug) std::cerr << "Printing program after spill:\n\n";
-          for (auto iptr : fptr->instructions) {
+          for (auto &iptr : fptr->instructions) {
             iptr->accept(myPrintVisitor);
           }
+          // seen_set = nodes_to_spill;
           /*
           Add the newly spilled variables to the function's tracking set. The color graph in the next loop iteration will get this updated set.
           - actually this probably isn't necessary, we only need to track the spill variables

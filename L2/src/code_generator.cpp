@@ -182,7 +182,7 @@ namespace L2{
       int stack_size = 0;
       ColorVariablesVisitor* myColorVisitor = new ColorVariablesVisitor(color_graph,fptr);
       for (Instruction *iptr : fptr->instructions) {
-        auto instruction = dynamic_cast<stackarg_assignment*>(iptr);
+        auto instruction = dynamic_cast<Memory_assignment_store*>(iptr);
         if (instruction){
           stack_size++;
         }

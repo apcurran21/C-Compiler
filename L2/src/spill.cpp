@@ -39,8 +39,28 @@ namespace L2{
                     Instruction * instruction1 = new Memory_assignment_store(var, visitor->replacementVariable, stack);
                     f->instructions.insert(f->instructions.begin() + i + 1, instruction1);
                     i += 1;
-                    
-                    if (i+1< f->instructions.size()){
+                    int last_call_index = -1;
+                    int counter = i;
+                    while (counter<f->instructions.size()){
+                        auto Call_tenserr = dynamic_cast<Call_tenserr_Instruction *>(f->instructions[counter]);
+                        auto Call_uN = dynamic_cast<Call_uN_Instruction *>(f->instructions[counter]);
+                        auto Call_print = dynamic_cast<Call_print_Instruction*>(f->instructions[counter]);
+                        auto Call_input = dynamic_cast<Call_input_Instruction*>(f->instructions[counter]);
+                        auto Call_allocate = dynamic_cast<Call_allocate_Instruction*>(f->instructions[counter]);
+                        auto Call_tuple = dynamic_cast<Call_tuple_Instruction*>(f->instructions[counter]);
+                        if (Call_tenserr || Call_uN||Call_print|| Call_input || Call_allocate || Call_tuple){
+                            last_call_index = counter;
+                        }
+                            counter++;
+                        }
+                    if (last_call_index != -1){ 
+                        Variable* tempVar = new Variable(temp + std::to_string(visitor->count+1));
+                        Instruction* instruction2 = new Memory_assignment_load(tempVar, var, stack);
+                        f->instructions.insert(f->instructions.begin() + last_call_index + 1, instruction2);
+                        visitor->count++;
+                        visitor->replacementVariable = tempVar;
+                    }
+                    else if (i+1< f->instructions.size()){
                         auto check_instruction = f->instructions[i+1];
                         auto check_memory_store = dynamic_cast<Memory_assignment_store*>(check_instruction);
                         while (i+1<f->instructions.size()){
@@ -99,8 +119,7 @@ namespace L2{
                 changed = true;
                 visitor->spilled = false;
             }
-
-        }
+        } 
         std::set<std::string> spilled_variables_in_spill;
         std::string s = visitor->replacementVariable->name;
         int number = std::stoi(s.substr(2));  // Extract the number from the string, assuming it's after "S"
@@ -117,6 +136,5 @@ namespace L2{
         // track the spill variables we created so that we don't accidentally spill it later
 
         return spilled_variables_in_spill;
-
     }
-};
+    }
