@@ -238,14 +238,9 @@ int main(
         Compute liveness for the current state of the current function
         - ie there might be additional spill instructions from the last iteration of the do-while loop
         */
-        L2::Curr_F_Liveness liveness_results;
         if (printdebug) std::cerr << "Printing in and out sets:\n";
-        if (printdebug) {
-          liveness_results = L2::liveness_analysis(&p, f_index, gen_kill_sets, in_out_sets, true);
-        } else {
-          liveness_results = L2::liveness_analysis(&p, f_index, gen_kill_sets, in_out_sets, false);
-        }
-      
+        L2::Curr_F_Liveness liveness_results = L2::liveness_analysis(&p, f_index, gen_kill_sets, in_out_sets, printdebug);
+
         /*
         Build an interference graph based off of the liveness
         */
@@ -262,10 +257,10 @@ int main(
           a variable that couldn't be colored or spilled!
             - maybe we could just return a tuple that also contains the big Fail bool for this case
         */
-        // auto color_result = L2::color_graph(graph);
+        auto color_result = L2::color_graph(p, graph, fptr);
         // bool big_fail = std::get<0>(color_result);
-        // std::set<L2::Variable*> new_spilled_vars = std::get<1>(color_result);
-        std::vector<L2::Node*> nodes_to_spill = L2::color_graph_alt(p, graph, fptr);
+        std::vector<L2::Node*> nodes_to_spill = std::get<1>(color_result);
+        // std::vector<L2::Node*> nodes_to_spill = L2::color_graph_alt(p, graph, fptr);
         // std::vector<L2::Variable*> new_spilled_vars;
         bool big_fail = false;
 

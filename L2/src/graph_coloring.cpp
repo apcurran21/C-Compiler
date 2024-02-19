@@ -33,16 +33,16 @@ namespace L2 {
         Graph* (pointer to the now colored graph, null pointer if unsuccessful)
     */
     // Graph* color_graph(Graph *graph) {
-    std::tuple<bool, std::set<Variable*>> color_graph(Graph *graph) {
+    std::tuple<bool, std::vector<Node*>> color_graph(Program &p, Graph *graph, Function *fptr) {
         /*
         Clone the initial graph in case we need to spill all variables
         */
-        Graph* orig_graph = graph->clone();
+        Graph* graph_copy = graph->clone();
 
         /*
         Predefine the colors of all register nodes
         */
-        color_registers(graph);
+        color_registers(graph_copy);
 
         /*
         Call to some depopulate function which implements step 1 of the coloring algorithm:
@@ -50,14 +50,14 @@ namespace L2 {
         -Should this function create a new stack and return it, or can we initialize it 
             outside of the function, pass a pointer as an arg, modify the memory, then return void?
         */
-        std::vector<Node*> node_stack = depopulate(graph);
+        std::vector<Node*> node_stack = depopulate(graph_copy);
 
         /*
         Call to some rebuild function which implements step 2 of the coloring algorithm
         -Select a color on each node as it comes back into the graph, making sure no adjacent
             nodes have the same color.
         */
-        return repopulate(graph, orig_graph, node_stack);
+        return repopulate(graph, graph_copy, node_stack);
     }
 
     /*
@@ -84,61 +84,53 @@ namespace L2 {
     degree < num registers. If the priority queue empties before we find a node with a small enough degree, then we have already 
     conveniently stored the large-degree nodes with the correct ordering. 
     */
-    std::vector<Node*> depopulate(Graph *g) {
-      std::vector<Node*> small_degree_vec;
-      std::vector<Node*> big_degree_vec;
+    std::vector<Node*> depopulate(Graph *graph) {
+      /*
+      Initialize our return stack to hold the variable ordering.
+      */
       std::vector<Node*> stack;
 
-      // place the vector of nodes into list format before sorting
-      for (auto& node: g->getNodes()) {
-        // we want to leave all the gp register nodes in the graph
-        if (dynamic_cast<Register*>(node->var)) {}
-        // otherwise we put the current node into the corresponding list depending on its number of neighbors
-        else if (node->getDegree() < gp_registers.size()) {
-          small_degree_vec.push_back(node);
-        } else {
-          big_degree_vec.push_back(node);
+      /*
+      Iterate until we've removed all non-register nodes.
+      */
+      while (graph->getSize() > 0) {
+
+        /*
+        Get and sort a list of the current variable nodes in the graph in non-decreasing order 
+        */
+        std::vector<Node*> curr_nodes = graph->getVarNodes();
+        std::sort(curr_nodes.begin(), curr_nodes.end(), cmp);
+
+        /*
+        Initialize a best-so-far variable and check for the largest degree node less than N.
+        */
+        Node* best_node = nullptr;
+        /*
+        Iterate left to right (ie in the order of increasing degree)
+        */
+        for (auto node : curr_nodes) {
+            if (node->degree >= gp_registers.size()) {
+                /*
+                If we encounter a node with degree greater than or equal to the number of colors,
+                then stop searching the list of nodes since we know the far right will be the best.
+                */
+                break;
+            }
+            best_node = node;
         }
+        if (best_node == nullptr) {
+          /*
+          Then there weren't any small degree nodes. Far right now holds the best.
+          */
+          best_node = curr_nodes.back();
+        }
+        stack.push_back(best_node);
+        graph->removeNode(best_node);
       }
 
-      while ((!small_degree_vec.empty()) || (!big_degree_vec.empty())) {
-        // small_degree_vec.sort(compare_nodes);
-        // big_degree_vec.sort(compare_nodes);
-        std::sort(small_degree_vec.begin(), small_degree_vec.end(), cmp);
-        std::sort(big_degree_vec.begin(), big_degree_vec.end(), cmp);
-
-        // get the node with the most edges
-        Node* curr_node;
-        if (!small_degree_vec.empty()) {
-          curr_node = small_degree_vec.back();
-          small_degree_vec.pop_back();
-        } else {
-          curr_node = big_degree_vec.back();
-          big_degree_vec.pop_back();
-        }
-
-        // remove the edges between the current node and its neighbors
-        auto it = g->graph.find(curr_node);
-        if (it != g->graph.end()) {
-          std::set<Node*> curr_node_neighbors = it->second;
-          for (auto neighbor: curr_node_neighbors) {
-            g->removeEdge(curr_node, neighbor);
-          }
-        } else {
-          if (debug) std::cout << "node not found in the graph" << std::endl;
-        }
-
-        // remove the current node from the graph
-        g->graph.erase(curr_node);
-
-        // remove the current node from the graph's list of nodes
-        // ie we need it so that we can initialize our "already in the graph" set
-        g->nodes.erase(curr_node->var);
-
-        stack.push_back(curr_node);
-      }
-
-      // return the stack of nodes, which are now ordered correctly according to step 1 of the slides coloring alg
+      /*
+      return the stack of nodes, which are now ordered correctly according to step 1 of the slides coloring alg
+      */
       return stack;
     }
 
@@ -146,78 +138,54 @@ namespace L2 {
     We need to compare the current state of the graph g with the initial state so that we know which edges to add back and when
     This function is for coloring each node as it comb
     */
-    std::tuple<bool, std::set<Variable*>> repopulate(Graph* g, Graph* orig_g, std::vector<Node*> node_stack) {
+    std::tuple<bool, std::vector<Node*>> repopulate(Graph* g, Graph* g_copy, std::vector<Node*> node_stack) {
       bool big_fail = false;
-      std::set<Variable*> newly_spilled;
+      std::vector<Node*> uncolored_nodes;
       
       bool failed_to_color = false;
-      // each node in the stack needs to be colored and added back into the stack
+      /*
+      We need to try to color each node and add it back into the graph.
+      - Would a while loop with pop_back() be safer here?
+      */
       for (auto node : node_stack) {
 
-        int max_number_nodes = 0;
-        auto it1 = orig_g->nodes.find(node->var);
-        if (it1 != orig_g->nodes.end()) {
-          auto it2 = orig_g->graph.find(it1->second);
-          if (it2 != orig_g->graph.end()) {
-              // Key exists, access the size of the set associated with the key
-              max_number_nodes = (std::min(it2->second.size(), g->getNodes().size()));
+        /*
+        Get a set of the current node's neighbors from the original cloned state
+        */
+        std::set<Node*> full_neighbor_set;
+        auto curr_node_in_original_graph_iterator = g_copy->nodes.find(node->var);
+        if (curr_node_in_original_graph_iterator != g_copy->nodes.end()) {
+          Node* n = curr_node_in_original_graph_iterator->second;
+          auto full_neighbor_set_iterator = g_copy->graph.find(n);
+          if (full_neighbor_set_iterator != g_copy->graph.end()) {
+              full_neighbor_set = full_neighbor_set_iterator->second;
           } else {
-            if (debug) std::cout << "the orig_g version of the current node wasn't found in the graph." << std::endl;
+              if (debug) std::cerr << "Couldn't find this node in the original graph.\n";
           }
         } else {
-          if (debug) std::cout << "the current node's variable wasn't found in orig_g's variable-to-node mapping. Terminating." << std::endl;
-          std::terminate();
+            if (debug) std::cerr << "Couldn't find this variable in any of the original graph's nodes.\n";
         }
 
         /*
-        Note for debugging - since we terminate if the variable pointer key isn't found in orig_g's , we're safe to use it1 here
+        Get a vector of the current node's original neighbors which exist in the current state of the graph.
         */
-        
-        // allocate an empty array to hold the current node's neighors in the current state of the graph
-        // std::vector<Node*> node_current_neighbors(max_number_nodes);
-
-        // get the original version of the current node
-        auto it_curr_node_orig_g = orig_g->nodes.find(it1->first);
-        // ^ just assume everything succeeds at this stage of debugging and use the iterator without checking for .end()
-
-        // get a set of the current node's neighbors from the original cloned state
-        auto it_curr_node_neighbors_orig_g = orig_g->graph.find(it_curr_node_orig_g->second);
-
-        /*
-        NOTE!!! lowkey this stage could just be our "set intersection" step
-        the call to find() will fail whenever we try to lookup an orig_g node key in the current graph state g nodes map. 
-        so in this case we just continue, since we only want to include nodes in curr_node_neighbors_g if they exist in 
-        both the it_curr_node_neighbors_orig_g (orig_g versions of the current node's cloned/original neighbors) set and 
-        the set of g version nodes that are included in the state of the current graph
-        */
-
-        // convert each node in the neighbor set to the current graph version and place into a new set
-        std::vector<Node*> node_current_neighbors;
-        // std::set<Node*> curr_node_neighbors_g;
-        for (auto n : it_curr_node_neighbors_orig_g->second) {
-          auto it_node = g->nodes.find(n->var);
-          if (it_node != g->nodes.end()) {
-            node_current_neighbors.push_back(it_node->second);
-            // curr_node_neighbors_g.insert(it_node->second);
-          }
-          // it's okay to end up here - it only means that the node n isn't in the current state of the graph yet (ie still in the stack)
-          // if (debug) std::cerr << "could not find the equivalent g equivalent for the current neighbor." << std::endl;
+        std::vector<Node*> neighbors_in_curr_graph;
+        for (auto n : full_neighbor_set) {
+            auto curr_graph_node_iterator = g_copy->nodes.find(n->var);
+            if (curr_graph_node_iterator != g_copy->nodes.end()) {
+                neighbors_in_curr_graph.push_back(curr_graph_node_iterator->second);
+            }
         }
 
-        // // perform the operations using the current graph state version of the node pointers
-        // auto it3 = std::set_intersection(
-        //   curr_node_neighbors_g.begin(),
-        //   curr_node_neighbors_g.end(),
-        //   g->getNodes().begin(),
-        //   g->getNodes().end(),
-        //   node_current_neighbors.begin()
-        // );
-        // node_current_neighbors.resize(it3 - node_current_neighbors.begin());
+        /*
+        Using the above vector, create a set of the colors belonging to the neighbors of the current node, 
+        in the current state of the graph.
+        */
+        std::set<std::string> neighbors_colors = get_colors(neighbors_in_curr_graph);
 
-        // using the above vector, create a set of the colors belonging to the neighbors of the current node, in the current graph
-        std::set<std::string> neighbors_colors = get_colors(node_current_neighbors);
-
-        // color the current node with the earliest one that doesn't conflict with the colors of the current node's neighbors
+        /*
+        Color the current node with the earliest one that doesn't conflict with the colors of its neighbors.
+        */
         for (auto color : gp_registers) {
           if (neighbors_colors.find(color) == neighbors_colors.end()) {
             node->color = color;
@@ -226,7 +194,7 @@ namespace L2 {
         }
 
         /*
-        Checking for spill conditions: if the node's color field is empty coloring failed
+        Checking for spill conditions: if the current node's color field is still empty, then coloring failed.
         */
         if (node->color.empty()) {
           failed_to_color = true;
@@ -237,7 +205,15 @@ namespace L2 {
             /*
             If it isn't found in this map, we are allowed to spill it.
             */
-            newly_spilled.insert(node->var);
+            uncolored_nodes.push_back(node);
+          }
+
+          /*
+          This check should have the same behavior as the one above. 
+          */
+          auto node_name = node->var->name;
+          if (node_name[0]=='%' && node_name[1]=='S'){
+              continue;
           }
 
           /*
@@ -246,18 +222,20 @@ namespace L2 {
           */
         }
 
-        // add the node back into the graph (if it wasn't able to be colored, then it still has an empty string and we spill)
-        add_back_into_graph(node, node_current_neighbors, g);
+        /*
+        Add the node back into the graph (if it wasn't able to be colored, then it still has an empty string and we spill)
+        */
+        add_back_into_graph(node, neighbors_in_curr_graph, g);
       }
       /*
       We know we failed the big condition and have to spill everything if:
       - we know coloring failed, but no variables are eligible to be spilled
       */
-      if (failed_to_color && (newly_spilled.size() == 0)) {
+      if (failed_to_color && (uncolored_nodes.size() == 0)) {
         big_fail = true;
       }
 
-      return std::make_tuple(big_fail, newly_spilled);
+      return std::make_tuple(big_fail, uncolored_nodes);
     }
 
 
