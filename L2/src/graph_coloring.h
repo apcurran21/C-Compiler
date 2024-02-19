@@ -16,9 +16,9 @@ namespace L2 {
     // Graph* color_graph(Graph *graph);
 
     /*
-    Note that this function now returns the full list of variables it has spilled
+    This function returns a bool indicating whether it failed to color any, and the vector of nodes it failed to color.
     */
-    std::tuple<bool, std::set<Variable*>> color_graph(Graph *graph);
+    std::tuple<bool, std::vector<Node*>> color_graph(Program &p, Graph *graph, Function *fptr);
 
     /*
     Do the initial step of coloring register nodes with their own colors
@@ -33,7 +33,7 @@ namespace L2 {
     /*
     Chooses colors and places nodes back into the graph
     */
-    std::tuple<bool, std::set<Variable*>> repopulate(Graph *graph, Graph *orig_graph, std::vector<Node*> node_stack);
+    std::tuple<bool, std::vector<Node*>> repopulate(Graph *graph, Graph *graph_copy, std::vector<Node*> node_stack);
 
     /*
     Places edges between a given node and its neighbors described in the vector arg 
