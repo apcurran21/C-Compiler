@@ -28,7 +28,7 @@
 /*
 Debugging
 */
-int printdebug =1;
+int printdebug = 1;
 
 void print_help (char *progName){
   // std::cerr << "Usage: " << progName << " [-v] [-g 0|1] [-O 0|1|2] [-s] [-l] [-i] SOURCE" << std::endl;
@@ -227,7 +227,7 @@ int main(
       - it would make sense to keep a set/vector as a field in the current function instance
     */
     int f_index = 0;
-    for (auto fptr : p.functions) {
+    for (auto &fptr : p.functions) {
       int spill_count = -1;
       while (true){
         L2::Gen_Kill_Store gen_kill_sets = L2::Gen_Kill_Store(&p);
@@ -243,7 +243,7 @@ int main(
         } else {
           liveness_results = L2::liveness_analysis(&p, f_index, gen_kill_sets, in_out_sets, false);
         }
-
+      
         /*
         Build an interference graph based off of the liveness
         */
@@ -267,7 +267,6 @@ int main(
         std::vector<L2::Node*> nodes_to_spill = L2::color_graph_alt(p, graph, fptr);
         // std::vector<L2::Variable*> new_spilled_vars;
         bool big_fail = false;
-        
 
         if (big_fail) {
           /*
@@ -300,16 +299,15 @@ int main(
           */
           L2::PrintVisitor* myPrintVisitor = new L2::PrintVisitor();
           if (printdebug) std::cerr << "Printing program before spill:\n\n";
-          for (auto iptr : fptr->instructions) {
+          for (auto &iptr : fptr->instructions) {
             iptr->accept(myPrintVisitor);
           }
-          for (auto node : nodes_to_spill) {
-            auto spilled_set = L2::spillForL2(fptr, node->var, spill_count);
-            fptr->string_spill_variables_set.insert(spilled_set.begin(), spilled_set.end());
+          for (auto &node : nodes_to_spill) {
+            auto spilled_set = L2::spillForL2(fptr, node->var, 1);
             spill_count++;
           }
           if (printdebug) std::cerr << "Printing program after spill:\n\n";
-          for (auto iptr : fptr->instructions) {
+          for (auto &iptr : fptr->instructions) {
             iptr->accept(myPrintVisitor);
           }
           /*
