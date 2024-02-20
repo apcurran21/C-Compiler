@@ -153,11 +153,11 @@ namespace L2 {
         Get a set of the current node's neighbors from the original cloned state
         */
         std::set<Node*> full_neighbor_set;
-        auto curr_node_in_original_graph_iterator = g_copy->nodes.find(node->var);
-        if (curr_node_in_original_graph_iterator != g_copy->nodes.end()) {
+        auto curr_node_in_original_graph_iterator = g->nodes.find(node->var);
+        if (curr_node_in_original_graph_iterator != g->nodes.end()) {
           Node* n = curr_node_in_original_graph_iterator->second;
-          auto full_neighbor_set_iterator = g_copy->graph.find(n);
-          if (full_neighbor_set_iterator != g_copy->graph.end()) {
+          auto full_neighbor_set_iterator = g->graph.find(n);
+          if (full_neighbor_set_iterator != g->graph.end()) {
               full_neighbor_set = full_neighbor_set_iterator->second;
           } else {
               if (debug) std::cerr << "Couldn't find this node in the original graph.\n";
@@ -171,10 +171,10 @@ namespace L2 {
         */
         std::vector<Node*> neighbors_in_curr_graph;
         for (auto n : full_neighbor_set) {
-            auto curr_graph_node_iterator = g_copy->nodes.find(n->var);
-            if (curr_graph_node_iterator != g_copy->nodes.end()) {
-                neighbors_in_curr_graph.push_back(curr_graph_node_iterator->second);
-            }
+          auto curr_graph_node_iterator = g_copy->nodes.find(n->var);
+          if (curr_graph_node_iterator != g_copy->nodes.end()) {
+              neighbors_in_curr_graph.push_back(curr_graph_node_iterator->second);
+          }
         }
 
         /*

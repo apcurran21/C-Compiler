@@ -47,6 +47,7 @@ namespace L2{
             // Graph * build_graph(Program &p, LivenessResult result);
             void printGraph() const;
             void printColors() const;
+            void printNodeDegrees() const;
     };
     
     // Graph * build_graph(Program &p, LivenessResult result);

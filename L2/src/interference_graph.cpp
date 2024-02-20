@@ -26,8 +26,10 @@ namespace L2{
   }
 
   void Graph::removeNode(Node *node) {
-    // Remove all connections to this node.
-    for (auto &pair : graph) {
+    /*
+    Iterate over all nodes in the graph to handle if the given node is a neighbor to any of them.
+    */
+    for (auto pair : graph) {
       if (pair.second.erase(node)) {
         // pair.first is a neighbor of the node, so subtract 1 from its degree
         pair.first->addDegree(-1);
@@ -265,6 +267,18 @@ namespace L2{
     return interference_graph;
   }
 
+  /*
+  Returns a set of the colors contained within a 
+  - NOTE - what if empty strings make it into this set?? is this possible?
+  - Ie it's possible for a node to have neighbors which are uncolored (ie if they
+    will get spilled eventually.)
+  - Actually we don't need to worry about that though since we only use this set to
+    get the first of the 15 colors which isn't currently being used by one of these
+    neighbors. We are never going to try and color with the empty string, so who cares
+    if it's in this set right?
+      - we could also just do a check on a string before adding into 'colors' if it 
+        ends up mattering. 
+  */
   std::set<std::string> get_colors(std::vector<Node*> nodes) {
     std::set<std::string> colors;
     for (auto node : nodes) {
@@ -272,12 +286,22 @@ namespace L2{
     }
     return colors;
   }
+
   /*
   Prints each node in the graph and its assigned color for verification
   */
   void Graph::printColors() const {
     for (auto node : getNodes()) {
       std::cout << "Name = " << node->var->print() << ", Color = " << node->color << "\n";
+    }
+  }
+
+  /*
+  Prints the degree of each node in the graph for debugging purposes.
+  */
+  void Graph::printNodeDegrees() const {
+    for (auto node: getNodes()) {
+      std::cout << "Name = " << node->var->print() << ", Degree = " << node->degree << "\n";
     }
   }
 
