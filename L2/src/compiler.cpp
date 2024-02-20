@@ -41,8 +41,8 @@ int main(
   int argc, 
   char **argv
   ){
-  auto enable_code_generator = false;
-  auto spill_only = true;
+  auto enable_code_generator = true;
+  auto spill_only = false;
   auto interference_only = false;
   auto liveness_only = false;
   auto run_color = false; // extra debug

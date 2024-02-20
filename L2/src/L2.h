@@ -447,7 +447,7 @@ namespace L2 {
     public:
       SpillVisitor(Variable* spilledVar, Variable* replacementVar,int count = 0) :
         spilledVariable(spilledVar), replacementVariable(replacementVar){}
-      void replaceIfSpilled(Item*& item);
+      bool replaceIfSpilled(Item*& item);
       void iterReplacementVariable();
       void visit(Instruction_ret *instruction) override;
       void visit(Instruction_assignment *instruction) override;
@@ -472,7 +472,8 @@ namespace L2 {
       void visit(SOP_assignment *instruction) override;  
       Variable* spilledVariable;
       Variable* replacementVariable;
-      bool spilled;
+      bool spilledLHS;
+      bool spilledRHS; 
   };
   class ColorVariablesVisitor: public Visitor {
     public:

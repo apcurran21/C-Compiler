@@ -497,15 +497,7 @@ namespace L2 {
             instruction->used.insert(var);
         };
     }
-    void SpillVisitor::iterReplacementVariable(){
-        std::string base = "%S";
-        // Assuming replacementVariable format is "%S" followed by a number
-        size_t numberStartIndex = base.size();
-        std::string numberStr = this->replacementVariable->name.substr(numberStartIndex);
-        int number = std::stoi(numberStr); 
-        number++; 
-        this->replacementVariable = new Variable("%S" + std::to_string(number));
-    }
+    
     void UseDefVisitor::visit(w_increment_decrement *instruction) {
         instruction->used.insert(dynamic_cast<Variable*>(instruction->r));
         instruction->defined.insert(dynamic_cast<Variable*>(instruction->r));
@@ -590,91 +582,161 @@ namespace L2 {
         instruction->used.insert(dynamic_cast<Variable*>(instruction->dst));
         instruction->defined.insert(dynamic_cast<Variable*>(instruction->dst));
     }
-    void SpillVisitor::replaceIfSpilled(Item*& item) {
+    bool SpillVisitor::replaceIfSpilled(Item*& item) {
         auto variable = dynamic_cast<Variable*>(item);
         if (variable) {
             if (variable->name == spilledVariable->name) { //need to fix this lol
                 item = this->replacementVariable;
-                this->spilled = true;
+                
+                return 1;
             }
         }
+        return 0;
     }
-
+    void SpillVisitor::iterReplacementVariable(){
+        std::string base = "%S";
+        // Assuming replacementVariable format is "%S" followed by a number
+        size_t numberStartIndex = base.size();
+        std::string numberStr = this->replacementVariable->name.substr(numberStartIndex);
+        int number = std::stoi(numberStr); 
+        number++; 
+        this->replacementVariable = new Variable("%S" + std::to_string(number));
+    }
     void SpillVisitor::visit(Instruction_ret *instruction){} ;
     void SpillVisitor::visit(Instruction_assignment *instruction){
-        replaceIfSpilled(instruction->d);
-        replaceIfSpilled(instruction->s);
+        bool replaceD = replaceIfSpilled(instruction->d);
+        bool replaceS = replaceIfSpilled(instruction->s);
+        if (replaceD){
+            this->spilledLHS = true;
+        }
+        if (replaceS){
+            this->spilledRHS = true;
+        }
 
     };
     void SpillVisitor::visit(label_Instruction *instruction) {};
     void SpillVisitor::visit(goto_label_instruction *instruction) {};
     void SpillVisitor::visit(Call_tenserr_Instruction *instruction) {};
     void SpillVisitor::visit(Call_uN_Instruction *instruction) {
-        replaceIfSpilled(instruction->u);
+        bool replaceU = replaceIfSpilled(instruction->u);
+        if (replaceU){
+            this->spilledRHS = true;
+        }
     };
     void SpillVisitor::visit(Call_print_Instruction *instruction) {};
     void SpillVisitor::visit(Call_input_Instruction *instruction) {};
     void SpillVisitor::visit(Call_allocate_Instruction *instruction){} ;
     void SpillVisitor::visit(Call_tuple_Instruction *instruction) {};
     void SpillVisitor::visit(w_increment_decrement *instruction) {
-        replaceIfSpilled(instruction->r);
-
+        bool replaceR = replaceIfSpilled(instruction->r);
+        if (replaceR) {
+            this->spilledLHS= true;
+            this->spilledRHS = true;
+        }
     };
     void SpillVisitor::visit(w_atreg_assignment *instruction) {
-        replaceIfSpilled(instruction->r1);
-        replaceIfSpilled(instruction->r2);
-        replaceIfSpilled(instruction->r3);
+        bool replaceR1 = replaceIfSpilled(instruction->r1);
+        bool replaceR2 = replaceIfSpilled(instruction->r2);
+        bool replaceR3 = replaceIfSpilled(instruction->r3);
+        if (replaceR1 ) {
+            this->spilledRHS = true;
+        }
+        if (replaceR2 || replaceR3){
+            this->spilledLHS = true; // We may need to check this later
+        }
     };
     void SpillVisitor::visit(Memory_assignment_store *instruction) {
-        replaceIfSpilled(instruction->s);
-        replaceIfSpilled(instruction->dst);   
+        bool replaceS = replaceIfSpilled(instruction->s);
+        bool replaceDST = replaceIfSpilled(instruction->dst);   
+        if (replaceS){
+            this->spilledRHS = true;
+        }
+
 
     };
     void SpillVisitor::visit(Memory_assignment_load *instruction){
-        replaceIfSpilled(instruction->dst);
-        replaceIfSpilled(instruction->x);
-        replaceIfSpilled(instruction->M); 
-         
+        bool replaceD = replaceIfSpilled(instruction->dst);
+        bool replaceX = replaceIfSpilled(instruction->x);
+        bool replaceM = replaceIfSpilled(instruction->M); 
+        if (replaceX || replaceM) {
+            this->spilledLHS = true;
+        }    
+        if (replaceD){
+            this->spilledRHS = true;
+        }        
     } ;
     void SpillVisitor::visit(Memory_arithmetic_load *instruction) {
-        replaceIfSpilled(instruction->dst);
-        replaceIfSpilled(instruction->instruction);    
-        replaceIfSpilled(instruction->M);         
+        bool replaceD = replaceIfSpilled(instruction->dst);
+        bool replaceInstruction = replaceIfSpilled(instruction->instruction);    
+        bool replaceM = replaceIfSpilled(instruction->M);  
+        bool replaceX = replaceIfSpilled(instruction->x);
+        if (replaceD) {
+            this->spilledLHS = true;
+        }    
+        if (replaceX || replaceM){
+            this->spilledRHS = true;
+        }
     };
     void SpillVisitor::visit(Memory_arithmetic_store *instruction){
-        replaceIfSpilled(instruction->dst);
-        replaceIfSpilled(instruction->t);
-        replaceIfSpilled(instruction->instruction);    
-        replaceIfSpilled(instruction->M);              
+        bool replaceD = replaceIfSpilled(instruction->dst);
+        bool replaceT = replaceIfSpilled(instruction->t);
+        bool replaceInstruction = replaceIfSpilled(instruction->instruction);    
+        bool replaceM = replaceIfSpilled(instruction->M);  
+
+        if (replaceT){
+            this->spilledRHS = true;
+        }         
     };
     void SpillVisitor::visit(cmp_Instruction *instruction){
-        replaceIfSpilled(instruction->dst);
-        replaceIfSpilled(instruction->t1);
-        replaceIfSpilled(instruction->method);    
-        replaceIfSpilled(instruction->t2); 
+        bool replaceD = replaceIfSpilled(instruction->dst);
+        bool replaceT = replaceIfSpilled(instruction->t1);
+        bool replaceM = replaceIfSpilled(instruction->method);    
+        bool replaceT2 = replaceIfSpilled(instruction->t2); 
+        if (replaceD) {
+            this->spilledLHS = true;
+        }  
+        if (replaceT || replaceT2){
+            this->spilledRHS = true;
+        }   
     };
     void SpillVisitor::visit(cjump_cmp_Instruction *instruction){
-        replaceIfSpilled(instruction->t2);
-        replaceIfSpilled(instruction->cmp);
-        replaceIfSpilled(instruction->t1);    
-        replaceIfSpilled(instruction->label);     
-     
+        bool replaceT2 = replaceIfSpilled(instruction->t2);
+        bool replaceCMP = replaceIfSpilled(instruction->cmp);
+        bool replaceT1 = replaceIfSpilled(instruction->t1);    
+        bool replaceLabel = replaceIfSpilled(instruction->label);     
+        if (replaceT2 || replaceT1 ) {
+            this->spilledRHS = true;
+        }          
     } ;
     void SpillVisitor::visit(stackarg_assignment *instruction){
-        replaceIfSpilled(instruction->w);
-        replaceIfSpilled(instruction->M);   
-        
+        bool replaceW = replaceIfSpilled(instruction->w);
+        bool replaceM = replaceIfSpilled(instruction->M);   
+        if (replaceW) {
+            this->spilledLHS = true;
+        }      
+        if (replaceM){
+            this->spilledRHS = true;
+        }    
     };
     void SpillVisitor::visit(AOP_assignment *instruction){
-        replaceIfSpilled(instruction->method);
-        replaceIfSpilled(instruction->dst);   
-        replaceIfSpilled(instruction->src);   
-     
+        bool replaceMethod = replaceIfSpilled(instruction->method);
+        bool replaceD = replaceIfSpilled(instruction->dst);   
+        bool replaceSrc = replaceIfSpilled(instruction->src);   
+        if (replaceD) {
+            this->spilledLHS= true;
+            this->spilledRHS = true;
+        }          
     };
     void SpillVisitor::visit(SOP_assignment *instruction) {
-        replaceIfSpilled(instruction->method);
-        replaceIfSpilled(instruction->dst);   
-        replaceIfSpilled(instruction->src);  
+        bool replaceMethod = replaceIfSpilled(instruction->method);
+        bool replaceDst = replaceIfSpilled(instruction->dst);   
+        bool replaceSrc = replaceIfSpilled(instruction->src);  
+        if (replaceDst) {
+            this->spilledLHS= true;
+        }          
+        if (replaceSrc){
+            this->spilledRHS = true;
+        }        
     };  
 
     /*

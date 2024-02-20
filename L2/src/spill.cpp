@@ -14,6 +14,7 @@ namespace L2{
     std::tuple<std::set<std::string>,Function*> spillForL2(Function* f, Variable* spilledVar, int spill_count) {    
         // Function* f = p.functions[0]; 
         Function* newFunction = new Function();
+        newFunction->name = f->name;
         newFunction->variable_allocator = f->variable_allocator;
         newFunction->variable_allocator.remove_variable(spilledVar->name);
         std::string temp = "%S";
@@ -28,29 +29,40 @@ namespace L2{
         SpillVisitor * visitor = new SpillVisitor(spilledVar,initial_replacement);
         bool changed = false;
         int assignment_counter = 0;
-        visitor->spilled = false;
+        visitor->spilledLHS = false;
+        visitor->spilledRHS = false;
         Variable* var = newFunction->variable_allocator.allocate_variable("rsp", VariableType::reg);
         std::vector<Instruction *> restore_vector;
         for (size_t i = 0; i < f->instructions.size(); ++i) {
             auto instruction = f->instructions[i];
             auto assignment_instruction = dynamic_cast<Instruction_assignment*>(instruction);
             instruction->accept(visitor);
-            if (visitor->spilled) {
-                if (assignment_instruction){
-                    newFunction->instructions.insert(newFunction->instructions.end(),instruction);
-                    Instruction * instruction1 = new Memory_assignment_store(var, visitor->replacementVariable, stack);
-                    newFunction->instructions.insert(newFunction->instructions.end(),instruction1);
-                    visitor->iterReplacementVariable();
-                } else {
-                    Instruction* instruction2 = new Memory_assignment_load(visitor->replacementVariable, var, stack);
-                    visitor->iterReplacementVariable();
-                    newFunction->instructions.insert(newFunction->instructions.end(),instruction2);
-                    newFunction->instructions.insert(newFunction->instructions.end(),instruction);
-                }
-                visitor->spilled = false;
+            if (visitor->spilledLHS && visitor->spilledRHS) {
+                Instruction* instruction2 = new Memory_assignment_load(visitor->replacementVariable, var, stack);
+                newFunction->instructions.insert(newFunction->instructions.end(),instruction2);
+                newFunction->instructions.insert(newFunction->instructions.end(),instruction);
+                Instruction * instruction1 = new Memory_assignment_store(var, visitor->replacementVariable, stack);
+                newFunction->instructions.insert(newFunction->instructions.end(),instruction1);
+                newFunction->variable_allocator.allocate_variable(visitor->replacementVariable->name, VariableType::reg);
+                visitor->iterReplacementVariable();
+            } else if (visitor->spilledRHS){
+                Instruction* instruction2 = new Memory_assignment_load(visitor->replacementVariable, var, stack);
+                newFunction->instructions.insert(newFunction->instructions.end(),instruction2);
+                newFunction->instructions.insert(newFunction->instructions.end(),instruction);
+                newFunction->variable_allocator.allocate_variable(visitor->replacementVariable->name, VariableType::reg);
+
+                visitor->iterReplacementVariable();
+            }  else if (visitor->spilledLHS){
+                newFunction->instructions.insert(newFunction->instructions.end(),instruction);
+                Instruction * instruction1 = new Memory_assignment_store(var, visitor->replacementVariable, stack);
+                newFunction->instructions.insert(newFunction->instructions.end(),instruction1);
+                newFunction->variable_allocator.allocate_variable(visitor->replacementVariable->name, VariableType::reg);
+                visitor->iterReplacementVariable();             
             } else {
                 newFunction->instructions.insert(newFunction->instructions.end(),instruction);
             }
+            visitor->spilledLHS = false;
+            visitor->spilledRHS = false;
         } 
         std::set<std::string> spilled_variables_in_spill;
         std::string s = visitor->replacementVariable->name;
