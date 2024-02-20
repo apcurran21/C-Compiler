@@ -41,8 +41,8 @@ int main(
   int argc, 
   char **argv
   ){
-  auto enable_code_generator = true;
-  auto spill_only = false;
+  auto enable_code_generator = false;
+  auto spill_only = true;
   auto interference_only = false;
   auto liveness_only = false;
   auto run_color = false; // extra debug
@@ -145,7 +145,8 @@ int main(
     auto replacementVar = p.variables[p.variables.size() - 2]; 
     std::tuple resultTuple = L2::spillForL2(p.functions[0] ,replacementVar, -1);
     auto changed = std::get<0>(resultTuple);
-
+    auto newFunction = std::get<1>(resultTuple);
+    p.update_function(p.functions[0],newFunction);
     L2::generate_spill_code(p, changed);
 
 

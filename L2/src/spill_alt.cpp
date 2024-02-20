@@ -11,7 +11,7 @@
 
 namespace L2{
     // bool spillForL2(Program &p, Variable* spilledVar){
-    std::tuple<std::set<std::string>,Function*> spillForL2(Function* f, Variable* spilledVar, int spill_count) {    
+    std::tuple<std::set<std::string>,Function*> spillALTForL2(Function* f, Variable* spilledVar, int spill_count) {    
         // Function* f = p.functions[0]; 
         Function* newFunction = new Function();
         newFunction->variable_allocator = f->variable_allocator;
@@ -21,36 +21,34 @@ namespace L2{
         // int temp_var = -1;
         // std::string result = temp + std::to_string(temp_var);
 
-        std::string result = temp + std::to_string(0);
+        std::string result = temp + std::to_string(spill_count);
         Variable* initial_replacement = f->variable_allocator.allocate_variable(result, VariableType::var);
 
         Number* stack = new Number(0);
         SpillVisitor * visitor = new SpillVisitor(spilledVar,initial_replacement);
         bool changed = false;
         int assignment_counter = 0;
-        visitor->spilled = false;
+        bool first = true;
         Variable* var = newFunction->variable_allocator.allocate_variable("rsp", VariableType::reg);
         std::vector<Instruction *> restore_vector;
         for (size_t i = 0; i < f->instructions.size(); ++i) {
             auto instruction = f->instructions[i];
-            auto assignment_instruction = dynamic_cast<Instruction_assignment*>(instruction);
             instruction->accept(visitor);
             if (visitor->spilled) {
-                if (assignment_instruction){
+                if (first){
                     newFunction->instructions.insert(newFunction->instructions.end(),instruction);
                     Instruction * instruction1 = new Memory_assignment_store(var, visitor->replacementVariable, stack);
                     newFunction->instructions.insert(newFunction->instructions.end(),instruction1);
                     visitor->iterReplacementVariable();
+                    first = false;
                 } else {
                     Instruction* instruction2 = new Memory_assignment_load(visitor->replacementVariable, var, stack);
                     visitor->iterReplacementVariable();
                     newFunction->instructions.insert(newFunction->instructions.end(),instruction2);
                     newFunction->instructions.insert(newFunction->instructions.end(),instruction);
                 }
-                visitor->spilled = false;
-            } else {
-                newFunction->instructions.insert(newFunction->instructions.end(),instruction);
             }
+            i++;
         } 
         std::set<std::string> spilled_variables_in_spill;
         std::string s = visitor->replacementVariable->name;

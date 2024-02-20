@@ -445,11 +445,10 @@ namespace L2 {
   };
   class SpillVisitor:public Visitor{
     public:
-      SpillVisitor(Variable* spilledVar, Variable* replacementVar,int count = -1) :
-        spilledVariable(spilledVar), replacementVariable(replacementVar),count(count){}
+      SpillVisitor(Variable* spilledVar, Variable* replacementVar,int count = 0) :
+        spilledVariable(spilledVar), replacementVariable(replacementVar){}
+      void replaceIfSpilled(Item*& item);
       void iterReplacementVariable();
-      bool replaceIfSpilled(Item*& item);
-      bool IfSpilled(Item*& item);
       void visit(Instruction_ret *instruction) override;
       void visit(Instruction_assignment *instruction) override;
       void visit(label_Instruction *instruction) override;
@@ -473,7 +472,6 @@ namespace L2 {
       void visit(SOP_assignment *instruction) override;  
       Variable* spilledVariable;
       Variable* replacementVariable;
-      int count;
       bool spilled;
   };
   class ColorVariablesVisitor: public Visitor {
