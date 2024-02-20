@@ -105,7 +105,7 @@ int main(
     /* 
      * Parse an L2 function and the spill arguments.
      */
-    //p = L2::parse_spill_file(argv[optind]);
+    p = L2::parse_spill_file(argv[optind]);
  
   } else if (liveness_only){
 
@@ -113,6 +113,7 @@ int main(
      * Parse an L2 function.
      */
     p = L2::parse_function_file(argv[optind]);
+
   } else if (interference_only || run_color){
 
     /*
@@ -133,26 +134,25 @@ int main(
    * Special cases.
    */
   if (spill_only){
-    p = L2::parse_spill_file(argv[optind]);
 
-    if (printdebug) {
-      std::cerr << "printing liveness before the spill\n\n";
-      auto gen_kill_sets = L2::Gen_Kill_Store(&p);
-      auto in_out_sets = L2::In_Out_Store(&p);
-      L2::Curr_F_Liveness liveness_results = L2::liveness_analysis(&p, 0, gen_kill_sets, in_out_sets, true);
-    }
+    // if (printdebug) {
+    //   std::cerr << "printing liveness before the spill\n\n";
+    //   auto gen_kill_sets = L2::Gen_Kill_Store(&p);
+    //   auto in_out_sets = L2::In_Out_Store(&p);
+    //   L2::Curr_F_Liveness liveness_results = L2::liveness_analysis(&p, 0, gen_kill_sets, in_out_sets, true);
+    // }
 
     auto replacementVar = p.variables[p.variables.size() - 2]; 
     auto changed = L2::spillForL2(p.functions[0] ,replacementVar, -1);
     L2::generate_spill_code(p, changed);
 
 
-    if (printdebug) {
-      std::cerr << "printing liveness after the spill\n\n";
-      auto gen_kill_sets = L2::Gen_Kill_Store(&p);
-      auto in_out_sets = L2::In_Out_Store(&p);
-      L2::Curr_F_Liveness liveness_results = L2::liveness_analysis(&p, 0, gen_kill_sets, in_out_sets, true);
-    }
+    // if (printdebug) {
+    //   std::cerr << "printing liveness after the spill\n\n";
+    //   auto gen_kill_sets = L2::Gen_Kill_Store(&p);
+    //   auto in_out_sets = L2::In_Out_Store(&p);
+    //   L2::Curr_F_Liveness liveness_results = L2::liveness_analysis(&p, 0, gen_kill_sets, in_out_sets, true);
+    // }
 
     // idk how we were testing spill, should fix before submitting
     // the setup seems super specific to one test case
@@ -196,13 +196,24 @@ int main(
   - currently it will just run the graph coloring alg once, edit later
   */
   if (run_color){
-    // auto liveness = L2::liveness_analysis(&p, false);
-    // // auto g = new L2::Graph();
-    // // auto interference_graph = g->build_graph(p, liveness);
-    // auto interference_graph = build_graph(p, liveness);
-    // auto colored_graph = L2::color_graph(interference_graph);
-    // // colored_graph->printGraph();
-    // colored_graph->printColors();
+    L2::Function* fptr = p.functions[0];
+    L2::Gen_Kill_Store gen_kill_sets = L2::Gen_Kill_Store(&p);
+    L2::In_Out_Store in_out_sets = L2::In_Out_Store(&p);
+    L2::Curr_F_Liveness liveness_results = L2::liveness_analysis(&p, 0, gen_kill_sets, in_out_sets, false);
+    L2::Graph* graph = L2::build_graph(fptr, liveness_results);
+    L2::Graph* graph_copy = graph->clone();
+    auto color_result = L2::color_graph(graph, graph_copy, fptr);
+    bool big_fail = std::get<0>(color_result);
+    std::vector<L2::Node*> nodes_to_spill = std::get<1>(color_result);
+    graph_copy->printGraph();
+    graph_copy->printColors();
+    for (auto node : nodes_to_spill) {
+      std::cout << node->var->print() << "\n";
+    }
+
+    /*
+    Order of printing: Interference graph, node colors, spilled nodes.
+    */
     return 0;
   }
 

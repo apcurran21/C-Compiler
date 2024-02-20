@@ -1,0 +1,33 @@
+%my_var_1 rdi r10 r11 r8 r9 rax rcx rdx rsi r12 r13 r14 r15 rbp rbx
+rdi %my_var_1 r10 r11 r8 r9 rax rcx rdx rsi r12 r13 r14 r15 rbp rbx
+r10 %my_var_1 rdi r11 r8 r9 rax rcx rdx rsi r12 r13 r14 r15 rbp rbx
+r11 %my_var_1 rdi r10 r8 r9 rax rcx rdx rsi r12 r13 r14 r15 rbp rbx
+r8 %my_var_1 rdi r10 r11 r9 rax rcx rdx rsi r12 r13 r14 r15 rbp rbx
+r9 %my_var_1 rdi r10 r11 r8 rax rcx rdx rsi r12 r13 r14 r15 rbp rbx
+rax %my_var_1 rdi r10 r11 r8 r9 rcx rdx rsi r12 r13 r14 r15 rbp rbx
+rcx %my_var_1 rdi r10 r11 r8 r9 rax rdx rsi r12 r13 r14 r15 rbp rbx
+rdx %my_var_1 rdi r10 r11 r8 r9 rax rcx rsi r12 r13 r14 r15 rbp rbx
+rsi %my_var_1 rdi r10 r11 r8 r9 rax rcx rdx r12 r13 r14 r15 rbp rbx
+r12 %my_var_1 rdi r10 r11 r8 r9 rax rcx rdx rsi r13 r14 r15 rbp rbx
+r13 %my_var_1 rdi r10 r11 r8 r9 rax rcx rdx rsi r12 r14 r15 rbp rbx
+r14 %my_var_1 rdi r10 r11 r8 r9 rax rcx rdx rsi r12 r13 r15 rbp rbx
+r15 %my_var_1 rdi r10 r11 r8 r9 rax rcx rdx rsi r12 r13 r14 rbp rbx
+rbp %my_var_1 rdi r10 r11 r8 r9 rax rcx rdx rsi r12 r13 r14 r15 rbx
+rbx %my_var_1 rdi r10 r11 r8 r9 rax rcx rdx rsi r12 r13 r14 r15 rbp
+Name = %my_var_1, Color = 
+Name = rdi, Color = rdi
+Name = r10, Color = r10
+Name = r11, Color = r11
+Name = r8, Color = r8
+Name = r9, Color = r9
+Name = rax, Color = rax
+Name = rcx, Color = rcx
+Name = rdx, Color = rdx
+Name = rsi, Color = rsi
+Name = r12, Color = r12
+Name = r13, Color = r13
+Name = r14, Color = r14
+Name = r15, Color = r15
+Name = rbp, Color = rbp
+Name = rbx, Color = rbx
+%my_var_1
