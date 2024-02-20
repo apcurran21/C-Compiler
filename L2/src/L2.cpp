@@ -5,7 +5,22 @@ namespace L2 {
     /*
     Token class extensions
     */
-
+    void Program::update_function(Function *oldFunction, Function *newFunction) {
+        for (size_t i = 0; i < functions.size(); ++i) {
+            if (functions[i] == oldFunction) {
+                // Delete or otherwise manage the memory of the old function here if necessary
+                // ...
+                
+                
+                delete oldFunction;
+                oldFunction = nullptr; // Good practice to nullify
+                
+                // Replace the old function with the new one
+                functions[i] = newFunction;
+                break; // Assuming each function is unique, we can break after the update
+            }
+        }
+    }
     // Register, derived from Variable
     Variable::Variable(std::string name) : name(name) { 
    
@@ -337,7 +352,7 @@ namespace L2 {
     void AOP_assignment::accept(Visitor *visitor) {
         visitor->visit(this);
     }
-
+    
     // Inside the SOP_assignment class
     void SOP_assignment::accept(Visitor *visitor) {
         visitor->visit(this);

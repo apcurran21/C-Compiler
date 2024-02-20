@@ -11,5 +11,5 @@ namespace L2 {
      * @param spilledVar The variable to be spilled.
      */
     // bool spillForL2(Program &p, Variable* spilledVar);
-    std::set<std::string> spillForL2(Function* f, Variable* spilledVar, int spill_count);
+    std::tuple<std::set<std::string>,Function*> spillForL2(Function* f, Variable* spilledVar, int spill_count);
 }

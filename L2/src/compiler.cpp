@@ -12,7 +12,7 @@
 #include <unistd.h>
 #include <iostream>
 #include <assert.h>
-
+#include <tuple>
 // #include "L2/src/parser.h"
 #include "parser.h"
 #include "liveness_analysis.h"
@@ -143,7 +143,9 @@ int main(
     // }
 
     auto replacementVar = p.variables[p.variables.size() - 2]; 
-    auto changed = L2::spillForL2(p.functions[0] ,replacementVar, -1);
+    std::tuple resultTuple = L2::spillForL2(p.functions[0] ,replacementVar, -1);
+    auto changed = std::get<0>(resultTuple);
+
     L2::generate_spill_code(p, changed);
 
 
@@ -237,11 +239,11 @@ int main(
     -NOTE! we should probably keep the list of spilled variables external to the graph instance
       - it would make sense to keep a set/vector as a field in the current function instance
     */
-    // int f_index = 0;
-    // for (auto fptr : p.functions) {
+    
     for (int f_index = 0; f_index < p.functions.size(); f_index++) {
       L2::Function* fptr = p.functions[f_index];
       int spill_count = -1;
+      std::unordered_map<std::string, int> seenMap;
       while (true){
         L2::Gen_Kill_Store gen_kill_sets = L2::Gen_Kill_Store(&p);
         L2::In_Out_Store in_out_sets = L2::In_Out_Store(&p);
@@ -270,9 +272,7 @@ int main(
           a variable that couldn't be colored or spilled!
             - maybe we could just return a tuple that also contains the big Fail bool for this case
         */
-        /*
-        Clone the initial graph, which we will make all our changes to.
-        */
+
         L2::Graph* graph_copy = graph->clone();
         auto color_result = L2::color_graph(graph, graph_copy, fptr);
         // bool big_fail = std::get<0>(color_result);
@@ -293,7 +293,11 @@ int main(
             auto var = pair.first;
             auto reg_ptr = dynamic_cast<L2::Register*>(var);
             if ((!reg_ptr) && (fptr->spill_variables_set.find(var) == fptr->spill_variables_set.end())) {
-              L2::spillForL2(fptr, var, spill_count);
+              std::tuple<std::set<std::string>,L2::Function*> resultTuple = L2::spillForL2(fptr, var, spill_count);
+              auto changed = std::get<0>(resultTuple); // For the std::set<std::string>
+              L2::Function* newFunction = std::get<1>(resultTuple);
+              p.update_function(fptr, newFunction);
+              fptr = newFunction;
               spill_count++;
             }
           }
@@ -313,19 +317,42 @@ int main(
           Some variables could not be colored, so we spill each of them and retry coloring in the next while loop iteration.
           - this function should also keep track of the new spill variables so we don't accidentally spill them later
           */
+
+         /*
+         bool duplicate_checker =false;
+          for (auto &node : nodes_to_spill) {
+            if (seenMap.find(node->var->name) != seenMap.end()){
+              duplicate_checker = true;
+              break;
+            }
+          }
+          if (duplicate_checker){
+            all_graphs[fptr] = graph;
+            break;
+          }
+         
+         */
+          
           L2::PrintVisitor* myPrintVisitor = new L2::PrintVisitor();
           if (printdebug) std::cerr << "Printing program before spill:\n\n";
           for (auto iptr : fptr->instructions) {
             iptr->accept(myPrintVisitor);
           }
-          for (auto node : nodes_to_spill) {
-            auto spilled_set = L2::spillForL2(fptr, node->var, spill_count);
-            /*
-            remove the spilled variable from the variable allocator database
-            */
-            fptr->variable_allocator.remove_variable(node->var->name, L2::var);
-            fptr->string_spill_variables_set.insert(spilled_set.begin(), spilled_set.end());
-            spill_count++;
+
+          for (auto &node : nodes_to_spill) {
+              std::tuple resultTuple = L2::spillForL2(fptr, node->var, 1);
+              auto spilled_set = std::get<0>(resultTuple);
+              L2::Function* newFunction = std::get<1>(resultTuple);
+
+              // Here, you need to update p's list of functions to point to the newFunction.
+              // This could be a function that takes the Program object, the old Function pointer,
+              // and the new Function pointer, and updates the Program's internal list.
+              p.update_function(fptr, newFunction);
+
+              // Now, update the local fptr to the new function for further processing.
+              fptr = newFunction;
+              spill_count++;
+
           }
           if (printdebug) std::cerr << "Printing program after spill:\n\n";
           for (auto iptr : fptr->instructions) {
