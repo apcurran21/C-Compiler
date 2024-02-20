@@ -568,5 +568,10 @@ namespace L2 {
     std::unordered_map<Instruction*, std::set<Variable*>> in;
     std::unordered_map<Instruction*, std::set<Variable*>> out;
   };
+
+  /*
+  Utility Functions
+  */
+  void printFunction(Function* fptr);
   
 }

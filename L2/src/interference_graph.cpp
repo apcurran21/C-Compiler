@@ -33,6 +33,7 @@ namespace L2{
       if (pair.second.erase(node)) {
         // pair.first is a neighbor of the node, so subtract 1 from its degree
         pair.first->addDegree(-1);
+        node->addDegree(-1);
       }
     }
     // Remove the node itself.

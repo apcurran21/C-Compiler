@@ -259,10 +259,10 @@ int main(
           a variable that couldn't be colored or spilled!
             - maybe we could just return a tuple that also contains the big Fail bool for this case
         */
-        // auto color_result = L2::color_graph(p, graph, fptr);
+        auto color_result = L2::color_graph(p, graph, fptr);
         // bool big_fail = std::get<0>(color_result);
-        // std::vector<L2::Node*> nodes_to_spill = std::get<1>(color_result);
-        std::vector<L2::Node*> nodes_to_spill = L2::color_graph_alt(p, graph, fptr);
+        std::vector<L2::Node*> nodes_to_spill = std::get<1>(color_result);
+        // std::vector<L2::Node*> nodes_to_spill = L2::color_graph_alt(p, graph, fptr);
         // std::vector<L2::Variable*> new_spilled_vars;
         bool big_fail = false;
         
