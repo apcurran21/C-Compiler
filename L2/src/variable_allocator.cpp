@@ -31,6 +31,7 @@ namespace L2 {
             return new_variable;
         }
     }
+
     bool VariableAllocator::remove_variable(std::string name){
         return variable_database.erase(name);
     }

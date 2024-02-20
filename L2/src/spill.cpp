@@ -80,7 +80,8 @@ namespace L2{
                         auto check_instruct = f->instructions[i+1];
                         auto instruct = dynamic_cast<Instruction_ret*>(check_instruct);
                         if (!instruct){
-                            Variable* tempVar = new Variable(temp + std::to_string(visitor->count+1));
+                            // Variable* tempVar = new Variable(temp + std::to_string(visitor->count+1));
+                            Variable* tempVar = f->variable_allocator.allocate_variable(temp + std::to_string(visitor->count+1), L2::var);
                             Instruction* instruction2 = new Memory_assignment_load(tempVar, var, stack);
                             f->instructions.insert(f->instructions.begin() + i + 1, instruction2);
                             newFunction->variable_allocator.allocate_variable(tempVar->name,VariableType::reg);
@@ -92,7 +93,8 @@ namespace L2{
                     newFunction->instructions.insert(newFunction->instructions.end(),instruction);
                 } else if (cjump_instruction){
                     Variable* var = f->variable_allocator.allocate_variable("rsp", VariableType::reg);
-                    Variable* tempVar = new Variable(temp + std::to_string(visitor->count-1));
+                    // Variable* tempVar = new Variable(temp + std::to_string(visitor->count-1));
+                    Variable* tempVar = f->variable_allocator.allocate_variable(temp + std::to_string(visitor->count-1), L2::var);
                     i++;
                     while (i<f->instructions.size()){
                         auto label_instruct = dynamic_cast<label_Instruction*>(f->instructions[i]);
@@ -114,7 +116,8 @@ namespace L2{
                     }
                 } else {
                     Variable* var = f->variable_allocator.allocate_variable("rsp", VariableType::reg);
-                    Variable* tempVar = new Variable(temp + std::to_string(visitor->count-1));
+                    // Variable* tempVar = new Variable(temp + std::to_string(visitor->count-1));
+                    Variable* tempVar = f->variable_allocator.allocate_variable(temp + std::to_string(visitor->count-1), L2::var);
                     Instruction * instruction1 = new Memory_assignment_store(var,tempVar, stack);
                     f->instructions.insert(f->instructions.begin() + i + 1, instruction1);
                     newFunction->variable_allocator.allocate_variable(tempVar->name,VariableType::reg);
@@ -154,5 +157,6 @@ namespace L2{
 
         // track the spill variables we created so that we don't accidentally spill it later
         return std::make_tuple(spilled_variables_in_spill, newFunction);
+
     }
     }

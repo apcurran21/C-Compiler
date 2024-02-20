@@ -920,4 +920,15 @@ namespace L2 {
         std::cerr << instruction->dst->print() << " " << instruction->method->print() << " " << instruction->src->print() << "\n"; 
     }
 
+
+    /*
+    Utility Functions
+    */
+    void printFunction(Function *fptr) {
+        PrintVisitor* myPrintVisitor = new L2::PrintVisitor();
+        for (auto iptr : fptr->instructions) {
+            iptr->accept(myPrintVisitor);
+        }
+    }
+
 }

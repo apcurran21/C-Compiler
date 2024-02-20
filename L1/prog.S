@@ -16,15 +16,11 @@ popq %rbp
 popq %rbx
 retq
 _entry:
-subq $8, %rsp
-movq %r12, 0(%rsp)
-movq $1, %r12
+movq $1, %r10
 movq $1, %rdi
 salq $1, %rdi
 addq $1, %rdi
 call print
-movq %r12, %rdi
+movq %r10, %rdi
 call print
-movq 0(%rsp), %r12
-addq $8, %rsp
 retq

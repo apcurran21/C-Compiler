@@ -18,7 +18,7 @@ namespace L2 {
     /*
     This function returns a bool indicating whether it failed to color any, and the vector of nodes it failed to color.
     */
-    std::tuple<bool, std::vector<Node*>> color_graph(Program &p, Graph *graph, Function *fptr);
+    std::tuple<bool, std::vector<Node*>> color_graph(Graph *graph, Graph *graph_copy, Function *fptr);
 
     /*
     Do the initial step of coloring register nodes with their own colors

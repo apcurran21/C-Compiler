@@ -24,12 +24,11 @@
 #include "spill_code_generator.h"
 #include "L2.h"
 #include "spill.h"
-#include <unordered_map>
 
 /*
 Debugging
 */
-int printdebug = 1;
+int printdebug =1;
 
 void print_help (char *progName){
   // std::cerr << "Usage: " << progName << " [-v] [-g 0|1] [-O 0|1|2] [-s] [-l] [-i] SOURCE" << std::endl;
@@ -106,7 +105,7 @@ int main(
     /* 
      * Parse an L2 function and the spill arguments.
      */
-    //p = L2::parse_spill_file(argv[optind]);
+    p = L2::parse_spill_file(argv[optind]);
  
   } else if (liveness_only){
 
@@ -114,6 +113,7 @@ int main(
      * Parse an L2 function.
      */
     p = L2::parse_function_file(argv[optind]);
+
   } else if (interference_only || run_color){
 
     /*
@@ -134,14 +134,13 @@ int main(
    * Special cases.
    */
   if (spill_only){
-    p = L2::parse_spill_file(argv[optind]);
 
-    if (printdebug) {
-      std::cerr << "printing liveness before the spill\n\n";
-      auto gen_kill_sets = L2::Gen_Kill_Store(&p);
-      auto in_out_sets = L2::In_Out_Store(&p);
-      L2::Curr_F_Liveness liveness_results = L2::liveness_analysis(&p, 0, gen_kill_sets, in_out_sets, true);
-    }
+    // if (printdebug) {
+    //   std::cerr << "printing liveness before the spill\n\n";
+    //   auto gen_kill_sets = L2::Gen_Kill_Store(&p);
+    //   auto in_out_sets = L2::In_Out_Store(&p);
+    //   L2::Curr_F_Liveness liveness_results = L2::liveness_analysis(&p, 0, gen_kill_sets, in_out_sets, true);
+    // }
 
     auto replacementVar = p.variables[p.variables.size() - 2]; 
     std::tuple resultTuple = L2::spillForL2(p.functions[0] ,replacementVar, -1);
@@ -150,12 +149,12 @@ int main(
     L2::generate_spill_code(p, changed);
 
 
-    if (printdebug) {
-      std::cerr << "printing liveness after the spill\n\n";
-      auto gen_kill_sets = L2::Gen_Kill_Store(&p);
-      auto in_out_sets = L2::In_Out_Store(&p);
-      L2::Curr_F_Liveness liveness_results = L2::liveness_analysis(&p, 0, gen_kill_sets, in_out_sets, true);
-    }
+    // if (printdebug) {
+    //   std::cerr << "printing liveness after the spill\n\n";
+    //   auto gen_kill_sets = L2::Gen_Kill_Store(&p);
+    //   auto in_out_sets = L2::In_Out_Store(&p);
+    //   L2::Curr_F_Liveness liveness_results = L2::liveness_analysis(&p, 0, gen_kill_sets, in_out_sets, true);
+    // }
 
     // idk how we were testing spill, should fix before submitting
     // the setup seems super specific to one test case
@@ -199,13 +198,24 @@ int main(
   - currently it will just run the graph coloring alg once, edit later
   */
   if (run_color){
-    // auto liveness = L2::liveness_analysis(&p, false);
-    // // auto g = new L2::Graph();
-    // // auto interference_graph = g->build_graph(p, liveness);
-    // auto interference_graph = build_graph(p, liveness);
-    // auto colored_graph = L2::color_graph(interference_graph);
-    // // colored_graph->printGraph();
-    // colored_graph->printColors();
+    L2::Function* fptr = p.functions[0];
+    L2::Gen_Kill_Store gen_kill_sets = L2::Gen_Kill_Store(&p);
+    L2::In_Out_Store in_out_sets = L2::In_Out_Store(&p);
+    L2::Curr_F_Liveness liveness_results = L2::liveness_analysis(&p, 0, gen_kill_sets, in_out_sets, false);
+    L2::Graph* graph = L2::build_graph(fptr, liveness_results);
+    L2::Graph* graph_copy = graph->clone();
+    auto color_result = L2::color_graph(graph, graph_copy, fptr);
+    bool big_fail = std::get<0>(color_result);
+    std::vector<L2::Node*> nodes_to_spill = std::get<1>(color_result);
+    graph_copy->printGraph();
+    graph_copy->printColors();
+    for (auto node : nodes_to_spill) {
+      std::cout << node->var->print() << "\n";
+    }
+
+    /*
+    Order of printing: Interference graph, node colors, spilled nodes.
+    */
     return 0;
   }
 
@@ -229,10 +239,10 @@ int main(
     -NOTE! we should probably keep the list of spilled variables external to the graph instance
       - it would make sense to keep a set/vector as a field in the current function instance
     */
-    int f_index = 0;
-    for (int f_index =0; f_index<p.functions.size();f_index++) {
+    
+    for (int f_index = 0; f_index < p.functions.size(); f_index++) {
+      L2::Function* fptr = p.functions[f_index];
       int spill_count = -1;
-      auto fptr = p.functions[f_index];
       std::unordered_map<std::string, int> seenMap;
       while (true){
         L2::Gen_Kill_Store gen_kill_sets = L2::Gen_Kill_Store(&p);
@@ -250,6 +260,8 @@ int main(
         L2::Graph* graph = L2::build_graph(fptr, liveness_results);
         if (printdebug) std::cerr << "Printing the graph:\n";
         if (printdebug) graph->printGraph();
+        // if (printdebug) graph->printNodeDegrees();
+        
         /*
         Color the interference graph
         - if the coloring was successful, then the size of the function's spilled variables set
@@ -260,11 +272,15 @@ int main(
           a variable that couldn't be colored or spilled!
             - maybe we could just return a tuple that also contains the big Fail bool for this case
         */
-        //std::tuple nodes_to_spill = L2::color_graph_alt(p, graph, fptr);
-        // std::vector<L2::Node*> nodes_to_spill = std::get<1>(color_result);
-        std::vector<L2::Node*> nodes_to_spill = L2::color_graph_alt(p, graph, fptr);
+
+        L2::Graph* graph_copy = graph->clone();
+        auto color_result = L2::color_graph(graph, graph_copy, fptr);
+        // bool big_fail = std::get<0>(color_result);
+        std::vector<L2::Node*> nodes_to_spill = std::get<1>(color_result);
+        // std::vector<L2::Node*> nodes_to_spill = L2::color_graph_alt(p, graph, fptr);
         // std::vector<L2::Variable*> new_spilled_vars;
         bool big_fail = false;
+        
 
         if (big_fail) {
           /*
@@ -273,7 +289,7 @@ int main(
           /*
           Spill all variables which aren't registers and aren't already spill variables
           */
-          for (auto& pair : graph->nodes) {
+          for (auto& pair : graph_copy->nodes) {
             auto var = pair.first;
             auto reg_ptr = dynamic_cast<L2::Register*>(var);
             if ((!reg_ptr) && (fptr->spill_variables_set.find(var) == fptr->spill_variables_set.end())) {
@@ -291,14 +307,17 @@ int main(
           /*
           Every variable was able to be colored, meaning we can move onto the code generation track
           the current state of the graph and move onto code generation.
+          -bruhhh the colored graph info is in the copy of the graph, which is made inside of color graph.
+            - we should really create the copy in compiler and pass it to color as an arg?
           */
-          all_graphs[fptr] = graph;
+          all_graphs[fptr] = graph_copy;
           break;
         } else {
           /*
           Some variables could not be colored, so we spill each of them and retry coloring in the next while loop iteration.
           - this function should also keep track of the new spill variables so we don't accidentally spill them later
           */
+
          /*
          bool duplicate_checker =false;
           for (auto &node : nodes_to_spill) {
@@ -316,9 +335,10 @@ int main(
           
           L2::PrintVisitor* myPrintVisitor = new L2::PrintVisitor();
           if (printdebug) std::cerr << "Printing program before spill:\n\n";
-          for (auto &iptr : fptr->instructions) {
+          for (auto iptr : fptr->instructions) {
             iptr->accept(myPrintVisitor);
           }
+
           for (auto &node : nodes_to_spill) {
               std::tuple resultTuple = L2::spillForL2(fptr, node->var, 1);
               auto spilled_set = std::get<0>(resultTuple);
@@ -332,12 +352,12 @@ int main(
               // Now, update the local fptr to the new function for further processing.
               fptr = newFunction;
               spill_count++;
+
           }
           if (printdebug) std::cerr << "Printing program after spill:\n\n";
-          for (auto &iptr : fptr->instructions) {
+          for (auto iptr : fptr->instructions) {
             iptr->accept(myPrintVisitor);
           }
-          // seen_set = nodes_to_spill;
           /*
           Add the newly spilled variables to the function's tracking set. The color graph in the next loop iteration will get this updated set.
           - actually this probably isn't necessary, we only need to track the spill variables
