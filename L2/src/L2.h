@@ -38,7 +38,6 @@ namespace L2 {
   class Variable : public Item {
     public:
       Variable (std::string name);
-      ~Variable();
       std::string translate() override;
       virtual std::string print() override;
       std::string name;

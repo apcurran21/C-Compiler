@@ -33,12 +33,7 @@ namespace L2 {
         Graph* (pointer to the now colored graph, null pointer if unsuccessful)
     */
     // Graph* color_graph(Graph *graph) {
-    std::tuple<bool, std::vector<Node*>> color_graph(Program &p, Graph *graph, Function *fptr) {
-        /*
-        Clone the initial graph in case we need to spill all variables
-        */
-        Graph* graph_copy = graph->clone();
-
+    std::tuple<bool, std::vector<Node*>> color_graph(Graph *graph, Graph *graph_copy, Function *fptr) {
         /*
         Predefine the colors of all register nodes
         */
@@ -225,7 +220,7 @@ namespace L2 {
         /*
         Add the node back into the graph (if it wasn't able to be colored, then it still has an empty string and we spill)
         */
-        add_back_into_graph(node, neighbors_in_curr_graph, g);
+        add_back_into_graph(node, neighbors_in_curr_graph, g_copy);
       }
       /*
       We know we failed the big condition and have to spill everything if:

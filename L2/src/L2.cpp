@@ -909,7 +909,7 @@ namespace L2 {
     /*
     Utility Functions
     */
-    void L2::printFunction(Function *fptr) {
+    void printFunction(Function *fptr) {
         PrintVisitor* myPrintVisitor = new L2::PrintVisitor();
         for (auto iptr : fptr->instructions) {
             iptr->accept(myPrintVisitor);

@@ -259,7 +259,11 @@ int main(
           a variable that couldn't be colored or spilled!
             - maybe we could just return a tuple that also contains the big Fail bool for this case
         */
-        auto color_result = L2::color_graph(p, graph, fptr);
+        /*
+        Clone the initial graph, which we will make all our changes to.
+        */
+        L2::Graph* graph_copy = graph->clone();
+        auto color_result = L2::color_graph(graph, graph_copy, fptr);
         // bool big_fail = std::get<0>(color_result);
         std::vector<L2::Node*> nodes_to_spill = std::get<1>(color_result);
         // std::vector<L2::Node*> nodes_to_spill = L2::color_graph_alt(p, graph, fptr);
@@ -274,7 +278,7 @@ int main(
           /*
           Spill all variables which aren't registers and aren't already spill variables
           */
-          for (auto& pair : graph->nodes) {
+          for (auto& pair : graph_copy->nodes) {
             auto var = pair.first;
             auto reg_ptr = dynamic_cast<L2::Register*>(var);
             if ((!reg_ptr) && (fptr->spill_variables_set.find(var) == fptr->spill_variables_set.end())) {
@@ -288,8 +292,10 @@ int main(
           /*
           Every variable was able to be colored, meaning we can move onto the code generation track
           the current state of the graph and move onto code generation.
+          -bruhhh the colored graph info is in the copy of the graph, which is made inside of color graph.
+            - we should really create the copy in compiler and pass it to color as an arg?
           */
-          all_graphs[fptr] = graph;
+          all_graphs[fptr] = graph_copy;
           break;
         } else {
           /*
