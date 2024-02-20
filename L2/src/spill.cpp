@@ -2,6 +2,8 @@
 #include <set>
 #include <string>
 #include <stack>
+#include <tuple>
+
 #include <L2.h>
 #include <graph_coloring.h>
 #include <code_generator.h>
@@ -9,12 +11,11 @@
 
 namespace L2{
     // bool spillForL2(Program &p, Variable* spilledVar){
-    std::set<std::string> spillForL2(Function* f, Variable* spilledVar, int spill_count) {    
-        
-
+    std::tuple<std::set<std::string>,Function*> spillForL2(Function* f, Variable* spilledVar, int spill_count) {    
         // Function* f = p.functions[0]; 
+        Function* newFunction = new Function();
         std::string temp = "%S";
-
+        
         // int temp_var = -1;
         // std::string result = temp + std::to_string(temp_var);
 
@@ -38,6 +39,7 @@ namespace L2{
                     Variable* var = f->variable_allocator.allocate_variable("rsp", VariableType::reg);
                     Instruction * instruction1 = new Memory_assignment_store(var, visitor->replacementVariable, stack);
                     f->instructions.insert(f->instructions.begin() + i + 1, instruction1);
+                    newFunction->instructions.insert(newFunction->instructions.end(),instruction1);
                     i += 1;
                     int last_call_index = -1;
                     int counter = i;
@@ -57,6 +59,7 @@ namespace L2{
                         Variable* tempVar = new Variable(temp + std::to_string(visitor->count+1));
                         Instruction* instruction2 = new Memory_assignment_load(tempVar, var, stack);
                         f->instructions.insert(f->instructions.begin() + last_call_index + 1, instruction2);
+                        newFunction->instructions.insert(newFunction->instructions.end(),instruction2);
                         visitor->count++;
                         visitor->replacementVariable = tempVar;
                     }
@@ -76,6 +79,7 @@ namespace L2{
                             Variable* tempVar = new Variable(temp + std::to_string(visitor->count+1));
                             Instruction* instruction2 = new Memory_assignment_load(tempVar, var, stack);
                             f->instructions.insert(f->instructions.begin() + i + 1, instruction2);
+                            newFunction->instructions.insert(newFunction->instructions.end(),instruction2);
                             visitor->count++;
                             visitor->replacementVariable = tempVar;
                         }
@@ -98,6 +102,7 @@ namespace L2{
                         if (!instruct){ 
                             Instruction* instruction2 = new Memory_assignment_load(visitor->replacementVariable, var, stack);
                             f->instructions.insert(f->instructions.begin() + i , instruction2);
+                            newFunction->instructions.insert(newFunction->instructions.end(),instruction2);
                         }
                     }
                 } else {
@@ -105,6 +110,7 @@ namespace L2{
                     Variable* tempVar = new Variable(temp + std::to_string(visitor->count-1));
                     Instruction * instruction1 = new Memory_assignment_store(var,tempVar, stack);
                     f->instructions.insert(f->instructions.begin() + i + 1, instruction1);
+                    newFunction->instructions.insert(newFunction->instructions.end(),instruction1);
                     i += 1;
                     if (i+1< f->instructions.size()){
                         auto check_instruction = f->instructions[i+1];
@@ -112,12 +118,16 @@ namespace L2{
                         if (!instruct){ 
                             Instruction* instruction2 = new Memory_assignment_load(visitor->replacementVariable, var, stack);
                             f->instructions.insert(f->instructions.begin() + i + 1, instruction2);
+                            newFunction->instructions.insert(newFunction->instructions.end(),instruction2);
                             i +=1;
                         }
                     }
                 }
                 changed = true;
                 visitor->spilled = false;
+            } else {
+                
+                newFunction->instructions.insert(newFunction->instructions.end(),instruction);
             }
         } 
         std::set<std::string> spilled_variables_in_spill;
@@ -134,7 +144,6 @@ namespace L2{
 
 
         // track the spill variables we created so that we don't accidentally spill it later
-
-        return spilled_variables_in_spill;
+        return std::make_tuple(spilled_variables_in_spill, newFunction);
     }
     }

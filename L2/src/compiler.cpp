@@ -12,7 +12,7 @@
 #include <unistd.h>
 #include <iostream>
 #include <assert.h>
-
+#include <tuple>
 // #include "L2/src/parser.h"
 #include "parser.h"
 #include "liveness_analysis.h"
@@ -144,7 +144,9 @@ int main(
     }
 
     auto replacementVar = p.variables[p.variables.size() - 2]; 
-    auto changed = L2::spillForL2(p.functions[0] ,replacementVar, -1);
+    std::tuple resultTuple = L2::spillForL2(p.functions[0] ,replacementVar, -1);
+    auto changed = std::get<0>(resultTuple);
+
     L2::generate_spill_code(p, changed);
 
 
@@ -228,8 +230,9 @@ int main(
       - it would make sense to keep a set/vector as a field in the current function instance
     */
     int f_index = 0;
-    for (auto &fptr : p.functions) {
+    for (int f_index =0; f_index<p.functions.size();f_index++) {
       int spill_count = -1;
+      auto fptr = p.functions[f_index];
       std::unordered_map<std::string, int> seenMap;
       while (true){
         L2::Gen_Kill_Store gen_kill_sets = L2::Gen_Kill_Store(&p);
@@ -257,10 +260,9 @@ int main(
           a variable that couldn't be colored or spilled!
             - maybe we could just return a tuple that also contains the big Fail bool for this case
         */
-        auto color_result = L2::color_graph(p, graph, fptr);
-        // bool big_fail = std::get<0>(color_result);
-        std::vector<L2::Node*> nodes_to_spill = std::get<1>(color_result);
-        // std::vector<L2::Node*> nodes_to_spill = L2::color_graph_alt(p, graph, fptr);
+        //std::tuple nodes_to_spill = L2::color_graph_alt(p, graph, fptr);
+        // std::vector<L2::Node*> nodes_to_spill = std::get<1>(color_result);
+        std::vector<L2::Node*> nodes_to_spill = L2::color_graph_alt(p, graph, fptr);
         // std::vector<L2::Variable*> new_spilled_vars;
         bool big_fail = false;
 
@@ -275,7 +277,10 @@ int main(
             auto var = pair.first;
             auto reg_ptr = dynamic_cast<L2::Register*>(var);
             if ((!reg_ptr) && (fptr->spill_variables_set.find(var) == fptr->spill_variables_set.end())) {
-              L2::spillForL2(fptr, var, spill_count);
+              std::tuple<std::set<std::string>,L2::Function*> resultTuple = L2::spillForL2(fptr, var, spill_count);
+              auto changed = std::get<0>(resultTuple); // For the std::set<std::string>
+              L2::Function* newFunction = std::get<1>(resultTuple);
+              fptr = newFunction;
               spill_count++;
             }
           }
@@ -293,7 +298,8 @@ int main(
           Some variables could not be colored, so we spill each of them and retry coloring in the next while loop iteration.
           - this function should also keep track of the new spill variables so we don't accidentally spill them later
           */
-          bool duplicate_checker =false;
+         /*
+         bool duplicate_checker =false;
           for (auto &node : nodes_to_spill) {
             if (seenMap.find(node->var->name) != seenMap.end()){
               duplicate_checker = true;
@@ -304,15 +310,20 @@ int main(
             all_graphs[fptr] = graph;
             break;
           }
+         
+         */
+          
           L2::PrintVisitor* myPrintVisitor = new L2::PrintVisitor();
           if (printdebug) std::cerr << "Printing program before spill:\n\n";
           for (auto &iptr : fptr->instructions) {
             iptr->accept(myPrintVisitor);
           }
           for (auto &node : nodes_to_spill) {
-            auto spilled_set = L2::spillForL2(fptr, node->var, 1);
+            std::tuple resultTuple = L2::spillForL2(fptr, node->var, 1);
+            auto spilled_set = std::get<0>(resultTuple);
+            L2::Function* newFunction = std::get<L2::Function*>(resultTuple);
+            fptr = newFunction;
             spill_count++;
-            seenMap[node->var->name] = 1;
           }
           if (printdebug) std::cerr << "Printing program after spill:\n\n";
           for (auto &iptr : fptr->instructions) {
