@@ -18,12 +18,19 @@ namespace L2{
   }
 
   void Graph::addNode(Node *node) {
-    // Add a node to the graph with no connections initially.
+    // Check if the node already exists in the graph
+    if (nodes.find(node->get()) != nodes.end()) {
+        return;
+    }
+
+    // If the node doesn't exist, add it to the graph with no connections initially.
     graph[node] = std::set<Node*>();
-    nodes[node->get()] = node; // we essentially want to associate the Variable with the node here 
-    // update the graph size
+    nodes[node->get()] = node; // Associate the Variable with the node here
+
+    // Update the graph size
     size++;
-  }
+}
+
 
   void Graph::removeNode(Node *node) {
     // Remove all connections to this node.

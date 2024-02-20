@@ -388,6 +388,7 @@ namespace L2 {
       std::string entryPointLabel;
       std::vector<Function *> functions;
       std::vector<Variable *> variables;
+      void update_function(Function *oldFunction, Function *newFunction);
   };
 
   class Visitor {

@@ -14,6 +14,8 @@ namespace L2{
     std::tuple<std::set<std::string>,Function*> spillForL2(Function* f, Variable* spilledVar, int spill_count) {    
         // Function* f = p.functions[0]; 
         Function* newFunction = new Function();
+        newFunction->variable_allocator = f->variable_allocator;
+        newFunction->variable_allocator.remove_variable(spilledVar->name);
         std::string temp = "%S";
         
         // int temp_var = -1;
@@ -26,6 +28,7 @@ namespace L2{
         SpillVisitor * visitor = new SpillVisitor(spilledVar,initial_replacement);
         bool changed = false;
         int assignment_counter = 0;
+        std::vector<Instruction *> restore_vector;
         for (size_t i = 0; i < f->instructions.size(); ++i) {
             auto instruction = f->instructions[i];
             auto assignment_instruction = dynamic_cast<Instruction_assignment*>(instruction);
@@ -36,7 +39,8 @@ namespace L2{
                 Take this to mean that the current instruction contains a variable that needs to be spilled.
                 */
                 if (assignment_instruction){
-                    Variable* var = f->variable_allocator.allocate_variable("rsp", VariableType::reg);
+                    Variable* var = newFunction->variable_allocator.allocate_variable("rsp", VariableType::reg);
+                    newFunction->variable_allocator.allocate_variable(visitor->replacementVariable->name, VariableType::reg);
                     Instruction * instruction1 = new Memory_assignment_store(var, visitor->replacementVariable, stack);
                     f->instructions.insert(f->instructions.begin() + i + 1, instruction1);
                     newFunction->instructions.insert(newFunction->instructions.end(),instruction1);
@@ -58,8 +62,8 @@ namespace L2{
                     if (last_call_index != -1){ 
                         Variable* tempVar = new Variable(temp + std::to_string(visitor->count+1));
                         Instruction* instruction2 = new Memory_assignment_load(tempVar, var, stack);
-                        f->instructions.insert(f->instructions.begin() + last_call_index + 1, instruction2);
-                        newFunction->instructions.insert(newFunction->instructions.end(),instruction2);
+                        newFunction->variable_allocator.allocate_variable(tempVar->name,VariableType::reg);
+                        restore_vector.insert(restore_vector.end(),instruction2);
                         visitor->count++;
                         visitor->replacementVariable = tempVar;
                     }
@@ -79,11 +83,13 @@ namespace L2{
                             Variable* tempVar = new Variable(temp + std::to_string(visitor->count+1));
                             Instruction* instruction2 = new Memory_assignment_load(tempVar, var, stack);
                             f->instructions.insert(f->instructions.begin() + i + 1, instruction2);
+                            newFunction->variable_allocator.allocate_variable(tempVar->name,VariableType::reg);
                             newFunction->instructions.insert(newFunction->instructions.end(),instruction2);
                             visitor->count++;
                             visitor->replacementVariable = tempVar;
                         }
                     }
+                    newFunction->instructions.insert(newFunction->instructions.end(),instruction);
                 } else if (cjump_instruction){
                     Variable* var = f->variable_allocator.allocate_variable("rsp", VariableType::reg);
                     Variable* tempVar = new Variable(temp + std::to_string(visitor->count-1));
@@ -102,6 +108,7 @@ namespace L2{
                         if (!instruct){ 
                             Instruction* instruction2 = new Memory_assignment_load(visitor->replacementVariable, var, stack);
                             f->instructions.insert(f->instructions.begin() + i , instruction2);
+                            newFunction->variable_allocator.allocate_variable(visitor->replacementVariable->name,VariableType::reg);
                             newFunction->instructions.insert(newFunction->instructions.end(),instruction2);
                         }
                     }
@@ -110,6 +117,7 @@ namespace L2{
                     Variable* tempVar = new Variable(temp + std::to_string(visitor->count-1));
                     Instruction * instruction1 = new Memory_assignment_store(var,tempVar, stack);
                     f->instructions.insert(f->instructions.begin() + i + 1, instruction1);
+                    newFunction->variable_allocator.allocate_variable(tempVar->name,VariableType::reg);
                     newFunction->instructions.insert(newFunction->instructions.end(),instruction1);
                     i += 1;
                     if (i+1< f->instructions.size()){
@@ -118,6 +126,7 @@ namespace L2{
                         if (!instruct){ 
                             Instruction* instruction2 = new Memory_assignment_load(visitor->replacementVariable, var, stack);
                             f->instructions.insert(f->instructions.begin() + i + 1, instruction2);
+                            newFunction->variable_allocator.allocate_variable(visitor->replacementVariable->name,VariableType::reg);
                             newFunction->instructions.insert(newFunction->instructions.end(),instruction2);
                             i +=1;
                         }
@@ -130,6 +139,7 @@ namespace L2{
                 newFunction->instructions.insert(newFunction->instructions.end(),instruction);
             }
         } 
+        newFunction->instructions.insert(newFunction->instructions.end()-1,restore_vector.begin(),restore_vector.end());
         std::set<std::string> spilled_variables_in_spill;
         std::string s = visitor->replacementVariable->name;
         int number = std::stoi(s.substr(2));  // Extract the number from the string, assuming it's after "S"
@@ -141,7 +151,6 @@ namespace L2{
         // Insert it into the set
             spilled_variables_in_spill.insert(variableName);
         }
-
 
         // track the spill variables we created so that we don't accidentally spill it later
         return std::make_tuple(spilled_variables_in_spill, newFunction);

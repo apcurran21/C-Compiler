@@ -280,6 +280,7 @@ int main(
               std::tuple<std::set<std::string>,L2::Function*> resultTuple = L2::spillForL2(fptr, var, spill_count);
               auto changed = std::get<0>(resultTuple); // For the std::set<std::string>
               L2::Function* newFunction = std::get<1>(resultTuple);
+              p.update_function(fptr, newFunction);
               fptr = newFunction;
               spill_count++;
             }
@@ -319,11 +320,18 @@ int main(
             iptr->accept(myPrintVisitor);
           }
           for (auto &node : nodes_to_spill) {
-            std::tuple resultTuple = L2::spillForL2(fptr, node->var, 1);
-            auto spilled_set = std::get<0>(resultTuple);
-            L2::Function* newFunction = std::get<L2::Function*>(resultTuple);
-            fptr = newFunction;
-            spill_count++;
+              std::tuple resultTuple = L2::spillForL2(fptr, node->var, 1);
+              auto spilled_set = std::get<0>(resultTuple);
+              L2::Function* newFunction = std::get<1>(resultTuple);
+
+              // Here, you need to update p's list of functions to point to the newFunction.
+              // This could be a function that takes the Program object, the old Function pointer,
+              // and the new Function pointer, and updates the Program's internal list.
+              p.update_function(fptr, newFunction);
+
+              // Now, update the local fptr to the new function for further processing.
+              fptr = newFunction;
+              spill_count++;
           }
           if (printdebug) std::cerr << "Printing program after spill:\n\n";
           for (auto &iptr : fptr->instructions) {
