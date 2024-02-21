@@ -113,7 +113,7 @@ int main(
      * Parse an L2 function.
      */
     p = L2::parse_function_file(argv[optind]);
-
+    
   } else if (interference_only || run_color){
 
     /*
