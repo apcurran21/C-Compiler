@@ -2,14 +2,19 @@
 
 namespace L2 {
 
+    int printdebug = 1;
+
     /*
     Code Analysis.
     */
     Graph* analyze_L2(Function* fptr) {
 
-        Curr_F_Liveness liveness_results = liveness_analysis(fptr, false);
+        if (printdebug) std::cerr << "Printing in and out sets:\n";
+        Curr_F_Liveness liveness_results = liveness_analysis(fptr, printdebug);
 
         Graph* interference_graph = build_graph(fptr, liveness_results);
+        if (printdebug) std::cerr << "Printing the graph:\n";
+        if (printdebug) interference_graph->printGraph();
 
         return interference_graph;
     }
@@ -83,12 +88,25 @@ namespace L2 {
                 */
 
                 for (auto node : uncolored_nodes) {
+
+                    L2::PrintVisitor* myPrintVisitor = new L2::PrintVisitor();
+                    if (printdebug) std::cerr << "Printing program before spill:\n\n";
+                    for (auto iptr : fptr->instructions) {
+                        iptr->accept(myPrintVisitor);
+                    }
+
                     std::tuple<std::set<std::string>, L2::Function *> spill_result = spillForL2(fptr, node->var, spill_count);
                     std::set<std::string> spilled_set = std::get<0>(spill_result);
                     L2::Function* newFunction = std::get<1>(spill_result);
                     std::cout<<"ENTERED"<<std::endl;
                     fptr = newFunction;
                     spill_count++;
+
+                    if (printdebug) std::cerr << "Printing program after spill:\n\n";
+                    for (auto iptr : fptr->instructions) {
+                        iptr->accept(myPrintVisitor);
+                    }
+
                 }   
 
             }
