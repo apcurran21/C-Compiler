@@ -134,6 +134,22 @@ int main(
   Special cases.
   */
   if (spill_only) {
+    std::set<std::string> all_changed;
+    L2::Program p_out;
+    p_out.entryPointLabel = p.entryPointLabel;
+    auto replacementVar = p.variables[p.variables.size() - 2];
+    while (!p.functions.empty()) {
+      L2::Function* fptr = p.functions.front();
+      p.functions.erase(p.functions.begin());
+      
+      std::tuple<std::set<std::string>, L2::Function*> resultTuple = L2::spillForL2(p.functions[0], replacementVar, -1);
+      auto changed = std::get<0>(resultTuple);
+      auto newFunction = std::get<1>(resultTuple);
+      
+      all_changed.insert(changed.begin(), changed.end());
+      p_out.functions.push_back(newFunction);
+    }
+    L2::generate_spill_code(p_out, all_changed);
 
     return 0;
   }
@@ -151,7 +167,14 @@ int main(
   }
 
   if (interference_only) {
+    while (!p.functions.empty()) {
+      L2::Function* fptr = p.functions.front();
+      p.functions.erase(p.functions.begin());
 
+      L2::Curr_F_Liveness curr_f_res = L2::liveness_analysis(fptr);
+      L2::Graph* interference_graph = L2::build_graph(fptr, curr_f_res);
+      interference_graph->printGraph();
+    }
     return 0;
   }
 
@@ -166,6 +189,7 @@ int main(
     Initialize the output program that will be passed to the code generator.
     */
     L2::Program p_out;
+    p_out.entryPointLabel = p.entryPointLabel;
 
     /*
     Perform code analysis and variable allocation for each function in the original program.
