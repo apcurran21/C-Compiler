@@ -12,6 +12,10 @@
 
 #include "variable_allocator.h"
 #include "interference_graph.h"
+#include "liveness_analysis.h"
+#include "graph_coloring.h"
+#include "spill.h"
+
 namespace L2 {
 
   extern int const debug;
@@ -25,7 +29,16 @@ namespace L2 {
   class Visitor;
   // class Node;
   // class Graph;
+
+  /*
+  Code Analysis.
+  */
+  Graph* analyze_L2(Function*);
   
+  /*
+  Register Allocation.
+  */
+  Function* allocate_registers(Function*);
 
   /*
   Object Classes
@@ -566,6 +579,13 @@ namespace L2 {
     std::unordered_map<Instruction*, std::set<Variable*>> kill;
     std::unordered_map<Instruction*, std::set<Variable*>> in;
     std::unordered_map<Instruction*, std::set<Variable*>> out;
+  };
+
+  struct LivenessSets {
+    std::set<Variable*> gen_set;
+    std::set<Variable*> kill_set;
+    std::set<Variable*> in_set;
+    std::set<Variable*> out_set;
   };
 
   /*

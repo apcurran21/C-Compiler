@@ -142,7 +142,8 @@ namespace L2{
 
   // void generate_code(Program p, bool changed, Graph *color_graph){
   // void generate_code(Program p, Graph *color_graph) {
-  void generate_code(Program p, std::map<Function*, Graph*> all_graphs) {
+  // void generate_code(Program p, std::map<Function*, Graph*> all_graphs) {
+  void generate_code(Program& p) {
     /* 
      * Open the output file.
      */ 
@@ -160,13 +161,13 @@ namespace L2{
       /*
       Grab the graph belonging to the current function
       */
-      Graph* color_graph;
-      auto it = all_graphs.find(fptr);
-      if (it != all_graphs.end()) {
-        color_graph = it->second;
-      } else {
-        if (debug) std::cerr << "couldn't find a graph for the current function pointer\n";
-      }
+      // Graph* color_graph;
+      // auto it = all_graphs.find(fptr);
+      // if (it != all_graphs.end()) {
+      //   color_graph = it->second;
+      // } else {
+      //   if (debug) std::cerr << "couldn't find a graph for the current function pointer\n";
+      // }
       
       std::string fname = fptr->name;
 
@@ -180,7 +181,7 @@ namespace L2{
       */
 
       int stack_size = 0;
-      ColorVariablesVisitor* myColorVisitor = new ColorVariablesVisitor(color_graph,fptr);
+      // ColorVariablesVisitor* myColorVisitor = new ColorVariablesVisitor(color_graph,fptr);
       for (Instruction *iptr : fptr->instructions) {
         auto instruction = dynamic_cast<Memory_assignment_store*>(iptr);
         if (instruction){
@@ -190,7 +191,7 @@ namespace L2{
       //This might supposed to be stack_size here 
       outputFile << fptr->arguments<<" "<<std::to_string(stack_size)<<"\n\t";
       for (Instruction *iptr : fptr->instructions) {
-        iptr->accept(myColorVisitor);
+        // iptr->accept(myColorVisitor);
         iptr->gen(fptr, outputFile);
       }
       int i = 0; // Initialize index i to 0

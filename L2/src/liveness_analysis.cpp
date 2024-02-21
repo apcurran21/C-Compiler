@@ -104,13 +104,22 @@ namespace L2{
     Full Liveness Analysis
     */
     // LivenessResult liveness_analysis(Program *p, bool print){
-    Curr_F_Liveness liveness_analysis(Program *p, int function_index, Gen_Kill_Store gen_kill_sets, In_Out_Store in_out_sets, bool print) {
+    // Curr_F_Liveness liveness_analysis(Program *p, int function_index, Gen_Kill_Store gen_kill_sets, In_Out_Store in_out_sets, bool print) {
+    Curr_F_Liveness liveness_analysis(Function* fptr, bool print) {
         if (debug) std::cerr << "Running Liveness Analysis..." << std::endl;
+
+        /*
+        Initialize sets to hold each instruction's gen, kill, in, and out.
+        */
+        std::unordered_map<Instruction*, std::set<Variable*>> gen_sets;
+        std::unordered_map<Instruction*, std::set<Variable*>> kill_sets;
+        std::unordered_map<Instruction*, std::set<Variable*>> in_sets;
+        std::unordered_map<Instruction*, std::set<Variable*>> out_sets;
 
         /*
         Run the liveness analysis algorithm for the current function
         */
-        Function* fptr = p->functions[function_index];
+        // Function* fptr = p->functions[function_index];
         if (debug) std::cerr << "Running liveness analysis on a new function..." << std::endl;
         
         /*
@@ -126,8 +135,11 @@ namespace L2{
             /*
             Define pointer references to the current instruction's Gen/Kill sets for convenience
             */
-            std::set<Variable*>* gen_set_ptr = &gen_kill_sets.Gen_Set[function_index][instruction_ptr];
-            std::set<Variable*>* kill_set_ptr = &gen_kill_sets.Kill_Set[function_index][instruction_ptr];
+            // std::set<Variable*>* gen_set_ptr = &gen_kill_sets.Gen_Set[function_index][instruction_ptr];
+            // std::set<Variable*>* kill_set_ptr = &gen_kill_sets.Kill_Set[function_index][instruction_ptr];
+            std::set<Variable*>* gen_set_ptr = &gen_sets[instruction_ptr];
+            std::set<Variable*>* kill_set_ptr = &kill_sets[instruction_ptr];
+
             /*
             Place Uses into Gen
             */
@@ -287,10 +299,14 @@ namespace L2{
                 /*
                     Define pointers to the Gen, Kill, In, Out sets for the current instruction
                 */
-                std::set<Variable*>* gen_set_ptr = &gen_kill_sets.Gen_Set[function_index][instruction_ptr];
-                std::set<Variable*>* kill_set_ptr = &gen_kill_sets.Kill_Set[function_index][instruction_ptr];
-                std::set<Variable*>* in_set_ptr = &in_out_sets.In_Set[function_index][instruction_ptr];
-                std::set<Variable*>* out_set_ptr = &in_out_sets.Out_Set[function_index][instruction_ptr];
+                // std::set<Variable*>* gen_set_ptr = &gen_kill_sets.Gen_Set[function_index][instruction_ptr];
+                // std::set<Variable*>* kill_set_ptr = &gen_kill_sets.Kill_Set[function_index][instruction_ptr];
+                // std::set<Variable*>* in_set_ptr = &in_out_sets.In_Set[function_index][instruction_ptr];
+                // std::set<Variable*>* out_set_ptr = &in_out_sets.Out_Set[function_index][instruction_ptr];
+                std::set<Variable*>* gen_set_ptr = &gen_sets[instruction_ptr];
+                std::set<Variable*>* kill_set_ptr = &kill_sets[instruction_ptr];
+                std::set<Variable*>* in_set_ptr = &in_sets[instruction_ptr];
+                std::set<Variable*>* out_set_ptr = &out_sets[instruction_ptr];
 
 
                 // if (debug) std::cerr << "computing In and Out sets for the current instruction..." << std::endl;
@@ -328,7 +344,8 @@ namespace L2{
                 std::set<Variable*> Out_Result;
                 for (auto successor : instruction_ptr->successors) {
                     // note that successor should be of type Instruction*
-                    std::set<Variable*> successor_in_set = in_out_sets.In_Set[function_index][successor];
+                    // std::set<Variable*> successor_in_set = in_out_sets.In_Set[function_index][successor];
+                    std::set<Variable*> successor_in_set = in_sets[successor];
                     std::set<Variable*> temp_union_set;
                     std::set_union(
                         Out_Result.begin(), Out_Result.end(),
@@ -350,11 +367,13 @@ namespace L2{
             Print the contents of our freshly computed In and Out sets to the file
             */
             std::cout << "(\n";
-            Function* function_ptr = p->functions[function_index];
+            // Function* function_ptr = p->functions[function_index];
+            Function* function_ptr = fptr;
             std::cout << "(in\n";
             for (auto instruction_ptr : function_ptr->instructions) {
                 std::cout << "(";
-                for (auto variable_ptr : in_out_sets.In_Set[function_index][instruction_ptr]) {
+                // for (auto variable_ptr : in_out_sets.In_Set[function_index][instruction_ptr]) {
+                for (auto variable_ptr : in_sets[instruction_ptr]) {
                     std::cout << variable_ptr->print() << " ";
                 }
                 std::cout << ")\n";
@@ -363,7 +382,8 @@ namespace L2{
             std::cout << "(out\n";
             for (auto instruction_ptr : function_ptr->instructions) {
                 std::cout << "(";
-                for (auto variable_ptr : in_out_sets.Out_Set[function_index][instruction_ptr]) {
+                // for (auto variable_ptr : in_out_sets.Out_Set[function_index][instruction_ptr]) {
+                for (auto variable_ptr : out_sets[instruction_ptr]) {
                     std::cout << variable_ptr->print() << " ";
                 }
                 std::cout << ")\n";
@@ -378,10 +398,11 @@ namespace L2{
         // LivenessResult result = {gen_kill_sets, in_out_sets};
 
         Curr_F_Liveness result = {
-            gen_kill_sets.Gen_Set[function_index],
-            gen_kill_sets.Kill_Set[function_index],
-            in_out_sets.In_Set[function_index],
-            in_out_sets.Out_Set[function_index]
+            // gen_kill_sets.Gen_Set[function_index],
+            // gen_kill_sets.Kill_Set[function_index],
+            // in_out_sets.In_Set[function_index],
+            // in_out_sets.Out_Set[function_index]
+            gen_sets, kill_sets, in_sets, out_sets
         };
         return result;
     }
