@@ -1,6 +1,104 @@
 #include "L2.h"
 
 namespace L2 {
+
+    /*
+    Code Analysis.
+    */
+    Graph* analyze_L2(Function* fptr) {
+
+        Curr_F_Liveness liveness_results = liveness_analysis(fptr, false);
+
+        Graph* interference_graph = build_graph(fptr, liveness_results);
+
+        return interference_graph;
+    }
+
+    /*
+    Register Allocation.
+    */
+    Function* allocate_registers(Function* fptr) {
+        Function* fptr_out;
+
+        int spill_count = -1;
+
+        while (true) {
+            /*
+            We need to iterate until we are able to fully color each node in the 
+            function's interference graph, or we spill everything.
+            */
+
+            Graph* interference_graph = analyze_L2(fptr);
+
+            Graph* interference_graph_copy = interference_graph->clone();
+
+            std::tuple<bool, std::vector<Node*>> color_result = color_graph(interference_graph, interference_graph_copy, fptr);
+
+            bool big_fail = std::get<0>(color_result);
+            std::vector<Node*> uncolored_nodes = std::get<1>(color_result);
+
+            if (big_fail) {
+
+                /*
+                Spill all variables in the graph.
+                */
+
+                for (auto& pair : interference_graph_copy->nodes) {
+                    auto var = pair.first;
+                    auto reg_ptr = dynamic_cast<L2::Register*>(var);
+                    if ((!reg_ptr) && (fptr->spill_variables_set.find(var) == fptr->spill_variables_set.end())) {
+                    std::tuple<std::set<std::string>,L2::Function*> resultTuple = L2::spillForL2(fptr, var, spill_count);
+                    auto changed = std::get<0>(resultTuple); // For the std::set<std::string>
+                    L2::Function* newFunction = std::get<1>(resultTuple);
+                    fptr = newFunction;
+                    spill_count++;
+                    }
+                }
+
+                fptr_out = fptr;
+                break;
+
+            } else if (uncolored_nodes.size() == 0) {
+
+                /*
+                Graph coloring succeeded.
+                -Is it safe to return the original fptr here?
+                    - I think so if all we do afterwards is codegen, no more
+                        updates that could cause error.
+                */
+
+                ColorVariablesVisitor myColorVisitor = ColorVariablesVisitor(interference_graph_copy, fptr);
+
+                for (Instruction *iptr : fptr->instructions) {
+                    iptr->accept(&myColorVisitor);
+                }
+
+                fptr_out = fptr;
+                break;
+
+            } else {
+
+                /*
+                Graph coloring failed, need to spill.
+                */
+
+                for (auto node : uncolored_nodes) {
+                    std::tuple<std::set<std::string>, L2::Function *> spill_result = spillForL2(fptr, node->var, spill_count);
+                    std::set<std::string> spilled_set = std::get<0>(spill_result);
+                    L2::Function* newFunction = std::get<1>(spill_result);
+
+                    fptr = newFunction;
+                    spill_count++;
+                }   
+
+            }
+
+        }
+
+        return fptr_out;
+    }
+
+
     std::map<std::string, bool> seenVariables;
     /*
     Token class extensions
@@ -10,7 +108,6 @@ namespace L2 {
             if (functions[i] == oldFunction) {
                 // Delete or otherwise manage the memory of the old function here if necessary
                 // ...
-                
                 
                 delete oldFunction;
                 oldFunction = nullptr; // Good practice to nullify
