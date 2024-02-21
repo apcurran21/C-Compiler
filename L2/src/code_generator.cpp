@@ -35,7 +35,7 @@ namespace L2{
     };
   
   void Instruction_ret::gen(Function *f, std::ofstream &outputFile) {
-    outputFile << "return\n";
+    outputFile << "return\n\t";
   }
 
   void Instruction_assignment::gen(Function *f, std::ofstream &outputFile) {
@@ -120,24 +120,8 @@ namespace L2{
   }
 
   void stackarg_assignment::gen(Function *f, std::ofstream &outputFile) {
-    outputFile << "mem rsp "<<this->M->print()<<"<- "<<this->w->print();
-    if (std::find(caller_registers.begin(),caller_registers.end(),this->w->print()) != caller_registers.end()){
-      int i = 0; // Initialize index i to 0
-      while (i < f->instructions.size()) {
-          Instruction* iptr = f->instructions[i];
-          auto instruction = dynamic_cast<Call_uN_Instruction*>(iptr);
-          if (instruction){
-            break;
-          }
-      }
-      Variable* rsp = f->variable_allocator.allocate_variable("rsp", VariableType::reg);
-      auto instruction = new Memory_assignment_load(this->w,rsp,this->M);
-      f->instructions.insert(f->instructions.begin()+i+2,instruction);
-    } else if (std::find(caller_registers.begin(),caller_registers.end(),this->w->print()) != callee_registers.end()){
-      Variable* rsp = f->variable_allocator.allocate_variable("rsp", VariableType::reg);
-      auto instruction = new Memory_assignment_load(this->w,rsp,this->M);
-      f->instructions.insert(f->instructions.end()-1,instruction);
-    }
+    outputFile << this->w->print()<<" <- "<< "mem rsp "<<this->M->print()<<"\n\t";
+
   }
 
   // void generate_code(Program p, bool changed, Graph *color_graph){
@@ -194,15 +178,9 @@ namespace L2{
         // iptr->accept(myColorVisitor);
         iptr->gen(fptr, outputFile);
       }
-      int i = 0; // Initialize index i to 0
-      for (Instruction *iptr : fptr->instructions) {
-        auto instruction = dynamic_cast<stackarg_assignment*>(iptr);
-        if (instruction){
-          iptr->gen(fptr, outputFile);
-        }
-      }
+      outputFile<<")\n";
     }
-    outputFile << ")\n)\n";
+    outputFile << ")\n";
 
     if (debug) std::cerr << "Finished code generation!" << std::endl;
 

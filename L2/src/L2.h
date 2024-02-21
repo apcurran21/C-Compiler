@@ -145,6 +145,7 @@ namespace L2 {
       stackarg_assignment(Item *w, Item *M);
       void accept(Visitor *visitor) override;
       void gen(Function *f, std::ofstream &outputFile) override;
+      void insert(Function *f, std::ofstream &outputFile, int i);
       void spill_gen(Function *f, std::ofstream &outputFile) override;
       void printMe() override;
       Item *w;
