@@ -139,6 +139,13 @@ int main(
   }
 
   if (liveness_only) {
+    while (!p.functions.empty()) {
+      L2::Function* fptr = p.functions.front();
+      p.functions.erase(p.functions.begin());
+
+      L2::Curr_F_Liveness curr_f_res = L2::liveness_analysis(fptr);
+      print_liveness(fptr, curr_f_res);
+    }
 
     return 0;
   }

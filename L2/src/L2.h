@@ -581,13 +581,6 @@ namespace L2 {
     std::unordered_map<Instruction*, std::set<Variable*>> out;
   };
 
-  struct LivenessSets {
-    std::set<Variable*> gen_set;
-    std::set<Variable*> kill_set;
-    std::set<Variable*> in_set;
-    std::set<Variable*> out_set;
-  };
-
   /*
   Utility Functions
   */
