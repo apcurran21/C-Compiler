@@ -86,7 +86,7 @@ namespace L2 {
                     std::tuple<std::set<std::string>, L2::Function *> spill_result = spillForL2(fptr, node->var, spill_count);
                     std::set<std::string> spilled_set = std::get<0>(spill_result);
                     L2::Function* newFunction = std::get<1>(spill_result);
-
+                    std::cout<<"ENTERED"<<std::endl;
                     fptr = newFunction;
                     spill_count++;
                 }   
