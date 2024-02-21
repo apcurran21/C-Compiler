@@ -49,6 +49,16 @@ namespace L2{
     size--;
   }
 
+  void Graph::removeNodeByName(const std::string& varName) {
+      // Find the node corresponding to varName
+      for (auto& pair : nodes) {
+          if (pair.first->name == varName) { // Assuming Variable has a 'name' field
+              removeNode(pair.second); // removeNode is your existing method to remove the node
+              break; // Exit after finding and removing the node to avoid iterator invalidation
+          }
+      }
+  }
+
   void Graph::addEdge(Node *src, Node *dst) {
     // Check for null pointers before using them
     if (!src || !dst) {

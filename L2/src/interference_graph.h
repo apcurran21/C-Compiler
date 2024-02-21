@@ -38,6 +38,7 @@ namespace L2{
             void removeNode(Node *node);
             void addEdge(Node *src, Node *dst);
             void removeEdge(Node *src, Node *dst);
+            void removeNodeByName(const std::string& varName);
             bool exists(Variable *var);
             std::vector<Node *> getNodes(void) const;
             std::vector<Node *> getVarNodes(void) const;

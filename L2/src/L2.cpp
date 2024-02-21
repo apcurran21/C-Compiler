@@ -10,7 +10,10 @@ namespace L2 {
     Graph* analyze_L2(Function* fptr) {
 
         Curr_F_Liveness liveness_results = liveness_analysis(fptr);
-
+        if (printdebug) {
+            std::cerr << "printing in and out sets..." <<"\n";
+            print_liveness(fptr, liveness_results);
+        }
         Graph* interference_graph = build_graph(fptr, liveness_results);
         if (printdebug) std::cerr << "Printing the graph:\n";
         if (printdebug) interference_graph->printGraph();
@@ -23,6 +26,7 @@ namespace L2 {
     */
     Function* allocate_registers(Function* fptr) {
         Function* fptr_out;
+        std::map<std::string, bool> seenVariables;
 
         int spill_count = -1;
 
@@ -35,6 +39,21 @@ namespace L2 {
             Graph* interference_graph = analyze_L2(fptr);
 
             Graph* interference_graph_copy = interference_graph->clone();
+
+            // Iterate over seenVariables to remove corresponding nodes from the graph based on their names.
+            for (const auto& varEntry : seenVariables) {
+                // Check if the variable is marked as 'seen' (true).
+                if (varEntry.second) {
+                    // varEntry.first holds the name of the variable.
+                    const std::string& varName = varEntry.first;
+
+                    // Directly attempt to remove the node by its variable name, avoiding the creation of a Variable instance.
+                    // This assumes you have a method like removeNodeByName implemented in your Graph class.
+                    interference_graph->removeNodeByName(varName);
+                    interference_graph_copy->removeNodeByName(varName);
+                }
+            }
+
 
             std::tuple<bool, std::vector<Node*>> color_result = color_graph(interference_graph, interference_graph_copy, fptr);
 
@@ -76,7 +95,6 @@ namespace L2 {
                 for (Instruction *iptr : fptr->instructions) {
                     iptr->accept(&myColorVisitor);
                 }
-
                 fptr_out = fptr;
                 break;
 
@@ -97,10 +115,10 @@ namespace L2 {
                     std::tuple<std::set<std::string>, L2::Function *> spill_result = spillForL2(fptr, node->var, spill_count);
                     std::set<std::string> spilled_set = std::get<0>(spill_result);
                     L2::Function* newFunction = std::get<1>(spill_result);
-                    std::cout<<"ENTERED"<<std::endl;
+                    seenVariables[node->var->name] = true;
                     fptr = newFunction;
                     spill_count++;
-
+                    
                     if (printdebug) std::cerr << "Printing program after spill:\n\n";
                     for (auto iptr : fptr->instructions) {
                         iptr->accept(myPrintVisitor);
