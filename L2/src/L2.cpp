@@ -9,8 +9,7 @@ namespace L2 {
     */
     Graph* analyze_L2(Function* fptr) {
 
-        if (printdebug) std::cerr << "Printing in and out sets:\n";
-        Curr_F_Liveness liveness_results = liveness_analysis(fptr, printdebug);
+        Curr_F_Liveness liveness_results = liveness_analysis(fptr);
 
         Graph* interference_graph = build_graph(fptr, liveness_results);
         if (printdebug) std::cerr << "Printing the graph:\n";

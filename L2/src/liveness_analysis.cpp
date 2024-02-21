@@ -105,7 +105,8 @@ namespace L2{
     */
     // LivenessResult liveness_analysis(Program *p, bool print){
     // Curr_F_Liveness liveness_analysis(Program *p, int function_index, Gen_Kill_Store gen_kill_sets, In_Out_Store in_out_sets, bool print) {
-    Curr_F_Liveness liveness_analysis(Function* fptr, bool print) {
+    // Curr_F_Liveness liveness_analysis(Function* fptr, bool print) {
+    Curr_F_Liveness liveness_analysis(Function* fptr) {
         if (debug) std::cerr << "Running Liveness Analysis..." << std::endl;
 
         /*
@@ -361,37 +362,6 @@ namespace L2{
             }
         } while (changed);
 
-
-        if (print) {
-            /*
-            Print the contents of our freshly computed In and Out sets to the file
-            */
-            std::cout << "(\n";
-            // Function* function_ptr = p->functions[function_index];
-            Function* function_ptr = fptr;
-            std::cout << "(in\n";
-            for (auto instruction_ptr : function_ptr->instructions) {
-                std::cout << "(";
-                // for (auto variable_ptr : in_out_sets.In_Set[function_index][instruction_ptr]) {
-                for (auto variable_ptr : in_sets[instruction_ptr]) {
-                    std::cout << variable_ptr->print() << " ";
-                }
-                std::cout << ")\n";
-            }
-            std::cout << ")\n\n";
-            std::cout << "(out\n";
-            for (auto instruction_ptr : function_ptr->instructions) {
-                std::cout << "(";
-                // for (auto variable_ptr : in_out_sets.Out_Set[function_index][instruction_ptr]) {
-                for (auto variable_ptr : out_sets[instruction_ptr]) {
-                    std::cout << variable_ptr->print() << " ";
-                }
-                std::cout << ")\n";
-            }
-            std::cout << ")\n\n";
-            std::cout << ")\n\n";
-        }
-
         /*
         Return the sets as a pair
         */
@@ -406,6 +376,38 @@ namespace L2{
         };
         return result;
     }
+
+    /*
+    Print the liveness set for the current function to std::cout
+    */
+    void print_liveness(Function* fptr, Curr_F_Liveness liveness_results) {
+        std::cout << "(\n";
+        std::cout << "(in\n";
+        // for (const auto& pair : liveness_results.in) {
+        for (const auto& iptr : fptr->instructions) {
+            std::cout << "(";
+            // for (const auto& variable_ptr : pair.second) {
+            for (const auto& variable_ptr : liveness_results.in[iptr]) {
+                std::cout << variable_ptr->print() << " ";
+            }
+            std::cout << ")\n";
+        }
+        std::cout << ")\n\n";
+        std::cout << "(out\n";
+        // for (const auto& pair : liveness_results.out) {
+        for (const auto& iptr : fptr->instructions) {
+            std::cout << "(";
+            for (const auto& variable_ptr : liveness_results.out[iptr]) {
+                std::cout << variable_ptr->print() << " ";
+            }
+            std::cout << ")\n";
+        }
+        std::cout << ")\n\n";
+        std::cout << ")\n\n";
+    }
+
+
+
 
     
 
