@@ -456,3 +456,7 @@ Segfaults, *best_node* is a null pointer, so the condition makes us grab from *c
   * **BRUH** i was overreacting on this bullet point, we were on the stub function. The original issue is still relevant.
 
   * okay after the first iteration of color_graph on the real function (ie not stub) we have to spill the node corresponding with the %v2 variable. This is stored in vector *uncolored_nodes* and i believe its pointer 0x4f00c0 is different from the pointer to this node in *interference_graph*. However it shows up in *interference_graph_copy* which is expected behavior, since this is a clone in memory of the original.
+
+  * okay after spilling %v2, whenever color_registers is called none of the registers in the graph get colored. This is weird 
+
+  * okay after this apparently %v1 gets spilled which i didn't realize.

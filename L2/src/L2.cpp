@@ -99,14 +99,13 @@ namespace L2 {
 
                 /*
                 Graph coloring failed, need to spill.
-                */
+                */ 
 
                 for (auto node : uncolored_nodes) {
 
-                    L2::PrintVisitor* myPrintVisitor = new L2::PrintVisitor();
-                    if (printdebug) std::cerr << "Printing program before spill:\n\n";
-                    for (auto iptr : fptr->instructions) {
-                        iptr->accept(myPrintVisitor);
+                    if (printdebug) {
+                        std::cerr << "Printing program before spill:\n\n";
+                        printFunction(fptr);
                     }
 
                     std::tuple<std::set<std::string>, L2::Function *> spill_result = spillForL2(fptr, node->var, spill_count);
@@ -116,9 +115,9 @@ namespace L2 {
                     fptr = newFunction;
                     spill_count++;
                     
-                    if (printdebug) std::cerr << "Printing program after spill:\n\n";
-                    for (auto iptr : fptr->instructions) {
-                        iptr->accept(myPrintVisitor);
+                    if (printdebug) {
+                        std::cerr << "Printing program after spill:\n\n";
+                        printFunction(fptr);
                     }
 
                 }   
