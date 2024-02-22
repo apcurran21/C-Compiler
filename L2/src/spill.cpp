@@ -15,6 +15,7 @@ namespace L2{
         // Function* f = p.functions[0]; 
         Function* newFunction = new Function();
         newFunction->name = f->name;
+        newFunction->arguments = f->arguments;
         newFunction->variable_allocator = f->variable_allocator;
         newFunction->variable_allocator.remove_variable(spilledVar->name);
         std::string temp = "%S";

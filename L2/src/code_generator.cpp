@@ -169,7 +169,10 @@ namespace L2{
       for (Instruction *iptr : fptr->instructions) {
         auto instruction = dynamic_cast<Memory_assignment_store*>(iptr);
         if (instruction){
-          stack_size++;
+          auto number = dynamic_cast<Number*>(instruction->M);
+          if (number->value >0){
+            stack_size++;
+          }
         }
       }
       //This might supposed to be stack_size here 
