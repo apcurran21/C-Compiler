@@ -790,10 +790,10 @@ namespace L2 {
         bool replaceX = replaceIfSpilled(instruction->x);
         bool replaceM = replaceIfSpilled(instruction->M); 
         if (replaceX || replaceM) {
-            this->spilledLHS = true;
+            this->spilledRHS = true;
         }    
         if (replaceD){
-            this->spilledRHS = true;
+            this->spilledLHS = true;
         }        
     } ;
     void SpillVisitor::visit(Memory_arithmetic_load *instruction) {
@@ -1055,7 +1055,7 @@ namespace L2 {
         std::cerr << "mem " << instruction->dst->print() << " " << instruction->M->print() << " <- " << instruction->s->print() << "\n";
     }
     void PrintVisitor::visit(Memory_assignment_load *instruction) {
-        std::cerr << instruction->dst->print() << " <- mem " << instruction->M->print() << " " << instruction->x->print() << "\n";
+        std::cerr << instruction->dst->print() << " <- mem " << instruction->x->print() << " " << instruction->M->print() << "\n";
     }
     void PrintVisitor::visit(Memory_arithmetic_load *instruction) {
         std::cerr << instruction->dst->print() << " " << instruction->instruction->print() << " mem " << instruction->x->print() << " " << instruction->M->print() << "\n";
