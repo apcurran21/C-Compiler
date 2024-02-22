@@ -94,8 +94,14 @@ namespace L2 {
         Get and sort a list of the current variable nodes in the graph in non-decreasing order 
         */
         std::vector<Node*> curr_nodes = graph->getVarNodes();
+        if (curr_nodes.empty()) {
+            // No more variable nodes to process, break out of the loop
+            // or handle this scenario according to your algorithm's logic
+            if (debug) std::cerr << "No more variable nodes to process.\n";
+            break; // or return stack; depending on your algorithm's requirements
+        }
         std::sort(curr_nodes.begin(), curr_nodes.end(), cmp);
-
+        
         /*
         Initialize a best-so-far variable and check for the largest degree node less than N.
         */
