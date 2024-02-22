@@ -38,8 +38,6 @@ namespace L2 {
 
             Graph* interference_graph = analyze_L2(fptr);
 
-            Graph* interference_graph_copy = interference_graph->clone();
-
             // Iterate over seenVariables to remove corresponding nodes from the graph based on their names.
             for (const auto& varEntry : seenVariables) {
                 // Check if the variable is marked as 'seen' (true).
@@ -50,10 +48,10 @@ namespace L2 {
                     // Directly attempt to remove the node by its variable name, avoiding the creation of a Variable instance.
                     // This assumes you have a method like removeNodeByName implemented in your Graph class.
                     interference_graph->removeNodeByName(varName);
-                    interference_graph_copy->removeNodeByName(varName);
                 }
             }
 
+            Graph* interference_graph_copy = interference_graph->clone();
 
             std::tuple<bool, std::vector<Node*>> color_result = color_graph(interference_graph, interference_graph_copy, fptr);
 

@@ -7,7 +7,7 @@ pushq %r12
 pushq %r13
 pushq %r14
 pushq %r15
-call _entry
+call _main
 popq %r15
 popq %r14
 popq %r13
@@ -15,12 +15,11 @@ popq %r12
 popq %rbp
 popq %rbx
 retq
-_entry:
+_main:
 movq $1, %r10
-movq $1, %rdi
-salq $1, %rdi
-addq $1, %rdi
-call print
-movq %r10, %rdi
-call print
+movq $2, %r11
+cmpq %r11, %r10
+setl %r10b
+movzbq %r10b, %r10
+movq %r10, %rax
 retq
