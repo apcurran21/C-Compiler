@@ -1,0 +1,136 @@
+(@main
+(@main
+	0 30
+	:call_label0
+	goto :call_label1
+	:call_label1
+	r10 <- 0
+	mem rsp 8 <- r10
+	r10 <- 43
+	mem rsp 8 <- r10
+	r10 <- 55
+	mem rsp 0 <- r10
+	r8 <- 32
+	r9 <- 74
+	rax <- 67
+	r10 <- 83
+	mem rsp 0 <- r10
+	rcx <- 39
+	rdi <- 45
+	rdx <- 22
+	rsi <- 41
+	r10 <- mem rsp 8
+	r10 <- r10
+	mem rsp 8 <- r10
+	r10 <- mem rsp 8
+	r10 <- mem rsp 8
+	r10 <- mem rsp 0
+	r10 <- mem rsp 8
+	r10 <- mem rsp 0
+	r10 <- mem rsp 8
+	r10 <- mem rsp 8
+	r10 <- mem rsp 0
+	r11 <- mem rsp 0
+	r10 <- mem rsp 8
+	r10 <- mem rsp 8
+	r10 <- mem rsp 8
+	r10 += r11
+	mem rsp 8 <- r10
+	r10 <- mem rsp 8
+	mem rsp 8 <- r10
+	r10 <- mem rsp 8
+	mem rsp 0 <- r10
+	r10 <- mem rsp 0
+	mem rsp 8 <- r10
+	r10 <- mem rsp 8
+	mem rsp 8 <- r10
+	r10 <- mem rsp 8
+	r10 <- r10
+	mem rsp 8 <- r10
+	r10 <- mem rsp 0
+	r10 <- mem rsp 0
+	r10 <- mem rsp 0
+	r10 <- mem rsp 8
+	r10 <- mem rsp 8
+	r10 <- mem rsp 0
+	r10 <- mem rsp 8
+	r10 <- mem rsp 0
+	r10 <- mem rsp 0
+	r10 <- mem rsp 8
+	r11 <- mem rsp 8
+	r10 <- mem rsp 0
+	r10 <- mem rsp 0
+	r10 <- mem rsp 0
+	r11 += r10
+	mem rsp 8 <- r11
+	r10 <- mem rsp 8
+	mem rsp 0 <- r10
+	r10 <- mem rsp 0
+	mem rsp 8 <- r10
+	r10 <- mem rsp 8
+	r10 <- r10
+	mem rsp 8 <- r10
+	r10 <- mem rsp 8
+	r10 += r8
+	mem rsp 8 <- r10
+	r10 <- mem rsp 8
+	r10 <- r10
+	mem rsp 8 <- r10
+	r10 <- mem rsp 8
+	r10 += r9
+	mem rsp 8 <- r10
+	r10 <- mem rsp 8
+	r10 <- r10
+	mem rsp 8 <- r10
+	r10 <- mem rsp 8
+	r10 += rax
+	mem rsp 8 <- r10
+	r10 <- mem rsp 8
+	r10 <- r10
+	mem rsp 8 <- r10
+	r11 <- mem rsp 8
+	r10 <- mem rsp 0
+	r11 += r10
+	mem rsp 8 <- r11
+	r10 <- mem rsp 8
+	r10 <- r10
+	mem rsp 8 <- r10
+	r10 <- mem rsp 8
+	r10 += rcx
+	mem rsp 8 <- r10
+	r10 <- mem rsp 8
+	r10 <- r10
+	mem rsp 8 <- r10
+	r10 <- mem rsp 8
+	r10 += rdi
+	mem rsp 8 <- r10
+	r10 <- mem rsp 8
+	r10 <- r10
+	mem rsp 8 <- r10
+	r10 <- mem rsp 8
+	r10 += rdx
+	mem rsp 8 <- r10
+	r10 <- mem rsp 8
+	r10 <- r10
+	mem rsp 8 <- r10
+	r10 <- mem rsp 8
+	r10 += rsi
+	mem rsp 8 <- r10
+	r10 <- mem rsp 8
+	r10 <- r10
+	mem rsp 8 <- r10
+	r10 <- mem rsp 8
+	r10 <<= 1
+	mem rsp 8 <- r10
+	r10 <- mem rsp 8
+	r10 <- r10
+	mem rsp 8 <- r10
+	r10 <- mem rsp 8
+	r10 += 1
+	mem rsp 8 <- r10
+	r10 <- mem rsp 8
+	rdi <- r10
+	call print 1
+	return
+	)
+)
