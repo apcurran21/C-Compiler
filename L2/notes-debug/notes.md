@@ -422,3 +422,37 @@ Something that is likely causing the majority of our error is how we wrote *spil
 * calling liveness on a normal function will not put rsp in the in/out sets of an instruction. However calling liveness on a function after spilling results in rsp being in the in/out sets and potentially the gen/kill sets.
   * there must be some behavior in spillForL2 causing this which i don't understand
   * spill still passes its test cases though, this is just a side effect
+
+### 2/21/24
+Currently failing the following, due to graph coloring:
+* 838
+* 837
+* 275
+
+Segfaults, *best_node* is a null pointer, so the condition makes us grab from *curr_nodes*, an empty set. 
+* on the first iteration of coloring, we should only have to spill one of the three variables.
+  * %v1 and %v2 connect with every register except for rcx - we would expect the first of these two in node stack to get colored with 'rcx' and then spill the other.
+  * %v3 only connects with about 7 registers, so plenty to pick from. However the worst case would be if this node is the first in node stack and the alg colors it with 'rcx' - this means that we would need to spill both %v1 and %v2 since they both connect with %v1 
+  
+* after the first call to depopulate in the first call to color_graph, variable %v3 is the first to get removed from the graph since it has degree 9 (less than 15). However, after the call to removeNode we see that:
+  * The size field of the graph has decreased from 18 to 17.
+  * The nodes map has decreased from size 18 to 17.
+  * The graph map has decreased from size 18 to 17.
+  * **However, %v3 still appears in the neighbor sets of its previous neighbors!**
+    * this means that there is a problem with the function *removeNode*.
+  * **BRUH** i think its because we don't iterate by reference in the remove node function, after calling 'pair.second.erase(node)' the set pair.second goes from size 17 to 16 but the graph itself's size stays at 17. 
+    * However the node degrees do get updated correctly it seems?
+
+  * So the removeNodes function looks fine now, and the segfault seems to be happening on the second iteration of the graph coloring algorithm
+    * we have already spilled a variable since %S0 shows up in the graph. At the time of the segfault, none of the other variables are showing up in the printed graph, which has size 16. It should follow that there is still 1 non-register node in the graph - however, currNodes is already empty (which stores the non-register nodes we are iterating from and trying to remove from the graph). This is backed up further by the fact that getSize() returns 1, meaning the while loop still had one more iteration to go.
+      * i think that this issue is coming partially from the function getVarNodes, and mostly from how spill variables like %S0 are stored in the graph. For example, this variable should be included in the vector returned by getVarNodes, however it doesn't seem like this is happening (verify this on next run through). %S0 should definitely be able to be removed from the graph, since we still need to color it with a register in order to progress.
+* wait but color_graph outputs an empty vector as uncolored_nodes so why are we even performing another iteration of the graph coloring?
+  * also this doesn't seem right, both %v1 and %v2 interfere with every other register.
+  * also at the end of this first iteration, *interference_graph* has size 15 which does not seem right. We should only be modifying *interference_graph_copy*, so i would think the original would still be in its initial state with size 18? like the graph and nodes fields only have 15 elements as well for *interference_graph*.
+    * bruh *interference_graph_copy* also only has 15 (the variables are missing it seems). Why didn't the repopulate function add everything back into the graph?
+  * **So we have two problems: the state of the original interference graph is getting affected somehow, and none of the inteference graphs are getting correctly repopulated with the removed variable nodes.**
+    * note that printGraph, printColors, and printNodeDegrees all verified the missing variable nodes.
+  * Also, the three variables v1-3 are all missing from the function's
+  * **BRUH** i was overreacting on this bullet point, we were on the stub function. The original issue is still relevant.
+
+  * okay after the first iteration of color_graph on the real function (ie not stub) we have to spill the node corresponding with the %v2 variable. This is stored in vector *uncolored_nodes* and i believe its pointer 0x4f00c0 is different from the pointer to this node in *interference_graph*. However it shows up in *interference_graph_copy* which is expected behavior, since this is a clone in memory of the original.

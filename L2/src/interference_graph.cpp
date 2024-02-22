@@ -34,16 +34,38 @@ namespace L2{
 
   void Graph::removeNode(Node *node) {
     /*
-    Iterate over all nodes in the graph to handle if the given node is a neighbor to any of them.
+    Iterate over all other nodes in the graph to handle if the given node is a neighbor to any of them.
     */
-    for (auto pair : graph) {
-      if (pair.second.erase(node)) {
-        // pair.first is a neighbor of the node, so subtract 1 from its degree
-        pair.first->addDegree(-1);
-        node->addDegree(-1);
+    std::vector<Node*> nodes_vec = getNodes();
+    for (auto& other_node : nodes_vec) {
+      auto it = graph.find(other_node);
+      if (it != graph.end()) {
+        /*
+        go about erasing the current node from the other node's neighbors set
+        */
+        if (it->second.erase(node)) {
+          /*
+          the current node and the other node were neighbors, so we need to remove their edge.
+          */
+          it->first->addDegree(-1);
+          node->addDegree(-1);
+        }
+      } else {
+        if (debug) std::cerr << "something is probably wrong, couldn't find a node returned by getNodes() in the graph.\n";
       }
+      /*
+      This isn't strictly necessary since we will end up just removing the current node entirely from the graph,
+      but we can also update its neighbors dictionary for debugging. Do this later.
+      */
+     
+      // ...
     }
-    // Remove the node itself.
+
+    /*
+    Remove the node itself.
+    - Should we also free the node's memory? we probably could, since the original copy of the
+    node still lays outside of the depopulate function.
+    */
     graph.erase(node);
     nodes.erase(node->get());
     size--;
