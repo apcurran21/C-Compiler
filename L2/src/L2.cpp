@@ -67,7 +67,7 @@ namespace L2 {
                     auto var = pair.first;
                     auto reg_ptr = dynamic_cast<L2::Register*>(var);
                     if ((!reg_ptr) && (fptr->spill_variables_set.find(var) == fptr->spill_variables_set.end())) {
-                    std::tuple<std::set<std::string>,L2::Function*,int> resultTuple = L2::spillForL2(fptr, var, spill_count,stack_counter);
+                    std::tuple<std::set<std::string>,L2::Function*,int> resultTuple = L2::spillForL2(fptr, var, spill_count, stack_counter);
                     auto changed = std::get<0>(resultTuple); // For the std::set<std::string>
                     L2::Function* newFunction = std::get<1>(resultTuple);
                     spill_count = std::get<2>(resultTuple);

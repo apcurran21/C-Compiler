@@ -52,7 +52,9 @@ namespace L2 {
         -Select a color on each node as it comes back into the graph, making sure no adjacent
             nodes have the same color.
         */
-        return repopulate(graph, graph_copy, node_stack);
+        std::tuple<bool, std::vector<Node*>> color_result = repopulate(graph, graph_copy, node_stack);
+        
+        return color_result; 
     }
 
     /*
@@ -148,7 +150,11 @@ namespace L2 {
       We need to try to color each node and add it back into the graph.
       - Would a while loop with pop_back() be safer here?
       */
-      for (auto node : node_stack) {
+      // for (auto node : node_stack) {
+      while (!node_stack.empty()) {
+        
+        Node* node = node_stack.back();
+        node_stack.pop_back();
 
         /*
         Get a set of the current node's neighbors from the original cloned state
@@ -164,7 +170,7 @@ namespace L2 {
               if (debug) std::cerr << "Couldn't find this node in the original graph.\n";
           }
         } else {
-            if (debug) std::cerr << "Couldn't find this variable in any of the original graph's nodes.\n";
+            if (debug) std::cerr << "Couldn't find this varianble in any of the original graph's nodes.\n";
         }
 
         /*
