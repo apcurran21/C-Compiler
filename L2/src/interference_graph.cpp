@@ -229,8 +229,8 @@ namespace L2{
     Add the functions current list of spill and spilled variables to the graph's corresponding field
     - spilled variables probably aren't necessary
     */
-    auto spilled_vars = f->spilled_variables;
-    auto spill_vars = f->spill_variables_set;
+    interference_graph->spilled_vars = f->spilled_variables;
+    interference_graph->spill_vars = f->spill_variables_set;
 
     /*
     Initialize the graph's size metric.

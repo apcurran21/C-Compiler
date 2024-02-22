@@ -67,7 +67,7 @@ namespace L2 {
                     auto var = pair.first;
                     auto reg_ptr = dynamic_cast<L2::Register*>(var);
                     if ((!reg_ptr) && (fptr->spill_variables_set.find(var) == fptr->spill_variables_set.end())) {
-                    std::tuple<std::set<std::string>,L2::Function*,int> resultTuple = L2::spillForL2(fptr, var, spill_count,stack_counter);
+                    std::tuple<std::set<std::string>,L2::Function*,int> resultTuple = L2::spillForL2(fptr, var, spill_count, stack_counter);
                     auto changed = std::get<0>(resultTuple); // For the std::set<std::string>
                     L2::Function* newFunction = std::get<1>(resultTuple);
                     spill_count = std::get<2>(resultTuple);
@@ -100,14 +100,13 @@ namespace L2 {
 
                 /*
                 Graph coloring failed, need to spill.
-                */
+                */ 
 
                 for (auto node : uncolored_nodes) {
 
-                    L2::PrintVisitor* myPrintVisitor = new L2::PrintVisitor();
-                    if (printdebug) std::cerr << "Printing program before spill:\n\n";
-                    for (auto iptr : fptr->instructions) {
-                        iptr->accept(myPrintVisitor);
+                    if (printdebug) {
+                        std::cerr << "Printing program before spill:\n\n";
+                        printFunction(fptr);
                     }
 
                     std::tuple<std::set<std::string>, L2::Function *,int> spill_result = spillForL2(fptr, node->var, spill_count,stack_counter);
@@ -115,10 +114,12 @@ namespace L2 {
                     L2::Function* newFunction = std::get<1>(spill_result);
                     spill_count = std::get<2>(spill_result);
                     seenVariables[node->var->name] = true;
-                    fptr = newFunction;                    
-                    if (printdebug) std::cerr << "Printing program after spill:\n\n";
-                    for (auto iptr : fptr->instructions) {
-                        iptr->accept(myPrintVisitor);
+                    fptr = newFunction;
+                    spill_count++;
+                    
+                    if (printdebug) {
+                        std::cerr << "Printing program after spill:\n\n";
+                        printFunction(fptr);
                     }
                     stack_counter++;
 

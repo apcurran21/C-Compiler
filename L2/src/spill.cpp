@@ -14,6 +14,10 @@ namespace L2{
     std::tuple<std::set<std::string>,Function*,int> spillForL2(Function* f, Variable* spilledVar, int count, int stack_count) {    
         // Function* f = p.functions[0]; 
         Function* newFunction = new Function();
+        /*
+        Need to transfer over spill sets from the existing function.
+        */
+        newFunction->spill_variables_set.insert(f->spill_variables_set.begin(), f->spill_variables_set.end());
         newFunction->name = f->name;
         newFunction->arguments = f->arguments;
         newFunction->variable_allocator = f->variable_allocator;
@@ -67,7 +71,8 @@ namespace L2{
             visitor->spilledLHS = false;
             visitor->spilledRHS = false;
         } 
-        std::set<std::string> spilled_variables_in_spill;
+        // std::set<std::string> spilled_variables_in_spill;
+        std::set<std::string> spill_variables;
         std::string s = visitor->replacementVariable->name;
         int number = std::stoi(s.substr(2));  // Extract the number from the string, assuming it's after "S"
 
@@ -76,11 +81,19 @@ namespace L2{
         // Generate the string for the current number
             std::string variableName = "%S" + std::to_string(i);
         // Insert it into the set
-            spilled_variables_in_spill.insert(variableName);
+            // spilled_variables_in_spill.insert(variableName);
+            spill_variables.insert(variableName);
+            /*
+            Make sure to insert the spill variables into the function's spill set so that the interference graph
+            will later have copies of them.
+            */
+            Variable* spill_variable = newFunction->variable_allocator.allocate_variable(variableName, VariableType::var);
+            newFunction->spill_variables_set.insert(spill_variable);
         }
 
         // track the spill variables we created so that we don't accidentally spill it later
-        return std::make_tuple(spilled_variables_in_spill, newFunction, count);
+        // return std::make_tuple(spilled_variables_in_spill, newFunction, count);
+        return std::make_tuple(spill_variables, newFunction, count);
 
     }
 

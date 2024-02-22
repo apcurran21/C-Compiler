@@ -456,3 +456,60 @@ Segfaults, *best_node* is a null pointer, so the condition makes us grab from *c
   * **BRUH** i was overreacting on this bullet point, we were on the stub function. The original issue is still relevant.
 
   * okay after the first iteration of color_graph on the real function (ie not stub) we have to spill the node corresponding with the %v2 variable. This is stored in vector *uncolored_nodes* and i believe its pointer 0x4f00c0 is different from the pointer to this node in *interference_graph*. However it shows up in *interference_graph_copy* which is expected behavior, since this is a clone in memory of the original.
+
+  * okay after spilling %v2, whenever color_registers is called none of the registers in the graph get colored. This is weird 
+
+  * okay after this apparently %v1 gets spilled which i didn't realize.
+
+  * we spill once (v1 and v3 left over), twice (v3 left over)
+
+#### infinite loop in test805.L2
+* 
+
+#### failing test849 segfaults
+* The L1 program segfaults because i don't think it allocates a byte in the function arguments for stack accesses.
+  * i confirmed this by running simone's compiler on a version that did have the byte allocation.
+* I think the spillForL2 function should be incrementing the 'locals' field in the new function it outputs, currently it just seems like it is zero all the time.
+
+### NOTE
+"if (node_name[0]=='%' && node_name[1]=='S')" this case should be find, since a variable must be at least two chars long
+
+### test 805
+
+why is it that after the first spill, 'fptr' (which gets passed in to spillForL2) gets altered with spill varaibles? This seems wrong, all changes should be made in the newFunction and the old one should be left untouched. 
+
+Also, the output of the first spill newFunction is incorrect:
+
+rdi <- 7
+rsi <- 1
+call allocate 2
+%firstRow <- rax
+r9 <- mem 8 %firstRow
+r9 += 2
+mem %firstRow 8 <- r9
+rdi <- 7
+rsi <- 1
+call allocate 2
+%S0 <- rax
+mem rsp 0 <- %S0
+r9 <- mem 16 %S1    // %S1 is used without first being defined
+mem rsp 0 <- %S1    // %S1 is used again, still not defined yet
+r9 += 2
+mem %S2 16 <- r9    // %S2 is used without being defined
+rdi <- 7
+rsi <- 1
+call allocate 2
+%thirdRow <- rax
+r9 <- mem 24 %thirdRow
+r9 += 2
+mem %thirdRow 24 <- r9
+rdi <- 7
+rsi <- 1
+call allocate 2
+rdi <- rax
+mem rdi 8 <- %firstRow
+%S2 <- mem 0 rsp    // why is the first time %S2 gets defined all the way down here
+mem rdi 16 <- %S2
+mem rdi 24 <- %thirdRow
+call print 1
+return
