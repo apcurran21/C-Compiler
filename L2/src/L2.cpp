@@ -15,8 +15,6 @@ namespace L2 {
             print_liveness(fptr, liveness_results);
         }
         Graph* interference_graph = build_graph(fptr, liveness_results);
-        if (printdebug) std::cerr << "Printing the graph:\n";
-        if (printdebug) interference_graph->printGraph();
 
         return interference_graph;
     }
@@ -50,7 +48,8 @@ namespace L2 {
                     interference_graph->removeNodeByName(varName);
                 }
             }
-
+            if (printdebug) std::cerr << "Printing the graph:\n";
+            if (printdebug) interference_graph->printGraph();
             Graph* interference_graph_copy = interference_graph->clone();
 
             std::tuple<bool, std::vector<Node*>> color_result = color_graph(interference_graph, interference_graph_copy, fptr);
@@ -856,6 +855,9 @@ namespace L2 {
             this->spilledLHS= true;
             this->spilledRHS = true;
         }          
+        if (replaceSrc){
+            this->spilledRHS=true;
+        }
     };
     void SpillVisitor::visit(SOP_assignment *instruction) {
         bool replaceMethod = replaceIfSpilled(instruction->method);
@@ -863,6 +865,7 @@ namespace L2 {
         bool replaceSrc = replaceIfSpilled(instruction->src);  
         if (replaceDst) {
             this->spilledLHS= true;
+            this->spilledRHS = true;
         }          
         if (replaceSrc){
             this->spilledRHS = true;

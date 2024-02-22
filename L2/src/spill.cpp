@@ -50,7 +50,6 @@ namespace L2{
                 newFunction->instructions.insert(newFunction->instructions.end(),instruction2);
                 newFunction->instructions.insert(newFunction->instructions.end(),instruction);
                 newFunction->variable_allocator.allocate_variable(visitor->replacementVariable->name, VariableType::reg);
-
                 visitor->iterReplacementVariable();
             }  else if (visitor->spilledLHS){
                 newFunction->instructions.insert(newFunction->instructions.end(),instruction);
