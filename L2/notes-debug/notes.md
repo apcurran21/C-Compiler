@@ -460,3 +460,5 @@ Segfaults, *best_node* is a null pointer, so the condition makes us grab from *c
   * okay after spilling %v2, whenever color_registers is called none of the registers in the graph get colored. This is weird 
 
   * okay after this apparently %v1 gets spilled which i didn't realize.
+
+  * we spill once (v1 and v3 left over), twice (v3 left over)
