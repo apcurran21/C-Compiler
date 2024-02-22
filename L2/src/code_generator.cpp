@@ -73,7 +73,7 @@ namespace L2{
   }
 
   void Call_tuple_Instruction::gen(Function *f, std::ofstream &outputFile) {
-    outputFile << "call tuple_error 3\n\t";
+    outputFile << "call tuple-error 3\n\t";
   }
 
   void w_increment_decrement::gen(Function *f, std::ofstream &outputFile) {
