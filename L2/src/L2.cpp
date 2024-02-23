@@ -769,26 +769,36 @@ namespace L2 {
         this->copiedInstruction = new Instruction_ret();
     } ;
     void SpillVisitor::visit(Instruction_assignment *instruction){
+        Item* d;
+        Item* s;
         bool replaceD = replaceIfSpilled(instruction->d);
         bool replaceS = replaceIfSpilled(instruction->s);
-        if (replaceD && replaceS){
-            this->copiedInstruction = new Instruction_assignment(this->replacementVariable,this->replacementVariable);
-        }
-        else if (replaceD){
-            this->spilledLHS = true;
-            auto s = instruction->s->clone();
-            this->copiedInstruction = new Instruction_assignment(this->replacementVariable,s);
-        }
-        else if (replaceS){
-            this->spilledRHS = true;
-            auto d = instruction->s->clone();
-            this->copiedInstruction = new Instruction_assignment(d,this->replacementVariable);
+        auto varD = dynamic_cast<Variable*>(instruction->d);
+        auto varS = dynamic_cast<Variable*>(instruction->s);
+        if (replaceD){
+            auto d = this->replacementVariable;
+        } else if (varMap.size()>0 && varMap.find(varD->name)!=varMap.end()){
+            auto d = varMap[varD->name];
         } else {
             auto d = instruction->d->clone();
-            auto s = instruction->s->clone();
-            this->copiedInstruction = new Instruction_assignment(d,s);
+            varMap[varD->name] = d;
         }
-
+        if (replaceS){
+            auto s = this->replacementVariable;
+        } else if (varMap.size()>0 && varMap.find(varS->name) != varMap.end()){
+            auto s = varMap[varS->name]; // Assuming varMap is correctly defined and accessible
+        } else {
+            auto s = instruction->s->clone();
+            varMap[varS->name] = s; // Assuming varMap is correctly defined and accessible
+        }
+        if (replaceD){
+            this->spilledLHS = true;
+        }
+        if (replaceS){
+            this->spilledRHS = true;
+        } 
+        this->copiedInstruction = new Instruction_assignment(d,s);
+    
     };
     void SpillVisitor::visit(label_Instruction *instruction) {
         auto label = instruction->label->clone();

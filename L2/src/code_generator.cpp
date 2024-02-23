@@ -165,13 +165,16 @@ namespace L2{
       */
 
       int stack_size = 0;
+      std::set<std::string> seenStrings; // Declare a set of strings
       // ColorVariablesVisitor* myColorVisitor = new ColorVariablesVisitor(color_graph,fptr);
       for (Instruction *iptr : fptr->instructions) {
         auto instruction = dynamic_cast<Memory_assignment_store*>(iptr);
         if (instruction){
           auto number = dynamic_cast<Number*>(instruction->M);
-          if (number->value >0){
+          auto variable = dynamic_cast<Variable*>(instruction->s);
+          if (number->value >=0 && seenStrings.find(variable->name) == seenStrings.end()){
             stack_size++;
+            seenStrings.insert(variable->name);
           }
         }
       }

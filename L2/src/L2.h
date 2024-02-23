@@ -497,6 +497,7 @@ namespace L2 {
       Variable* spilledVariable;
       Variable* replacementVariable;
       Instruction * copiedInstruction;
+      std::map<std::string, Item*> varMap;
       bool spilledLHS;
       bool spilledRHS; 
   };
