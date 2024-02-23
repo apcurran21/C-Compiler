@@ -80,7 +80,7 @@ namespace L2{
         int number = std::stoi(s.substr(2));  // Extract the number from the string, assuming it's after "S"
 
     // Loop from 0 to the extracted number
-        for (int i = 0; i <= number; ++i) {
+        for (int i = 0; i < number; ++i) {
         // Generate the string for the current number
             std::string variableName = "%S" + std::to_string(i);
         // Insert it into the set

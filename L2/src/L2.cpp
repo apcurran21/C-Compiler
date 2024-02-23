@@ -37,7 +37,7 @@ namespace L2 {
             Graph* interference_graph = analyze_L2(fptr);
 
             // Iterate over seenVariables to remove corresponding nodes from the graph based on their names.
-            /*
+            
             for (const auto& varEntry : seenVariables) {
                 // Check if the variable is marked as 'seen' (true).
                 if (varEntry.second) {
@@ -49,7 +49,7 @@ namespace L2 {
                     interference_graph->removeNodeByName(varName);
                 }
             }
-            */
+            
             
             if (printdebug) std::cerr << "Printing the graph:\n";
             if (printdebug) interference_graph->printGraph();
@@ -748,7 +748,7 @@ namespace L2 {
         auto variable = dynamic_cast<Variable*>(item);
         if (variable) {
             if (variable->name == spilledVariable->name) { //need to fix this lol
-                item = this->replacementVariable;
+                item = this->replacementVariable->clone();
                 
                 return 1;
             }
