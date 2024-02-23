@@ -1243,6 +1243,7 @@ namespace L2 {
         if (replaceD) {
             dst = this->replacementVariable;
             this->spilledLHS = true;
+            this->spilledRHS = true;
         } else {
             auto varDst = dynamic_cast<Variable*>(instruction->dst);
             if (varDst && varMap.find(varDst->name) != varMap.end()) {
