@@ -37,7 +37,7 @@ namespace L2 {
             Graph* interference_graph = analyze_L2(fptr);
 
             // Iterate over seenVariables to remove corresponding nodes from the graph based on their names.
-            
+            /*
             for (const auto& varEntry : seenVariables) {
                 // Check if the variable is marked as 'seen' (true).
                 if (varEntry.second) {
@@ -49,6 +49,8 @@ namespace L2 {
                     interference_graph->removeNodeByName(varName);
                 }
             }
+            */
+            
             
             
             if (printdebug) std::cerr << "Printing the graph:\n";
@@ -748,8 +750,7 @@ namespace L2 {
         auto variable = dynamic_cast<Variable*>(item);
         if (variable) {
             if (variable->name == spilledVariable->name) { //need to fix this lol
-                item = this->replacementVariable->clone();
-                
+                item = this->replacementVariable;
                 return 1;
             }
         }
@@ -764,126 +765,265 @@ namespace L2 {
         number++; 
         this->replacementVariable = new Variable("%S" + std::to_string(number));
     }
-    void SpillVisitor::visit(Instruction_ret *instruction){} ;
+    void SpillVisitor::visit(Instruction_ret *instruction){
+        this->copiedInstruction = new Instruction_ret();
+    } ;
     void SpillVisitor::visit(Instruction_assignment *instruction){
         bool replaceD = replaceIfSpilled(instruction->d);
         bool replaceS = replaceIfSpilled(instruction->s);
-        if (replaceD){
-            this->spilledLHS = true;
+        if (replaceD && replaceS){
+            this->copiedInstruction = new Instruction_assignment(this->replacementVariable,this->replacementVariable);
         }
-        if (replaceS){
+        else if (replaceD){
+            this->spilledLHS = true;
+            auto s = instruction->s->clone();
+            this->copiedInstruction = new Instruction_assignment(this->replacementVariable,s);
+        }
+        else if (replaceS){
             this->spilledRHS = true;
+            auto d = instruction->s->clone();
+            this->copiedInstruction = new Instruction_assignment(d,this->replacementVariable);
+        } else {
+            auto d = instruction->d->clone();
+            auto s = instruction->s->clone();
+            this->copiedInstruction = new Instruction_assignment(d,s);
         }
 
     };
-    void SpillVisitor::visit(label_Instruction *instruction) {};
-    void SpillVisitor::visit(goto_label_instruction *instruction) {};
-    void SpillVisitor::visit(Call_tenserr_Instruction *instruction) {};
+    void SpillVisitor::visit(label_Instruction *instruction) {
+        auto label = instruction->label->clone();
+        this->copiedInstruction = new label_Instruction(label);
+    };
+    void SpillVisitor::visit(goto_label_instruction *instruction) {
+        auto label = instruction->label->clone();
+        this->copiedInstruction = new goto_label_instruction(label);
+    };
+    void SpillVisitor::visit(Call_tenserr_Instruction *instruction) {
+        auto F = instruction->F->clone();
+        this->copiedInstruction = new Call_tenserr_Instruction(F);
+    };
     void SpillVisitor::visit(Call_uN_Instruction *instruction) {
         bool replaceU = replaceIfSpilled(instruction->u);
         if (replaceU){
             this->spilledRHS = true;
+            auto N = instruction->N->clone();
+            this->copiedInstruction = new Call_uN_Instruction(this->replacementVariable,N);
+        } else {
+            auto u = instruction->u->clone();
+            auto N = instruction->N->clone();
+            this->copiedInstruction = new Call_uN_Instruction(u,N);
         }
     };
-    void SpillVisitor::visit(Call_print_Instruction *instruction) {};
-    void SpillVisitor::visit(Call_input_Instruction *instruction) {};
-    void SpillVisitor::visit(Call_allocate_Instruction *instruction){} ;
-    void SpillVisitor::visit(Call_tuple_Instruction *instruction) {};
+    void SpillVisitor::visit(Call_print_Instruction *instruction) {
+        this->copiedInstruction = new Call_print_Instruction();
+    };
+    void SpillVisitor::visit(Call_input_Instruction *instruction) {
+        this->copiedInstruction = new Call_input_Instruction();
+    };
+    void SpillVisitor::visit(Call_allocate_Instruction *instruction){
+        this->copiedInstruction = new Call_allocate_Instruction();
+    } ;
+    void SpillVisitor::visit(Call_tuple_Instruction *instruction) {
+        this->copiedInstruction = new Call_tuple_Instruction();
+    };
     void SpillVisitor::visit(w_increment_decrement *instruction) {
         bool replaceR = replaceIfSpilled(instruction->r);
         if (replaceR) {
             this->spilledLHS= true;
             this->spilledRHS = true;
+            auto symbol = instruction->symbol->clone();
+            this->copiedInstruction = new w_increment_decrement(this->replacementVariable,symbol);
+        } else {
+            auto r = instruction->r->clone();
+            auto symbol = instruction->symbol->clone();
+            this->copiedInstruction = new w_increment_decrement(r,symbol);
         }
     };
     void SpillVisitor::visit(w_atreg_assignment *instruction) {
         bool replaceR1 = replaceIfSpilled(instruction->r1);
         bool replaceR2 = replaceIfSpilled(instruction->r2);
         bool replaceR3 = replaceIfSpilled(instruction->r3);
+        auto E = instruction->E->clone();
+        auto r1 = replaceR1 ? this->replacementVariable : instruction->r1->clone();
+        auto r2 = replaceR2 ? this->replacementVariable : instruction->r2->clone();
+        auto r3 = replaceR3 ? this->replacementVariable : instruction->r3->clone();
         if (replaceR1 ) {
-            this->spilledRHS = true;
+            this->spilledLHS = true;
         }
         if (replaceR2 || replaceR3){
-            this->spilledLHS = true; // We may need to check this later
+            this->spilledRHS = true; // We may need to check this later
         }
+        this->copiedInstruction = new w_atreg_assignment(r1,r2,r3,E);
+
     };
     void SpillVisitor::visit(Memory_assignment_store *instruction) {
         bool replaceS = replaceIfSpilled(instruction->s);
         bool replaceDST = replaceIfSpilled(instruction->dst);   
-        if (replaceS){
+        if (replaceS && replaceDST){
+            auto M = instruction->M->clone();
+            this->copiedInstruction = new Memory_assignment_store(this->replacementVariable,this->replacementVariable,M);
+        } else if (replaceS){
+            auto dst = instruction->dst->clone();
+            auto M = instruction->M->clone();
+            this->copiedInstruction = new Memory_assignment_store(dst,this->replacementVariable,M);
+        } else if (replaceDST){
+            auto s = instruction->s->clone();
+            auto M = instruction->M->clone();
+            this->copiedInstruction = new Memory_assignment_store(this->replacementVariable,s,M);
+        } else {
+            auto dst = instruction->dst->clone();
+            auto s = instruction->s->clone();
+            auto M = instruction->M->clone();
+            this->copiedInstruction = new Memory_assignment_store(dst,s,M);
+        }
+        if (replaceS || replaceDST){
             this->spilledRHS = true;
         }
-
-
     };
     void SpillVisitor::visit(Memory_assignment_load *instruction){
         bool replaceD = replaceIfSpilled(instruction->dst);
         bool replaceX = replaceIfSpilled(instruction->x);
-        bool replaceM = replaceIfSpilled(instruction->M); 
-        if (replaceX || replaceM) {
+        if (replaceX) {
             this->spilledRHS = true;
         }    
         if (replaceD){
             this->spilledLHS = true;
-        }        
+        }  
+        if (replaceX && replaceD){
+            auto M = instruction->M->clone();
+            this->copiedInstruction = new Memory_assignment_load(this->replacementVariable,this->replacementVariable,M);
+        } else if (replaceX){
+            auto dst = instruction->dst->clone();
+            auto M = instruction->M->clone();
+            this->copiedInstruction = new Memory_assignment_load(dst,this->replacementVariable,M);  
+        } else if (replaceD){
+            auto x = instruction->x->clone();
+            auto M = instruction->M->clone();
+            this->copiedInstruction = new Memory_assignment_load(this->replacementVariable,x,M);           
+        } else {
+            auto dst = instruction->dst->clone();
+            auto x = instruction->x->clone();
+            auto M = instruction->M->clone();
+            this->copiedInstruction = new Memory_assignment_load(dst,x,M);
+        }
+
     } ;
     void SpillVisitor::visit(Memory_arithmetic_load *instruction) {
         bool replaceD = replaceIfSpilled(instruction->dst);
-        bool replaceInstruction = replaceIfSpilled(instruction->instruction);    
-        bool replaceM = replaceIfSpilled(instruction->M);  
         bool replaceX = replaceIfSpilled(instruction->x);
+        auto M = instruction->M->clone();
+        auto copied_instruction = instruction->instruction->clone();
         if (replaceD) {
             this->spilledLHS = true;
         }    
-        if (replaceX || replaceM){
+        if (replaceX){
             this->spilledRHS = true;
+        }
+        if (replaceX && replaceD){
+            auto M = instruction->M->clone();
+            this->copiedInstruction = new Memory_arithmetic_load(this->replacementVariable,this->replacementVariable,copied_instruction,M);
+        } else if (replaceX){
+            auto dst = instruction->dst->clone();
+            this->copiedInstruction = new Memory_arithmetic_load(dst,this->replacementVariable,copied_instruction,M); 
+        } else if (replaceD){
+            auto x = instruction->x->clone();
+            this->copiedInstruction = new Memory_arithmetic_load(this->replacementVariable,x,copied_instruction,M);       
+        } else {
+            auto dst = instruction->dst->clone();
+            auto x = instruction->x->clone();
+            this->copiedInstruction = new Memory_arithmetic_load(dst,x,copied_instruction,M);
         }
     };
     void SpillVisitor::visit(Memory_arithmetic_store *instruction){
         bool replaceD = replaceIfSpilled(instruction->dst);
         bool replaceT = replaceIfSpilled(instruction->t);
-        bool replaceInstruction = replaceIfSpilled(instruction->instruction);    
-        bool replaceM = replaceIfSpilled(instruction->M);  
 
-        if (replaceT){
+        if (replaceT || replaceD){
             this->spilledRHS = true;
-        }         
+        } 
+        if (replaceT && replaceD){
+            auto M = instruction->M->clone();
+            auto copied_instruction = instruction->instruction->clone();
+            this->copiedInstruction = new Memory_arithmetic_store(this->replacementVariable,this->replacementVariable,copied_instruction,M);
+        } else if (replaceT){
+            auto dst = instruction->dst->clone();
+            auto M = instruction->M->clone();
+            auto copied_instruction = instruction->instruction->clone();
+            this->copiedInstruction = new Memory_arithmetic_store(dst,this->replacementVariable,copied_instruction,M);
+        } else if (replaceD){
+            auto t = instruction->t->clone();
+            auto M = instruction->M->clone();
+            auto copied_instruction = instruction->instruction->clone();
+            this->copiedInstruction = new Memory_arithmetic_store(this->replacementVariable,t,copied_instruction,M);
+        } else {
+            auto dst = instruction->dst->clone();
+            auto t = instruction->t->clone();
+            auto M = instruction->M->clone();
+            auto copied_instruction = instruction->instruction->clone();
+            this->copiedInstruction = new Memory_arithmetic_store(dst,t,copied_instruction,M); 
+        }
+
     };
     void SpillVisitor::visit(cmp_Instruction *instruction){
         bool replaceD = replaceIfSpilled(instruction->dst);
         bool replaceT = replaceIfSpilled(instruction->t1);
         bool replaceM = replaceIfSpilled(instruction->method);    
         bool replaceT2 = replaceIfSpilled(instruction->t2); 
+        auto dst = instruction->dst->clone();
+        auto t1 = instruction->t1->clone();
+        auto method = instruction->method->clone();
+        auto t2 = instruction->t2->clone();
         if (replaceD) {
             this->spilledLHS = true;
+            dst = this->replacementVariable;
         }  
-        if (replaceT || replaceT2){
+        if (replaceT){
             this->spilledRHS = true;
+            t1 = this->replacementVariable;
         }   
+        if (replaceT2){
+            this->spilledRHS = true;
+            t2 = this->replacementVariable;
+        }   
+        this->copiedInstruction = new cmp_Instruction(dst,t2,method,t1);
+
+        
     };
     void SpillVisitor::visit(cjump_cmp_Instruction *instruction){
         bool replaceT2 = replaceIfSpilled(instruction->t2);
         bool replaceCMP = replaceIfSpilled(instruction->cmp);
         bool replaceT1 = replaceIfSpilled(instruction->t1);    
-        bool replaceLabel = replaceIfSpilled(instruction->label);     
-        if (replaceT2 || replaceT1 ) {
+        bool replaceLabel = replaceIfSpilled(instruction->label);    
+        auto cmp = instruction->cmp->clone();
+        auto t1 = replaceT1 ? this->replacementVariable : instruction->t1->clone();
+        auto label = instruction->label->clone();
+        auto t2 = replaceT2 ? this->replacementVariable : instruction->t2->clone();
+        if (replaceT2) {
             this->spilledRHS = true;
-        }          
+        }         
+        if (replaceT1){
+            this->spilledRHS = true;
+        } 
+        this->copiedInstruction = new cjump_cmp_Instruction(t2,cmp,t1,label);
     } ;
     void SpillVisitor::visit(stackarg_assignment *instruction){
         bool replaceW = replaceIfSpilled(instruction->w);
-        bool replaceM = replaceIfSpilled(instruction->M);   
+        bool replaceM = replaceIfSpilled(instruction->M); 
+        auto w = replaceW ? this->replacementVariable : instruction->w->clone();
+        auto M = instruction->M->clone();  
         if (replaceW) {
             this->spilledLHS = true;
         }      
-        if (replaceM){
-            this->spilledRHS = true;
-        }    
+        this->copiedInstruction = new stackarg_assignment(w,M);
+
     };
     void SpillVisitor::visit(AOP_assignment *instruction){
         bool replaceMethod = replaceIfSpilled(instruction->method);
         bool replaceD = replaceIfSpilled(instruction->dst);   
         bool replaceSrc = replaceIfSpilled(instruction->src);   
+        auto dst = replaceD ? this->replacementVariable : instruction->dst->clone();
+        auto src = replaceSrc ? this->replacementVariable : instruction->src->clone();
+        auto method = instruction->method->clone();
         if (replaceD) {
             this->spilledLHS= true;
             this->spilledRHS = true;
@@ -891,11 +1031,15 @@ namespace L2 {
         if (replaceSrc){
             this->spilledRHS=true;
         }
+        this->copiedInstruction = new AOP_assignment(method,dst,src);
     };
     void SpillVisitor::visit(SOP_assignment *instruction) {
         bool replaceMethod = replaceIfSpilled(instruction->method);
         bool replaceDst = replaceIfSpilled(instruction->dst);   
         bool replaceSrc = replaceIfSpilled(instruction->src);  
+        auto dst = replaceDst ? this->replacementVariable : instruction->dst->clone();
+        auto src = replaceSrc ? this->replacementVariable : instruction->src->clone(); // this is a far better way than just randomly deep copying memory above 
+        auto method = instruction->method->clone();
         if (replaceDst) {
             this->spilledLHS= true;
             this->spilledRHS = true;
@@ -903,6 +1047,7 @@ namespace L2 {
         if (replaceSrc){
             this->spilledRHS = true;
         }        
+        this->copiedInstruction = new SOP_assignment(method,dst,src);
     };  
 
     /*
@@ -1108,116 +1253,6 @@ namespace L2 {
     }
     void PrintVisitor::visit(SOP_assignment *instruction) {
         std::cerr << instruction->dst->print() << " " << instruction->method->print() << " " << instruction->src->print() << "\n"; 
-    }
-
-    /*
-    Deepy Copy Visitor Methods
-    */
-   void DeepCopyVisitor::visit(Instruction_ret *instruction) {
-        this->copiedInstruction = new Instruction_ret();
-    }
-    void DeepCopyVisitor::visit(Instruction_assignment *instruction) {
-        auto d = instruction->d->clone();
-        auto s = instruction->s->clone();
-        this->copiedInstruction = new Instruction_assignment(d,s);
-    }
-    void DeepCopyVisitor::visit(label_Instruction *instruction) {
-        auto label = instruction->label->clone();
-        this->copiedInstruction = new label_Instruction(label);
-    }
-    void DeepCopyVisitor::visit(goto_label_instruction *instruction) {
-        auto label = instruction->label->clone();
-        this->copiedInstruction = new goto_label_instruction(label);
-    }
-    void DeepCopyVisitor::visit(Call_tenserr_Instruction *instruction) {
-        auto F = instruction->F->clone();
-        this->copiedInstruction = new Call_tenserr_Instruction(F);
-    }
-    void DeepCopyVisitor::visit(Call_uN_Instruction *instruction) {
-        auto u = instruction->u->clone();
-        auto N = instruction->N->clone();
-        this->copiedInstruction = new Call_uN_Instruction(u,N);
-    }
-    void DeepCopyVisitor::visit(Call_print_Instruction *instruction) {
-        this->copiedInstruction = new Call_print_Instruction();
-    }
-    void DeepCopyVisitor::visit(Call_input_Instruction *instruction) {
-        this->copiedInstruction = new Call_input_Instruction();
-    }
-    void DeepCopyVisitor::visit(Call_allocate_Instruction *instruction) {
-        this->copiedInstruction = new Call_allocate_Instruction();
-    }
-    void DeepCopyVisitor::visit(Call_tuple_Instruction *instruction) {
-        this->copiedInstruction = new Call_tuple_Instruction();
-    }
-    void DeepCopyVisitor::visit(w_increment_decrement *instruction) {
-        auto r = instruction->r->clone();
-        auto symbol = instruction->symbol->clone();
-        this->copiedInstruction = new w_increment_decrement(r,symbol);
-    }
-    void DeepCopyVisitor::visit(w_atreg_assignment *instruction) {
-        auto r1 = instruction->r1->clone();
-        auto r2 = instruction->r2->clone();
-        auto r3 = instruction->r3->clone();
-        auto E = instruction->E->clone();
-        this->copiedInstruction = new w_atreg_assignment(r1,r2,r3,E);
-    }
-    void DeepCopyVisitor::visit(Memory_assignment_store *instruction) {
-        auto dst = instruction->dst->clone();
-        auto s = instruction->s->clone();
-        auto M = instruction->M->clone();
-        this->copiedInstruction = new Memory_assignment_store(dst,s,M);
-    }
-    void DeepCopyVisitor::visit(Memory_assignment_load *instruction) {
-        auto dst = instruction->dst->clone();
-        auto x = instruction->x->clone();
-        auto M = instruction->M->clone();
-        this->copiedInstruction = new Memory_assignment_load(dst,x,M);
-    }
-    void DeepCopyVisitor::visit(Memory_arithmetic_load *instruction) {
-        auto dst = instruction->dst->clone();
-        auto x = instruction->x->clone();
-        auto M = instruction->M->clone();
-        auto copied_instruction = instruction->instruction->clone();
-        this->copiedInstruction = new Memory_arithmetic_load(dst,x,copied_instruction,M);
-    }
-    void DeepCopyVisitor::visit(Memory_arithmetic_store *instruction) {
-        auto dst = instruction->dst->clone();
-        auto t = instruction->t->clone();
-        auto M = instruction->M->clone();
-        auto copied_instruction = instruction->instruction->clone();
-        this->copiedInstruction = new Memory_arithmetic_store(dst,t,copied_instruction,M);
-    }
-    void DeepCopyVisitor::visit(cmp_Instruction *instruction) {
-        auto dst = instruction->dst->clone();
-        auto t1 = instruction->t1->clone();
-        auto method = instruction->method->clone();
-        auto t2 = instruction->t2->clone();
-        this->copiedInstruction = new cmp_Instruction(dst,t2,method,t1);
-    }
-    void DeepCopyVisitor::visit(cjump_cmp_Instruction *instruction) {
-        auto cmp = instruction->cmp->clone();
-        auto t1 = instruction->t1->clone();
-        auto label = instruction->label->clone();
-        auto t2 = instruction->t2->clone();    
-        this->copiedInstruction = new cjump_cmp_Instruction(t2,cmp,t1,label);
-    }
-    void DeepCopyVisitor::visit(stackarg_assignment *instruction) {
-        auto w = instruction->w->clone();
-        auto M = instruction->M->clone();
-        this->copiedInstruction = new stackarg_assignment(w,M);
-    }
-    void DeepCopyVisitor::visit(AOP_assignment *instruction) {
-        auto method = instruction->method->clone();
-        auto dst = instruction->dst->clone();
-        auto src = instruction->src->clone();
-        this->copiedInstruction = new AOP_assignment(method,dst,src);
-    }
-    void DeepCopyVisitor::visit(SOP_assignment *instruction) {
-        auto method = instruction->method->clone();
-        auto dst = instruction->dst->clone();
-        auto src = instruction->src->clone();
-        this->copiedInstruction = new SOP_assignment(method,dst,src);
     }
 
     /*

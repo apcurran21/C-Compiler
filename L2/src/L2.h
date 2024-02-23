@@ -470,7 +470,7 @@ namespace L2 {
   class SpillVisitor:public Visitor{
     public:
       SpillVisitor(Variable* spilledVar, Variable* replacementVar,int count = 0) :
-        spilledVariable(spilledVar), replacementVariable(replacementVar){}
+        spilledVariable(spilledVar), replacementVariable(replacementVar),copiedInstruction(copiedInstruction){}
       bool replaceIfSpilled(Item*& item);
       void iterReplacementVariable();
       void visit(Instruction_ret *instruction) override;
@@ -496,6 +496,7 @@ namespace L2 {
       void visit(SOP_assignment *instruction) override;  
       Variable* spilledVariable;
       Variable* replacementVariable;
+      Instruction * copiedInstruction;
       bool spilledLHS;
       bool spilledRHS; 
   };
@@ -528,31 +529,6 @@ namespace L2 {
     
       Graph *color_graph; // Member variable for the graph
       Function *current_function; 
-  };
-  class DeepCopyVisitor:  public Visitor {
-    public:
-      void visit(Instruction_ret *instruction) override;
-      void visit(Instruction_assignment *instruction) override;
-      void visit(label_Instruction *instruction) override;
-      void visit(goto_label_instruction *instruction) override;
-      void visit(Call_tenserr_Instruction *instruction) override;
-      void visit(Call_uN_Instruction *instruction) override;
-      void visit(Call_print_Instruction *instruction) override;
-      void visit(Call_input_Instruction *instruction) override;
-      void visit(Call_allocate_Instruction *instruction) override;
-      void visit(Call_tuple_Instruction *instruction) override;
-      void visit(w_increment_decrement *instruction) override;
-      void visit(w_atreg_assignment *instruction) override;
-      void visit(Memory_assignment_store *instruction) override;
-      void visit(Memory_assignment_load *instruction) override;
-      void visit(Memory_arithmetic_load *instruction) override;
-      void visit(Memory_arithmetic_store *instruction) override;
-      void visit(cmp_Instruction *instruction) override;
-      void visit(cjump_cmp_Instruction *instruction) override;
-      void visit(stackarg_assignment *instruction) override;
-      void visit(AOP_assignment *instruction) override;
-      void visit(SOP_assignment *instruction) override;  
-      Instruction* copiedInstruction;
   };
   class PrintVisitor:  public Visitor {
     public:

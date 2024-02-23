@@ -2,9 +2,7 @@
 
   (@entry
 0
-
     %my_var_1 <- 1
-
     rdi <- 1
     rdi <<= 1
     rdi += 1

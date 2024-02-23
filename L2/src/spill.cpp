@@ -23,7 +23,6 @@ namespace L2{
         newFunction->variable_allocator = f->variable_allocator;
         newFunction->variable_allocator.remove_variable(spilledVar->name);
         std::string temp = "%S";
-        DeepCopyVisitor deepVisitor;
         
         // int temp_var = -1;
         // std::string result = temp + std::to_string(temp_var);
@@ -37,33 +36,34 @@ namespace L2{
         int assignment_counter = 0;
         visitor->spilledLHS = false;
         visitor->spilledRHS = false;
-        Variable* var = newFunction->variable_allocator.allocate_variable("rsp", VariableType::reg);
         std::vector<Instruction *> restore_vector;
         for (size_t i = 0; i < f->instructions.size(); ++i) {
             auto instruction = f->instructions[i];
             auto assignment_instruction = dynamic_cast<Instruction_assignment*>(instruction);
             instruction->accept(visitor);
-            instruction->accept(&deepVisitor);
-            auto copiedInstruction = deepVisitor.copiedInstruction;
+            auto copiedInstruction = visitor->copiedInstruction;
             if (visitor->spilledLHS && visitor->spilledRHS) {
-                Instruction* instruction2 = new Memory_assignment_load(visitor->replacementVariable, var, stack);
+                Variable* var1 = newFunction->variable_allocator.allocate_variable("rsp", VariableType::reg);
+                Instruction* instruction2 = new Memory_assignment_load(visitor->replacementVariable, var1, stack);
                 newFunction->instructions.insert(newFunction->instructions.end(),instruction2);
                 newFunction->instructions.insert(newFunction->instructions.end(),copiedInstruction);
-                Instruction * instruction1 = new Memory_assignment_store(var, visitor->replacementVariable, stack);
+                Instruction * instruction1 = new Memory_assignment_store(var1, visitor->replacementVariable, stack);
                 newFunction->instructions.insert(newFunction->instructions.end(),instruction1);
                 newFunction->variable_allocator.allocate_variable(visitor->replacementVariable->name, VariableType::reg);
                 visitor->iterReplacementVariable();
                 count++;            
             } else if (visitor->spilledRHS){
-                Instruction* instruction2 = new Memory_assignment_load(visitor->replacementVariable, var, stack);
+                Variable* var2 = newFunction->variable_allocator.allocate_variable("rsp", VariableType::reg);
+                Instruction* instruction2 = new Memory_assignment_load(visitor->replacementVariable, var2, stack);
                 newFunction->instructions.insert(newFunction->instructions.end(),instruction2);
                 newFunction->instructions.insert(newFunction->instructions.end(),copiedInstruction);
                 newFunction->variable_allocator.allocate_variable(visitor->replacementVariable->name, VariableType::reg);
                 visitor->iterReplacementVariable();
                 count++;            
             }  else if (visitor->spilledLHS){
+                Variable* var3 = newFunction->variable_allocator.allocate_variable("rsp", VariableType::reg);
                 newFunction->instructions.insert(newFunction->instructions.end(),copiedInstruction);
-                Instruction * instruction1 = new Memory_assignment_store(var, visitor->replacementVariable, stack);
+                Instruction * instruction1 = new Memory_assignment_store(var3, visitor->replacementVariable, stack);
                 newFunction->instructions.insert(newFunction->instructions.end(),instruction1);
                 newFunction->variable_allocator.allocate_variable(visitor->replacementVariable->name, VariableType::reg);
                 visitor->iterReplacementVariable(); 
