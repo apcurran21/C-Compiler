@@ -37,6 +37,7 @@ namespace L2 {
             Graph* interference_graph = analyze_L2(fptr);
 
             // Iterate over seenVariables to remove corresponding nodes from the graph based on their names.
+            /*
             for (const auto& varEntry : seenVariables) {
                 // Check if the variable is marked as 'seen' (true).
                 if (varEntry.second) {
@@ -48,6 +49,8 @@ namespace L2 {
                     interference_graph->removeNodeByName(varName);
                 }
             }
+            */
+            
             if (printdebug) std::cerr << "Printing the graph:\n";
             if (printdebug) interference_graph->printGraph();
             Graph* interference_graph_copy = interference_graph->clone();
@@ -229,6 +232,34 @@ namespace L2 {
     }
     std::string Operator::print() {
         return this->sign;
+    }
+
+    /*
+    Deep Copy Instructions
+    */
+
+    Item* Variable::clone() const {
+    return new Variable(this->name);
+    }
+
+    Item* Register::clone() const {
+    return new Register(this->name);
+    }
+
+    Item* Number::clone() const {
+    return new Number(this->value);
+    }
+
+    Item* Name::clone() const {
+    return new Name(this->value);
+    }
+
+    Item* Label::clone() const {
+    return new Label(this->value);
+    }
+
+    Item* Operator::clone() const {
+    return new Operator(this->sign);
     }
 
 
@@ -1079,6 +1110,115 @@ namespace L2 {
         std::cerr << instruction->dst->print() << " " << instruction->method->print() << " " << instruction->src->print() << "\n"; 
     }
 
+    /*
+    Deepy Copy Visitor Methods
+    */
+   void DeepCopyVisitor::visit(Instruction_ret *instruction) {
+        this->copiedInstruction = new Instruction_ret();
+    }
+    void DeepCopyVisitor::visit(Instruction_assignment *instruction) {
+        auto d = instruction->d->clone();
+        auto s = instruction->s->clone();
+        this->copiedInstruction = new Instruction_assignment(d,s);
+    }
+    void DeepCopyVisitor::visit(label_Instruction *instruction) {
+        auto label = instruction->label->clone();
+        this->copiedInstruction = new label_Instruction(label);
+    }
+    void DeepCopyVisitor::visit(goto_label_instruction *instruction) {
+        auto label = instruction->label->clone();
+        this->copiedInstruction = new goto_label_instruction(label);
+    }
+    void DeepCopyVisitor::visit(Call_tenserr_Instruction *instruction) {
+        auto F = instruction->F->clone();
+        this->copiedInstruction = new Call_tenserr_Instruction(F);
+    }
+    void DeepCopyVisitor::visit(Call_uN_Instruction *instruction) {
+        auto u = instruction->u->clone();
+        auto N = instruction->N->clone();
+        this->copiedInstruction = new Call_uN_Instruction(u,N);
+    }
+    void DeepCopyVisitor::visit(Call_print_Instruction *instruction) {
+        this->copiedInstruction = new Call_print_Instruction();
+    }
+    void DeepCopyVisitor::visit(Call_input_Instruction *instruction) {
+        this->copiedInstruction = new Call_input_Instruction();
+    }
+    void DeepCopyVisitor::visit(Call_allocate_Instruction *instruction) {
+        this->copiedInstruction = new Call_allocate_Instruction();
+    }
+    void DeepCopyVisitor::visit(Call_tuple_Instruction *instruction) {
+        this->copiedInstruction = new Call_tuple_Instruction();
+    }
+    void DeepCopyVisitor::visit(w_increment_decrement *instruction) {
+        auto r = instruction->r->clone();
+        auto symbol = instruction->symbol->clone();
+        this->copiedInstruction = new w_increment_decrement(r,symbol);
+    }
+    void DeepCopyVisitor::visit(w_atreg_assignment *instruction) {
+        auto r1 = instruction->r1->clone();
+        auto r2 = instruction->r2->clone();
+        auto r3 = instruction->r3->clone();
+        auto E = instruction->E->clone();
+        this->copiedInstruction = new w_atreg_assignment(r1,r2,r3,E);
+    }
+    void DeepCopyVisitor::visit(Memory_assignment_store *instruction) {
+        auto dst = instruction->dst->clone();
+        auto s = instruction->s->clone();
+        auto M = instruction->M->clone();
+        this->copiedInstruction = new Memory_assignment_store(dst,s,M);
+    }
+    void DeepCopyVisitor::visit(Memory_assignment_load *instruction) {
+        auto dst = instruction->dst->clone();
+        auto x = instruction->x->clone();
+        auto M = instruction->M->clone();
+        this->copiedInstruction = new Memory_assignment_load(dst,x,M);
+    }
+    void DeepCopyVisitor::visit(Memory_arithmetic_load *instruction) {
+        auto dst = instruction->dst->clone();
+        auto x = instruction->x->clone();
+        auto M = instruction->M->clone();
+        auto copied_instruction = instruction->instruction->clone();
+        this->copiedInstruction = new Memory_arithmetic_load(dst,x,copied_instruction,M);
+    }
+    void DeepCopyVisitor::visit(Memory_arithmetic_store *instruction) {
+        auto dst = instruction->dst->clone();
+        auto t = instruction->t->clone();
+        auto M = instruction->M->clone();
+        auto copied_instruction = instruction->instruction->clone();
+        this->copiedInstruction = new Memory_arithmetic_store(dst,t,copied_instruction,M);
+    }
+    void DeepCopyVisitor::visit(cmp_Instruction *instruction) {
+        auto dst = instruction->dst->clone();
+        auto t1 = instruction->t1->clone();
+        auto method = instruction->method->clone();
+        auto t2 = instruction->t2->clone();
+        this->copiedInstruction = new cmp_Instruction(dst,t2,method,t1);
+    }
+    void DeepCopyVisitor::visit(cjump_cmp_Instruction *instruction) {
+        auto cmp = instruction->cmp->clone();
+        auto t1 = instruction->t1->clone();
+        auto label = instruction->label->clone();
+        auto t2 = instruction->t2->clone();    
+        this->copiedInstruction = new cjump_cmp_Instruction(t2,cmp,t1,label);
+    }
+    void DeepCopyVisitor::visit(stackarg_assignment *instruction) {
+        auto w = instruction->w->clone();
+        auto M = instruction->M->clone();
+        this->copiedInstruction = new stackarg_assignment(w,M);
+    }
+    void DeepCopyVisitor::visit(AOP_assignment *instruction) {
+        auto method = instruction->method->clone();
+        auto dst = instruction->dst->clone();
+        auto src = instruction->src->clone();
+        this->copiedInstruction = new AOP_assignment(method,dst,src);
+    }
+    void DeepCopyVisitor::visit(SOP_assignment *instruction) {
+        auto method = instruction->method->clone();
+        auto dst = instruction->dst->clone();
+        auto src = instruction->src->clone();
+        this->copiedInstruction = new SOP_assignment(method,dst,src);
+    }
 
     /*
     Utility Functions

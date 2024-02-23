@@ -23,6 +23,7 @@ namespace L2{
         newFunction->variable_allocator = f->variable_allocator;
         newFunction->variable_allocator.remove_variable(spilledVar->name);
         std::string temp = "%S";
+        DeepCopyVisitor deepVisitor;
         
         // int temp_var = -1;
         // std::string result = temp + std::to_string(temp_var);
@@ -42,10 +43,12 @@ namespace L2{
             auto instruction = f->instructions[i];
             auto assignment_instruction = dynamic_cast<Instruction_assignment*>(instruction);
             instruction->accept(visitor);
+            instruction->accept(&deepVisitor);
+            auto copiedInstruction = deepVisitor.copiedInstruction;
             if (visitor->spilledLHS && visitor->spilledRHS) {
                 Instruction* instruction2 = new Memory_assignment_load(visitor->replacementVariable, var, stack);
                 newFunction->instructions.insert(newFunction->instructions.end(),instruction2);
-                newFunction->instructions.insert(newFunction->instructions.end(),instruction);
+                newFunction->instructions.insert(newFunction->instructions.end(),copiedInstruction);
                 Instruction * instruction1 = new Memory_assignment_store(var, visitor->replacementVariable, stack);
                 newFunction->instructions.insert(newFunction->instructions.end(),instruction1);
                 newFunction->variable_allocator.allocate_variable(visitor->replacementVariable->name, VariableType::reg);
@@ -54,19 +57,19 @@ namespace L2{
             } else if (visitor->spilledRHS){
                 Instruction* instruction2 = new Memory_assignment_load(visitor->replacementVariable, var, stack);
                 newFunction->instructions.insert(newFunction->instructions.end(),instruction2);
-                newFunction->instructions.insert(newFunction->instructions.end(),instruction);
+                newFunction->instructions.insert(newFunction->instructions.end(),copiedInstruction);
                 newFunction->variable_allocator.allocate_variable(visitor->replacementVariable->name, VariableType::reg);
                 visitor->iterReplacementVariable();
                 count++;            
             }  else if (visitor->spilledLHS){
-                newFunction->instructions.insert(newFunction->instructions.end(),instruction);
+                newFunction->instructions.insert(newFunction->instructions.end(),copiedInstruction);
                 Instruction * instruction1 = new Memory_assignment_store(var, visitor->replacementVariable, stack);
                 newFunction->instructions.insert(newFunction->instructions.end(),instruction1);
                 newFunction->variable_allocator.allocate_variable(visitor->replacementVariable->name, VariableType::reg);
                 visitor->iterReplacementVariable(); 
                 count++;            
             } else {
-                newFunction->instructions.insert(newFunction->instructions.end(),instruction);
+                newFunction->instructions.insert(newFunction->instructions.end(),copiedInstruction);
             }
             visitor->spilledLHS = false;
             visitor->spilledRHS = false;

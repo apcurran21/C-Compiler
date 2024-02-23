@@ -47,6 +47,8 @@ namespace L2 {
     public:
       virtual std::string translate() = 0;    // returns string with the x86 conventions attached
       virtual std::string print() = 0;        // returns the value as is
+      virtual Item* clone() const = 0; // Pure virtual clone method
+      virtual ~Item() {} // A virtual destructor to ensure proper cleanup
   };
   class Variable : public Item {
     public:
@@ -54,12 +56,16 @@ namespace L2 {
       std::string translate() override;
       virtual std::string print() override;
       std::string name;
+      Item* clone() const override;
+
   };
   class Register : public Variable {
     public:
       Register (std::string value);
       std::string print() override;
       std::string name;
+      Item* clone() const override;
+
   };
 
   class Number : public Item {
@@ -68,6 +74,8 @@ namespace L2 {
       std::string translate() override;
       std::string print() override;
       int64_t value;
+      Item* clone() const override;
+
   };
 
   class Name : public Item {
@@ -75,8 +83,9 @@ namespace L2 {
       Name (const std::string &value);
       std::string translate() override;
       std::string print() override;
-    private:
       std::string value;
+      Item* clone() const override;
+
   };
 
   class Label : public Item {
@@ -87,6 +96,7 @@ namespace L2 {
       std::string getLabel() const {
         return value;
       };
+      Item* clone() const override;
       std::string value;
   };
 
@@ -97,8 +107,8 @@ namespace L2 {
       std::string print() override;
       bool operator==(const Operator &other) const {
         return this->sign == other.sign;
-      }
-    private:
+      };
+      Item* clone() const override;
       std::string sign;
   };
 
@@ -518,6 +528,31 @@ namespace L2 {
     
       Graph *color_graph; // Member variable for the graph
       Function *current_function; 
+  };
+  class DeepCopyVisitor:  public Visitor {
+    public:
+      void visit(Instruction_ret *instruction) override;
+      void visit(Instruction_assignment *instruction) override;
+      void visit(label_Instruction *instruction) override;
+      void visit(goto_label_instruction *instruction) override;
+      void visit(Call_tenserr_Instruction *instruction) override;
+      void visit(Call_uN_Instruction *instruction) override;
+      void visit(Call_print_Instruction *instruction) override;
+      void visit(Call_input_Instruction *instruction) override;
+      void visit(Call_allocate_Instruction *instruction) override;
+      void visit(Call_tuple_Instruction *instruction) override;
+      void visit(w_increment_decrement *instruction) override;
+      void visit(w_atreg_assignment *instruction) override;
+      void visit(Memory_assignment_store *instruction) override;
+      void visit(Memory_assignment_load *instruction) override;
+      void visit(Memory_arithmetic_load *instruction) override;
+      void visit(Memory_arithmetic_store *instruction) override;
+      void visit(cmp_Instruction *instruction) override;
+      void visit(cjump_cmp_Instruction *instruction) override;
+      void visit(stackarg_assignment *instruction) override;
+      void visit(AOP_assignment *instruction) override;
+      void visit(SOP_assignment *instruction) override;  
+      Instruction* copiedInstruction;
   };
   class PrintVisitor:  public Visitor {
     public:
