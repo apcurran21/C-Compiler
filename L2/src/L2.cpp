@@ -776,20 +776,24 @@ namespace L2 {
         auto varD = dynamic_cast<Variable*>(instruction->d);
         auto varS = dynamic_cast<Variable*>(instruction->s);
         if (replaceD){
-            auto d = this->replacementVariable;
-        } else if (varMap.size()>0 && varMap.find(varD->name)!=varMap.end()){
-            auto d = varMap[varD->name];
+            d = this->replacementVariable;
+        } else if (varD && varMap.size()>0 && varMap.find(varD->name)!=varMap.end()){
+            d = varMap[varD->name];
         } else {
-            auto d = instruction->d->clone();
-            varMap[varD->name] = d;
+            d = instruction->d->clone();
+            if (varD){
+                varMap[varD->name] = d;
+            }
         }
         if (replaceS){
-            auto s = this->replacementVariable;
-        } else if (varMap.size()>0 && varMap.find(varS->name) != varMap.end()){
-            auto s = varMap[varS->name]; // Assuming varMap is correctly defined and accessible
+            s = this->replacementVariable;
+        } else if (varS && varMap.size()>0 && varMap.find(varS->name) != varMap.end()){
+            s = varMap[varS->name]; // Assuming varMap is correctly defined and accessible
         } else {
-            auto s = instruction->s->clone();
-            varMap[varS->name] = s; // Assuming varMap is correctly defined and accessible
+            s = instruction->s->clone();
+            if (varS){
+                varMap[varS->name] = s; // Assuming varMap is correctly defined and accessible
+            }
         }
         if (replaceD){
             this->spilledLHS = true;
@@ -798,7 +802,6 @@ namespace L2 {
             this->spilledRHS = true;
         } 
         this->copiedInstruction = new Instruction_assignment(d,s);
-    
     };
     void SpillVisitor::visit(label_Instruction *instruction) {
         auto label = instruction->label->clone();
@@ -813,16 +816,24 @@ namespace L2 {
         this->copiedInstruction = new Call_tenserr_Instruction(F);
     };
     void SpillVisitor::visit(Call_uN_Instruction *instruction) {
+        Item* u;
         bool replaceU = replaceIfSpilled(instruction->u);
         if (replaceU){
             this->spilledRHS = true;
-            auto N = instruction->N->clone();
-            this->copiedInstruction = new Call_uN_Instruction(this->replacementVariable,N);
+            u = this->replacementVariable;
         } else {
-            auto u = instruction->u->clone();
-            auto N = instruction->N->clone();
-            this->copiedInstruction = new Call_uN_Instruction(u,N);
+            auto varU = dynamic_cast<Variable*>(instruction->u);
+            if (varU && varMap.size() > 0 && varMap.find(varU->name) != varMap.end()) {
+                u = varMap[varU->name]; // Assuming varMap is correctly defined and accessible
+            } else {
+                u = instruction->u->clone();
+                if (varU) {
+                    varMap[varU->name] = u; // Assuming varMap is correctly defined and accessible
+                }
+            }
         }
+        auto N = instruction->N->clone();
+        this->copiedInstruction = new Call_uN_Instruction(u, N);
     };
     void SpillVisitor::visit(Call_print_Instruction *instruction) {
         this->copiedInstruction = new Call_print_Instruction();
@@ -837,228 +848,480 @@ namespace L2 {
         this->copiedInstruction = new Call_tuple_Instruction();
     };
     void SpillVisitor::visit(w_increment_decrement *instruction) {
+        Item* r;
         bool replaceR = replaceIfSpilled(instruction->r);
         if (replaceR) {
-            this->spilledLHS= true;
+            this->spilledLHS = true;
             this->spilledRHS = true;
-            auto symbol = instruction->symbol->clone();
-            this->copiedInstruction = new w_increment_decrement(this->replacementVariable,symbol);
+            r = this->replacementVariable;
         } else {
-            auto r = instruction->r->clone();
-            auto symbol = instruction->symbol->clone();
-            this->copiedInstruction = new w_increment_decrement(r,symbol);
+            auto varR = dynamic_cast<Variable*>(instruction->r);
+            if (varR && varMap.size() > 0 && varMap.find(varR->name) != varMap.end()) {
+                r = varMap[varR->name]; // Assuming varMap is correctly defined and accessible
+            } else {
+                r = instruction->r->clone();
+                if (varR) {
+                    varMap[varR->name] = r; // Assuming varMap is correctly defined and accessible
+                }
+            }
         }
+        auto symbol = instruction->symbol->clone();
+        this->copiedInstruction = new w_increment_decrement(r, symbol);
     };
     void SpillVisitor::visit(w_atreg_assignment *instruction) {
+        Item* r1;
+        Item* r2;
+        Item* r3;
         bool replaceR1 = replaceIfSpilled(instruction->r1);
         bool replaceR2 = replaceIfSpilled(instruction->r2);
         bool replaceR3 = replaceIfSpilled(instruction->r3);
-        auto E = instruction->E->clone();
-        auto r1 = replaceR1 ? this->replacementVariable : instruction->r1->clone();
-        auto r2 = replaceR2 ? this->replacementVariable : instruction->r2->clone();
-        auto r3 = replaceR3 ? this->replacementVariable : instruction->r3->clone();
-        if (replaceR1 ) {
-            this->spilledLHS = true;
-        }
-        if (replaceR2 || replaceR3){
-            this->spilledRHS = true; // We may need to check this later
-        }
-        this->copiedInstruction = new w_atreg_assignment(r1,r2,r3,E);
 
-    };
-    void SpillVisitor::visit(Memory_assignment_store *instruction) {
-        bool replaceS = replaceIfSpilled(instruction->s);
-        bool replaceDST = replaceIfSpilled(instruction->dst);   
-        if (replaceS && replaceDST){
-            auto M = instruction->M->clone();
-            this->copiedInstruction = new Memory_assignment_store(this->replacementVariable,this->replacementVariable,M);
-        } else if (replaceS){
-            auto dst = instruction->dst->clone();
-            auto M = instruction->M->clone();
-            this->copiedInstruction = new Memory_assignment_store(dst,this->replacementVariable,M);
-        } else if (replaceDST){
-            auto s = instruction->s->clone();
-            auto M = instruction->M->clone();
-            this->copiedInstruction = new Memory_assignment_store(this->replacementVariable,s,M);
+        auto E = instruction->E->clone();
+
+        if (replaceR1) {
+            r1 = this->replacementVariable;
+            this->spilledLHS = true;
         } else {
-            auto dst = instruction->dst->clone();
-            auto s = instruction->s->clone();
-            auto M = instruction->M->clone();
-            this->copiedInstruction = new Memory_assignment_store(dst,s,M);
+            auto varR1 = dynamic_cast<Variable*>(instruction->r1);
+            if (varR1 && varMap.size() > 0 && varMap.find(varR1->name) != varMap.end()) {
+                r1 = varMap[varR1->name]; // Assuming varMap is correctly defined and accessible
+            } else {
+                r1 = instruction->r1->clone();
+                if (varR1) {
+                    varMap[varR1->name] = r1; // Assuming varMap is correctly defined and accessible
+                }
+            }
         }
-        if (replaceS || replaceDST){
+
+        if (replaceR2) {
+            r2 = this->replacementVariable;
             this->spilledRHS = true;
+        } else {
+            auto varR2 = dynamic_cast<Variable*>(instruction->r2);
+            if (varR2 && varMap.size() > 0 && varMap.find(varR2->name) != varMap.end()) {
+                r2 = varMap[varR2->name]; // Assuming varMap is correctly defined and accessible
+            } else {
+                r2 = instruction->r2->clone();
+                if (varR2) {
+                    varMap[varR2->name] = r2; // Assuming varMap is correctly defined and accessible
+                }
+            }
         }
+
+        if (replaceR3) {
+            r3 = this->replacementVariable;
+            this->spilledRHS = true;
+        } else {
+            auto varR3 = dynamic_cast<Variable*>(instruction->r3);
+            if (varR3 && varMap.size() > 0 && varMap.find(varR3->name) != varMap.end()) {
+                r3 = varMap[varR3->name]; // Assuming varMap is correctly defined and accessible
+            } else {
+                r3 = instruction->r3->clone();
+                if (varR3) {
+                    varMap[varR3->name] = r3; // Assuming varMap is correctly defined and accessible
+                }
+            }
+        }
+
+        this->copiedInstruction = new w_atreg_assignment(r1, r2, r3, E);
+    };
+
+    void SpillVisitor::visit(Memory_assignment_store *instruction) {
+        Item* s;
+        Item* dst;
+        bool replaceS = replaceIfSpilled(instruction->s);
+        bool replaceDST = replaceIfSpilled(instruction->dst); 
+
+        auto M = instruction->M->clone();
+
+        if (replaceS) {
+            s = this->replacementVariable;
+            this->spilledRHS = true;
+        } else {
+            auto varS = dynamic_cast<Variable*>(instruction->s);
+            if (varS && varMap.find(varS->name) != varMap.end()) {
+                s = varMap[varS->name]; // Use the variable mapping if available
+            } else {
+                s = instruction->s->clone();
+                if (varS) {
+                    varMap[varS->name] = s; // Update the variable mapping
+                }
+            }
+        }
+
+        if (replaceDST) {
+            dst = this->replacementVariable;
+            this->spilledRHS = true;
+        } else {
+            auto varDST = dynamic_cast<Variable*>(instruction->dst);
+            if (varDST && varMap.find(varDST->name) != varMap.end()) {
+                dst = varMap[varDST->name]; // Use the variable mapping if available
+            } else {
+                dst = instruction->dst->clone();
+                if (varDST) {
+                    varMap[varDST->name] = dst; // Update the variable mapping
+                }
+            }
+        }
+
+        this->copiedInstruction = new Memory_assignment_store(dst, s, M);
     };
     void SpillVisitor::visit(Memory_assignment_load *instruction){
+        Item* dst;
+        Item* x;
         bool replaceD = replaceIfSpilled(instruction->dst);
         bool replaceX = replaceIfSpilled(instruction->x);
-        if (replaceX) {
-            this->spilledRHS = true;
-        }    
-        if (replaceD){
+        auto M = instruction->M->clone();
+
+        if (replaceD) {
+            dst = this->replacementVariable;
             this->spilledLHS = true;
-        }  
-        if (replaceX && replaceD){
-            auto M = instruction->M->clone();
-            this->copiedInstruction = new Memory_assignment_load(this->replacementVariable,this->replacementVariable,M);
-        } else if (replaceX){
-            auto dst = instruction->dst->clone();
-            auto M = instruction->M->clone();
-            this->copiedInstruction = new Memory_assignment_load(dst,this->replacementVariable,M);  
-        } else if (replaceD){
-            auto x = instruction->x->clone();
-            auto M = instruction->M->clone();
-            this->copiedInstruction = new Memory_assignment_load(this->replacementVariable,x,M);           
         } else {
-            auto dst = instruction->dst->clone();
-            auto x = instruction->x->clone();
-            auto M = instruction->M->clone();
-            this->copiedInstruction = new Memory_assignment_load(dst,x,M);
+            auto varD = dynamic_cast<Variable*>(instruction->dst);
+            if (varD && varMap.find(varD->name) != varMap.end()) {
+                dst = varMap[varD->name]; // Use the variable mapping if available
+            } else {
+                dst = instruction->dst->clone();
+                if (varD) {
+                    varMap[varD->name] = dst; // Update the variable mapping
+                }
+            }
         }
 
-    } ;
+        if (replaceX) {
+            x = this->replacementVariable;
+            this->spilledRHS = true;
+        } else {
+            auto varX = dynamic_cast<Variable*>(instruction->x);
+            if (varX && varMap.find(varX->name) != varMap.end()) {
+                x = varMap[varX->name]; // Use the variable mapping if available
+            } else {
+                x = instruction->x->clone();
+                if (varX) {
+                    varMap[varX->name] = x; // Update the variable mapping
+                }
+            }
+        }
+
+        this->copiedInstruction = new Memory_assignment_load(dst, x, M);
+    };
+
     void SpillVisitor::visit(Memory_arithmetic_load *instruction) {
+        Item* dst;
+        Item* x;
         bool replaceD = replaceIfSpilled(instruction->dst);
         bool replaceX = replaceIfSpilled(instruction->x);
         auto M = instruction->M->clone();
         auto copied_instruction = instruction->instruction->clone();
+
         if (replaceD) {
+            dst = this->replacementVariable;
             this->spilledLHS = true;
-        }    
-        if (replaceX){
-            this->spilledRHS = true;
-        }
-        if (replaceX && replaceD){
-            auto M = instruction->M->clone();
-            this->copiedInstruction = new Memory_arithmetic_load(this->replacementVariable,this->replacementVariable,copied_instruction,M);
-        } else if (replaceX){
-            auto dst = instruction->dst->clone();
-            this->copiedInstruction = new Memory_arithmetic_load(dst,this->replacementVariable,copied_instruction,M); 
-        } else if (replaceD){
-            auto x = instruction->x->clone();
-            this->copiedInstruction = new Memory_arithmetic_load(this->replacementVariable,x,copied_instruction,M);       
         } else {
-            auto dst = instruction->dst->clone();
-            auto x = instruction->x->clone();
-            this->copiedInstruction = new Memory_arithmetic_load(dst,x,copied_instruction,M);
+            auto varD = dynamic_cast<Variable*>(instruction->dst);
+            if (varD && varMap.find(varD->name) != varMap.end()) {
+                dst = varMap[varD->name]; // Use the variable mapping if available
+            } else {
+                dst = instruction->dst->clone();
+                if (varD) {
+                    varMap[varD->name] = dst; // Update the variable mapping
+                }
+            }
         }
+
+        if (replaceX) {
+            x = this->replacementVariable;
+            this->spilledRHS = true;
+        } else {
+            auto varX = dynamic_cast<Variable*>(instruction->x);
+            if (varX && varMap.find(varX->name) != varMap.end()) {
+                x = varMap[varX->name]; // Use the variable mapping if available
+            } else {
+                x = instruction->x->clone();
+                if (varX) {
+                    varMap[varX->name] = x; // Update the variable mapping
+                }
+            }
+        }
+
+        this->copiedInstruction = new Memory_arithmetic_load(dst, x, copied_instruction, M);
     };
-    void SpillVisitor::visit(Memory_arithmetic_store *instruction){
+
+    void SpillVisitor::visit(Memory_arithmetic_store *instruction) {
+        Item* dst;
+        Item* t;
         bool replaceD = replaceIfSpilled(instruction->dst);
         bool replaceT = replaceIfSpilled(instruction->t);
+        auto M = instruction->M->clone();
+        auto copied_instruction = instruction->instruction->clone();
 
-        if (replaceT || replaceD){
-            this->spilledRHS = true;
-        } 
-        if (replaceT && replaceD){
-            auto M = instruction->M->clone();
-            auto copied_instruction = instruction->instruction->clone();
-            this->copiedInstruction = new Memory_arithmetic_store(this->replacementVariable,this->replacementVariable,copied_instruction,M);
-        } else if (replaceT){
-            auto dst = instruction->dst->clone();
-            auto M = instruction->M->clone();
-            auto copied_instruction = instruction->instruction->clone();
-            this->copiedInstruction = new Memory_arithmetic_store(dst,this->replacementVariable,copied_instruction,M);
-        } else if (replaceD){
-            auto t = instruction->t->clone();
-            auto M = instruction->M->clone();
-            auto copied_instruction = instruction->instruction->clone();
-            this->copiedInstruction = new Memory_arithmetic_store(this->replacementVariable,t,copied_instruction,M);
+        if (replaceD) {
+            dst = this->replacementVariable;
+            this->spilledLHS = true; // Assuming you want to mark LHS as spilled if replaced
         } else {
-            auto dst = instruction->dst->clone();
-            auto t = instruction->t->clone();
-            auto M = instruction->M->clone();
-            auto copied_instruction = instruction->instruction->clone();
-            this->copiedInstruction = new Memory_arithmetic_store(dst,t,copied_instruction,M); 
+            auto varD = dynamic_cast<Variable*>(instruction->dst);
+            if (varD && varMap.find(varD->name) != varMap.end()) {
+                dst = varMap[varD->name]; // Use the variable mapping if available
+            } else {
+                dst = instruction->dst->clone();
+                if (varD) {
+                    varMap[varD->name] = dst; // Update the variable mapping
+                }
+            }
         }
 
-    };
-    void SpillVisitor::visit(cmp_Instruction *instruction){
-        bool replaceD = replaceIfSpilled(instruction->dst);
-        bool replaceT = replaceIfSpilled(instruction->t1);
-        bool replaceM = replaceIfSpilled(instruction->method);    
-        bool replaceT2 = replaceIfSpilled(instruction->t2); 
-        auto dst = instruction->dst->clone();
-        auto t1 = instruction->t1->clone();
-        auto method = instruction->method->clone();
-        auto t2 = instruction->t2->clone();
-        if (replaceD) {
-            this->spilledLHS = true;
-            dst = this->replacementVariable;
-        }  
-        if (replaceT){
+        if (replaceT) {
+            t = this->replacementVariable;
             this->spilledRHS = true;
-            t1 = this->replacementVariable;
-        }   
-        if (replaceT2){
-            this->spilledRHS = true;
-            t2 = this->replacementVariable;
-        }   
-        this->copiedInstruction = new cmp_Instruction(dst,t2,method,t1);
+        } else {
+            auto varT = dynamic_cast<Variable*>(instruction->t);
+            if (varT && varMap.find(varT->name) != varMap.end()) {
+                t = varMap[varT->name]; // Use the variable mapping if available
+            } else {
+                t = instruction->t->clone();
+                if (varT) {
+                    varMap[varT->name] = t; // Update the variable mapping
+                }
+            }
+        }
 
-        
+        // Creating the new Memory_arithmetic_store instruction with potentially replaced items.
+        this->copiedInstruction = new Memory_arithmetic_store(dst, t, copied_instruction, M);
     };
+    void SpillVisitor::visit(cmp_Instruction *instruction) {
+        Item* dst;
+        Item* t1;
+        Item* method;
+        Item* t2;
+        bool replaceD = replaceIfSpilled(instruction->dst);
+        bool replaceT1 = replaceIfSpilled(instruction->t1);
+        bool replaceM = replaceIfSpilled(instruction->method);    
+        bool replaceT2 = replaceIfSpilled(instruction->t2);    
+
+        // Handling dst replacement or cloning with varMap update if necessary
+        if (replaceD) {
+            dst = this->replacementVariable;
+            this->spilledLHS = true;
+        } else {
+            auto varD = dynamic_cast<Variable*>(instruction->dst);
+            if (varD && varMap.find(varD->name) != varMap.end()) {
+                dst = varMap[varD->name];
+            } else {
+                dst = instruction->dst->clone();
+                if (varD) {
+                    varMap[varD->name] = dst;
+                }
+            }
+        }
+
+        // Handling t1 replacement or cloning with varMap update if necessary
+        if (replaceT1) {
+            t1 = this->replacementVariable;
+            this->spilledRHS = true;
+        } else {
+            auto varT1 = dynamic_cast<Variable*>(instruction->t1);
+            if (varT1 && varMap.find(varT1->name) != varMap.end()) {
+                t1 = varMap[varT1->name];
+            } else {
+                t1 = instruction->t1->clone();
+                if (varT1) {
+                    varMap[varT1->name] = t1;
+                }
+            }
+        }
+
+        // Assuming 'method' does not require varMap handling if it's not a variable
+        method = replaceM ? this->replacementVariable : instruction->method->clone();
+
+        // Handling t2 replacement or cloning with varMap update if necessary
+        if (replaceT2) {
+            t2 = this->replacementVariable;
+            this->spilledRHS = true; // Assuming you want to mark RHS as spilled if t2 is replaced
+        } else {
+            auto varT2 = dynamic_cast<Variable*>(instruction->t2);
+            if (varT2 && varMap.find(varT2->name) != varMap.end()) {
+                t2 = varMap[varT2->name];
+            } else {
+                t2 = instruction->t2->clone();
+                if (varT2) {
+                    varMap[varT2->name] = t2;
+                }
+            }
+        }
+
+        // Creating the new cmp_Instruction with potentially replaced or updated items
+        this->copiedInstruction = new cmp_Instruction(dst, t1, method, t2);
+    }
     void SpillVisitor::visit(cjump_cmp_Instruction *instruction){
+        Item* t1;
+        Item* cmp;
+        Item* t2;
+        Item* label;
         bool replaceT2 = replaceIfSpilled(instruction->t2);
         bool replaceCMP = replaceIfSpilled(instruction->cmp);
-        bool replaceT1 = replaceIfSpilled(instruction->t1);    
-        bool replaceLabel = replaceIfSpilled(instruction->label);    
-        auto cmp = instruction->cmp->clone();
-        auto t1 = replaceT1 ? this->replacementVariable : instruction->t1->clone();
-        auto label = instruction->label->clone();
-        auto t2 = replaceT2 ? this->replacementVariable : instruction->t2->clone();
-        if (replaceT2) {
-            this->spilledRHS = true;
-        }         
-        if (replaceT1){
-            this->spilledRHS = true;
-        } 
-        this->copiedInstruction = new cjump_cmp_Instruction(t2,cmp,t1,label);
-    } ;
-    void SpillVisitor::visit(stackarg_assignment *instruction){
-        bool replaceW = replaceIfSpilled(instruction->w);
-        bool replaceM = replaceIfSpilled(instruction->M); 
-        auto w = replaceW ? this->replacementVariable : instruction->w->clone();
-        auto M = instruction->M->clone();  
-        if (replaceW) {
-            this->spilledLHS = true;
-        }      
-        this->copiedInstruction = new stackarg_assignment(w,M);
+        bool replaceT1 = replaceIfSpilled(instruction->t1);
+        // Assuming labels are not variables and thus not subject to spilling/replacement
 
-    };
-    void SpillVisitor::visit(AOP_assignment *instruction){
-        bool replaceMethod = replaceIfSpilled(instruction->method);
-        bool replaceD = replaceIfSpilled(instruction->dst);   
-        bool replaceSrc = replaceIfSpilled(instruction->src);   
-        auto dst = replaceD ? this->replacementVariable : instruction->dst->clone();
-        auto src = replaceSrc ? this->replacementVariable : instruction->src->clone();
-        auto method = instruction->method->clone();
-        if (replaceD) {
-            this->spilledLHS= true;
+        // Handling t2 replacement or cloning with varMap update if necessary
+        if (replaceT2) {
+            t2 = this->replacementVariable;
             this->spilledRHS = true;
-        }          
-        if (replaceSrc){
-            this->spilledRHS=true;
+        } else {
+            auto varT2 = dynamic_cast<Variable*>(instruction->t2);
+            if (varT2 && varMap.find(varT2->name) != varMap.end()) {
+                t2 = varMap[varT2->name];
+            } else {
+                t2 = instruction->t2->clone();
+                if (varT2) {
+                    varMap[varT2->name] = t2;
+                }
+            }
         }
-        this->copiedInstruction = new AOP_assignment(method,dst,src);
+
+        // Handling cmp replacement or cloning
+        cmp = replaceCMP ? this->replacementVariable : instruction->cmp->clone();
+
+        // Handling t1 replacement or cloning with varMap update if necessary
+        if (replaceT1) {
+            t1 = this->replacementVariable;
+            this->spilledRHS = true;
+        } else {
+            auto varT1 = dynamic_cast<Variable*>(instruction->t1);
+            if (varT1 && varMap.find(varT1->name) != varMap.end()) {
+                t1 = varMap[varT1->name];
+            } else {
+                t1 = instruction->t1->clone();
+                if (varT1) {
+                    varMap[varT1->name] = t1;
+                }
+            }
+        }
+
+        // Cloning the label as is, since it doesn't get spilled or replaced
+        label = instruction->label; // Assuming Label* type doesn't require cloning
+
+        // Creating the new cjump_cmp_Instruction with potentially replaced or updated items
+        this->copiedInstruction = new cjump_cmp_Instruction(t2, cmp, t1, label);
     };
+
+    void SpillVisitor::visit(stackarg_assignment *instruction) {
+        Item* w;
+        bool replaceW = replaceIfSpilled(instruction->w);
+        
+        // Handling w replacement or cloning with varMap update if necessary
+        if (replaceW) {
+            w = this->replacementVariable;
+            this->spilledLHS = true;
+        } else {
+            auto varW = dynamic_cast<Variable*>(instruction->w);
+            if (varW && varMap.find(varW->name) != varMap.end()) {
+                w = varMap[varW->name]; // Use the variable mapping if available
+            } else {
+                w = instruction->w->clone();
+                if (varW) {
+                    varMap[varW->name] = w; // Update the variable mapping
+                }
+            }
+        }
+
+        // Assuming M is a memory offset or similar and not subject to varMap replacement
+        auto M = instruction->M->clone();
+
+        // Creating the new stackarg_assignment instruction with potentially replaced or updated w
+        this->copiedInstruction = new stackarg_assignment(w, M);
+    }
+
+    void SpillVisitor::visit(AOP_assignment *instruction) {
+        Item *dst, *src, *method;
+
+        bool replaceD = replaceIfSpilled(instruction->dst);
+        bool replaceSrc = replaceIfSpilled(instruction->src);
+        // Assuming method is an operation and not a variable to replace, we clone directly.
+        method = instruction->method->clone();
+
+        // Handling dst replacement or cloning with varMap update if necessary
+        if (replaceD) {
+            dst = this->replacementVariable;
+            this->spilledLHS = true;
+        } else {
+            auto varDst = dynamic_cast<Variable*>(instruction->dst);
+            if (varDst && varMap.find(varDst->name) != varMap.end()) {
+                dst = varMap[varDst->name]; // Use the variable mapping if available
+            } else {
+                dst = instruction->dst->clone();
+                if (varDst) {
+                    varMap[varDst->name] = dst; // Update the variable mapping
+                }
+            }
+        }
+
+        // Handling src replacement or cloning with varMap update if necessary
+        if (replaceSrc) {
+            src = this->replacementVariable;
+            this->spilledRHS = true;
+        } else {
+            auto varSrc = dynamic_cast<Variable*>(instruction->src);
+            if (varSrc && varMap.find(varSrc->name) != varMap.end()) {
+                src = varMap[varSrc->name]; // Use the variable mapping if available
+            } else {
+                src = instruction->src->clone();
+                if (varSrc) {
+                    varMap[varSrc->name] = src; // Update the variable mapping
+                }
+            }
+        }
+
+        // Spilling flags are adjusted above based on whether replacements were made
+        this->copiedInstruction = new AOP_assignment(method, dst, src);
+    }
+
     void SpillVisitor::visit(SOP_assignment *instruction) {
-        bool replaceMethod = replaceIfSpilled(instruction->method);
-        bool replaceDst = replaceIfSpilled(instruction->dst);   
-        bool replaceSrc = replaceIfSpilled(instruction->src);  
-        auto dst = replaceDst ? this->replacementVariable : instruction->dst->clone();
-        auto src = replaceSrc ? this->replacementVariable : instruction->src->clone(); // this is a far better way than just randomly deep copying memory above 
+        // Clone the method directly as it's likely an operation rather than a variable.
         auto method = instruction->method->clone();
+
+        // Check if dst and src need to be replaced due to spilling
+        bool replaceDst = replaceIfSpilled(instruction->dst);
+        bool replaceSrc = replaceIfSpilled(instruction->src);
+    
+        // Replace or clone dst, update varMap if necessary
+        Item *dst;
         if (replaceDst) {
-            this->spilledLHS= true;
+            dst = this->replacementVariable;
+            this->spilledLHS = true;
+        } else {
+            auto varDst = dynamic_cast<Variable*>(instruction->dst);
+            if (varDst && varMap.find(varDst->name) != varMap.end()) {
+                dst = varMap[varDst->name]; // Use the variable mapping if available
+            } else {
+                dst = instruction->dst->clone();
+                if (varDst) {
+                    varMap[varDst->name] = dst; // Update the variable mapping
+                }
+            }
+        }
+
+        // Replace or clone src, update varMap if necessary
+        Item *src;
+        if (replaceSrc) {
+            src = this->replacementVariable;
             this->spilledRHS = true;
-        }          
-        if (replaceSrc){
-            this->spilledRHS = true;
-        }        
-        this->copiedInstruction = new SOP_assignment(method,dst,src);
-    };  
+        } else {
+            auto varSrc = dynamic_cast<Variable*>(instruction->src);
+            if (varSrc && varMap.find(varSrc->name) != varMap.end()) {
+                src = varMap[varSrc->name]; // Use the variable mapping if available
+            } else {
+                src = instruction->src->clone();
+                if (varSrc) {
+                    varMap[varSrc->name] = src; // Update the variable mapping
+                }
+            }
+        }
+
+        // Note that spilledRHS is already set true if either dst or src is replaced.
+        // Create a new SOP_assignment with the potentially replaced or updated dst and src, along with the cloned method.
+        this->copiedInstruction = new SOP_assignment(method, dst, src);
+    };
+
 
     /*
     Calculate the Use/Def sets by running over each instruction's visit method

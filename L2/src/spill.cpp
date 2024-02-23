@@ -42,7 +42,7 @@ namespace L2{
             auto assignment_instruction = dynamic_cast<Instruction_assignment*>(instruction);
             instruction->accept(visitor);
             auto copiedInstruction = visitor->copiedInstruction;
-            if (visitor->spilledLHS && visitor->spilledRHS) {
+            if (visitor->spilledLHS ==true && visitor->spilledRHS==true) {
                 Variable* var1 = newFunction->variable_allocator.allocate_variable("rsp", VariableType::reg);
                 Instruction* instruction2 = new Memory_assignment_load(visitor->replacementVariable, var1, stack);
                 newFunction->instructions.insert(newFunction->instructions.end(),instruction2);
@@ -52,7 +52,7 @@ namespace L2{
                 newFunction->variable_allocator.allocate_variable(visitor->replacementVariable->name, VariableType::reg);
                 visitor->iterReplacementVariable();
                 count++;            
-            } else if (visitor->spilledRHS){
+            } else if (visitor->spilledRHS == true){
                 Variable* var2 = newFunction->variable_allocator.allocate_variable("rsp", VariableType::reg);
                 Instruction* instruction2 = new Memory_assignment_load(visitor->replacementVariable, var2, stack);
                 newFunction->instructions.insert(newFunction->instructions.end(),instruction2);
@@ -60,7 +60,7 @@ namespace L2{
                 newFunction->variable_allocator.allocate_variable(visitor->replacementVariable->name, VariableType::reg);
                 visitor->iterReplacementVariable();
                 count++;            
-            }  else if (visitor->spilledLHS){
+            }  else if (visitor->spilledLHS == true){
                 Variable* var3 = newFunction->variable_allocator.allocate_variable("rsp", VariableType::reg);
                 newFunction->instructions.insert(newFunction->instructions.end(),copiedInstruction);
                 Instruction * instruction1 = new Memory_assignment_store(var3, visitor->replacementVariable, stack);
