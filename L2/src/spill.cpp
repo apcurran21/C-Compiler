@@ -21,6 +21,7 @@ namespace L2{
         newFunction->name = f->name;
         newFunction->arguments = f->arguments;
         newFunction->variable_allocator = f->variable_allocator;
+        newFunction->locals = stack_count;
         newFunction->variable_allocator.remove_variable(spilledVar->name);
         std::string temp = "%S";
         
