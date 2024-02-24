@@ -513,3 +513,11 @@ mem rdi 16 <- %S2
 mem rdi 24 <- %thirdRow
 call print 1
 return
+
+
+
+### 2/23/24
+* %v4Encoded <- %v4Encoded      what should the instructions be if we need to spill %v4Enconded?
+
+%S1% is the first to go and it is making it into the if (g->spill_vars.find(node->var) == g->spill_vars.end()) condition (bad)
+  - this is because the variable is not being found in the graph's spill_vars set.

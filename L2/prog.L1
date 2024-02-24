@@ -1,37 +1,66 @@
-(@go
-(@go
-	0 7
-	mem rsp 40 <- rbx
-	mem rsp 32 <- rbp
-	mem rsp 24 <- r15
-	mem rsp 16 <- r14
-	mem rsp 8 <- r13
-	mem rsp 0 <- r12
-	rdi <- 1
-	mem rsp 48 <- rdi
-	rdi <- 0
-	r12 <- 1
-	r13 <- 0
-	:loop
-	r14 <- rdi
-	r14 += r12
-	rdi <- r14
-	rcx <- mem rsp 48
-	rdi <<= rcx
-	rdi += 1
+(@main
+(@main
+	0 15
+	%S15 <- 1
+	mem rsp 32 <- %S15
+	%S19 <- 2
+	mem rsp 48 <- %S19
+	mem rsp -8 <- :call_label0
+	%S16 <- mem rsp 32
+	rdi <- %S16
+	%S20 <- mem rsp 48
+	rsi <- %S20
+	rdx <- 3
+	call @myF 3
+	:call_label0
+	%S21 <- rax
+	mem rsp 56 <- %S21
+	%S22 <- mem rsp 56
+	%S17 <- %S22
+	mem rsp 40 <- %S17
+	%S18 <- mem rsp 40
+	mem rsp 0 <- %S18
+	%S1 <<= 1
+	mem rsp 0 <- %S1
+	%S8 <- mem rsp 0
+	mem rsp 8 <- %S8
+	%S9 <- mem rsp 8
+	%S9 <- %S9
+	mem rsp 8 <- %S9
+	%S10 <- mem rsp 8
+	mem rsp 0 <- %S10
+	%S23 <- mem rsp 0
+	mem rsp 64 <- %S23
+	%S24 <- mem rsp 64
+	%S24 += 1
+	mem rsp 64 <- %S24
+	%S25 <- mem rsp 64
+	mem rsp 0 <- %S25
+	%S13 <- mem rsp 0
+	mem rsp 24 <- %S13
+	%S14 <- mem rsp 24
+	rdi <- %S14
 	call print 1
-	rdi <- r12
-	r12 <- r14
-	r13++
-	rax <- r13 <= 20
-	cjump rax = 1 :loop
-	r12 <- mem rsp 0
-	r13 <- mem rsp 8
-	r14 <- mem rsp 16
-	r15 <- mem rsp 24
-	rbp <- mem rsp 32
-	rbx <- mem rsp 40
+	%S11 <- mem rsp 0
+	mem rsp 16 <- %S11
+	%S12 <- mem rsp 16
+	rdi <- %S12
+	rsi <- 1
+	call allocate 2
+	%S7 <- rax
+	mem rsp 0 <- %S7
+	rax <- 0
 	return
-)
-
+	)
+(@myF
+	3 0
+	r10 <- rdi
+	r8 <- rsi
+	r11 <- rdx
+	r10 <- r10
+	r10 += r8
+	r10 += r11
+	rax <- r10
+	return
+	)
 )

@@ -26,6 +26,12 @@ namespace L2 {
         Function* fptr_out;
         std::map<std::string, bool> seenVariables;
 
+        /*
+        Make a deep copy of the original function in case the big fail case occurs.
+        */
+        Function* original_function;
+        // original_function = deep_copy_function(fptr);
+
         int spill_count = 0;
 
         while (true) {
@@ -33,25 +39,7 @@ namespace L2 {
             We need to iterate until we are able to fully color each node in the 
             function's interference graph, or we spill everything.
             */
-
             Graph* interference_graph = analyze_L2(fptr);
-
-            // Iterate over seenVariables to remove corresponding nodes from the graph based on their names.
-            /*
-            for (const auto& varEntry : seenVariables) {
-                // Check if the variable is marked as 'seen' (true).
-                if (varEntry.second) {
-                    // varEntry.first holds the name of the variable.
-                    const std::string& varName = varEntry.first;
-
-                    // Directly attempt to remove the node by its variable name, avoiding the creation of a Variable instance.
-                    // This assumes you have a method like removeNodeByName implemented in your Graph class.
-                    interference_graph->removeNodeByName(varName);
-                }
-            }
-            */
-            
-            
             
             if (printdebug) std::cerr << "Printing the graph:\n";
             if (printdebug) interference_graph->printGraph();
@@ -63,26 +51,35 @@ namespace L2 {
             std::vector<Node*> uncolored_nodes = std::get<1>(color_result);
             int stack_counter = 0;
             if (big_fail) {
+                /*
+                Create an interference graph from the original function.
+                */
+                Graph* original_function_interference_graph = analyze_L2(original_function);
 
                 /*
-                Spill all variables in the graph.
+                Get a vector of its variable nodes to iterate over - we will spill each one.
                 */
+                std::vector<Node*> variable_nodes_vec = original_function_interference_graph->getVarNodes();
 
-                for (auto& pair : interference_graph_copy->nodes) {
-                    auto var = pair.first;
-                    auto reg_ptr = dynamic_cast<L2::Register*>(var);
-                    if ((!reg_ptr) && (fptr->spill_variables_set.find(var) == fptr->spill_variables_set.end())) {
-                    std::tuple<std::set<std::string>,L2::Function*,int> resultTuple = L2::spillForL2(fptr, var, spill_count, stack_counter);
-                    auto changed = std::get<0>(resultTuple); // For the std::set<std::string>
-                    L2::Function* newFunction = std::get<1>(resultTuple);
-                    spill_count = std::get<2>(resultTuple);
+                /*
+                Iterate over each of these nodes, spilling and getting the updated functions.
+                - the order we do this shouldn't really matter.
+                */
+                while (!variable_nodes_vec.empty()) {
+                    Node* var_node = variable_nodes_vec.back();
+                    variable_nodes_vec.pop_back();
+                    Variable* variable = var_node->var;
+                    std::tuple<std::set<std::string>,L2::Function*,int> spill_result = L2::spillForL2(fptr, variable, spill_count, stack_counter);
+                    std::set<std::string> spilled_set = std::get<0>(spill_result);
+                    L2::Function* newFunction = std::get<1>(spill_result);
+                    spill_count = std::get<2>(spill_result);
                     fptr = newFunction;
                     stack_counter++;
-                    }
                 }
-
-                fptr_out = fptr;
-                break;
+                /*
+                We shouldn't break, since we still need to color this updated function which is now stored in fptr.
+                */
+                // break;
 
             } else if (uncolored_nodes.size() == 0) {
 
