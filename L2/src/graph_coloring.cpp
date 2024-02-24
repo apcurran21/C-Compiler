@@ -148,9 +148,7 @@ namespace L2 {
       bool failed_to_color = false;
       /*
       We need to try to color each node and add it back into the graph.
-      - Would a while loop with pop_back() be safer here?
       */
-      // for (auto node : node_stack) {
       while (!node_stack.empty()) {
         
         Node* node = node_stack.back();
@@ -209,19 +207,21 @@ namespace L2 {
           Check if the current node is one of our spill variables
           */
           if (g->spill_vars.find(node->var) == g->spill_vars.end()) {
-            /*
-            If it isn't found in this map, we are allowed to spill it.
-            */
-            uncolored_nodes.push_back(node);
+              /*
+              This check should have the same behavior as the one above. 
+              */
+              auto node_name = node->var->name;
+              if (node_name[0]=='%' && node_name[1]=='S'){
+                continue;
+              }
+
+              /*
+              If it isn't found in this map (meaning it isn't a spill variable), we are allowed to spill it.
+              */
+              uncolored_nodes.push_back(node);
           }
 
-          /*
-          This check should have the same behavior as the one above. 
-          */
-          auto node_name = node->var->name;
-          if (node_name[0]=='%' && node_name[1]=='S'){
-              continue;
-          }
+
 
           /*
           However if it is, we just add it into the graph without a color and hope another variable is able to be spilled so we can recalculate liveness.

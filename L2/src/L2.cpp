@@ -2,7 +2,7 @@
 
 namespace L2 {
 
-    int printdebug = 1;
+    int printdebug = 0;
 
     /*
     Code Analysis.
@@ -26,32 +26,21 @@ namespace L2 {
         Function* fptr_out;
         std::map<std::string, bool> seenVariables;
 
+        /*
+        Make a deep copy of the original function in case the big fail case occurs.
+        */
+        Function* original_function;
+        original_function = deepCopyFunction(fptr);
+
         int spill_count = 0;
         int stack_counter = 0;
+        bool big_fail = false;
         while (true) {
             /*
             We need to iterate until we are able to fully color each node in the 
             function's interference graph, or we spill everything.
             */
-
             Graph* interference_graph = analyze_L2(fptr);
-
-            // Iterate over seenVariables to remove corresponding nodes from the graph based on their names.
-            /*
-            for (const auto& varEntry : seenVariables) {
-                // Check if the variable is marked as 'seen' (true).
-                if (varEntry.second) {
-                    // varEntry.first holds the name of the variable.
-                    const std::string& varName = varEntry.first;
-
-                    // Directly attempt to remove the node by its variable name, avoiding the creation of a Variable instance.
-                    // This assumes you have a method like removeNodeByName implemented in your Graph class.
-                    interference_graph->removeNodeByName(varName);
-                }
-            }
-            */
-            
-            
             
             if (printdebug) std::cerr << "Printing the graph:\n";
             if (printdebug) interference_graph->printGraph();
@@ -59,29 +48,38 @@ namespace L2 {
 
             std::tuple<bool, std::vector<Node*>> color_result = color_graph(interference_graph, interference_graph_copy, fptr);
 
-            bool big_fail = std::get<0>(color_result);
+            big_fail = std::get<0>(color_result);
             std::vector<Node*> uncolored_nodes = std::get<1>(color_result);
             if (big_fail) {
+                /*
+                Create an interference graph from the original function.
+                */
+                Graph* original_function_interference_graph = analyze_L2(original_function);
 
                 /*
-                Spill all variables in the graph.
+                Get a vector of its variable nodes to iterate over - we will spill each one.
                 */
+                std::vector<Node*> variable_nodes_vec = original_function_interference_graph->getVarNodes();
 
-                for (auto& pair : interference_graph_copy->nodes) {
-                    auto var = pair.first;
-                    auto reg_ptr = dynamic_cast<L2::Register*>(var);
-                    if ((!reg_ptr) && (fptr->spill_variables_set.find(var) == fptr->spill_variables_set.end())) {
-                    std::tuple<std::set<std::string>,L2::Function*,int> resultTuple = L2::spillForL2(fptr, var, spill_count, stack_counter);
-                    auto changed = std::get<0>(resultTuple); // For the std::set<std::string>
-                    L2::Function* newFunction = std::get<1>(resultTuple);
-                    spill_count = std::get<2>(resultTuple);
+                /*
+                Iterate over each of these nodes, spilling and getting the updated functions.
+                - the order we do this shouldn't really matter.
+                */
+                while (!variable_nodes_vec.empty()) {
+                    Node* var_node = variable_nodes_vec.back();
+                    variable_nodes_vec.pop_back();
+                    Variable* variable = var_node->var;
+                    std::tuple<std::set<std::string>,L2::Function*,int> spill_result = L2::spillForL2(fptr, variable, spill_count, stack_counter);
+                    std::set<std::string> spilled_set = std::get<0>(spill_result);
+                    L2::Function* newFunction = std::get<1>(spill_result);
+                    spill_count = std::get<2>(spill_result);
                     fptr = newFunction;
                     stack_counter++;
-                    }
                 }
-
-                fptr_out = fptr;
-                break;
+                /*
+                We shouldn't break, since we still need to color this updated function which is now stored in fptr.
+                */
+                // break;
 
             } else if (uncolored_nodes.size() == 0) {
 
@@ -1529,14 +1527,156 @@ namespace L2 {
         std::cerr << instruction->dst->print() << " " << instruction->method->print() << " " << instruction->src->print() << "\n"; 
     }
 
+
+    /*
+    Deepy Copy Visitor Methods
+    */
+    void DeepCopyVisitor::visit(Instruction_ret *instruction) {
+        this->copiedInstruction = new Instruction_ret();
+    }
+    void DeepCopyVisitor::visit(Instruction_assignment *instruction) {
+        auto d = instruction->d->clone();
+        auto s = instruction->s->clone();
+        this->copiedInstruction = new Instruction_assignment(d,s);
+    }
+    void DeepCopyVisitor::visit(label_Instruction *instruction) {
+        auto label = instruction->label->clone();
+        this->copiedInstruction = new label_Instruction(label);
+    }
+    void DeepCopyVisitor::visit(goto_label_instruction *instruction) {
+        auto label = instruction->label->clone();
+        this->copiedInstruction = new goto_label_instruction(label);
+    }
+    void DeepCopyVisitor::visit(Call_tenserr_Instruction *instruction) {
+        auto F = instruction->F->clone();
+        this->copiedInstruction = new Call_tenserr_Instruction(F);
+    }
+    void DeepCopyVisitor::visit(Call_uN_Instruction *instruction) {
+        auto u = instruction->u->clone();
+        auto N = instruction->N->clone();
+        this->copiedInstruction = new Call_uN_Instruction(u,N);
+    }
+    void DeepCopyVisitor::visit(Call_print_Instruction *instruction) {
+        this->copiedInstruction = new Call_print_Instruction();
+    }
+    void DeepCopyVisitor::visit(Call_input_Instruction *instruction) {
+        this->copiedInstruction = new Call_input_Instruction();
+    }
+    void DeepCopyVisitor::visit(Call_allocate_Instruction *instruction) {
+        this->copiedInstruction = new Call_allocate_Instruction();
+    }
+    void DeepCopyVisitor::visit(Call_tuple_Instruction *instruction) {
+        this->copiedInstruction = new Call_tuple_Instruction();
+    }
+    void DeepCopyVisitor::visit(w_increment_decrement *instruction) {
+        auto r = instruction->r->clone();
+        auto symbol = instruction->symbol->clone();
+        this->copiedInstruction = new w_increment_decrement(r,symbol);
+    }
+    void DeepCopyVisitor::visit(w_atreg_assignment *instruction) {
+        auto r1 = instruction->r1->clone();
+        auto r2 = instruction->r2->clone();
+        auto r3 = instruction->r3->clone();
+        auto E = instruction->E->clone();
+        this->copiedInstruction = new w_atreg_assignment(r1,r2,r3,E);
+    }
+    void DeepCopyVisitor::visit(Memory_assignment_store *instruction) {
+        auto dst = instruction->dst->clone();
+        auto s = instruction->s->clone();
+        auto M = instruction->M->clone();
+        this->copiedInstruction = new Memory_assignment_store(dst,s,M);
+    }
+    void DeepCopyVisitor::visit(Memory_assignment_load *instruction) {
+        auto dst = instruction->dst->clone();
+        auto x = instruction->x->clone();
+        auto M = instruction->M->clone();
+        this->copiedInstruction = new Memory_assignment_load(dst,x,M);
+    }
+    void DeepCopyVisitor::visit(Memory_arithmetic_load *instruction) {
+        auto dst = instruction->dst->clone();
+        auto x = instruction->x->clone();
+        auto M = instruction->M->clone();
+        auto copied_instruction = instruction->instruction->clone();
+        this->copiedInstruction = new Memory_arithmetic_load(dst,x,copied_instruction,M);
+    }
+    void DeepCopyVisitor::visit(Memory_arithmetic_store *instruction) {
+        auto dst = instruction->dst->clone();
+        auto t = instruction->t->clone();
+        auto M = instruction->M->clone();
+        auto copied_instruction = instruction->instruction->clone();
+        this->copiedInstruction = new Memory_arithmetic_store(dst,t,copied_instruction,M);
+    }
+    void DeepCopyVisitor::visit(cmp_Instruction *instruction) {
+        auto dst = instruction->dst->clone();
+        auto t1 = instruction->t1->clone();
+        auto method = instruction->method->clone();
+        auto t2 = instruction->t2->clone();
+        this->copiedInstruction = new cmp_Instruction(dst,t2,method,t1);
+    }
+    void DeepCopyVisitor::visit(cjump_cmp_Instruction *instruction) {
+        auto cmp = instruction->cmp->clone();
+        auto t1 = instruction->t1->clone();
+        auto label = instruction->label->clone();
+        auto t2 = instruction->t2->clone();    
+        this->copiedInstruction = new cjump_cmp_Instruction(t2,cmp,t1,label);
+    }
+    void DeepCopyVisitor::visit(stackarg_assignment *instruction) {
+        auto w = instruction->w->clone();
+        auto M = instruction->M->clone();
+        this->copiedInstruction = new stackarg_assignment(w,M);
+    }
+    void DeepCopyVisitor::visit(AOP_assignment *instruction) {
+        auto method = instruction->method->clone();
+        auto dst = instruction->dst->clone();
+        auto src = instruction->src->clone();
+        this->copiedInstruction = new AOP_assignment(method,dst,src);
+    }
+    void DeepCopyVisitor::visit(SOP_assignment *instruction) {
+        auto method = instruction->method->clone();
+        auto dst = instruction->dst->clone();
+        auto src = instruction->src->clone();
+        this->copiedInstruction = new SOP_assignment(method,dst,src);
+    }
+
+
     /*
     Utility Functions
     */
     void printFunction(Function *fptr) {
-        PrintVisitor* myPrintVisitor = new L2::PrintVisitor();
+        PrintVisitor* myPrintVisitor = new PrintVisitor();
         for (auto iptr : fptr->instructions) {
             iptr->accept(myPrintVisitor);
         }
+    }
+
+    Function* deepCopyFunction(Function *fptr) {
+        /*
+        Note - the DeepCopyVisitor is only responsible for making deep copies of the individual instructions
+        */
+
+        /*
+        Initialize the output function and visitors.
+        */
+        Function* new_function = new Function();
+        DeepCopyVisitor* myDeepCopyVisitor = new DeepCopyVisitor();
+
+        /*
+        Copy over the function fields.
+        */
+        new_function->name = fptr->name;
+        new_function->arguments = fptr->arguments;
+        new_function->locals = fptr->locals;
+
+        /*
+        Copy over the instructions.
+        */
+        for (auto& instruction : fptr->instructions) {
+            instruction->accept(myDeepCopyVisitor);
+            auto copiedInstruction = myDeepCopyVisitor->copiedInstruction;
+            new_function->instructions.push_back(copiedInstruction);
+        }
+
+        return new_function;
     }
 
 }

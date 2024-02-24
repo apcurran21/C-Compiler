@@ -152,6 +152,11 @@ namespace L2{
     // Create a new graph instance.
     auto newGraph = new Graph();
 
+    /*
+    Make sure to transfer over all the original graph's spill variable set
+    */
+    newGraph->spill_vars = spill_vars;
+
     std::map<const Node*, Node*> origToNewNodeMap;
 
     for (const auto &nodePair : this->nodes) {
