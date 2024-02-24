@@ -397,7 +397,7 @@ namespace L2 {
     public:
       std::string name;
       int64_t arguments;
-      int64_t locals;
+      int locals;
       std::vector<Instruction *> instructions;
       VariableAllocator variable_allocator;
       std::set<Variable *> spilled_variables; // for original variables in the L2 program that need to be spilled

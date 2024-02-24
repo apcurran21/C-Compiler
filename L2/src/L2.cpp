@@ -33,7 +33,7 @@ namespace L2 {
         // original_function = deep_copy_function(fptr);
 
         int spill_count = 0;
-
+        int stack_counter = 0;
         while (true) {
             /*
             We need to iterate until we are able to fully color each node in the 
@@ -49,7 +49,6 @@ namespace L2 {
 
             bool big_fail = std::get<0>(color_result);
             std::vector<Node*> uncolored_nodes = std::get<1>(color_result);
-            int stack_counter = 0;
             if (big_fail) {
                 /*
                 Create an interference graph from the original function.
@@ -1147,7 +1146,7 @@ namespace L2 {
         }
 
         // Creating the new cmp_Instruction with potentially replaced or updated items
-        this->copiedInstruction = new cmp_Instruction(dst, t1, method, t2);
+        this->copiedInstruction = new cmp_Instruction(dst, t2, method, t1);
     }
     void SpillVisitor::visit(cjump_cmp_Instruction *instruction){
         Item* t1;
@@ -1285,6 +1284,7 @@ namespace L2 {
         Item *dst;
         if (replaceDst) {
             dst = this->replacementVariable;
+            this->spilledRHS = true;
             this->spilledLHS = true;
         } else {
             auto varDst = dynamic_cast<Variable*>(instruction->dst);

@@ -121,7 +121,6 @@ namespace L2{
 
   void stackarg_assignment::gen(Function *f, std::ofstream &outputFile) {
     outputFile << this->w->print()<<" <- "<< "mem rsp "<<this->M->print()<<"\n\t";
-
   }
 
   // void generate_code(Program p, bool changed, Graph *color_graph){
@@ -163,26 +162,37 @@ namespace L2{
       theres some weird stuff going on with 'changed' why is everything inconsistent
       just hardcode for now and remove the extra arg so we can at least compile
       */
-
+ 
+ 
       int stack_size = 0;
-      std::set<std::string> seenStrings; // Declare a set of strings
+      std::unordered_map<int, bool> seen;
       // ColorVariablesVisitor* myColorVisitor = new ColorVariablesVisitor(color_graph,fptr);
       for (Instruction *iptr : fptr->instructions) {
         auto instruction = dynamic_cast<Memory_assignment_store*>(iptr);
         if (instruction){
           auto number = dynamic_cast<Number*>(instruction->M);
           auto variable = dynamic_cast<Variable*>(instruction->s);
-          if (number->value >=0 && seenStrings.find(variable->name) == seenStrings.end()){
-            stack_size++;
-            seenStrings.insert(variable->name);
+          if (number->value >=0){
+            if (seen.find(number->value) == seen.end()) {
+              stack_size++;
+              seen[number->value] = true;
+            }
           }
         }
       }
+ 
+    
       //This might supposed to be stack_size here 
-      outputFile << fptr->arguments<<" "<<std::to_string(stack_size)<<"\n\t";
+
+      outputFile << fptr->arguments<<" "<<stack_size<<"\n\t";
       for (Instruction *iptr : fptr->instructions) {
         // iptr->accept(myColorVisitor);
-        iptr->gen(fptr, outputFile);
+        auto cast_stack_arg = dynamic_cast<stackarg_assignment*>(iptr);
+        if (cast_stack_arg){
+          outputFile << cast_stack_arg->w->print()<<" <- "<< "mem rsp "<<std::stoi(cast_stack_arg->M->print())+ (8*stack_size) << "\n\t";
+        } else {
+          iptr->gen(fptr, outputFile);
+        }
       }
       outputFile<<")\n";
     }
