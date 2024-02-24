@@ -148,9 +148,7 @@ namespace L2 {
       bool failed_to_color = false;
       /*
       We need to try to color each node and add it back into the graph.
-      - Would a while loop with pop_back() be safer here?
       */
-      // for (auto node : node_stack) {
       while (!node_stack.empty()) {
         
         Node* node = node_stack.back();

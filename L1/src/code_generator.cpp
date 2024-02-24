@@ -142,7 +142,12 @@ namespace L1{
   void Memory_assignment_store::gen(Function *f, std::ofstream &outputFile) {
     if (debug) std:cerr << "gen method called for a Memory_assignment_store instance!" << std::endl;
     outputFile << "movq ";
-    if (dynamic_cast<Label*>(this->s)) {
+    // if (dynamic_cast<Label*>(this->s)) {
+      /*
+      Changing the above line, it might be required that function namees in the source might also need to be 
+      prepended by '$', and then the '_'
+      */
+    if (dynamic_cast<Label*>(this->s) || dynamic_cast<Name*>(this->s)) {
       outputFile << "$";
     }
     outputFile << this->s->translate() << ", " << this->M->print() << "(" << this->dst->translate() << ")\n";

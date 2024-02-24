@@ -1,0 +1,1847 @@
+(@main
+(@main
+	0 8
+	:call_label0
+	r10 <- 0
+	mem rsp 56 <- r10
+	r10 <- 0
+	mem rsp 48 <- r10
+	r10 <- 0
+	mem rsp 40 <- r10
+	r10 <- 601
+	mem rsp 8 <- r10
+	r10 <- mem rsp 8
+	r10 <- r10
+	r10 >>= 1
+	r11 <- r10
+	r10 <- mem rsp 8
+	r10 <- r10
+	r10 >>= 1
+	r11 <- r11
+	r11 *= r10
+	r11 <- r11
+	r11 <<= 1
+	r11 <- r11
+	r11 += 1
+	r11 <- r11
+	r11 += 6
+	rdi <- r11
+	rsi <- 1
+	call allocate 2
+	r10 <- rax
+	mem rsp 40 <- r10
+	r10 <- mem rsp 40
+	r10 <- r10
+	r10 += 8
+	mem r10 0 <- 5
+	r10 <- mem rsp 40
+	r10 <- r10
+	r10 += 16
+	r11 <- mem rsp 8
+	mem r10 0 <- r11
+	r10 <- mem rsp 40
+	r11 <- r10
+	r11 += 24
+	r10 <- mem rsp 8
+	mem r11 0 <- r10
+	r10 <- mem rsp 8
+	r10 <- r10
+	r10 >>= 1
+	r11 <- r10
+	r10 <- mem rsp 8
+	r10 <- r10
+	r10 >>= 1
+	r11 <- r11
+	r11 *= r10
+	r11 <- r11
+	r11 <<= 1
+	r11 <- r11
+	r11 += 1
+	r11 <- r11
+	r11 += 6
+	rdi <- r11
+	rsi <- 1
+	call allocate 2
+	r10 <- rax
+	mem rsp 48 <- r10
+	r10 <- mem rsp 48
+	r10 <- r10
+	r10 += 8
+	mem r10 0 <- 5
+	r10 <- mem rsp 48
+	r10 <- r10
+	r10 += 16
+	r11 <- mem rsp 8
+	mem r10 0 <- r11
+	r10 <- mem rsp 48
+	r10 <- r10
+	r10 += 24
+	r11 <- mem rsp 8
+	mem r10 0 <- r11
+	r10 <- mem rsp 8
+	r10 <- r10
+	r10 >>= 1
+	r11 <- r10
+	r10 <- mem rsp 8
+	r10 <- r10
+	r10 >>= 1
+	r11 <- r11
+	r11 *= r10
+	r11 <- r11
+	r11 <<= 1
+	r11 <- r11
+	r11 += 1
+	r11 <- r11
+	r11 += 6
+	rdi <- r11
+	rsi <- 1
+	call allocate 2
+	r10 <- rax
+	mem rsp 56 <- r10
+	r10 <- mem rsp 56
+	r10 <- r10
+	r10 += 8
+	mem r10 0 <- 5
+	r10 <- mem rsp 56
+	r11 <- r10
+	r11 += 16
+	r10 <- mem rsp 8
+	mem r11 0 <- r10
+	r10 <- mem rsp 56
+	r11 <- r10
+	r11 += 24
+	r10 <- mem rsp 8
+	mem r11 0 <- r10
+	r10 <- 9
+	mem rsp 24 <- r10
+	r10 <- 9
+	mem rsp 16 <- r10
+	r10 <- 1
+	mem rsp 0 <- r10
+	goto :call_label1
+	:call_label1
+	r10 <- mem rsp 0
+	r9 <- r10
+	r9 <- r9
+	r9 >>= 1
+	r10 <- mem rsp 24
+	r11 <- r10
+	r11 <- r11
+	r11 >>= 1
+	r10 <- r9 < r11
+	r10 <- r10
+	r10 <<= 1
+	r10 <- r10
+	r10 += 1
+	r9 <- r10
+	r9 <- r9
+	r9 >>= 1
+	cjump r9 = 1 :call_label2
+	goto :call_label6
+	:call_label2
+	r10 <- 1
+	mem rsp 32 <- r10
+	goto :call_label3
+	:call_label3
+	r10 <- mem rsp 32
+	r9 <- r10
+	r9 <- r9
+	r9 >>= 1
+	r10 <- mem rsp 16
+	r11 <- r10
+	r11 <- r11
+	r11 >>= 1
+	r10 <- r9 < r11
+	r10 <- r10
+	r10 <<= 1
+	r10 <- r10
+	r10 += 1
+	r9 <- r10
+	r9 <- r9
+	r9 >>= 1
+	cjump r9 = 1 :call_label4
+	goto :call_label5
+	:call_label4
+	r10 <- mem rsp 40
+	rdi <- r10
+	r10 <- mem rsp 48
+	rsi <- r10
+	r10 <- mem rsp 56
+	rdx <- r10
+	r10 <- mem rsp 0
+	rcx <- r10
+	r10 <- mem rsp 32
+	r8 <- r10
+	mem rsp -8 <- :call_label7
+	call @computeAndPrint 5
+	:call_label7
+	r10 <- mem rsp 32
+	r9 <- r10
+	r9 <- r9
+	r9 >>= 1
+	r11 <- 3
+	r11 <- r11
+	r11 >>= 1
+	r10 <- r9
+	mem rsp 32 <- r10
+	r10 <- mem rsp 32
+	r10 += r11
+	mem rsp 32 <- r10
+	r10 <- mem rsp 32
+	r10 <- r10
+	mem rsp 32 <- r10
+	r10 <- mem rsp 32
+	r10 <<= 1
+	mem rsp 32 <- r10
+	r10 <- mem rsp 32
+	r10 <- r10
+	mem rsp 32 <- r10
+	r10 <- mem rsp 32
+	r10 += 1
+	mem rsp 32 <- r10
+	goto :call_label3
+	:call_label5
+	r10 <- mem rsp 0
+	r9 <- r10
+	r9 <- r9
+	r9 >>= 1
+	r11 <- 3
+	r11 <- r11
+	r11 >>= 1
+	r10 <- r9
+	mem rsp 0 <- r10
+	r10 <- mem rsp 0
+	r10 += r11
+	mem rsp 0 <- r10
+	r10 <- mem rsp 0
+	r10 <- r10
+	mem rsp 0 <- r10
+	r10 <- mem rsp 0
+	r10 <<= 1
+	mem rsp 0 <- r10
+	r10 <- mem rsp 0
+	r10 <- r10
+	mem rsp 0 <- r10
+	r10 <- mem rsp 0
+	r10 += 1
+	mem rsp 0 <- r10
+	goto :call_label1
+	:call_label6
+	return
+	)
+(@computeAndPrint
+	5 4
+	r10 <- rdi
+	mem rsp 0 <- r10
+	r10 <- rsi
+	mem rsp 24 <- r10
+	r10 <- rdx
+	mem rsp 8 <- r10
+	r11 <- rcx
+	r10 <- r8
+	mem rsp 16 <- r10
+	:call_label_ciao_8
+	r10 <- mem rsp 0
+	rdi <- r10
+	rsi <- r11
+	mem rsp -8 <- :call_label_ciao_9
+	call @initMatrix 2
+	:call_label_ciao_9
+	r10 <- mem rsp 24
+	rdi <- r10
+	r10 <- mem rsp 16
+	rsi <- r10
+	mem rsp -8 <- :call_label_ciao_10
+	call @initMatrix 2
+	:call_label_ciao_10
+	r10 <- mem rsp 0
+	rdi <- r10
+	r10 <- mem rsp 24
+	rsi <- r10
+	r10 <- mem rsp 8
+	rdx <- r10
+	mem rsp -8 <- :call_label_ciao_11
+	call @matrixMultiplication 3
+	:call_label_ciao_11
+	r10 <- mem rsp 0
+	rdi <- r10
+	mem rsp -8 <- :call_label_ciao_12
+	call @totalSum 1
+	:call_label_ciao_12
+	r10 <- rax
+	rdi <- r10
+	call print 1
+	r10 <- mem rsp 24
+	rdi <- r10
+	mem rsp -8 <- :call_label_ciao_13
+	call @totalSum 1
+	:call_label_ciao_13
+	r10 <- rax
+	rdi <- r10
+	call print 1
+	r10 <- mem rsp 8
+	rdi <- r10
+	mem rsp -8 <- :call_label_ciao_14
+	call @totalSum 1
+	:call_label_ciao_14
+	r10 <- rax
+	rdi <- r10
+	call print 1
+	return
+	)
+(@initMatrix
+	2 39
+	r10 <- rdi
+	mem rsp 24 <- r10
+	r10 <- rsi
+	mem rsp 416 <- r10
+	:call_label_ciao__ciao_15
+	r10 <- 0
+	mem rsp 424 <- r10
+	r10 <- mem rsp 424
+	r10 *= 8
+	mem rsp 424 <- r10
+	r10 <- mem rsp 424
+	r10 <- r10
+	mem rsp 504 <- r10
+	r10 <- mem rsp 504
+	r10 += 16
+	mem rsp 504 <- r10
+	r10 <- mem rsp 24
+	r10 <- r10
+	mem rsp 1112 <- r10
+	r11 <- mem rsp 504
+	r10 <- mem rsp 1112
+	r10 += r11
+	mem rsp 1112 <- r10
+	r10 <- mem rsp 1112
+	r10 <- mem r10 0
+	mem rsp 16 <- r10
+	r10 <- 1
+	mem rsp 1216 <- r10
+	r10 <- mem rsp 1216
+	r10 *= 8
+	mem rsp 1216 <- r10
+	r10 <- mem rsp 1216
+	r10 <- r10
+	mem rsp 1232 <- r10
+	r10 <- mem rsp 1232
+	r10 += 16
+	mem rsp 1232 <- r10
+	r10 <- mem rsp 24
+	r10 <- r10
+	mem rsp 1832 <- r10
+	r11 <- mem rsp 1232
+	r10 <- mem rsp 1832
+	r10 += r11
+	mem rsp 1832 <- r10
+	r10 <- mem rsp 1832
+	r10 <- mem r10 0
+	mem rsp 8 <- r10
+	r10 <- 1
+	mem rsp 40 <- r10
+	goto :call_label_ciao__ciao_16
+	:call_label_ciao__ciao_16
+	r10 <- mem rsp 40
+	r10 <- r10
+	mem rsp 152 <- r10
+	r10 <- mem rsp 152
+	r10 <- r10
+	mem rsp 152 <- r10
+	r10 <- mem rsp 152
+	r10 >>= 1
+	mem rsp 152 <- r10
+	r10 <- mem rsp 16
+	r10 <- r10
+	mem rsp 136 <- r10
+	r10 <- mem rsp 136
+	r10 <- r10
+	mem rsp 136 <- r10
+	r10 <- mem rsp 136
+	r10 >>= 1
+	mem rsp 136 <- r10
+	r11 <- mem rsp 136
+	r10 <- mem rsp 152
+	r10 <- r10 < r11
+	mem rsp 1048 <- r10
+	r10 <- mem rsp 1048
+	r10 <- r10
+	mem rsp 1048 <- r10
+	r10 <- mem rsp 1048
+	r10 <<= 1
+	mem rsp 1048 <- r10
+	r10 <- mem rsp 1048
+	r10 <- r10
+	mem rsp 1048 <- r10
+	r10 <- mem rsp 1048
+	r10 += 1
+	mem rsp 1048 <- r10
+	r10 <- mem rsp 1048
+	r10 <- r10
+	mem rsp 152 <- r10
+	r10 <- mem rsp 152
+	r10 <- r10
+	mem rsp 152 <- r10
+	r10 <- mem rsp 152
+	r10 >>= 1
+	mem rsp 152 <- r10
+	r10 <- mem rsp 152
+	cjump r10 = 1 :call_label_ciao__ciao_17
+	goto :call_label_ciao__ciao_26
+	:call_label_ciao__ciao_17
+	r10 <- 1
+	mem rsp 248 <- r10
+	goto :call_label_ciao__ciao_18
+	:call_label_ciao__ciao_18
+	r10 <- mem rsp 248
+	r10 <- r10
+	mem rsp 152 <- r10
+	r10 <- mem rsp 152
+	r10 <- r10
+	mem rsp 152 <- r10
+	r10 <- mem rsp 152
+	r10 >>= 1
+	mem rsp 152 <- r10
+	r10 <- mem rsp 8
+	r10 <- r10
+	mem rsp 136 <- r10
+	r10 <- mem rsp 136
+	r10 <- r10
+	mem rsp 136 <- r10
+	r10 <- mem rsp 136
+	r10 >>= 1
+	mem rsp 136 <- r10
+	r10 <- mem rsp 136
+	r11 <- mem rsp 152
+	r10 <- r11 < r10
+	mem rsp 240 <- r10
+	r10 <- mem rsp 240
+	r10 <- r10
+	mem rsp 240 <- r10
+	r10 <- mem rsp 240
+	r10 <<= 1
+	mem rsp 240 <- r10
+	r10 <- mem rsp 240
+	r10 <- r10
+	mem rsp 240 <- r10
+	r10 <- mem rsp 240
+	r10 += 1
+	mem rsp 240 <- r10
+	r10 <- mem rsp 240
+	r10 <- r10
+	mem rsp 152 <- r10
+	r10 <- mem rsp 152
+	r10 <- r10
+	mem rsp 152 <- r10
+	r10 <- mem rsp 152
+	r10 >>= 1
+	mem rsp 152 <- r10
+	r10 <- mem rsp 152
+	cjump r10 = 1 :call_label_ciao__ciao_19
+	goto :call_label_ciao__ciao_25
+	:call_label_ciao__ciao_19
+	r10 <- mem rsp 416
+	r10 <- r10
+	mem rsp 152 <- r10
+	r10 <- mem rsp 152
+	r10 <- r10
+	mem rsp 152 <- r10
+	r10 <- mem rsp 152
+	r10 >>= 1
+	mem rsp 152 <- r10
+	r10 <- mem rsp 40
+	r10 <- r10
+	mem rsp 136 <- r10
+	r10 <- mem rsp 136
+	r10 <- r10
+	mem rsp 136 <- r10
+	r10 <- mem rsp 136
+	r10 >>= 1
+	mem rsp 136 <- r10
+	r10 <- mem rsp 152
+	r10 <- r10
+	mem rsp 144 <- r10
+	r11 <- mem rsp 136
+	r10 <- mem rsp 144
+	r10 += r11
+	mem rsp 144 <- r10
+	r10 <- mem rsp 144
+	r10 <- r10
+	mem rsp 144 <- r10
+	r10 <- mem rsp 144
+	r10 <<= 1
+	mem rsp 144 <- r10
+	r10 <- mem rsp 144
+	r10 <- r10
+	mem rsp 144 <- r10
+	r10 <- mem rsp 144
+	r10 += 1
+	mem rsp 144 <- r10
+	r10 <- mem rsp 144
+	r10 <- r10
+	mem rsp 152 <- r10
+	r10 <- mem rsp 152
+	r10 <- r10
+	mem rsp 152 <- r10
+	r10 <- mem rsp 152
+	r10 >>= 1
+	mem rsp 152 <- r10
+	r10 <- mem rsp 248
+	r10 <- r10
+	mem rsp 136 <- r10
+	r10 <- mem rsp 136
+	r10 <- r10
+	mem rsp 136 <- r10
+	r10 <- mem rsp 136
+	r10 >>= 1
+	mem rsp 136 <- r10
+	r10 <- mem rsp 152
+	r10 <- r10
+	mem rsp 144 <- r10
+	r11 <- mem rsp 136
+	r10 <- mem rsp 144
+	r10 += r11
+	mem rsp 144 <- r10
+	r10 <- mem rsp 144
+	r10 <- r10
+	mem rsp 144 <- r10
+	r10 <- mem rsp 144
+	r10 <<= 1
+	mem rsp 144 <- r10
+	r10 <- mem rsp 144
+	r10 <- r10
+	mem rsp 144 <- r10
+	r10 <- mem rsp 144
+	r10 += 1
+	mem rsp 144 <- r10
+	r10 <- mem rsp 40
+	r10 <- r10
+	mem rsp 184 <- r10
+	r10 <- mem rsp 184
+	r10 <- r10
+	mem rsp 184 <- r10
+	r10 <- mem rsp 184
+	r10 >>= 1
+	mem rsp 184 <- r10
+	r10 <- mem rsp 248
+	r10 <- r10
+	mem rsp 128 <- r10
+	r10 <- mem rsp 128
+	r10 <- r10
+	mem rsp 128 <- r10
+	r10 <- mem rsp 128
+	r10 >>= 1
+	mem rsp 128 <- r10
+	r10 <- 0
+	mem rsp 120 <- r10
+	r10 <- mem rsp 24
+	r10 <- r10 = 0
+	mem rsp 96 <- r10
+	r10 <- mem rsp 96
+	cjump r10 = 1 :call_label_ciao__ciao_23
+	goto :call_label_ciao__ciao_20
+	:call_label_ciao__ciao_20
+	r10 <- 0
+	mem rsp 792 <- r10
+	r10 <- mem rsp 792
+	r10 *= 8
+	mem rsp 792 <- r10
+	r10 <- mem rsp 792
+	r10 <- r10
+	mem rsp 1312 <- r10
+	r10 <- mem rsp 1312
+	r10 += 16
+	mem rsp 1312 <- r10
+	r10 <- mem rsp 24
+	r10 <- r10
+	mem rsp 568 <- r10
+	r11 <- mem rsp 568
+	r10 <- mem rsp 1312
+	r11 += r10
+	mem rsp 568 <- r11
+	r10 <- mem rsp 568
+	r10 <- mem r10 0
+	mem rsp 192 <- r10
+	r10 <- mem rsp 192
+	r10 <- r10
+	mem rsp 192 <- r10
+	r10 <- mem rsp 192
+	r10 >>= 1
+	mem rsp 192 <- r10
+	r10 <- mem rsp 184
+	r10 <- r10
+	mem rsp 120 <- r10
+	r10 <- mem rsp 120
+	r10 <- r10
+	mem rsp 120 <- r10
+	r10 <- mem rsp 120
+	r10 <<= 1
+	mem rsp 120 <- r10
+	r10 <- mem rsp 120
+	r10 <- r10
+	mem rsp 120 <- r10
+	r10 <- mem rsp 120
+	r10 += 1
+	mem rsp 120 <- r10
+	r10 <- mem rsp 184
+	r11 <- mem rsp 192
+	r10 <- r10 < r11
+	mem rsp 200 <- r10
+	r10 <- mem rsp 200
+	cjump r10 = 1 :call_label_ciao__ciao_21
+	goto :call_label_ciao__ciao_23
+	:call_label_ciao__ciao_21
+	r10 <- 1
+	mem rsp 432 <- r10
+	r10 <- mem rsp 432
+	r10 *= 8
+	mem rsp 432 <- r10
+	r10 <- mem rsp 432
+	r10 <- r10
+	mem rsp 440 <- r10
+	r10 <- mem rsp 440
+	r10 += 16
+	mem rsp 440 <- r10
+	r10 <- mem rsp 24
+	r10 <- r10
+	mem rsp 1392 <- r10
+	r11 <- mem rsp 440
+	r10 <- mem rsp 1392
+	r10 += r11
+	mem rsp 1392 <- r10
+	r10 <- mem rsp 1392
+	r10 <- mem r10 0
+	mem rsp 1376 <- r10
+	r10 <- mem rsp 1376
+	r10 <- r10
+	mem rsp 1376 <- r10
+	r10 <- mem rsp 1376
+	r10 >>= 1
+	mem rsp 1376 <- r10
+	r10 <- mem rsp 128
+	r10 <- r10
+	mem rsp 120 <- r10
+	r10 <- mem rsp 120
+	r10 <- r10
+	mem rsp 120 <- r10
+	r10 <- mem rsp 120
+	r10 <<= 1
+	mem rsp 120 <- r10
+	r10 <- mem rsp 120
+	r10 <- r10
+	mem rsp 120 <- r10
+	r10 <- mem rsp 120
+	r10 += 1
+	mem rsp 120 <- r10
+	r10 <- mem rsp 128
+	r11 <- mem rsp 1376
+	r10 <- r10 < r11
+	mem rsp 2040 <- r10
+	r10 <- mem rsp 2040
+	cjump r10 = 1 :call_label_ciao__ciao_22
+	goto :call_label_ciao__ciao_23
+	:call_label_ciao__ciao_22
+	goto :call_label_ciao__ciao_24
+	:call_label_ciao__ciao_23
+	rdi <- 1
+	call tensor-error 1
+	goto :call_label_ciao__ciao_24
+	:call_label_ciao__ciao_24
+	r10 <- 0
+	mem rsp 80 <- r10
+	r10 <- mem rsp 24
+	r10 <- r10
+	mem rsp 48 <- r10
+	r10 <- mem rsp 48
+	r10 += 24
+	mem rsp 48 <- r10
+	r10 <- mem rsp 48
+	r10 <- mem r10 0
+	mem rsp 56 <- r10
+	r10 <- mem rsp 56
+	r10 <- r10
+	mem rsp 32 <- r10
+	r10 <- mem rsp 32
+	r10 >>= 1
+	mem rsp 32 <- r10
+	r10 <- 1
+	mem rsp 0 <- r10
+	r10 <- mem rsp 0
+	r10 <- r10
+	mem rsp 0 <- r10
+	r10 <- mem rsp 0
+	r11 <- mem rsp 32
+	r10 *= r11
+	mem rsp 0 <- r10
+	r10 <- mem rsp 184
+	r10 <- r10
+	mem rsp 1056 <- r10
+	r10 <- mem rsp 0
+	r11 <- mem rsp 1056
+	r11 *= r10
+	mem rsp 1056 <- r11
+	r10 <- mem rsp 80
+	r10 <- r10
+	mem rsp 80 <- r10
+	r11 <- mem rsp 80
+	r10 <- mem rsp 1056
+	r11 += r10
+	mem rsp 80 <- r11
+	r10 <- mem rsp 80
+	r10 <- r10
+	mem rsp 80 <- r10
+	r11 <- mem rsp 80
+	r10 <- mem rsp 128
+	r11 += r10
+	mem rsp 80 <- r11
+	r10 <- mem rsp 80
+	r10 <- r10
+	mem rsp 832 <- r10
+	r10 <- mem rsp 832
+	r10 *= 8
+	mem rsp 832 <- r10
+	r10 <- mem rsp 832
+	r10 <- r10
+	mem rsp 832 <- r10
+	r10 <- mem rsp 832
+	r10 += 32
+	mem rsp 832 <- r10
+	r10 <- mem rsp 24
+	r10 <- r10
+	mem rsp 824 <- r10
+	r11 <- mem rsp 824
+	r10 <- mem rsp 832
+	r11 += r10
+	mem rsp 824 <- r11
+	r11 <- mem rsp 144
+	r10 <- mem rsp 824
+	mem r10 0 <- r11
+	r10 <- mem rsp 248
+	r10 <- r10
+	mem rsp 152 <- r10
+	r10 <- mem rsp 152
+	r10 <- r10
+	mem rsp 152 <- r10
+	r10 <- mem rsp 152
+	r10 >>= 1
+	mem rsp 152 <- r10
+	r10 <- 3
+	mem rsp 136 <- r10
+	r10 <- mem rsp 136
+	r10 <- r10
+	mem rsp 136 <- r10
+	r10 <- mem rsp 136
+	r10 >>= 1
+	mem rsp 136 <- r10
+	r10 <- mem rsp 152
+	r10 <- r10
+	mem rsp 248 <- r10
+	r11 <- mem rsp 136
+	r10 <- mem rsp 248
+	r10 += r11
+	mem rsp 248 <- r10
+	r10 <- mem rsp 248
+	r10 <- r10
+	mem rsp 248 <- r10
+	r10 <- mem rsp 248
+	r10 <<= 1
+	mem rsp 248 <- r10
+	r10 <- mem rsp 248
+	r10 <- r10
+	mem rsp 248 <- r10
+	r10 <- mem rsp 248
+	r10 += 1
+	mem rsp 248 <- r10
+	goto :call_label_ciao__ciao_18
+	:call_label_ciao__ciao_25
+	r10 <- mem rsp 40
+	r10 <- r10
+	mem rsp 152 <- r10
+	r10 <- mem rsp 152
+	r10 <- r10
+	mem rsp 152 <- r10
+	r10 <- mem rsp 152
+	r10 >>= 1
+	mem rsp 152 <- r10
+	r10 <- 3
+	mem rsp 136 <- r10
+	r10 <- mem rsp 136
+	r10 <- r10
+	mem rsp 136 <- r10
+	r10 <- mem rsp 136
+	r10 >>= 1
+	mem rsp 136 <- r10
+	r10 <- mem rsp 152
+	r10 <- r10
+	mem rsp 40 <- r10
+	r10 <- mem rsp 40
+	r11 <- mem rsp 136
+	r10 += r11
+	mem rsp 40 <- r10
+	r10 <- mem rsp 40
+	r10 <- r10
+	mem rsp 40 <- r10
+	r10 <- mem rsp 40
+	r10 <<= 1
+	mem rsp 40 <- r10
+	r10 <- mem rsp 40
+	r10 <- r10
+	mem rsp 40 <- r10
+	r10 <- mem rsp 40
+	r10 += 1
+	mem rsp 40 <- r10
+	goto :call_label_ciao__ciao_16
+	:call_label_ciao__ciao_26
+	return
+	)
+(@matrixMultiplication
+	3 11
+	r10 <- rdi
+	mem rsp 48 <- r10
+	r10 <- rsi
+	mem rsp 40 <- r10
+	r10 <- rdx
+	mem rsp 32 <- r10
+	:call_label_ciao__ciao__ciao_27
+	r10 <- 0
+	r10 *= 8
+	r11 <- r10
+	r11 += 16
+	r10 <- mem rsp 48
+	r10 <- r10
+	r10 += r11
+	r10 <- mem r10 0
+	mem rsp 24 <- r10
+	r10 <- 1
+	r10 *= 8
+	r11 <- r10
+	r11 += 16
+	r10 <- mem rsp 48
+	r10 <- r10
+	r10 += r11
+	r10 <- mem r10 0
+	mem rsp 16 <- r10
+	r10 <- 0
+	r10 *= 8
+	r11 <- r10
+	r11 += 16
+	r10 <- mem rsp 40
+	r10 <- r10
+	r10 += r11
+	r11 <- mem r10 0
+	r10 <- 1
+	r10 *= 8
+	r8 <- r10
+	r8 += 16
+	r10 <- mem rsp 40
+	r10 <- r10
+	r10 += r8
+	r10 <- mem r10 0
+	mem rsp 8 <- r10
+	r10 <- 0
+	r10 *= 8
+	r8 <- r10
+	r8 += 16
+	r10 <- mem rsp 32
+	r10 <- r10
+	r10 += r8
+	rcx <- mem r10 0
+	r10 <- 1
+	r10 *= 8
+	r8 <- r10
+	r8 += 16
+	r10 <- mem rsp 32
+	r10 <- r10
+	r10 += r8
+	rdx <- mem r10 0
+	r10 <- mem rsp 16
+	r9 <- r10
+	r9 <- r9
+	r9 >>= 1
+	r8 <- r11
+	r8 <- r8
+	r8 >>= 1
+	r10 <- r9 = r8
+	r10 <- r10
+	r10 <<= 1
+	r10 <- r10
+	r10 += 1
+	r9 <- r10
+	r9 <- r9
+	r9 >>= 1
+	cjump r9 = 1 :call_label_ciao__ciao__ciao_28
+	goto :call_label_ciao__ciao__ciao_73
+	:call_label_ciao__ciao__ciao_28
+	r9 <- rcx
+	r9 <- r9
+	r9 >>= 1
+	r10 <- mem rsp 24
+	r8 <- r10
+	r8 <- r8
+	r8 >>= 1
+	r10 <- r9 = r8
+	r10 <- r10
+	r10 <<= 1
+	r10 <- r10
+	r10 += 1
+	r9 <- r10
+	r9 <- r9
+	r9 >>= 1
+	cjump r9 = 1 :call_label_ciao__ciao__ciao_29
+	goto :call_label_ciao__ciao__ciao_73
+	:call_label_ciao__ciao__ciao_29
+	r9 <- rdx
+	r9 <- r9
+	r9 >>= 1
+	r10 <- mem rsp 8
+	r8 <- r10
+	r8 <- r8
+	r8 >>= 1
+	r10 <- r9 = r8
+	r10 <- r10
+	r10 <<= 1
+	r10 <- r10
+	r10 += 1
+	r9 <- r10
+	r9 <- r9
+	r9 >>= 1
+	cjump r9 = 1 :call_label_ciao__ciao__ciao_30
+	goto :call_label_ciao__ciao__ciao_73
+	:call_label_ciao__ciao__ciao_30
+	r10 <- 1
+	mem rsp 80 <- r10
+	goto :call_label_ciao__ciao__ciao_31
+	:call_label_ciao__ciao__ciao_31
+	r10 <- mem rsp 80
+	r9 <- r10
+	r9 <- r9
+	r9 >>= 1
+	r10 <- mem rsp 24
+	r8 <- r10
+	r8 <- r8
+	r8 >>= 1
+	r10 <- r9 < r8
+	r10 <- r10
+	r10 <<= 1
+	r10 <- r10
+	r10 += 1
+	r9 <- r10
+	r9 <- r9
+	r9 >>= 1
+	cjump r9 = 1 :call_label_ciao__ciao__ciao_32
+	goto :call_label_ciao__ciao__ciao_44
+	:call_label_ciao__ciao__ciao_32
+	r11 <- 1
+	goto :call_label_ciao__ciao__ciao_33
+	:call_label_ciao__ciao__ciao_33
+	r9 <- r11
+	r9 <- r9
+	r9 >>= 1
+	r10 <- mem rsp 8
+	r8 <- r10
+	r8 <- r8
+	r8 >>= 1
+	r10 <- r9 < r8
+	r10 <- r10
+	r10 <<= 1
+	r10 <- r10
+	r10 += 1
+	r9 <- r10
+	r9 <- r9
+	r9 >>= 1
+	cjump r9 = 1 :call_label_ciao__ciao__ciao_34
+	goto :call_label_ciao__ciao__ciao_43
+	:call_label_ciao__ciao__ciao_34
+	rcx <- 1
+	goto :call_label_ciao__ciao__ciao_35
+	:call_label_ciao__ciao__ciao_35
+	r9 <- rcx
+	r9 <- r9
+	r9 >>= 1
+	r10 <- mem rsp 16
+	r8 <- r10
+	r8 <- r8
+	r8 >>= 1
+	r10 <- r9 < r8
+	r10 <- r10
+	r10 <<= 1
+	r10 <- r10
+	r10 += 1
+	r9 <- r10
+	r9 <- r9
+	r9 >>= 1
+	cjump r9 = 1 :call_label_ciao__ciao__ciao_36
+	goto :call_label_ciao__ciao__ciao_42
+	:call_label_ciao__ciao__ciao_36
+	r10 <- mem rsp 80
+	r9 <- r10
+	r9 <- r9
+	r9 >>= 1
+	r8 <- r11
+	r8 <- r8
+	r8 >>= 1
+	rdx <- 0
+	r10 <- mem rsp 32
+	r10 <- r10 = 0
+	cjump r10 = 1 :call_label_ciao__ciao__ciao_40
+	goto :call_label_ciao__ciao__ciao_37
+	:call_label_ciao__ciao__ciao_37
+	r10 <- 0
+	r10 *= 8
+	rdx <- r10
+	rdx += 16
+	r10 <- mem rsp 32
+	r10 <- r10
+	r10 += rdx
+	r10 <- mem r10 0
+	r10 <- r10
+	r10 >>= 1
+	rdx <- r9
+	rdx <- rdx
+	rdx <<= 1
+	rdx <- rdx
+	rdx += 1
+	r10 <- r9 < r10
+	cjump r10 = 1 :call_label_ciao__ciao__ciao_38
+	goto :call_label_ciao__ciao__ciao_40
+	:call_label_ciao__ciao__ciao_38
+	r10 <- 1
+	r10 *= 8
+	rdx <- r10
+	rdx += 16
+	r10 <- mem rsp 32
+	r10 <- r10
+	r10 += rdx
+	r10 <- mem r10 0
+	r10 <- r10
+	r10 >>= 1
+	rdx <- r8
+	rdx <- rdx
+	rdx <<= 1
+	rdx <- rdx
+	rdx += 1
+	r10 <- r8 < r10
+	cjump r10 = 1 :call_label_ciao__ciao__ciao_39
+	goto :call_label_ciao__ciao__ciao_40
+	:call_label_ciao__ciao__ciao_39
+	goto :call_label_ciao__ciao__ciao_41
+	:call_label_ciao__ciao__ciao_40
+	rdi <- 1
+	call tensor-error 1
+	goto :call_label_ciao__ciao__ciao_41
+	:call_label_ciao__ciao__ciao_41
+	rdx <- 0
+	r10 <- mem rsp 32
+	r10 <- r10
+	r10 += 24
+	r10 <- mem r10 0
+	r10 <- r10
+	mem rsp 72 <- r10
+	r10 <- mem rsp 72
+	r10 >>= 1
+	mem rsp 72 <- r10
+	r10 <- 1
+	mem rsp 56 <- r10
+	r10 <- mem rsp 56
+	r10 <- r10
+	mem rsp 56 <- r10
+	r10 <- mem rsp 56
+	rsi <- mem rsp 72
+	r10 *= rsi
+	mem rsp 56 <- r10
+	r10 <- r9
+	r9 <- mem rsp 56
+	r10 *= r9
+	rdx <- rdx
+	rdx += r10
+	rdx <- rdx
+	rdx += r8
+	r8 <- rdx
+	r8 *= 8
+	r8 <- r8
+	r8 += 32
+	r10 <- mem rsp 32
+	r10 <- r10
+	r10 += r8
+	mem r10 0 <- 1
+	r9 <- rcx
+	r9 <- r9
+	r9 >>= 1
+	r8 <- 3
+	r8 <- r8
+	r8 >>= 1
+	rcx <- r9
+	rcx += r8
+	rcx <- rcx
+	rcx <<= 1
+	rcx <- rcx
+	rcx += 1
+	goto :call_label_ciao__ciao__ciao_35
+	:call_label_ciao__ciao__ciao_42
+	r9 <- r11
+	r9 <- r9
+	r9 >>= 1
+	r8 <- 3
+	r8 <- r8
+	r8 >>= 1
+	r11 <- r9
+	r11 += r8
+	r11 <- r11
+	r11 <<= 1
+	r11 <- r11
+	r11 += 1
+	goto :call_label_ciao__ciao__ciao_33
+	:call_label_ciao__ciao__ciao_43
+	r10 <- mem rsp 80
+	r9 <- r10
+	r9 <- r9
+	r9 >>= 1
+	r8 <- 3
+	r8 <- r8
+	r8 >>= 1
+	r10 <- r9
+	mem rsp 80 <- r10
+	r10 <- mem rsp 80
+	r10 += r8
+	mem rsp 80 <- r10
+	r10 <- mem rsp 80
+	r10 <- r10
+	mem rsp 80 <- r10
+	r10 <- mem rsp 80
+	r10 <<= 1
+	mem rsp 80 <- r10
+	r10 <- mem rsp 80
+	r10 <- r10
+	mem rsp 80 <- r10
+	r10 <- mem rsp 80
+	r10 += 1
+	mem rsp 80 <- r10
+	goto :call_label_ciao__ciao__ciao_31
+	:call_label_ciao__ciao__ciao_44
+	r10 <- 1
+	mem rsp 0 <- r10
+	goto :call_label_ciao__ciao__ciao_45
+	:call_label_ciao__ciao__ciao_45
+	r10 <- mem rsp 0
+	r9 <- r10
+	r9 <- r9
+	r9 >>= 1
+	r10 <- mem rsp 24
+	r8 <- r10
+	r8 <- r8
+	r8 >>= 1
+	r10 <- r9 < r8
+	r10 <- r10
+	r10 <<= 1
+	r10 <- r10
+	r10 += 1
+	r9 <- r10
+	r9 <- r9
+	r9 >>= 1
+	cjump r9 = 1 :call_label_ciao__ciao__ciao_46
+	goto :call_label_ciao__ciao__ciao_73
+	:call_label_ciao__ciao__ciao_46
+	r10 <- 1
+	mem rsp 64 <- r10
+	goto :call_label_ciao__ciao__ciao_47
+	:call_label_ciao__ciao__ciao_47
+	r10 <- mem rsp 64
+	r9 <- r10
+	r9 <- r9
+	r9 >>= 1
+	r10 <- mem rsp 8
+	r8 <- r10
+	r8 <- r8
+	r8 >>= 1
+	r10 <- r9 < r8
+	r10 <- r10
+	r10 <<= 1
+	r10 <- r10
+	r10 += 1
+	r9 <- r10
+	r9 <- r9
+	r9 >>= 1
+	cjump r9 = 1 :call_label_ciao__ciao__ciao_48
+	goto :call_label_ciao__ciao__ciao_72
+	:call_label_ciao__ciao__ciao_48
+	r11 <- 1
+	goto :call_label_ciao__ciao__ciao_49
+	:call_label_ciao__ciao__ciao_49
+	r9 <- r11
+	r9 <- r9
+	r9 >>= 1
+	r10 <- mem rsp 16
+	r8 <- r10
+	r8 <- r8
+	r8 >>= 1
+	r10 <- r9 < r8
+	r10 <- r10
+	r10 <<= 1
+	r10 <- r10
+	r10 += 1
+	r9 <- r10
+	r9 <- r9
+	r9 >>= 1
+	cjump r9 = 1 :call_label_ciao__ciao__ciao_50
+	goto :call_label_ciao__ciao__ciao_71
+	:call_label_ciao__ciao__ciao_50
+	r10 <- mem rsp 0
+	r9 <- r10
+	r9 <- r9
+	r9 >>= 1
+	r8 <- r11
+	r8 <- r8
+	r8 >>= 1
+	rcx <- 0
+	r10 <- mem rsp 48
+	r10 <- r10 = 0
+	cjump r10 = 1 :call_label_ciao__ciao__ciao_54
+	goto :call_label_ciao__ciao__ciao_51
+	:call_label_ciao__ciao__ciao_51
+	r10 <- 0
+	r10 *= 8
+	rcx <- r10
+	rcx += 16
+	r10 <- mem rsp 48
+	r10 <- r10
+	r10 += rcx
+	r10 <- mem r10 0
+	r10 <- r10
+	r10 >>= 1
+	rcx <- r9
+	rcx <- rcx
+	rcx <<= 1
+	rcx <- rcx
+	rcx += 1
+	r10 <- r9 < r10
+	cjump r10 = 1 :call_label_ciao__ciao__ciao_52
+	goto :call_label_ciao__ciao__ciao_54
+	:call_label_ciao__ciao__ciao_52
+	r10 <- 1
+	r10 *= 8
+	rcx <- r10
+	rcx += 16
+	r10 <- mem rsp 48
+	r10 <- r10
+	r10 += rcx
+	r10 <- mem r10 0
+	r10 <- r10
+	r10 >>= 1
+	rcx <- r8
+	rcx <- rcx
+	rcx <<= 1
+	rcx <- rcx
+	rcx += 1
+	r10 <- r8 < r10
+	cjump r10 = 1 :call_label_ciao__ciao__ciao_53
+	goto :call_label_ciao__ciao__ciao_54
+	:call_label_ciao__ciao__ciao_53
+	goto :call_label_ciao__ciao__ciao_55
+	:call_label_ciao__ciao__ciao_54
+	rdi <- 1
+	call tensor-error 1
+	goto :call_label_ciao__ciao__ciao_55
+	:call_label_ciao__ciao__ciao_55
+	rcx <- 0
+	r10 <- mem rsp 48
+	r10 <- r10
+	r10 += 24
+	r10 <- mem r10 0
+	r10 <- r10
+	r10 >>= 1
+	rdx <- 1
+	rdx <- rdx
+	rdx *= r10
+	r10 <- r9
+	r10 *= rdx
+	rcx <- rcx
+	rcx += r10
+	rcx <- rcx
+	rcx += r8
+	r8 <- rcx
+	r8 *= 8
+	r8 <- r8
+	r8 += 32
+	r10 <- mem rsp 48
+	r10 <- r10
+	r10 += r8
+	r8 <- mem r10 0
+	rcx <- r11
+	rcx <- rcx
+	rcx >>= 1
+	r10 <- mem rsp 64
+	r9 <- r10
+	r9 <- r9
+	r9 >>= 1
+	rdx <- 0
+	r10 <- mem rsp 40
+	r10 <- r10 = 0
+	cjump r10 = 1 :call_label_ciao__ciao__ciao_59
+	goto :call_label_ciao__ciao__ciao_56
+	:call_label_ciao__ciao__ciao_56
+	r10 <- 0
+	r10 *= 8
+	rdx <- r10
+	rdx += 16
+	r10 <- mem rsp 40
+	r10 <- r10
+	r10 += rdx
+	r10 <- mem r10 0
+	r10 <- r10
+	r10 >>= 1
+	rdx <- rcx
+	rdx <- rdx
+	rdx <<= 1
+	rdx <- rdx
+	rdx += 1
+	r10 <- rcx < r10
+	cjump r10 = 1 :call_label_ciao__ciao__ciao_57
+	goto :call_label_ciao__ciao__ciao_59
+	:call_label_ciao__ciao__ciao_57
+	r10 <- 1
+	r10 *= 8
+	rdx <- r10
+	rdx += 16
+	r10 <- mem rsp 40
+	r10 <- r10
+	r10 += rdx
+	r10 <- mem r10 0
+	r10 <- r10
+	r10 >>= 1
+	rdx <- r9
+	rdx <- rdx
+	rdx <<= 1
+	rdx <- rdx
+	rdx += 1
+	r10 <- r9 < r10
+	cjump r10 = 1 :call_label_ciao__ciao__ciao_58
+	goto :call_label_ciao__ciao__ciao_59
+	:call_label_ciao__ciao__ciao_58
+	goto :call_label_ciao__ciao__ciao_60
+	:call_label_ciao__ciao__ciao_59
+	rdi <- 1
+	call tensor-error 1
+	goto :call_label_ciao__ciao__ciao_60
+	:call_label_ciao__ciao__ciao_60
+	rdx <- 0
+	r10 <- mem rsp 40
+	r10 <- r10
+	r10 += 24
+	r10 <- mem r10 0
+	r10 <- r10
+	r10 >>= 1
+	rsi <- 1
+	rsi <- rsi
+	rsi *= r10
+	r10 <- rcx
+	r10 *= rsi
+	rdx <- rdx
+	rdx += r10
+	rdx <- rdx
+	rdx += r9
+	r9 <- rdx
+	r9 *= 8
+	r9 <- r9
+	r9 += 32
+	r10 <- mem rsp 40
+	r10 <- r10
+	r10 += r9
+	r10 <- mem r10 0
+	r9 <- r8
+	r9 <- r9
+	r9 >>= 1
+	r8 <- r10
+	r8 <- r8
+	r8 >>= 1
+	rcx <- r9
+	rcx *= r8
+	rcx <- rcx
+	rcx <<= 1
+	rcx <- rcx
+	rcx += 1
+	r10 <- mem rsp 0
+	r8 <- r10
+	r8 <- r8
+	r8 >>= 1
+	r10 <- mem rsp 64
+	r9 <- r10
+	r9 <- r9
+	r9 >>= 1
+	rdx <- 0
+	r10 <- mem rsp 32
+	r10 <- r10 = 0
+	cjump r10 = 1 :call_label_ciao__ciao__ciao_64
+	goto :call_label_ciao__ciao__ciao_61
+	:call_label_ciao__ciao__ciao_61
+	r10 <- 0
+	r10 *= 8
+	rdx <- r10
+	rdx += 16
+	r10 <- mem rsp 32
+	r10 <- r10
+	r10 += rdx
+	r10 <- mem r10 0
+	r10 <- r10
+	r10 >>= 1
+	rdx <- r8
+	rdx <- rdx
+	rdx <<= 1
+	rdx <- rdx
+	rdx += 1
+	r10 <- r8 < r10
+	cjump r10 = 1 :call_label_ciao__ciao__ciao_62
+	goto :call_label_ciao__ciao__ciao_64
+	:call_label_ciao__ciao__ciao_62
+	r10 <- 1
+	r10 *= 8
+	rdx <- r10
+	rdx += 16
+	r10 <- mem rsp 32
+	r10 <- r10
+	r10 += rdx
+	r10 <- mem r10 0
+	r10 <- r10
+	r10 >>= 1
+	rdx <- r9
+	rdx <- rdx
+	rdx <<= 1
+	rdx <- rdx
+	rdx += 1
+	r10 <- r9 < r10
+	cjump r10 = 1 :call_label_ciao__ciao__ciao_63
+	goto :call_label_ciao__ciao__ciao_64
+	:call_label_ciao__ciao__ciao_63
+	goto :call_label_ciao__ciao__ciao_65
+	:call_label_ciao__ciao__ciao_64
+	rdi <- 1
+	call tensor-error 1
+	goto :call_label_ciao__ciao__ciao_65
+	:call_label_ciao__ciao__ciao_65
+	rdx <- 0
+	r10 <- mem rsp 32
+	r10 <- r10
+	r10 += 24
+	r10 <- mem r10 0
+	r10 <- r10
+	r10 >>= 1
+	rsi <- 1
+	rsi <- rsi
+	rsi *= r10
+	r10 <- r8
+	r10 *= rsi
+	rdx <- rdx
+	rdx += r10
+	rdx <- rdx
+	rdx += r9
+	r8 <- rdx
+	r8 *= 8
+	r8 <- r8
+	r8 += 32
+	r10 <- mem rsp 32
+	r10 <- r10
+	r10 += r8
+	r9 <- mem r10 0
+	r9 <- r9
+	r9 <- r9
+	r9 >>= 1
+	r8 <- 9
+	r8 <- r8
+	r8 >>= 1
+	r9 <- r9
+	r9 *= r8
+	r9 <- r9
+	r9 <<= 1
+	r9 <- r9
+	r9 += 1
+	r9 <- r9
+	r9 <- r9
+	r9 >>= 1
+	r8 <- rcx
+	r8 <- r8
+	r8 >>= 1
+	r9 <- r9
+	r9 += r8
+	r9 <- r9
+	r9 <<= 1
+	r9 <- r9
+	r9 += 1
+	r10 <- mem rsp 0
+	r8 <- r10
+	r8 <- r8
+	r8 >>= 1
+	r10 <- mem rsp 64
+	rcx <- r10
+	rcx <- rcx
+	rcx >>= 1
+	rdx <- 0
+	r10 <- mem rsp 32
+	r10 <- r10 = 0
+	cjump r10 = 1 :call_label_ciao__ciao__ciao_69
+	goto :call_label_ciao__ciao__ciao_66
+	:call_label_ciao__ciao__ciao_66
+	r10 <- 0
+	r10 *= 8
+	rdx <- r10
+	rdx += 16
+	r10 <- mem rsp 32
+	r10 <- r10
+	r10 += rdx
+	r10 <- mem r10 0
+	r10 <- r10
+	r10 >>= 1
+	rdx <- r8
+	rdx <- rdx
+	rdx <<= 1
+	rdx <- rdx
+	rdx += 1
+	r10 <- r8 < r10
+	cjump r10 = 1 :call_label_ciao__ciao__ciao_67
+	goto :call_label_ciao__ciao__ciao_69
+	:call_label_ciao__ciao__ciao_67
+	r10 <- 1
+	r10 *= 8
+	rdx <- r10
+	rdx += 16
+	r10 <- mem rsp 32
+	r10 <- r10
+	r10 += rdx
+	r10 <- mem r10 0
+	r10 <- r10
+	r10 >>= 1
+	rdx <- rcx
+	rdx <- rdx
+	rdx <<= 1
+	rdx <- rdx
+	rdx += 1
+	r10 <- rcx < r10
+	cjump r10 = 1 :call_label_ciao__ciao__ciao_68
+	goto :call_label_ciao__ciao__ciao_69
+	:call_label_ciao__ciao__ciao_68
+	goto :call_label_ciao__ciao__ciao_70
+	:call_label_ciao__ciao__ciao_69
+	rdi <- 1
+	call tensor-error 1
+	goto :call_label_ciao__ciao__ciao_70
+	:call_label_ciao__ciao__ciao_70
+	rdx <- 0
+	r10 <- mem rsp 32
+	r10 <- r10
+	r10 += 24
+	r10 <- mem r10 0
+	r10 <- r10
+	r10 >>= 1
+	rsi <- 1
+	rsi <- rsi
+	rsi *= r10
+	r10 <- r8
+	r10 *= rsi
+	rdx <- rdx
+	rdx += r10
+	rdx <- rdx
+	rdx += rcx
+	r8 <- rdx
+	r8 *= 8
+	r8 <- r8
+	r8 += 32
+	r10 <- mem rsp 32
+	r10 <- r10
+	r10 += r8
+	mem r10 0 <- r9
+	r9 <- r11
+	r9 <- r9
+	r9 >>= 1
+	r8 <- 3
+	r8 <- r8
+	r8 >>= 1
+	r11 <- r9
+	r11 += r8
+	r11 <- r11
+	r11 <<= 1
+	r11 <- r11
+	r11 += 1
+	goto :call_label_ciao__ciao__ciao_49
+	:call_label_ciao__ciao__ciao_71
+	r10 <- mem rsp 64
+	r9 <- r10
+	r9 <- r9
+	r9 >>= 1
+	r8 <- 3
+	r8 <- r8
+	r8 >>= 1
+	r10 <- r9
+	mem rsp 64 <- r10
+	r10 <- mem rsp 64
+	r10 += r8
+	mem rsp 64 <- r10
+	r10 <- mem rsp 64
+	r10 <- r10
+	mem rsp 64 <- r10
+	r10 <- mem rsp 64
+	r10 <<= 1
+	mem rsp 64 <- r10
+	r10 <- mem rsp 64
+	r10 <- r10
+	mem rsp 64 <- r10
+	r10 <- mem rsp 64
+	r10 += 1
+	mem rsp 64 <- r10
+	goto :call_label_ciao__ciao__ciao_47
+	:call_label_ciao__ciao__ciao_72
+	r10 <- mem rsp 0
+	r9 <- r10
+	r9 <- r9
+	r9 >>= 1
+	r8 <- 3
+	r8 <- r8
+	r8 >>= 1
+	r10 <- r9
+	mem rsp 0 <- r10
+	r10 <- mem rsp 0
+	r10 += r8
+	mem rsp 0 <- r10
+	r10 <- mem rsp 0
+	r10 <- r10
+	mem rsp 0 <- r10
+	r10 <- mem rsp 0
+	r10 <<= 1
+	mem rsp 0 <- r10
+	r10 <- mem rsp 0
+	r10 <- r10
+	mem rsp 0 <- r10
+	r10 <- mem rsp 0
+	r10 += 1
+	mem rsp 0 <- r10
+	goto :call_label_ciao__ciao__ciao_45
+	:call_label_ciao__ciao__ciao_73
+	return
+	)
+(@totalSum
+	1 5
+	r11 <- rdi
+	:call_label_ciao__ciao__ciao__ciao_74
+	r10 <- 0
+	r10 *= 8
+	r8 <- r10
+	r8 += 16
+	r10 <- r11
+	r10 += r8
+	r10 <- mem r10 0
+	mem rsp 8 <- r10
+	r10 <- 1
+	r10 *= 8
+	r8 <- r10
+	r8 += 16
+	r10 <- r11
+	r10 += r8
+	r8 <- mem r10 0
+	r10 <- 1
+	mem rsp 32 <- r10
+	r10 <- 1
+	mem rsp 24 <- r10
+	goto :call_label_ciao__ciao__ciao__ciao_75
+	:call_label_ciao__ciao__ciao__ciao_75
+	r10 <- mem rsp 32
+	rcx <- r10
+	rcx <- rcx
+	rcx >>= 1
+	r10 <- mem rsp 8
+	r9 <- r10
+	r9 <- r9
+	r9 >>= 1
+	r10 <- rcx < r9
+	r10 <- r10
+	r10 <<= 1
+	r10 <- r10
+	r10 += 1
+	rcx <- r10
+	rcx <- rcx
+	rcx >>= 1
+	cjump rcx = 1 :call_label_ciao__ciao__ciao__ciao_76
+	goto :call_label_ciao__ciao__ciao__ciao_85
+	:call_label_ciao__ciao__ciao__ciao_76
+	r10 <- 1
+	mem rsp 16 <- r10
+	goto :call_label_ciao__ciao__ciao__ciao_77
+	:call_label_ciao__ciao__ciao__ciao_77
+	r10 <- mem rsp 16
+	rcx <- r10
+	rcx <- rcx
+	rcx >>= 1
+	r9 <- r8
+	r9 <- r9
+	r9 >>= 1
+	r10 <- rcx < r9
+	r10 <- r10
+	r10 <<= 1
+	r10 <- r10
+	r10 += 1
+	rcx <- r10
+	rcx <- rcx
+	rcx >>= 1
+	cjump rcx = 1 :call_label_ciao__ciao__ciao__ciao_78
+	goto :call_label_ciao__ciao__ciao__ciao_84
+	:call_label_ciao__ciao__ciao__ciao_78
+	r10 <- mem rsp 32
+	rcx <- r10
+	rcx <- rcx
+	rcx >>= 1
+	r10 <- mem rsp 16
+	r9 <- r10
+	r9 <- r9
+	r9 >>= 1
+	rdx <- 0
+	r10 <- r11 = 0
+	cjump r10 = 1 :call_label_ciao__ciao__ciao__ciao_82
+	goto :call_label_ciao__ciao__ciao__ciao_79
+	:call_label_ciao__ciao__ciao__ciao_79
+	r10 <- 0
+	r10 *= 8
+	rdx <- r10
+	rdx += 16
+	r10 <- r11
+	r10 += rdx
+	r10 <- mem r10 0
+	r10 <- r10
+	r10 >>= 1
+	rdx <- rcx
+	rdx <- rdx
+	rdx <<= 1
+	rdx <- rdx
+	rdx += 1
+	r10 <- rcx < r10
+	cjump r10 = 1 :call_label_ciao__ciao__ciao__ciao_80
+	goto :call_label_ciao__ciao__ciao__ciao_82
+	:call_label_ciao__ciao__ciao__ciao_80
+	r10 <- 1
+	r10 *= 8
+	r10 <- r10
+	r10 += 16
+	rdx <- r11
+	rdx += r10
+	r10 <- mem rdx 0
+	r10 <- r10
+	r10 >>= 1
+	rdx <- r9
+	rdx <- rdx
+	rdx <<= 1
+	rdx <- rdx
+	rdx += 1
+	r10 <- r9 < r10
+	cjump r10 = 1 :call_label_ciao__ciao__ciao__ciao_81
+	goto :call_label_ciao__ciao__ciao__ciao_82
+	:call_label_ciao__ciao__ciao__ciao_81
+	goto :call_label_ciao__ciao__ciao__ciao_83
+	:call_label_ciao__ciao__ciao__ciao_82
+	rdi <- 1
+	call tensor-error 1
+	goto :call_label_ciao__ciao__ciao__ciao_83
+	:call_label_ciao__ciao__ciao__ciao_83
+	rdx <- 0
+	r10 <- r11
+	r10 += 24
+	r10 <- mem r10 0
+	r10 <- r10
+	r10 >>= 1
+	rsi <- 1
+	mem rsp 0 <- rsi
+	rsi <- mem rsp 0
+	rsi <- rsi
+	mem rsp 0 <- rsi
+	rsi <- mem rsp 0
+	rsi *= r10
+	mem rsp 0 <- rsi
+	rcx <- rcx
+	r10 <- mem rsp 0
+	rcx *= r10
+	rdx <- rdx
+	rdx += rcx
+	rdx <- rdx
+	rdx += r9
+	r9 <- rdx
+	r9 *= 8
+	r9 <- r9
+	r9 += 32
+	r10 <- r11
+	r10 += r9
+	r9 <- mem r10 0
+	r10 <- mem rsp 24
+	rcx <- r10
+	rcx <- rcx
+	rcx >>= 1
+	r9 <- r9
+	r9 <- r9
+	r9 >>= 1
+	r10 <- rcx
+	mem rsp 24 <- r10
+	r10 <- mem rsp 24
+	r10 += r9
+	mem rsp 24 <- r10
+	r10 <- mem rsp 24
+	r10 <- r10
+	mem rsp 24 <- r10
+	r10 <- mem rsp 24
+	r10 <<= 1
+	mem rsp 24 <- r10
+	r10 <- mem rsp 24
+	r10 <- r10
+	mem rsp 24 <- r10
+	r10 <- mem rsp 24
+	r10 += 1
+	mem rsp 24 <- r10
+	r10 <- mem rsp 16
+	rcx <- r10
+	rcx <- rcx
+	rcx >>= 1
+	r9 <- 3
+	r9 <- r9
+	r9 >>= 1
+	r10 <- rcx
+	mem rsp 16 <- r10
+	r10 <- mem rsp 16
+	r10 += r9
+	mem rsp 16 <- r10
+	r10 <- mem rsp 16
+	r10 <- r10
+	mem rsp 16 <- r10
+	r10 <- mem rsp 16
+	r10 <<= 1
+	mem rsp 16 <- r10
+	r10 <- mem rsp 16
+	r10 <- r10
+	mem rsp 16 <- r10
+	r10 <- mem rsp 16
+	r10 += 1
+	mem rsp 16 <- r10
+	goto :call_label_ciao__ciao__ciao__ciao_77
+	:call_label_ciao__ciao__ciao__ciao_84
+	r10 <- mem rsp 32
+	rcx <- r10
+	rcx <- rcx
+	rcx >>= 1
+	r9 <- 3
+	r9 <- r9
+	r9 >>= 1
+	r10 <- rcx
+	mem rsp 32 <- r10
+	r10 <- mem rsp 32
+	r10 += r9
+	mem rsp 32 <- r10
+	r10 <- mem rsp 32
+	r10 <- r10
+	mem rsp 32 <- r10
+	r10 <- mem rsp 32
+	r10 <<= 1
+	mem rsp 32 <- r10
+	r10 <- mem rsp 32
+	r10 <- r10
+	mem rsp 32 <- r10
+	r10 <- mem rsp 32
+	r10 += 1
+	mem rsp 32 <- r10
+	goto :call_label_ciao__ciao__ciao__ciao_75
+	:call_label_ciao__ciao__ciao__ciao_85
+	r10 <- mem rsp 24
+	rax <- r10
+	return
+	)
+)

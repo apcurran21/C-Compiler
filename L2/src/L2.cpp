@@ -2,7 +2,7 @@
 
 namespace L2 {
 
-    int printdebug = 1;
+    int printdebug = 0;
 
     /*
     Code Analysis.
@@ -30,10 +30,11 @@ namespace L2 {
         Make a deep copy of the original function in case the big fail case occurs.
         */
         Function* original_function;
-        // original_function = deep_copy_function(fptr);
+        original_function = deepCopyFunction(fptr);
 
         int spill_count = 0;
         int stack_counter = 0;
+        bool big_fail = false;
         while (true) {
             /*
             We need to iterate until we are able to fully color each node in the 
@@ -47,7 +48,7 @@ namespace L2 {
 
             std::tuple<bool, std::vector<Node*>> color_result = color_graph(interference_graph, interference_graph_copy, fptr);
 
-            bool big_fail = std::get<0>(color_result);
+            big_fail = std::get<0>(color_result);
             std::vector<Node*> uncolored_nodes = std::get<1>(color_result);
             if (big_fail) {
                 /*
