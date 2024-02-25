@@ -4,11 +4,14 @@
 
 namespace L2{
 
-  LivenessResult liveness_analysis(Program *p, bool print);
+  // LivenessResult liveness_analysis(Program *p, bool print);
+  // Curr_F_Liveness liveness_analysis(Program *p, int function_index, Gen_Kill_Store gen_kill_sets, In_Out_Store in_out_sets, bool print);
+  // Curr_F_Liveness liveness_analysis(Function* fptr, bool print);
+    Curr_F_Liveness liveness_analysis(Function* fptr);
 
-  // probably don't need this actually
-  class LiveAnalysisVisitor : public Visitor {
-    void visit();
-  };
+  /*
+  
+  */
+  void print_liveness(Function* fptr, Curr_F_Liveness liveness_results);
 
 }

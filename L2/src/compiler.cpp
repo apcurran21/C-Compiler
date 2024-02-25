@@ -12,14 +12,23 @@
 #include <unistd.h>
 #include <iostream>
 #include <assert.h>
-
-#include <parser.h>
+#include <tuple>
+// #include "L2/src/parser.h"
+#include "parser.h"
 #include "liveness_analysis.h"
 #include "interference_graph.h"
 #include "spill.h"
 #include "graph_coloring.h"
-#include <code_generator.h>
+#include "graph_coloring_alt.h"
+#include "code_generator.h"
 #include "spill_code_generator.h"
+#include "L2.h"
+#include "spill.h"
+
+/*
+Debugging
+*/
+int printdebug = 0;
 
 void print_help (char *progName){
   // std::cerr << "Usage: " << progName << " [-v] [-g 0|1] [-O 0|1|2] [-s] [-l] [-i] SOURCE" << std::endl;
@@ -96,7 +105,7 @@ int main(
     /* 
      * Parse an L2 function and the spill arguments.
      */
-    //p = L2::parse_spill_file(argv[optind]);
+    p = L2::parse_spill_file(argv[optind]);
  
   } else if (liveness_only){
 
@@ -104,6 +113,7 @@ int main(
      * Parse an L2 function.
      */
     p = L2::parse_function_file(argv[optind]);
+    
   } else if (interference_only || run_color){
 
     /*
@@ -121,79 +131,85 @@ int main(
   }
 
   /*
-   * Special cases.
-   */
-  if (spill_only){
-    p = L2::parse_spill_file(argv[optind]);
-    auto replacementVar = p.variables[p.variables.size() - 2]; 
-    bool changed = L2::spillForL2(p,replacementVar);
-    L2::generate_spill_code(p,changed);
-  }
-
-  /*
-   * Liveness test.
-   */
-  if (liveness_only){
-    auto In_Out_sets = L2::liveness_analysis(&p, true);
-    
-    return 0;
-  }
-
-  /*
-   * Interference graph test.
-   */
-  if (interference_only){
-    auto liveness = L2::liveness_analysis(&p, false);
-    auto g = new L2::Graph();
-    auto interference_graph = g->build_graph(p, liveness);
-    interference_graph->printGraph();
-    return 0;
-  }
-
-  /*
-  Extra debug graph coloring test.
-  - currently it will just run the graph coloring alg once, edit later
+  Special cases.
   */
-  if (run_color){
-    auto liveness = L2::liveness_analysis(&p, false);
-    auto g = new L2::Graph();
-    auto interference_graph = g->build_graph(p, liveness);
-    auto colored_graph = L2::color_graph(interference_graph);
-    colored_graph->printGraph();
-    // colored_graph->printColors();
+  if (spill_only) {
+    std::set<std::string> all_changed;
+    L2::Program p_out;
+    p_out.entryPointLabel = p.entryPointLabel;
+    auto replacementVar = p.variables[p.variables.size() - 2];
+    while (!p.functions.empty()) {
+      L2::Function* fptr = p.functions.front();
+      p.functions.erase(p.functions.begin());
+      
+      std::tuple<std::set<std::string>, L2::Function*,int> resultTuple = L2::spillForL2(p.functions[0], replacementVar, -1,0);
+      auto changed = std::get<0>(resultTuple);
+      auto newFunction = std::get<1>(resultTuple);
+      
+      all_changed.insert(changed.begin(), changed.end());
+      p_out.functions.push_back(newFunction);
+    }
+    L2::generate_spill_code(p_out, all_changed);
+
     return 0;
   }
 
-  /*
-   * Generate the target code.
-   */
-  if (enable_code_generator){
-    auto g = new L2:: Graph();
-    bool changed = false;
-    L2::Graph colored_graph;
-    do {
-      /*
-      We want to continue our process of generating liveness, creating the
-      interference graph based on it, and coloring that graph until we are able to
-      color all variables. At this point, we can replace all the variables with their
-      corresponding colors in the final interference graph.
-      */
-      auto liveness = L2::liveness_analysis(&p, false);
-      auto interference_graph = g->build_graph(p, liveness);
-      auto g = new L2::Graph();
-      auto colored_graph = L2::color_graph(interference_graph);
-      for (auto var_ptr : interference_graph->spilled_vars) {
-        // what is 'changed' for?
-        bool changed = L2::spillForL2(p, var_ptr);
-      }
-    } while (false); // we should really do while interference graph produces new spilled variables
+  if (liveness_only) {
+    while (!p.functions.empty()) {
+      L2::Function* fptr = p.functions.front();
+      p.functions.erase(p.functions.begin());
 
-    // use the interference graph to replace the variables in the program with registers
+      L2::Curr_F_Liveness curr_f_res = L2::liveness_analysis(fptr);
+      print_liveness(fptr, curr_f_res);
+    }
+
+    return 0;
+  }
+
+  if (interference_only) {
+    while (!p.functions.empty()) {
+      L2::Function* fptr = p.functions.front();
+      p.functions.erase(p.functions.begin());
+
+      L2::Curr_F_Liveness curr_f_res = L2::liveness_analysis(fptr);
+      L2::Graph* interference_graph = L2::build_graph(fptr, curr_f_res);
+      interference_graph->printGraph();
+    }
+    return 0;
+  }
+
+  if (run_color) {
+
+    return 0;
+  }
+
+  if (enable_code_generator) {
     
-    // run code gen on the updated program
-    L2::generate_code(p,colored_graph); 
+    /*
+    Initialize the output program that will be passed to the code generator.
+    */
+    L2::Program p_out;
+    p_out.entryPointLabel = p.entryPointLabel;
+
+    /*
+    Perform code analysis and variable allocation for each function in the original program.
+    Append the results to the output program.
+    */
+    while (!p.functions.empty()) {
+        L2::Function* fptr = p.functions.front();
+
+        p.functions.erase(p.functions.begin());
+
+        L2::Function* fptr_out = L2::allocate_registers(fptr);
+        
+        p_out.functions.push_back(fptr_out);
+    }
+
+    /*
+    Generate the L1 code.
+    */
+    L2::generate_code(p_out);
+
     return 0;
   }
-
-  return 0;
 }

@@ -35,7 +35,7 @@ namespace L2{
     };
   
   void Instruction_ret::gen(Function *f, std::ofstream &outputFile) {
-    outputFile << "return\n";
+    outputFile << "return\n\t";
   }
 
   void Instruction_assignment::gen(Function *f, std::ofstream &outputFile) {
@@ -73,7 +73,7 @@ namespace L2{
   }
 
   void Call_tuple_Instruction::gen(Function *f, std::ofstream &outputFile) {
-    outputFile << "call tuple_error 3\n\t";
+    outputFile << "call tuple-error 3\n\t";
   }
 
   void w_increment_decrement::gen(Function *f, std::ofstream &outputFile) {
@@ -120,70 +120,94 @@ namespace L2{
   }
 
   void stackarg_assignment::gen(Function *f, std::ofstream &outputFile) {
-    outputFile << "mem rsp "<<this->M->print()<<"<- "<<this->w->print();
-    if (std::find(caller_registers.begin(),caller_registers.end(),this->w->print()) != caller_registers.end()){
-      int i = 0; // Initialize index i to 0
-      while (i < f->instructions.size()) {
-          Instruction* iptr = f->instructions[i];
-          auto instruction = dynamic_cast<Call_uN_Instruction*>(iptr);
-          if (instruction){
-            break;
-          }
-      }
-      Variable* rsp = f->variable_allocator.allocate_variable("rsp", VariableType::reg);
-      auto instruction = new Memory_assignment_load(this->w,rsp,this->M);
-      f->instructions.insert(f->instructions.begin()+i+2,instruction);
-    } else if (std::find(caller_registers.begin(),caller_registers.end(),this->w->print()) != callee_registers.end()){
-      Variable* rsp = f->variable_allocator.allocate_variable("rsp", VariableType::reg);
-      auto instruction = new Memory_assignment_load(this->w,rsp,this->M);
-      f->instructions.insert(f->instructions.end()-1,instruction);
-    }
+    outputFile << this->w->print()<<" <- "<< "mem rsp "<<this->M->print()<<"\n\t";
   }
 
-  void generate_spill_code(Program p, bool changed,Graph *color_graph){
-
+  // void generate_code(Program p, bool changed, Graph *color_graph){
+  // void generate_code(Program p, Graph *color_graph) {
+  // void generate_code(Program p, std::map<Function*, Graph*> all_graphs) {
+  void generate_code(Program& p) {
     /* 
      * Open the output file.
      */ 
     std::ofstream outputFile;
-    outputFile.open("test0.L2f.out2.tmp");
+    outputFile.open("prog.L1");
+
+    /*
+    Gen the entry point label
+    */
+    std::string entry_lab = p.entryPointLabel;
+    outputFile << "(" << entry_lab << "\n";
 
     // main loop
     for (Function *fptr : p.functions) {
+      /*
+      Grab the graph belonging to the current function
+      */
+      // Graph* color_graph;
+      // auto it = all_graphs.find(fptr);
+      // if (it != all_graphs.end()) {
+      //   color_graph = it->second;
+      // } else {
+      //   if (debug) std::cerr << "couldn't find a graph for the current function pointer\n";
+      // }
+      
       std::string fname = fptr->name;
 
       // std::cout << "Currently generating for function " << fname << std::endl;
 
-      outputFile << "("<<fname<<"\n\t";
-      int variables = 0;
-      if (changed){
-        variables = 1;
-      }
+      outputFile << "(" << fname << "\n\t";
+
+      /*
+      theres some weird stuff going on with 'changed' why is everything inconsistent
+      just hardcode for now and remove the extra arg so we can at least compile
+      */
+ 
+ 
       int stack_size = 0;
-      ColorVariablesVisitor* myColorVisitor = new ColorVariablesVisitor(color_graph,fptr);
+      int stack_arg_size = 0;
+      std::unordered_map<int, bool> seen;
+      bool zero_seen = false;
+      // ColorVariablesVisitor* myColorVisitor = new ColorVariablesVisitor(color_graph,fptr);
       for (Instruction *iptr : fptr->instructions) {
-        auto instruction = dynamic_cast<stackarg_assignment*>(iptr);
+        auto instruction = dynamic_cast<Memory_assignment_store*>(iptr);
         if (instruction){
-          stack_size++;
+          auto number = dynamic_cast<Number*>(instruction->M);
+          auto variable = dynamic_cast<Variable*>(instruction->s);
+          if (number->value >=0){
+            if (seen.find(number->value) == seen.end()) {
+              stack_arg_size++;
+              seen[number->value] = true;
+            }      
+            zero_seen = true;
+            if (number->value>stack_size){
+              stack_size = number->value;
+            }
+          }
         }
       }
-      //This might supposed to be stack_size here 
-      outputFile << fptr->arguments<<" "<<std::to_string(stack_size)<<"\n\t";
-      for (Instruction *iptr : fptr->instructions) {
-        iptr->accept(myColorVisitor);
-        iptr->gen(fptr, outputFile);
+      int append = 0;
+      if (zero_seen == true){
+        append = (stack_size+1);
       }
-      int i = 0; // Initialize index i to 0
+    
+      //This might supposed to be stack_size here 
+
+      outputFile << fptr->arguments<<" "<<append<<"\n\t";
       for (Instruction *iptr : fptr->instructions) {
-        auto instruction = dynamic_cast<stackarg_assignment*>(iptr);
-        if (instruction){
+        // iptr->accept(myColorVisitor);
+        auto cast_stack_arg = dynamic_cast<stackarg_assignment*>(iptr);
+        if (cast_stack_arg){
+          outputFile << cast_stack_arg->w->print()<<" <- "<< "mem rsp "<<std::stoi(cast_stack_arg->M->print())+ (8*(append)) << "\n\t";
+        } else {
           iptr->gen(fptr, outputFile);
         }
       }
+      outputFile<<")\n";
     }
-    outputFile<<")\n";
+    outputFile << ")\n";
 
-    if (debug) std::cerr << "Finished code generator!" << std::endl;
+    if (debug) std::cerr << "Finished code generation!" << std::endl;
 
     /* 
      * Close the output file.

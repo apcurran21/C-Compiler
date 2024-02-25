@@ -409,3 +409,357 @@ $31 = {
   },
   spilled_vars = std::set with 0 elements
 }
+
+
+### 2/16
+Something that is likely causing the majority of our error is how we wrote *spillForL2*, apparently rsp is **not** supposed to make it into the interference graphs liveness etc. Currently we are manually creating an 'rsp' variable instance in *spillForL2*, which then makes it into the liveness and interference graphs upon the next try at coloring. This is not expected behavior. We have a more specific problem in test849:
+* the first pass of graph coloring goes as expected. There are 16 nodes (15 gp registers and 1 variable), and *my_var_1* has edges with everything, so it must be spilled. The graph color function returns this node in its nodes_to_spill vector output, and *spillForL2* gets called on this singular node/variable.
+* This newly constructed graph still contains 16 nodes as expected (since should still have 15 gp registers, a spill variable 'S-1', and the absence of variable 'my_var_1' since it was spilled.) However, all 16 are Register types, with 'rsp' taking the spot of 'S-1' which doesn't appear in the graph anywhere.
+* The actual error we receive from this is a segfault in the depopulate / get_node_order function. This happens because we call *getVarNodes()* (which returns a vector of all the non Register type nodes from the graph) then call *back()* on its output, which is invalid since the output is a vector of length zero. 
+* So the immediate question is even if the rsp node makes it into interference graph, why does the new spill variable not have node there??
+* Our next step should be to quickly cook up a print program visitor so that we can see the state of the program after spilling.
+
+* calling liveness on a normal function will not put rsp in the in/out sets of an instruction. However calling liveness on a function after spilling results in rsp being in the in/out sets and potentially the gen/kill sets.
+  * there must be some behavior in spillForL2 causing this which i don't understand
+  * spill still passes its test cases though, this is just a side effect
+
+### 2/21/24
+Currently failing the following, due to graph coloring:
+* 838
+* 837
+* 275
+
+Segfaults, *best_node* is a null pointer, so the condition makes us grab from *curr_nodes*, an empty set. 
+* on the first iteration of coloring, we should only have to spill one of the three variables.
+  * %v1 and %v2 connect with every register except for rcx - we would expect the first of these two in node stack to get colored with 'rcx' and then spill the other.
+  * %v3 only connects with about 7 registers, so plenty to pick from. However the worst case would be if this node is the first in node stack and the alg colors it with 'rcx' - this means that we would need to spill both %v1 and %v2 since they both connect with %v1 
+  
+* after the first call to depopulate in the first call to color_graph, variable %v3 is the first to get removed from the graph since it has degree 9 (less than 15). However, after the call to removeNode we see that:
+  * The size field of the graph has decreased from 18 to 17.
+  * The nodes map has decreased from size 18 to 17.
+  * The graph map has decreased from size 18 to 17.
+  * **However, %v3 still appears in the neighbor sets of its previous neighbors!**
+    * this means that there is a problem with the function *removeNode*.
+  * **BRUH** i think its because we don't iterate by reference in the remove node function, after calling 'pair.second.erase(node)' the set pair.second goes from size 17 to 16 but the graph itself's size stays at 17. 
+    * However the node degrees do get updated correctly it seems?
+
+  * So the removeNodes function looks fine now, and the segfault seems to be happening on the second iteration of the graph coloring algorithm
+    * we have already spilled a variable since %S0 shows up in the graph. At the time of the segfault, none of the other variables are showing up in the printed graph, which has size 16. It should follow that there is still 1 non-register node in the graph - however, currNodes is already empty (which stores the non-register nodes we are iterating from and trying to remove from the graph). This is backed up further by the fact that getSize() returns 1, meaning the while loop still had one more iteration to go.
+      * i think that this issue is coming partially from the function getVarNodes, and mostly from how spill variables like %S0 are stored in the graph. For example, this variable should be included in the vector returned by getVarNodes, however it doesn't seem like this is happening (verify this on next run through). %S0 should definitely be able to be removed from the graph, since we still need to color it with a register in order to progress.
+* wait but color_graph outputs an empty vector as uncolored_nodes so why are we even performing another iteration of the graph coloring?
+  * also this doesn't seem right, both %v1 and %v2 interfere with every other register.
+  * also at the end of this first iteration, *interference_graph* has size 15 which does not seem right. We should only be modifying *interference_graph_copy*, so i would think the original would still be in its initial state with size 18? like the graph and nodes fields only have 15 elements as well for *interference_graph*.
+    * bruh *interference_graph_copy* also only has 15 (the variables are missing it seems). Why didn't the repopulate function add everything back into the graph?
+  * **So we have two problems: the state of the original interference graph is getting affected somehow, and none of the inteference graphs are getting correctly repopulated with the removed variable nodes.**
+    * note that printGraph, printColors, and printNodeDegrees all verified the missing variable nodes.
+  * Also, the three variables v1-3 are all missing from the function's
+  * **BRUH** i was overreacting on this bullet point, we were on the stub function. The original issue is still relevant.
+
+  * okay after the first iteration of color_graph on the real function (ie not stub) we have to spill the node corresponding with the %v2 variable. This is stored in vector *uncolored_nodes* and i believe its pointer 0x4f00c0 is different from the pointer to this node in *interference_graph*. However it shows up in *interference_graph_copy* which is expected behavior, since this is a clone in memory of the original.
+
+  * okay after spilling %v2, whenever color_registers is called none of the registers in the graph get colored. This is weird 
+
+  * okay after this apparently %v1 gets spilled which i didn't realize.
+
+  * we spill once (v1 and v3 left over), twice (v3 left over)
+
+#### infinite loop in test805.L2
+* 
+
+#### failing test849 segfaults
+* The L1 program segfaults because i don't think it allocates a byte in the function arguments for stack accesses.
+  * i confirmed this by running simone's compiler on a version that did have the byte allocation.
+* I think the spillForL2 function should be incrementing the 'locals' field in the new function it outputs, currently it just seems like it is zero all the time.
+
+### NOTE
+"if (node_name[0]=='%' && node_name[1]=='S')" this case should be find, since a variable must be at least two chars long
+
+### test 805
+
+why is it that after the first spill, 'fptr' (which gets passed in to spillForL2) gets altered with spill varaibles? This seems wrong, all changes should be made in the newFunction and the old one should be left untouched. 
+
+Also, the output of the first spill newFunction is incorrect:
+
+rdi <- 7
+rsi <- 1
+call allocate 2
+%firstRow <- rax
+r9 <- mem 8 %firstRow
+r9 += 2
+mem %firstRow 8 <- r9
+rdi <- 7
+rsi <- 1
+call allocate 2
+%S0 <- rax
+mem rsp 0 <- %S0
+r9 <- mem 16 %S1    // %S1 is used without first being defined
+mem rsp 0 <- %S1    // %S1 is used again, still not defined yet
+r9 += 2
+mem %S2 16 <- r9    // %S2 is used without being defined
+rdi <- 7
+rsi <- 1
+call allocate 2
+%thirdRow <- rax
+r9 <- mem 24 %thirdRow
+r9 += 2
+mem %thirdRow 24 <- r9
+rdi <- 7
+rsi <- 1
+call allocate 2
+rdi <- rax
+mem rdi 8 <- %firstRow
+%S2 <- mem 0 rsp    // why is the first time %S2 gets defined all the way down here
+mem rdi 16 <- %S2
+mem rdi 24 <- %thirdRow
+call print 1
+return
+
+
+
+### 2/23/24
+* %v4Encoded <- %v4Encoded      what should the instructions be if we need to spill %v4Enconded?
+
+%S1% is the first to go and it is making it into the if (g->spill_vars.find(node->var) == g->spill_vars.end()) condition (bad)
+  - this is because the variable is not being found in the graph's spill_vars set.
+
+
+  :call_label_ciao__ciao__ciao_6
+goto :call_label_ciao__ciao__ciao_13
+:call_label_ciao__ciao__ciao_7
+return
+:call_label_ciao__ciao__ciao_8
+%newVar1 <- %i
+%newVar1 *= 8
+%newVar0 <- %newVar1
+%newVar0 += 8
+%newVar2 <- %cGs
+%newVar2 += %newVar0
+%cG <- mem %newVar2 0
+%newVar4 <- 0
+%newVar4 *= 8
+%newVar3 <- %newVar4
+%newVar3 += 8
+%newVar5 <- %cG
+%newVar5 += %newVar3
+%g <- mem %newVar5 0
+rdi <- %cG
+rsi <- %X
+mem rsp -8 <- :call_label_ciao__ciao__ciao_14
+call %g 2
+:call_label_ciao__ciao__ciao_14
+%cH <- rax
+%newVar7 <- 0
+%newVar7 *= 8
+%newVar6 <- %newVar7
+%newVar6 += 8
+%newVar8 <- %cH
+%newVar8 += %newVar6
+%h <- mem %newVar8 0
+rdi <- %cH
+rsi <- %Y
+mem rsp -8 <- :call_label_ciao__ciao__ciao_15
+call %h 2
+:call_label_ciao__ciao__ciao_15
+%ans <- rax
+%num <- %ans
+%num *= 2
+%num <- %num
+%num += 1
+rdi <- %num
+call print 1
+%i <- %i
+%i += 1
+%fin <- 3 < %i
+cjump 1 = %fin :call_label_ciao__ciao__ciao_8
+goto :call_label_ciao__ciao__ciao_7
+:call_label_ciao__ciao__ciao_9
+%i <- 0
+goto :call_label_ciao__ciao__ciao_8
+:call_label_ciao__ciao__ciao_10
+%newVar10 <- %i
+%newVar10 *= 8
+%newVar9 <- %newVar10
+%newVar9 += 8
+%newVar11 <- %ops
+%newVar11 += %newVar9
+%f <- mem %newVar11 0
+rdi <- 3
+rsi <- 1
+call allocate 2
+%cF <- rax
+%newVar13 <- 0
+%newVar13 *= 8
+%newVar12 <- %newVar13
+%newVar12 += 8
+%newVar14 <- %cF
+%newVar14 += %newVar12
+mem %newVar14 0 <- %f
+rdi <- %cF
+mem rsp -8 <- :call_label_ciao__ciao__ciao_16
+call @curry 1
+:call_label_ciao__ciao__ciao_16
+%cG <- rax
+%newVar16 <- %i
+%newVar16 *= 8
+%newVar15 <- %newVar16
+%newVar15 += 8
+%newVar17 <- %cGs
+%newVar17 += %newVar15
+mem %newVar17 0 <- %cG
+%i <- %i
+%i += 1
+%fin <- 3 < %i
+cjump 1 = %fin :call_label_ciao__ciao__ciao_10
+goto :call_label_ciao__ciao__ciao_9
+:call_label_ciao__ciao__ciao_11
+rdi <- 7
+rsi <- 1
+call allocate 2
+%cGs <- rax
+%i <- 0
+goto :call_label_ciao__ciao__ciao_10
+:call_label_ciao__ciao__ciao_12
+%newVar19 <- %i
+%newVar19 *= 8
+%newVar18 <- %newVar19
+%newVar18 += 8
+%newVar20 <- %ops
+%newVar20 += %newVar18
+%f <- mem %newVar20 0
+rdi <- %ops
+rsi <- %X
+rdx <- %Y
+mem rsp -8 <- :call_label_ciao__ciao__ciao_17
+call %f 3
+:call_label_ciao__ciao__ciao_17
+%ans <- rax
+%num <- %ans
+%num *= 2
+%num <- %num
+%num += 1
+rdi <- %num
+call print 1
+%i <- %i
+%i += 1
+%fin <- 3 < %i
+cjump 1 = %fin :call_label_ciao__ciao__ciao_12
+goto :call_label_ciao__ciao__ciao_11
+:call_label_ciao__ciao__ciao_13
+rdi <- 7
+rsi <- 1
+call allocate 2
+%ops <- rax
+%plus <- @plus
+%minus <- @minus
+%times <- @times
+%newVar22 <- 0
+%newVar22 *= 8
+%newVar21 <- %newVar22
+%newVar21 += 8
+%newVar23 <- %ops
+%newVar23 += %newVar21
+mem %newVar23 0 <- %plus
+%newVar25 <- 1
+%newVar25 *= 8
+%newVar24 <- %newVar25
+%newVar24 += 8
+%newVar26 <- %ops
+%newVar26 += %newVar24
+mem %newVar26 0 <- %minus
+%newVar28 <- 2
+%newVar28 *= 8
+%newVar27 <- %newVar28
+%newVar27 += 8
+%newVar29 <- %ops
+%newVar29 += %newVar27
+mem %newVar29 0 <- %times
+%X <- 7
+%Y <- 2
+%i <- 0
+goto :call_label_ciao__ciao__ciao_12
+
+
+* The interference graph contains duplicate registers which does not seem right. There are tons and tons of r10s for example.
+* The code then segfaults when it gets to the code generation step, very likely because of these duplicates. 
+* wait wtf his liveness also seems incorrect and has duplicates, like %newVar27
+  * **NVM** i was confusing liveness and interference graph
+* okay so we have the same liveness
+* we also have the same interference.
+  * these are both from the initial function, we are likely experiencing problems specifically with the spill.
+
+
+test 534 seems like an L1 compiler problem womp
+The prog.L1 file generated by our L2 compiler, when compiled with simone's L1 compiler, produces the output 
+
+9
+5
+14
+9
+5
+14
+
+which matches the test534.L2.out file exactly. This means that the L2 code we generate is valid, but not the L1. The prog.S file generated by our L1 compiler causes the following assembler errors:
+
+prog.S: Assembler messages:
+prog.S:284: Error: too many memory references for `movq'
+prog.S:323: Error: too many memory references for `movq'
+
+For reference here are lines:
+* movq _curry_arg1, 0(%r11)
+* movq _curry_arg2, 0(%r8)
+
+test406 also produces a similar assembler error:
+
+prog.S: Assembler messages:
+prog.S:274: Error: too many memory references for `movq'
+prog.S:311: Error: too many memory references for `movq'
+
+For reference these lines are:
+* movq _curry_arg1, 0(%r10)
+* movq _curry_arg2, 0(%r8)
+  * The corresponding line in the L1 prog is *mem r8 0 <- @curry_arg2*
+Need to look at the Memory_assignment_store code generator in L1 to figure this out.
+
+### after codegen
+Now failing test769.L2 test683.L2 test764.L2 test766.L2 test588.L2 test166.L2 test729.L2 test285.L2 test478.L2, which i think are completely different tests from before.
+
+these tests seem to pass after removing the print statements
+* 683, 764, 766, 
+these tests segfault during a.out execution
+* 769
+* 588
+  * "Cannot access memory at address 0x3c"
+  * From the prog.S:
+_main:
+subq $96, %rsp
+_call_label0:
+jmp _call_label1
+_call_label1:
+movq $10, %r10
+movq %r10, 408(%rsp)
+movq 408(%rsp), %r10
+movq %r10, %r10
+movq %r10, 8(%rsp)
+movq 8(%rsp), %r10
+salq $1, %r10
+movq %r10, 8(%rsp)
+movq 8(%rsp), %r10
+movq %r10, %r10
+movq %r10, 8(%rsp)
+movq 8(%rsp), %r10
+addq $1, %r10
+movq %r10, 8(%rsp)
+movq 8(%rsp), %r10
+movq %r10, %rdi
+movq $2, %rsi
+  * does this mean we are subtracting 96 bytes from the stack? why is there an offset of 408 this seems to high for 96
+  * all the movqs seem unnecessary?
+
+### test769.L2
+Both ours and simone's L1 compiler produce an a.out executable which prints:
+```python
+26910000
+26910000
+3074457339547744436
+Segmentation fault
+```

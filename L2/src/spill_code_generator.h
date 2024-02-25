@@ -4,6 +4,6 @@
 
 namespace L2{
 
-  void generate_spill_code(Program p,bool changed);
+  void generate_spill_code(Program &p, std::set<std::string> changed);
 
 }

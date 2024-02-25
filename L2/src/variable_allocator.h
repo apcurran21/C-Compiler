@@ -30,6 +30,9 @@ namespace L2 {
             VariableAllocator();
             ~VariableAllocator();
             Variable* allocate_variable(std::string name, VariableType type);
+
+            bool remove_variable(std::string name);
+      
         private:
             std::unordered_map<std::string, Variable*> variable_database;
     };

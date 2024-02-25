@@ -1144,11 +1144,18 @@ namespace L2 {
   template<> struct action < function_name_rule > {
     template< typename Input>
     static void apply( const Input & in, Program & p) {
-      if (debug) std::cerr << "Recognized a function_name rule" << std::endl;
+      // if (debug) std::cerr << "Recognized a function_name rule" << std::endl;
 
-      auto newF = new Function();
-      newF->name = in.string();
-      p.functions.push_back(newF);
+       if (p.entryPointLabel.empty()) {
+         p.entryPointLabel = in.string();
+       } else {
+         auto newF = new Function();
+         newF->name = in.string();
+         p.functions.push_back(newF);
+       }
+      // auto newF = new Function();
+      // newF->name = in.string();
+      // p.functions.push_back(newF);
     }
   };
 
@@ -1162,12 +1169,44 @@ namespace L2 {
     }
   };
 
+  /*
+  Debug actions
+  */
   template<> struct action < Function_rule > {
     template< typename Input >
 	  static void apply( const Input & in, Program & p) {
       if (debug) std::cerr << "Recognized a Function!" << std::endl;
     }
   };
+
+  template<> struct action < entry_point_rule > {
+    template< typename Input >
+    static void apply( const Input & in, Program & p){
+      if (debug) std::cerr << "Recognized a complete entry point rule, done !" << std::endl;
+    }
+  };
+
+  template<> struct action < Functions_rule > {
+    template< typename Input >
+    static void apply( const Input & in, Program & p){
+      if (debug) std::cerr << "Recognized a functions rule" << std::endl;
+    }
+  };
+
+  template<> struct action < seps_with_comments > {
+    template< typename Input >
+    static void apply( const Input & in, Program & p){
+      if (debug) std::cerr << "Recognized a seps_with_comments rule" << std::endl;
+    }
+  };
+
+  template<> struct action < seps > {
+    template< typename Input >
+    static void apply( const Input & in, Program & p){
+      if (debug) std::cerr << "Recognized a sepsma rule" << std::endl;
+    }
+  };
+  
 
 
   /*

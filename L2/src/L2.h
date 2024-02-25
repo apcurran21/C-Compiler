@@ -8,9 +8,14 @@
 #include <iostream>
 #include <list>
 #include <map>
+#include <tuple>
 
 #include "variable_allocator.h"
 #include "interference_graph.h"
+#include "liveness_analysis.h"
+#include "graph_coloring.h"
+#include "spill.h"
+
 namespace L2 {
 
   extern int const debug;
@@ -22,7 +27,18 @@ namespace L2 {
   class Instruction;
   class Variable;
   class Visitor;
+  // class Node;
+  // class Graph;
 
+  /*
+  Code Analysis.
+  */
+  Graph* analyze_L2(Function*);
+  
+  /*
+  Register Allocation.
+  */
+  Function* allocate_registers(Function*);
 
   /*
   Object Classes
@@ -31,6 +47,8 @@ namespace L2 {
     public:
       virtual std::string translate() = 0;    // returns string with the x86 conventions attached
       virtual std::string print() = 0;        // returns the value as is
+      virtual Item* clone() const = 0; // Pure virtual clone method
+      virtual ~Item() {} // A virtual destructor to ensure proper cleanup
   };
   class Variable : public Item {
     public:
@@ -38,12 +56,16 @@ namespace L2 {
       std::string translate() override;
       virtual std::string print() override;
       std::string name;
+      Item* clone() const override;
+
   };
   class Register : public Variable {
     public:
       Register (std::string value);
       std::string print() override;
       std::string name;
+      Item* clone() const override;
+
   };
 
   class Number : public Item {
@@ -52,6 +74,8 @@ namespace L2 {
       std::string translate() override;
       std::string print() override;
       int64_t value;
+      Item* clone() const override;
+
   };
 
   class Name : public Item {
@@ -59,8 +83,9 @@ namespace L2 {
       Name (const std::string &value);
       std::string translate() override;
       std::string print() override;
-    private:
       std::string value;
+      Item* clone() const override;
+
   };
 
   class Label : public Item {
@@ -71,6 +96,7 @@ namespace L2 {
       std::string getLabel() const {
         return value;
       };
+      Item* clone() const override;
       std::string value;
   };
 
@@ -81,8 +107,8 @@ namespace L2 {
       std::string print() override;
       bool operator==(const Operator &other) const {
         return this->sign == other.sign;
-      }
-    private:
+      };
+      Item* clone() const override;
       std::string sign;
   };
 
@@ -93,6 +119,7 @@ namespace L2 {
     public:
       virtual void accept(Visitor *visitor) = 0; 
       virtual void gen(Function *f, std::ofstream &outputFile) = 0;
+      virtual void spill_gen(Function *f, std::ofstream &outputFile) = 0;
       virtual void printMe() = 0;
 
       std::set<Instruction *> predecessors;
@@ -108,6 +135,7 @@ namespace L2 {
     public:
       Instruction_ret ();
       void gen(Function *f, std::ofstream &outputFile) override;
+      void spill_gen(Function *f, std::ofstream &outputFile) override;
       void printMe() override;
       void accept(Visitor *visitor) override;
   };
@@ -116,6 +144,7 @@ namespace L2 {
     public:
       Instruction_assignment (Item *d, Item *s);
       void gen(Function *f, std::ofstream &outputFile) override;
+      void spill_gen(Function *f, std::ofstream &outputFile) override;
       void printMe() override;
       void accept(Visitor *visitor) override;
       Item *s;
@@ -126,6 +155,8 @@ namespace L2 {
       stackarg_assignment(Item *w, Item *M);
       void accept(Visitor *visitor) override;
       void gen(Function *f, std::ofstream &outputFile) override;
+      void insert(Function *f, std::ofstream &outputFile, int i);
+      void spill_gen(Function *f, std::ofstream &outputFile) override;
       void printMe() override;
       Item *w;
       Item *M;
@@ -138,6 +169,7 @@ namespace L2 {
       label_Instruction(Item *label);
       void accept(Visitor *visitor) override;
       void gen(Function *f, std::ofstream &outputFile) override;
+      void spill_gen(Function *f, std::ofstream &outputFile) override;
       void printMe() override;
       std::string getLabel() {
           Label *labelPtr = dynamic_cast<Label*>(label);
@@ -151,6 +183,7 @@ namespace L2 {
       void accept(Visitor *visitor) override;
       goto_label_instruction(Item *label);
       void gen(Function *f, std::ofstream &outputFile) override;
+      void spill_gen(Function *f, std::ofstream &outputFile) override;
       void printMe() override;
   };
 
@@ -159,6 +192,7 @@ namespace L2 {
       void accept(Visitor *visitor) override;
       Call_tenserr_Instruction(Item *F);
       void gen(Function *f, std::ofstream &outputFile) override;
+      void spill_gen(Function *f, std::ofstream &outputFile) override;
       void printMe() override;
       Item *F;
   };
@@ -167,6 +201,7 @@ namespace L2 {
     public:
       Call_uN_Instruction(Item *u, Item *N);
       void gen(Function *f, std::ofstream &outputFile) override;
+      void spill_gen(Function *f, std::ofstream &outputFile) override;
       void printMe() override;
       void accept(Visitor *visitor) override;
       Item *u;
@@ -178,6 +213,7 @@ namespace L2 {
       void accept(Visitor *visitor) override;
       Call_print_Instruction();
       void gen(Function *f, std::ofstream &outputFile) override;
+      void spill_gen(Function *f, std::ofstream &outputFile) override;
       void printMe() override;
   };
   class Call_input_Instruction : public Instruction {
@@ -186,6 +222,7 @@ namespace L2 {
       Call_input_Instruction();
       void accept(Visitor *visitor) override;
       void gen(Function *f, std::ofstream &outputFile) override;
+      void spill_gen(Function *f, std::ofstream &outputFile) override;
       void printMe() override;
   };
   class Call_allocate_Instruction : public Instruction {
@@ -194,6 +231,7 @@ namespace L2 {
       Call_allocate_Instruction();
       void accept(Visitor *visitor) override;
       void gen(Function *f, std::ofstream &outputFile) override;
+      void spill_gen(Function *f, std::ofstream &outputFile) override;
       void printMe() override;
   };
   class Call_tuple_Instruction : public Instruction {
@@ -202,6 +240,7 @@ namespace L2 {
       Call_tuple_Instruction();
       void accept(Visitor *visitor) override;
       void gen(Function *f, std::ofstream &outputFile) override;
+      void spill_gen(Function *f, std::ofstream &outputFile) override;
       void printMe() override;
   };
 
@@ -209,6 +248,7 @@ namespace L2 {
     public:
       w_increment_decrement(Item *r, Item *symbol);
       void gen(Function *f, std::ofstream &outputFile) override;
+      void spill_gen(Function *f, std::ofstream &outputFile) override;
       void printMe() override;
       void accept(Visitor *visitor) override;
       Item *r;
@@ -220,6 +260,7 @@ namespace L2 {
     public:
       w_atreg_assignment(Item *r1, Item *r2, Item *r3, Item *E);
       void gen(Function *f, std::ofstream &outputFile) override;
+      void spill_gen(Function *f, std::ofstream &outputFile) override;
       void printMe() override;
       void accept(Visitor *visitor) override;
       Item *r1;
@@ -232,6 +273,7 @@ namespace L2 {
     public:
       Memory_assignment_store(Item *dst, Item *s, Item *M);
       void gen(Function *f, std::ofstream &outputFile) override;
+      void spill_gen(Function *f, std::ofstream &outputFile) override;
       void printMe() override;
       void accept(Visitor *visitor) override;
       Item *dst;
@@ -244,6 +286,7 @@ namespace L2 {
     public:
       Memory_assignment_load(Item *dst, Item *x, Item *M);
       void gen(Function *f, std::ofstream &outputFile) override;
+      void spill_gen(Function *f, std::ofstream &outputFile) override;
       void printMe() override;
       void accept(Visitor *visitor) override;
       Item *dst;
@@ -255,6 +298,7 @@ namespace L2 {
     public:
       Memory_arithmetic_load(Item *dst, Item *x, Item *instruction, Item *M);
       void gen(Function *f, std::ofstream &outputFile) override;
+      void spill_gen(Function *f, std::ofstream &outputFile) override;
       void printMe() override;
       void accept(Visitor *visitor) override;
       Item *dst;  // w
@@ -267,6 +311,7 @@ namespace L2 {
     public:
       Memory_arithmetic_store(Item *dst, Item *t, Item *instruction, Item *M);
       void gen(Function *f, std::ofstream &outputFile) override;
+      void spill_gen(Function *f, std::ofstream &outputFile) override;
       void printMe() override;
       void accept(Visitor *visitor) override;
       Item *dst;
@@ -280,6 +325,7 @@ namespace L2 {
     public:
       cmp_Instruction(Item *dst, Item *t2, Item *method, Item *t1);
       void gen(Function *f, std::ofstream &outputFile) override;
+      void spill_gen(Function *f, std::ofstream &outputFile) override;
       void printMe() override;
       void accept(Visitor *visitor) override;
       Item *dst;
@@ -292,6 +338,7 @@ namespace L2 {
     public:
       cjump_cmp_Instruction(Item *t2, Item *cmp, Item *t1, Item *label);
       void gen(Function *f, std::ofstream &outputFile) override;
+      void spill_gen(Function *f, std::ofstream &outputFile) override;
       void printMe() override;
       void accept(Visitor *visitor) override;
       std::string getLabel() const {
@@ -321,6 +368,7 @@ namespace L2 {
     public:
       AOP_assignment(Item *method, Item *dst, Item *src);
       void gen(Function *f, std::ofstream &outputFile) override;
+      void spill_gen(Function *f, std::ofstream &outputFile) override;
       void printMe() override;
       void accept(Visitor *visitor) override;
       Item *method;
@@ -332,6 +380,7 @@ namespace L2 {
     public:
       SOP_assignment(Item *method, Item *dst, Item *src);
       void gen(Function *f, std::ofstream &outputFile) override;
+      void spill_gen(Function *f, std::ofstream &outputFile) override;
       void printMe() override;
       void accept(Visitor *visitor) override;
       Item *method;
@@ -348,9 +397,12 @@ namespace L2 {
     public:
       std::string name;
       int64_t arguments;
-      int64_t locals;
+      int locals;
       std::vector<Instruction *> instructions;
       VariableAllocator variable_allocator;
+      std::set<Variable *> spilled_variables; // for original variables in the L2 program that need to be spilled
+      std::set<Variable *> spill_variables_set;   // for our custom variables that we replace spilled variables with
+      std::set<std::string> string_spill_variables_set;
       void calculateCFG();
       void calculateUseDefs();
   }; 
@@ -360,6 +412,7 @@ namespace L2 {
       std::string entryPointLabel;
       std::vector<Function *> functions;
       std::vector<Variable *> variables;
+      void update_function(Function *oldFunction, Function *newFunction);
   };
 
   class Visitor {
@@ -416,11 +469,10 @@ namespace L2 {
   };
   class SpillVisitor:public Visitor{
     public:
-      SpillVisitor(Variable* spilledVar, Variable* replacementVar,int count = -1) :
-        spilledVariable(spilledVar), replacementVariable(replacementVar),count(count){}
-      void iterReplacementVariable();
+      SpillVisitor(Variable* spilledVar, Variable* replacementVar,int count = 0) :
+        spilledVariable(spilledVar), replacementVariable(replacementVar),copiedInstruction(copiedInstruction){}
       bool replaceIfSpilled(Item*& item);
-      bool IfSpilled(Item*& item);
+      void iterReplacementVariable();
       void visit(Instruction_ret *instruction) override;
       void visit(Instruction_assignment *instruction) override;
       void visit(label_Instruction *instruction) override;
@@ -444,8 +496,10 @@ namespace L2 {
       void visit(SOP_assignment *instruction) override;  
       Variable* spilledVariable;
       Variable* replacementVariable;
-      int count;
-      bool spilled;
+      Instruction * copiedInstruction;
+      std::map<std::string, Item*> varMap;
+      bool spilledLHS;
+      bool spilledRHS; 
   };
   class ColorVariablesVisitor: public Visitor {
     public:
@@ -477,6 +531,55 @@ namespace L2 {
       Graph *color_graph; // Member variable for the graph
       Function *current_function; 
   };
+  class PrintVisitor:  public Visitor {
+    public:
+      void visit(Instruction_ret *instruction) override;
+      void visit(Instruction_assignment *instruction) override;
+      void visit(label_Instruction *instruction) override;
+      void visit(goto_label_instruction *instruction) override;
+      void visit(Call_tenserr_Instruction *instruction) override;
+      void visit(Call_uN_Instruction *instruction) override;
+      void visit(Call_print_Instruction *instruction) override;
+      void visit(Call_input_Instruction *instruction) override;
+      void visit(Call_allocate_Instruction *instruction) override;
+      void visit(Call_tuple_Instruction *instruction) override;
+      void visit(w_increment_decrement *instruction) override;
+      void visit(w_atreg_assignment *instruction) override;
+      void visit(Memory_assignment_store *instruction) override;
+      void visit(Memory_assignment_load *instruction) override;
+      void visit(Memory_arithmetic_load *instruction) override;
+      void visit(Memory_arithmetic_store *instruction) override;
+      void visit(cmp_Instruction *instruction) override;
+      void visit(cjump_cmp_Instruction *instruction) override;
+      void visit(stackarg_assignment *instruction) override;
+      void visit(AOP_assignment *instruction) override;
+      void visit(SOP_assignment *instruction) override;  
+  };
+  class DeepCopyVisitor:  public Visitor {
+    public:
+      void visit(Instruction_ret *instruction) override;
+      void visit(Instruction_assignment *instruction) override;
+      void visit(label_Instruction *instruction) override;
+      void visit(goto_label_instruction *instruction) override;
+      void visit(Call_tenserr_Instruction *instruction) override;
+      void visit(Call_uN_Instruction *instruction) override;
+      void visit(Call_print_Instruction *instruction) override;
+      void visit(Call_input_Instruction *instruction) override;
+      void visit(Call_allocate_Instruction *instruction) override;
+      void visit(Call_tuple_Instruction *instruction) override;
+      void visit(w_increment_decrement *instruction) override;
+      void visit(w_atreg_assignment *instruction) override;
+      void visit(Memory_assignment_store *instruction) override;
+      void visit(Memory_assignment_load *instruction) override;
+      void visit(Memory_arithmetic_load *instruction) override;
+      void visit(Memory_arithmetic_store *instruction) override;
+      void visit(cmp_Instruction *instruction) override;
+      void visit(cjump_cmp_Instruction *instruction) override;
+      void visit(stackarg_assignment *instruction) override;
+      void visit(AOP_assignment *instruction) override;
+      void visit(SOP_assignment *instruction) override;  
+      Instruction* copiedInstruction;
+  };
 
   /*
   Liveness Analysis Storage Classes
@@ -498,14 +601,29 @@ namespace L2 {
 
   class Gen_Kill_Store {
     public:
-    Gen_Kill_Store(Program *p);
-    void print_sets(int function_index, Instruction* instruction_ptr);
-    std::vector<std::unordered_map<Instruction*, std::set<Variable*>>> Gen_Set;
-    std::vector<std::unordered_map<Instruction*, std::set<Variable*>>> Kill_Set;
+      Gen_Kill_Store(Program *p);
+      void print_sets(int function_index, Instruction* instruction_ptr);
+      std::vector<std::unordered_map<Instruction*, std::set<Variable*>>> Gen_Set;
+      std::vector<std::unordered_map<Instruction*, std::set<Variable*>>> Kill_Set;
   };
+
   struct LivenessResult {
     Gen_Kill_Store gen_kill_sets;
     In_Out_Store in_out_sets;
   };
+
+  struct Curr_F_Liveness {
+    std::unordered_map<Instruction*, std::set<Variable*>> gen;
+    std::unordered_map<Instruction*, std::set<Variable*>> kill;
+    std::unordered_map<Instruction*, std::set<Variable*>> in;
+    std::unordered_map<Instruction*, std::set<Variable*>> out;
+  };
+
+  /*
+  Utility Functions
+  */
+  void printFunction(Function* fptr);
+
+  Function* deepCopyFunction(Function* fptr);
   
 }

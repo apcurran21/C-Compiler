@@ -1,0 +1,11 @@
+(@func
+(@func
+    0
+
+    %myvar <- 1
+    mem rsp 0 <- %myvar
+    %myvar <- mem rsp 0
+    return
+    
+)
+)
