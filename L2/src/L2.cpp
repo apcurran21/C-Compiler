@@ -124,9 +124,7 @@ namespace L2 {
                         printFunction(fptr);
                     }
                     stack_counter++;
-
                 }   
-
             }
 
         }
