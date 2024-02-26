@@ -12,7 +12,11 @@
 #include <unistd.h>
 #include <iostream>
 #include <assert.h>
-#include <parser.h>
+
+#include "parser.h"
+#include "code_generator.h"
+#include "L3.h"
+
 
 
 void print_help (char *progName){

@@ -194,9 +194,8 @@ namespace L3 {
     }
 
 
-    Instruction_call_function::Instruction_call_function (Item *callee, std::vector<Item*>& args = {}) :
+    Instruction_call_function::Instruction_call_function (Item *callee) :
         callee { callee },
-        args { args }
     {
     }
 
@@ -209,16 +208,17 @@ namespace L3 {
     }
 
     std::vector<Item*> Instruction_call_function::getArgs() const {
-        /*
-        TODO - remember to implement this in the parser.
-        */
         return args;
     }
 
+    void Instruction_call_function::addArg(Item *arg) {
+        args.push_back(arg);
+    }
 
-    Instruction_call_function_assignment::Instruction_call_function_assignment (Item *var, Item *callee, std::vector<Item*>& args) :
+
+    Instruction_call_function_assignment::Instruction_call_function_assignment (Item *var, Item *callee) :
         var { var },
-        Instruction_call_function { callee, args }
+        Instruction_call_function { callee }
     {
     }
 

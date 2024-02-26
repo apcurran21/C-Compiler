@@ -189,10 +189,11 @@ namespace L3 {
             /*
             Note - we are passing by reference for the vector of args. Would it be better to copy each item in the vector?
             */
-            Instruction_call_function (Item *callee, std::vector<Item*>& args = {});
+            Instruction_call_function (Item *callee);
             void accept(Visitor *visitor) override;
             Item* getCallee() const;
             std::vector<Item*> getArgs() const;
+            void addArg();
         protected:
             Item* callee;
             std::vector<Item*> args;
@@ -201,8 +202,8 @@ namespace L3 {
     class Instruction_call_function_assignment : public Instruction_call_function {
         // var <- call callee ( args )
         public:
-            Instruction_call_function_assignment (Item *var, Item *callee, std::vector<Item*>& args);
-            void accept(Vistor *visitor) override;
+            Instruction_call_function_assignment (Item *var, Item *callee);
+            void accept(Visitor *visitor) override;
             Item* getDest() const;
         private:
             Item* var;

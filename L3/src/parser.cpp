@@ -22,6 +22,16 @@ namespace L3 {
   std::vector<Item*> parsed_items;
 
   /*
+  Stack for stored the params of a function definition.
+  */
+  std::vector<Item*> parsed_params;
+
+  /*
+  Stack for storing the args of a function call.
+  */
+  std::vector<Item*> parsed_args;
+
+  /*
   Keywords
   */
   struct str_load : TAO_PEGTL_STRING( "load" ) {};
@@ -92,7 +102,7 @@ namespace L3 {
     > {};
 
   /*
-  Special rules for separating out "@name" use cases.
+  Special rules for separating out different "@name" use cases.
   */
   // the base pattern
   struct name_rule:
@@ -108,7 +118,7 @@ namespace L3 {
     name_rule {};
 
   /*
-  Special rules for serparating out "%var" use cases.
+  Special rules for serparating out  the different "%var" use cases.
   */
   // the base pattern
   struct variable_name_rule:
@@ -482,6 +492,27 @@ namespace L3 {
     }
   };
 
+  template<> struct action < defined_var_rule > {
+    template< typename Input >
+    static void apply( const Input & in, Program & p ) {
+      if (debug) std::cerr << "Recognized a defined_var rule.\n";
+
+      Symbol* var = new Symbol(in.string);
+      parsed_params.push_back(var);
+    }
+  };
+
+  template<> struct action < arg_rule > {
+    template< typename Input >
+    static void apply( const Input & in, Program & p ) {
+      if (debug) std::cerr << "Recognized a defined_var rule.\n";
+
+      Symbol* var = new Symbol(in.string);
+      parsed_args.push_back(var);
+    }
+  };
+
+
   template<> struct action < var_rule > {
     template< typename Input >
     static void apply( const Input & in, Program & p ) {
@@ -681,11 +712,41 @@ namespace L3 {
       if (debug) std::cerr << "Recognized an Instruction_call_function rule.\n";
 
       auto currentF = p.getLastFunction();
-      auto label = parsed_items.back();
+      auto callee = parsed_items.back();
       parsed_items.pop_back();
-      auto t = parsed_items.back();
+      auto i = new Instruction_call_function(callee);
+
+      /* Grab the function arguments.*/
+      while (!parsed_args.empty()) {
+        auto arg = parsed_args.back();
+        i.addArg(arg);
+        parsed_args.pop_back();
+      }
+
+      currentF.addInstruction(i);
+    }
+  };
+
+  template<> struct action < Instruction_call_function_assignment_rule > {
+    template< typename Input >
+    static void apply( const Input & in, Program & p ) {
+      // var <- call callee ( args )
+      if (debug) std::cerr << "Recognized an Instruction_call_function_assignment rule.\n";
+
+      auto currentF = p.getLastFunction();
+      auto callee = parsed_items.back();
       parsed_items.pop_back();
-      auto i = new Instruction_branch_label_conditional(t, label);
+      auto var = parsed_items.back();
+      parsed_items.pop_back();
+      auto i = new Instruction_call_function_assignment(var, callee);
+
+      /* Grab the function arguments.*/
+      while (!parsed_args.empty()) {
+        auto arg = parsed_args.back();
+        i.addArg(arg);
+        parsed_args.pop_back();
+      }
+
       currentF.addInstruction(i);
     }
   };
