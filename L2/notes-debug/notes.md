@@ -763,3 +763,14 @@ Both ours and simone's L1 compiler produce an a.out executable which prints:
 3074457339547744436
 Segmentation fault
 ```
+
+
+### Okay fresh start 2-24-24, 7:30pm
+It seems suspicious that there aren't any big spills happening. However, there are cases where a certain variable is not getting spilled, but is later showing up in the generated program as being loaded to and from the stack (something i need to clarify with isaac is whether or not this is happening immediately after seeing that the variable doesn't get spilled, or just later on in the program. It's completely possible that a variable that doesn't get spilled initially will get spilled a few iterations later.)
+
+We'll focus on testcase 478, and the variable **%ArrSize** which is not initially spilled but later shows up on the stack. A good first step is to check how many total iterations of the graph coloring algorithm is applied to this program, and see if this is consistent over multiple runs. Also, i'm going to disable printing for both L1 and L2 compilers for the time being.
+* test 478 is not that large it might not be supposed to do a big spill tbh, check the number of variables however.
+
+#### Notes about test478
+* Contains 3 functions, the first one is the big one called main, this is where we should check for a big spill.
+* Currently, it compiles very quickly. However when the a.out executable is run it produces the 

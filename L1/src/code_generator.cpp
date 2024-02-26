@@ -293,7 +293,7 @@ namespace L1{
     for (Function *fptr : p.functions) {
       std::string fname = fptr->name;
 
-      std::cout << "Currently generating for function " << fname << std::endl;
+      if (debug) std::cout << "Currently generating for function " << fname << std::endl;
 
       outputFile << fname.replace(0, 1, "_") << ":\n";
       bool c = fptr->locals > 0;
@@ -302,7 +302,7 @@ namespace L1{
       }
 
       for (Instruction *iptr : fptr->instructions) {
-        std::cout << "Currently generating an instruction:" << std::endl;
+        if (debug) std::cout << "Currently generating an instruction:" << std::endl;
         iptr->gen(fptr, outputFile);
       }
     }

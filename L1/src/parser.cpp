@@ -40,7 +40,7 @@ using namespace std;
 
 namespace L1 {
 
-  const int debug = 1;
+  const int debug = 0;
 
   /* 
    * Tokens parsed

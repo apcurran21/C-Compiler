@@ -1,0 +1,7 @@
+define @main () {
+
+    %a <- 3
+    call print (%a)
+    return
+
+}
