@@ -1052,7 +1052,6 @@ namespace L2 {
 
         if (replaceD) {
             dst = this->replacementVariable;
-            this->spilledLHS = true; // Assuming you want to mark LHS as spilled if replaced
         } else {
             auto varD = dynamic_cast<Variable*>(instruction->dst);
             if (varD && varMap.find(varD->name) != varMap.end()) {
@@ -1067,11 +1066,8 @@ namespace L2 {
 
         if (replaceT) {
             t = this->replacementVariable;
-            auto varD = dynamic_cast<Variable*>(instruction->dst);
-            auto varT = dynamic_cast<Variable*>(instruction->t);
-            if (varD->name != varT->name){
-                this->spilledRHS = true;
-            }
+            this->spilledRHS = true;
+            
         } else {
             auto varT = dynamic_cast<Variable*>(instruction->t);
             if (varT && varMap.find(varT->name) != varMap.end()) {
