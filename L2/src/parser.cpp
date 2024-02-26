@@ -138,6 +138,9 @@ namespace L2 {
       name
     > {};
 
+  struct test_function_name_rule:
+    at_name_rule {};
+
   struct function_name_rule:
     at_name_rule {};
 
@@ -573,7 +576,13 @@ namespace L2 {
       seps_with_comments,
       pegtl::seq<spaces, pegtl::one< '(' >>,
       seps_with_comments,
-      pegtl::seq<spaces, function_name_rule>,
+      pegtl::seq<
+        spaces, 
+        pegtl::sor<
+          test_function_name_rule,
+          function_name_rule
+        >
+      >,
       seps_with_comments,
       pegtl::seq<spaces, argument_number>,
       seps_with_comments,
@@ -581,6 +590,9 @@ namespace L2 {
       seps_with_comments,
       pegtl::seq<spaces, pegtl::one< ')' >>
     > {};
+
+
+
   struct spill_rule:
     pegtl::seq<
         Function_rule,
@@ -1141,6 +1153,16 @@ namespace L2 {
   /*
   Function Actions!
   */
+  template<> struct action < test_function_name_rule > {
+    template< typename Input>
+    static void apply( const Input & in, Program & p) {
+      // if (debug) std::cerr << "Recognized a test_function_name rule" << std::endl;
+      auto newF = new Function();
+      newF->name = in.string();
+      p.functions.push_back(newF);
+    }
+  };
+
   template<> struct action < function_name_rule > {
     template< typename Input>
     static void apply( const Input & in, Program & p) {
@@ -1153,9 +1175,7 @@ namespace L2 {
          newF->name = in.string();
          p.functions.push_back(newF);
        }
-      // auto newF = new Function();
-      // newF->name = in.string();
-      // p.functions.push_back(newF);
+
     }
   };
 
@@ -1208,7 +1228,6 @@ namespace L2 {
   };
   
 
-
   /*
   Grammar Rules!
   */
@@ -1222,12 +1241,11 @@ namespace L2 {
       Function_rule
     > {};
 
-
   // still need to actually implement after getting liveness
   struct spill_grammar :
-      pegtl::must<
-        spill_rule
-        > {};
+    pegtl::must<  
+      spill_rule
+    > {};
 
 
   /*
