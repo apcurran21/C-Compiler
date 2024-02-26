@@ -47,6 +47,14 @@ namespace L3 {
         visitor->visit(this);
     }
 
+    Item* Instruction_assignment::getDest() const {
+        return dest;
+    }
+
+    Item* Instruction_assignment::getSrc() const {
+        return src;
+    }
+
 
     Instruction_load::Instruction_load(Item *var1, Item *var2) :
         Instruction_assignment { var1, var2 }
@@ -81,6 +89,22 @@ namespace L3 {
         Dummmy implementation, Instruction_action is currently abstract.
         */
         // visitor->visit(this);
+    }
+
+    Item* Instruction_action::getDest() const {
+        return var;
+    }
+
+    Item* Instruction_action::getSrc1() const {
+        return t1;
+    }
+
+    Item* Instruction_action::getAction() const {
+        return action;
+    }
+
+    Item* Instruction_action::getSrc2() const {
+        return t2;
     }
 
 
@@ -118,8 +142,12 @@ namespace L3 {
     {
     }
 
-    Instruction_return_value::accept(Visitor *visitor) {
+    void Instruction_return_value::accept(Visitor *visitor) {
         visitor->visit(this);
+    }
+
+    Item* Instruction_return_value::getT() const {
+        return t;
     }
 
 
@@ -128,18 +156,26 @@ namespace L3 {
     {
     }
 
-    Instruction_label::accept(Visitor *visitor) {
+    void Instruction_label::accept(Visitor *visitor) {
         visitor->visit(this);
     }
 
+    Item* Instruction_label::getLabel() const {
+        return label;
+    }
 
-    Instruction_branch_label::Instruction_break_label (Item *label) :
+
+    Instruction_branch_label::Instruction_branch_label (Item *label) :
         label { label }
     {
     }
 
-    Instruction_branch_label::accept(Visitor *visitor) {
+    void Instruction_branch_label::accept(Visitor *visitor) {
         visitor->visit(this);
+    }
+
+    Item* Instruction_branch_label::getLabel() const {
+        return label;
     }
 
 
@@ -149,8 +185,12 @@ namespace L3 {
     {
     }
 
-    Instruction_branch_label_conditional::accept(Visitor *visitor) {
+    void Instruction_branch_label_conditional::accept(Visitor *visitor) {
         visitor->visit(this);
+    }
+
+    Item* Instruction_branch_label_conditional::getCondition() const {
+        return t;
     }
 
 
@@ -160,8 +200,19 @@ namespace L3 {
     {
     }
 
-    Instruction_call_function::accept(Visitor *visitor) {
+    void Instruction_call_function::accept(Visitor *visitor) {
         visitor->visit(this);
+    }
+
+    Item* Instruction_call_function::getCallee() const {
+        return callee;
+    }
+
+    std::vector<Item*> Instruction_call_function::getArgs() const {
+        /*
+        TODO - remember to implement this in the parser.
+        */
+        return args;
     }
 
 
@@ -171,8 +222,12 @@ namespace L3 {
     {
     }
 
-    Instruction_call_function_assignment::accept(Visitor *visitor) {
+    void Instruction_call_function_assignment::accept(Visitor *visitor) {
         visitor->visit(this);
+    }
+
+    Item* Instruction_call_function_assignment::getDest() const {
+        return var;
     }
 
 
@@ -212,4 +267,62 @@ namespace L3 {
         functions.push_back(new_function);
     }
 
+
+    /*
+    Print Visitor class for printing and debugging intstructions. 
+    */
+    PrintVisitor::visit(Instruction_assignment *instruction) {
+        // std::cerr << instruction->dest << " <- " << instruction-> << "\n";
+    }
+
+    PrintVisitor::visit(Instruction_load *instruction) {
+        // std::cerr << dest << " <- load " << src << "\n";
+    }
+
+    PrintVisitor::visit(Instruction_store *instruction) {
+        // std::cerr << 
+    }
+
+    PrintVisitor::visit(Instruction_action *instruction) {
+
+    }
+
+    PrintVisitor::visit(Instruction_operation *instruction) {
+
+    }
+
+    PrintVisitor::visit(Instruction_comparison *instruction) {
+
+    }
+
+    PrintVisitor::visit(Instruction_return *instruction) {
+
+    }
+
+    PrintVisitor::visit(Instruction_return_value *instruction) {
+
+    }
+
+    PrintVisitor::visit(Instruction_label *instruction) {
+
+    }
+
+    PrintVisitor::visit(Instruction_branch_label *instruction) {
+
+    }
+
+    PrintVisitor::visit(Instruction_branch_label_conditional *instruction) {
+
+    }
+
+    PrintVisitor::visit(Instruction_call_function *instruction) {
+
+    }
+
+    PrintVisitor::visit(Instruction_call_function_assignment *instruction) {
+
+    }
+
+
+    }
 }

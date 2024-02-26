@@ -20,6 +20,7 @@ namespace L3 {
     class Function; 
     class Program;
     class Item;
+    class Visitor;
 
     /*
     Data types used in the L3 program's memory representation.
@@ -81,6 +82,8 @@ namespace L3 {
         public:
             Instruction_assignment (Item *dest, Item *src);
             void accept(Visitor *visitor) override;
+            Item* getDest() const;
+            Item* getSrc() const;
         protected:
             Item* dest;
             Item* src;
@@ -91,22 +94,27 @@ namespace L3 {
         public:
             Instruction_load(Item *var1, Item *var2);
             void accept(Visitor *visitor) override;
-    }
+    };
 
     class Instruction_store : public Instruction_assignment {
         // store var1 <- var2
         public:
             Instruction_store(Item *var1, Item *var2);
             void accept(Visitor *visitor) override;
-    }
+    };
 
 
     class Instruction_action : public Instruction {
-        // Abstract class for:
+        // Sort of abstract class for:
         // var <- t1 op t2 | var <- t1 cmp t2
+        // dest <- src1 op src2 | dest <- src1 comp src2
         public:
             Instruction_action (Item *var, Item *t1, Item *action, Item *t2);
             void accept(Visitor *visitor) override;
+            Item* getDest() const;
+            Item* getSrc1() const;
+            Item* getAction() const;
+            Item* getSrc2() const;
         protected:
             Item* var;
             Item* t1;
@@ -140,6 +148,7 @@ namespace L3 {
         public:
             Instruction_return_value (Item* t);
             void accept(Visitor *visitor) override;
+            Item* getT() const;
         private:
             Item* t;
     };
@@ -149,6 +158,7 @@ namespace L3 {
         public:
             Instruction_label (Item *label);
             void accept(Visitor *visitor) override;
+            Item* getLabel() const;
         private:
             Item* label;
     };
@@ -158,15 +168,17 @@ namespace L3 {
         public:
             Instruction_branch_label (Item *label);
             void accept(Visitor *visitor) override;
+            Item* getLabel() const;
         protected:
             Item* label;
     };
 
-    class Instruction_branch_label_conditional : public Instruction_branch_label_conditional {
+    class Instruction_branch_label_conditional : public Instruction_branch_label {
         // br t label
         public:
             Instruction_branch_label_conditional (Item *t, Item *label);
             void accept(Visitor *visitor) override;
+            Item* getCondition() const;
         private:
             Item* t;
     };
@@ -178,7 +190,9 @@ namespace L3 {
             Note - we are passing by reference for the vector of args. Would it be better to copy each item in the vector?
             */
             Instruction_call_function (Item *callee, std::vector<Item*>& args = {});
-            void accept(Vistor *visitor) override;
+            void accept(Visitor *visitor) override;
+            Item* getCallee() const;
+            std::vector<Item*> getArgs() const;
         protected:
             Item* callee;
             std::vector<Item*> args;
@@ -189,6 +203,7 @@ namespace L3 {
         public:
             Instruction_call_function_assignment (Item *var, Item *callee, std::vector<Item*>& args);
             void accept(Vistor *visitor) override;
+            Item* getDest() const;
         private:
             Item* var;
     };
@@ -237,5 +252,24 @@ namespace L3 {
             virtual void visit(Instruction_branch_label_conditional *instruction) = 0;
             virtual void visit(Instruction_call_function *instruction) = 0;
             virtual void visit(Instruction_call_function_assignment *instruction) = 0;
+    };
+
+    /*
+    Print Visitor for instructions.
+    */
+    class PrintVisitor : public Visitor {
+        virtual void visit(Instruction_assignment *instruction) = 0;
+        virtual void visit(Instruction_load *instruction) = 0;
+        virtual void visit(Instruction_store *instruction) = 0;
+        virtual void visit(Instruction_action *instruction) = 0;
+        virtual void visit(Instruction_operation *instruction) = 0;
+        virtual void visit(Instruction_comparison *instruction) = 0;
+        virtual void visit(Instruction_return *instruction) = 0;
+        virtual void visit(Instruction_return_value *instruction) = 0;
+        virtual void visit(Instruction_label *instruction) = 0;
+        virtual void visit(Instruction_branch_label *instruction) = 0;
+        virtual void visit(Instruction_branch_label_conditional *instruction) = 0;
+        virtual void visit(Instruction_call_function *instruction) = 0;
+        virtual void visit(Instruction_call_function_assignment *instruction) = 0;
     };
 }
