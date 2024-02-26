@@ -142,7 +142,7 @@ int main(
       L2::Function* fptr = p.functions.front();
       p.functions.erase(p.functions.begin());
       
-      std::tuple<std::set<std::string>, L2::Function*,int> resultTuple = L2::spillForL2(p.functions[0], replacementVar, -1,0);
+      std::tuple<std::set<std::string>, L2::Function*,int> resultTuple = L2::spillForL2(p.functions[0], replacementVar, 0,0);
       auto changed = std::get<0>(resultTuple);
       auto newFunction = std::get<1>(resultTuple);
       
