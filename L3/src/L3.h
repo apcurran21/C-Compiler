@@ -23,9 +23,37 @@ namespace L3 {
     class Visitor;
 
     /*
+    Enums for operations/comparision tokens, which we store in an Action class
+    - Todo: implement a print method for this.
+    */
+    enum class OperationType {
+        plus,
+        minus,
+        times,
+        bwand,
+        lshift,
+        rshift,
+    };
+
+    enum class ComparisonType {
+        less,
+        lesseq,
+        eq,
+        greatereq,
+        greater
+    };
+
+    /*
+    Utilities for the above enums.
+    */
+    OperationType stringToOperation(const std::string& str);
+
+    ComparisonType stringToComparison(const std::string& str);
+
+
+    /*
     Data types used in the L3 program's memory representation.
     */
-
 
     /*
     Item interface
@@ -58,7 +86,7 @@ namespace L3 {
 
 
     /*
-    Base class for Labels, Function Names, Variables, Operations, Comparisons
+    Base class for Labels, Function Names, Variables
     */
     class Symbol : public Item {
         public:
@@ -66,6 +94,28 @@ namespace L3 {
             std::string print() const override;
         private:
             std::string value;
+    };
+
+    /*
+    Class for operations
+    */
+    class Operation : public Item {
+        public:
+            Operation (OperationType);
+            std::string print() const override;
+        private:
+            OperationType value;
+    };
+
+    /*
+    Class for comparisons
+    */
+    class Comparison : public Item {
+        public:
+            Comparison (ComparisonType);
+            std::string print() const override;
+        private:
+            ComparisonType value;
     };
 
 
@@ -193,7 +243,7 @@ namespace L3 {
             void accept(Visitor *visitor) override;
             Item* getCallee() const;
             std::vector<Item*> getArgs() const;
-            void addArg();
+            void addArg(Item* arg);
         protected:
             Item* callee;
             std::vector<Item*> args;
@@ -237,6 +287,7 @@ namespace L3 {
 
     /*
     Visitor Interface.
+    -None necessary for the naive implementation.
     */
     class Visitor {
         public:
@@ -255,22 +306,24 @@ namespace L3 {
             virtual void visit(Instruction_call_function_assignment *instruction) = 0;
     };
 
-    /*
-    Print Visitor for instructions.
-    */
-    class PrintVisitor : public Visitor {
-        virtual void visit(Instruction_assignment *instruction) = 0;
-        virtual void visit(Instruction_load *instruction) = 0;
-        virtual void visit(Instruction_store *instruction) = 0;
-        virtual void visit(Instruction_action *instruction) = 0;
-        virtual void visit(Instruction_operation *instruction) = 0;
-        virtual void visit(Instruction_comparison *instruction) = 0;
-        virtual void visit(Instruction_return *instruction) = 0;
-        virtual void visit(Instruction_return_value *instruction) = 0;
-        virtual void visit(Instruction_label *instruction) = 0;
-        virtual void visit(Instruction_branch_label *instruction) = 0;
-        virtual void visit(Instruction_branch_label_conditional *instruction) = 0;
-        virtual void visit(Instruction_call_function *instruction) = 0;
-        virtual void visit(Instruction_call_function_assignment *instruction) = 0;
-    };
+//     /*
+//     Print Visitor for instructions.
+//     */
+//     class PrintVisitor : public Visitor {
+//         virtual void visit(Instruction_assignment *instruction) override;
+//         virtual void visit(Instruction_load *instruction) override;
+//         virtual void visit(Instruction_store *instruction) override;
+//         virtual void visit(Instruction_action *instruction) override;
+//         virtual void visit(Instruction_operation *instruction) override;
+//         virtual void visit(Instruction_comparison *instruction) override;
+//         virtual void visit(Instruction_return *instruction) override;
+//         virtual void visit(Instruction_return_value *instruction) override;
+//         virtual void visit(Instruction_label *instruction) override;
+//         virtual void visit(Instruction_branch_label *instruction) override;
+//         virtual void visit(Instruction_branch_label_conditional *instruction) override;
+//         virtual void visit(Instruction_call_function *instruction) override;
+//         virtual void visit(Instruction_call_function_assignment *instruction) override;
+//     };
+
+
 }

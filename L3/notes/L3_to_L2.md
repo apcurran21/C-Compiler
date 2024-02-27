@@ -22,10 +22,10 @@
         * var &= t2
     * "<<"
         * var <- t1
-        * var << t2
+        * var <<= t2
     * ">>"
         * var <- t1
-        * var >> t2
+        * var >>= t2
 
 #### L3 comparison assignment
 * var <- t1 cmp t2
@@ -86,3 +86,61 @@
 * L2:
     cjump 0 < t label
 
+#### L3 call function
+* call callee ( args )
+    * We need to explicitly store the return label for the function on the stack, place any necessary arguments onto the stack, make the function call, and place the return label after the call.
+        * The first 6 arguments of a function are stored in registers, so any more get put on stack.
+        * We should think about how to globalize these new return labels, since they are not included in the original L3 program.
+* L2:
+    * mem rsp -8 <- :return_label
+    * L2: for each parameter 1 through 6 ...
+        * 1: rdi <- arg1
+        * 2: rsi <- arg2
+        * 3: rdx <- arg3
+        * 4: rcx <- arg4
+        * 5: r8 <- arg5
+        * 6: r9 <- arg6
+    * L2: for each parameter 7 though N ...
+        * 7: mem rsp -16 <- arg7
+        * N: mem rsp -8-8(N-6)
+    * call callee N
+    * :return_label
+
+#### L3 call function assignment
+* var <- call callee ( args )
+    * same as before, except we also need to extract the function's return value from rax.
+* L2:
+    * mem rsp -8 <- :return_label
+    * L2: for each parameter 1 through 6 ...
+        * 1: rdi <- arg1
+        * 2: rsi <- arg2
+        * 3: rdx <- arg3
+        * 4: rcx <- arg4
+        * 5: r8 <- arg5
+        * 6: r9 <- arg6
+    * L2: for each parameter 7 though N ...
+        * 7: mem rsp -16 <- arg7
+        * N: mem rsp -8-8(N-6) <- argN
+    * call callee N
+    * :return_label
+    * var <- rax
+
+#### L3 function definition
+* define I ( vars ) { i+ }
+    * if the number of parameters N is greater than 6, then we need to store onto the stack
+* L2:
+    * ( I
+    *   N
+    * L2: for each parameter 1 through 6 ...
+        * 1: var1 <- rdi
+        * 2: var2 <- rsi
+        * 3: var3 <- rdx
+        * 4: var4 <- rcx
+        * 5: var5 <- r8
+        * 6: var6 <- r9
+    * L2: for each parameter 7 through N ...
+        * 7: var7 <- stack-arg 8(N-7)
+        * N: varN <- stack-arg 0
+    *   Instructions ...
+    * )
+* **Note:** We can write the define phrase and function name to the outfile as soon as we recognize a defined_function_name rule, and can write the list of parameters as soon as we recognize a params_rule. What follows is a series of instructions matched by rules, all of which write to the file. This means that the actual action template for the function_definition rule can just close it off by writing a closing paren.

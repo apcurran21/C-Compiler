@@ -27,10 +27,109 @@ namespace L3 {
     /*
     Symbol
     */
-    Symbol::Symbol(std::string val) : value(val) {};
+    Symbol::Symbol(std::string val) : value(val) {}
 
     std::string Symbol::print() const {
         return value;
+    }
+
+    /*
+    Operation
+    */
+    Operation::Operation(OperationType val) : value(val) {}
+
+    std::string Operation::print() const {
+        std::string res;
+
+        switch (value) {
+            case OperationType::plus:
+                res = "+";
+                break;
+            case OperationType::minus:
+                res = "-";
+                break;
+            case OperationType::times:
+                res = "*";
+                break;
+            case OperationType::bwand:
+                res = "&";
+                break;
+            case OperationType::lshift:
+                res = "<<";
+                break;
+            case OperationType::rshift:
+                res = ">>";
+                break;
+        }
+
+        return res;
+    }
+
+    /*
+    Comparison
+    */
+    Comparison::Comparison(ComparisonType val) : value(val) {}
+
+    std::string Comparison::print() const {
+        std::string res;
+
+        switch (value) {
+            case ComparisonType::less:
+                res = "<";
+                break;
+            case ComparisonType::lesseq:
+                res = "<=";
+                break;
+            case ComparisonType::eq:
+                res = "=";
+                break;
+            case ComparisonType::greatereq:
+                res = ">=";
+                break;
+            case ComparisonType::greater:
+                res = ">";
+                break;
+        }
+
+        return res;
+    }
+
+    /*
+    Utilities for the Operation and Comparison enums
+    */
+    OperationType stringToOperation(const std::string& str) {
+        static const std::map<std::string, OperationType> OperationMap = {
+            {"+", OperationType::plus},
+            {"-", OperationType::minus},
+            {"*", OperationType::times},
+            {"&", OperationType::bwand},
+            {"<<", OperationType::lshift},
+            {">>", OperationType::rshift},
+        };
+
+        auto it = OperationMap.find(str);
+        if (it != OperationMap.end()) {
+            return it->second;
+        } else {
+            throw std::invalid_argument("Invalid string");
+        }
+    }
+
+    ComparisonType stringToComparison(const std::string& str) {
+        static const std::map<std::string, ComparisonType> ComparisonMap = {
+            {"<", ComparisonType::less},
+            {"<=", ComparisonType::lesseq},
+            {"=", ComparisonType::eq},
+            {">=", ComparisonType::greatereq},
+            {">", ComparisonType::greater}
+        };
+
+        auto it = ComparisonMap.find(str);
+        if (it != ComparisonMap.end()) {
+            return it->second;
+        } else {
+            throw std::invalid_argument("Invalid action string");
+        }
     }
 
 
@@ -66,7 +165,7 @@ namespace L3 {
     }
 
 
-    void Instruction_store::Instruction_store(Item *var1, Item *var2) :
+    Instruction_store::Instruction_store(Item *var1, Item *var2) :
         Instruction_assignment { var1, var2 }
     {
     }
@@ -109,7 +208,7 @@ namespace L3 {
 
 
     Instruction_operation::Instruction_operation (Item *var, Item *t1, Item *action, Item *t2) :
-        Instruction_action { Item *var, Item *t1, Item *action, Item *t2 }
+        Instruction_action { var, t1, action, t2 }
     {
     }
 
@@ -119,7 +218,7 @@ namespace L3 {
 
 
     Instruction_comparison::Instruction_comparison (Item *var, Item *t1, Item *action, Item *t2) :
-        Instruction_action { Item *var, Item *t1, Item *action, Item *t2 }
+        Instruction_action { var, t1, action, t2 }
     {
     }
 
@@ -179,7 +278,7 @@ namespace L3 {
     }
 
 
-    Instruction_branch_label_conditional (Item *t, Item *label) :
+    Instruction_branch_label_conditional::Instruction_branch_label_conditional (Item *t, Item *label) :
         t { t },
         Instruction_branch_label { label }
     {
@@ -195,7 +294,7 @@ namespace L3 {
 
 
     Instruction_call_function::Instruction_call_function (Item *callee) :
-        callee { callee },
+        callee { callee }
     {
     }
 
@@ -234,11 +333,11 @@ namespace L3 {
     /*
     Function / Program
     */
-    void Function::print() const {
-        /*
-        Todo write a print visitor for the instructions.
-        */
-    }
+    // void Function::print() const {
+    //     /*
+    //     Todo write a print visitor for the instructions.
+    //     */
+    // }
 
     void Function::setFunctionName(std::string new_name) {
         name = new_name;
@@ -248,81 +347,80 @@ namespace L3 {
         parameters.push_back(new_parameter);
     }
 
-    void Function::addInstruction(Item *new_instruction) {
+    void Function::addInstruction(Instruction *new_instruction) {
         instructions.push_back(new_instruction);
     }
 
     
-    /*
-    Print the contents of the program to cerr.
-    */
-    void Program::print() const {
-        for (auto function& : functions) {
-            function.print();
-            std::cerr << "\n\n";
-        }
-    }
+    // /*
+    // Print the contents of the program to cerr.
+    // */
+    // void Program::print() const {
+    //     for (auto function : functions) {
+    //         function->print();
+    //         std::cerr << "\n\n";
+    //     }
+    // }
 
     void Program::addFunction(Function *new_function) {
         functions.push_back(new_function);
     }
 
 
-    /*
-    Print Visitor class for printing and debugging intstructions. 
-    */
-    PrintVisitor::visit(Instruction_assignment *instruction) {
-        // std::cerr << instruction->dest << " <- " << instruction-> << "\n";
-    }
+    // /*
+    // Print Visitor class for printing and debugging intstructions. 
+    // */
+    // PrintVisitor::visit(Instruction_assignment *instruction) {
+    //     // std::cerr << instruction->dest << " <- " << instruction-> << "\n";
+    // }
 
-    PrintVisitor::visit(Instruction_load *instruction) {
-        // std::cerr << dest << " <- load " << src << "\n";
-    }
+    // PrintVisitor::visit(Instruction_load *instruction) {
+    //     // std::cerr << dest << " <- load " << src << "\n";
+    // }
 
-    PrintVisitor::visit(Instruction_store *instruction) {
-        // std::cerr << 
-    }
+    // PrintVisitor::visit(Instruction_store *instruction) {
+    //     // std::cerr << 
+    // }
 
-    PrintVisitor::visit(Instruction_action *instruction) {
+    // PrintVisitor::visit(Instruction_action *instruction) {
 
-    }
+    // }
 
-    PrintVisitor::visit(Instruction_operation *instruction) {
+    // PrintVisitor::visit(Instruction_operation *instruction) {
 
-    }
+    // }
 
-    PrintVisitor::visit(Instruction_comparison *instruction) {
+    // PrintVisitor::visit(Instruction_comparison *instruction) {
 
-    }
+    // }
 
-    PrintVisitor::visit(Instruction_return *instruction) {
+    // PrintVisitor::visit(Instruction_return *instruction) {
 
-    }
+    // }
 
-    PrintVisitor::visit(Instruction_return_value *instruction) {
+    // PrintVisitor::visit(Instruction_return_value *instruction) {
 
-    }
+    // }
 
-    PrintVisitor::visit(Instruction_label *instruction) {
+    // PrintVisitor::visit(Instruction_label *instruction) {
 
-    }
+    // }
 
-    PrintVisitor::visit(Instruction_branch_label *instruction) {
+    // PrintVisitor::visit(Instruction_branch_label *instruction) {
 
-    }
+    // }
 
-    PrintVisitor::visit(Instruction_branch_label_conditional *instruction) {
+    // PrintVisitor::visit(Instruction_branch_label_conditional *instruction) {
 
-    }
+    // }
 
-    PrintVisitor::visit(Instruction_call_function *instruction) {
+    // PrintVisitor::visit(Instruction_call_function *instruction) {
 
-    }
+    // }
 
-    PrintVisitor::visit(Instruction_call_function_assignment *instruction) {
+    // PrintVisitor::visit(Instruction_call_function_assignment *instruction) {
 
-    }
+    // }
 
 
-    }
 }

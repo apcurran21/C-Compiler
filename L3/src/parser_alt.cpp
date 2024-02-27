@@ -32,6 +32,11 @@ namespace L3 {
   std::vector<Item*> parsed_args;
 
   /*
+  Counter for creating globally unique return labels.
+  */
+  int returnCounter = 0;
+
+  /*
   Keywords
   */
   struct str_load : TAO_PEGTL_STRING( "load" ) {};
@@ -265,7 +270,7 @@ namespace L3 {
   struct Instruction_assignment_rule:
     // var <- s
     pegtl::seq<
-      variable_rule,
+      var_rule,
       spaces,
       str_arrow,
       spaces,
@@ -275,7 +280,7 @@ namespace L3 {
   struct Instruction_operation_rule:
     // var <- t op t
     pegtl::seq<
-      variable_rule,
+      var_rule,
       spaces,
       str_arrow,
       spaces,
@@ -289,7 +294,7 @@ namespace L3 {
   struct Instruction_comparison_rule:
     // var <- t cmp t
     pegtl::seq<
-      variable_rule,
+      var_rule,
       spaces,
       str_arrow,
       spaces,
@@ -303,13 +308,13 @@ namespace L3 {
   struct Instruction_load_rule:
     // var <- load var
     pegtl::seq<
-      variable_rule,
+      var_rule,
       spaces,
       str_arrow,
       spaces,
       str_load,
       spaces,
-      variable_rule
+      var_rule
     > {};
 
   struct Instruction_store_rule:
@@ -317,7 +322,7 @@ namespace L3 {
     pegtl::seq<
       str_store,
       spaces,
-      variable_rule,
+      var_rule,
       spaces,
       str_arrow,
       spaces,
@@ -386,7 +391,7 @@ namespace L3 {
   struct Instruction_call_function_assignment_rule:
     // var <- call callee ( args )
     pegtl::seq<
-      variable_rule,
+      var_rule,
       spaces,
       str_arrow,
       spaces,
@@ -433,7 +438,7 @@ namespace L3 {
       spaces,
       pegtl::one< "(" >,
       spaces,
-      variable_rule,
+      vars_rule,
       spaces,
       pegtl::one< ")" >,
       spaces,
@@ -463,7 +468,7 @@ namespace L3 {
 
   template<> struct action < number_rule > {
     template< typename Input >
-    static void apply( const Input & in, Program & p) {
+    static void apply( const Input & in, std::ofstream & out) {
       if (debug) std::cerr << "Recognized a number rule.\n";
 
       int val = std::stoi(in.string);
@@ -474,7 +479,7 @@ namespace L3 {
 
   template<> struct action < label_rule > {
     template< typename Input >
-    static void apply( const Input & in, Program & p ) {
+    static void apply( const Input & in, std::ofstream & out ) {
       if (debug) std::cerr << "Recognized a label rule.\n";
 
       Symbol* lab = new Symbol(in.string);
@@ -484,7 +489,7 @@ namespace L3 {
 
   template<> struct action < I_rule > {
     template< typename Input >
-    static void apply( const Input & in, Program & p ) {
+    static void apply( const Input & in, std::ofstream & out ) {
       if (debug) std::cerr << "Recognized an I rule.\n";
 
       Symbol* fname = new Symbol(in.string);
@@ -494,7 +499,7 @@ namespace L3 {
 
   template<> struct action < defined_var_rule > {
     template< typename Input >
-    static void apply( const Input & in, Program & p ) {
+    static void apply( const Input & in, std::ofstream & out ) {
       if (debug) std::cerr << "Recognized a defined_var rule.\n";
 
       Symbol* var = new Symbol(in.string);
@@ -504,7 +509,7 @@ namespace L3 {
 
   template<> struct action < arg_rule > {
     template< typename Input >
-    static void apply( const Input & in, Program & p ) {
+    static void apply( const Input & in, std::ofstream & out ) {
       if (debug) std::cerr << "Recognized a defined_var rule.\n";
 
       Symbol* var = new Symbol(in.string);
@@ -515,7 +520,7 @@ namespace L3 {
 
   template<> struct action < var_rule > {
     template< typename Input >
-    static void apply( const Input & in, Program & p ) {
+    static void apply( const Input & in, std::ofstream & out ) {
       if (debug) std::cerr << "Recognized a var rule.\n";
 
       Symbol* var = new Symbol(in.string);
@@ -525,20 +530,22 @@ namespace L3 {
 
   template<> struct action < op_rule > {
     template< typename Input >
-    static void apply( const Input & in, Program & p ) {
+    static void apply( const Input & in, std::ofstream & out ) {
       if (debug) std::cerr << "Recognized a operation rule.\n";
 
-      Symbol* op = new Symbol(in.string);
+      ActionType type = stringToOperation(in.string);
+      Action* op = new Action(type);
       parsed_items.push_back(op);
     }
   };
 
   template<> struct action < cmp_rule > {
     template< typename Input >
-    static void apply( const Input & in, Program & p ) {
+    static void apply( const Input & in, std::ofstream & out ) {
       if (debug) std::cerr << "Recognized a comparison rule.\n";
 
-      Symbol* cmp = new Symbol(in.string);
+      ActionType type = stringToComparison(in.string);
+      Action* cmp = new Action(type);
       parsed_items.push_back(cmp);
     }
   };
@@ -549,27 +556,25 @@ namespace L3 {
   */
   template<> struct action < Instruction_assignment_rule > {
     template< typename Input >
-    static void apply( const Input & in, Program & p ) {
+    static void apply( const Input & in, std::ofstream & out ) {
       // var <- s
       if (debug) std::cerr << "Recognized an Instruction_assignment rule.\n";
 
-      auto currentF = p.getLastFunction();
       auto s = parsed_items.back();
       parsed_items.pop_back();
       auto var = parsed_items.back();
       parsed_items.pop_back();
-      auto i = new Instruction_assignment(var, s);
 
+      out << var->print() << " <- " << s->print() << "\n";
     }
   };
 
   template<> struct action < Instruction_operation_rule > {
     template< typename Input >
-    static void apply( const Input & in, Program & p ) {
+    static void apply( const Input & in, std::ofstream & out ) {
       // var <- t1 op t2
       if (debug) std::cerr << "Recognized an Instruction_operation rule.\n";
 
-      auto currentF = p.getLastFunction();
       auto t2 = parsed_items.back();
       parsed_items.pop_back();
       auto op = parsed_items.back();
@@ -578,18 +583,18 @@ namespace L3 {
       parsed_items.pop_back();
       auto var = parsed_items.back();
       parsed_items.pop_back();
-      auto i = new Instruction_operation(var, t1, op, t2);
-      currentF.addInstruction(i);
+
+      out << var->print() << " <- " << t1->print() << "\n";
+      out << var->print() << " " << op->print() <<"= " << t2->print() << "\n";
     }
   };
 
   template<> struct action < Instruction_comparison_rule > {
     template< typename Input >
-    static void apply( const Input & in, Program & p ) {
+    static void apply( const Input & in, std::ofstream & out ) {
       // var <- t1 cmp t2
       if (debug) std::cerr << "Recognized an Instruction_comparison rule.\n";
 
-      auto currentF = p.getLastFunction();
       auto t2 = parsed_items.back();
       parsed_items.pop_back();
       auto cmp = parsed_items.back();
@@ -598,182 +603,240 @@ namespace L3 {
       parsed_items.pop_back();
       auto var = parsed_items.back();
       parsed_items.pop_back();
-      auto i = new Instruction_comparison(var, t1, cmp, t2);
-      currentF.addInstruction(i);
+      
+      out << var->print() << " -> ";
+
+      switch (cmp) {
+        case ComparisonType::less:
+            out << t1->print() << " < " << t2->print() << "\n";
+            break;
+        case ComparisonType::lesseq:
+            out << t1->print() << " <= " << t2->print() << "\n";
+            break;
+        case ComparisonType::eq:
+            out << t1->print() << " = " << t2->print() << "\n";
+            break;
+        case ComparisonType::greatereq:
+            out << t2->print() << " < " << t1->print() << "\n";
+            break;
+        case ComparisonType::greater:
+            out << t2->print() << " <= " << t1->print() << "\n";
+            break;
+      }
     }
   };
 
   template<> struct action < Instruction_load_rule > {
     template< typename Input >
-    static void apply( const Input & in, Program & p ) {
+    static void apply( const Input & in, std::ofstream & out ) {
       // var1 <- load var2
       if (debug) std::cerr << "Recognized an Instruction_load rule.\n";
 
-      auto currentF = p.getLastFunction();
       auto var2 = parsed_items.back();
       parsed_items.pop_back();
       auto var1 = parsed_items.back();
       parsed_items.pop_back();
-      auto i = new Instruction_load(var1, var2);
-      currentF.addInstruction(i);
+
+      out << var1->print() << " <- mem " << var2->print() << " 0\n";
     }
   };
 
   template<> struct action < Instruction_store_rule > {
     template< typename Input >
-    static void apply( const Input & in, Program & p ) {
+    static void apply( const Input & in, std::ofstream & out ) {
       // store var <- s
       if (debug) std::cerr << "Recognized an Instruction_store rule.\n";
 
-      auto currentF = p.getLastFunction();
       auto s = parsed_items.back();
       parsed_items.pop_back();
       auto var = parsed_items.back();
       parsed_items.pop_back();
-      auto i = new Instruction_store(var, s);
-      currentF.addInstruction(i);
+
+      out << "mem " << var->print() " 0 <- " << s->print() << "\n";
     }
   };
 
   template<> struct action < Instruction_return_val_rule > {
     template< typename Input >
-    static void apply( const Input & in, Program & p ) {
+    static void apply( const Input & in, std::ofstream & out ) {
       // return t
       if (debug) std::cerr << "Recognized an Instruction_store rule.\n";
 
-      auto currentF = p.getLastFunction();
       auto t = parsed_items.back();
       parsed_items.pop_back();
-      auto i = new Instruction_return_value(t);
-      currentF.addInstruction(i);
+      
+      out << "rax <- " << t->print() << "\n";
+      out << "return\n";
     }
   };
 
   template<> struct action < Instruction_return_rule > {
     template< typename Input >
-    static void apply( const Input & in, Program & p ) {
+    static void apply( const Input & in, std::ofstream & out ) {
       // return
       if (debug) std::cerr << "Recognized an Instruction_return rule.\n";
 
-      auto currentF = p.getLastFunction();
-      auto i = new Instruction_return();
-      currentF.addInstruction(i);
+      out << "return\n";
     }
   };
 
   template<> struct action < Instruction_label_rule > {
     template< typename Input >
-    static void apply( const Input & in, Program & p ) {
+    static void apply( const Input & in, std::ofstream & out ) {
       // label
       if (debug) std::cerr << "Recognized an Instruction_label rule.\n";
 
-      auto currentF = p.getLastFunction();
       auto label = parsed_items.back();
       parsed_items.pop_back();
-      auto i = new Instruction_label(label);
-      currentF.addInstruction(i);
+
+      out << label->print() << "\n";
     }
   };
 
   template<> struct action < Instruction_branch_label_rule > {
     template< typename Input >
-    static void apply( const Input & in, Program & p ) {
+    static void apply( const Input & in, std::ofstream & out ) {
       // br label
       if (debug) std::cerr << "Recognized an Instruction_branch_label rule.\n";
 
-      auto currentF = p.getLastFunction();
       auto label = parsed_items.back();
       parsed_items.pop_back();
-      auto i = new Instruction_branch_label(label);
-      currentF.addInstruction(i);
+
+      out << "cjump 0 = 0 " << label->print() << "\n";
     }
   };
 
   template<> struct action < Instruction_branch_label_conditional_rule > {
     template< typename Input >
-    static void apply( const Input & in, Program & p ) {
+    static void apply( const Input & in, std::ofstream & out ) {
       // br t label
       if (debug) std::cerr << "Recognized an Instruction_branch_label_conditional rule.\n";
 
-      auto currentF = p.getLastFunction();
+
       auto label = parsed_items.back();
       parsed_items.pop_back();
       auto t = parsed_items.back();
       parsed_items.pop_back();
-      auto i = new Instruction_branch_label_conditional(t, label);
-      currentF.addInstruction(i);
+
+      out << "cjump 0 < " << t->print() << " " << label->print() << "\n";
     }
   };
 
   template<> struct action < Instruction_call_function_rule > {
     template< typename Input >
-    static void apply( const Input & in, Program & p ) {
+    static void apply( const Input & in, std::ofstream & out ) {
       // call callee ( args )
       if (debug) std::cerr << "Recognized an Instruction_call_function rule.\n";
 
-      auto currentF = p.getLastFunction();
       auto callee = parsed_items.back();
       parsed_items.pop_back();
-      auto i = new Instruction_call_function(callee);
 
-      /* Grab the function arguments.*/
+      /*
+      We'll use the label globalization strategy originally in Simone's slides,
+      since he said we won't be tested on it even if the old version was false. 
+      */
+      std::string return_label = callee->print() + std::to_string(returnCounter);
+      out << "mem rsp -8 <- :" << return_label << "\n";
+
+      /* Grab the function arguments and info */
+      int count = 0;
+      int numArgs = parsed_args.size();
       while (!parsed_args.empty()) {
         auto arg = parsed_args.back();
-        i.addArg(arg);
         parsed_args.pop_back();
+
+        /* Try to use one of the six argument registers, otherwise use stack */
+        if (count < 6) {
+          out << argRegisters[count] << " <- " << arg->print() << "\n";
+        } else {
+          out << "mem rsp " << (40 - (8 * N)) << "\n";
+        }
       }
 
-      currentF.addInstruction(i);
+      out << "call " << callee->print() << " " << numArgs << "\n";
+      out << return_label << "\n";
+
+      returnCounter++;
     }
   };
 
   template<> struct action < Instruction_call_function_assignment_rule > {
     template< typename Input >
-    static void apply( const Input & in, Program & p ) {
+    static void apply( const Input & in, std::ofstream & out ) {
       // var <- call callee ( args )
       if (debug) std::cerr << "Recognized an Instruction_call_function_assignment rule.\n";
 
-      auto currentF = p.getLastFunction();
       auto callee = parsed_items.back();
       parsed_items.pop_back();
       auto var = parsed_items.back();
       parsed_items.pop_back();
-      auto i = new Instruction_call_function_assignment(var, callee);
 
-      /* Grab the function arguments.*/
+      std::string return_label = callee->print() + std::to_string(returnCounter);
+      out << "mem rsp -8 <- :" << return_label << "\n";
+
+      int count = 0;
+      int numArgs = parsed_args.size();
       while (!parsed_args.empty()) {
         auto arg = parsed_args.back();
-        i.addArg(arg);
         parsed_args.pop_back();
+
+        if (count < 6) {
+          out << argRegisters[count] << " <- " << arg->print() << "\n";
+        } else {
+          out << "mem rsp " << (40 - (8 * N)) << "\n";
+        }
       }
 
-      currentF.addInstruction(i);
+      out << "call " << callee->print() << " " << numArgs << "\n";
+      out << return_label << "\n";
+      out << var->print() << " <- rax\n";
+
+      returnCounter++;
     }
   };
   
   /*
   Function / Program Actions
   */
-  template<> struct action < function_name_rule > {
+  template<> struct action < defined_function_name_rule > {
     template< typename Input>
-    static void apply( const Input & in, Program & p) {
-      if (debug) std::cerr << "Recognized an arg rule" << std::endl;
+    static void apply( const Input & in, std::ofstream & out) {
+      if (debug) std::cerr << "Recognized an defined_function_name rule" << std::endl;
       
-      auto currentF = p.getLastFunction();
-      auto 
+      out << "define " << in.string << " ";
     }
   };
 
-  template<> struct action < function_name_rule > {
+  template<> struct action < vars_rule > {
     template< typename Input>
-    static void apply( const Input & in, Program & p) {
-      if (debug) std::cerr << "Recognized a function_name rule" << std::endl;
-        auto new_function = new Function();
-        new_function.setFunctionName(in.string());
-        p.addFunction(new_function);
+    static void apply( const Input & in, std::ofstream & out) {
+      if (debug) std::cerr << "Recognized a vars rule" << std::endl;
+
+      out << "(";
+
+      while (!parsed_params.empty()) {
+        auto comma = (parsed_params.size() > 1);
+        
+        auto param = parsed_params.back();
+        parsed_params.pop_back();
+
+        out << " " << param->print()
+        if (omma) out << ",";
+      }
+
+      out << " ) {\n";
     }
   };
 
+
+  template<> struct action < Function_rule > {
+    template< typename Input>
+    static void apply( const Input & in, std::ofstream & out) {
+      if (debug) std::cerr << "Recognized a function rule" << std::endl;
+      
+      out << "}\n\n ";
+    }
+  };
 
   /*
   Grammar Rules
@@ -787,7 +850,7 @@ namespace L3 {
   /*
   Program Parser
   */
-  Program parse_file (char *fileName) {
+  Program parse_file_alt (char *fileName) {
     /* 
     Check the grammar for some possible issues.
     */
@@ -797,14 +860,27 @@ namespace L3 {
     }
 
     /*
-    Parse if valid grammar.
+    Continue the parse if valid grammar. Get the input file.
     */
     file_input< > fileInput(fileName);
-    Program p;
-    parse< full_grammar, action >(fileInput, p);
+
+    /* 
+     * Open the output file.
+     */ 
+    std::ofstream outputFile;
+    outputFile.open("prog.L1");
+
+    /*
+    Parse out of the input and generate code into the output.
+    */
+    parse< full_grammar, action >(fileInput, outputFile);
 
     return p;
 
-
   }
+
+  /*
+  Utility for storing the calling convention.
+  */
+  std::vector<std::string> argRegisters = {"rdi", "rsi", "rdx", "rcx", "r8", "r9"};
 }

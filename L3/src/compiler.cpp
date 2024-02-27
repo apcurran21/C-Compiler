@@ -14,13 +14,14 @@
 #include <assert.h>
 
 #include "parser.h"
+#include "parser_alt.h"
 #include "code_generator.h"
 #include "L3.h"
 
 
 
 void print_help (char *progName){
-  std::cerr << "Usage: " << progName << " [-v] [-g 0|1] [-O 0|1|2] SOURCE" << std::endl;
+  std::cerr << "Usage: " << progName << " [-v] [-g 0|1] [-O 0|1|2] [-n] SOURCE" << std::endl;
   return ;
 }
 
@@ -29,6 +30,7 @@ int main(
   char **argv
   ){
   auto enable_code_generator = true;
+  auto naive = true;
   int32_t optLevel = 0;
   bool verbose;
 
@@ -54,6 +56,10 @@ int main(
         verbose = true;
         break ;
 
+      case 'n' :
+        naive = (strtoul(optarg, NULL, 0) == 0) ? false : true ;
+        break ;
+
       default:
         print_help(argv[0]);
         return 1;
@@ -63,8 +69,11 @@ int main(
   /*
    * Parse the input file.
    */
-  auto p = L3::parse_file(argv[optind]);
-
+  L3::Program p;
+  if (!naive) {
+    p = L3::parse_file(argv[optind]);
+  }
+  
   /*
    * Code optimizations (optional)
    */
@@ -82,10 +91,20 @@ int main(
   }
 
   /*
-   * Generate x86_64 assembly.
+   * Generate L3 code.
    */
   if (enable_code_generator){
-    L3::generate_code(p);
+    if (naive) {
+      /*
+      Do the parsing and code generation in one step.
+      */
+      L3::parse_file_alt(argv[optind]);
+
+    } else {
+      L3::generate_code(p);
+
+    }
+
   }
 
   return 0;
