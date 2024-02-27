@@ -2,7 +2,7 @@
 #include <tao/pegtl/contrib/analyze.hpp>
 #include <tao/pegtl/contrib/raw_string.hpp>
 
-#include "parser.h"
+#include "parser_alt.h"
 
 namespace pegtl = TAO_PEGTL_NAMESPACE;
 
@@ -65,7 +65,44 @@ namespace L3 {
   struct str_and : TAO_PEGTL_STRING( "&" ) {};
   struct str_shiftl : TAO_PEGTL_STRING( "<<" ) {};
   struct str_shiftr : TAO_PEGTL_STRING( ">>" ) {};
-  struct
+
+
+  /*
+  Whitespace Rules
+  */
+  struct comment: 
+    pegtl::disable< 
+      TAO_PEGTL_STRING( "//" ), 
+      pegtl::until< pegtl::eolf > 
+    > {};
+
+  struct spaces :
+    pegtl::star< 
+      pegtl::sor<
+        pegtl::one< ' ' >,
+        pegtl::one< '\t'>
+      >
+    > {};
+
+  struct seps : 
+    pegtl::star<
+      pegtl::seq<
+        spaces,
+        pegtl::eol
+      >
+    > {};
+
+  struct seps_with_comments : 
+    pegtl::star< 
+      pegtl::seq<
+        spaces,
+        pegtl::sor<
+          pegtl::eol,
+          comment
+        >
+      >
+    > {};
+
 
   /*
   Item Rules
@@ -139,16 +176,23 @@ namespace L3 {
     variable_name_rule {};
 
   /*
-  Should match to the arguments in a function call.
-  */
-  struct arg_rule:
-    t_rule {};
-  
-  /*
   Should match to all other variable instances in the program.
   */
   struct var_rule:
     variable_name_rule {};
+
+  struct t_rule:
+    pegtl::sor<
+      var_rule,
+      number_rule
+    > {};
+
+  /*
+  Should match to the arguments in a function call.
+  */
+  struct arg_rule:
+    t_rule {};
+
 
   /*
   Item Group rules
@@ -160,12 +204,6 @@ namespace L3 {
       I_rule
     > {};
 
-  struct t_rule:
-    pegtl::sor<
-      var_rule,
-      number_rule
-    > {};
-  
   struct u_rule:
     pegtl::sor<
       var_rule,
@@ -177,7 +215,7 @@ namespace L3 {
       pegtl::opt< defined_var_rule >,
       pegtl::star<
         pegtl::seq<
-          pegtl::one< "," >,
+          pegtl::one< ',' >,
           spaces,
           defined_var_rule
         >
@@ -189,7 +227,7 @@ namespace L3 {
       pegtl::opt< arg_rule >,
       pegtl::star<
         pegtl::seq<
-          pegtl::one< "," >,
+          pegtl::one< ',' >,
           spaces,
           arg_rule
         >
@@ -206,41 +244,6 @@ namespace L3 {
       str_tenserr
     > {};
 
-  /*
-  Whitespace Rules
-  */
-  struct comment: 
-    pegtl::disable< 
-      TAO_PEGTL_STRING( "//" ), 
-      pegtl::until< pegtl::eolf > 
-    > {};
-
-  struct spaces :
-    pegtl::star< 
-      pegtl::sor<
-        pegtl::one< ' ' >,
-        pegtl::one< '\t'>
-      >
-    > {};
-
-  struct seps : 
-    pegtl::star<
-      pegtl::seq<
-        spaces,
-        pegtl::eol
-      >
-    > {};
-
-  struct seps_with_comments : 
-    pegtl::star< 
-      pegtl::seq<
-        spaces,
-        pegtl::sor<
-          pegtl::eol,
-          comment
-        >
-      >
-    > {};
 
   /*
   Operator / Comparison Rules
@@ -375,11 +378,11 @@ namespace L3 {
       spaces,
       callee_rule,
       spaces,
-      pegtl::one< "(" >,
+      pegtl::one< '(' >,
       spaces,
       args_rule,
       spaces,
-      pegtl::one< ")" >
+      pegtl::one< ')' >
     > {};
 
   struct Instruction_call_function_rule:
@@ -436,17 +439,17 @@ namespace L3 {
       spaces,
       defined_function_name_rule,
       spaces,
-      pegtl::one< "(" >,
+      pegtl::one< '(' >,
       spaces,
       vars_rule,
       spaces,
-      pegtl::one< ")" >,
+      pegtl::one< ')' >,
       spaces,
-      pegtl::one< "{" >,
+      pegtl::one< '{' >,
       seps_with_comments,
       Instructions_rule,
       seps_with_comments,
-      pegtl::one< "}" >
+      pegtl::one< '}' >
     > {};
 
   struct Functions_rule:
@@ -533,8 +536,8 @@ namespace L3 {
     static void apply( const Input & in, std::ofstream & out ) {
       if (debug) std::cerr << "Recognized a operation rule.\n";
 
-      ActionType type = stringToOperation(in.string);
-      Action* op = new Action(type);
+      OperationType type = stringToOperation(in.string);
+      Operation* op = new Operation(type);
       parsed_items.push_back(op);
     }
   };
@@ -544,8 +547,8 @@ namespace L3 {
     static void apply( const Input & in, std::ofstream & out ) {
       if (debug) std::cerr << "Recognized a comparison rule.\n";
 
-      ActionType type = stringToComparison(in.string);
-      Action* cmp = new Action(type);
+      ComparisonType type = stringToComparison(in.string);
+      Comparison* cmp = new Comparison(type);
       parsed_items.push_back(cmp);
     }
   };
@@ -850,7 +853,7 @@ namespace L3 {
   /*
   Program Parser
   */
-  Program parse_file_alt (char *fileName) {
+  void parse_file_alt (char *fileName) {
     /* 
     Check the grammar for some possible issues.
     */
@@ -868,14 +871,12 @@ namespace L3 {
      * Open the output file.
      */ 
     std::ofstream outputFile;
-    outputFile.open("prog.L1");
+    outputFile.open("prog.L3");
 
     /*
     Parse out of the input and generate code into the output.
     */
     parse< full_grammar, action >(fileInput, outputFile);
-
-    return p;
 
   }
 

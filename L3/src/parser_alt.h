@@ -1,9 +1,9 @@
-#pragma once 
+#pragma once
 
 #include "L3.h"
 
 namespace L3 {
 
-    Program parse_file_alt (char *filename);
+    void parse_file_alt (char *filename);
     
 }
