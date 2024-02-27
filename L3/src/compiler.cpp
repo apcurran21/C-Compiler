@@ -12,7 +12,6 @@
 #include <unistd.h>
 #include <iostream>
 #include <assert.h>
-
 #include <parser.h>
 
 
@@ -81,9 +80,18 @@ int main(
   /*
    * Generate x86_64 assembly.
    */
-  if (enable_code_generator){
-    L3::generate_code(p);
-  }
+    if (enable_code_generator){
+      std::ofstream outputFile;
 
+      L3::buildTree(p,outputFile); //this should now be an output file 
+      
+      L3::Program tileL3;
+      tileL3 = L3::tileTree("buildTreeOutput.L3");
+
+      L3::globalLabelLocalizations(tileL3)
+      L3::generate_code(tileL3,outputFile);
+
+      L3::generate_code(p);
+  }
   return 0;
 }
