@@ -80,14 +80,14 @@ int main(
   /* 
    * Print the source program.
    */
-  if (verbose){
-    std::cout << "\n\n" << std::endl;
-    std::cout << "Verbose mode selected, check output to verify the parsed program.\n------------------------------\n";
+  // if (verbose){
+  //   std::cout << "\n\n" << std::endl;
+  //   std::cout << "Verbose mode selected, check output to verify the parsed program.\n------------------------------\n";
     
-    p.print();
+  //   p.print();
 
-    std::cout << "Done.\n\n";
-  }
+  //   std::cout << "Done.\n\n";
+  // }
 
   /*
    * Generate L3 code.
@@ -98,11 +98,11 @@ int main(
       Do the parsing and code generation in one step.
       */
       L3::parse_file_alt(argv[optind]);
-
-    } else {
-      L3::generate_code(p);
-
     }
+    // } else {
+    //   L3::generate_code(p);
+
+    // }
 
   }
 

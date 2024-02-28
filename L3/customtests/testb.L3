@@ -1,0 +1,5 @@
+define @main () {
+
+%ar <- call allocate (%newVar0, 1)
+return
+}

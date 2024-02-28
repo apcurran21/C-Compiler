@@ -14,7 +14,13 @@ namespace L3 {
   /*
   Debug flag.
   */
-  const int debug = 0;
+  const int debug = 1;
+
+  /*
+  Forward Declarations.
+  */
+  // struct var_rule;
+  // struct t_rule;
 
   /*
   Stack for storing parsed tokens.
@@ -32,9 +38,19 @@ namespace L3 {
   std::vector<Item*> parsed_args;
 
   /*
+  Stack for holding the parsed function names.
+  */
+  std::vector<Item*> parsed_fnames;
+
+  /*
   Counter for creating globally unique return labels.
   */
   int returnCounter = 0;
+
+  /*
+  Utility for storing the calling convention.
+  */
+  std::vector<std::string> argRegisters = {"rdi", "rsi", "rdx", "rcx", "r8", "r9"};
 
   /*
   Keywords
@@ -50,6 +66,8 @@ namespace L3 {
   struct str_input : TAO_PEGTL_STRING( "input" ) {};
   struct str_tuperr : TAO_PEGTL_STRING( "tuple-error" ) {};
   struct str_tenserr : TAO_PEGTL_STRING( "tensor-error" ) {};
+  struct str_main : TAO_PEGTL_STRING( "@main" ) {};
+
   /*
   Symbols
   */
@@ -176,6 +194,16 @@ namespace L3 {
     variable_name_rule {};
 
   /*
+  Should match to the arguments in a function call.
+  */
+  struct arg_rule:
+    pegtl::sor<
+      variable_name_rule,
+      number_rule
+    > {};
+    // t_rule {};
+
+  /*
   Should match to all other variable instances in the program.
   */
   struct var_rule:
@@ -187,16 +215,19 @@ namespace L3 {
       number_rule
     > {};
 
-  /*
-  Should match to the arguments in a function call.
-  */
-  struct arg_rule:
-    t_rule {};
-
 
   /*
   Item Group rules
   */
+  struct stdlib_rule:
+    pegtl::sor<
+      str_print,
+      str_allocate,
+      str_input,
+      str_tuperr,
+      str_tenserr
+    > {};
+
   struct s_rule:
     pegtl::sor<
       t_rule,
@@ -237,11 +268,7 @@ namespace L3 {
   struct callee_rule:
     pegtl::sor<
       u_rule,
-      str_print,
-      str_allocate,
-      str_input,
-      str_tuperr,
-      str_tenserr
+      stdlib_rule
     > {};
 
 
@@ -270,15 +297,6 @@ namespace L3 {
   /*
   Instruction Rules
   */
-  struct Instruction_assignment_rule:
-    // var <- s
-    pegtl::seq<
-      var_rule,
-      spaces,
-      str_arrow,
-      spaces,
-      s_rule
-    > {};
 
   struct Instruction_operation_rule:
     // var <- t op t
@@ -398,12 +416,29 @@ namespace L3 {
       spaces,
       str_arrow,
       spaces,
-      call_function_rule
+      str_call,
+      spaces,
+      callee_rule,
+      spaces,
+      pegtl::one< '(' >,
+      spaces,
+      args_rule,
+      spaces,
+      pegtl::one< ')' >
+    > {};
+
+  struct Instruction_assignment_rule:
+    // var <- s
+    pegtl::seq<
+      var_rule,
+      spaces,
+      str_arrow,
+      spaces,
+      s_rule
     > {};
 
   struct Instruction_rule:
     pegtl::sor<
-      pegtl::seq< pegtl::at<Instruction_assignment_rule>, Instruction_assignment_rule >,
       pegtl::seq< pegtl::at<Instruction_operation_rule>, Instruction_operation_rule >,
       pegtl::seq< pegtl::at<Instruction_comparison_rule>, Instruction_comparison_rule >,
       pegtl::seq< pegtl::at<Instruction_load_rule>, Instruction_load_rule >,
@@ -415,6 +450,7 @@ namespace L3 {
       pegtl::seq< pegtl::at<Instruction_branch_label_conditional_rule>, Instruction_branch_label_conditional_rule>,
       pegtl::seq< pegtl::at<Instruction_call_function_rule>, Instruction_call_function_rule>,
       pegtl::seq< pegtl::at<Instruction_call_function_assignment_rule>, Instruction_call_function_assignment_rule>,
+      pegtl::seq< pegtl::at<Instruction_assignment_rule>, Instruction_assignment_rule >,
       pegtl::seq< pegtl::at<comment>, comment>
     > {};
 
@@ -432,6 +468,25 @@ namespace L3 {
   /*
   Function / Program Rules
   */
+  struct Main_function_rule:
+    pegtl::seq<
+      str_define,
+      spaces,
+      str_main,
+      spaces,
+      pegtl::one< '(' >,
+      spaces,
+      vars_rule,
+      spaces,
+      pegtl::one< ')' >,
+      spaces,
+      pegtl::one< '{' >,
+      seps_with_comments,
+      Instructions_rule,
+      seps_with_comments,
+      pegtl::one< '}' >
+    > {};
+
   struct Function_rule:
     pegtl::seq<
       seps_with_comments,
@@ -453,7 +508,7 @@ namespace L3 {
     > {};
 
   struct Functions_rule:
-    pegtl::plus<
+    pegtl::star<
       seps_with_comments,
       Function_rule,
       seps_with_comments
@@ -462,19 +517,93 @@ namespace L3 {
   /*
   What is the entry point rule here?? is it always @main?
   */
+  struct entry_point_rule:
+    pegtl::seq<
+      seps_with_comments,
+      Main_function_rule,
+      Functions_rule
+    > {};
+
+
+  template< typename Rule >
+  struct action : pegtl::nothing< Rule > {};
+
+  /*
+  Debug Actions
+  */
+
+  template<> struct action < variable_name_rule > {
+    template< typename Input >
+    static void apply( const Input & in, std::ofstream & out) {
+      if (debug) std::cerr << "Recognized a variable_name rule.\n";
+    }
+  };
+
+  template<> struct action < Functions_rule > {
+    template< typename Input >
+    static void apply( const Input & in, std::ofstream & out) {
+      if (debug) std::cerr << "Recognized a Functions rule.\n";
+    }
+  };
+
+
+  template<> struct action < str_main > {
+    template< typename Input >
+    static void apply( const Input & in, std::ofstream & out) {
+      if (debug) std::cerr << "Recognized an str_main keyword rule.\n";
+
+      Symbol* fname = new Symbol(in.string());
+      parsed_fnames.push_back(fname);
+
+      out << "(" << in.string() << "\n";
+      out << "(" << in.string() << "\n";
+    }
+  };
+
+
+  template<> struct action < Main_function_rule > {
+    template< typename Input >
+    static void apply( const Input & in, std::ofstream & out) {
+      if (debug) std::cerr << "Recognized a Main_function rule.\n";
+      
+      out << ")\n\n";
+    }
+  };
+
+
+  template<> struct action < entry_point_rule > {
+    template< typename Input >
+    static void apply( const Input & in, std::ofstream & out) {
+      if (debug) std::cerr << "Recognized an entry_point rule, successflly parsed the program!\n";
+    
+      out << ")\n";
+    }
+  };
+
+
+  template<> struct action < str_arrow > {
+    template< typename Input >
+    static void apply( const Input & in, std::ofstream & out) {
+      if (debug) std::cerr << "Recognized an str_arrow rule.\n";
+    }
+  };
+
+  template<> struct action < t_rule > {
+    template< typename Input >
+    static void apply( const Input & in, std::ofstream & out) {
+      if (debug) std::cerr << "Recognized a t_rule rule.\n";
+    }
+  };
 
   /*
   Item Actions
   */
-  template< typename Rule >
-  struct action : pegtl::nothing< Rule > {};
-
   template<> struct action < number_rule > {
     template< typename Input >
     static void apply( const Input & in, std::ofstream & out) {
       if (debug) std::cerr << "Recognized a number rule.\n";
 
-      int val = std::stoi(in.string);
+      int val = std::stoi(in.string());
       Number* num = new Number(val);
       parsed_items.push_back(num);
     }
@@ -485,27 +614,38 @@ namespace L3 {
     static void apply( const Input & in, std::ofstream & out ) {
       if (debug) std::cerr << "Recognized a label rule.\n";
 
-      Symbol* lab = new Symbol(in.string);
+      Symbol* lab = new Symbol(in.string());
       parsed_items.push_back(lab);
     }
   };
 
-  template<> struct action < I_rule > {
-    template< typename Input >
-    static void apply( const Input & in, std::ofstream & out ) {
-      if (debug) std::cerr << "Recognized an I rule.\n";
-
-      Symbol* fname = new Symbol(in.string);
-      parsed_items.push_back(fname);
+  
+  template<> struct action < stdlib_rule > {
+    template< typename Input>
+    static void apply( const Input & in, std::ofstream & out) {
+      if (debug) std::cerr << "Recognized a callee rule" << std::endl;
+      
+      Symbol* callee = new Symbol(in.string());
+      parsed_items.push_back(callee);
     }
   };
+
+  // template<> struct action < I_rule > {
+  //   template< typename Input >
+  //   static void apply( const Input & in, std::ofstream & out ) {
+  //     if (debug) std::cerr << "Recognized an I rule.\n";
+
+  //     Symbol* fname = new Symbol(in.string());
+  //     parsed_items.push_back(fname);
+  //   }
+  // };
 
   template<> struct action < defined_var_rule > {
     template< typename Input >
     static void apply( const Input & in, std::ofstream & out ) {
       if (debug) std::cerr << "Recognized a defined_var rule.\n";
 
-      Symbol* var = new Symbol(in.string);
+      Symbol* var = new Symbol(in.string());
       parsed_params.push_back(var);
     }
   };
@@ -513,9 +653,9 @@ namespace L3 {
   template<> struct action < arg_rule > {
     template< typename Input >
     static void apply( const Input & in, std::ofstream & out ) {
-      if (debug) std::cerr << "Recognized a defined_var rule.\n";
+      if (debug) std::cerr << "Recognized an arg_var rule.\n";
 
-      Symbol* var = new Symbol(in.string);
+      Symbol* var = new Symbol(in.string());
       parsed_args.push_back(var);
     }
   };
@@ -526,7 +666,7 @@ namespace L3 {
     static void apply( const Input & in, std::ofstream & out ) {
       if (debug) std::cerr << "Recognized a var rule.\n";
 
-      Symbol* var = new Symbol(in.string);
+      Symbol* var = new Symbol(in.string());
       parsed_items.push_back(var);
     }
   };
@@ -536,7 +676,7 @@ namespace L3 {
     static void apply( const Input & in, std::ofstream & out ) {
       if (debug) std::cerr << "Recognized a operation rule.\n";
 
-      OperationType type = stringToOperation(in.string);
+      OperationType type = stringToOperation(in.string());
       Operation* op = new Operation(type);
       parsed_items.push_back(op);
     }
@@ -547,7 +687,7 @@ namespace L3 {
     static void apply( const Input & in, std::ofstream & out ) {
       if (debug) std::cerr << "Recognized a comparison rule.\n";
 
-      ComparisonType type = stringToComparison(in.string);
+      ComparisonType type = stringToComparison(in.string());
       Comparison* cmp = new Comparison(type);
       parsed_items.push_back(cmp);
     }
@@ -609,7 +749,8 @@ namespace L3 {
       
       out << var->print() << " -> ";
 
-      switch (cmp) {
+      ComparisonType cmp_type = stringToComparison(cmp->print());
+      switch (cmp_type) {
         case ComparisonType::less:
             out << t1->print() << " < " << t2->print() << "\n";
             break;
@@ -655,7 +796,7 @@ namespace L3 {
       auto var = parsed_items.back();
       parsed_items.pop_back();
 
-      out << "mem " << var->print() " 0 <- " << s->print() << "\n";
+      out << "mem " << var->print() << " 0 <- " << s->print() << "\n";
     }
   };
 
@@ -738,8 +879,16 @@ namespace L3 {
       We'll use the label globalization strategy originally in Simone's slides,
       since he said we won't be tested on it even if the old version was false. 
       */
-      std::string return_label = callee->print() + std::to_string(returnCounter);
-      out << "mem rsp -8 <- :" << return_label << "\n";
+      std::string clean_fname = removeAtSymbol(callee->print());
+
+      /* hacky way of checking if this is a stdlib function call */
+      auto isStdlib = (callee->print().size() == clean_fname.size());
+
+      std::string return_label;
+      if (!isStdlib) {
+        return_label = ":" + clean_fname + std::to_string(returnCounter);
+        out << "mem rsp -8 <- " << return_label << "\n";
+      }
 
       /* Grab the function arguments and info */
       int count = 0;
@@ -752,12 +901,15 @@ namespace L3 {
         if (count < 6) {
           out << argRegisters[count] << " <- " << arg->print() << "\n";
         } else {
-          out << "mem rsp " << (40 - (8 * N)) << "\n";
+          out << "mem rsp " << (40 - (8 * numArgs)) << "\n";
         }
+
+        count++;
       }
 
       out << "call " << callee->print() << " " << numArgs << "\n";
-      out << return_label << "\n";
+      
+      if (!isStdlib) out << return_label << "\n";
 
       returnCounter++;
     }
@@ -774,8 +926,16 @@ namespace L3 {
       auto var = parsed_items.back();
       parsed_items.pop_back();
 
-      std::string return_label = callee->print() + std::to_string(returnCounter);
-      out << "mem rsp -8 <- :" << return_label << "\n";
+      std::string clean_fname = removeAtSymbol(callee->print());
+
+      /* hacky way of checking if this is a stdlib function call */
+      auto isStdlib = (callee->print().size() == clean_fname.size());
+
+      std::string return_label;
+      if (!isStdlib) {
+        return_label = ":" + clean_fname + std::to_string(returnCounter);
+        out << "mem rsp -8 <- " << return_label << "\n";
+      }
 
       int count = 0;
       int numArgs = parsed_args.size();
@@ -786,12 +946,14 @@ namespace L3 {
         if (count < 6) {
           out << argRegisters[count] << " <- " << arg->print() << "\n";
         } else {
-          out << "mem rsp " << (40 - (8 * N)) << "\n";
+          out << "mem rsp " << (40 - (8 * numArgs)) << "\n";
         }
+
+        count++;
       }
 
       out << "call " << callee->print() << " " << numArgs << "\n";
-      out << return_label << "\n";
+      if (!isStdlib) out << return_label << "\n";
       out << var->print() << " <- rax\n";
 
       returnCounter++;
@@ -806,7 +968,9 @@ namespace L3 {
     static void apply( const Input & in, std::ofstream & out) {
       if (debug) std::cerr << "Recognized an defined_function_name rule" << std::endl;
       
-      out << "define " << in.string << " ";
+      Symbol* fname = new Symbol(in.string());
+      parsed_fnames.push_back(fname);
+      out << "(" << in.string() << "\n";
     }
   };
 
@@ -815,19 +979,27 @@ namespace L3 {
     static void apply( const Input & in, std::ofstream & out) {
       if (debug) std::cerr << "Recognized a vars rule" << std::endl;
 
-      out << "(";
+      int numArgs = parsed_args.size();
 
-      while (!parsed_params.empty()) {
-        auto comma = (parsed_params.size() > 1);
-        
-        auto param = parsed_params.back();
-        parsed_params.pop_back();
+      std::cout << numArgs << "\n";
 
-        out << " " << param->print()
-        if (omma) out << ",";
+      out << numArgs << "\n";
+
+      int count = 0;
+      while (!parsed_args.empty()) {
+        auto arg = parsed_args.back();
+        parsed_args.pop_back();
+
+        /* arguments 1-6 are in registers, otherwise on the stack*/
+        if (count < 6) {
+          out << arg->print() << " <- " << argRegisters[count] << "\n";
+        } else {
+          out << arg->print() << " <- " << (8 * (numArgs - 1 - count)) << "\n";
+        }
+
+        count++;
       }
 
-      out << " ) {\n";
     }
   };
 
@@ -846,7 +1018,7 @@ namespace L3 {
   */
   struct full_grammar :
     pegtl::must<
-      Functions_rule
+      entry_point_rule
     > {};
 
 
@@ -871,7 +1043,7 @@ namespace L3 {
      * Open the output file.
      */ 
     std::ofstream outputFile;
-    outputFile.open("prog.L3");
+    outputFile.open("prog.L2");
 
     /*
     Parse out of the input and generate code into the output.
@@ -880,8 +1052,4 @@ namespace L3 {
 
   }
 
-  /*
-  Utility for storing the calling convention.
-  */
-  std::vector<std::string> argRegisters = {"rdi", "rsi", "rdx", "rcx", "r8", "r9"};
 }

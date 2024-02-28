@@ -44,11 +44,13 @@ namespace L3 {
     };
 
     /*
-    Utilities for the above enums.
+    Utilities for the above enums and name cleaning
     */
     OperationType stringToOperation(const std::string& str);
 
     ComparisonType stringToComparison(const std::string& str);
+
+    std::string removeAtSymbol(const std::string& str);
 
 
     /*

@@ -95,7 +95,7 @@ namespace L3 {
     }
 
     /*
-    Utilities for the Operation and Comparison enums
+    Utilities for the Operation and Comparison enums and other strings
     */
     OperationType stringToOperation(const std::string& str) {
         static const std::map<std::string, OperationType> OperationMap = {
@@ -131,6 +131,14 @@ namespace L3 {
             throw std::invalid_argument("Invalid action string");
         }
     }
+
+    std::string removeAtSymbol(const std::string& str) {
+        if (!str.empty() && str[0] == '@') {
+            return str.substr(1);
+        }
+        return str;
+    }
+
 
 
     /*

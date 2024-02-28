@@ -140,6 +140,7 @@
         * 6: var6 <- r9
     * L2: for each parameter 7 through N ...
         * 7: var7 <- stack-arg 8(N-7)
+        * I: vari <- stack-arg 8((N-1)-i) for i in {0, ... N-1}
         * N: varN <- stack-arg 0
     *   Instructions ...
     * )
