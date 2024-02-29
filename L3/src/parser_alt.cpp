@@ -52,6 +52,7 @@ namespace L3 {
   */
   std::vector<std::string> argRegisters = {"rdi", "rsi", "rdx", "rcx", "r8", "r9"};
 
+
   /*
   Keywords
   */
@@ -142,7 +143,7 @@ namespace L3 {
       >
     > {};
 
-  struct number_rule:
+  struct number:
     pegtl::seq<
       pegtl::opt<
         pegtl::sor<
@@ -199,7 +200,7 @@ namespace L3 {
   struct arg_rule:
     pegtl::sor<
       variable_name_rule,
-      number_rule
+      number
     > {};
     // t_rule {};
 
@@ -208,6 +209,9 @@ namespace L3 {
   */
   struct var_rule:
     variable_name_rule {};
+
+  struct number_rule:
+    number {};
 
   struct t_rule:
     pegtl::sor<
@@ -254,8 +258,9 @@ namespace L3 {
     > {};
 
   struct args_rule:
-    pegtl::sor<
+    pegtl::seq<
       pegtl::opt< arg_rule >,
+      spaces,
       pegtl::star<
         pegtl::seq<
           pegtl::one< ',' >,
@@ -623,22 +628,22 @@ namespace L3 {
   template<> struct action < stdlib_rule > {
     template< typename Input>
     static void apply( const Input & in, std::ofstream & out) {
-      if (debug) std::cerr << "Recognized a callee rule" << std::endl;
+      if (debug) std::cerr << "Recognized an stdlib rule" << std::endl;
       
       Symbol* callee = new Symbol(in.string());
       parsed_items.push_back(callee);
     }
   };
 
-  // template<> struct action < I_rule > {
-  //   template< typename Input >
-  //   static void apply( const Input & in, std::ofstream & out ) {
-  //     if (debug) std::cerr << "Recognized an I rule.\n";
+  template<> struct action < I_rule > {
+    template< typename Input >
+    static void apply( const Input & in, std::ofstream & out ) {
+      if (debug) std::cerr << "Recognized an I rule.\n";
 
-  //     Symbol* fname = new Symbol(in.string());
-  //     parsed_items.push_back(fname);
-  //   }
-  // };
+      Symbol* fname = new Symbol(in.string());
+      parsed_items.push_back(fname);
+    }
+  };
 
   template<> struct action < defined_var_rule > {
     template< typename Input >
@@ -872,14 +877,17 @@ namespace L3 {
       // call callee ( args )
       if (debug) std::cerr << "Recognized an Instruction_call_function rule.\n";
 
+      if (debug) std::cerr << "examining parsed_items, length is " << parsed_items.size() << "\n";
       auto callee = parsed_items.back();
       parsed_items.pop_back();
+      
+      auto function_scope = parsed_fnames.back();
 
       /*
       We'll use the label globalization strategy originally in Simone's slides,
       since he said we won't be tested on it even if the old version was false. 
       */
-      std::string clean_fname = removeAtSymbol(callee->print());
+      std::string clean_fname = removeAtSymbol(function_scope->print());
 
       /* hacky way of checking if this is a stdlib function call */
       auto isStdlib = (callee->print().size() == clean_fname.size());
@@ -894,8 +902,8 @@ namespace L3 {
       int count = 0;
       int numArgs = parsed_args.size();
       while (!parsed_args.empty()) {
-        auto arg = parsed_args.back();
-        parsed_args.pop_back();
+        auto arg = parsed_args.front();
+        parsed_args.erase(parsed_args.begin());
 
         /* Try to use one of the six argument registers, otherwise use stack */
         if (count < 6) {
@@ -940,8 +948,10 @@ namespace L3 {
       int count = 0;
       int numArgs = parsed_args.size();
       while (!parsed_args.empty()) {
-        auto arg = parsed_args.back();
-        parsed_args.pop_back();
+        // auto arg = parsed_args.back();
+        // parsed_args.pop_back();
+        auto arg = parsed_args.front();
+        parsed_args.erase(parsed_args.begin());
 
         if (count < 6) {
           out << argRegisters[count] << " <- " << arg->print() << "\n";
@@ -987,8 +997,8 @@ namespace L3 {
 
       int count = 0;
       while (!parsed_args.empty()) {
-        auto arg = parsed_args.back();
-        parsed_args.pop_back();
+        auto arg = parsed_params.front();
+        parsed_params.erase(parsed_params.begin());
 
         /* arguments 1-6 are in registers, otherwise on the stack*/
         if (count < 6) {
@@ -1009,7 +1019,7 @@ namespace L3 {
     static void apply( const Input & in, std::ofstream & out) {
       if (debug) std::cerr << "Recognized a function rule" << std::endl;
       
-      out << "}\n\n ";
+      out << ")\n\n ";
     }
   };
 

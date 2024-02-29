@@ -1,5 +1,6 @@
 define @main () {
-
-%ar <- call allocate (%newVar0, 1)
+:hi
+%a <- 1
+call @f (%arr, 1)
 return
 }

@@ -3,6 +3,13 @@ define @main () {
     %a <- 3
     call print (%a)
     %a <- %a + 4
-    return
+    %b <- call @f (%a)
 
+    return %a
+
+}
+
+define @f (%c) {
+
+    return
 }
