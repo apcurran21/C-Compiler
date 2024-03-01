@@ -105,6 +105,7 @@ namespace L3 {
         public:
             Operation (OperationType);
             std::string print() const override;
+            OperationType get_operation() const;
         private:
             OperationType value;
     };

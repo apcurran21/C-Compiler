@@ -65,6 +65,10 @@ namespace L3 {
         return res;
     }
 
+    OperationType Operation::get_operation() const {
+        return value;
+    }
+
     /*
     Comparison
     */

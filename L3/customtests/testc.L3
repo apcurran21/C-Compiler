@@ -1,0 +1,5 @@
+define @main(){
+	:loop
+	%check <- %var2<=%var1
+	return
+}

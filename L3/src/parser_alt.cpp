@@ -23,6 +23,11 @@ namespace L3 {
   // struct t_rule;
 
   /*
+  Vector of dictionaries for keeping track of the labels and their globalizations.
+  */
+  std::vector<std::map<std::string, std::string>> labels_map;
+
+  /*
   Stack for storing parsed tokens.
   */
   std::vector<Item*> parsed_items;
@@ -43,9 +48,25 @@ namespace L3 {
   std::vector<Item*> parsed_fnames;
 
   /*
+  Hopefully a universal counter for globalizing all labels in the program.
+  */
+  int labelCounter = 0;
+
+  /*
   Counter for creating globally unique return labels.
   */
   int returnCounter = 0;
+
+  /*
+  Counter for creating labels that are globally unique,
+  but consistent at the function scope
+  */
+  int functionCounter = 0;
+
+  /*
+  Counter for tracking the parsing of a new function
+  */
+  int fnameCounter = 0;
 
   /*
   Utility for storing the calling convention.
@@ -246,7 +267,7 @@ namespace L3 {
     > {};
 
   struct vars_rule:
-    pegtl::sor<
+    pegtl::seq<
       pegtl::opt< defined_var_rule >,
       pegtl::star<
         pegtl::seq<
@@ -475,6 +496,7 @@ namespace L3 {
   */
   struct Main_function_rule:
     pegtl::seq<
+      spaces,
       str_define,
       spaces,
       str_main,
@@ -560,6 +582,11 @@ namespace L3 {
       Symbol* fname = new Symbol(in.string());
       parsed_fnames.push_back(fname);
 
+      /*
+      Push back an empty dictionary on the vector in preparation for the rest of the function.
+      */
+      labels_map.emplace_back();
+
       out << "(" << in.string() << "\n";
       out << "(" << in.string() << "\n";
     }
@@ -570,7 +597,7 @@ namespace L3 {
     template< typename Input >
     static void apply( const Input & in, std::ofstream & out) {
       if (debug) std::cerr << "Recognized a Main_function rule.\n";
-      
+
       out << ")\n\n";
     }
   };
@@ -579,7 +606,7 @@ namespace L3 {
   template<> struct action < entry_point_rule > {
     template< typename Input >
     static void apply( const Input & in, std::ofstream & out) {
-      if (debug) std::cerr << "Recognized an entry_point rule, successflly parsed the program!\n";
+      if (debug) std::cerr << "Recognized an entry_point rule, successflly parsed the L3 program!\n";
     
       out << ")\n";
     }
@@ -619,7 +646,29 @@ namespace L3 {
     static void apply( const Input & in, std::ofstream & out ) {
       if (debug) std::cerr << "Recognized a label rule.\n";
 
-      Symbol* lab = new Symbol(in.string());
+      /*
+      Globalize the label before ever putting it into the parsed_items stack.
+      */
+
+      if (debug) std::cerr << "labels_map has size " << labels_map.size() << ", fnameCounter is " << fnameCounter << "\n";;
+
+      std::string global_label;
+      auto it = labels_map[fnameCounter].find(in.string());
+      if (it != labels_map[fnameCounter].end()) {
+        if (debug) std::cerr << "the label was already in labels map\n";
+        /* if the key exists in the map we already globalized it */
+        global_label = it->second;
+        if (debug) std::cerr << "global_label from the map is " << global_label << "\n";
+      } else {
+        if (debug) std::cerr << "the label was not in the labels_map\n";
+        /* we need to globalize the label */
+        global_label = in.string() + "_global_" + std::to_string(labelCounter);
+        if (debug) std::cerr << "adding the new value " << global_label << " for key " << in.string() << "\n";
+        labels_map[fnameCounter][in.string()] = global_label;
+      }
+      labelCounter++;
+
+      Symbol* lab = new Symbol(global_label);
       parsed_items.push_back(lab);
     }
   };
@@ -732,8 +781,25 @@ namespace L3 {
       auto var = parsed_items.back();
       parsed_items.pop_back();
 
-      out << var->print() << " <- " << t1->print() << "\n";
-      out << var->print() << " " << op->print() <<"= " << t2->print() << "\n";
+      /*
+      test411 case, can't use and define the same variable from the rhs if op is noncommutative
+      */
+      if (var->print() == t2->print()) {
+        if (debug) std::cerr << "found that var equals t2\n";
+        if (op->print() == "-" || op->print() == "<<" || op->print() == ">>") {
+          auto function_scope = parsed_fnames.back();
+          std::string clean_fname = removeAtSymbol(function_scope->print());
+          std::string temp_var = "%" + clean_fname + std::to_string(returnCounter);
+          returnCounter++;
+
+          out << temp_var << " <- " << t1->print() << "\n";
+          out << temp_var << " " << op->print() << "= " << t2->print() << "\n";
+          out << var->print() << " <- " << temp_var << "\n";
+        }
+      } else {
+        out << var->print() << " <- " << t1->print() << "\n";
+        out << var->print() << " " << op->print() <<"= " << t2->print() << "\n";
+      }
     }
   };
 
@@ -752,7 +818,7 @@ namespace L3 {
       auto var = parsed_items.back();
       parsed_items.pop_back();
       
-      out << var->print() << " -> ";
+      out << var->print() << " <- ";
 
       ComparisonType cmp_type = stringToComparison(cmp->print());
       switch (cmp_type) {
@@ -835,10 +901,30 @@ namespace L3 {
       // label
       if (debug) std::cerr << "Recognized an Instruction_label rule.\n";
 
+      if (debug) std::cerr << "parsed items has size " << parsed_items.size() << "\n";
+
       auto label = parsed_items.back();
       parsed_items.pop_back();
 
       out << label->print() << "\n";
+
+      // if (debug) std::cerr << "labels_map has size " << labels_map.size() << ", fnameCounter is " << fnameCounter << "\n";;
+
+      // std::string global_label;
+      // auto it = labels_map[fnameCounter].find(label->print());
+      // if (it != labels_map[fnameCounter].end()) {
+      //   if (debug) std::cerr << "the label was already in labels map\n";
+      //   /* if the key exists in the map we already globalized it */
+      //   global_label = it->second;
+      // } else {
+      //   if (debug) std::cerr << "the label was not in the labels_map\n";
+      //   /* we need to globalize the label */
+      //   global_label = label->print() + "_global_" + std::to_string(labelCounter);
+      //   if (debug) std::cerr << "adding the new value " << global_label << " for key " << label->print() << "\n";
+      //   labels_map[fnameCounter][label->print()] = global_label;
+      // }
+      // labelCounter++;
+      // out << global_label << "\n";
     }
   };
 
@@ -848,10 +934,30 @@ namespace L3 {
       // br label
       if (debug) std::cerr << "Recognized an Instruction_branch_label rule.\n";
 
+      if (debug) std::cerr << "parsed items has size " << parsed_items.size() << "\n";
+
       auto label = parsed_items.back();
       parsed_items.pop_back();
 
       out << "cjump 0 = 0 " << label->print() << "\n";
+
+      // if (debug) std::cerr << "labels_map has size " << labels_map.size() << "\n";
+
+      // std::string global_label;
+      // auto it = labels_map[fnameCounter].find(label->print());
+      // if (it != labels_map[fnameCounter].end()) {
+      //   /* if the key exists in the map we already globalized it */
+      //   if (debug) std::cerr << "the label was already in labels map\n";
+      //   global_label = it->second;
+      // } else {
+      //   if (debug) std::cerr << "the label was not in the labels_map\n";
+      //   /* we need to globalize the label */
+      //   global_label = label->print() + "_global_" + std::to_string(labelCounter);
+      //   if (debug) std::cerr << "adding the new value " << global_label << " for key " << label->print() << "\n";
+      //   labels_map[fnameCounter][label->print()] = global_label;
+      // }
+      // labelCounter++;
+      // out << "cjump 0 = 0 " << global_label << "\n";
     }
   };
 
@@ -888,14 +994,18 @@ namespace L3 {
       since he said we won't be tested on it even if the old version was false. 
       */
       std::string clean_fname = removeAtSymbol(function_scope->print());
+      std::string clean_callee = removeAtSymbol(callee->print());
 
       /* hacky way of checking if this is a stdlib function call */
-      auto isStdlib = (callee->print().size() == clean_fname.size());
+      auto isStdlib = (!callee->print().empty() && callee->print()[0] == '@') && (callee->print().size() == clean_callee.size());
+
+      if (debug) std::cerr << "clean_callee= " << clean_callee << " : size= " << clean_callee.size() << ", callee= " << callee->print() << " : size= " << callee->print().size() << "\n";
 
       std::string return_label;
       if (!isStdlib) {
-        return_label = ":" + clean_fname + std::to_string(returnCounter);
+        return_label = ":ret_" + clean_fname + "_global_" + std::to_string(labelCounter);
         out << "mem rsp -8 <- " << return_label << "\n";
+        labelCounter++;
       }
 
       /* Grab the function arguments and info */
@@ -918,8 +1028,6 @@ namespace L3 {
       out << "call " << callee->print() << " " << numArgs << "\n";
       
       if (!isStdlib) out << return_label << "\n";
-
-      returnCounter++;
     }
   };
 
@@ -934,15 +1042,20 @@ namespace L3 {
       auto var = parsed_items.back();
       parsed_items.pop_back();
 
-      std::string clean_fname = removeAtSymbol(callee->print());
+      auto function_scope = parsed_fnames.back();
+      std::string clean_fname = removeAtSymbol(function_scope->print());
+      std::string clean_callee = removeAtSymbol(callee->print());
 
       /* hacky way of checking if this is a stdlib function call */
-      auto isStdlib = (callee->print().size() == clean_fname.size());
+      auto isStdlib = (!callee->print().empty() && callee->print()[0] == '@') && (callee->print().size() == clean_callee.size());
+
+      if (debug) std::cerr << "clean_callee= " << clean_callee << " : size= " << clean_callee.size() << ", callee= " << callee->print() << " : size= " << callee->print().size() << "\n";
 
       std::string return_label;
       if (!isStdlib) {
-        return_label = ":" + clean_fname + std::to_string(returnCounter);
+        return_label = ":ret_" + clean_fname + "_global_" + std::to_string(labelCounter);
         out << "mem rsp -8 <- " << return_label << "\n";
+        labelCounter++;
       }
 
       int count = 0;
@@ -965,8 +1078,6 @@ namespace L3 {
       out << "call " << callee->print() << " " << numArgs << "\n";
       if (!isStdlib) out << return_label << "\n";
       out << var->print() << " <- rax\n";
-
-      returnCounter++;
     }
   };
   
@@ -980,6 +1091,13 @@ namespace L3 {
       
       Symbol* fname = new Symbol(in.string());
       parsed_fnames.push_back(fname);
+      fnameCounter++;
+
+      /*
+      Push back an empty dictionary on the vector in preparation for the rest of the function.
+      */
+      labels_map.emplace_back();
+
       out << "(" << in.string() << "\n";
     }
   };
@@ -989,14 +1107,14 @@ namespace L3 {
     static void apply( const Input & in, std::ofstream & out) {
       if (debug) std::cerr << "Recognized a vars rule" << std::endl;
 
-      int numArgs = parsed_args.size();
+      int numArgs = parsed_params.size();
 
       std::cout << numArgs << "\n";
 
       out << numArgs << "\n";
 
       int count = 0;
-      while (!parsed_args.empty()) {
+      while (!parsed_params.empty()) {
         auto arg = parsed_params.front();
         parsed_params.erase(parsed_params.begin());
 
