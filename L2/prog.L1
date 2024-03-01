@@ -1,0 +1,228 @@
+(@main
+(@main
+	0 12
+	:MainEntry_global_0
+	r10 <- 10
+	mem rsp 400 <- r10
+	r10 <- mem rsp 400
+	r10 <- r10
+	mem rsp 8 <- r10
+	r10 <- mem rsp 8
+	r10 <<= 1
+	mem rsp 8 <- r10
+	r10 <- mem rsp 8
+	r10 <- r10
+	mem rsp 8 <- r10
+	r10 <- mem rsp 8
+	r10 += 1
+	mem rsp 8 <- r10
+	mem rsp -8 <- :ret_main_global_1
+	r10 <- mem rsp 8
+	rdi <- r10
+	rsi <- 2
+	call @Alloc1DArr 2
+	:ret_main_global_1
+	r10 <- rax
+	mem rsp 40 <- r10
+	mem rsp -8 <- :ret_main_global_2
+	r10 <- mem rsp 8
+	rdi <- r10
+	rsi <- 4
+	call @Alloc1DArr 2
+	:ret_main_global_2
+	r10 <- rax
+	mem rsp 24 <- r10
+	mem rsp -8 <- :ret_main_global_3
+	r10 <- mem rsp 40
+	rdi <- r10
+	call @CalcArrSum 1
+	:ret_main_global_3
+	r10 <- rax
+	mem rsp 48 <- r10
+	mem rsp -8 <- :ret_main_global_4
+	r10 <- mem rsp 24
+	rdi <- r10
+	call @CalcArrSum 1
+	:ret_main_global_4
+	r10 <- rax
+	mem rsp 32 <- r10
+	r10 <- mem rsp 48
+	r10 <- r10
+	mem rsp 152 <- r10
+	r11 <- mem rsp 32
+	r10 <- mem rsp 152
+	r10 += r11
+	mem rsp 152 <- r10
+	r10 <- mem rsp 48
+	r10 <- r10
+	mem rsp 0 <- r10
+	r11 <- mem rsp 0
+	r10 <- mem rsp 32
+	r11 *= r10
+	mem rsp 0 <- r11
+	r10 <- mem rsp 48
+	r10 <- r10
+	mem rsp 224 <- r10
+	r10 <- mem rsp 224
+	r10 <<= 1
+	mem rsp 224 <- r10
+	r10 <- mem rsp 224
+	r10 <- r10
+	mem rsp 224 <- r10
+	r10 <- mem rsp 224
+	r10 += 1
+	mem rsp 224 <- r10
+	r10 <- mem rsp 224
+	rdi <- r10
+	call print 1
+	r10 <- mem rsp 32
+	r10 <- r10
+	mem rsp 168 <- r10
+	r10 <- mem rsp 168
+	r10 <<= 1
+	mem rsp 168 <- r10
+	r10 <- mem rsp 168
+	r10 <- r10
+	mem rsp 168 <- r10
+	r10 <- mem rsp 168
+	r10 += 1
+	mem rsp 168 <- r10
+	r10 <- mem rsp 168
+	rdi <- r10
+	call print 1
+	r10 <- mem rsp 152
+	r10 <- r10
+	mem rsp 64 <- r10
+	r10 <- mem rsp 64
+	r10 <<= 1
+	mem rsp 64 <- r10
+	r10 <- mem rsp 64
+	r10 <- r10
+	mem rsp 64 <- r10
+	r10 <- mem rsp 64
+	r10 += 1
+	mem rsp 64 <- r10
+	r10 <- mem rsp 0
+	r10 <- r10
+	mem rsp 16 <- r10
+	r10 <- mem rsp 16
+	r10 <<= 1
+	mem rsp 16 <- r10
+	r10 <- mem rsp 16
+	r10 <- r10
+	mem rsp 16 <- r10
+	r10 <- mem rsp 16
+	r10 += 1
+	mem rsp 16 <- r10
+	r10 <- mem rsp 64
+	rdi <- r10
+	call print 1
+	r10 <- mem rsp 16
+	rdi <- r10
+	call print 1
+	return
+	)
+(@CalcArrSum
+	1 0
+	r8 <- rdi
+	:CalcArrEntry_global_5
+	r10 <- 0
+	r10 *= 8
+	r10 <- r10
+	r10 += 16
+	r11 <- r8
+	r11 += r10
+	rcx <- mem r11 0
+	rcx <- rcx
+	rcx >>= 1
+	r9 <- 0
+	rax <- 0
+	goto :Loop_global_6
+	:Loop_global_6
+	r10 <- 0
+	r11 <- 1
+	r10 <- r10
+	r10 += r9
+	r11 <- r10
+	r11 *= 8
+	r11 <- r11
+	r11 += 24
+	r10 <- r8
+	r10 += r11
+	r10 <- mem r10 0
+	r9 <- r9
+	r9 += 1
+	rax <- rax
+	rax += r10
+	r10 <- r9 < rcx
+	cjump 1 = r10 :Loop_global_6
+	goto :Stop_global_9
+	:Stop_global_9
+	rax <- rax
+	return
+	)
+(@Alloc1DArr
+	2 2
+	r10 <- rdi
+	mem rsp 8 <- r10
+	r10 <- rsi
+	mem rsp 0 <- r10
+	:Alloc1DEntry_global_11
+	r10 <- mem rsp 8
+	r10 <- r10
+	r10 >>= 1
+	r10 <- r10
+	r10 <- r10
+	r10 <<= 1
+	r10 <- r10
+	r10 += 1
+	r10 <- r10
+	r10 += 4
+	mem rsp -8 <- :ret_Alloc1DArr_global_12
+	rdi <- r10
+	rsi <- 1
+	call allocate 2
+	:ret_Alloc1DArr_global_12
+	r11 <- rax
+	r10 <- r11
+	r10 += 8
+	mem r10 0 <- 3
+	r8 <- r11
+	r8 += 16
+	r10 <- mem rsp 8
+	mem r8 0 <- r10
+	r10 <- 0
+	r10 *= 8
+	r10 <- r10
+	r10 += 16
+	r8 <- r11
+	r8 += r10
+	r9 <- mem r8 0
+	r9 <- r9
+	r9 >>= 1
+	r8 <- 0
+	r10 <- 0
+	goto :Loop_global_13
+	:Loop_global_13
+	r10 <- 0
+	rcx <- 1
+	r10 <- r10
+	r10 += r8
+	r10 <- r10
+	r10 *= 8
+	r10 <- r10
+	r10 += 24
+	rcx <- r11
+	rcx += r10
+	r10 <- mem rsp 0
+	mem rcx 0 <- r10
+	r8 <- r8
+	r8 += 1
+	r10 <- r8 < r9
+	cjump 1 = r10 :Loop_global_13
+	goto :Stop_global_16
+	:Stop_global_16
+	rax <- r11
+	return
+	)
+)

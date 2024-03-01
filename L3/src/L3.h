@@ -71,10 +71,10 @@ namespace L3 {
 
     class Number : public Item {
         public:
-            Number (int n);
+            Number (long long int n);
             std::string print() const override;
         private:
-            int value;
+            long long int value;
     };
 
     // maybe this won't get used rn

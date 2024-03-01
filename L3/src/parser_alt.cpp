@@ -66,7 +66,7 @@ namespace L3 {
   /*
   Counter for tracking the parsing of a new function
   */
-  int fnameCounter = 0;
+  int fnameCounter = -1;
 
   /*
   Utility for storing the calling convention.
@@ -93,7 +93,12 @@ namespace L3 {
   /*
   Symbols
   */
-  struct str_lesseq : TAO_PEGTL_STRING( "<=" ) {};
+  // struct str_lesseq : TAO_PEGTL_STRING( "<=" ) {};
+  struct str_lesseq :
+    pegtl::seq<
+      pegtl::one<'<'>,
+      pegtl::one<'='>
+    > {};
   struct str_less : TAO_PEGTL_STRING( "<" ) {};
   struct str_eq : TAO_PEGTL_STRING( "=" ) {};
   struct str_greatereq : TAO_PEGTL_STRING( ">=" ) {};
@@ -245,8 +250,8 @@ namespace L3 {
   */
   struct cmp_rule:
     pegtl::sor<
-      str_less,
       str_lesseq,
+      str_less,
       str_eq,
       str_greatereq,
       str_greater
@@ -310,8 +315,6 @@ namespace L3 {
   struct s_rule:
     pegtl::sor<
       t_rule,
-      // var_rule,
-      // number_rule,
       label_rule,
       I_rule
     > {};
@@ -361,6 +364,7 @@ namespace L3 {
   struct Instruction_load_rule:
     // var <- load var
     pegtl::seq<
+      spaces,
       var_rule,
       spaces,
       str_arrow,
@@ -373,6 +377,7 @@ namespace L3 {
   struct Instruction_store_rule:
     // store var <- s
     pegtl::seq<
+      spaces,
       str_store,
       spaces,
       var_rule,
@@ -385,12 +390,14 @@ namespace L3 {
   struct Instruction_return_rule:
     // return
     pegtl::seq<
+      spaces,
       str_return
     > {};
 
   struct Instruction_return_val_rule:
     // return t
     pegtl::seq<
+      spaces,
       str_return,
       spaces,
       t_rule
@@ -399,12 +406,14 @@ namespace L3 {
   struct Instruction_label_rule:
     // label
     pegtl::seq<
+      spaces,
       label_rule
     > {};
 
   struct Instruction_branch_label_rule:
     // br label
     pegtl::seq<
+      spaces,
       str_branch,
       spaces,
       label_rule
@@ -413,6 +422,7 @@ namespace L3 {
   struct Instruction_branch_label_conditional_rule:
     // br t label
     pegtl::seq<
+      spaces,
       str_branch,
       spaces,
       t_rule,
@@ -424,6 +434,7 @@ namespace L3 {
   struct call_function_rule:
     // call callee ( args )
     pegtl::seq<
+      spaces,
       str_call,
       spaces,
       callee_rule,
@@ -438,12 +449,14 @@ namespace L3 {
   struct Instruction_call_function_rule:
     // call callee ( args )
     pegtl::seq<
+      spaces,
       call_function_rule
     > {};
 
   struct Instruction_call_function_assignment_rule:
     // var <- call callee ( args )
     pegtl::seq<
+      spaces,
       var_rule,
       spaces,
       str_arrow,
@@ -462,6 +475,7 @@ namespace L3 {
   struct Instruction_assignment_rule:
     // var <- s
     pegtl::seq<
+      spaces,
       var_rule,
       spaces,
       str_arrow,
@@ -480,8 +494,8 @@ namespace L3 {
       pegtl::seq< pegtl::at<Instruction_label_rule>, Instruction_label_rule>,
       pegtl::seq< pegtl::at<Instruction_branch_label_rule>, Instruction_branch_label_rule>,
       pegtl::seq< pegtl::at<Instruction_branch_label_conditional_rule>, Instruction_branch_label_conditional_rule>,
-      pegtl::seq< pegtl::at<Instruction_call_function_rule>, Instruction_call_function_rule>,
       pegtl::seq< pegtl::at<Instruction_call_function_assignment_rule>, Instruction_call_function_assignment_rule>,
+      pegtl::seq< pegtl::at<Instruction_call_function_rule>, Instruction_call_function_rule>,
       pegtl::seq< pegtl::at<Instruction_assignment_rule>, Instruction_assignment_rule >,
       pegtl::seq< pegtl::at<comment>, comment>
     > {};
@@ -500,29 +514,33 @@ namespace L3 {
   /*
   Function / Program Rules
   */
-  struct Main_function_rule:
-    pegtl::seq<
-      spaces,
-      str_define,
-      spaces,
-      str_main,
-      spaces,
-      pegtl::one< '(' >,
-      spaces,
-      vars_rule,
-      spaces,
-      pegtl::one< ')' >,
-      spaces,
-      pegtl::one< '{' >,
-      seps_with_comments,
-      Instructions_rule,
-      seps_with_comments,
-      pegtl::one< '}' >
-    > {};
+  // struct Main_function_rule:
+  //   pegtl::seq<
+  //     spaces,
+  //     str_define,
+  //     spaces,
+  //     str_main,
+  //     spaces,
+  //     pegtl::one< '(' >,
+  //     spaces,
+  //     vars_rule,
+  //     spaces,
+  //     pegtl::one< ')' >,
+  //     spaces,
+  //     pegtl::one< '{' >,
+  //     seps_with_comments,
+  //     Instructions_rule,
+  //     seps_with_comments,
+  //     pegtl::seq<
+  //       spaces,
+  //       pegtl::one< '}' >
+  //     >
+  //   > {};
 
   struct Function_rule:
     pegtl::seq<
-      seps_with_comments,
+      // seps_with_comments,
+      spaces,
       str_define,
       spaces,
       defined_function_name_rule,
@@ -532,11 +550,13 @@ namespace L3 {
       vars_rule,
       spaces,
       pegtl::one< ')' >,
+      seps,
       spaces,
       pegtl::one< '{' >,
       seps_with_comments,
       Instructions_rule,
       seps_with_comments,
+      spaces,
       pegtl::one< '}' >
     > {};
 
@@ -552,8 +572,8 @@ namespace L3 {
   */
   struct entry_point_rule:
     pegtl::seq<
-      seps_with_comments,
-      Main_function_rule,
+      // seps_with_comments,
+      // Main_function_rule,
       Functions_rule
     > {};
 
@@ -564,6 +584,20 @@ namespace L3 {
   /*
   Debug Actions
   */
+
+  template<> struct action <  seps_with_comments > {
+    template< typename Input >
+    static void apply( const Input & in, std::ofstream & out) {
+      if (debug) std::cerr << "Recognized a seps_with_comments rule.\n";
+    }
+  };
+ 
+  template<> struct action < Instructions_rule > {
+    template< typename Input >
+    static void apply( const Input & in, std::ofstream & out) {
+      if (debug) std::cerr << "Recognized an Instructions rule.\n";
+    }
+  };
 
   template<> struct action < variable_name_rule > {
     template< typename Input >
@@ -580,33 +614,33 @@ namespace L3 {
   };
 
 
-  template<> struct action < str_main > {
-    template< typename Input >
-    static void apply( const Input & in, std::ofstream & out) {
-      if (debug) std::cerr << "Recognized an str_main keyword rule.\n";
+  // template<> struct action < str_main > {
+  //   template< typename Input >
+  //   static void apply( const Input & in, std::ofstream & out) {
+  //     if (debug) std::cerr << "Recognized an str_main keyword rule.\n";
 
-      Symbol* fname = new Symbol(in.string());
-      parsed_fnames.push_back(fname);
+  //     Symbol* fname = new Symbol(in.string());
+  //     parsed_fnames.push_back(fname);
 
-      /*
-      Push back an empty dictionary on the vector in preparation for the rest of the function.
-      */
-      labels_map.emplace_back();
+  //     /*
+  //     Push back an empty dictionary on the vector in preparation for the rest of the function.
+  //     */
+  //     labels_map.emplace_back();
 
-      out << "(" << in.string() << "\n";
-      out << "(" << in.string() << "\n";
-    }
-  };
+  //     out << "(" << in.string() << "\n";
+  //     out << "(" << in.string() << "\n";
+  //   }
+  // };
 
 
-  template<> struct action < Main_function_rule > {
-    template< typename Input >
-    static void apply( const Input & in, std::ofstream & out) {
-      if (debug) std::cerr << "Recognized a Main_function rule.\n";
+  // template<> struct action < Main_function_rule > {
+  //   template< typename Input >
+  //   static void apply( const Input & in, std::ofstream & out) {
+  //     if (debug) std::cerr << "Recognized a Main_function rule.\n";
 
-      out << ")\n\n";
-    }
-  };
+  //     out << ")\n\n";
+  //   }
+  // };
 
 
   template<> struct action < entry_point_rule > {
@@ -648,7 +682,7 @@ namespace L3 {
     static void apply( const Input & in, std::ofstream & out) {
       if (debug) std::cerr << "Recognized a number rule.\n";
 
-      int val = std::stoi(in.string());
+      long long int val = std::stoll(in.string());
       Number* num = new Number(val);
       parsed_items.push_back(num);
     }
@@ -796,19 +830,29 @@ namespace L3 {
 
       /*
       test411 case, can't use and define the same variable from the rhs if op is noncommutative
+      Actually i don't think its just the noncommutors, i think we need to do this for every operation
+      with var == t1. 
+      eg:
+        a = b + a
+        ---------
+        a = b
+        a = a * a
+        -> then a = 2b, not b + a
       */
+      // std::set<std::string> noncommutors {"-", "<<", ">>", };
+      // if ((var->print() == t2->print()) && (noncommutors.find(op->print()) != noncommutors.end())) {
       if (var->print() == t2->print()) {
-        if (debug) std::cerr << "found that var equals t2\n";
-        if (op->print() == "-" || op->print() == "<<" || op->print() == ">>") {
-          auto function_scope = parsed_fnames.back();
-          std::string clean_fname = removeAtSymbol(function_scope->print());
-          std::string temp_var = "%" + clean_fname + std::to_string(returnCounter);
-          returnCounter++;
+        if (debug) std::cerr << "found the need to reorder arithmetic operation\n";
+        // if (op->print() == "-" || op->print() == "<<" || op->print() == ">>") {
+        auto function_scope = parsed_fnames.back();
+        std::string clean_fname = removeAtSymbol(function_scope->print());
+        std::string temp_var = "%" + clean_fname + std::to_string(labelCounter);
+        labelCounter++;
 
-          out << temp_var << " <- " << t1->print() << "\n";
-          out << temp_var << " " << op->print() << "= " << t2->print() << "\n";
-          out << var->print() << " <- " << temp_var << "\n";
-        }
+        out << temp_var << " <- " << t1->print() << "\n";
+        out << temp_var << " " << op->print() << "= " << t2->print() << "\n";
+        out << var->print() << " <- " << temp_var << "\n";
+        // }
       } else {
         out << var->print() << " <- " << t1->print() << "\n";
         out << var->print() << " " << op->print() <<"= " << t2->print() << "\n";
@@ -845,10 +889,10 @@ namespace L3 {
             out << t1->print() << " = " << t2->print() << "\n";
             break;
         case ComparisonType::greatereq:
-            out << t2->print() << " < " << t1->print() << "\n";
+            out << t2->print() << " <= " << t1->print() << "\n";
             break;
         case ComparisonType::greater:
-            out << t2->print() << " <= " << t1->print() << "\n";
+            out << t2->print() << " < " << t1->print() << "\n";
             break;
       }
     }
@@ -952,7 +996,7 @@ namespace L3 {
       auto label = parsed_items.back();
       parsed_items.pop_back();
 
-      out << "cjump 0 = 0 " << label->print() << "\n";
+      out << "goto " << label->print() << "\n";
 
       // if (debug) std::cerr << "labels_map has size " << labels_map.size() << "\n";
 
@@ -986,7 +1030,7 @@ namespace L3 {
       auto t = parsed_items.back();
       parsed_items.pop_back();
 
-      out << "cjump 0 < " << t->print() << " " << label->print() << "\n";
+      out << "cjump 1 = " << t->print() << " " << label->print() << "\n";
     }
   };
 
@@ -1010,9 +1054,13 @@ namespace L3 {
       std::string clean_callee = removeAtSymbol(callee->print());
 
       /* hacky way of checking if this is a stdlib function call */
-      auto isStdlib = (!callee->print().empty() && callee->print()[0] == '@') && (callee->print().size() == clean_callee.size());
+      // auto isStdlib = (!callee->print().empty() && callee->print()[0] == '@') && (callee->print().size() == clean_callee.size());
+
+      auto isStdlib = (!callee->print().empty() && callee->print()[0] != '@');
 
       if (debug) std::cerr << "clean_callee= " << clean_callee << " : size= " << clean_callee.size() << ", callee= " << callee->print() << " : size= " << callee->print().size() << "\n";
+
+      if (debug && isStdlib) std::cerr << "callee " << callee->print() << " is an stdlib function\n";
 
       std::string return_label;
       if (!isStdlib) {
@@ -1024,15 +1072,18 @@ namespace L3 {
       /* Grab the function arguments and info */
       int count = 0;
       int numArgs = parsed_args.size();
+      if (debug) std::cerr << "numArgs is " << numArgs << "\n";
       while (!parsed_args.empty()) {
         auto arg = parsed_args.front();
         parsed_args.erase(parsed_args.begin());
+
+        if (debug) std::cerr << "arg is " << arg->print() << "\n"; 
 
         /* Try to use one of the six argument registers, otherwise use stack */
         if (count < 6) {
           out << argRegisters[count] << " <- " << arg->print() << "\n";
         } else {
-          out << "mem rsp " << (40 - (8 * numArgs)) << "\n";
+          out << "mem rsp " << (32 - (8 * count)) << " <- " << arg->print() << "\n";
         }
 
         count++;
@@ -1082,7 +1133,7 @@ namespace L3 {
         if (count < 6) {
           out << argRegisters[count] << " <- " << arg->print() << "\n";
         } else {
-          out << "mem rsp " << (40 - (8 * numArgs)) << "\n";
+          out << "mem rsp " << (32 - (8 * count)) << " <- " << arg->print() << "\n";
         }
 
         count++;
@@ -1135,7 +1186,7 @@ namespace L3 {
         if (count < 6) {
           out << arg->print() << " <- " << argRegisters[count] << "\n";
         } else {
-          out << arg->print() << " <- " << (8 * (numArgs - 1 - count)) << "\n";
+          out << arg->print() << " <- stack-arg " << (8 * (numArgs - 1 - count)) << "\n";
         }
 
         count++;
@@ -1150,7 +1201,7 @@ namespace L3 {
     static void apply( const Input & in, std::ofstream & out) {
       if (debug) std::cerr << "Recognized a function rule" << std::endl;
       
-      out << ")\n\n ";
+      out << ")\n\n";
     }
   };
 
@@ -1189,6 +1240,8 @@ namespace L3 {
     /*
     Parse out of the input and generate code into the output.
     */
+    // see if this works, then just close off with a final parenthese in the entry point rule
+    outputFile << "(@main\n";
     parse< full_grammar, action >(fileInput, outputFile);
 
   }

@@ -188,12 +188,164 @@
 
 * Honestly for label globalization i should globalize the label using the map before even putting it into the parsed_items stack. Labels can be used in basically any other instruction, curently I'm only handling these cases inside of the Instruction label and Instruction branch label actions.
 
+* bruh apparently the first function defined does not need to be main (look at test119.)
 
-tests
-Test 66: test348.L3                                                                                           [FAILED]
-Test 72: test88.L3                                                                                            [FAILED]
-Test 78: test190.L3                                                                                           [FAILED]
-Test 81: test77.L3                                                                                            [FAILED]
-Test 86: test323.L3                                                                                           [FAILED]
-Test 89: test66.L3                                                                                            [FAILED]
-Test 92: test358.L3                                                                                           [FAILED]
+test 116 might be infinite looping whoops
+* 116 fixed, now test 394 is not finishing
+
+Test 331: test381.L3                                                                                           [FAILED]
+Test 333: test112.L3                                                                                           [FAILED]
+Test 335: test293.L3                                                                                           [FAILED]
+Test 336: test214.L3                                                                                           [FAILED]
+Test 345: test362.L3                                                                                           [FAILED]
+Test 426: test320.L3                                                                                           [FAILED]
+Test 427: test319.L3                                                                                           [FAILED]
+
+
+
+```python
+.text
+.globl go
+go:
+pushq %rbx
+pushq %rbp
+pushq %r12
+pushq %r13
+pushq %r14
+pushq %r15
+call _main
+popq %r15
+popq %r14
+popq %r13
+popq %r12
+popq %rbp
+popq %rbx
+retq
+_main:
+subq $96, %rsp
+_MainEntry_global_0:
+movq $10, %r10
+movq %r10, 400(%rsp)
+movq 400(%rsp), %r10
+movq %r10, %r10
+movq %r10, 8(%rsp)
+movq 8(%rsp), %r10
+salq $1, %r10
+movq %r10, 8(%rsp)
+movq 8(%rsp), %r10
+movq %r10, %r10
+movq %r10, 8(%rsp)
+movq 8(%rsp), %r10
+addq $1, %r10
+movq %r10, 8(%rsp)
+movq $_ret_main_global_1, -8(%rsp)
+movq 8(%rsp), %r10
+movq %r10, %rdi
+movq $2, %rsi
+subq $8, %rsp
+jmp _Alloc1DArr
+_ret_main_global_1:
+movq %rax, %r10
+movq %r10, 40(%rsp)
+movq $_ret_main_global_2, -8(%rsp)
+movq 8(%rsp), %r10
+movq %r10, %rdi
+movq $4, %rsi
+subq $8, %rsp
+jmp _Alloc1DArr
+_ret_main_global_2:
+movq %rax, %r10
+movq %r10, 24(%rsp)
+movq $_ret_main_global_3, -8(%rsp)
+movq 40(%rsp), %r10
+movq %r10, %rdi
+subq $8, %rsp
+jmp _CalcArrSum
+_ret_main_global_3:
+movq %rax, %r10
+movq %r10, 48(%rsp)
+movq $_ret_main_global_4, -8(%rsp)
+movq 24(%rsp), %r10
+movq %r10, %rdi
+subq $8, %rsp
+jmp _CalcArrSum
+_ret_main_global_4:
+movq %rax, %r10
+movq %r10, 32(%rsp)
+movq 48(%rsp), %r10
+movq %r10, %r10
+movq %r10, 152(%rsp)
+movq 32(%rsp), %r11
+movq 152(%rsp), %r10
+addq %r11, %r10
+movq %r10, 152(%rsp)
+movq 48(%rsp), %r10
+movq %r10, %r10
+movq %r10, 0(%rsp)
+movq 0(%rsp), %r11
+movq 32(%rsp), %r10
+imulq %r10, %r11
+movq %r11, 0(%rsp)
+movq 48(%rsp), %r10
+movq %r10, %r10
+movq %r10, 224(%rsp)
+movq 224(%rsp), %r10
+salq $1, %r10
+movq %r10, 224(%rsp)
+movq 224(%rsp), %r10
+movq %r10, %r10
+movq %r10, 224(%rsp)
+movq 224(%rsp), %r10
+addq $1, %r10
+movq %r10, 224(%rsp)
+movq 224(%rsp), %r10
+movq %r10, %rdi
+call print
+movq 32(%rsp), %r10
+movq %r10, %r10
+movq %r10, 168(%rsp)
+movq 168(%rsp), %r10
+salq $1, %r10
+movq %r10, 168(%rsp)
+movq 168(%rsp), %r10
+movq %r10, %r10
+movq %r10, 168(%rsp)
+movq 168(%rsp), %r10
+addq $1, %r10
+movq %r10, 168(%rsp)
+movq 168(%rsp), %r10
+movq %r10, %rdi
+call print
+movq 152(%rsp), %r10
+movq %r10, %r10
+movq %r10, 64(%rsp)
+movq 64(%rsp), %r10
+salq $1, %r10
+movq %r10, 64(%rsp)
+movq 64(%rsp), %r10
+movq %r10, %r10
+movq %r10, 64(%rsp)
+movq 64(%rsp), %r10
+addq $1, %r10
+movq %r10, 64(%rsp)
+movq 0(%rsp), %r10
+movq %r10, %r10
+movq %r10, 16(%rsp)
+movq 16(%rsp), %r10
+salq $1, %r10
+movq %r10, 16(%rsp)
+movq 16(%rsp), %r10
+movq %r10, %r10
+movq %r10, 16(%rsp)
+movq 16(%rsp), %r10
+addq $1, %r10
+movq %r10, 16(%rsp)
+movq 64(%rsp), %r10
+movq %r10, %rdi
+call print
+movq 16(%rsp), %r10
+movq %r10, %rdi
+call print
+addq $96, %rsp
+retq
+```

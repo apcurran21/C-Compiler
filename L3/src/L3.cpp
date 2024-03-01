@@ -9,7 +9,7 @@ namespace L3 {
     /*
     Number
     */
-    Number::Number(int n) : value(n) {}
+    Number::Number(long long int n) : value(n) {}
 
     std::string Number::print() const {
         return std::to_string(value);
