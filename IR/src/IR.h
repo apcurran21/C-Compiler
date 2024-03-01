@@ -261,7 +261,7 @@ namespace IR{
 
     class Block : public Token {
         public:
-            Block(std::string label);
+            explicit Block(std::string label);
             std::vector<Block *> getSuccessors();
             void appendInstruction(Instruction *i);
             std::string getLabel();
@@ -314,7 +314,6 @@ namespace IR{
         public:
             virtual void forBlock(Function *function)= 0;
     };
-
     class Function {
         public:
             explicit Function(userFuncName* functionName, Type* returnType);
@@ -323,6 +322,7 @@ namespace IR{
             Block* getBlockByName(const std::string& blockName);
             Variable* getVariableByName(const std::string& variableName);
             userFuncName* getFunctionName() const;
+            std::vector<Instruction *> instructions;
             std::vector<Variable*> parameters;
             std::vector<Block*> codeBlocks;
             std::vector<Block*> executionTraceOrder;

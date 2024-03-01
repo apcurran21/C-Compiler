@@ -20,7 +20,7 @@ namespace IR {
     void calculateCFG::forProgram(Program *p){
         for (auto f:p->functions){
             f->accept(this);
-        }
+        } 
     };
         void calculateCFG::forFunction(Function *f){
             std::queue<Block *> queue;
