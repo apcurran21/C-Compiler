@@ -1,0 +1,169 @@
+define @main () {
+ :NNNNNN
+ br :entry
+ :entry
+ %arr <- call @read_input_arr ()
+ %ans <- call @sort_arr (%arr)
+ call @print_arr (%ans)
+ return 
+}
+
+define @swap (%index_1, %index_2, %arr) {
+ :NNNNN
+ br :swap
+ :swap
+ %newVar1 <- 0
+ %newVar2 <- 1
+ %newVar1 <- %newVar1 + %index_1
+ %newVar0 <- %newVar1 * 8
+ %newVar0 <- %newVar0 + 16
+ %newVar3 <- %arr + %newVar0
+ %temp <- load %newVar3
+ %newVar5 <- 0
+ %newVar6 <- 1
+ %newVar5 <- %newVar5 + %index_2
+ %newVar4 <- %newVar5 * 8
+ %newVar4 <- %newVar4 + 16
+ %newVar7 <- %arr + %newVar4
+ %temp2 <- load %newVar7
+ %newVar9 <- 0
+ %newVar10 <- 1
+ %newVar9 <- %newVar9 + %index_2
+ %newVar8 <- %newVar9 * 8
+ %newVar8 <- %newVar8 + 16
+ %newVar11 <- %arr + %newVar8
+ store %newVar11 <- %temp
+ %newVar13 <- 0
+ %newVar14 <- 1
+ %newVar13 <- %newVar13 + %index_1
+ %newVar12 <- %newVar13 * 8
+ %newVar12 <- %newVar12 + 16
+ %newVar15 <- %arr + %newVar12
+ store %newVar15 <- %temp2
+ return 
+}
+
+define @sort_arr (%arr) {
+ :NNNNNNNNNNNNNN
+ br :sort_arr
+ :ENDL_OUTER
+ return %arr
+ :ENDL_INNER
+ %i <- %i - 1
+ br :FORL_OUTER
+ :FORL_OUTER
+ %j <- 0
+ %i_le_0 <- %i <= 0
+ br %i_le_0 :ENDL_OUTER 
+ br :FORL_INNER
+ :FORL_INNER
+ %j_ge_i <- %j >= %i
+ br %j_ge_i :ENDL_INNER 
+ br :ENTERED_INNER
+ :ENTERED_INNER
+ %newVar1 <- 0
+ %newVar2 <- 1
+ %newVar1 <- %newVar1 + %j
+ %newVar0 <- %newVar1 * 8
+ %newVar0 <- %newVar0 + 16
+ %newVar3 <- %arr + %newVar0
+ %j_val <- load %newVar3
+ %j_plus_one <- %j + 1
+ %newVar5 <- 0
+ %newVar6 <- 1
+ %newVar5 <- %newVar5 + %j_plus_one
+ %newVar4 <- %newVar5 * 8
+ %newVar4 <- %newVar4 + 16
+ %newVar7 <- %arr + %newVar4
+ %j_plus1_val <- load %newVar7
+ %j_ge_j_plus1 <- %j_val > %j_plus1_val
+ br %j_ge_j_plus1 :GOTOCALL 
+ br :SKIP
+ :GOTOCALL
+ call print (%arr)
+ call @swap (%j, %j_plus_one, %arr)
+ call print (%arr)
+ br :SKIP
+ :SKIP
+ %j <- %j + 1
+ br :FORL_INNER
+ :sort_arr
+ %newVar8 <- 0 * 8
+ %newVar9 <- %newVar8 + 8
+ %newVar10 <- %arr + %newVar9
+ %l <- load %newVar10
+ %l <- %l >> 1
+ %i <- %l - 1
+ br :FORL_OUTER
+}
+
+define @read_input_arr () {
+ :NNNNNNNNNNN
+ br :read_input
+ :ENDL
+ return %user_arr
+ :ENTER_CALL
+ %user_val <- call input ()
+ %newVar1 <- 0
+ %newVar2 <- 1
+ %newVar1 <- %newVar1 + %index
+ %newVar0 <- %newVar1 * 8
+ %newVar0 <- %newVar0 + 16
+ %newVar3 <- %user_arr + %newVar0
+ store %newVar3 <- %user_val
+ %index <- %index + 1
+ call print (%user_arr)
+ br :FORL
+ :FORL
+ %i_geq_len <- %index >= %user_arr_len
+ br %i_geq_len :ENDL 
+ br :ENTER_CALL
+ :read_input
+ %user_arr_len <- call input ()
+ %newVar5 <- %user_arr_len >> 1
+ %newVar4 <- %newVar5
+ %newVar4 <- %newVar4 << 1
+ %newVar4 <- %newVar4 + 1
+ %newVar4 <- %newVar4 + 2
+ %user_arr <- call allocate (%newVar4, 1)
+ %newVar6 <- %user_arr + 8
+ store %newVar6 <- %user_arr_len
+ %newVar7 <- 0 * 8
+ %newVar8 <- %newVar7 + 8
+ %newVar9 <- %user_arr + %newVar8
+ %user_arr_len <- load %newVar9
+ %user_arr_len <- %user_arr_len >> 1
+ %index <- 0
+ br :FORL
+}
+
+define @print_arr (%arr) {
+ :NNNNNNNNNNNNN
+ br :print_arr
+ :ENDL
+ return 
+ :ENTERTHELOOP
+ %newVar1 <- 0
+ %newVar2 <- 1
+ %newVar1 <- %newVar1 + %index
+ %newVar0 <- %newVar1 * 8
+ %newVar0 <- %newVar0 + 16
+ %newVar3 <- %arr + %newVar0
+ %curr_element <- load %newVar3
+ call print (%curr_element)
+ %index <- %index + 1
+ br :FORL
+ :FORL
+ %i_geq_len <- %index >= %arr_len
+ br %i_geq_len :ENDL 
+ br :ENTERTHELOOP
+ :print_arr
+ %newVar4 <- 0 * 8
+ %newVar5 <- %newVar4 + 8
+ %newVar6 <- %arr + %newVar5
+ %arr_len <- load %newVar6
+ %arr_len <- %arr_len >> 1
+ %index <- 0
+ br :FORL
+}
+

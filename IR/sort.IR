@@ -1,0 +1,118 @@
+define void @main(){
+    :entry
+    int64[] %arr
+    int64[] %ans 
+    %arr <- call @read_input_arr()
+    %ans <- call @sort_arr(%arr)
+    call @print_arr(%ans)
+    return 
+}
+
+define void @swap(int64 %index_1,int64 %index_2, int64[] %arr){
+    :swap
+    int64 %temp
+    int64 %temp2
+    %temp <- %arr[%index_1]
+    %temp2 <- %arr[%index_2]
+    %arr[%index_2] <- %temp
+    %arr[%index_1] <- %temp2
+    return
+}
+
+define int64[] @sort_arr(int64[] %arr){
+    :sort_arr
+    int64 %l
+    int64 %i_le_0
+    int64 %i 
+    int64 %j
+    int64 %j_ge_i
+    int64 %j_val
+    int64 %j_plus1_val
+    int64 %j_ge_j_plus1
+    int64 %j_plus_one
+    int64 %temp
+    %l <- length %arr 0
+    %l <- %l >> 1
+    %i <- %l - 1 
+    //Iterate the main array 
+    br :FORL_OUTER
+    :FORL_OUTER
+    %j <- 0
+    %i_le_0 <- %i <= 0 
+    br %i_le_0 :ENDL_OUTER :FORL_INNER 
+        :FORL_INNER
+        %j_ge_i <- %j >= %i
+        br %j_ge_i :ENDL_INNER :ENTERED_INNER 
+            :ENTERED_INNER    
+            %j_val <- %arr[%j]
+            %j_plus_one <- %j + 1
+            %j_plus1_val <- %arr[%j_plus_one]
+            // only swap if j_val is greater than j_plus1_val
+            %j_ge_j_plus1 <- %j_val > %j_plus1_val
+            br %j_ge_j_plus1 :GOTOCALL :SKIP
+                :GOTOCALL
+                // Call swap with indices, not values
+                call @swap(%j, %j_plus_one, %arr)
+            br :SKIP
+            :SKIP
+            // update inner index and element pointers
+            %j <- %j + 1
+            br :FORL_INNER
+        :ENDL_INNER
+        %i <- %i - 1 
+        br :FORL_OUTER
+    :ENDL_OUTER
+    return %arr
+}
+
+define int64[] @read_input_arr(){
+    :read_input
+    int64 %user_arr_len
+    int64[] %user_arr
+    int64 %index
+    int64 %user_val
+    int64 %i_geq_len
+    int64 %print_temp
+    %user_arr_len <- call input()
+    %user_arr <- new Array(%user_arr_len)
+    %user_arr_len <- length %user_arr 0
+    %user_arr_len <- %user_arr_len >> 1
+    %index <- 0
+    br :FORL
+    :FORL 
+    %i_geq_len <- %index >= %user_arr_len
+    br %i_geq_len :ENDL :ENTER_CALL
+        :ENTER_CALL
+        %user_val <- call input()
+        %user_arr[%index] <- %user_val
+        %index <- %index + 1
+        call print(%user_arr)
+        br :FORL
+    :ENDL
+    return %user_arr
+}
+
+define void @print_arr(int64[] %arr){
+    :print_arr
+    int64 %arr_len
+    int64 %index
+    int64 %ent
+    int64 %i_geq_len
+    int64 %curr_element
+    %arr_len <- length %arr 0
+    %arr_len <- %arr_len >> 1
+    %index <- 0
+    br :FORL
+    :FORL
+    %i_geq_len <- %index >= %arr_len
+    br %i_geq_len :ENDL :ENTERTHELOOP
+        :ENTERTHELOOP
+        %curr_element <- %arr[%index]
+        call print(%curr_element)
+        %index <- %index + 1
+        br :FORL
+    :ENDL 
+    return
+
+}
+
