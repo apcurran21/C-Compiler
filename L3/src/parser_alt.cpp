@@ -93,9 +93,8 @@ namespace L3 {
   /*
   Symbols
   */
-  struct str_arrow : TAO_PEGTL_STRING( "<-" ) {};
-  struct str_less : TAO_PEGTL_STRING( "<" ) {};
   struct str_lesseq : TAO_PEGTL_STRING( "<=" ) {};
+  struct str_less : TAO_PEGTL_STRING( "<" ) {};
   struct str_eq : TAO_PEGTL_STRING( "=" ) {};
   struct str_greatereq : TAO_PEGTL_STRING( ">=" ) {};
   struct str_greater : TAO_PEGTL_STRING( ">" ) {};
@@ -106,7 +105,8 @@ namespace L3 {
   struct str_shiftl : TAO_PEGTL_STRING( "<<" ) {};
   struct str_shiftr : TAO_PEGTL_STRING( ">>" ) {};
 
-
+  struct str_arrow : TAO_PEGTL_STRING( "<-" ) {};
+  
   /*
   Whitespace Rules
   */
@@ -240,64 +240,6 @@ namespace L3 {
       number_rule
     > {};
 
-
-  /*
-  Item Group rules
-  */
-  struct stdlib_rule:
-    pegtl::sor<
-      str_print,
-      str_allocate,
-      str_input,
-      str_tuperr,
-      str_tenserr
-    > {};
-
-  struct s_rule:
-    pegtl::sor<
-      t_rule,
-      label_rule,
-      I_rule
-    > {};
-
-  struct u_rule:
-    pegtl::sor<
-      var_rule,
-      I_rule
-    > {};
-
-  struct vars_rule:
-    pegtl::seq<
-      pegtl::opt< defined_var_rule >,
-      pegtl::star<
-        pegtl::seq<
-          pegtl::one< ',' >,
-          spaces,
-          defined_var_rule
-        >
-      >
-    > {};
-
-  struct args_rule:
-    pegtl::seq<
-      pegtl::opt< arg_rule >,
-      spaces,
-      pegtl::star<
-        pegtl::seq<
-          pegtl::one< ',' >,
-          spaces,
-          arg_rule
-        >
-      >
-    > {};
-
-  struct callee_rule:
-    pegtl::sor<
-      u_rule,
-      stdlib_rule
-    > {};
-
-
   /*
   Operator / Comparison Rules
   */
@@ -351,6 +293,70 @@ namespace L3 {
       spaces,
       t_rule
     > {};
+
+
+  /*
+  Item Group rules
+  */
+  struct stdlib_rule:
+    pegtl::sor<
+      str_print,
+      str_allocate,
+      str_input,
+      str_tuperr,
+      str_tenserr
+    > {};
+
+  struct s_rule:
+    pegtl::sor<
+      t_rule,
+      // var_rule,
+      // number_rule,
+      label_rule,
+      I_rule
+    > {};
+
+  struct u_rule:
+    pegtl::sor<
+      var_rule,
+      I_rule
+    > {};
+
+  struct vars_rule:
+    pegtl::seq<
+      pegtl::opt< defined_var_rule >,
+      pegtl::star<
+        pegtl::seq<
+          pegtl::one< ',' >,
+          spaces,
+          defined_var_rule
+        >
+      >
+    > {};
+
+  struct args_rule:
+    pegtl::seq<
+      pegtl::opt< arg_rule >,
+      spaces,
+      pegtl::star<
+        pegtl::seq<
+          pegtl::one< ',' >,
+          spaces,
+          arg_rule
+        >
+      >
+    > {};
+
+  struct callee_rule:
+    pegtl::sor<
+      u_rule,
+      stdlib_rule
+    > {};
+
+
+  /*
+  Some instruction rules
+  */
 
   struct Instruction_load_rule:
     // var <- load var
@@ -624,6 +630,13 @@ namespace L3 {
     template< typename Input >
     static void apply( const Input & in, std::ofstream & out) {
       if (debug) std::cerr << "Recognized a t_rule rule.\n";
+    }
+  };
+
+  template<> struct action < s_rule > {
+    template< typename Input >
+    static void apply( const Input & in, std::ofstream & out) {
+      if (debug) std::cerr << "Recognized an s_rule rule.\n";
     }
   };
 

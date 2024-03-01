@@ -1,5 +1,4 @@
 define @main(){
-	:loop
-	%check <- %var2<=%var1
+	%check <- %var1<=%var1
 	return
 }
