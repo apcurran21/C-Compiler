@@ -1,0 +1,1451 @@
+define void @main ( ) {
+
+ :new_label48
+ int64 %newVar79
+ int64 %newVar78
+ int64 %newVar77
+ int64 %newVar76
+ int64 %newVar75
+ int64 %newVar74
+ int64 %newVar73
+ int64 %newVar72
+ int64 %newVar71
+ int64 %newVar70
+ int64 %newVar69
+ int64 %newVar68
+ int64 %newVar67
+ int64 %newVar66
+ int64 %newVar23
+ int64 %newVar22
+ int64 %newVar21
+ int64 %newVar20
+ int64 %newVar19
+ int64 %newVar18
+ int64 %newVar65
+ int64 %newVar64
+ int64 %newVar63
+ int64 %newVar62
+ int64 %newVar61
+ int64 %newVar60
+ int64 %newVar59
+ int64 %newVar58
+ int64 %newVar57
+ int64 %newVar56
+ int64 %newVar55
+ int64 %newVar54
+ int64 %newVar53
+ int64 %newVar52
+ int64 %newVar17
+ int64 %newVar16
+ int64 %newVar15
+ int64 %newVar14
+ int64 %newVar13
+ int64 %newVar12
+ int64 %newVar51
+ int64 %newVar50
+ int64 %newVar49
+ int64 %newVar48
+ int64 %newVar47
+ int64 %newVar46
+ int64 %newVar45
+ int64 %newVar44
+ int64 %newVar43
+ int64 %newVar42
+ int64 %newVar41
+ int64 %newVar40
+ int64 %newVar39
+ int64 %newVar38
+ int64 %newVar11
+ int64 %newVar10
+ int64 %newVar9
+ int64 %newVar8
+ int64 %newVar7
+ int64 %newVar6
+ int64 %newVar37
+ int64 %newVar36
+ int64 %newVar35
+ int64 %newVar34
+ int64 %newVar33
+ int64 %newVar32
+ int64 %newVar31
+ int64 %newVar30
+ int64 %newVar29
+ int64 %newVar28
+ int64 %newVar27
+ int64 %newVar26
+ int64 %newVar25
+ int64 %newVar24
+ int64 %newVar5
+ int64 %newVar4
+ int64 %newVar3
+ int64 %newVar2
+ int64 %newVar1
+ int64 %newVar0
+ int64 %sum
+ int64 %e_l3
+ int64 %e_l2
+ int64 %e_l1
+ int64 %l3
+ int64 %l2
+ int64 %l1
+ int64 %v
+ int64[] %r
+ int64[][][] %m
+ %m <- 0
+ %r <- 0
+ %v <- 1
+ %l1 <- 1
+ %l2 <- 1
+ %l3 <- 1
+ %e_l1 <- 1
+ %e_l2 <- 1
+ %e_l3 <- 1
+ %v <- 21
+ %l1 <- 21
+ %l2 <- 19
+ %l3 <- 17
+ %m <- new Array (%l1, %l2, %l3)
+ %r <-  call @find (%m, %v)
+  call print (%r)
+  call @print_find_res (%r)
+ %sum <- 1
+ %newVar0 <- 1
+ %newVar1 <- 1
+ %newVar1 <- 1
+ %newVar1 <- %newVar1 >> 1
+ %newVar2 <- 1
+ %newVar3 <- 1
+ %newVar3 <- 1
+ %newVar3 <- %newVar3 >> 1
+ %newVar4 <- 1
+ %newVar5 <- 1
+ %newVar5 <- 1
+ %newVar5 <- %newVar5 >> 1
+ %newVar24 <- 47
+ %newVar25 <- 1
+ %newVar26 <- 1
+ %newVar27 <- 1
+ %newVar28 <- %m = 0
+ br %newVar28 :new_label0 :new_label4 
+
+ :new_label4
+ %newVar26 <- 1
+ %newVar29 <- length %m 0
+ %newVar25 <- %newVar29
+ %newVar29 <- %newVar29 >> 1
+ %newVar27 <- %newVar1
+ %newVar27 <- %newVar27 << 1
+ %newVar27 <- %newVar27 + 1
+ %newVar30 <- %newVar1 >= 0
+ br %newVar30 :new_label5 :new_label2 
+
+ :new_label5
+ %newVar31 <- %newVar1 < %newVar29
+ br %newVar31 :new_label6 :new_label2 
+
+ :new_label6
+ %newVar26 <- 3
+ %newVar32 <- length %m 1
+ %newVar25 <- %newVar32
+ %newVar32 <- %newVar32 >> 1
+ %newVar27 <- %newVar3
+ %newVar27 <- %newVar27 << 1
+ %newVar27 <- %newVar27 + 1
+ %newVar33 <- %newVar3 >= 0
+ br %newVar33 :new_label7 :new_label2 
+
+ :new_label7
+ %newVar34 <- %newVar3 < %newVar32
+ br %newVar34 :new_label8 :new_label2 
+
+ :new_label8
+ %newVar26 <- 5
+ %newVar35 <- length %m 2
+ %newVar25 <- %newVar35
+ %newVar35 <- %newVar35 >> 1
+ %newVar27 <- %newVar5
+ %newVar27 <- %newVar27 << 1
+ %newVar27 <- %newVar27 + 1
+ %newVar36 <- %newVar5 >= 0
+ br %newVar36 :new_label9 :new_label2 
+
+ :new_label9
+ %newVar37 <- %newVar5 < %newVar35
+ br %newVar37 :new_label10 :new_label2 
+
+ :new_label10
+ br :new_label11
+
+ :new_label0
+  call tensor-error (%newVar24)
+ br :new_label1
+
+ :new_label1
+  call tensor-error (%newVar24, %newVar25, %newVar27)
+ br :new_label3
+
+ :new_label3
+  call tuple-error (%newVar24, %newVar25, %newVar27)
+ br :new_label2
+
+ :new_label2
+  call tensor-error (%newVar24, %newVar26, %newVar25, %newVar27)
+ br :new_label11
+
+ :new_label11
+ %m[%newVar1][%newVar3][%newVar5] <- %v
+ %r <-  call @find (%m, %v)
+ %newVar6 <- 1
+ %newVar7 <- 1
+ %newVar7 <- 1
+ %newVar7 <- %newVar7 >> 1
+ %newVar8 <- 1
+ %newVar9 <- 1
+ %newVar9 <- 1
+ %newVar9 <- %newVar9 >> 1
+ %newVar10 <- 1
+ %newVar11 <- 1
+ %newVar11 <- 1
+ %newVar11 <- %newVar11 >> 1
+ %newVar38 <- 51
+ %newVar39 <- 1
+ %newVar40 <- 1
+ %newVar41 <- 1
+ %newVar42 <- %m = 0
+ br %newVar42 :new_label12 :new_label16 
+
+ :new_label16
+ %newVar40 <- 1
+ %newVar43 <- length %m 0
+ %newVar39 <- %newVar43
+ %newVar43 <- %newVar43 >> 1
+ %newVar41 <- %newVar7
+ %newVar41 <- %newVar41 << 1
+ %newVar41 <- %newVar41 + 1
+ %newVar44 <- %newVar7 >= 0
+ br %newVar44 :new_label17 :new_label14 
+
+ :new_label17
+ %newVar45 <- %newVar7 < %newVar43
+ br %newVar45 :new_label18 :new_label14 
+
+ :new_label18
+ %newVar40 <- 3
+ %newVar46 <- length %m 1
+ %newVar39 <- %newVar46
+ %newVar46 <- %newVar46 >> 1
+ %newVar41 <- %newVar9
+ %newVar41 <- %newVar41 << 1
+ %newVar41 <- %newVar41 + 1
+ %newVar47 <- %newVar9 >= 0
+ br %newVar47 :new_label19 :new_label14 
+
+ :new_label19
+ %newVar48 <- %newVar9 < %newVar46
+ br %newVar48 :new_label20 :new_label14 
+
+ :new_label20
+ %newVar40 <- 5
+ %newVar49 <- length %m 2
+ %newVar39 <- %newVar49
+ %newVar49 <- %newVar49 >> 1
+ %newVar41 <- %newVar11
+ %newVar41 <- %newVar41 << 1
+ %newVar41 <- %newVar41 + 1
+ %newVar50 <- %newVar11 >= 0
+ br %newVar50 :new_label21 :new_label14 
+
+ :new_label21
+ %newVar51 <- %newVar11 < %newVar49
+ br %newVar51 :new_label22 :new_label14 
+
+ :new_label22
+ br :new_label23
+
+ :new_label12
+  call tensor-error (%newVar38)
+ br :new_label13
+
+ :new_label13
+  call tensor-error (%newVar38, %newVar39, %newVar41)
+ br :new_label15
+
+ :new_label15
+  call tuple-error (%newVar38, %newVar39, %newVar41)
+ br :new_label14
+
+ :new_label14
+  call tensor-error (%newVar38, %newVar40, %newVar39, %newVar41)
+ br :new_label23
+
+ :new_label23
+ %m[%newVar7][%newVar9][%newVar11] <- 11
+ %sum <-  call @compute_sum (%m)
+  call print (%sum)
+  call print (%r)
+  call @print_find_res (%r)
+ %newVar12 <- 1
+ %newVar13 <- 1
+ %newVar13 <- 3
+ %newVar13 <- %newVar13 >> 1
+ %newVar14 <- 1
+ %newVar15 <- 1
+ %newVar15 <- 1
+ %newVar15 <- %newVar15 >> 1
+ %newVar16 <- 1
+ %newVar17 <- 1
+ %newVar17 <- 9
+ %newVar17 <- %newVar17 >> 1
+ %newVar52 <- 63
+ %newVar53 <- 1
+ %newVar54 <- 1
+ %newVar55 <- 1
+ %newVar56 <- %m = 0
+ br %newVar56 :new_label24 :new_label28 
+
+ :new_label28
+ %newVar54 <- 1
+ %newVar57 <- length %m 0
+ %newVar53 <- %newVar57
+ %newVar57 <- %newVar57 >> 1
+ %newVar55 <- %newVar13
+ %newVar55 <- %newVar55 << 1
+ %newVar55 <- %newVar55 + 1
+ %newVar58 <- %newVar13 >= 0
+ br %newVar58 :new_label29 :new_label26 
+
+ :new_label29
+ %newVar59 <- %newVar13 < %newVar57
+ br %newVar59 :new_label30 :new_label26 
+
+ :new_label30
+ %newVar54 <- 3
+ %newVar60 <- length %m 1
+ %newVar53 <- %newVar60
+ %newVar60 <- %newVar60 >> 1
+ %newVar55 <- %newVar15
+ %newVar55 <- %newVar55 << 1
+ %newVar55 <- %newVar55 + 1
+ %newVar61 <- %newVar15 >= 0
+ br %newVar61 :new_label31 :new_label26 
+
+ :new_label31
+ %newVar62 <- %newVar15 < %newVar60
+ br %newVar62 :new_label32 :new_label26 
+
+ :new_label32
+ %newVar54 <- 5
+ %newVar63 <- length %m 2
+ %newVar53 <- %newVar63
+ %newVar63 <- %newVar63 >> 1
+ %newVar55 <- %newVar17
+ %newVar55 <- %newVar55 << 1
+ %newVar55 <- %newVar55 + 1
+ %newVar64 <- %newVar17 >= 0
+ br %newVar64 :new_label33 :new_label26 
+
+ :new_label33
+ %newVar65 <- %newVar17 < %newVar63
+ br %newVar65 :new_label34 :new_label26 
+
+ :new_label34
+ br :new_label35
+
+ :new_label24
+  call tensor-error (%newVar52)
+ br :new_label25
+
+ :new_label25
+  call tensor-error (%newVar52, %newVar53, %newVar55)
+ br :new_label27
+
+ :new_label27
+  call tuple-error (%newVar52, %newVar53, %newVar55)
+ br :new_label26
+
+ :new_label26
+  call tensor-error (%newVar52, %newVar54, %newVar53, %newVar55)
+ br :new_label35
+
+ :new_label35
+ %m[%newVar13][%newVar15][%newVar17] <- %v
+ %r <-  call @find (%m, %v)
+ %newVar18 <- 1
+ %newVar19 <- 1
+ %newVar19 <- 3
+ %newVar19 <- %newVar19 >> 1
+ %newVar20 <- 1
+ %newVar21 <- 1
+ %newVar21 <- 1
+ %newVar21 <- %newVar21 >> 1
+ %newVar22 <- 1
+ %newVar23 <- 1
+ %newVar23 <- 9
+ %newVar23 <- %newVar23 >> 1
+ %newVar66 <- 67
+ %newVar67 <- 1
+ %newVar68 <- 1
+ %newVar69 <- 1
+ %newVar70 <- %m = 0
+ br %newVar70 :new_label36 :new_label40 
+
+ :new_label40
+ %newVar68 <- 1
+ %newVar71 <- length %m 0
+ %newVar67 <- %newVar71
+ %newVar71 <- %newVar71 >> 1
+ %newVar69 <- %newVar19
+ %newVar69 <- %newVar69 << 1
+ %newVar69 <- %newVar69 + 1
+ %newVar72 <- %newVar19 >= 0
+ br %newVar72 :new_label41 :new_label38 
+
+ :new_label41
+ %newVar73 <- %newVar19 < %newVar71
+ br %newVar73 :new_label42 :new_label38 
+
+ :new_label42
+ %newVar68 <- 3
+ %newVar74 <- length %m 1
+ %newVar67 <- %newVar74
+ %newVar74 <- %newVar74 >> 1
+ %newVar69 <- %newVar21
+ %newVar69 <- %newVar69 << 1
+ %newVar69 <- %newVar69 + 1
+ %newVar75 <- %newVar21 >= 0
+ br %newVar75 :new_label43 :new_label38 
+
+ :new_label43
+ %newVar76 <- %newVar21 < %newVar74
+ br %newVar76 :new_label44 :new_label38 
+
+ :new_label44
+ %newVar68 <- 5
+ %newVar77 <- length %m 2
+ %newVar67 <- %newVar77
+ %newVar77 <- %newVar77 >> 1
+ %newVar69 <- %newVar23
+ %newVar69 <- %newVar69 << 1
+ %newVar69 <- %newVar69 + 1
+ %newVar78 <- %newVar23 >= 0
+ br %newVar78 :new_label45 :new_label38 
+
+ :new_label45
+ %newVar79 <- %newVar23 < %newVar77
+ br %newVar79 :new_label46 :new_label38 
+
+ :new_label46
+ br :new_label47
+
+ :new_label36
+  call tensor-error (%newVar66)
+ br :new_label37
+
+ :new_label37
+  call tensor-error (%newVar66, %newVar67, %newVar69)
+ br :new_label39
+
+ :new_label39
+  call tuple-error (%newVar66, %newVar67, %newVar69)
+ br :new_label38
+
+ :new_label38
+  call tensor-error (%newVar66, %newVar68, %newVar67, %newVar69)
+ br :new_label47
+
+ :new_label47
+ %m[%newVar19][%newVar21][%newVar23] <- 11
+ %sum <-  call @compute_sum (%m)
+  call print (%sum)
+  call print (%r)
+  call @print_find_res (%r)
+ return 
+
+ :new_label49
+ return 
+
+}
+
+define int64 @compute_sum ( int64[][][] %m) {
+
+ :new_label12
+ int64 %newVar22
+ int64 %newVar21
+ int64 %newVar20
+ int64 %newVar19
+ int64 %newVar18
+ int64 %newVar17
+ int64 %newVar16
+ int64 %newVar15
+ int64 %newVar36
+ int64 %newVar35
+ int64 %newVar34
+ int64 %newVar33
+ int64 %newVar32
+ int64 %newVar31
+ int64 %newVar30
+ int64 %newVar29
+ int64 %newVar28
+ int64 %newVar27
+ int64 %newVar26
+ int64 %newVar25
+ int64 %newVar24
+ int64 %newVar23
+ int64 %newVar14
+ int64 %newVar13
+ int64 %newVar12
+ int64 %newVar11
+ int64 %newVar10
+ int64 %newVar9
+ int64 %d
+ int64 %newVar8
+ int64 %newVar7
+ int64 %newVar6
+ int64 %check3
+ int64 %index3
+ int64 %newVar5
+ int64 %newVar4
+ int64 %newVar3
+ int64 %check2
+ int64 %index2
+ int64 %newVar2
+ int64 %newVar1
+ int64 %newVar0
+ int64 %check
+ int64 %sum
+ int64 %index
+ int64 %l3
+ int64 %l2
+ int64 %l1
+ %l1 <- 1
+ %l2 <- 1
+ %l3 <- 1
+ %l1 <- length %m 0
+ %l2 <- length %m 1
+ %l3 <- length %m 2
+  call print (%l1)
+  call print (%l2)
+  call print (%l3)
+ %index <- 1
+ %sum <- 1
+ %sum <- 1
+ %index <- 1
+ br :header
+
+ :header
+ %check <- 1
+ %newVar0 <- 1
+ %newVar0 <- %index
+ %newVar0 <- %newVar0 >> 1
+ %newVar1 <- 1
+ %newVar1 <- %l1
+ %newVar1 <- %newVar1 >> 1
+ %check <- %newVar0 < %newVar1
+ %check <- %check << 1
+ %check <- %check + 1
+ %newVar2 <- 1
+ %newVar2 <- %check
+ %newVar2 <- %newVar2 >> 1
+ br %newVar2 :outerBody :leave 
+
+ :outerBody
+ %index2 <- 1
+ %index2 <- 1
+ br :header2
+
+ :header2
+ %check2 <- 1
+ %newVar3 <- 1
+ %newVar3 <- %index2
+ %newVar3 <- %newVar3 >> 1
+ %newVar4 <- 1
+ %newVar4 <- %l2
+ %newVar4 <- %newVar4 >> 1
+ %check2 <- %newVar3 < %newVar4
+ %check2 <- %check2 << 1
+ %check2 <- %check2 + 1
+ %newVar5 <- 1
+ %newVar5 <- %check2
+ %newVar5 <- %newVar5 >> 1
+ br %newVar5 :innerBody :endOuterBody 
+
+ :innerBody
+ %index3 <- 1
+ %index3 <- 1
+ br :header3
+
+ :header3
+ %check3 <- 1
+ %newVar6 <- 1
+ %newVar6 <- %index3
+ %newVar6 <- %newVar6 >> 1
+ %newVar7 <- 1
+ %newVar7 <- %l3
+ %newVar7 <- %newVar7 >> 1
+ %check3 <- %newVar6 < %newVar7
+ %check3 <- %check3 << 1
+ %check3 <- %check3 + 1
+ %newVar8 <- 1
+ %newVar8 <- %check3
+ %newVar8 <- %newVar8 >> 1
+ br %newVar8 :Body3 :endInnerBody 
+
+ :Body3
+ %d <- 1
+ %newVar9 <- 1
+ %newVar10 <- 1
+ %newVar10 <- %index
+ %newVar10 <- %newVar10 >> 1
+ %newVar11 <- 1
+ %newVar12 <- 1
+ %newVar12 <- %index2
+ %newVar12 <- %newVar12 >> 1
+ %newVar13 <- 1
+ %newVar14 <- 1
+ %newVar14 <- %index3
+ %newVar14 <- %newVar14 >> 1
+ %newVar23 <- 177
+ %newVar24 <- 1
+ %newVar25 <- 1
+ %newVar26 <- 1
+ %newVar27 <- %m = 0
+ br %newVar27 :new_label0 :new_label4 
+
+ :new_label4
+ %newVar25 <- 1
+ %newVar28 <- length %m 0
+ %newVar24 <- %newVar28
+ %newVar28 <- %newVar28 >> 1
+ %newVar26 <- %newVar10
+ %newVar26 <- %newVar26 << 1
+ %newVar26 <- %newVar26 + 1
+ %newVar29 <- %newVar10 >= 0
+ br %newVar29 :new_label5 :new_label2 
+
+ :new_label5
+ %newVar30 <- %newVar10 < %newVar28
+ br %newVar30 :new_label6 :new_label2 
+
+ :new_label6
+ %newVar25 <- 3
+ %newVar31 <- length %m 1
+ %newVar24 <- %newVar31
+ %newVar31 <- %newVar31 >> 1
+ %newVar26 <- %newVar12
+ %newVar26 <- %newVar26 << 1
+ %newVar26 <- %newVar26 + 1
+ %newVar32 <- %newVar12 >= 0
+ br %newVar32 :new_label7 :new_label2 
+
+ :new_label7
+ %newVar33 <- %newVar12 < %newVar31
+ br %newVar33 :new_label8 :new_label2 
+
+ :new_label8
+ %newVar25 <- 5
+ %newVar34 <- length %m 2
+ %newVar24 <- %newVar34
+ %newVar34 <- %newVar34 >> 1
+ %newVar26 <- %newVar14
+ %newVar26 <- %newVar26 << 1
+ %newVar26 <- %newVar26 + 1
+ %newVar35 <- %newVar14 >= 0
+ br %newVar35 :new_label9 :new_label2 
+
+ :new_label9
+ %newVar36 <- %newVar14 < %newVar34
+ br %newVar36 :new_label10 :new_label2 
+
+ :new_label10
+ br :new_label11
+
+ :new_label0
+  call tensor-error (%newVar23)
+ br :new_label1
+
+ :new_label1
+  call tensor-error (%newVar23, %newVar24, %newVar26)
+ br :new_label3
+
+ :new_label3
+  call tuple-error (%newVar23, %newVar24, %newVar26)
+ br :new_label2
+
+ :new_label2
+  call tensor-error (%newVar23, %newVar25, %newVar24, %newVar26)
+ br :new_label11
+
+ :new_label11
+ %d <- %m[%newVar10][%newVar12][%newVar14]
+ %newVar15 <- 1
+ %newVar15 <- %sum
+ %newVar15 <- %newVar15 >> 1
+ %newVar16 <- 1
+ %newVar16 <- %d
+ %newVar16 <- %newVar16 >> 1
+ %sum <- %newVar15 + %newVar16
+ %sum <- %sum << 1
+ %sum <- %sum + 1
+ br :endBody3
+
+ :endBody3
+ %newVar17 <- 1
+ %newVar17 <- %index3
+ %newVar17 <- %newVar17 >> 1
+ %newVar18 <- 1
+ %newVar18 <- 3
+ %newVar18 <- %newVar18 >> 1
+ %index3 <- %newVar17 + %newVar18
+ %index3 <- %index3 << 1
+ %index3 <- %index3 + 1
+ br :header3
+
+ :endInnerBody
+ %newVar19 <- 1
+ %newVar19 <- %index2
+ %newVar19 <- %newVar19 >> 1
+ %newVar20 <- 1
+ %newVar20 <- 3
+ %newVar20 <- %newVar20 >> 1
+ %index2 <- %newVar19 + %newVar20
+ %index2 <- %index2 << 1
+ %index2 <- %index2 + 1
+ br :header2
+
+ :endOuterBody
+ %newVar21 <- 1
+ %newVar21 <- %index
+ %newVar21 <- %newVar21 >> 1
+ %newVar22 <- 1
+ %newVar22 <- 3
+ %newVar22 <- %newVar22 >> 1
+ %index <- %newVar21 + %newVar22
+ %index <- %index << 1
+ %index <- %index + 1
+ br :header
+
+ :leave
+ return %sum
+
+}
+
+define void @print_find_res ( int64[] %res) {
+
+ :new_label8
+ int64 %newVar6
+ int64 %newVar5
+ int64 %newVar14
+ int64 %newVar13
+ int64 %newVar12
+ int64 %newVar11
+ int64 %newVar10
+ int64 %newVar9
+ int64 %newVar8
+ int64 %newVar7
+ int64 %newVar4
+ int64 %newVar3
+ int64 %pos
+ int64 %newVar2
+ int64 %newVar1
+ int64 %newVar0
+ int64 %check
+ int64 %index
+ int64 %l
+ %l <- 1
+ %l <- length %res 0
+ %index <- 1
+ %index <- 1
+ br :Header
+
+ :Header
+ %check <- 1
+ %newVar0 <- 1
+ %newVar0 <- %index
+ %newVar0 <- %newVar0 >> 1
+ %newVar1 <- 1
+ %newVar1 <- %l
+ %newVar1 <- %newVar1 >> 1
+ %check <- %newVar0 < %newVar1
+ %check <- %check << 1
+ %check <- %check + 1
+ %newVar2 <- 1
+ %newVar2 <- %check
+ %newVar2 <- %newVar2 >> 1
+ br %newVar2 :Body :End 
+
+ :Body
+ %pos <- 1
+ %newVar3 <- 1
+ %newVar4 <- 1
+ %newVar4 <- %index
+ %newVar4 <- %newVar4 >> 1
+ %newVar7 <- 253
+ %newVar8 <- 1
+ %newVar9 <- 1
+ %newVar10 <- 1
+ %newVar11 <- %res = 0
+ br %newVar11 :new_label0 :new_label4 
+
+ :new_label4
+ %newVar12 <- length %res 0
+ %newVar8 <- %newVar12
+ %newVar12 <- %newVar12 >> 1
+ %newVar10 <- %newVar4
+ %newVar10 <- %newVar10 << 1
+ %newVar10 <- %newVar10 + 1
+ %newVar13 <- %newVar4 >= 0
+ br %newVar13 :new_label5 :new_label1 
+
+ :new_label5
+ %newVar14 <- %newVar4 < %newVar12
+ br %newVar14 :new_label6 :new_label1 
+
+ :new_label6
+ br :new_label7
+
+ :new_label0
+  call tensor-error (%newVar7)
+ br :new_label1
+
+ :new_label1
+  call tensor-error (%newVar7, %newVar8, %newVar10)
+ br :new_label3
+
+ :new_label3
+  call tuple-error (%newVar7, %newVar8, %newVar10)
+ br :new_label2
+
+ :new_label2
+  call tensor-error (%newVar7, %newVar9, %newVar8, %newVar10)
+ br :new_label7
+
+ :new_label7
+ %pos <- %res[%newVar4]
+  call print (%pos)
+ %newVar5 <- 1
+ %newVar5 <- %index
+ %newVar5 <- %newVar5 >> 1
+ %newVar6 <- 1
+ %newVar6 <- 3
+ %newVar6 <- %newVar6 >> 1
+ %index <- %newVar5 + %newVar6
+ %index <- %index << 1
+ %index <- %index + 1
+ br :Header
+
+ :End
+ return 
+
+ :new_label9
+ return 
+
+}
+
+define int64[] @find ( int64[][][] %m, int64 %v) {
+
+ :new_label60
+ int64 %newVar97
+ int64 %newVar96
+ int64 %newVar95
+ int64 %newVar94
+ int64 %newVar93
+ int64 %newVar92
+ int64 %newVar91
+ int64 %newVar90
+ int64 %newVar35
+ int64 %newVar34
+ int64 %newVar89
+ int64 %newVar88
+ int64 %newVar87
+ int64 %newVar86
+ int64 %newVar85
+ int64 %newVar84
+ int64 %newVar83
+ int64 %newVar82
+ int64 %newVar33
+ int64 %newVar32
+ int64 %newVar81
+ int64 %newVar80
+ int64 %newVar79
+ int64 %newVar78
+ int64 %newVar77
+ int64 %newVar76
+ int64 %newVar75
+ int64 %newVar74
+ int64 %newVar31
+ int64 %newVar30
+ int64 %newVar29
+ int64 %newVar28
+ int64 %newVar27
+ int64 %newVar26
+ int64 %newVar25
+ int64 %newVar24
+ int64 %newVar23
+ int64 %newVar22
+ int64 %newVar21
+ int64 %newVar73
+ int64 %newVar72
+ int64 %newVar71
+ int64 %newVar70
+ int64 %newVar69
+ int64 %newVar68
+ int64 %newVar67
+ int64 %newVar66
+ int64 %newVar65
+ int64 %newVar64
+ int64 %newVar63
+ int64 %newVar62
+ int64 %newVar61
+ int64 %newVar60
+ int64 %newVar20
+ int64 %newVar19
+ int64 %newVar18
+ int64 %newVar17
+ int64 %newVar16
+ int64 %newVar15
+ int64 %sameE
+ int64 %e
+ int64 %newVar14
+ int64 %newVar13
+ int64 %newVar12
+ int64 %check3
+ int64 %index3
+ int64 %newVar11
+ int64 %newVar10
+ int64 %newVar9
+ int64 %check2
+ int64 %index2
+ int64 %newVar8
+ int64 %newVar7
+ int64 %newVar6
+ int64 %check
+ int64 %newVar59
+ int64 %newVar58
+ int64 %newVar57
+ int64 %newVar56
+ int64 %newVar55
+ int64 %newVar54
+ int64 %newVar53
+ int64 %newVar52
+ int64 %newVar5
+ int64 %newVar4
+ int64 %newVar51
+ int64 %newVar50
+ int64 %newVar49
+ int64 %newVar48
+ int64 %newVar47
+ int64 %newVar46
+ int64 %newVar45
+ int64 %newVar44
+ int64 %newVar3
+ int64 %newVar2
+ int64 %newVar43
+ int64 %newVar42
+ int64 %newVar41
+ int64 %newVar40
+ int64 %newVar39
+ int64 %newVar38
+ int64 %newVar37
+ int64 %newVar36
+ int64 %newVar1
+ int64 %newVar0
+ int64[] %res
+ int64 %index
+ int64 %l3
+ int64 %l2
+ int64 %l1
+ %l1 <- 1
+ %l2 <- 1
+ %l3 <- 1
+ %l1 <- length %m 0
+ %l2 <- length %m 1
+ %l3 <- length %m 2
+ br :init
+
+ :init
+ %index <- 1
+ %res <- 0
+ %res <- new Array (7)
+ %newVar0 <- 1
+ %newVar1 <- 1
+ %newVar1 <- 1
+ %newVar1 <- %newVar1 >> 1
+ %newVar36 <- 299
+ %newVar37 <- 1
+ %newVar38 <- 1
+ %newVar39 <- 1
+ %newVar40 <- %res = 0
+ br %newVar40 :new_label0 :new_label4 
+
+ :new_label4
+ %newVar41 <- length %res 0
+ %newVar37 <- %newVar41
+ %newVar41 <- %newVar41 >> 1
+ %newVar39 <- %newVar1
+ %newVar39 <- %newVar39 << 1
+ %newVar39 <- %newVar39 + 1
+ %newVar42 <- %newVar1 >= 0
+ br %newVar42 :new_label5 :new_label1 
+
+ :new_label5
+ %newVar43 <- %newVar1 < %newVar41
+ br %newVar43 :new_label6 :new_label1 
+
+ :new_label6
+ br :new_label7
+
+ :new_label0
+  call tensor-error (%newVar36)
+ br :new_label1
+
+ :new_label1
+  call tensor-error (%newVar36, %newVar37, %newVar39)
+ br :new_label3
+
+ :new_label3
+  call tuple-error (%newVar36, %newVar37, %newVar39)
+ br :new_label2
+
+ :new_label2
+  call tensor-error (%newVar36, %newVar38, %newVar37, %newVar39)
+ br :new_label7
+
+ :new_label7
+ %res[%newVar1] <- -1
+ %newVar2 <- 1
+ %newVar3 <- 1
+ %newVar3 <- 3
+ %newVar3 <- %newVar3 >> 1
+ %newVar44 <- 301
+ %newVar45 <- 1
+ %newVar46 <- 1
+ %newVar47 <- 1
+ %newVar48 <- %res = 0
+ br %newVar48 :new_label8 :new_label12 
+
+ :new_label12
+ %newVar49 <- length %res 0
+ %newVar45 <- %newVar49
+ %newVar49 <- %newVar49 >> 1
+ %newVar47 <- %newVar3
+ %newVar47 <- %newVar47 << 1
+ %newVar47 <- %newVar47 + 1
+ %newVar50 <- %newVar3 >= 0
+ br %newVar50 :new_label13 :new_label9 
+
+ :new_label13
+ %newVar51 <- %newVar3 < %newVar49
+ br %newVar51 :new_label14 :new_label9 
+
+ :new_label14
+ br :new_label15
+
+ :new_label8
+  call tensor-error (%newVar44)
+ br :new_label9
+
+ :new_label9
+  call tensor-error (%newVar44, %newVar45, %newVar47)
+ br :new_label11
+
+ :new_label11
+  call tuple-error (%newVar44, %newVar45, %newVar47)
+ br :new_label10
+
+ :new_label10
+  call tensor-error (%newVar44, %newVar46, %newVar45, %newVar47)
+ br :new_label15
+
+ :new_label15
+ %res[%newVar3] <- -1
+ %newVar4 <- 1
+ %newVar5 <- 1
+ %newVar5 <- 5
+ %newVar5 <- %newVar5 >> 1
+ %newVar52 <- 303
+ %newVar53 <- 1
+ %newVar54 <- 1
+ %newVar55 <- 1
+ %newVar56 <- %res = 0
+ br %newVar56 :new_label16 :new_label20 
+
+ :new_label20
+ %newVar57 <- length %res 0
+ %newVar53 <- %newVar57
+ %newVar57 <- %newVar57 >> 1
+ %newVar55 <- %newVar5
+ %newVar55 <- %newVar55 << 1
+ %newVar55 <- %newVar55 + 1
+ %newVar58 <- %newVar5 >= 0
+ br %newVar58 :new_label21 :new_label17 
+
+ :new_label21
+ %newVar59 <- %newVar5 < %newVar57
+ br %newVar59 :new_label22 :new_label17 
+
+ :new_label22
+ br :new_label23
+
+ :new_label16
+  call tensor-error (%newVar52)
+ br :new_label17
+
+ :new_label17
+  call tensor-error (%newVar52, %newVar53, %newVar55)
+ br :new_label19
+
+ :new_label19
+  call tuple-error (%newVar52, %newVar53, %newVar55)
+ br :new_label18
+
+ :new_label18
+  call tensor-error (%newVar52, %newVar54, %newVar53, %newVar55)
+ br :new_label23
+
+ :new_label23
+ %res[%newVar5] <- -1
+ %index <- 1
+ br :header
+
+ :header
+ %check <- 1
+ %newVar6 <- 1
+ %newVar6 <- %index
+ %newVar6 <- %newVar6 >> 1
+ %newVar7 <- 1
+ %newVar7 <- %l1
+ %newVar7 <- %newVar7 >> 1
+ %check <- %newVar6 < %newVar7
+ %check <- %check << 1
+ %check <- %check + 1
+ %newVar8 <- 1
+ %newVar8 <- %check
+ %newVar8 <- %newVar8 >> 1
+ br %newVar8 :outerBody :leave 
+
+ :outerBody
+ %index2 <- 1
+ %index2 <- 1
+ br :header2
+
+ :header2
+ %check2 <- 1
+ %newVar9 <- 1
+ %newVar9 <- %index2
+ %newVar9 <- %newVar9 >> 1
+ %newVar10 <- 1
+ %newVar10 <- %l2
+ %newVar10 <- %newVar10 >> 1
+ %check2 <- %newVar9 < %newVar10
+ %check2 <- %check2 << 1
+ %check2 <- %check2 + 1
+ %newVar11 <- 1
+ %newVar11 <- %check2
+ %newVar11 <- %newVar11 >> 1
+ br %newVar11 :innerBody :endOuterBody 
+
+ :innerBody
+ %index3 <- 1
+ %index3 <- 1
+ br :header3
+
+ :header3
+ %check3 <- 1
+ %newVar12 <- 1
+ %newVar12 <- %index3
+ %newVar12 <- %newVar12 >> 1
+ %newVar13 <- 1
+ %newVar13 <- %l3
+ %newVar13 <- %newVar13 >> 1
+ %check3 <- %newVar12 < %newVar13
+ %check3 <- %check3 << 1
+ %check3 <- %check3 + 1
+ %newVar14 <- 1
+ %newVar14 <- %check3
+ %newVar14 <- %newVar14 >> 1
+ br %newVar14 :Body3 :endInnerBody 
+
+ :Body3
+ %e <- 1
+ %sameE <- 1
+ %newVar15 <- 1
+ %newVar16 <- 1
+ %newVar16 <- %index
+ %newVar16 <- %newVar16 >> 1
+ %newVar17 <- 1
+ %newVar18 <- 1
+ %newVar18 <- %index2
+ %newVar18 <- %newVar18 >> 1
+ %newVar19 <- 1
+ %newVar20 <- 1
+ %newVar20 <- %index3
+ %newVar20 <- %newVar20 >> 1
+ %newVar60 <- 367
+ %newVar61 <- 1
+ %newVar62 <- 1
+ %newVar63 <- 1
+ %newVar64 <- %m = 0
+ br %newVar64 :new_label24 :new_label28 
+
+ :new_label28
+ %newVar62 <- 1
+ %newVar65 <- length %m 0
+ %newVar61 <- %newVar65
+ %newVar65 <- %newVar65 >> 1
+ %newVar63 <- %newVar16
+ %newVar63 <- %newVar63 << 1
+ %newVar63 <- %newVar63 + 1
+ %newVar66 <- %newVar16 >= 0
+ br %newVar66 :new_label29 :new_label26 
+
+ :new_label29
+ %newVar67 <- %newVar16 < %newVar65
+ br %newVar67 :new_label30 :new_label26 
+
+ :new_label30
+ %newVar62 <- 3
+ %newVar68 <- length %m 1
+ %newVar61 <- %newVar68
+ %newVar68 <- %newVar68 >> 1
+ %newVar63 <- %newVar18
+ %newVar63 <- %newVar63 << 1
+ %newVar63 <- %newVar63 + 1
+ %newVar69 <- %newVar18 >= 0
+ br %newVar69 :new_label31 :new_label26 
+
+ :new_label31
+ %newVar70 <- %newVar18 < %newVar68
+ br %newVar70 :new_label32 :new_label26 
+
+ :new_label32
+ %newVar62 <- 5
+ %newVar71 <- length %m 2
+ %newVar61 <- %newVar71
+ %newVar71 <- %newVar71 >> 1
+ %newVar63 <- %newVar20
+ %newVar63 <- %newVar63 << 1
+ %newVar63 <- %newVar63 + 1
+ %newVar72 <- %newVar20 >= 0
+ br %newVar72 :new_label33 :new_label26 
+
+ :new_label33
+ %newVar73 <- %newVar20 < %newVar71
+ br %newVar73 :new_label34 :new_label26 
+
+ :new_label34
+ br :new_label35
+
+ :new_label24
+  call tensor-error (%newVar60)
+ br :new_label25
+
+ :new_label25
+  call tensor-error (%newVar60, %newVar61, %newVar63)
+ br :new_label27
+
+ :new_label27
+  call tuple-error (%newVar60, %newVar61, %newVar63)
+ br :new_label26
+
+ :new_label26
+  call tensor-error (%newVar60, %newVar62, %newVar61, %newVar63)
+ br :new_label35
+
+ :new_label35
+ %e <- %m[%newVar16][%newVar18][%newVar20]
+ %newVar21 <- 1
+ %newVar21 <- %e
+ %newVar21 <- %newVar21 >> 1
+ %newVar22 <- 1
+ %newVar22 <- %v
+ %newVar22 <- %newVar22 >> 1
+ %sameE <- %newVar21 = %newVar22
+ %sameE <- %sameE << 1
+ %sameE <- %sameE + 1
+ %newVar23 <- 1
+ %newVar23 <- %sameE
+ %newVar23 <- %newVar23 >> 1
+ br %newVar23 :setAndLeave :endBody3 
+
+ :endBody3
+ %newVar24 <- 1
+ %newVar24 <- %index3
+ %newVar24 <- %newVar24 >> 1
+ %newVar25 <- 1
+ %newVar25 <- 3
+ %newVar25 <- %newVar25 >> 1
+ %index3 <- %newVar24 + %newVar25
+ %index3 <- %index3 << 1
+ %index3 <- %index3 + 1
+ br :header3
+
+ :endInnerBody
+ %newVar26 <- 1
+ %newVar26 <- %index2
+ %newVar26 <- %newVar26 >> 1
+ %newVar27 <- 1
+ %newVar27 <- 3
+ %newVar27 <- %newVar27 >> 1
+ %index2 <- %newVar26 + %newVar27
+ %index2 <- %index2 << 1
+ %index2 <- %index2 + 1
+ br :header2
+
+ :endOuterBody
+ %newVar28 <- 1
+ %newVar28 <- %index
+ %newVar28 <- %newVar28 >> 1
+ %newVar29 <- 1
+ %newVar29 <- 3
+ %newVar29 <- %newVar29 >> 1
+ %index <- %newVar28 + %newVar29
+ %index <- %index << 1
+ %index <- %index + 1
+ br :header
+
+ :setAndLeave
+ %newVar30 <- 1
+ %newVar31 <- 1
+ %newVar31 <- 1
+ %newVar31 <- %newVar31 >> 1
+ %newVar74 <- 401
+ %newVar75 <- 1
+ %newVar76 <- 1
+ %newVar77 <- 1
+ %newVar78 <- %res = 0
+ br %newVar78 :new_label36 :new_label40 
+
+ :new_label40
+ %newVar79 <- length %res 0
+ %newVar75 <- %newVar79
+ %newVar79 <- %newVar79 >> 1
+ %newVar77 <- %newVar31
+ %newVar77 <- %newVar77 << 1
+ %newVar77 <- %newVar77 + 1
+ %newVar80 <- %newVar31 >= 0
+ br %newVar80 :new_label41 :new_label37 
+
+ :new_label41
+ %newVar81 <- %newVar31 < %newVar79
+ br %newVar81 :new_label42 :new_label37 
+
+ :new_label42
+ br :new_label43
+
+ :new_label36
+  call tensor-error (%newVar74)
+ br :new_label37
+
+ :new_label37
+  call tensor-error (%newVar74, %newVar75, %newVar77)
+ br :new_label39
+
+ :new_label39
+  call tuple-error (%newVar74, %newVar75, %newVar77)
+ br :new_label38
+
+ :new_label38
+  call tensor-error (%newVar74, %newVar76, %newVar75, %newVar77)
+ br :new_label43
+
+ :new_label43
+ %res[%newVar31] <- %index
+ %newVar32 <- 1
+ %newVar33 <- 1
+ %newVar33 <- 3
+ %newVar33 <- %newVar33 >> 1
+ %newVar82 <- 403
+ %newVar83 <- 1
+ %newVar84 <- 1
+ %newVar85 <- 1
+ %newVar86 <- %res = 0
+ br %newVar86 :new_label44 :new_label48 
+
+ :new_label48
+ %newVar87 <- length %res 0
+ %newVar83 <- %newVar87
+ %newVar87 <- %newVar87 >> 1
+ %newVar85 <- %newVar33
+ %newVar85 <- %newVar85 << 1
+ %newVar85 <- %newVar85 + 1
+ %newVar88 <- %newVar33 >= 0
+ br %newVar88 :new_label49 :new_label45 
+
+ :new_label49
+ %newVar89 <- %newVar33 < %newVar87
+ br %newVar89 :new_label50 :new_label45 
+
+ :new_label50
+ br :new_label51
+
+ :new_label44
+  call tensor-error (%newVar82)
+ br :new_label45
+
+ :new_label45
+  call tensor-error (%newVar82, %newVar83, %newVar85)
+ br :new_label47
+
+ :new_label47
+  call tuple-error (%newVar82, %newVar83, %newVar85)
+ br :new_label46
+
+ :new_label46
+  call tensor-error (%newVar82, %newVar84, %newVar83, %newVar85)
+ br :new_label51
+
+ :new_label51
+ %res[%newVar33] <- %index2
+ %newVar34 <- 1
+ %newVar35 <- 1
+ %newVar35 <- 5
+ %newVar35 <- %newVar35 >> 1
+ %newVar90 <- 405
+ %newVar91 <- 1
+ %newVar92 <- 1
+ %newVar93 <- 1
+ %newVar94 <- %res = 0
+ br %newVar94 :new_label52 :new_label56 
+
+ :new_label56
+ %newVar95 <- length %res 0
+ %newVar91 <- %newVar95
+ %newVar95 <- %newVar95 >> 1
+ %newVar93 <- %newVar35
+ %newVar93 <- %newVar93 << 1
+ %newVar93 <- %newVar93 + 1
+ %newVar96 <- %newVar35 >= 0
+ br %newVar96 :new_label57 :new_label53 
+
+ :new_label57
+ %newVar97 <- %newVar35 < %newVar95
+ br %newVar97 :new_label58 :new_label53 
+
+ :new_label58
+ br :new_label59
+
+ :new_label52
+  call tensor-error (%newVar90)
+ br :new_label53
+
+ :new_label53
+  call tensor-error (%newVar90, %newVar91, %newVar93)
+ br :new_label55
+
+ :new_label55
+  call tuple-error (%newVar90, %newVar91, %newVar93)
+ br :new_label54
+
+ :new_label54
+  call tensor-error (%newVar90, %newVar92, %newVar91, %newVar93)
+ br :new_label59
+
+ :new_label59
+ %res[%newVar35] <- %index3
+ br :leave
+
+ :leave
+ return %res
+
+}
+

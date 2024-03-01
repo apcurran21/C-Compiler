@@ -275,7 +275,6 @@ namespace L3 {
         return label;
     }
 
-
     Instruction_branch_label::Instruction_branch_label (Item *label) :
         label { label }
     {
@@ -288,7 +287,6 @@ namespace L3 {
     Item* Instruction_branch_label::getLabel() const {
         return label;
     }
-
 
     Instruction_branch_label_conditional::Instruction_branch_label_conditional (Item *t, Item *label) :
         t { t },
@@ -378,7 +376,7 @@ namespace L3 {
         functions.push_back(new_function);
     }
 
-
+  
     // /*
     // Print Visitor class for printing and debugging intstructions. 
     // */

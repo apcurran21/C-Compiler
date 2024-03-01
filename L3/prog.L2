@@ -1,163 +1,262 @@
 (@main
-(@main
-0
-:MainEntry_global_0
-%ArrSize <- 10
-%ArrSizeEncoded <- %ArrSize
-%ArrSizeEncoded <<= 1
-%ArrSizeEncoded <- %ArrSizeEncoded
-%ArrSizeEncoded += 1
-mem rsp -8 <- :ret_main_global_1
-rdi <- %ArrSizeEncoded
-rsi <- 2
-call @Alloc1DArr 2
-:ret_main_global_1
-%Arr1 <- rax
-mem rsp -8 <- :ret_main_global_2
-rdi <- %ArrSizeEncoded
-rsi <- 4
-call @Alloc1DArr 2
-:ret_main_global_2
-%Arr2 <- rax
-mem rsp -8 <- :ret_main_global_3
-rdi <- %Arr1
-call @CalcArrSum 1
-:ret_main_global_3
-%Arr1Sum <- rax
-mem rsp -8 <- :ret_main_global_4
-rdi <- %Arr2
-call @CalcArrSum 1
-:ret_main_global_4
-%Arr2Sum <- rax
-%SumOfArr <- %Arr1Sum
-%SumOfArr += %Arr2Sum
-%ProdOfArr <- %Arr1Sum
-%ProdOfArr *= %Arr2Sum
-%Arr1PrintVal <- %Arr1Sum
-%Arr1PrintVal <<= 1
-%Arr1PrintVal <- %Arr1PrintVal
-%Arr1PrintVal += 1
-rdi <- %Arr1PrintVal
-call print 1
-%Arr2PrintVal <- %Arr2Sum
-%Arr2PrintVal <<= 1
-%Arr2PrintVal <- %Arr2PrintVal
-%Arr2PrintVal += 1
-rdi <- %Arr2PrintVal
-call print 1
-%ArrSumPrintVal <- %SumOfArr
-%ArrSumPrintVal <<= 1
-%ArrSumPrintVal <- %ArrSumPrintVal
-%ArrSumPrintVal += 1
-%ArrProdPrintVal <- %ProdOfArr
-%ArrProdPrintVal <<= 1
-%ArrProdPrintVal <- %ArrProdPrintVal
-%ArrProdPrintVal += 1
-rdi <- %ArrSumPrintVal
-call print 1
-rdi <- %ArrProdPrintVal
-call print 1
-return
-)
-
-(@CalcArrSum
-1
-%TargetArr <- rdi
-:CalcArrEntry_global_5
-%newVar0 <- 0
-%newVar0 *= 8
-%newVar1 <- %newVar0
-%newVar1 += 16
-%newVar2 <- %TargetArr
-%newVar2 += %newVar1
-%ArrLen <- mem %newVar2 0
-%ArrLen <- %ArrLen
-%ArrLen >>= 1
-%Count <- 0
-%ArrSum <- 0
-goto :Loop_global_6
-:Loop_global_6
-%newVar4 <- 0
-%newVar5 <- 1
-%newVar4 <- %newVar4
-%newVar4 += %Count
-%newVar3 <- %newVar4
-%newVar3 *= 8
-%newVar3 <- %newVar3
-%newVar3 += 24
-%newVar6 <- %TargetArr
-%newVar6 += %newVar3
-%CurrElm <- mem %newVar6 0
-%Count <- %Count
-%Count += 1
-%ArrSum <- %ArrSum
-%ArrSum += %CurrElm
-%ContLoop <- %Count < %ArrLen
-cjump 1 = %ContLoop :Loop_global_6
-goto :Stop_global_9
-:Stop_global_9
-rax <- %ArrSum
-return
-)
-
-(@Alloc1DArr
-2
-%ArrSize <- rdi
-%InitElmVal <- rsi
-:Alloc1DEntry_global_11
-%newVar1 <- %ArrSize
-%newVar1 >>= 1
-%newVar0 <- %newVar1
-%newVar0 <- %newVar0
-%newVar0 <<= 1
-%newVar0 <- %newVar0
-%newVar0 += 1
-%newVar0 <- %newVar0
-%newVar0 += 4
-mem rsp -8 <- :ret_Alloc1DArr_global_12
-rdi <- %newVar0
-rsi <- 1
-call allocate 2
-:ret_Alloc1DArr_global_12
-%NewArr <- rax
-%newVar2 <- %NewArr
-%newVar2 += 8
-mem %newVar2 0 <- 3
-%newVar3 <- %NewArr
-%newVar3 += 16
-mem %newVar3 0 <- %ArrSize
-%newVar4 <- 0
-%newVar4 *= 8
-%newVar5 <- %newVar4
-%newVar5 += 16
-%newVar6 <- %NewArr
-%newVar6 += %newVar5
-%ArrLen <- mem %newVar6 0
-%ArrLen <- %ArrLen
-%ArrLen >>= 1
-%Count <- 0
-%ArrSum <- 0
-goto :Loop_global_13
-:Loop_global_13
-%newVar8 <- 0
-%newVar9 <- 1
-%newVar8 <- %newVar8
-%newVar8 += %Count
-%newVar7 <- %newVar8
-%newVar7 *= 8
-%newVar7 <- %newVar7
-%newVar7 += 24
-%newVar10 <- %NewArr
-%newVar10 += %newVar7
-mem %newVar10 0 <- %InitElmVal
-%Count <- %Count
-%Count += 1
-%ContLoop <- %Count < %ArrLen
-cjump 1 = %ContLoop :Loop_global_13
-goto :Stop_global_16
-:Stop_global_16
-rax <- %NewArr
-return
-)
-
+  (@main
+    0
+    :call_label0
+    goto :call_label1
+    :call_label1
+    mem rsp -8 <- :call_label2
+    call @read_input_arr 0
+    :call_label2
+    %arr <- rax
+    rdi <- %arr
+    mem rsp -8 <- :call_label3
+    call @sort_arr 1
+    :call_label3
+    %ans <- rax
+    rdi <- %ans
+    mem rsp -8 <- :call_label4
+    call @print_arr 1
+    :call_label4
+    return
+  )
+  (@swap
+    3
+    %index_1 <- rdi
+    %index_2 <- rsi
+    %arr <- rdx
+    :call_label_ciao_5
+    goto :call_label_ciao_6
+    :call_label_ciao_6
+    %newVar1 <- 0
+    %newVar2 <- 1
+    %newVar1 <- %newVar1
+    %newVar1 += %index_1
+    %newVar0 <- %newVar1
+    %newVar0 *= 8
+    %newVar0 <- %newVar0
+    %newVar0 += 16
+    %newVar3 <- %arr
+    %newVar3 += %newVar0
+    %temp <- mem %newVar3 0 
+    %newVar5 <- 0
+    %newVar6 <- 1
+    %newVar5 <- %newVar5
+    %newVar5 += %index_2
+    %newVar4 <- %newVar5
+    %newVar4 *= 8
+    %newVar4 <- %newVar4
+    %newVar4 += 16
+    %newVar7 <- %arr
+    %newVar7 += %newVar4
+    %temp2 <- mem %newVar7 0 
+    %newVar9 <- 0
+    %newVar10 <- 1
+    %newVar9 <- %newVar9
+    %newVar9 += %index_2
+    %newVar8 <- %newVar9
+    %newVar8 *= 8
+    %newVar8 <- %newVar8
+    %newVar8 += 16
+    %newVar11 <- %arr
+    %newVar11 += %newVar8
+    mem %newVar11 0  <- %temp
+    %newVar13 <- 0
+    %newVar14 <- 1
+    %newVar13 <- %newVar13
+    %newVar13 += %index_1
+    %newVar12 <- %newVar13
+    %newVar12 *= 8
+    %newVar12 <- %newVar12
+    %newVar12 += 16
+    %newVar15 <- %arr
+    %newVar15 += %newVar12
+    mem %newVar15 0  <- %temp2
+    return
+  )
+  (@sort_arr
+    1
+    %arr <- rdi
+    :call_label_ciao__ciao_7
+    goto :call_label_ciao__ciao_15
+    :call_label_ciao__ciao_8
+    rax <- %arr
+    return
+    :call_label_ciao__ciao_9
+    %i <- %i
+    %i -= 1
+    goto :call_label_ciao__ciao_10
+    :call_label_ciao__ciao_10
+    %j <- 0
+    %i_le_0 <- %i <= 0
+    
+    cjump %i_le_0 = 1 :call_label_ciao__ciao_8
+    goto :call_label_ciao__ciao_11
+    :call_label_ciao__ciao_11
+    %j_ge_i <- %i <= %j
+    
+    cjump %j_ge_i = 1 :call_label_ciao__ciao_9
+    goto :call_label_ciao__ciao_12
+    :call_label_ciao__ciao_12
+    %newVar1 <- 0
+    %newVar2 <- 1
+    %newVar1 <- %newVar1
+    %newVar1 += %j
+    %newVar0 <- %newVar1
+    %newVar0 *= 8
+    %newVar0 <- %newVar0
+    %newVar0 += 16
+    %newVar3 <- %arr
+    %newVar3 += %newVar0
+    %j_val <- mem %newVar3 0 
+    %j_plus_one <- %j
+    %j_plus_one += 1
+    %newVar5 <- 0
+    %newVar6 <- 1
+    %newVar5 <- %newVar5
+    %newVar5 += %j_plus_one
+    %newVar4 <- %newVar5
+    %newVar4 *= 8
+    %newVar4 <- %newVar4
+    %newVar4 += 16
+    %newVar7 <- %arr
+    %newVar7 += %newVar4
+    %j_plus1_val <- mem %newVar7 0 
+    %j_ge_j_plus1 <- %j_plus1_val < %j_val
+    
+    cjump %j_ge_j_plus1 = 1 :call_label_ciao__ciao_13
+    goto :call_label_ciao__ciao_14
+    :call_label_ciao__ciao_13
+    rdi <- %arr
+    call print 1
+    rdi <- %j
+    rsi <- %j_plus_one
+    rdx <- %arr
+    mem rsp -8 <- :call_label_ciao__ciao_16
+    call @swap 3
+    :call_label_ciao__ciao_16
+    rdi <- %arr
+    call print 1
+    goto :call_label_ciao__ciao_14
+    :call_label_ciao__ciao_14
+    %j <- %j
+    %j += 1
+    goto :call_label_ciao__ciao_11
+    :call_label_ciao__ciao_15
+    %newVar8 <- 0
+    %newVar8 *= 8
+    %newVar9 <- %newVar8
+    %newVar9 += 8
+    %newVar10 <- %arr
+    %newVar10 += %newVar9
+    %l <- mem %newVar10 0 
+    %l <- %l
+    %l >>= 1
+    %i <- %l
+    %i -= 1
+    goto :call_label_ciao__ciao_10
+  )
+  (@read_input_arr
+    0
+    :call_label_ciao__ciao__ciao_17
+    goto :call_label_ciao__ciao__ciao_21
+    :call_label_ciao__ciao__ciao_18
+    rax <- %user_arr
+    return
+    :call_label_ciao__ciao__ciao_19
+    call input 0
+    %user_val <- rax
+    %newVar1 <- 0
+    %newVar2 <- 1
+    %newVar1 <- %newVar1
+    %newVar1 += %index
+    %newVar0 <- %newVar1
+    %newVar0 *= 8
+    %newVar0 <- %newVar0
+    %newVar0 += 16
+    %newVar3 <- %user_arr
+    %newVar3 += %newVar0
+    mem %newVar3 0  <- %user_val
+    %index <- %index
+    %index += 1
+    rdi <- %user_arr
+    call print 1
+    goto :call_label_ciao__ciao__ciao_20
+    :call_label_ciao__ciao__ciao_20
+    %i_geq_len <- %user_arr_len <= %index
+    
+    cjump %i_geq_len = 1 :call_label_ciao__ciao__ciao_18
+    goto :call_label_ciao__ciao__ciao_19
+    :call_label_ciao__ciao__ciao_21
+    call input 0
+    %user_arr_len <- rax
+    %newVar5 <- %user_arr_len
+    %newVar5 >>= 1
+    %newVar4 <- %newVar5
+    %newVar4 <- %newVar4
+    %newVar4 <<= 1
+    %newVar4 <- %newVar4
+    %newVar4 += 1
+    %newVar4 <- %newVar4
+    %newVar4 += 2
+    rdi <- %newVar4
+    rsi <- 1
+    call allocate 2
+    %user_arr <- rax
+    %newVar6 <- %user_arr
+    %newVar6 += 8
+    mem %newVar6 0  <- %user_arr_len
+    %newVar7 <- 0
+    %newVar7 *= 8
+    %newVar8 <- %newVar7
+    %newVar8 += 8
+    %newVar9 <- %user_arr
+    %newVar9 += %newVar8
+    %user_arr_len <- mem %newVar9 0 
+    %user_arr_len <- %user_arr_len
+    %user_arr_len >>= 1
+    %index <- 0
+    goto :call_label_ciao__ciao__ciao_20
+  )
+  (@print_arr
+    1
+    %arr <- rdi
+    :call_label_ciao__ciao__ciao__ciao_22
+    goto :call_label_ciao__ciao__ciao__ciao_26
+    :call_label_ciao__ciao__ciao__ciao_23
+    return
+    :call_label_ciao__ciao__ciao__ciao_24
+    %newVar1 <- 0
+    %newVar2 <- 1
+    %newVar1 <- %newVar1
+    %newVar1 += %index
+    %newVar0 <- %newVar1
+    %newVar0 *= 8
+    %newVar0 <- %newVar0
+    %newVar0 += 16
+    %newVar3 <- %arr
+    %newVar3 += %newVar0
+    %curr_element <- mem %newVar3 0 
+    rdi <- %curr_element
+    call print 1
+    %index <- %index
+    %index += 1
+    goto :call_label_ciao__ciao__ciao__ciao_25
+    :call_label_ciao__ciao__ciao__ciao_25
+    %i_geq_len <- %arr_len <= %index
+    
+    cjump %i_geq_len = 1 :call_label_ciao__ciao__ciao__ciao_23
+    goto :call_label_ciao__ciao__ciao__ciao_24
+    :call_label_ciao__ciao__ciao__ciao_26
+    %newVar4 <- 0
+    %newVar4 *= 8
+    %newVar5 <- %newVar4
+    %newVar5 += 8
+    %newVar6 <- %arr
+    %newVar6 += %newVar5
+    %arr_len <- mem %newVar6 0 
+    %arr_len <- %arr_len
+    %arr_len >>= 1
+    %index <- 0
+    goto :call_label_ciao__ciao__ciao__ciao_25
+  )
 )

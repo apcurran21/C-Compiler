@@ -328,5 +328,4 @@ namespace L3 {
 //         virtual void visit(Instruction_call_function_assignment *instruction) override;
 //     };
 
-
 }
