@@ -1,0 +1,6 @@
+define @main () {
+:hi
+%a <- 1
+call @f (%arr, 1)
+return
+}

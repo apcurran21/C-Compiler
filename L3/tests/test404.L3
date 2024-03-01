@@ -1,4 +1,4 @@
- define @main () {
+define @main () {
 
   // Call tensor-error
   call tensor-error(5, 3, 3, 9)
