@@ -146,7 +146,7 @@ namespace IR{
         public:
             explicit labelInstruction(std::string label);
             std::string label;
-    }
+    };
     class operationInstruction: public nonVoidInstruction{
         public:
             void accept(InstructionVisitor *) override;
