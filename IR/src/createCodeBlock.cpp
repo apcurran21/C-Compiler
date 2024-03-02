@@ -15,25 +15,26 @@ namespace IR {
     void createCodeBlock(Program *p) {
         for (auto *fptr : p->functions) {
             std::vector<Block *> appendBlock;
-            Block *currentBlock = nullptr; // Pointer to hold the current block
+            Block *currentBlock = nullptr; // Initialize currentBlock to nullptr.
 
             for (auto i : fptr->instructions) {
                 auto label_cast = dynamic_cast<labelInstruction *>(i);
                 if (label_cast) {
                     if (currentBlock) {
-                        appendBlock.push_back(currentBlock); // Append the current block to the vector
+                        appendBlock.push_back(currentBlock); // Append the current block to the vector if it exists.
                     }
-                    currentBlock = new Block(label_cast->label); // Create a new block for the new label
+                    currentBlock = new Block(label_cast->label); // Create a new block for the new label.
+                    // Since we're sure this happens for the first instruction, there's no need for a !currentBlock check.
                 }
-                if (!currentBlock) {
-                    currentBlock = new Block(""); // Create a new block if there's no current block
-                }
-                currentBlock->appendInstruction(i); // Append instruction to the current block
+                currentBlock->appendInstruction(i); // Append instruction to the current block.
             }
+
+            // After the loop, append the last block to the vector if it exists.
             if (currentBlock) {
-                appendBlock.push_back(currentBlock); // Append the last block to the vector
+                appendBlock.push_back(currentBlock);
             }
-            fptr->codeBlocks = appendBlock;
+
+            fptr->codeBlocks = appendBlock; // Assign the vector of blocks to the function's codeBlocks.
         }
     }
 }
