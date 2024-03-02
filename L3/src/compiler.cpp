@@ -103,19 +103,19 @@ int main(
     //   L3::generate_code(p);
 
     // }
-    else {
-      std::ofstream outputFile;
+    // else {
+    //   std::ofstream outputFile;
 
-      L3::buildTree(p,outputFile); //this should now be an output file 
+    //   L3::buildTree(p,outputFile); //this should now be an output file 
       
-      L3::Program tileL3;
-      tileL3 = L3::tileTree("buildTreeOutput.L3");
+    //   L3::Program tileL3;
+    //   tileL3 = L3::tileTree("buildTreeOutput.L3");
 
-      L3::globalLabelLocalizations(tileL3)
-      L3::generate_code(tileL3,outputFile);
+    //   L3::globalLabelLocalizations(tileL3)
+    //   L3::generate_code(tileL3,outputFile);
 
-      L3::generate_code(p);
-    }
+    //   L3::generate_code(p);
+    // }
   }
   return 0;
 }

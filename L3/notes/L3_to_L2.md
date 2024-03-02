@@ -201,6 +201,9 @@ Test 345: test362.L3                                                            
 Test 426: test320.L3                                                                                           [FAILED]
 Test 427: test319.L3                                                                                           [FAILED]
 
+### Update 
+320 passes, all the rest fail. Test 319 fails in the middle of execution instead of afterwards, so this should be a good candidate for the bulk of the debugging.
+
 
 
 ```python
@@ -349,3 +352,12 @@ call print
 addq $96, %rsp
 retq
 ```
+
+
+### Latest
+Here is instruction after which the program segfaults
+```python
+ %ProdOfArr <- %Arr1Sum * %Arr2Sum
+```
+
+ call print (1)
