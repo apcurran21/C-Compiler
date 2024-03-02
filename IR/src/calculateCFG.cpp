@@ -22,7 +22,7 @@ namespace IR {
             f->accept(this);
         } 
     };
-        void calculateCFG::forFunction(Function *f){
+    void calculateCFG::forFunction(Function *f){
             std::queue<Block *> queue;
             for (auto block : f->codeBlocks){
                 queue.push(block);
@@ -40,7 +40,6 @@ namespace IR {
                     }
                 }
             }
-
         };
         void calculateCFG::forBlock(Block *b){
 
