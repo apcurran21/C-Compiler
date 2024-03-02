@@ -473,6 +473,15 @@ namespace L3 {
     > {};
 
   struct Instruction_assignment_rule:
+    // var <- s
+    pegtl::seq<
+      spaces,
+      var_rule,
+      spaces,
+      str_arrow,
+      spaces,
+      s_rule
+    > {};
 
 
   struct Instruction_rule:
