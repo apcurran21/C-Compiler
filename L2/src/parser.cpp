@@ -1182,7 +1182,7 @@ namespace L2 {
   template<> struct action < entry_point_rule > {
     template< typename Input >
     static void apply( const Input & in, Program & p){
-      if (debug) std::cerr << "Recognized a complete entry point rule, done !" << std::endl;
+      if (debug) std::cerr << "Recognized a complete entry point rule, done parsing the L2 program!" << std::endl;
     }
   };
 

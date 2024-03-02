@@ -1,0 +1,5 @@
+/opt/rh/gcc-toolset-11/root/usr/bin/ld: obj/L3.o:(.bss+0x0): multiple definition of `L3::argRegisters[abi:cxx11]'; obj/compiler.o:(.bss+0x0): first defined here
+/opt/rh/gcc-toolset-11/root/usr/bin/ld: obj/parser_alt.o:(.bss+0x0): multiple definition of `L3::argRegisters[abi:cxx11]'; obj/compiler.o:(.bss+0x0): first defined here
+/opt/rh/gcc-toolset-11/root/usr/bin/ld: obj/parser.o:(.bss+0x0): multiple definition of `L3::argRegisters[abi:cxx11]'; obj/compiler.o:(.bss+0x0): first defined here
+collect2: error: ld returned 1 exit status
+make: *** [Makefile:24: bin/L3] Error 1

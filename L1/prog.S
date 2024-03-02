@@ -24,14 +24,10 @@ subq $8, %rsp
 jmp _read_input_arr
 _call_label2:
 movq %rax, %r10
-movq %r10, %rdi
-movq $_call_label3, -8(%rsp)
-subq $8, %rsp
 jmp _sort_arr
 _call_label3:
 movq %rax, %r10
 movq %r10, %rdi
-movq $_call_label4, -8(%rsp)
 subq $8, %rsp
 jmp _print_arr
 _call_label4:

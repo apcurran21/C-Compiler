@@ -1,0 +1,4 @@
+define @main(){
+	%check <- 5 <= 5
+	return
+}
