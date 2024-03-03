@@ -323,6 +323,7 @@ namespace IR{
             std::vector<Block*> codeBlocks;
             std::vector<Block*> executionTraceOrder;
             std::unordered_map<std::string, Variable*> variableNameToPointer;
+            std::unordered_map<std::string, newArray*> variableNameToArray;
             std::unordered_map<Variable*, Type*> variableToTypeMapping;
             std::unordered_map<std::string, Block*> blockNameToPointer;
             Type* returnType;
