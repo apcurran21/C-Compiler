@@ -5,8 +5,8 @@
 
 #include "IR.h"
 
-namespace L3 {
+namespace IR {
 
-    void parse_file (char *filename);
+    Program parse_file (char *filename);
     
 }

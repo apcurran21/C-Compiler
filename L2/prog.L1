@@ -1,10 +1,1919 @@
 (@main
-(@main
-	0 0
-	rdi <- 1
-	mem rsp -8 <- :ret_main_global_0
-	call print 1
-	:ret_main_global_0
+(@vec_ctor
+	0 2
+	:NNNNNN_global_0
+	goto :entry_global_1
+	:entry_global_1
+	rdi <- 7
+	rsi <- 1
+	call allocate 2
+	r10 <- rax
+	mem rsp 0 <- r10
+	r10 <- 0
+	r10 *= 8
+	r11 <- r10
+	r11 += 8
+	r10 <- mem rsp 0
+	r10 <- r10
+	r10 += r11
+	mem r10 0 <- 0
+	r10 <- 1
+	r10 *= 8
+	r11 <- r10
+	r11 += 8
+	r10 <- mem rsp 0
+	r10 <- r10
+	r10 += r11
+	mem r10 0 <- 1
+	r10 <- 5
+	r10 >>= 1
+	r10 <- r10
+	r11 <- 5
+	r11 >>= 1
+	r10 <- r10
+	r10 *= r11
+	r10 <- r10
+	r10 <<= 1
+	r10 <- r10
+	r10 += 1
+	r10 <- r10
+	r10 += 4
+	rdi <- r10
+	rsi <- 1
+	call allocate 2
+	r8 <- rax
+	r10 <- r8
+	r10 += 8
+	mem r10 0 <- 5
+	r10 <- r8
+	r10 += 16
+	mem r10 0 <- 5
+	r10 <- 2
+	r10 *= 8
+	r11 <- r10
+	r11 += 8
+	r10 <- mem rsp 0
+	r10 <- r10
+	r10 += r11
+	mem r10 0 <- r8
+	r10 <- mem rsp 0
+	rax <- r10
 	return
+	)
+(@memcp32
+	3 2
+	r8 <- rdi
+	rcx <- rsi
+	r11 <- rdx
+	:NNNNNN_global_3
+	goto :entry_global_4
+	:entry_global_4
+	r9 <- 0
+	r10 <- r8
+	r10 += 16
+	r10 <- mem r10 0
+	rdi <- r10
+	rdi >>= 1
+	r10 <- r8
+	r10 += 24
+	r10 <- mem r10 0
+	r10 <- r10
+	r10 >>= 1
+	rdx <- 1
+	r10 <- r10
+	r10 *= rdx
+	rdx <- r10
+	r10 <- 0
+	r10 *= rdx
+	r10 <- r10
+	r10 += r9
+	r9 <- r10
+	r10 <- rdi
+	r10 *= rdx
+	rdx <- r10
+	r10 <- rcx
+	r10 *= rdx
+	r10 <- r10
+	r10 += r9
+	r9 <- r10
+	r9 <- r9
+	r9 += 0
+	r10 <- r9
+	r10 *= 8
+	r10 <- r10
+	r10 += 32
+	r9 <- r8
+	r9 += r10
+	r9 <- mem r9 0
+	rdi <- 0
+	r10 <- r11
+	r10 += 16
+	r10 <- mem r10 0
+	r10 <- r10
+	r10 >>= 1
+	rdx <- 1
+	r10 <- r10
+	r10 *= rdx
+	rdx <- r10
+	r10 <- 0
+	r10 *= rdx
+	r10 <- r10
+	r10 += rdi
+	rdi <- r10
+	rdi <- rdi
+	rdi += 0
+	rdi <- rdi
+	rdi *= 8
+	rdi <- rdi
+	rdi += 24
+	r10 <- r11
+	r10 += rdi
+	mem r10 0 <- r9
+	r9 <- 0
+	r10 <- r8
+	r10 += 16
+	r10 <- mem r10 0
+	rdx <- r10
+	rdx >>= 1
+	r10 <- r8
+	r10 += 24
+	r10 <- mem r10 0
+	r10 <- r10
+	r10 >>= 1
+	rdi <- 1
+	r10 <- r10
+	r10 *= rdi
+	rdi <- r10
+	r10 <- 0
+	r10 *= rdi
+	r10 <- r10
+	r10 += r9
+	r9 <- r10
+	r10 <- rdx
+	r10 *= rdi
+	rdi <- r10
+	r10 <- rcx
+	r10 *= rdi
+	r10 <- r10
+	r10 += r9
+	r9 <- r10
+	r9 <- r9
+	r9 += 1
+	r10 <- r9
+	r10 *= 8
+	r10 <- r10
+	r10 += 32
+	r9 <- r8
+	r9 += r10
+	r9 <- mem r9 0
+	rdi <- 0
+	r10 <- r11
+	r10 += 16
+	r10 <- mem r10 0
+	r10 <- r10
+	r10 >>= 1
+	rdx <- 1
+	r10 <- r10
+	r10 *= rdx
+	rdx <- r10
+	r10 <- 0
+	r10 *= rdx
+	r10 <- r10
+	r10 += rdi
+	rdi <- r10
+	rdi <- rdi
+	rdi += 1
+	rdi <- rdi
+	rdi *= 8
+	rdi <- rdi
+	rdi += 24
+	r10 <- r11
+	r10 += rdi
+	mem r10 0 <- r9
+	r9 <- 0
+	r10 <- r8
+	r10 += 16
+	r10 <- mem r10 0
+	rdx <- r10
+	rdx >>= 1
+	r10 <- r8
+	r10 += 24
+	r10 <- mem r10 0
+	r10 <- r10
+	r10 >>= 1
+	rdi <- 1
+	r10 <- r10
+	r10 *= rdi
+	rdi <- r10
+	r10 <- 1
+	r10 *= rdi
+	r10 <- r10
+	r10 += r9
+	r9 <- r10
+	r10 <- rdx
+	r10 *= rdi
+	rdi <- r10
+	r10 <- rcx
+	r10 *= rdi
+	r10 <- r10
+	r10 += r9
+	r9 <- r10
+	r9 <- r9
+	r9 += 0
+	r9 <- r9
+	r9 *= 8
+	r9 <- r9
+	r9 += 32
+	r10 <- r8
+	r10 += r9
+	r9 <- mem r10 0
+	rdi <- 0
+	r10 <- r11
+	r10 += 16
+	r10 <- mem r10 0
+	r10 <- r10
+	r10 >>= 1
+	rdx <- 1
+	r10 <- r10
+	r10 *= rdx
+	rdx <- r10
+	r10 <- 1
+	r10 *= rdx
+	r10 <- r10
+	r10 += rdi
+	rdi <- r10
+	rdi <- rdi
+	rdi += 0
+	rdi <- rdi
+	rdi *= 8
+	rdi <- rdi
+	rdi += 24
+	r10 <- r11
+	r10 += rdi
+	mem r10 0 <- r9
+	r9 <- 0
+	r10 <- r8
+	r10 += 16
+	r10 <- mem r10 0
+	rdi <- r10
+	rdi >>= 1
+	r10 <- r8
+	r10 += 24
+	r10 <- mem r10 0
+	r10 <- r10
+	r10 >>= 1
+	rdx <- 1
+	r10 <- r10
+	r10 *= rdx
+	rdx <- r10
+	r10 <- 1
+	r10 *= rdx
+	r10 <- r10
+	r10 += r9
+	r9 <- r10
+	r10 <- rdi
+	r10 *= rdx
+	rdx <- r10
+	r10 <- rcx
+	r10 *= rdx
+	r10 <- r10
+	r10 += r9
+	r9 <- r10
+	r9 <- r9
+	r9 += 1
+	r9 <- r9
+	r9 *= 8
+	r9 <- r9
+	r9 += 32
+	r10 <- r8
+	r10 += r9
+	r9 <- mem r10 0
+	r8 <- 0
+	r10 <- r11
+	r10 += 16
+	r10 <- mem r10 0
+	r10 <- r10
+	r10 >>= 1
+	rcx <- 1
+	r10 <- r10
+	r10 *= rcx
+	rcx <- r10
+	r10 <- 1
+	r10 *= rcx
+	r10 <- r10
+	r10 += r8
+	r8 <- r10
+	r8 <- r8
+	r8 += 1
+	r8 <- r8
+	r8 *= 8
+	r8 <- r8
+	r8 += 24
+	r10 <- r11
+	r10 += r8
+	mem r10 0 <- r9
+	return
+	)
+(@memcp23
+	3 2
+	r8 <- rdi
+	r11 <- rsi
+	r9 <- rdx
+	:NNNNNN_global_30
+	goto :entry_global_31
+	:entry_global_31
+	rcx <- 0
+	r10 <- r8
+	r10 += 16
+	r10 <- mem r10 0
+	r10 <- r10
+	r10 >>= 1
+	rdi <- 1
+	r10 <- r10
+	r10 *= rdi
+	rdi <- r10
+	r10 <- 0
+	r10 *= rdi
+	r10 <- r10
+	r10 += rcx
+	rcx <- r10
+	rcx <- rcx
+	rcx += 0
+	r10 <- rcx
+	r10 *= 8
+	r10 <- r10
+	r10 += 24
+	rcx <- r8
+	rcx += r10
+	rcx <- mem rcx 0
+	rdi <- 0
+	r10 <- r11
+	r10 += 16
+	r10 <- mem r10 0
+	rdx <- r10
+	rdx >>= 1
+	r10 <- r11
+	r10 += 24
+	r10 <- mem r10 0
+	r10 <- r10
+	r10 >>= 1
+	rsi <- 1
+	r10 <- r10
+	r10 *= rsi
+	rsi <- r10
+	r10 <- 0
+	r10 *= rsi
+	r10 <- r10
+	r10 += rdi
+	rdi <- r10
+	r10 <- rdx
+	r10 *= rsi
+	rsi <- r10
+	r10 <- r9
+	r10 *= rsi
+	r10 <- r10
+	r10 += rdi
+	rdi <- r10
+	rdi <- rdi
+	rdi += 0
+	rdi <- rdi
+	rdi *= 8
+	rdi <- rdi
+	rdi += 32
+	r10 <- r11
+	r10 += rdi
+	mem r10 0 <- rcx
+	rcx <- 0
+	r10 <- r8
+	r10 += 16
+	r10 <- mem r10 0
+	r10 <- r10
+	r10 >>= 1
+	rdi <- 1
+	r10 <- r10
+	r10 *= rdi
+	rdi <- r10
+	r10 <- 0
+	r10 *= rdi
+	r10 <- r10
+	r10 += rcx
+	rcx <- r10
+	rcx <- rcx
+	rcx += 1
+	rcx <- rcx
+	rcx *= 8
+	rcx <- rcx
+	rcx += 24
+	r10 <- r8
+	r10 += rcx
+	rcx <- mem r10 0
+	rdi <- 0
+	r10 <- r11
+	r10 += 16
+	r10 <- mem r10 0
+	rsi <- r10
+	rsi >>= 1
+	r10 <- r11
+	r10 += 24
+	r10 <- mem r10 0
+	r10 <- r10
+	r10 >>= 1
+	rdx <- 1
+	r10 <- r10
+	r10 *= rdx
+	rdx <- r10
+	r10 <- 0
+	r10 *= rdx
+	r10 <- r10
+	r10 += rdi
+	rdi <- r10
+	r10 <- rsi
+	r10 *= rdx
+	rdx <- r10
+	r10 <- r9
+	r10 *= rdx
+	r10 <- r10
+	r10 += rdi
+	rdi <- r10
+	rdi <- rdi
+	rdi += 1
+	r10 <- rdi
+	r10 *= 8
+	r10 <- r10
+	r10 += 32
+	rdi <- r11
+	rdi += r10
+	mem rdi 0 <- rcx
+	rcx <- 0
+	r10 <- r8
+	r10 += 16
+	r10 <- mem r10 0
+	r10 <- r10
+	r10 >>= 1
+	rdi <- 1
+	r10 <- r10
+	r10 *= rdi
+	rdi <- r10
+	r10 <- 1
+	r10 *= rdi
+	r10 <- r10
+	r10 += rcx
+	rcx <- r10
+	rcx <- rcx
+	rcx += 0
+	r10 <- rcx
+	r10 *= 8
+	r10 <- r10
+	r10 += 24
+	rcx <- r8
+	rcx += r10
+	rcx <- mem rcx 0
+	rdi <- 0
+	r10 <- r11
+	r10 += 16
+	r10 <- mem r10 0
+	rsi <- r10
+	rsi >>= 1
+	r10 <- r11
+	r10 += 24
+	r10 <- mem r10 0
+	r10 <- r10
+	r10 >>= 1
+	rdx <- 1
+	r10 <- r10
+	r10 *= rdx
+	rdx <- r10
+	r10 <- 1
+	r10 *= rdx
+	r10 <- r10
+	r10 += rdi
+	rdi <- r10
+	r10 <- rsi
+	r10 *= rdx
+	rdx <- r10
+	r10 <- r9
+	r10 *= rdx
+	r10 <- r10
+	r10 += rdi
+	rdi <- r10
+	rdi <- rdi
+	rdi += 0
+	r10 <- rdi
+	r10 *= 8
+	r10 <- r10
+	r10 += 32
+	rdi <- r11
+	rdi += r10
+	mem rdi 0 <- rcx
+	rcx <- 0
+	r10 <- r8
+	r10 += 16
+	r10 <- mem r10 0
+	r10 <- r10
+	r10 >>= 1
+	rdi <- 1
+	r10 <- r10
+	r10 *= rdi
+	rdi <- r10
+	r10 <- 1
+	r10 *= rdi
+	r10 <- r10
+	r10 += rcx
+	rcx <- r10
+	rcx <- rcx
+	rcx += 1
+	rcx <- rcx
+	rcx *= 8
+	rcx <- rcx
+	rcx += 24
+	r10 <- r8
+	r10 += rcx
+	rcx <- mem r10 0
+	r8 <- 0
+	r10 <- r11
+	r10 += 16
+	r10 <- mem r10 0
+	rdx <- r10
+	rdx >>= 1
+	r10 <- r11
+	r10 += 24
+	r10 <- mem r10 0
+	r10 <- r10
+	r10 >>= 1
+	rdi <- 1
+	r10 <- r10
+	r10 *= rdi
+	rdi <- r10
+	r10 <- 1
+	r10 *= rdi
+	r10 <- r10
+	r10 += r8
+	r8 <- r10
+	r10 <- rdx
+	r10 *= rdi
+	rdi <- r10
+	r10 <- r9
+	r10 *= rdi
+	r10 <- r10
+	r10 += r8
+	r8 <- r10
+	r8 <- r8
+	r8 += 1
+	r8 <- r8
+	r8 *= 8
+	r8 <- r8
+	r8 += 32
+	r10 <- r11
+	r10 += r8
+	mem r10 0 <- rcx
+	return
+	)
+(@vec_do_push_back
+	2 3
+	r10 <- rdi
+	mem rsp 0 <- r10
+	r11 <- rsi
+	:NNNNNN_global_57
+	goto :entry_global_58
+	:entry_global_58
+	r10 <- 0
+	r10 *= 8
+	r8 <- r10
+	r8 += 8
+	r10 <- mem rsp 0
+	r10 <- r10
+	r10 += r8
+	r10 <- mem r10 0
+	mem rsp 8 <- r10
+	r10 <- 1
+	r10 *= 8
+	r8 <- r10
+	r8 += 8
+	r10 <- mem rsp 0
+	r10 <- r10
+	r10 += r8
+	r10 <- mem r10 0
+	rdi <- r11
+	rsi <- r10
+	r10 <- mem rsp 8
+	rdx <- r10
+	mem rsp -8 <- :ret_vec_do_push_back_global_60
+	call @memcp23 3
+	:ret_vec_do_push_back_global_60
+	r10 <- mem rsp 8
+	r8 <- r10
+	r8 += 1
+	r10 <- 0
+	r10 *= 8
+	r11 <- r10
+	r11 += 8
+	r10 <- mem rsp 0
+	r10 <- r10
+	r10 += r11
+	mem r10 0 <- r8
+	return
+	)
+(@vec_push_back_alloc
+	1 9
+	r10 <- rdi
+	mem rsp 40 <- r10
+	:NNNNNNNNNNNNNNN_global_61
+	goto :entry_global_62
+	:alloc_new_global_63
+	r10 <- 3
+	r10 >>= 1
+	r11 <- r10
+	r10 <- 5
+	r10 >>= 1
+	r11 <- r11
+	r11 *= r10
+	r10 <- 5
+	r10 >>= 1
+	r11 <- r11
+	r11 *= r10
+	r11 <- r11
+	r11 <<= 1
+	r11 <- r11
+	r11 += 1
+	r11 <- r11
+	r11 += 6
+	rdi <- r11
+	rsi <- 1
+	call allocate 2
+	r8 <- rax
+	r10 <- r8
+	r10 += 8
+	mem r10 0 <- 3
+	r10 <- r8
+	r10 += 16
+	mem r10 0 <- 5
+	r10 <- r8
+	r10 += 24
+	mem r10 0 <- 5
+	r10 <- 1
+	r10 *= 8
+	r11 <- r10
+	r11 += 8
+	r10 <- mem rsp 40
+	r10 <- r10
+	r10 += r11
+	mem r10 0 <- r8
+	return
+	:finish_global_64
+	r10 <- 1
+	r10 *= 8
+	r11 <- r10
+	r11 += 8
+	r10 <- mem rsp 40
+	r10 <- r10
+	r10 += r11
+	r11 <- mem rsp 48
+	mem r10 0 <- r11
+	return
+	:inc_global_65
+	r10 <- mem rsp 32
+	r10 <- r10
+	mem rsp 32 <- r10
+	r10 <- mem rsp 32
+	r10 += 1
+	mem rsp 32 <- r10
+	goto :copy_global_66
+	:copy_global_66
+	r10 <- mem rsp 8
+	r11 <- mem rsp 32
+	r10 <- r11 < r10
+	cjump 1 = r10 :do_global_68
+	goto :finish_global_64
+	:do_global_68
+	r10 <- 2
+	r10 *= 8
+	r11 <- r10
+	r11 += 8
+	r10 <- mem rsp 40
+	r10 <- r10
+	r10 += r11
+	r10 <- mem r10 0
+	mem rsp 24 <- r10
+	r10 <- mem rsp 56
+	rdi <- r10
+	r10 <- mem rsp 32
+	rsi <- r10
+	r10 <- mem rsp 24
+	rdx <- r10
+	mem rsp -8 <- :ret_vec_push_back_alloc_global_71
+	call @memcp32 3
+	:ret_vec_push_back_alloc_global_71
+	r10 <- mem rsp 24
+	rdi <- r10
+	r10 <- mem rsp 48
+	rsi <- r10
+	r10 <- mem rsp 32
+	rdx <- r10
+	mem rsp -8 <- :ret_vec_push_back_alloc_global_72
+	call @memcp23 3
+	:ret_vec_push_back_alloc_global_72
+	goto :inc_global_65
+	:extend_global_74
+	r10 <- mem rsp 16
+	r10 <- r10
+	mem rsp 0 <- r10
+	r10 <- mem rsp 0
+	r10 >>= 1
+	mem rsp 0 <- r10
+	r10 <- mem rsp 0
+	r10 <- r10
+	mem rsp 0 <- r10
+	r10 <- mem rsp 0
+	r10 <<= 1
+	mem rsp 0 <- r10
+	r10 <- mem rsp 0
+	r10 <- r10
+	mem rsp 0 <- r10
+	r10 <- mem rsp 0
+	r10 <<= 1
+	mem rsp 0 <- r10
+	r10 <- mem rsp 0
+	r10 <- r10
+	mem rsp 0 <- r10
+	r10 <- mem rsp 0
+	r10 += 1
+	mem rsp 0 <- r10
+	r10 <- mem rsp 0
+	r10 <- r10
+	r10 >>= 1
+	r11 <- r10
+	r10 <- 5
+	r10 >>= 1
+	r11 <- r11
+	r11 *= r10
+	r10 <- 5
+	r10 >>= 1
+	r11 <- r11
+	r11 *= r10
+	r11 <- r11
+	r11 <<= 1
+	r11 <- r11
+	r11 += 1
+	r11 <- r11
+	r11 += 6
+	rdi <- r11
+	rsi <- 1
+	call allocate 2
+	r10 <- rax
+	mem rsp 48 <- r10
+	r10 <- mem rsp 48
+	r11 <- r10
+	r11 += 8
+	r10 <- mem rsp 0
+	mem r11 0 <- r10
+	r10 <- mem rsp 48
+	r10 <- r10
+	r10 += 16
+	mem r10 0 <- 5
+	r10 <- mem rsp 48
+	r10 <- r10
+	r10 += 24
+	mem r10 0 <- 5
+	r10 <- 0
+	mem rsp 32 <- r10
+	r10 <- mem rsp 16
+	r10 <- r10
+	mem rsp 8 <- r10
+	r10 <- mem rsp 8
+	r10 >>= 1
+	mem rsp 8 <- r10
+	goto :copy_global_66
+	:has_space_left_global_76
+	return
+	:check_length_global_77
+	r10 <- 0
+	r10 *= 8
+	r11 <- r10
+	r11 += 8
+	r10 <- mem rsp 40
+	r10 <- r10
+	r10 += r11
+	r11 <- mem r10 0
+	r10 <- 0
+	r10 *= 8
+	r8 <- r10
+	r8 += 8
+	r10 <- mem rsp 56
+	r10 <- r10
+	r10 += r8
+	r10 <- mem r10 0
+	mem rsp 16 <- r10
+	r10 <- mem rsp 16
+	r10 <- r10
+	r10 >>= 1
+	r10 <- r11 = r10
+	cjump 1 = r10 :extend_global_74
+	goto :has_space_left_global_76
+	:entry_global_62
+	r10 <- 1
+	r10 *= 8
+	r11 <- r10
+	r11 += 8
+	r10 <- mem rsp 40
+	r10 <- r10
+	r10 += r11
+	r10 <- mem r10 0
+	mem rsp 56 <- r10
+	r10 <- mem rsp 56
+	r10 <- r10
+	r10 &= 1
+	cjump 1 = r10 :alloc_new_global_63
+	goto :check_length_global_77
+	)
+(@main
+	0 7
+	:NNNNNN_global_83
+	goto :entry_global_84
+	:B6_global_85
+	r10 <- 1
+	r10 *= 8
+	r11 <- r10
+	r11 += 8
+	r10 <- mem rsp 0
+	r10 <- r10
+	r10 += r11
+	r10 <- mem r10 0
+	rdi <- r10
+	call print 1
+	return
+	:B5_global_86
+	r10 <- mem rsp 8
+	r10 <- r10
+	r10 *= 2
+	r10 <- r10
+	r10 += 1
+	rdi <- r10
+	call print 1
+	r10 <- mem rsp 16
+	rdi <- r10
+	call print 1
+	goto :B4_global_87
+	:B4_global_87
+	r10 <- mem rsp 16
+	rdi <- r10
+	mem rsp -8 <- :ret_main_global_89
+	call @nextfib 1
+	:ret_main_global_89
+	r10 <- mem rsp 24
+	r10 <- r10
+	r10 &= 2097151
+	r10 <- r10 = 0
+	cjump 1 = r10 :save_global_90
+	goto :B2_global_91
+	:B2_global_91
+	r11 <- 1
+	r10 <- mem rsp 8
+	r11 += r10
+	r10 <- r11
+	mem rsp 8 <- r10
+	r10 <- mem rsp 8
+	r11 <- mem rsp 32
+	r10 <- r11 < r10
+	r11 <- 1
+	r11 -= r10
+	r10 <- r11
+	cjump 1 = r10 :B3_global_95
+	goto :B6_global_85
+	:B3_global_95
+	r10 <- mem rsp 8
+	r10 <- r10 <= 10
+	cjump 1 = r10 :B5_global_86
+	goto :B3_5_global_99
+	:B3_5_global_99
+	r10 <- mem rsp 8
+	r10 <- r10
+	mem rsp 24 <- r10
+	r10 <- mem rsp 24
+	r10 -= 1
+	mem rsp 24 <- r10
+	r10 <- mem rsp 24
+	r10 <- r10
+	r10 &= 33554431
+	r11 <- 1
+	r11 -= r10
+	cjump 1 = r11 :B5_global_86
+	goto :B4_global_87
+	:save_global_90
+	r10 <- mem rsp 0
+	rdi <- r10
+	mem rsp -8 <- :ret_main_global_104
+	call @vec_push_back_alloc 1
+	:ret_main_global_104
+	r10 <- mem rsp 0
+	rdi <- r10
+	r10 <- mem rsp 16
+	rsi <- r10
+	mem rsp -8 <- :ret_main_global_105
+	call @vec_do_push_back 2
+	:ret_main_global_105
+	r10 <- 0
+	r10 *= 8
+	r11 <- r10
+	r11 += 8
+	r10 <- mem rsp 0
+	r10 <- r10
+	r10 += r11
+	r8 <- mem r10 0
+	r8 <- r8
+	r8 <<= 1
+	r8 <- r8
+	r8 += 1
+	r10 <- 0
+	r10 *= 8
+	r11 <- r10
+	r11 += 8
+	r10 <- mem rsp 40
+	r10 <- r10
+	r10 += r11
+	mem r10 0 <- r8
+	r10 <- 1
+	r10 *= 8
+	r11 <- r10
+	r11 += 8
+	r10 <- mem rsp 0
+	r10 <- r10
+	r10 += r11
+	r8 <- mem r10 0
+	r10 <- 0
+	r10 *= 8
+	r11 <- r10
+	r11 += 8
+	r10 <- r8
+	r10 += r11
+	r8 <- mem r10 0
+	r10 <- 1
+	r10 *= 8
+	r11 <- r10
+	r11 += 8
+	r10 <- mem rsp 40
+	r10 <- r10
+	r10 += r11
+	mem r10 0 <- r8
+	r10 <- mem rsp 40
+	rdi <- r10
+	call print 1
+	goto :B2_global_91
+	:B1_global_107
+	rdi <- 5
+	rsi <- 1
+	call allocate 2
+	r10 <- rax
+	mem rsp 40 <- r10
+	r10 <- mem rsp 40
+	r10 <- mem r10 0
+	r10 <- r10
+	r10 <<= 1
+	r10 <- r10
+	r10 += 1
+	rdi <- r10
+	call print 1
+	mem rsp -8 <- :ret_main_global_108
+	call @vec_ctor 0
+	:ret_main_global_108
+	r10 <- rax
+	mem rsp 0 <- r10
+	r10 <- 0
+	mem rsp 8 <- r10
+	r10 <- 300000000
+	mem rsp 32 <- r10
+	r10 <- 5
+	r10 >>= 1
+	r10 <- r10
+	r11 <- 5
+	r11 >>= 1
+	r10 <- r10
+	r10 *= r11
+	r10 <- r10
+	r10 <<= 1
+	r10 <- r10
+	r10 += 1
+	r10 <- r10
+	r10 += 4
+	rdi <- r10
+	rsi <- 1
+	call allocate 2
+	r10 <- rax
+	mem rsp 16 <- r10
+	r10 <- mem rsp 16
+	r10 <- r10
+	r10 += 8
+	mem r10 0 <- 5
+	r10 <- mem rsp 16
+	r10 <- r10
+	r10 += 16
+	mem r10 0 <- 5
+	r10 <- mem rsp 16
+	rdi <- r10
+	mem rsp -8 <- :ret_main_global_109
+	call @initmat 1
+	:ret_main_global_109
+	goto :B2_global_91
+	:entry_global_84
+	r10 <- 0
+	mem rsp 24 <- r10
+	goto :B1_global_107
+	)
+(@initmat
+	1 2
+	r11 <- rdi
+	:NNNNNN_global_113
+	goto :entry_global_114
+	:B1_global_115
+	r8 <- 0
+	r10 <- r11
+	r10 += 16
+	r10 <- mem r10 0
+	r10 <- r10
+	r10 >>= 1
+	r9 <- 1
+	r10 <- r10
+	r10 *= r9
+	r9 <- r10
+	r10 <- 0
+	r10 *= r9
+	r10 <- r10
+	r10 += r8
+	r8 <- r10
+	r8 <- r8
+	r8 += 0
+	r10 <- r8
+	r10 *= 8
+	r10 <- r10
+	r10 += 24
+	r8 <- r11
+	r8 += r10
+	mem r8 0 <- 1
+	r8 <- 0
+	r10 <- r11
+	r10 += 16
+	r10 <- mem r10 0
+	r10 <- r10
+	r10 >>= 1
+	r9 <- 1
+	r10 <- r10
+	r10 *= r9
+	r9 <- r10
+	r10 <- 0
+	r10 *= r9
+	r10 <- r10
+	r10 += r8
+	r8 <- r10
+	r8 <- r8
+	r8 += 1
+	r10 <- r8
+	r10 *= 8
+	r10 <- r10
+	r10 += 24
+	r8 <- r11
+	r8 += r10
+	mem r8 0 <- 3
+	r8 <- 0
+	r10 <- r11
+	r10 += 16
+	r10 <- mem r10 0
+	r10 <- r10
+	r10 >>= 1
+	r9 <- 1
+	r10 <- r10
+	r10 *= r9
+	r9 <- r10
+	r10 <- 1
+	r10 *= r9
+	r10 <- r10
+	r10 += r8
+	r8 <- r10
+	r8 <- r8
+	r8 += 0
+	r10 <- r8
+	r10 *= 8
+	r10 <- r10
+	r10 += 24
+	r8 <- r11
+	r8 += r10
+	mem r8 0 <- 3
+	r8 <- 0
+	r10 <- r11
+	r10 += 16
+	r10 <- mem r10 0
+	r10 <- r10
+	r10 >>= 1
+	r9 <- 1
+	r10 <- r10
+	r10 *= r9
+	r9 <- r10
+	r10 <- 1
+	r10 *= r9
+	r10 <- r10
+	r10 += r8
+	r8 <- r10
+	r8 <- r8
+	r8 += 1
+	r8 <- r8
+	r8 *= 8
+	r8 <- r8
+	r8 += 24
+	r10 <- r11
+	r10 += r8
+	mem r10 0 <- 3
+	return
+	:entry_global_114
+	goto :B1_global_115
+	)
+(@mod10000
+	1 0
+	r10 <- rdi
+	:NNNNNNNN_global_126
+	goto :entry_global_127
+	:mod_global_128
+	r10 <- r10
+	r10 -= 10000
+	rdi <- r10
+	mem rsp -8 <- :ret_mod10000_global_129
+	call @mod10000 1
+	:ret_mod10000_global_129
+	r10 <- rax
+	rax <- r10
+	return
+	:nothing_global_130
+	rax <- r10
+	return
+	:entry_global_127
+	r11 <- 10000 <= r10
+	cjump 1 = r11 :mod_global_128
+	goto :nothing_global_130
+	)
+(@nextfib
+	1 102
+	r10 <- rdi
+	mem rsp 48 <- r10
+	:NNNNNN_global_134
+	goto :entry_global_135
+	:B3_global_136
+	r10 <- mem rsp 1056
+	r10 <- r10
+	mem rsp 24 <- r10
+	r11 <- mem rsp 24
+	r10 <- mem rsp 1896
+	r11 *= r10
+	mem rsp 24 <- r11
+	r10 <- mem rsp 1064
+	r10 <- r10
+	mem rsp 64 <- r10
+	r11 <- mem rsp 64
+	r10 <- mem rsp 1800
+	r11 *= r10
+	mem rsp 64 <- r11
+	r10 <- mem rsp 1056
+	r10 <- r10
+	mem rsp 1704 <- r10
+	r11 <- mem rsp 1704
+	r10 <- mem rsp 1776
+	r11 *= r10
+	mem rsp 1704 <- r11
+	r10 <- mem rsp 1064
+	r10 <- r10
+	mem rsp 1672 <- r10
+	r10 <- mem rsp 1672
+	r11 <- mem rsp 1768
+	r10 *= r11
+	mem rsp 1672 <- r10
+	r10 <- mem rsp 56
+	r10 <- r10
+	mem rsp 1656 <- r10
+	r10 <- mem rsp 1656
+	r11 <- mem rsp 1896
+	r10 *= r11
+	mem rsp 1656 <- r10
+	r10 <- mem rsp 8
+	r10 <- r10
+	mem rsp 1568 <- r10
+	r11 <- mem rsp 1568
+	r10 <- mem rsp 1800
+	r11 *= r10
+	mem rsp 1568 <- r11
+	r10 <- mem rsp 56
+	r10 <- r10
+	mem rsp 1608 <- r10
+	r11 <- mem rsp 1608
+	r10 <- mem rsp 1776
+	r11 *= r10
+	mem rsp 1608 <- r11
+	r10 <- mem rsp 8
+	r10 <- r10
+	mem rsp 1664 <- r10
+	r11 <- mem rsp 1664
+	r10 <- mem rsp 1768
+	r11 *= r10
+	mem rsp 1664 <- r11
+	r10 <- mem rsp 24
+	r10 <- r10
+	mem rsp 40 <- r10
+	r11 <- mem rsp 40
+	r10 <- mem rsp 64
+	r11 += r10
+	mem rsp 40 <- r11
+	r10 <- mem rsp 1704
+	r10 <- r10
+	mem rsp 32 <- r10
+	r11 <- mem rsp 32
+	r10 <- mem rsp 1672
+	r11 += r10
+	mem rsp 32 <- r11
+	r10 <- mem rsp 1656
+	r10 <- r10
+	mem rsp 16 <- r10
+	r10 <- mem rsp 16
+	r11 <- mem rsp 1568
+	r10 += r11
+	mem rsp 16 <- r10
+	r10 <- mem rsp 1608
+	r10 <- r10
+	mem rsp 0 <- r10
+	r11 <- mem rsp 0
+	r10 <- mem rsp 1664
+	r11 += r10
+	mem rsp 0 <- r11
+	goto :Bend_global_137
+	:Bend_global_137
+	r10 <- mem rsp 40
+	r10 <- r10
+	mem rsp 40 <- r10
+	r10 <- mem rsp 40
+	r10 += 1
+	mem rsp 40 <- r10
+	r10 <- mem rsp 32
+	r10 <- r10
+	mem rsp 32 <- r10
+	r10 <- mem rsp 32
+	r10 += 1
+	mem rsp 32 <- r10
+	r10 <- mem rsp 16
+	r10 <- r10
+	mem rsp 16 <- r10
+	r10 <- mem rsp 16
+	r10 += 1
+	mem rsp 16 <- r10
+	r10 <- mem rsp 0
+	r10 <- r10
+	mem rsp 0 <- r10
+	r10 <- mem rsp 0
+	r10 += 1
+	mem rsp 0 <- r10
+	r10 <- mem rsp 40
+	rdi <- r10
+	mem rsp -8 <- :ret_nextfib_global_139
+	call @mod10000 1
+	:ret_nextfib_global_139
+	r10 <- rax
+	mem rsp 40 <- r10
+	r10 <- mem rsp 16
+	rdi <- r10
+	mem rsp -8 <- :ret_nextfib_global_140
+	call @mod10000 1
+	:ret_nextfib_global_140
+	r10 <- rax
+	mem rsp 32 <- r10
+	r10 <- mem rsp 16
+	rdi <- r10
+	mem rsp -8 <- :ret_nextfib_global_141
+	call @mod10000 1
+	:ret_nextfib_global_141
+	r10 <- rax
+	mem rsp 16 <- r10
+	r10 <- mem rsp 0
+	rdi <- r10
+	mem rsp -8 <- :ret_nextfib_global_142
+	call @mod10000 1
+	:ret_nextfib_global_142
+	r10 <- rax
+	mem rsp 0 <- r10
+	r10 <- 0
+	mem rsp 632 <- r10
+	r10 <- mem rsp 48
+	r10 <- r10
+	mem rsp 2448 <- r10
+	r10 <- mem rsp 2448
+	r10 += 16
+	mem rsp 2448 <- r10
+	r10 <- mem rsp 2448
+	r10 <- mem r10 0
+	mem rsp 2432 <- r10
+	r10 <- mem rsp 2432
+	r10 <- r10
+	mem rsp 2360 <- r10
+	r10 <- mem rsp 2360
+	r10 >>= 1
+	mem rsp 2360 <- r10
+	r10 <- 1
+	mem rsp 480 <- r10
+	r10 <- mem rsp 2360
+	r10 <- r10
+	mem rsp 584 <- r10
+	r10 <- mem rsp 480
+	r11 <- mem rsp 584
+	r11 *= r10
+	mem rsp 584 <- r11
+	r10 <- mem rsp 584
+	r10 <- r10
+	mem rsp 480 <- r10
+	r10 <- 0
+	mem rsp 560 <- r10
+	r10 <- mem rsp 480
+	r11 <- mem rsp 560
+	r11 *= r10
+	mem rsp 560 <- r11
+	r10 <- mem rsp 560
+	r10 <- r10
+	mem rsp 536 <- r10
+	r10 <- mem rsp 536
+	r11 <- mem rsp 632
+	r10 += r11
+	mem rsp 536 <- r10
+	r10 <- mem rsp 536
+	r10 <- r10
+	mem rsp 632 <- r10
+	r10 <- mem rsp 632
+	r10 <- r10
+	mem rsp 632 <- r10
+	r10 <- mem rsp 632
+	r10 += 0
+	mem rsp 632 <- r10
+	r10 <- mem rsp 632
+	r10 <- r10
+	mem rsp 472 <- r10
+	r10 <- mem rsp 472
+	r10 *= 8
+	mem rsp 472 <- r10
+	r10 <- mem rsp 472
+	r10 <- r10
+	mem rsp 472 <- r10
+	r10 <- mem rsp 472
+	r10 += 24
+	mem rsp 472 <- r10
+	r10 <- mem rsp 48
+	r10 <- r10
+	mem rsp 592 <- r10
+	r10 <- mem rsp 472
+	r11 <- mem rsp 592
+	r11 += r10
+	mem rsp 592 <- r11
+	r10 <- mem rsp 40
+	r11 <- mem rsp 592
+	mem r11 0 <- r10
+	r10 <- 0
+	mem rsp 504 <- r10
+	r10 <- mem rsp 48
+	r10 <- r10
+	mem rsp 512 <- r10
+	r10 <- mem rsp 512
+	r10 += 16
+	mem rsp 512 <- r10
+	r10 <- mem rsp 512
+	r10 <- mem r10 0
+	mem rsp 944 <- r10
+	r10 <- mem rsp 944
+	r10 <- r10
+	mem rsp 752 <- r10
+	r10 <- mem rsp 752
+	r10 >>= 1
+	mem rsp 752 <- r10
+	r10 <- 1
+	mem rsp 856 <- r10
+	r10 <- mem rsp 752
+	r10 <- r10
+	mem rsp 728 <- r10
+	r10 <- mem rsp 728
+	r11 <- mem rsp 856
+	r10 *= r11
+	mem rsp 728 <- r10
+	r10 <- mem rsp 728
+	r10 <- r10
+	mem rsp 856 <- r10
+	r10 <- 0
+	mem rsp 832 <- r10
+	r10 <- mem rsp 832
+	r11 <- mem rsp 856
+	r10 *= r11
+	mem rsp 832 <- r10
+	r10 <- mem rsp 832
+	r10 <- r10
+	mem rsp 464 <- r10
+	r10 <- mem rsp 464
+	r11 <- mem rsp 504
+	r10 += r11
+	mem rsp 464 <- r10
+	r10 <- mem rsp 464
+	r10 <- r10
+	mem rsp 504 <- r10
+	r10 <- mem rsp 504
+	r10 <- r10
+	mem rsp 504 <- r10
+	r10 <- mem rsp 504
+	r10 += 1
+	mem rsp 504 <- r10
+	r10 <- mem rsp 504
+	r10 <- r10
+	mem rsp 760 <- r10
+	r10 <- mem rsp 760
+	r10 *= 8
+	mem rsp 760 <- r10
+	r10 <- mem rsp 760
+	r10 <- r10
+	mem rsp 760 <- r10
+	r10 <- mem rsp 760
+	r10 += 24
+	mem rsp 760 <- r10
+	r10 <- mem rsp 48
+	r10 <- r10
+	mem rsp 664 <- r10
+	r10 <- mem rsp 664
+	r11 <- mem rsp 760
+	r10 += r11
+	mem rsp 664 <- r10
+	r10 <- mem rsp 32
+	r11 <- mem rsp 664
+	mem r11 0 <- r10
+	r10 <- 0
+	mem rsp 576 <- r10
+	r10 <- mem rsp 48
+	r10 <- r10
+	mem rsp 640 <- r10
+	r10 <- mem rsp 640
+	r10 += 16
+	mem rsp 640 <- r10
+	r10 <- mem rsp 640
+	r10 <- mem r10 0
+	mem rsp 680 <- r10
+	r10 <- mem rsp 680
+	r10 <- r10
+	mem rsp 616 <- r10
+	r10 <- mem rsp 616
+	r10 >>= 1
+	mem rsp 616 <- r10
+	r10 <- 1
+	mem rsp 544 <- r10
+	r10 <- mem rsp 616
+	r10 <- r10
+	mem rsp 2688 <- r10
+	r10 <- mem rsp 544
+	r11 <- mem rsp 2688
+	r11 *= r10
+	mem rsp 2688 <- r11
+	r10 <- mem rsp 2688
+	r10 <- r10
+	mem rsp 544 <- r10
+	r10 <- 1
+	mem rsp 488 <- r10
+	r10 <- mem rsp 488
+	r11 <- mem rsp 544
+	r10 *= r11
+	mem rsp 488 <- r10
+	r10 <- mem rsp 488
+	r10 <- r10
+	mem rsp 528 <- r10
+	r10 <- mem rsp 528
+	r11 <- mem rsp 576
+	r10 += r11
+	mem rsp 528 <- r10
+	r10 <- mem rsp 528
+	r10 <- r10
+	mem rsp 576 <- r10
+	r10 <- mem rsp 576
+	r10 <- r10
+	mem rsp 576 <- r10
+	r10 <- mem rsp 576
+	r10 += 0
+	mem rsp 576 <- r10
+	r10 <- mem rsp 576
+	r10 <- r10
+	mem rsp 496 <- r10
+	r10 <- mem rsp 496
+	r10 *= 8
+	mem rsp 496 <- r10
+	r10 <- mem rsp 496
+	r10 <- r10
+	mem rsp 496 <- r10
+	r10 <- mem rsp 496
+	r10 += 24
+	mem rsp 496 <- r10
+	r10 <- mem rsp 48
+	r10 <- r10
+	mem rsp 1048 <- r10
+	r10 <- mem rsp 496
+	r11 <- mem rsp 1048
+	r11 += r10
+	mem rsp 1048 <- r11
+	r10 <- mem rsp 16
+	r11 <- mem rsp 1048
+	mem r11 0 <- r10
+	r10 <- 0
+	mem rsp 1296 <- r10
+	r10 <- mem rsp 48
+	r10 <- r10
+	mem rsp 600 <- r10
+	r10 <- mem rsp 600
+	r10 += 16
+	mem rsp 600 <- r10
+	r10 <- mem rsp 600
+	r10 <- mem r10 0
+	mem rsp 928 <- r10
+	r10 <- mem rsp 928
+	r10 <- r10
+	mem rsp 568 <- r10
+	r10 <- mem rsp 568
+	r10 >>= 1
+	mem rsp 568 <- r10
+	r10 <- 1
+	mem rsp 848 <- r10
+	r10 <- mem rsp 568
+	r10 <- r10
+	mem rsp 656 <- r10
+	r11 <- mem rsp 656
+	r10 <- mem rsp 848
+	r11 *= r10
+	mem rsp 656 <- r11
+	r10 <- mem rsp 656
+	r10 <- r10
+	mem rsp 848 <- r10
+	r10 <- 1
+	mem rsp 936 <- r10
+	r11 <- mem rsp 848
+	r10 <- mem rsp 936
+	r10 *= r11
+	mem rsp 936 <- r10
+	r10 <- mem rsp 936
+	r10 <- r10
+	mem rsp 2008 <- r10
+	r11 <- mem rsp 1296
+	r10 <- mem rsp 2008
+	r10 += r11
+	mem rsp 2008 <- r10
+	r10 <- mem rsp 2008
+	r10 <- r10
+	mem rsp 1296 <- r10
+	r10 <- mem rsp 1296
+	r10 <- r10
+	mem rsp 1296 <- r10
+	r10 <- mem rsp 1296
+	r10 += 1
+	mem rsp 1296 <- r10
+	r10 <- mem rsp 1296
+	r10 <- r10
+	mem rsp 72 <- r10
+	r10 <- mem rsp 72
+	r10 *= 8
+	mem rsp 72 <- r10
+	r10 <- mem rsp 72
+	r10 <- r10
+	mem rsp 72 <- r10
+	r10 <- mem rsp 72
+	r10 += 24
+	mem rsp 72 <- r10
+	r10 <- mem rsp 48
+	r10 <- r10
+	mem rsp 160 <- r10
+	r11 <- mem rsp 72
+	r10 <- mem rsp 160
+	r10 += r11
+	mem rsp 160 <- r10
+	r10 <- mem rsp 0
+	r11 <- mem rsp 160
+	mem r11 0 <- r10
+	return
+	:B1_global_151
+	r10 <- 0
+	mem rsp 88 <- r10
+	r10 <- mem rsp 48
+	r10 <- r10
+	mem rsp 96 <- r10
+	r10 <- mem rsp 96
+	r10 += 16
+	mem rsp 96 <- r10
+	r10 <- mem rsp 96
+	r10 <- mem r10 0
+	mem rsp 1288 <- r10
+	r10 <- mem rsp 1288
+	r10 <- r10
+	mem rsp 112 <- r10
+	r10 <- mem rsp 112
+	r10 >>= 1
+	mem rsp 112 <- r10
+	r10 <- 1
+	mem rsp 104 <- r10
+	r10 <- mem rsp 112
+	r10 <- r10
+	mem rsp 264 <- r10
+	r11 <- mem rsp 104
+	r10 <- mem rsp 264
+	r10 *= r11
+	mem rsp 264 <- r10
+	r10 <- mem rsp 264
+	r10 <- r10
+	mem rsp 104 <- r10
+	r10 <- 0
+	mem rsp 240 <- r10
+	r10 <- mem rsp 104
+	r11 <- mem rsp 240
+	r11 *= r10
+	mem rsp 240 <- r11
+	r10 <- mem rsp 240
+	r10 <- r10
+	mem rsp 232 <- r10
+	r10 <- mem rsp 88
+	r11 <- mem rsp 232
+	r11 += r10
+	mem rsp 232 <- r11
+	r10 <- mem rsp 232
+	r10 <- r10
+	mem rsp 88 <- r10
+	r10 <- mem rsp 88
+	r10 <- r10
+	mem rsp 88 <- r10
+	r10 <- mem rsp 88
+	r10 += 0
+	mem rsp 88 <- r10
+	r10 <- mem rsp 88
+	r10 <- r10
+	mem rsp 2200 <- r10
+	r10 <- mem rsp 2200
+	r10 *= 8
+	mem rsp 2200 <- r10
+	r10 <- mem rsp 2200
+	r10 <- r10
+	mem rsp 2200 <- r10
+	r10 <- mem rsp 2200
+	r10 += 24
+	mem rsp 2200 <- r10
+	r10 <- mem rsp 48
+	r10 <- r10
+	mem rsp 1336 <- r10
+	r10 <- mem rsp 1336
+	r11 <- mem rsp 2200
+	r10 += r11
+	mem rsp 1336 <- r10
+	r10 <- mem rsp 1336
+	r10 <- mem r10 0
+	mem rsp 1056 <- r10
+	r10 <- 0
+	mem rsp 192 <- r10
+	r10 <- mem rsp 48
+	r10 <- r10
+	mem rsp 176 <- r10
+	r10 <- mem rsp 176
+	r10 += 16
+	mem rsp 176 <- r10
+	r10 <- mem rsp 176
+	r10 <- mem r10 0
+	mem rsp 2984 <- r10
+	r10 <- mem rsp 2984
+	r10 <- r10
+	mem rsp 2184 <- r10
+	r10 <- mem rsp 2184
+	r10 >>= 1
+	mem rsp 2184 <- r10
+	r10 <- 1
+	mem rsp 216 <- r10
+	r10 <- mem rsp 2184
+	r10 <- r10
+	mem rsp 2176 <- r10
+	r10 <- mem rsp 216
+	r11 <- mem rsp 2176
+	r11 *= r10
+	mem rsp 2176 <- r11
+	r10 <- mem rsp 2176
+	r10 <- r10
+	mem rsp 216 <- r10
+	r10 <- 0
+	mem rsp 2328 <- r10
+	r10 <- mem rsp 216
+	r11 <- mem rsp 2328
+	r11 *= r10
+	mem rsp 2328 <- r11
+	r10 <- mem rsp 2328
+	r10 <- r10
+	mem rsp 184 <- r10
+	r11 <- mem rsp 184
+	r10 <- mem rsp 192
+	r11 += r10
+	mem rsp 184 <- r11
+	r10 <- mem rsp 184
+	r10 <- r10
+	mem rsp 192 <- r10
+	r10 <- mem rsp 192
+	r10 <- r10
+	mem rsp 192 <- r10
+	r10 <- mem rsp 192
+	r10 += 1
+	mem rsp 192 <- r10
+	r10 <- mem rsp 192
+	r10 <- r10
+	mem rsp 200 <- r10
+	r10 <- mem rsp 200
+	r10 *= 8
+	mem rsp 200 <- r10
+	r10 <- mem rsp 200
+	r10 <- r10
+	mem rsp 200 <- r10
+	r10 <- mem rsp 200
+	r10 += 24
+	mem rsp 200 <- r10
+	r10 <- mem rsp 48
+	r10 <- r10
+	mem rsp 3048 <- r10
+	r11 <- mem rsp 200
+	r10 <- mem rsp 3048
+	r10 += r11
+	mem rsp 3048 <- r10
+	r10 <- mem rsp 3048
+	r10 <- mem r10 0
+	mem rsp 1064 <- r10
+	r10 <- 0
+	mem rsp 336 <- r10
+	r10 <- mem rsp 48
+	r10 <- r10
+	mem rsp 3032 <- r10
+	r10 <- mem rsp 3032
+	r10 += 16
+	mem rsp 3032 <- r10
+	r10 <- mem rsp 3032
+	r10 <- mem r10 0
+	mem rsp 3272 <- r10
+	r10 <- mem rsp 3272
+	r10 <- r10
+	mem rsp 3240 <- r10
+	r10 <- mem rsp 3240
+	r10 >>= 1
+	mem rsp 3240 <- r10
+	r10 <- 1
+	mem rsp 424 <- r10
+	r10 <- mem rsp 3240
+	r10 <- r10
+	mem rsp 448 <- r10
+	r10 <- mem rsp 424
+	r11 <- mem rsp 448
+	r11 *= r10
+	mem rsp 448 <- r11
+	r10 <- mem rsp 448
+	r10 <- r10
+	mem rsp 424 <- r10
+	r10 <- 1
+	mem rsp 408 <- r10
+	r11 <- mem rsp 408
+	r10 <- mem rsp 424
+	r11 *= r10
+	mem rsp 408 <- r11
+	r10 <- mem rsp 408
+	r10 <- r10
+	mem rsp 376 <- r10
+	r11 <- mem rsp 336
+	r10 <- mem rsp 376
+	r10 += r11
+	mem rsp 376 <- r10
+	r10 <- mem rsp 376
+	r10 <- r10
+	mem rsp 336 <- r10
+	r10 <- mem rsp 336
+	r10 <- r10
+	mem rsp 336 <- r10
+	r10 <- mem rsp 336
+	r10 += 0
+	mem rsp 336 <- r10
+	r10 <- mem rsp 336
+	r10 <- r10
+	mem rsp 344 <- r10
+	r10 <- mem rsp 344
+	r10 *= 8
+	mem rsp 344 <- r10
+	r10 <- mem rsp 344
+	r10 <- r10
+	mem rsp 344 <- r10
+	r10 <- mem rsp 344
+	r10 += 24
+	mem rsp 344 <- r10
+	r10 <- mem rsp 48
+	r10 <- r10
+	mem rsp 3128 <- r10
+	r10 <- mem rsp 344
+	r11 <- mem rsp 3128
+	r11 += r10
+	mem rsp 3128 <- r11
+	r10 <- mem rsp 3128
+	r10 <- mem r10 0
+	mem rsp 56 <- r10
+	r10 <- 0
+	mem rsp 208 <- r10
+	r10 <- mem rsp 48
+	r10 <- r10
+	mem rsp 1504 <- r10
+	r10 <- mem rsp 1504
+	r10 += 16
+	mem rsp 1504 <- r10
+	r10 <- mem rsp 1504
+	r10 <- mem r10 0
+	mem rsp 1488 <- r10
+	r10 <- mem rsp 1488
+	r10 <- r10
+	mem rsp 1456 <- r10
+	r10 <- mem rsp 1456
+	r10 >>= 1
+	mem rsp 1456 <- r10
+	r10 <- 1
+	mem rsp 1400 <- r10
+	r10 <- mem rsp 1456
+	r10 <- r10
+	mem rsp 1424 <- r10
+	r11 <- mem rsp 1400
+	r10 <- mem rsp 1424
+	r10 *= r11
+	mem rsp 1424 <- r10
+	r10 <- mem rsp 1424
+	r10 <- r10
+	mem rsp 1400 <- r10
+	r10 <- 1
+	mem rsp 1384 <- r10
+	r11 <- mem rsp 1384
+	r10 <- mem rsp 1400
+	r11 *= r10
+	mem rsp 1384 <- r11
+	r10 <- mem rsp 1384
+	r10 <- r10
+	mem rsp 1232 <- r10
+	r11 <- mem rsp 208
+	r10 <- mem rsp 1232
+	r10 += r11
+	mem rsp 1232 <- r10
+	r10 <- mem rsp 1232
+	r10 <- r10
+	mem rsp 208 <- r10
+	r10 <- mem rsp 208
+	r10 <- r10
+	mem rsp 208 <- r10
+	r10 <- mem rsp 208
+	r10 += 1
+	mem rsp 208 <- r10
+	r10 <- mem rsp 208
+	r10 <- r10
+	mem rsp 1128 <- r10
+	r10 <- mem rsp 1128
+	r10 *= 8
+	mem rsp 1128 <- r10
+	r10 <- mem rsp 1128
+	r10 <- r10
+	mem rsp 1128 <- r10
+	r10 <- mem rsp 1128
+	r10 += 24
+	mem rsp 1128 <- r10
+	r10 <- mem rsp 48
+	r10 <- r10
+	mem rsp 1112 <- r10
+	r11 <- mem rsp 1112
+	r10 <- mem rsp 1128
+	r11 += r10
+	mem rsp 1112 <- r11
+	r10 <- mem rsp 1112
+	r10 <- mem r10 0
+	mem rsp 8 <- r10
+	r10 <- mem rsp 1056
+	r10 <- r10
+	mem rsp 1056 <- r10
+	r10 <- mem rsp 1056
+	r10 -= 1
+	mem rsp 1056 <- r10
+	r10 <- mem rsp 1064
+	r10 <- r10
+	mem rsp 1064 <- r10
+	r10 <- mem rsp 1064
+	r10 -= 1
+	mem rsp 1064 <- r10
+	r10 <- mem rsp 56
+	r10 <- r10
+	mem rsp 56 <- r10
+	r10 <- mem rsp 56
+	r10 -= 1
+	mem rsp 56 <- r10
+	r10 <- mem rsp 8
+	r10 <- r10
+	mem rsp 8 <- r10
+	r10 <- mem rsp 8
+	r10 -= 1
+	mem rsp 8 <- r10
+	goto :B2_global_160
+	:B2_global_160
+	r10 <- 0
+	mem rsp 1896 <- r10
+	r10 <- 1
+	mem rsp 1776 <- r10
+	r10 <- 1
+	mem rsp 1800 <- r10
+	r10 <- 1
+	mem rsp 1768 <- r10
+	goto :B3_global_136
+	:entry_global_135
+	goto :B1_global_151
 	)
 )

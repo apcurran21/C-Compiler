@@ -1057,11 +1057,11 @@ namespace L3 {
       /* hacky way of checking if this is a stdlib function call */
       // auto isStdlib = (!callee->print().empty() && callee->print()[0] == '@') && (callee->print().size() == clean_callee.size());
 
-      // auto isStdlib = (!callee->print().empty() && callee->print()[0] != '@');
+      auto isStdlib = (!callee->print().empty() && callee->print()[0] != '@' && callee->print()[0] != '%');
 
       if (debug) std::cerr << "clean_callee= " << clean_callee << " : size= " << clean_callee.size() << ", callee= " << callee->print() << " : size= " << callee->print().size() << "\n";
 
-      // if (debug && isStdlib) std::cerr << "callee " << callee->print() << " is an stdlib function\n";
+      if (debug && isStdlib) std::cerr << "callee " << callee->print() << " is an stdlib function\n";
 
       /* Grab the function arguments and info */
       int count = 0;
@@ -1084,16 +1084,16 @@ namespace L3 {
       }
 
       std::string return_label;
-      // if (!isStdlib) {
-      return_label = ":ret_" + clean_fname + "_global_" + std::to_string(labelCounter);
-      out << "mem rsp -8 <- " << return_label << "\n";
-      labelCounter++;
-      // }
+      if (!isStdlib) {
+        return_label = ":ret_" + clean_fname + "_global_" + std::to_string(labelCounter);
+        out << "mem rsp -8 <- " << return_label << "\n";
+        labelCounter++;
+      }
 
       out << "call " << callee->print() << " " << numArgs << "\n";
       
-      // if (!isStdlib) out << return_label << "\n";
-      out << return_label << "\n";
+      if (!isStdlib) out << return_label << "\n";
+      // out << return_label << "\n";
     }
   };
 
@@ -1113,11 +1113,11 @@ namespace L3 {
       std::string clean_callee = removeAtSymbol(callee->print());
 
       /* hacky way of checking if this is a stdlib function call */
-      // auto isStdlib = (!callee->print().empty() && callee->print()[0] != '@');
+      auto isStdlib = (!callee->print().empty() && callee->print()[0] != '@' && callee->print()[0] != '%');
 
       if (debug) std::cerr << "clean_callee= " << clean_callee << " : size= " << clean_callee.size() << ", callee= " << callee->print() << " : size= " << callee->print().size() << "\n";
 
-      // if (debug && isStdlib) std::cerr << "callee " << callee->print() << " is an stdlib function\n";
+      if (debug && isStdlib) std::cerr << "callee " << callee->print() << " is an stdlib function\n";
       
       int count = 0;
       int numArgs = parsed_args.size();
@@ -1137,16 +1137,16 @@ namespace L3 {
       }
 
       std::string return_label;
-      // if (!isStdlib) {
-      return_label = ":ret_" + clean_fname + "_global_" + std::to_string(labelCounter);
-      out << "mem rsp -8 <- " << return_label << "\n";
-      labelCounter++;
+      if (!isStdlib) {
+        return_label = ":ret_" + clean_fname + "_global_" + std::to_string(labelCounter);
+        out << "mem rsp -8 <- " << return_label << "\n";
+        labelCounter++;
         // if (debug) std::cerr << "callee is not standard library, we made a return label " << return_label << "\n";
-      // }
+      }
 
       out << "call " << callee->print() << " " << numArgs << "\n";
-      // if (!isStdlib) out << return_label << "\n";
-      out << return_label << "\n";
+      if (!isStdlib) out << return_label << "\n";
+      // out << return_label << "\n";
       out << var->print() << " <- rax\n";
     }
   };

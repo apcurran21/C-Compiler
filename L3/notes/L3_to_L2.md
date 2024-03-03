@@ -363,14 +363,6 @@ Here is instruction after which the program segfaults
  call print (1)
 
 
-
-
-
-
-
-
-
-
  Test 426: test320.L3                                                                                           [FAILED]
 Test 427: test319.L3                                                                                           [FAILED]
 Test 430: test178.L3                                                                                           [OK]
@@ -422,3 +414,28 @@ The program is actually segfaulting in the *entry_label_6* labeled section of th
 ==3865998==  The main thread stack size used in this run was 8388608.
 ==3865998== 
 ```
+
+### Update
+Ok so after switching our L3 compiler to stop saving return labels for standard library functions, the executable was able to produce a few more lines of output. note that only the first two lines match simones output however.
+```
+1
+{s:6, 2, 2, 0, 1, 1, 1}
+2
+nil
+Segmentation fault
+```
+
+### Attempts
+
+* *call allocate (a, b)* means that we allocate a size 5 array of 1's i think.
+    * so the following sequence of instructions should print 5 i believe (i placed this into customtests\testg.L3):
+```
+ %printing_buf <- call allocate (5, 1)
+
+ %andy_var <- load %printing_buf
+ %andy_var <- %andy_var << 1
+ %andy_var <- %andy_var + 1
+ call print(%andy_var)
+```
+
+okay the program went nuts infinite looping after this. However it did produce the expected behavior when compiled with simone's L3c. Note that you pass in encoded values to allocate (we pass in 5 to allocate, this is an encoded 2 so the allocate function creates an array of size 2.)

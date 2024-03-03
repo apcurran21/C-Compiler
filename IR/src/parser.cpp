@@ -9,7 +9,7 @@ namespace pegtl = TAO_PEGTL_NAMESPACE;
 using namespace pegtl;
 using namespace std;
 
-namespace L3 {
+namespace IR {
 
   /*
   Debug flag.
@@ -34,6 +34,7 @@ namespace L3 {
   /*
   Keywords.
   */
+  struct str_length : TAO_PEGTL_STRING( "length" ) {};
   struct str_return : TAO_PEGTL_STRING( "return" ) {};
   struct str_define : TAO_PEGTL_STRING( "define" ) {};
   struct str_branch : TAO_PEGTL_STRING( "br" ) {};
@@ -57,8 +58,8 @@ namespace L3 {
   Terminal symbols.
   */
   struct str_arrow : TAO_PEGTL_STRING( "<-" ) {};
-  struct str_comment : TAO_PEGTL_STRING( "//" ),
-  struct str_bracks: TAO_PEGTL_STRING( "[]" ),
+  struct str_comment : TAO_PEGTL_STRING( "//" ) {};
+  struct str_bracks: TAO_PEGTL_STRING( "[]" ) {};
   struct str_lesseq : TAO_PEGTL_STRING( "<=" ) {};
   struct str_less : TAO_PEGTL_STRING( "<" ) {};
   struct str_eq : TAO_PEGTL_STRING( "=" ) {};
@@ -161,9 +162,9 @@ namespace L3 {
       str_shiftr,
       str_lesseq,
       str_less,
-      srt_eq,
+      str_eq,
       str_greatereq,
-      str_greater,
+      str_greater
     > {};
 
 
@@ -177,7 +178,7 @@ namespace L3 {
   struct u_rule:
     pegtl::sor<
       var_rule,
-      I_rule,
+      I_rule
     > {};
   struct t_rule:
     pegtl::sor<
@@ -196,7 +197,7 @@ namespace L3 {
       pegtl::star<
         pegtl::one< ',' >,
         spaces,
-        arg_rule
+        t_rule
       >
     > {};
   struct callee_rule:
@@ -293,7 +294,7 @@ namespace L3 {
       spaces,
       str_arrow,
       spaces,
-      s_rule,
+      s_rule
     > {};
   struct Instruction_dim_length:
     // var1 <- length var2 t
@@ -319,7 +320,7 @@ namespace L3 {
       spaces,
       str_length,
       spaces,
-      var_rule,
+      var_rule
     > {};
   struct Instruction_call_function_rule:
     // call callee ( args? )
@@ -332,20 +333,6 @@ namespace L3 {
       pegtl::one< '(' >,
       spaces,
       pegtl::opt< args_rule >,
-      spaces,
-      pegtl::one< ')' >
-    > {};
-  struct Instruction_call_function_rule:
-    // call callee ( args? )
-    pegtl::seq<
-      spaces,
-      str_call,
-      spaces,
-      callee_rule,
-      spaces,
-      pegtl::one< '(' >,
-      spaces,
-
       spaces,
       pegtl::one< ')' >
     > {};
@@ -381,9 +368,9 @@ namespace L3 {
       spaces,
       pegtl::one< '(' >,
       spaces,
-      args_rule
+      args_rule,
       spaces,
-      pegtl::one< ')' >,
+      pegtl::one< ')' >
     > {};
   struct Instruction_tuple_initialization_rule:
     // var <- new Tuple( t )
@@ -401,7 +388,7 @@ namespace L3 {
       spaces,
       t_rule,
       spaces,
-      pegtl::one< ')' >,
+      pegtl::one< ')' >
     > {};
   struct Instruction_rule:
     pegtl::sor<
@@ -415,7 +402,7 @@ namespace L3 {
       pegtl::seq< pegtl::at< Instruction_operation_rule >, Instruction_operation_rule >,
       pegtl::seq< pegtl::at< Instruction_assignment_rule >, Instruction_assignment_rule >,
       pegtl::seq< pegtl::at<Instruction_load_rule>, Instruction_load_rule >,
-      pegtl::seq< pegtl::at<Instruction_store_rule>, Instruction_store_rule>,
+      pegtl::seq< pegtl::at<Instruction_store_rule>, Instruction_store_rule>
     > {};
   struct Instructions_rule:
     pegtl::star<
@@ -454,7 +441,7 @@ namespace L3 {
       spaces,
       str_return,
       spaces,
-      t_rule,
+      t_rule
     > {};
   struct Terminator_return_rule:
     // return
@@ -468,7 +455,7 @@ namespace L3 {
       pegtl::seq< pegtl::at< Terminator_return_rule >, Terminator_return_rule >,
       pegtl::seq< pegtl::at< Terminator_double_branch_rule >, Terminator_double_branch_rule >,
       pegtl::seq< pegtl::at< Terminator_single_branch_rule >, Terminator_single_branch_rule >
-    > {}    
+    > {};
 
   /*
   Basic Block rules.
@@ -485,7 +472,7 @@ namespace L3 {
     pegtl::plus<
       seps_with_comments,
       BB_rule,
-      seps_with_comments,
+      seps_with_comments
     > {};
   
   /*
@@ -531,7 +518,7 @@ namespace L3 {
   struct Functions_rule:
     pegtl::plus<
       pegtl::seq<
-        seps_with_commments,
+        seps_with_comments,
         Function_rule,
         seps_with_comments
       >
@@ -565,7 +552,7 @@ namespace L3 {
   /*
   Program Parser.
   */
-  void parse_file (char *fileName) {
+  Program parse_file (char *fileName) {
     /* 
     Check the grammar for some possible issues.
     */
@@ -573,6 +560,8 @@ namespace L3 {
       std::cerr << "There are problems with the grammar" << std::endl;
       exit(1);
     }
+
+    std::cerr << "No problems with the grammar.\n";
 
     /*
      * Parse.

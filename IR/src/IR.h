@@ -12,6 +12,17 @@
 #include <tuple>
 
 namespace IR{
+
+    /*
+    Forward declarations.
+    */
+    class Function;
+    class Variable;
+    class teInstruction;
+    class Operator;
+
+
+
     class Token {
         public:
         virtual ~Token() = default;
@@ -40,22 +51,26 @@ namespace IR{
     class Item : public Token {
         public:
     };
+
     class Number : public Item {
         public:
             explicit Number(int64_t value);
             int64_t const value; 
     };
+
     class arrAccess: public Item{
         public:
             explicit arrAccess(Variable *obj);
             Variable *const object;
 
     };
+
     class Variable : public Item{
         public:
             explicit Variable(std::string name);
             std::string name;
     };
+
     class userFuncName : public Item {
         public:
             // Constructor
@@ -63,6 +78,16 @@ namespace IR{
             std::string getName() const;
             std::string name;
         };
+
+    class Operator : public Item {
+        friend class OperatorSingletons; 
+        explicit Operator(OperatorEnum id); 
+        OperatorEnum id; 
+    public:
+        void accept(ItemVisitor *v) override;
+        OperatorEnum getID() const; 
+    };
+
     enum OperatorEnum {
         gt,
         geq,
@@ -91,15 +116,6 @@ namespace IR{
         inline static Operator *const AMP = new Operator(amp);
         inline static Operator *const LEFT = new Operator(left);
     };
-
-    class Operator : public Item {
-        friend class OperatorSingletons; 
-        explicit Operator(OperatorEnum id); 
-        OperatorEnum id; 
-    public:
-        OperatorEnum getID() const; 
-    };
-
 
     class Singleton {
         public:

@@ -28,7 +28,7 @@ int main(
   int argc, 
   char **argv
   ){
-  auto enable_code_generator = true;
+  auto enable_code_generator = false;
   int32_t optLevel = 0;
   bool verbose;
 
@@ -84,9 +84,9 @@ int main(
   /*
    * Generate x86_64 assembly.
    */
-  if (enable_code_generator){
-    IR::generate_code(p);
-  }
+  // if (enable_code_generator){
+  //   IR::generate_code(p);
+  // }
 
   return 0;
 }
