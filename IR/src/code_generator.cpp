@@ -1,9 +1,5 @@
-#include <string>
-#include <iostream>
-#include <fstream>
-#include "L2.h"
-#include <code_generator.h>
-#include <calculateArray.h>
+#include "code_generator.h"
+
 using namespace std;
 
 // use 1 for debug statements, 0 for no printing
@@ -19,38 +15,38 @@ namespace IR{
 
 
   void generate_code(Program& p) {
-    /* 
-     * Open the output file.
-     */ 
-    std::ofstream outputFile;
-    outputFile.open("prog.L3");
+    // /* 
+    //  * Open the output file.
+    //  */ 
+    // std::ofstream outputFile;
+    // outputFile.open("prog.L3");
 
-    /*
-    Gen the entry point label
-    */
-    outputFile << "" << entry_lab << "\n";
+    // /*
+    // Gen the entry point label
+    // */
+    // outputFile << "" << entry_lab << "\n";
 
-    for (Function *fptr : p.functions) {
+    // for (Function *fptr : p.functions) {
 
-      std::string fname = fptr->functionName;
+    //   std::string fname = fptr->functionName;
 
-      outputFile << "define @" << fname << " (";
-      for (auto var:fptr->parameters){
-        outputFile<<var->name<<" ";
-      }
-      outputFile<<") {";
+    //   outputFile << "define @" << fname << " (";
+    //   for (auto var:fptr->parameters){
+    //     outputFile<<var->name<<" ";
+    //   }
+    //   outputFile<<") {";
  
-       for (Instruction *iptr : fptr->instructions) {
-        // iptr->accept(myColorVisitor);
-          iptr->gen(fptr, outputFile);
-        }
-      }
-      outputFile<<")\n";
-    }
-    outputFile << ")\n";
+    //    for (Instruction *iptr : fptr->instructions) {
+    //     // iptr->accept(myColorVisitor);
+    //       iptr->gen(fptr, outputFile);
+    //     }
+    //   }
+    //   outputFile<<")\n";
+    // }
+    // outputFile << ")\n";
 
-    if (debug) std::cerr << "Finished code generation!" << std::endl;
-    outputFile.close();
+    // if (debug) std::cerr << "Finished code generation!" << std::endl;
+    // outputFile.close();
    
     return ;
   }

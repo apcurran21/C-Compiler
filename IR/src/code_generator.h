@@ -1,6 +1,7 @@
 #pragma once
 
-#include <IR.h>
+#include "IR.h"
+#include "calculateArray.h"
 
 namespace IR{
 
