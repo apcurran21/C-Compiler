@@ -2,21 +2,67 @@
 
 #include <set>
 #include <vector>
+#include <queue>
 #include <unordered_map>
 #include <string>
 #include <variant>
 #include <algorithm>
 #include <iostream>
+#include <fstream>
 #include <list>
 #include <map>
 #include <tuple>
 
 namespace IR{
+
+    /*
+    Forward declarations.
+    */
+    class Function;
+    class Variable;
+    class teInstruction;
+    class Operator;
+
+
+
     class Token {
         public:
         virtual ~Token() = default;
     };
-    class Type : public Token{};
+
+    /*
+    Can we make this derive from Item so that it can be placed onto the parsed_items stack?
+    */
+    // class Type : public Token{};
+
+    // class TupleType : public Type {
+    //     friend class Singleton;
+    //     TupleType() = default;
+    // };
+
+    // class CodeType : public Type {
+    //     friend class Singleton;
+    //     CodeType() = default;
+    // };
+
+    // class IntType : public Type {
+    //     friend class Singleton;
+    //     IntType() = default;
+    // };
+
+    // class VoidType : public Type{
+    //     friend class Singleton;
+    //     VoidType() = default;
+    // };
+
+    /*
+    Terminal Items.
+    */
+    class Item : public Token {
+        public:
+    };
+
+    class Type : public Item{};
 
     class TupleType : public Type {
         friend class Singleton;
@@ -37,32 +83,43 @@ namespace IR{
         friend class Singleton;
         VoidType() = default;
     };
-    class Item : public Token {
+
+    class Label : public Item {
         public:
-    };
+            explicit Label(std::string name);
+            std::string name;
+    }
+
     class Number : public Item {
         public:
             explicit Number(int64_t value);
             std::string const value; 
     };
-    class arrAccess: public Item{
-        public:
-            explicit arrAccess(Variable *obj);
-            Variable *const object;
 
-    };
     class Variable : public Item{
         public:
             explicit Variable(std::string name);
             std::string name;
     };
+
+    class arrAccess: public Item{
+        public:
+            explicit arrAccess(Variable *obj);
+            Variable *const object;
+    };
+
+
     class userFuncName : public Item {
         public:
+        /*
+        Is this for the I_rule? like is this for both function definition names and callee names?
+        */
             // Constructor
             explicit userFuncName(const std::string& name);
             std::string getName() const;
             std::string name;
         };
+
     enum OperatorEnum {
         gt,
         geq,
@@ -74,22 +131,21 @@ namespace IR{
         lt,
         left,
         right,
-        amp,
+        amp
     };
 
-    class OperatorSingletons {
-    public:
-        inline static Operator *const EQ = new Operator(eq);
-        inline static Operator *const GEQ = new Operator(geq);
-        inline static Operator *const GT = new Operator(gt);
-        inline static Operator *const PLUS = new Operator(plus);
-        inline static Operator *const MINUS = new Operator(minus);
-        inline static Operator *const RIGHT = new Operator(right);
-        inline static Operator *const LT = new Operator(lt);
-        inline static Operator *const LEQ = new Operator(leq);
-        inline static Operator *const TIMES = new Operator(times);
-        inline static Operator *const AMP = new Operator(amp);
-        inline static Operator *const LEFT = new Operator(left);
+    std::map<std::string, OperatorEnum> stringToOperatorEnum = {
+        {">", OperatorEnum::gt},
+        {">=", OperatorEnum::geq},
+        {"=", OperatorEnum::eq},
+        {"<=", OperatorEnum::leq},
+        {"*", OperatorEnum::times},
+        {"-", OperatorEnum::minus},
+        {"+", OperatorEnum::plus},
+        {"<", OperatorEnum::lt},
+        {"<<", OperatorEnum::left},
+        {">>", OperatorEnum::right},
+        {"&", OperatorEnum::amp}
     };
 
     class Operator : public Item {
@@ -97,9 +153,27 @@ namespace IR{
         explicit Operator(OperatorEnum id); 
         OperatorEnum id; 
     public:
+        /*
+        Didn't define ItemVisitor yet.
+        */
+        // void accept(ItemVisitor *v) override;
         OperatorEnum getID() const; 
     };
 
+    class OperatorSingletons {
+    public:
+        inline static Operator *const EQ = new Operator(OperatorEnum::eq);
+        inline static Operator *const GEQ = new Operator(OperatorEnum::geq);
+        inline static Operator *const GT = new Operator(OperatorEnum::gt);
+        inline static Operator *const PLUS = new Operator(OperatorEnum::plus);
+        inline static Operator *const MINUS = new Operator(OperatorEnum::minus);
+        inline static Operator *const RIGHT = new Operator(OperatorEnum::right);
+        inline static Operator *const LT = new Operator(OperatorEnum::lt);
+        inline static Operator *const LEQ = new Operator(OperatorEnum::leq);
+        inline static Operator *const TIMES = new Operator(OperatorEnum::times);
+        inline static Operator *const AMP = new Operator(OperatorEnum::amp);
+        inline static Operator *const LEFT = new Operator(OperatorEnum::left);
+    };
 
     class Singleton {
         public:
@@ -116,6 +190,9 @@ namespace IR{
 
     // Specific IR declarations
 
+    /*
+    Instructions
+    */
     class Instruction : public Token {
         public:
 
@@ -131,6 +208,13 @@ namespace IR{
             explicit nonVoidInstruction(Variable *dst);
             Variable *const dst;
     };
+
+    class declarationInstruction : public voidInstruction {
+        public
+            void gen(Function *f, std::ofstream &outputFile) override;
+            explicit declarationInstruction();
+    }
+
     class Assignment : public nonVoidInstruction{
         public:
             void gen(Function *f, std::ofstream &outputFile) override;
@@ -140,8 +224,8 @@ namespace IR{
     class labelInstruction : public voidInstruction {
         public:
             void gen(Function *f, std::ofstream &outputFile) override;
-            explicit labelInstruction(std::string label);
-            std::string label;
+            explicit labelInstruction(Label *label);
+            Label *label;
     };
     class operationInstruction: public nonVoidInstruction{
         public:
@@ -156,16 +240,21 @@ namespace IR{
     class loadInstruction : public nonVoidInstruction{
         public:
             void gen(Function *f, std::ofstream &outputFile) override;
-            explicit loadInstruction(arrAccess *access, Item *var);
-            arrAccess *const access;
+            explicit loadInstruction(Variable *dst, Item *var);
+            // arrAccess *const access;
             Item *const var;
+            std::vector<Item *> index_args_vec;
     };
     class storeInstruction: public nonVoidInstruction {
         public:
             void gen(Function *f, std::ofstream &outputFile) override;
-            explicit storeInstruction(arrAccess *access, Item *var);
-            arrAccess *const access;
-            Item *const var; 
+            /*
+            In this constructor, var has to be the source since dst was already defined in the base nonVoidInstruction class.
+            */
+            explicit storeInstruction(Variable *dst, Item *var);
+            // arrAccess *const access;
+            Item *const var;
+            std::vector<Item *> index_args_vec;
     };
     class arrLength : public nonVoidInstruction{
         public:
@@ -179,33 +268,38 @@ namespace IR{
         public:
             void gen(Function *f, std::ofstream &outputFile) override;
             explicit tupleLength(Variable *dst, Variable *tuple);
-            Variable *const dst;
+            // Variable *const dst;
             Variable *const tuple;
     };
 
     class VoidCallInstruction : public voidInstruction {
         public:
             void gen(Function *f, std::ofstream &outputFile) override;
-            explicit VoidCallInstruction(Item *callee, std::vector<Item *> args);
+            explicit VoidCallInstruction(Item *callee);
             Item *const callee;
             std::vector<Item *> args; 
     };
     class NonVoidCallInstruction : public nonVoidInstruction {
     public:
         void gen(Function *f, std::ofstream &outputFile) override;
-        explicit NonVoidCallInstruction(Variable *dest, Item *callee, std::vector<Item *> args);
+        explicit NonVoidCallInstruction(Variable *dest, Item *callee);
         Item *const callee;
         std::vector<Item *> args; // Now included directly in this class
         Variable *destination; // Assuming Variable *dest is similar to Atom *callee
+        /*
+        What does the base class field 'dst' get? Right now I'm giving it the 'dest' argument, 'destination' will be initialized empty.
+        */
     };
 
     class newArray : public nonVoidInstruction {
         public:
             void gen(Function *f, std::ofstream &outputFile) override;
-            explicit newArray(Variable *dest, std::vector<Item *> args);
+            explicit newArray(Variable *dest);
             std::vector<Item *> args; 
-            void calculate_array(Function *f, std::ofstream &outputFile);
-            Variable *destination; 
+            Variable *destination;
+            /*
+            What does the base class field 'dst' get? Right now I'm giving it the 'dest' argument, 'destination' will be initialized empty.
+            */
             int offset;
             std::vector<int> dimensions;            
     };

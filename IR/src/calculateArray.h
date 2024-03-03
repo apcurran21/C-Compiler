@@ -1,12 +1,9 @@
-#pragma once
-
-#include "IR.h"
-#include "calculateArray.h"
+#include <IR.h>
 
 namespace IR{
 
   // void generate_code(Program p, Graph color_graph);
   // void generate_code(Program p, std::map<Function*, Graph*> all_graphs);
-  void generate_code(Program& p);
+  void calculate_array(Function *f, std::ofstream &outputFile, Instruction &iptr);
 
 }

@@ -24,8 +24,8 @@
 
 #define HEAP_SIZE 1048576    // one megabyte
 //#define HEAP_SIZE 200      // small heap size for testing
-//#define GC_DEBUG           // uncomment this to enable GC debugging
-//#define GC_DUMP            // prints the entire heap before/after each gc
+// #define GC_DEBUG           // uncomment this to enable GC debugging
+// #define GC_DUMP            // prints the entire heap before/after each gc
 
 typedef struct {
    int64_t *allocptr;           // current allocation position
