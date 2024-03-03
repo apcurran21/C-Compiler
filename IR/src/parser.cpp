@@ -264,7 +264,7 @@ namespace L3 {
       spaces,
       s_rule
     > {};
-  struct Instruction_load:
+  struct Instruction_load_rule:
     // var1 <- var2[t]...
     pegtl::seq<
       spaces,
@@ -280,7 +280,7 @@ namespace L3 {
         >
       >
     > {};
-  struct Instruction_store:
+  struct Instruction_store_rule:
     // var1[t]... <- s
     pegtl::seq<
       spaces,
@@ -403,14 +403,186 @@ namespace L3 {
       spaces,
       pegtl::one< ')' >,
     > {};
-  
-
-  
+  struct Instruction_rule:
+    pegtl::sor<
+      pegtl::seq< pegtl::at< Instruction_type_declaration_rule >, Instruction_type_declaration_rule >,
+      pegtl::seq< pegtl::at< Instruction_array_initialization_rule >, Instruction_array_initialization_rule >,
+      pegtl::seq< pegtl::at< Instruction_tuple_initialization_rule >, Instruction_tuple_initialization_rule >,
+      pegtl::seq< pegtl::at< Instruction_call_function_assignment_rule >, Instruction_call_function_assignment_rule >,
+      pegtl::seq< pegtl::at< Instruction_call_function_rule >, Instruction_call_function_rule >,
+      pegtl::seq< pegtl::at< Instruction_dim_length >, Instruction_dim_length >,
+      pegtl::seq< pegtl::at< Instruction_length >, Instruction_length >,
+      pegtl::seq< pegtl::at< Instruction_operation_rule >, Instruction_operation_rule >,
+      pegtl::seq< pegtl::at< Instruction_assignment_rule >, Instruction_assignment_rule >,
+      pegtl::seq< pegtl::at<Instruction_load_rule>, Instruction_load_rule >,
+      pegtl::seq< pegtl::at<Instruction_store_rule>, Instruction_store_rule>,
+    > {};
+  struct Instructions_rule:
+    pegtl::star<
+      pegtl::seq<
+        seps_with_comments,
+        pegtl::bol,
+        spaces,
+        Instructions_rule,
+        seps_with_comments
+      >
+    > {};
+      
   /*
   Terminator rules.
   */
+  struct Terminator_single_branch_rule:
+    // br label
+    pegtl::seq<
+      spaces,
+      str_branch,
+      label_rule
+    > {};
+  struct Terminator_double_branch_rule:
+    // br t label1 label2
+    pegtl::seq<
+      spaces,
+      str_branch,
+      spaces,
+      label_rule,
+      spaces,
+      label_rule
+    > {};
+  struct Terminator_return_val_rule:
+    // return t
+    pegtl::seq<
+      spaces,
+      str_return,
+      spaces,
+      t_rule,
+    > {};
+  struct Terminator_return_rule:
+    // return
+    pegtl::seq<
+      spaces,
+      str_return
+    > {};
+  struct Terminator_rule:
+    pegtl::sor<
+      pegtl::seq< pegtl::at< Terminator_return_val_rule >, Terminator_return_val_rule >,
+      pegtl::seq< pegtl::at< Terminator_return_rule >, Terminator_return_rule >,
+      pegtl::seq< pegtl::at< Terminator_double_branch_rule >, Terminator_double_branch_rule >,
+      pegtl::seq< pegtl::at< Terminator_single_branch_rule >, Terminator_single_branch_rule >
+    > {}    
+
+  /*
+  Basic Block rules.
+  */
+  struct BB_rule:
+    pegtl::seq<
+      spaces,
+      label_rule,
+      Instructions_rule,
+      spaces,
+      Terminator_rule
+    > {};
+  struct BBs_rule:
+    pegtl::plus<
+      seps_with_comments,
+      BB_rule,
+      seps_with_comments,
+    > {};
   
+  /*
+  Function rules.
+  */
+  struct Function_rule:
+    pegtl::seq<
+      spaces,
+      str_define,
+      spaces,
+      T_rule,
+      spaces,
+      I_rule,
+      spaces,
+      pegtl::one< '(' >,
+      spaces,
+      pegtl::seq<
+        pegtl::opt<
+          pegtl::seq<
+            type_rule,
+            spaces,
+            var_rule
+          >
+        >,
+        spaces,
+        pegtl::star<
+          pegtl::seq<
+            pegtl::one< ',' >,
+            spaces,
+            var_rule
+          >
+        >
+      >,
+      spaces,
+      pegtl::one< ')' >,
+      seps,
+      spaces,
+      pegtl::one< '{' >,
+      BBs_rule,
+      spaces,
+      pegtl::one< '}' >
+    > {};
+  struct Functions_rule:
+    pegtl::plus<
+      pegtl::seq<
+        seps_with_commments,
+        Function_rule,
+        seps_with_comments
+      >
+    > {};
+
+  /*
+  Program rules.
+  */
+  struct entry_point_rule:
+    pegtl::seq<
+      Functions_rule
+    > {};
+
+  /*
+  Grammar rules.
+  */
+  struct full_grammar :
+    pegtl::must<
+      entry_point_rule
+    > {};
+
+
+  /*
+  Actions.
+  */
+  template< typename Rule >
+  struct action : pegtl::nothing< Rule > {};
+
+
   
+  /*
+  Program Parser.
+  */
+  void parse_file (char *fileName) {
+    /* 
+    Check the grammar for some possible issues.
+    */
+    if (pegtl::analyze< full_grammar >() != 0){
+      std::cerr << "There are problems with the grammar" << std::endl;
+      exit(1);
+    }
+
+    /*
+     * Parse.
+     */
+    file_input< > fileInput(fileName);
+    Program p;
+    parse< full_grammar, action >(fileInput, p);
+
+    return p;
+  }
 
   
 

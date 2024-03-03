@@ -1,0 +1,4 @@
+define @main () {
+call print(1)
+return
+}

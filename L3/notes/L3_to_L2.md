@@ -361,3 +361,64 @@ Here is instruction after which the program segfaults
 ```
 
  call print (1)
+
+
+
+
+
+
+
+
+
+
+ Test 426: test320.L3                                                                                           [FAILED]
+Test 427: test319.L3                                                                                           [FAILED]
+Test 430: test178.L3                                                                                           [OK]
+
+########## SUMMARY
+Failed tests: test319.L3 test320.L3 
+Test passed: 429 out of 431
+
+
+The error in test320 seems to be caused by our L3 parser. Once we pass in the L2 program produced by simone's L3 compiler to our own L2 compiler, we get the correct output from the subsequent a.out. We also found that Simone's L2 compiler produces a valid a.out executable when run on the prog.L2 output of our L3 compiler. Simone's L1 compiler also produces a correct a.out executable whenever it is run on the prog.L1 ouput created by our L3 and L2 compilers.
+
+We found that the Prog.L2 output of simone's L3 compiler, when compiled by our L2 and L1 compilers, produces a correct a.out executable.
+
+From all of these, it seems that our L3 and L2 compilers are not cooperating. I would guess that simone's L2 compiler is able to produce a working executable only because his doesn't spill as great a quantity of variables as our L2 compiler does. In other words, simone's compiler doesn't trigger the bug created by our L3 compiler because it is only evident when dealing with stack locations or something of that nature.
+
+The program is actually segfaulting in the *entry_label_6* labeled section of the prog code. Here is the stack and error output from gdb:
+```
+[0] from 0x0000000000401e38 in _entry_global_64
+[1] from 0x0000000000000002
+[2] from 0x00007ffff7a9be73 in _IO_new_file_overflow+259 at fileops.c:788
+[3] from 0x0000000000000020
+[4] from 0x0000000000000001
+[5] from 0x0000000000403745 in print+21 at ../lib/runtime.c:84
+[6] from 0x0000000000401fd3 in _save_global_97
+[7] from 0x0000000000000020
+[8] from 0x0000000000000001
+[9] from 0x00007ffff7208080
+[+]
+```
+```
+==3865998== Invalid read of size 8
+==3865998==    at 0x401E38: ??? (in /home/apc6353/Documents/school/cs322/322_framework/L3/a.out)
+==3865998==    by 0x1: ???
+==3865998==    by 0x4EDAE72: _IO_file_overflow@@GLIBC_2.2.5 (fileops.c:788)
+==3865998==    by 0x1F: ???
+==3865998==  Address 0x30 is not stack'd, malloc'd or (recently) free'd
+==3865998== 
+==3865998== 
+==3865998== Process terminating with default action of signal 11 (SIGSEGV)
+==3865998==  Access not within mapped region at address 0x30
+==3865998==    at 0x401E38: ??? (in /home/apc6353/Documents/school/cs322/322_framework/L3/a.out)
+==3865998==    by 0x1: ???
+==3865998==    by 0x4EDAE72: _IO_file_overflow@@GLIBC_2.2.5 (fileops.c:788)
+==3865998==    by 0x1F: ???
+==3865998==  If you believe this happened as a result of a stack
+==3865998==  overflow in your program's main thread (unlikely but
+==3865998==  possible), you can try to increase the size of the
+==3865998==  main thread stack using the --main-stacksize= flag.
+==3865998==  The main thread stack size used in this run was 8388608.
+==3865998== 
+```

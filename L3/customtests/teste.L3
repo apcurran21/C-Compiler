@@ -6,18 +6,8 @@ define @main () {
  %ArrSizeEncoded <- %ArrSizeEncoded + 1
  %Arr1 <- call @Alloc1DArr (%ArrSizeEncoded, 2)
  %Arr2 <- call @Alloc1DArr (%ArrSizeEncoded, 4)
-
- %a <- load %Arr1
- %b <- %a >> 1
- %b <- %b + 1
- call print(%b)
-
- //%Arr1Sum <- 1
- //%Arr2Sum <- 1
-
  %Arr1Sum <- call @CalcArrSum (%Arr1)
  %Arr2Sum <- call @CalcArrSum (%Arr2)
-
  %SumOfArr <- %Arr1Sum + %Arr2Sum
  %ProdOfArr <- %Arr1Sum * %Arr2Sum
  %Arr1PrintVal <- %Arr1Sum << 1
@@ -27,11 +17,7 @@ define @main () {
  %Arr2PrintVal <- %Arr2PrintVal + 1
  call print (%Arr2PrintVal)
  %ArrSumPrintVal <- %SumOfArr << 1
- %ArrSumPrintVal <- %ArrSumPrintVal + 1
- %ArrProdPrintVal <- %ProdOfArr << 1
- %ArrProdPrintVal <- %ArrProdPrintVal + 1
- call print (%ArrSumPrintVal)
- call print (%ArrProdPrintVal)
+
  return 
 }
 
@@ -58,7 +44,7 @@ define @CalcArrSum (%TargetArr) {
  %Count <- %Count + 1
  %ArrSum <- %ArrSum + %CurrElm
  %ContLoop <- %Count < %ArrLen
- // br %ContLoop :Loop 
+ br %ContLoop :Loop 
  br :Stop
  
 :Stop

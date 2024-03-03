@@ -14,8 +14,8 @@
 #include <assert.h>
 
 #include "parser.h"
-#include "code_generator.h"
-#include "L3.h"
+// #include "code_generator.h"
+#include "IR.h"
 
 
 
@@ -63,7 +63,7 @@ int main(
   /*
    * Parse the input file.
    */
-  auto p = L3::parse_file(argv[optind]);
+  auto p = IR::parse_file(argv[optind]);
 
   /*
    * Code optimizations (optional)
@@ -76,7 +76,7 @@ int main(
     std::cout << "\n\n" << std::endl;
     std::cout << "Verbose mode selected, check output to verify the parsed program.\n------------------------------\n";
     
-    p.print();
+    // p.print();
 
     std::cout << "Done.\n\n";
   }
@@ -85,7 +85,7 @@ int main(
    * Generate x86_64 assembly.
    */
   if (enable_code_generator){
-    L3::generate_code(p);
+    IR::generate_code(p);
   }
 
   return 0;
