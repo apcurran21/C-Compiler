@@ -11,7 +11,6 @@
 #include <tuple>
 #include "IR.h"
 namespace IR {
-    
-    void creatCodeBlock(Program *p);
-    
+    void createCodeBlock(Program *p);
+    void createSuccessors(Program *p);
 }

@@ -17,12 +17,7 @@ namespace IR {
 
     extern int const debug;
     
-    void calculateCFG::forProgram(Program *p){
-        for (auto f:p->functions){
-            f->accept(this);
-        } 
-    };
-        void calculateCFG::forFunction(Function *f){
+    void calculateCFG::forFunction(Function *f){
             std::queue<Block *> queue;
             for (auto block : f->codeBlocks){
                 queue.push(block);
@@ -33,17 +28,13 @@ namespace IR {
                 while (!block->marked){
                     block ->marked = true;
                     f->executionTraceOrder.push_back(block);
-                    for (auto blockSuccessor : block->getSuccessors()){
+                    for (auto blockSuccessor : block->successors){
                         if (!blockSuccessor->marked){
                             block = blockSuccessor;
                         }
                     }
                 }
             }
-
         };
-        void calculateCFG::forBlock(Block *b){
 
-        }; 
-    
 }
