@@ -14,7 +14,12 @@ namespace IR{
 
     }
     void arrLength::gen(Function *f,std::ofstream &outputFile){
-
+        auto array = f->variableNameToArray[this->arr->name];
+        auto number = dynamic_cast<Number *>(this->dim);
+        int offset_val = 8*(number->value+1)
+        outputFile<<"%offset <-"<<offset_val<<'\n\t';
+        outputFile<<"%address <-"<<"%m + %offset"<<"\n\t";
+        outputFile<<this->dst->name<<" <- load %address"<<"\n\t";
     };
 
 
@@ -29,7 +34,7 @@ namespace IR{
     Gen the entry point label
     */
     outputFile << "" << entry_lab << "\n";
-
+ 
     for (Function *fptr : p.functions) {
 
       std::string fname = fptr->functionName;
@@ -41,8 +46,12 @@ namespace IR{
       outputFile<<") {";
  
        for (Instruction *iptr : fptr->instructions) {
-        // iptr->accept(myColorVisitor);
-          iptr->gen(fptr, outputFile);
+          auto array_instruction = dynamic_cast<newArray*>(iptr)
+          if (array_instruction){
+            array_instruction->calculate_array(f,outputFile);
+          } else {
+            iptr->gen(fptr, outputFile);
+          }    
         }
       }
       outputFile<<")\n";
@@ -54,4 +63,4 @@ namespace IR{
    
     return ;
   }
-}
+

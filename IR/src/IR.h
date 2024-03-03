@@ -43,7 +43,7 @@ namespace IR{
     class Number : public Item {
         public:
             explicit Number(int64_t value);
-            int64_t const value; 
+            std::string const value; 
     };
     class arrAccess: public Item{
         public:
@@ -172,6 +172,7 @@ namespace IR{
             void gen(Function *f, std::ofstream &outputFile) override;
             explicit arrLength(Variable *dst, Variable *arr, Item *dim);
             Variable *const arr;
+            Variable *const dst;
             Item *const dim;
     };
     class tupleLength : public nonVoidInstruction{
@@ -203,6 +204,7 @@ namespace IR{
             void gen(Function *f, std::ofstream &outputFile) override;
             explicit newArray(Variable *dest, std::vector<Item *> args);
             std::vector<Item *> args; 
+            void calculate_array(Function *f, std::ofstream &outputFile);
             Variable *destination; 
             int offset;
             std::vector<int> dimensions;            
