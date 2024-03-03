@@ -14,11 +14,9 @@ namespace IR {
 
     extern int const debug;
     
-    class calculateCFG : ProgramVisitor {
+    class calculateCFG {
     public:
-        void forProgram(Program *p);
         void forFunction(Function *f);
-        void forBlock(Block *b); // Add a method for handling Block objects
+
     };
-    
 }
