@@ -319,14 +319,17 @@ namespace IR{
     class newArray : public nonVoidInstruction {
         public:
             void gen(Function *f, std::ofstream &outputFile) override;
-            explicit newArray(Variable *dest);
+            explicit newArray(Variable *dest, int64_t counter);
             std::vector<Item *> args; 
+            
+
+
             Variable *destination;
             /*
             What does the base class field 'dst' get? Right now I'm giving it the 'dest' argument, 'destination' will be initialized empty.
             */
             int offset;
-            std::vector<int> dimensions;            
+            std::vector<int> dimensions;    
     };
     class newTuple : public nonVoidInstruction {
         public:
