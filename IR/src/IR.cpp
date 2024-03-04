@@ -47,202 +47,235 @@ namespace IR {
         
     }
 
-/*
-Token/Item constructors
-*/
-Type::Type(TypeEnum type) :
-    type(type)
-{
-}
-std::string Type::print() const {
-    std::string res;
-    switch (type) {
-        case TypeEnum::int64:
-            res = "int64";
-            for (int i = 0; i < dims; i++) {
-                res += "[]";
-            }
-            break;
-        case TypeEnum::tuple:
-            res = "tuple";
-            break;
-        case TypeEnum::code:
-            res = "code";
-            break;
-        case TypeEnum::voidt:
-            res = "void";
-            break;
-        case TypeEnum::bracks:
-            res = "[]";
-            break;
+    /*
+    Token/Item constructors
+    */
+    Type::Type(TypeEnum type) :
+        type(type)
+    {
     }
-    return res;
-}
-
-Label::Label(std::string name) :
-    name(name)
-{
-}
-std::string Label::print() const  {
-    return name;
-}
-
-Number::Number(int64_t value) :
-    value(value)
-{
-}
-std::string Number::print() const  {
-    return std::to_string(value);
-}
-
-Variable::Variable(std::string name) :
-    name(name)
-{
-}
-std::string Variable::print() const  {
-    return name;
-}
-
-Operator::Operator(OperatorEnum id) : 
-    id(id)
-{
-}
-std::string Operator::print() const  {
-    std::string res;
-    switch (value) {
-        case OperationEnum::plus:
-            res = "+";
-            break;
-        case OperationEnum::minus:
-            res = "-";
-            break;
-        case OperationEnum::times:
-            res = "*";
-            break;
-        case OperationEnum::amp:
-            res = "&";
-            break;
-        case OperationEnum::left:
-            res = "<<";
-            break;
-        case OperationEnum::right:
-            res = ">>";
-            break;
-        case OperationEnum::lt:
-            res = "<";
-            break;
-        case OperationEnum::leq:
-            res = "<=";
-            break;
-        case OperationEnum::eq:
-            res = "=";
-            break;
-        case OperationEnum::geq:
-            res = ">=";
-            break;
-        case OperationEnum::gt:
-            res = ">";
-            break;
+    std::string Type::print() const {
+        std::string res;
+        switch (type) {
+            case TypeEnum::int64:
+                res = "int64";
+                for (int i = 0; i < dims; i++) {
+                    res += "[]";
+                }
+                break;
+            case TypeEnum::tuple:
+                res = "tuple";
+                break;
+            case TypeEnum::code:
+                res = "code";
+                break;
+            case TypeEnum::voidt:
+                res = "void";
+                break;
+            case TypeEnum::bracks:
+                res = "[]";
+                break;
+        }
+        return res;
     }
-    return res;
-}
 
-Block::Block(std::string label) :
-    label(label)
-{
-}
+    Label::Label(std::string name) :
+        name(name)
+    {
+    }
+    std::string Label::print() const  {
+        return name;
+    }
 
+    Number::Number(int64_t value) :
+        value(value)
+    {
+    }
+    std::string Number::print() const  {
+        return std::to_string(value);
+    }
 
-/*
-Instruction constructors.
-*/
+    Variable::Variable(std::string name) :
+        name(name)
+    {
+    }
+    std::string Variable::print() const  {
+        return name;
+    }
 
-/*
-Void
-*/
-declarationInstruction::declarationInstruction(Type *type, Variable *var) :
-    type(type),
-    var(var)
-{
-}
+    Operator::Operator(OperatorEnum id) : 
+        id(id)
+    {
+    }
+    std::string Operator::print() const  {
+        std::string res;
+        switch (id) {
+            case OperatorEnum::plus:
+                res = "+";
+                break;
+            case OperatorEnum::minus:
+                res = "-";
+                break;
+            case OperatorEnum::times:
+                res = "*";
+                break;
+            case OperatorEnum::amp:
+                res = "&";
+                break;
+            case OperatorEnum::left:
+                res = "<<";
+                break;
+            case OperatorEnum::right:
+                res = ">>";
+                break;
+            case OperatorEnum::lt:
+                res = "<";
+                break;
+            case OperatorEnum::leq:
+                res = "<=";
+                break;
+            case OperatorEnum::eq:
+                res = "=";
+                break;
+            case OperatorEnum::geq:
+                res = ">=";
+                break;
+            case OperatorEnum::gt:
+                res = ">";
+                break;
+        }
+        return res;
+    }
 
-labelInstruction::labelInstruction(Label *label) :
-    label(label)
-{
-}
-
-VoidCallInstruction::VoidCallInstruction(Item *callee) :
-    callee(callee),
-{
-}
-
-/*
-Non-Void
-*/
-nonVoidInstruction::nonVoidInstruction(Variable *dst) :
-    dst(dst)
-{
-}
-
-Assignment::Assignment(Variable *dst, Item *src) :
-    nonVoidInstruction(dst),
-    src(src)
-{
-}
-
-operationInstruction::operationInstruction(Variable *dst, Item *t1, Operator *op, Item *t2) :
-    nonVoidInstruction(dst),
-    t1(t1),
-    op(op),
-    t2(t2)
-{
-}
-
-loadInstruction::loadInstruction(Variable *dst Item *var) :
-    nonVoidInstruction(dst),
-    var(var)
-{
-}
-
-storeInstruction::storeInstruction(Variable *dst, Item *var) :
-    nonVoidInstruction(dst),
-    var(var)
-{
-}
-
-arrLength::arrLength(Variable *dst, Variable *arr, Item *dim) :
-    nonVoidInstruction(dst),
-    arr(arr),
-    dim(dim)
-{
-}
-
-tupleLength::tupleLength(Variable *dst, Variable *tuple) :
-    nonVoidInstruction(dst),
-    tuple(tuple)
-{
-}
-
-NonVoidCallInstruction::NonVoidCallInstruction(Variable *dest, Item *callee) :
-    nonVoidInstruction(dest),
-    callee(callee),
-{
-}
-
-newArray::newArray(Variable *dest, int64_t counter) :
-    nonVoidInstruction(dest),
-    count(counter)
-{
-}
-
-newTuple::newTuple(Variable *dest, Item *size) :
-    nonVoidInstruction(dest),
-    size(size)
-{
-}
+    Block::Block(std::string label) :
+        label(label)
+    {
+    }
 
 
+    /*
+    Instruction constructors.
+    */
+
+    /*
+    Void
+    */
+    declarationInstruction::declarationInstruction(Type *type, Variable *var) :
+        type(type),
+        var(var)
+    {
+    }
+
+    labelInstruction::labelInstruction(Label *label) :
+        label(label)
+    {
+    }
+
+    VoidCallInstruction::VoidCallInstruction(Item *callee) :
+        callee(callee)
+    {
+    }
+
+    /*
+    Non-Void
+    */
+    nonVoidInstruction::nonVoidInstruction(Variable *dst) :
+        dst(dst)
+    {
+    }
+
+    Assignment::Assignment(Variable *dst, Item *src) :
+        nonVoidInstruction(dst),
+        src(src)
+    {
+    }
+
+    operationInstruction::operationInstruction(Variable *dst, Item *t1, Operator *op, Item *t2) :
+        nonVoidInstruction(dst),
+        t1(t1),
+        op(op),
+        t2(t2)
+    {
+    }
+
+    loadInstruction::loadInstruction(Variable *dst, Item *var) :
+        nonVoidInstruction(dst),
+        var(var)
+    {
+    }
+
+    storeInstruction::storeInstruction(Variable *dst, Item *var) :
+        nonVoidInstruction(dst),
+        var(var)
+    {
+    }
+
+    arrLength::arrLength(Variable *dst, Variable *arr, Item *dim) :
+        nonVoidInstruction(dst),
+        arr(arr),
+        dim(dim)
+    {
+    }
+
+    tupleLength::tupleLength(Variable *dst, Variable *tuple) :
+        nonVoidInstruction(dst),
+        tuple(tuple)
+    {
+    }
+
+    NonVoidCallInstruction::NonVoidCallInstruction(Variable *dest, Item *callee) :
+        nonVoidInstruction(dest),
+        callee(callee)
+    {
+    }
+
+    newArray::newArray(Variable *dest, int64_t counter) :
+        nonVoidInstruction(dest),
+        count(counter)
+    {
+    }
+
+    newTuple::newTuple(Variable *dest, Item *size) :
+        nonVoidInstruction(dest),
+        size(size)
+    {
+    }
+
+    /*
+    Terminator instructions.
+    */
+    oneSuccBranch::oneSuccBranch(Label *label) :
+        label(label)
+    {
+    }
+
+    twoSuccBranch::twoSuccBranch(Item *t, Label *labelTrue, Label *labelFalse) :
+        t(t),
+        labelTrue(labelTrue),
+        labelFalse(labelFalse)
+    {
+    }
+
+    falseReturn::falseReturn() {}
+
+    trueReturn::trueReturn(Item *returnVal) :
+        returnVal(returnVal)
+    {
+    }
 
 
+    /*
+    Function/Program methods.
+    */
+    userFuncName* Program::getFunctionName(const std::string& name) {
+        userFuncName* res;
+        auto it = functionNames.find(name);
+        if (it != functionNames.end()) {
+            res = it->second;
+        } else {
+            std::cerr << "could not find " << name << " in the map of function names.\n";
+        }
+        return res;
+    }
 
 }

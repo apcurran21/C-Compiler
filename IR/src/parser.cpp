@@ -528,7 +528,7 @@ namespace IR {
         >
       >,
       spaces,
-      pegtl::one< ')' >,    
+      pegtl::one< ')' >
     > {};
   struct Function_rule:
     pegtl::seq<
@@ -663,8 +663,8 @@ namespace IR {
         if (debug) std::cerr << "string " << in.string() << " is not a valid operator.\n";
       }
 
-      auto operator = new Operator(op);
-      parsed_items.push_back(operator);
+      auto operator_instance = new Operator(op);
+      parsed_items.push_back(operator_instance);
     }
   };
   
@@ -685,13 +685,18 @@ namespace IR {
     static void apply( const Input & in, Program & p) {
       if (debug) std::cerr << "Recognized a type rule\n";
 
-      auto type = parsed_items.front();
+      auto type_temp = parsed_items.front();
       parsed_items.erase(parsed_items.begin());
 
       int64_t dims = 0;
       while (!parsed_items.empty()) {
         parsed_items.pop_back();
         dims++;
+      }
+
+      auto type = dynamic_cast<Type*>(type_temp);
+      if (!type) {
+        if (debug) std::cerr << "Program is incorrect, " << type->print() << " should be of Type type.\n";
       }
 
       type->dims = dims;
@@ -705,9 +710,19 @@ namespace IR {
     static void apply( const Input & in, Program & p) {
       if (debug) std::cerr << "Recognized a defined_fname rule\n";
 
-      auto fname = parsed_items.back();
+      auto fname_temp = parsed_items.back();
       parsed_items.pop_back();
-      auto type = parsed_items.back();
+      auto type_temp = parsed_items.back();
+
+      auto fname = dynamic_cast<userFuncName*>(fname_temp);
+      if (!fname) {
+        if (debug) std::cerr << "Program is incorrect, " << fname->print() << " should be of userFuncName type.\n";
+      }
+
+      auto type = dynamic_cast<Type*>(type_temp);
+      if (!type) {
+        if (debug) std::cerr << "Program is incorrect, " << type->print() << " should be of Type type.\n";
+      }
 
       auto function = new Function(fname, type);
       p.functions.push_back(function);
@@ -719,25 +734,25 @@ namespace IR {
   Group actions.
   */
   // for matching variables in a function definition.
-  template<> struct action < params_rule > {
-    template< typename Input >
-    static void apply( const Input & in, Program & p) {
-      if (debug) std::cerr << "Recognized an params rule\n";
+  // template<> struct action < params_rule > {
+  //   template< typename Input >
+  //   static void apply( const Input & in, Program & p) {
+  //     if (debug) std::cerr << "Recognized an params rule\n";
 
-      std::vector<Item*> args_vec;
+  //     std::vector<Item*> args_vec;
 
-      /*
-      Populate the new vector of args, avoid making a copy just in case.
-      */
-      while (!parsed_items.empty()) {
-        auto arg = parsed_items.front();
-        parsed_items.erase(parsed_items.begin());
-        args_vec.push_back(arg);
-      }
+  //     /*
+  //     Populate the new vector of args, avoid making a copy just in case.
+  //     */
+  //     while (!parsed_items.empty()) {
+  //       auto arg = parsed_items.front();
+  //       parsed_items.erase(parsed_items.begin());
+  //       args_vec.push_back(arg);
+  //     }
 
-      auto args = new varArguments(args_vec);
-    }
-  };
+  //     auto args = new varArguments(args_vec);
+  //   }
+  // };
 
   // // for matching variables in a function call.
   // template<> struct action < args_rule > {
@@ -794,8 +809,13 @@ namespace IR {
       if (debug) std::cerr << "Recognized an Label_label rule\n";
 
       auto f = p.functions.back();
-      auto label = parsed_items.back();
+      auto label_temp = parsed_items.back();
       parsed_items.pop_back();
+
+      auto label = dynamic_cast<Label*>(label_temp);
+      if (!label) {
+        if (debug) std::cerr << "Program is incorrect, " << label->print() << " should be of Label type.\n";
+      }
 
       auto i = new labelInstruction(label);
       f->instructions.push_back(i);
@@ -813,15 +833,25 @@ namespace IR {
       if (debug) std::cerr << "Recognized an Instruction_type_declaration rule\n";
 
       auto f = p.functions.back();
-      auto var = parsed_items.back();
+      auto var_temp = parsed_items.back();
       parsed_items.pop_back();
-      auto type = parsed_items.back();
+      auto type_temp = parsed_items.back();
       parsed_items.pop_back();
+
+      auto var = dynamic_cast<Variable*>(var_temp);
+      if (!var) {
+        if (debug) std::cerr << "Program is incorrect, " << var->print() << " should be of variable type.\n";
+      }
+
+      auto type = dynamic_cast<Type*>(type_temp);
+      if (!type) {
+        if (debug) std::cerr << "Program is incorrect, " << type->print() << " should be of Type type.\n";
+      }
 
       /*
       Associate the variable within the containing function's maps.
       */
-      std::string var_name = var->name;
+      std::string var_name = var->print();
       f->variableNameToPointer[var_name] = var;
       f->variableToTypeMapping[var] = type;
 
@@ -839,11 +869,16 @@ namespace IR {
       auto f = p.functions.back();
       auto s = parsed_items.back();
       parsed_items.pop_back();
-      auto var = parsed_items.back();
+      auto var_temp = parsed_items.back();
       parsed_items.pop_back();
 
+      auto var = dynamic_cast<Variable*>(var_temp);
+      if (!var) {
+        if (debug) std::cerr << "Program is incorrect, " << var->print() << " should be of variable type.\n";
+      }
+
       auto i = new Assignment(var, s);
-      f->instructions.push_back(i)
+      f->instructions.push_back(i);
     }
   };
 
@@ -856,15 +891,25 @@ namespace IR {
       auto f = p.functions.back();
       auto t2 = parsed_items.back();
       parsed_items.pop_back();
-      auto op = parsed_items.back();
+      auto op_temp = parsed_items.back();
       parsed_items.pop_back();
       auto t1 = parsed_items.back();
       parsed_items.pop_back();
-      auto var = parsed_items.back();
+      auto var_temp = parsed_items.back();
       parsed_items.pop_back();
 
+      auto var = dynamic_cast<Variable*>(var_temp);
+      if (!var) {
+        if (debug) std::cerr << "Program is incorrect, " << var->print() << " should be of variable type.\n";
+      }
+
+      auto op = dynamic_cast<Operator*>(op_temp);
+      if (!op) {
+        if (debug) std::cerr << "Program is incorrect, " << op->print() << " should be of Operator type.\n";
+      }
+
       auto i = new operationInstruction(var, t1, op, t2);
-      f->instructions.push_back(i)
+      f->instructions.push_back(i);
     }
   };
 
@@ -875,12 +920,22 @@ namespace IR {
       if (debug) std::cerr << "Recognized an Instruction_load rule\n";
 
       auto f = p.functions.back();
-      auto var1 = parsed_items.front();
+      auto var1_temp = parsed_items.front();
       parsed_items.erase(parsed_items.begin());
-      auto var2 = parsed_items.front();
+      auto var2_temp = parsed_items.front();
       parsed_items.erase(parsed_items.begin());
 
-      auto i = new loadInstruction(var1, var2)
+      auto var1 = dynamic_cast<Variable*>(var1_temp);
+      if (!var1) {
+        if (debug) std::cerr << "Program is incorrect, " << var1->print() << " should be of variable type.\n";
+      }
+
+      auto var2 = dynamic_cast<Variable*>(var2_temp);
+      if (!var2) {
+        if (debug) std::cerr << "Program is incorrect, " << var2->print() << " should be of variable type.\n";
+      }
+
+      auto i = new loadInstruction(var1, var2);
 
       while (!parsed_items.empty()) {
         auto arg = parsed_items.front();
@@ -901,10 +956,15 @@ namespace IR {
       auto f = p.functions.back();
       auto s = parsed_items.back();
       parsed_items.pop_back();
-      auto var1 = parsed_items.front();
+      auto var1_temp = parsed_items.front();
       parsed_items.erase(parsed_items.begin());
 
-      auto i = new storeInstruction(var1, s)
+      auto var1 = dynamic_cast<Variable*>(var1_temp);
+      if (!var1) {
+        if (debug) std::cerr << "Program is incorrect, " << var1->print() << " should be of variable type.\n";
+      }
+
+      auto i = new storeInstruction(var1, s);
 
       while (!parsed_items.empty()) {
         auto arg = parsed_items.front();
@@ -925,12 +985,22 @@ namespace IR {
       auto f = p.functions.back();
       auto t = parsed_items.back();
       parsed_items.pop_back();
-      auto var2 = parsed_items.back();
+      auto var2_temp = parsed_items.back();
       parsed_items.pop_back();
-      auto var1 = parsed_items.back();
+      auto var1_temp = parsed_items.back();
       parsed_items.pop_back();
 
-      auto i = new arrLength(var1, var2 t);
+      auto var1 = dynamic_cast<Variable*>(var1_temp);
+      if (!var1) {
+        if (debug) std::cerr << "Program is incorrect, " << var1->print() << " should be of variable type.\n";
+      }
+
+      auto var2 = dynamic_cast<Variable*>(var2_temp);
+      if (!var2) {
+        if (debug) std::cerr << "Program is incorrect, " << var2->print() << " should be of variable type.\n";
+      }
+
+      auto i = new arrLength(var1, var2, t);
       f->instructions.push_back(i);
     }
   };
@@ -942,12 +1012,22 @@ namespace IR {
       if (debug) std::cerr << "Recognized an Instruction_length rule\n";
 
       auto f = p.functions.back();
-      auto var2 = parsed_items.back();
+      auto var2_temp = parsed_items.back();
       parsed_items.pop_back();
-      auto var1 = parsed_items.back();
+      auto var1_temp = parsed_items.back();
       parsed_items.pop_back();
 
-      auto i = new tupleLength(var1, var2 );
+      auto var1 = dynamic_cast<Variable*>(var1_temp);
+      if (!var1) {
+        if (debug) std::cerr << "Program is incorrect, " << var1->print() << " should be of variable type.\n";
+      }
+
+      auto var2 = dynamic_cast<Variable*>(var2_temp);
+      if (!var2) {
+        if (debug) std::cerr << "Program is incorrect, " << var2->print() << " should be of variable type.\n";
+      }
+
+      auto i = new tupleLength(var1, var2);
       f->instructions.push_back(i);
     }
   };
@@ -981,10 +1061,15 @@ namespace IR {
       if (debug) std::cerr << "Recognized an Instruction_call_function_assignment rule\n";
 
       auto f = p.functions.back();
-      auto var = parsed_items.front();
+      auto var_temp = parsed_items.front();
       parsed_items.erase(parsed_items.begin());
       auto callee = parsed_items.front();
       parsed_items.erase(parsed_items.begin());
+
+      auto var = dynamic_cast<Variable*>(var_temp);
+      if (!var) {
+        if (debug) std::cerr << "Program is incorrect, " << var->print() << " should be of variable type.\n";
+      }
 
       auto i = new NonVoidCallInstruction(var, callee);
 
@@ -1005,8 +1090,14 @@ namespace IR {
       if (debug) std::cerr << "Recognized an Instruction_array_initialization rule\n";
 
       auto f = p.functions.back();
-      auto var = parsed_items.front();
+      auto var_temp = parsed_items.front();
       parsed_items.erase(parsed_items.begin());
+
+      auto var = dynamic_cast<Variable*>(var_temp);
+      if (!var) {
+        if (debug) std::cerr << "Program is incorrect, " << var->print() << " should be of variable type.\n";
+      }
+
 
       auto i = new newArray(var, counter);
       counter++;
@@ -1030,8 +1121,13 @@ namespace IR {
       auto f = p.functions.back();
       auto t = parsed_items.back();
       parsed_items.pop_back();
-      auto var = parsed_items.back();
+      auto var_temp = parsed_items.back();
       parsed_items.pop_back();
+
+      auto var = dynamic_cast<Variable*>(var_temp);
+      if (!var) {
+        if (debug) std::cerr << "Program is incorrect, " << var->print() << " should be of variable type.\n";
+      }
 
       auto i = new newTuple(var, t);
       f->instructions.push_back(i);
@@ -1049,8 +1145,13 @@ namespace IR {
       if (debug) std::cerr << "Recognized an Terminator_single_branch rule\n";
 
       auto f = p.functions.back();
-      auto label = parsed_items.back();
+      auto label_temp = parsed_items.back();
       parsed_items.pop_back();
+
+      auto label = dynamic_cast<Label*>(label_temp);
+      if (!label) {
+        if (debug) std::cerr << "Program is incorrect, " << label->print() << " should be of Label type.\n";
+      }
 
       auto i = new oneSuccBranch(label);
       f->instructions.push_back(i);
@@ -1064,12 +1165,22 @@ namespace IR {
       if (debug) std::cerr << "Recognized an Terminator_double_branch rule\n";
 
       auto f = p.functions.back();
-      auto label2 = parsed_items.back();
+      auto label2_temp = parsed_items.back();
       parsed_items.pop_back();
-      auto label1 = parsed_items.back();
+      auto label1_temp = parsed_items.back();
       parsed_items.pop_back();
       auto t = parsed_items.back();
       parsed_items.pop_back();
+
+      auto label1 = dynamic_cast<Label*>(label1_temp);
+      if (!label1) {
+        if (debug) std::cerr << "Program is incorrect, " << label1->print() << " should be of Label type.\n";
+      }
+
+      auto label2 = dynamic_cast<Label*>(label2_temp);
+      if (!label2) {
+        if (debug) std::cerr << "Program is incorrect, " << label2->print() << " should be of Label type.\n";
+      }
 
       auto i = new twoSuccBranch(t, label1, label2);
       f->instructions.push_back(i);
@@ -1127,10 +1238,15 @@ namespace IR {
       while (!parsed_items.empty()) {
         auto type = parsed_items.front();         // it seems like we aren't currently doing anything with this
         parsed_items.erase(parsed_items.begin());
-        auto var = parsed_items.front();
+        auto var_temp = parsed_items.front();
         parsed_items.erase(parsed_items.begin());
 
-        f.parameters.push_back(var);
+        auto var = dynamic_cast<Variable*>(var_temp);
+        if (!var) {
+          if (debug) std::cerr << "Program is incorrect, " << var->print() << " should be of variable type.\n";
+        }
+
+        f->parameters.push_back(var);
       }
 
     }
