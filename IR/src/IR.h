@@ -320,11 +320,12 @@ namespace IR{
     class newArray : public nonVoidInstruction {
         public:
             void gen(Function *f, std::ofstream &outputFile) override;
-            explicit newArray(Variable *dest);
+            explicit newArray(Variable *dest,int64_t counter);
             std::vector<Item *> args; 
             void calculate_array(Function *f, std::ofstream &outputFile);
             Variable *destination;
             int offset;
+            int64_t count;
             std::vector<std::string> variableDimensions;
             std::vector<int> dimensions;            
     };
