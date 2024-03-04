@@ -12,6 +12,8 @@
 
 
 namespace IR { 
+
+
     void newArray::calculate_array(Function *f, std::ofstream &outputFile){
         for (auto num:this->args){
             auto number = dynamic_cast<Number *>(num);
@@ -52,7 +54,7 @@ Type::Type(TypeEnum type) :
     type(type)
 {
 }
-std::string Type::print() {
+std::string Type::print() const {
     std::string res;
     switch (type) {
         case TypeEnum::int64:
@@ -81,7 +83,7 @@ Label::Label(std::string name) :
     name(name)
 {
 }
-std::string Label::print() {
+std::string Label::print() const  {
     return name;
 }
 
@@ -89,7 +91,7 @@ Number::Number(int64_t value) :
     value(value)
 {
 }
-std::string Number::print() {
+std::string Number::print() const  {
     return std::to_string(value);
 }
 
@@ -97,7 +99,7 @@ Variable::Variable(std::string name) :
     name(name)
 {
 }
-std::string Variable::print() {
+std::string Variable::print() const  {
     return name;
 }
 
@@ -105,7 +107,7 @@ Operator::Operator(OperatorEnum id) :
     id(id)
 {
 }
-std::string Operator::print() {
+std::string Operator::print() const  {
     std::string res;
     switch (value) {
         case OperationEnum::plus:
@@ -158,16 +160,19 @@ Instruction constructors.
 /*
 Void
 */
-declarationInstruction::declarationInstruction()
+declarationInstruction::declarationInstruction(Type *type, Variable *var) :
+    type(type),
+    var(var)
+{
+}
 
 labelInstruction::labelInstruction(Label *label) :
     label(label)
 {
 }
 
-VoidCallInstruction::VoidCallInstruction(Item *callee, std::vector<Item *> args) :
+VoidCallInstruction::VoidCallInstruction(Item *callee) :
     callee(callee),
-    args(args)
 {
 }
 
@@ -221,7 +226,6 @@ tupleLength::tupleLength(Variable *dst, Variable *tuple) :
 NonVoidCallInstruction::NonVoidCallInstruction(Variable *dest, Item *callee) :
     nonVoidInstruction(dest),
     callee(callee),
-    args(args)
 {
 }
 
@@ -236,9 +240,6 @@ newTuple::newTuple(Variable *dest, Item *size) :
     size(size)
 {
 }
-
-
-
 
 
 

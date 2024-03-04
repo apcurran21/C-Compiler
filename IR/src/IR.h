@@ -321,7 +321,7 @@ namespace IR{
     class newArray : public nonVoidInstruction {
         public:
             void gen(Function *f, std::ofstream &outputFile) override;
-            explicit newArray(Variable *dest,int64_t counter);
+            explicit newArray(Variable *dest, int64_t counter);
             std::vector<Item *> args; 
             void calculate_array(Function *f, std::ofstream &outputFile);
             Variable *destination;
@@ -337,53 +337,53 @@ namespace IR{
             Item *const size;
     };
 
-    enum SystemFunctionType {
-        Print,
-        Input,
-        ToUpper,
-        Tenserr
-    };
+    // enum SystemFunctionType {
+    //     Print,
+    //     Input,
+    //     ToUpper,
+    //     Tenserr
+    // };
 
-    class SystemCallFunction : public Item {
-    private:
-        explicit SystemCallFunction(SystemFunctionType type) : type_(type) {}
+    // class SystemCallFunction : public Item {
+    // private:
+    //     explicit SystemCallFunction(SystemFunctionType type) : type_(type) {}
 
-    public:
-        const SystemFunctionType type_;
-
-
-        SystemFunctionType getType() const {
-            return type_;
-        }
-
-        // Singleton instances
-        static SystemCallFunction *const PrintInstance() {
-            static SystemCallFunction instance(SystemFunctionType::Print);
-            return &instance;
-        }
-
-        static SystemCallFunction *const InputInstance() {
-            static SystemCallFunction instance(SystemFunctionType::Input);
-            return &instance;
-        }
-
-        static SystemCallFunction *const ToUpperInstance() {
-            static SystemCallFunction instance(SystemFunctionType::ToUpper);
-            return &instance;
-        }
-
-        static SystemCallFunction *const TenserrInstance() {
-            static SystemCallFunction instance(SystemFunctionType::Tenserr);
-            return &instance;
-        }
-    };
+    // public:
+    //     const SystemFunctionType type_;
 
 
-    class varArguments : public Token {
-        public:
-            explicit varArguments(std::vector<Item*> args);
-            std::vector<Item *> args;
-    };
+    //     SystemFunctionType getType() const {
+    //         return type_;
+    //     }
+
+    //     // Singleton instances
+    //     static SystemCallFunction *const PrintInstance() {
+    //         static SystemCallFunction instance(SystemFunctionType::Print);
+    //         return &instance;
+    //     }
+
+    //     static SystemCallFunction *const InputInstance() {
+    //         static SystemCallFunction instance(SystemFunctionType::Input);
+    //         return &instance;
+    //     }
+
+    //     static SystemCallFunction *const ToUpperInstance() {
+    //         static SystemCallFunction instance(SystemFunctionType::ToUpper);
+    //         return &instance;
+    //     }
+
+    //     static SystemCallFunction *const TenserrInstance() {
+    //         static SystemCallFunction instance(SystemFunctionType::Tenserr);
+    //         return &instance;
+    //     }
+    // };
+
+
+    // class varArguments : public Token {
+    //     public:
+    //         explicit varArguments(std::vector<Item*> args);
+    //         std::vector<Item *> args;
+    // };
 
 
     class Block : public Token {
@@ -473,4 +473,4 @@ namespace IR{
     };
     
 
-};
+}
