@@ -315,9 +315,6 @@ namespace IR{
         explicit NonVoidCallInstruction(Variable *dest, Item *callee);
         Item *const callee;
         std::vector<Item *> args; // Now included directly in this class
-        /*
-        What does the base class field 'dst' get? Right now I'm giving it the 'dest' argument, 'destination' will be initialized empty.
-        */
     };
 
     class newArray : public nonVoidInstruction {
@@ -327,10 +324,6 @@ namespace IR{
             int64_t count;
             std::vector<Item *> args; 
             
-
-            /*
-            What does the base class field 'dst' get? Right now I'm giving it the 'dest' argument, 'destination' will be initialized empty.
-            */
             int offset;
             std::vector<int> dimensions;    
     };

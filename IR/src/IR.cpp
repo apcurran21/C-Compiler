@@ -109,7 +109,6 @@ std::string Operator::print() {
             res = ">";
             break;
     }
-
     return res;
 }
 
@@ -189,16 +188,16 @@ tupleLength::tupleLength(Variable *dst, Variable *tuple) :
 {
 }
 
-NonVoidCallInstruction::NonVoidCallInstruction(Variable *dest, Item *callee, std::vector<Item *> args) :
+NonVoidCallInstruction::NonVoidCallInstruction(Variable *dest, Item *callee) :
     nonVoidInstruction(dest),
     callee(callee),
     args(args)
 {
 }
 
-newArray::newArray(Variable *dest, std::vector<Item *> args) :
+newArray::newArray(Variable *dest, int64_t counter) :
     nonVoidInstruction(dest),
-    args(args)
+    count(counter)
 {
 }
 
