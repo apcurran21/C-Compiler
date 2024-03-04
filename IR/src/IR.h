@@ -320,13 +320,13 @@ namespace IR{
     public:
         void gen(Function *f, std::ofstream &outputFile) override;
         explicit NonVoidCallInstruction(Variable *dest, Item *callee);
+        Variable *dest;
         Item *const callee;
         std::vector<Item *> args; // Now included directly in this class
     };
 
     class newArray : public nonVoidInstruction {
         public:
-            void gen(Function *f, std::ofstream &outputFile) override;
             explicit newArray(Variable *destination, int64_t counter);
             std::vector<Item *> args; 
             void calculate_array(Function *f, std::ofstream &outputFile);
@@ -409,11 +409,12 @@ namespace IR{
     };
     class teInstruction : public voidInstruction {
         public:
-            // virtual std::vector<Block *> getSuccessors() = 0;
+        
     };
 
     class oneSuccBranch : public teInstruction {
         public: 
+            void gen(Function *f, std::ofstream &outputFile) override;
             // explicit oneSuccBranch(Block *block);
             explicit oneSuccBranch(Label *label);
             // std::vector<Block *> getSuccessors() override;
@@ -424,6 +425,7 @@ namespace IR{
 
     class twoSuccBranch : public teInstruction {
         public:
+            void gen(Function *f, std::ofstream &outputFile) override;
             // twoSuccBranch(Item *t, Block *trueBBlock , Block *falseB);
             explicit twoSuccBranch(Item *t, Label *labelTrue, Label *labelFalse);
             // std::vector<Block*> getSuccessors() override;
@@ -437,12 +439,14 @@ namespace IR{
 
     class falseReturn : public teInstruction{
         public:
+            void gen(Function *f, std::ofstream &outputFile) override;
             // std::vector<Block *> getSuccessors() override;
             explicit falseReturn();
     };
 
     class trueReturn : public teInstruction {
         public:
+            void gen(Function *f, std::ofstream &outputFile) override;
             explicit trueReturn(Item *returnVal);
             // std::vector<Block *> getSuccessors() override;
 

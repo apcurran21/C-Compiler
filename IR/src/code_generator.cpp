@@ -1,14 +1,10 @@
 #include "code_generator.h"
-
 using namespace std;
 
 // use 1 for debug statements, 0 for no printing
 // int debug = 1;
 
 namespace IR{
-    void Assignment::gen(Function *f, std::ofstream &outputFile){
-
-    };
     void tupleLength::gen(Function *f, std::ofstream &outputFile){
       outputFile<<this->dst->print() << " <- load "<<this->tuple->print()<<"\n\t";
       outputFile << this->dst->print() << " <- "<< this->dst->print()<<" << 1"<<"\n\t";
@@ -21,7 +17,7 @@ namespace IR{
         auto array = this->arr;
         auto number = dynamic_cast<Number *>(this->dim);
         int offset_val = 8*(number->value+1);
-        outputFile<<"%offset <-"<<offset_val<<'\n\t';
+        outputFile<<"%offset <-"<<offset_val<<"\n\t";
         outputFile<<"%address <-"<<"%m + %offset"<<"\n\t";
         outputFile<<this->dst->name<<" <- load %address"<<"\n\t";
     };
@@ -61,8 +57,41 @@ namespace IR{
         tuple->count++;
       } 
       
+    };
+    void twoSuccBranch::gen(Function *f,std::ofstream &outputFile){
+      outputFile <<"br "<<t->print()<<" "<<labelTrue->print()<<"\n\t";
+      outputFile <<"br "<< labelFalse->print()<<"\n\t";
     }
-    void 
+    void oneSuccBranch::gen(Function *f, std::ofstream &outputFile){
+      outputFile << "br "<< label->print()<<"\n\t";
+    }
+    void operationInstruction::gen(Function *f, std::ofstream &outputFile){
+      outputFile << dst->print() << " <- " << t1->print() << " "<< op->print()<<" "<<t2->print()<<"\n\t";
+    };
+    void falseReturn::gen(Function *f, std::ofstream &outputFile){
+      outputFile << "return" << "\n\t";
+    };
+    void trueReturn::gen(Function *f, std::ofstream &outputFile){
+      outputFile << "return" << returnVal->print()<<"\n\t";
+    };
+    void VoidCallInstruction::gen(Function *f, std::ofstream &outputFile){
+      outputFile << "call "<< callee->print() << " (";
+      int last_i = 0;
+      for (int i =0;i<args.size();i++){
+        outputFile << args[i]->print()<<",";
+        last_i = i;
+      }
+      outputFile << args[last_i]->print()<<")"<<"\n\t";
+    };
+    void NonVoidCallInstruction::gen(Function *f, std::ofstream &outputFile){
+      outputFile << dest->print()<<" <- call "<< callee->print() << " (";
+      int last_i = 0;
+      for (int i =0;i<args.size();i++){
+        outputFile << args[i]->print()<<",";
+        last_i = i;
+      }
+      outputFile << args[last_i]->print()<<")"<<"\n\t";
+    };
     void loadInstruction::gen(Function *f, std::ofstream &outputFile){
       auto key = this->var->print();
       auto key_var = f->variableNameToPointer[key];
@@ -93,9 +122,8 @@ namespace IR{
         auto tuple = f->variableNameToTuple[this->var->print()];
         outputFile << "%newVar" << tuple->count << "<- "<< tuple->dest<<" + 8"<<"\n\t";
         outputFile << this->var->print()<< "<- load "<<"%newVar"<<tuple->count<< "\n\t";
-      }
-      
-    // }
+      }  
+     }
 
 
   void generate_code(Program& p) {
@@ -113,7 +141,7 @@ namespace IR{
       outputFile<<") (";
         for (Block *block: fptr->executionTraceOrder){
           for (Instruction *iptr : block->instructionBody) {
-            auto arr_cast = dynamic_cast<newArray *>(iptr);
+            auto arr_cast = dynamic_cast<newArray*>(iptr);
             auto tuple_cast = dynamic_cast<newTuple *>(iptr);
             if (arr_cast){
               arr_cast->calculate_array(fptr,outputFile);
@@ -121,21 +149,13 @@ namespace IR{
             } else if (tuple_cast){
               iptr->gen(fptr, outputFile);
               fptr->variableNameToTuple[tuple_cast->dest->print()] = tuple_cast;
-    
             } else {
               iptr->gen(fptr, outputFile);
             }
           }
         }
-      
-       }
-       outputFile<<")\n";
-     }
-    // outputFile << ")\n";
-
-    // if (debug) std::cerr << "Finished code generation!" << std::endl;
-    // outputFile.close();
-   
+      }
+      outputFile<<")\n";
   }
 }
 
