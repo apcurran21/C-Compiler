@@ -5,11 +5,11 @@
 #include <variant>
 #include <algorithm>
 #include <iostream>
-#include <fstream>
 #include <list>
 #include <map>
 #include <tuple>
 #include "IR.h"
+
 
 namespace IR { 
     void newArray::calculate_array(Function *f, std::ofstream &outputFile){
@@ -48,24 +48,101 @@ namespace IR {
 /*
 Token/Item constructors
 */
+Type::Type(TypeEnum type) :
+    type(type)
+{
+}
+std::string Type::print() {
+    std::string res;
+    switch (type) {
+        case TypeEnum::int64:
+            res = "int64";
+            for (int i = 0; i < dims; i++) {
+                res += "[]";
+            }
+            break;
+        case TypeEnum::tuple:
+            res = "tuple";
+            break;
+        case TypeEnum::code:
+            res = "code";
+            break;
+        case TypeEnum::voidt:
+            res = "void";
+            break;
+        case TypeEnum::bracks:
+            res = "[]";
+            break;
+    }
+    return res;
+}
+
 Label::Label(std::string name) :
     name(name)
 {
+}
+std::string Label::print() {
+    return name;
 }
 
 Number::Number(int64_t value) :
     value(value)
 {
 }
+std::string Number::print() {
+    return std::to_string(value);
+}
 
 Variable::Variable(std::string name) :
     name(name)
 {
 }
+std::string Variable::print() {
+    return name;
+}
 
 Operator::Operator(OperatorEnum id) : 
     id(id)
 {
+}
+std::string Operator::print() {
+    std::string res;
+    switch (value) {
+        case OperationEnum::plus:
+            res = "+";
+            break;
+        case OperationEnum::minus:
+            res = "-";
+            break;
+        case OperationEnum::times:
+            res = "*";
+            break;
+        case OperationEnum::amp:
+            res = "&";
+            break;
+        case OperationEnum::left:
+            res = "<<";
+            break;
+        case OperationEnum::right:
+            res = ">>";
+            break;
+        case OperationEnum::lt:
+            res = "<";
+            break;
+        case OperationEnum::leq:
+            res = "<=";
+            break;
+        case OperationEnum::eq:
+            res = "=";
+            break;
+        case OperationEnum::geq:
+            res = ">=";
+            break;
+        case OperationEnum::gt:
+            res = ">";
+            break;
+    }
+    return res;
 }
 
 Block::Block(std::string label) :
@@ -141,16 +218,16 @@ tupleLength::tupleLength(Variable *dst, Variable *tuple) :
 {
 }
 
-NonVoidCallInstruction::NonVoidCallInstruction(Variable *dest, Item *callee, std::vector<Item *> args) :
+NonVoidCallInstruction::NonVoidCallInstruction(Variable *dest, Item *callee) :
     nonVoidInstruction(dest),
     callee(callee),
     args(args)
 {
 }
 
-newArray::newArray(Variable *dest, std::vector<Item *> args) :
+newArray::newArray(Variable *dest, int64_t counter) :
     nonVoidInstruction(dest),
-    args(args)
+    count(counter)
 {
 }
 
