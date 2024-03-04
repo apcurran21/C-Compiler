@@ -321,11 +321,10 @@ namespace IR{
             void gen(Function *f, std::ofstream &outputFile) override;
             explicit newArray(Variable *dest);
             std::vector<Item *> args; 
+            void calculate_array(Function *f, std::ofstream &outputFile);
             Variable *destination;
-            /*
-            What does the base class field 'dst' get? Right now I'm giving it the 'dest' argument, 'destination' will be initialized empty.
-            */
             int offset;
+            std::vector<std::string> variableDimensions;
             std::vector<int> dimensions;            
     };
     class newTuple : public nonVoidInstruction {
@@ -470,4 +469,5 @@ namespace IR{
             std::unordered_map<std::string, userFuncName *> functionNames;
     };
     
-}
+
+};
