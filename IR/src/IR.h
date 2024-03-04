@@ -123,7 +123,7 @@ namespace IR{
         public:
             explicit Number(int64_t value);
             std::string print() const override;
-            int64_t const value; 
+            const int64_t value; 
     };
 
     class Variable : public Item{
@@ -228,23 +228,25 @@ namespace IR{
     */
     class Instruction : public Token {
         public:
+            virtual void gen(Function *f, std::ofstream &outputFile) = 0;
+
 
     };
     class voidInstruction : public Instruction {
         public:
-            // virtual void gen(Function *f, std::ofstream &outputFile) = 0;
+            virtual void gen(Function *f, std::ofstream &outputFile) = 0;
     }; 
 
     class nonVoidInstruction : public Instruction {
         public:
-            // virtual void gen(Function *f, std::ofstream &outputFile) = 0;
+            virtual void gen(Function *f, std::ofstream &outputFile) = 0;
             explicit nonVoidInstruction(Variable *dst);
             Variable *const dst;
     };
 
     class declarationInstruction : public voidInstruction {
         public:
-            // void gen(Function *f, std::ofstream &outputFile) override;
+            void gen(Function *f, std::ofstream &outputFile) override;
             explicit declarationInstruction(Type *type, Variable *var);
             Type *type;
             Variable *var;
@@ -252,19 +254,19 @@ namespace IR{
 
     class Assignment : public nonVoidInstruction{
         public:
-            // void gen(Function *f, std::ofstream &outputFile) override;
+            void gen(Function *f, std::ofstream &outputFile) override;
             explicit Assignment(Variable *dst, Item *src);
             Item *const src;
     };
     class labelInstruction : public voidInstruction {
         public:
-            // void gen(Function *f, std::ofstream &outputFile) override;
+            void gen(Function *f, std::ofstream &outputFile) override;
             explicit labelInstruction(Label *label);
             Label *label;
     };
     class operationInstruction: public nonVoidInstruction{
         public:
-            // void gen(Function *f, std::ofstream &outputFile) override;
+            void gen(Function *f, std::ofstream &outputFile) override;
 
             explicit operationInstruction(Variable *dst, Item *t1, Operator *op, Item *t2);
             
@@ -274,7 +276,7 @@ namespace IR{
     };
     class loadInstruction : public nonVoidInstruction{
         public:
-            // void gen(Function *f, std::ofstream &outputFile) override;
+            void gen(Function *f, std::ofstream &outputFile) override;
             explicit loadInstruction(Variable *dst, Item *var);
             // arrAccess *const access;
             Item *const var;
@@ -282,11 +284,12 @@ namespace IR{
     };
     class storeInstruction: public nonVoidInstruction {
         public:
-            // void gen(Function *f, std::ofstream &outputFile) override;
+            void gen(Function *f, std::ofstream &outputFile) override;
             /*
             In this constructor, var has to be the source since dst was already defined in the base nonVoidInstruction class.
             */
             explicit storeInstruction(Variable *dst, Item *var);
+
             // arrAccess *const access;
             Variable *dst;
             Item *const var;
@@ -294,28 +297,28 @@ namespace IR{
     };
     class arrLength : public nonVoidInstruction{
         public:
-            // void gen(Function *f, std::ofstream &outputFile) override;
+            void gen(Function *f, std::ofstream &outputFile) override;
             explicit arrLength(Variable *dst, Variable *arr, Item *dim);
             Variable *const arr;
             Item *const dim;
     };
     class tupleLength : public nonVoidInstruction{
         public:
-            // void gen(Function *f, std::ofstream &outputFile) override;
+            void gen(Function *f, std::ofstream &outputFile) override;
             explicit tupleLength(Variable *dst, Variable *tuple);
             Variable *const tuple;
     };
 
     class VoidCallInstruction : public voidInstruction {
         public:
-            // void gen(Function *f, std::ofstream &outputFile) override;
+            void gen(Function *f, std::ofstream &outputFile) override;
             explicit VoidCallInstruction(Item *callee);
             Item *const callee;
             std::vector<Item *> args; 
     };
     class NonVoidCallInstruction : public nonVoidInstruction {
     public:
-        // void gen(Function *f, std::ofstream &outputFile) override;
+        void gen(Function *f, std::ofstream &outputFile) override;
         explicit NonVoidCallInstruction(Variable *dest, Item *callee);
         Item *const callee;
         std::vector<Item *> args; // Now included directly in this class
@@ -323,8 +326,8 @@ namespace IR{
 
     class newArray : public nonVoidInstruction {
         public:
-            // void gen(Function *f, std::ofstream &outputFile) override;
-            explicit newArray(Variable *dest, int64_t counter);
+            void gen(Function *f, std::ofstream &outputFile) override;
+            explicit newArray(Variable *destination, int64_t counter);
             std::vector<Item *> args; 
             void calculate_array(Function *f, std::ofstream &outputFile);
             Variable *destination;
@@ -335,9 +338,13 @@ namespace IR{
     };
     class newTuple : public nonVoidInstruction {
         public:
-            // void gen(Function *f, std::ofstream &outputFile) override;
-            explicit newTuple(Variable *dest, Item *size);
+            void gen(Function *f, std::ofstream &outputFile) override;
+            explicit newTuple(Variable *dest, Item *size,int64_t counter);
             Item *const size;
+            Variable *dest;
+            int64_t count;
+
+            
     };
 
     // enum SystemFunctionType {
@@ -459,6 +466,7 @@ namespace IR{
             std::vector<Block*> executionTraceOrder;
             std::unordered_map<std::string, Variable*> variableNameToPointer;
             std::unordered_map<std::string, newArray*> variableNameToArray;
+            std::unordered_map<std::string, newTuple*> variableNameToTuple;
             std::unordered_map<Variable*, Type*> variableToTypeMapping;
             std::unordered_map<std::string, Block*> blockNameToPointer;
             Type* returnType;

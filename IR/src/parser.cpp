@@ -1182,7 +1182,13 @@ namespace IR {
         if (debug) std::cerr << "Program is incorrect, " << var->print() << " should be of variable type.\n";
       }
 
-      auto i = new newTuple(var, t);
+      auto var = dynamic_cast<Variable*>(var_temp);
+      if (!var) {
+        if (debug) std::cerr << "Program is incorrect, " << var->print() << " should be of variable type.\n";
+      }
+
+      auto i = new newTuple(var, t,counter);
+      counter++;
       f->instructions.push_back(i);
     }
   };

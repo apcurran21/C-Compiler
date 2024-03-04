@@ -58,7 +58,7 @@ namespace IR {
         outputFile << "%v0 <- %v0 +" << this->args.size();
         outputFile<< "%v0 <- %v0 << 1";
         outputFile << "%v0 <- %v0 + 1";
-        outputFile << "%a <- call allocate(%v0,1)";
+        outputFile << this->destination->name<<" <- call allocate(%v0,1)";
         /*
         These should be instructions to access vals
         int count = 2;
@@ -267,9 +267,10 @@ namespace IR {
     {
     }
 
-    newTuple::newTuple(Variable *dest, Item *size) :
+    newTuple::newTuple(Variable *dest, Item *size,int64_t counter) :
         nonVoidInstruction(dest),
-        size(size)
+        size(size),
+        count(counter)
     {
     }
 
