@@ -104,6 +104,7 @@ namespace IR{
     class Type : public Item {
         public:
             explicit Type(TypeEnum t);
+            std::string print() const override;
             TypeEnum type;
             int64_t dims;
     };
@@ -111,18 +112,21 @@ namespace IR{
     class Label : public Item {
         public:
             explicit Label(std::string name);
+            std::string print() const override;
             std::string name;
     };
 
     class Number : public Item {
         public:
             explicit Number(int64_t value);
+            std::string print() const override;
             std::string const value; 
     };
 
     class Variable : public Item{
         public:
             explicit Variable(std::string name);
+            std::string print() const override;
             std::string name;
     };
 
@@ -139,7 +143,7 @@ namespace IR{
         */
             // Constructor
             explicit userFuncName(const std::string& name);
-            std::string getName() const;
+            std::string print() const override;
             std::string name;
         };
 
@@ -172,15 +176,16 @@ namespace IR{
     };
 
     class Operator : public Item {
-        friend class OperatorSingletons; 
-        explicit Operator(OperatorEnum id); 
-        OperatorEnum id; 
-    public:
-        /*
-        Didn't define ItemVisitor yet.
-        */
-        // void accept(ItemVisitor *v) override;
-        OperatorEnum getID() const; 
+        public:
+            /*
+            Didn't define ItemVisitor yet.
+            */
+            // void accept(ItemVisitor *v) override;
+            friend class OperatorSingletons; 
+            explicit Operator(OperatorEnum id);
+            std::string print() const override;
+            OperatorEnum getID() const;
+            OperatorEnum id; 
     };
 
     class OperatorSingletons {
@@ -310,7 +315,6 @@ namespace IR{
         explicit NonVoidCallInstruction(Variable *dest, Item *callee);
         Item *const callee;
         std::vector<Item *> args; // Now included directly in this class
-        Variable *destination; // Assuming Variable *dest is similar to Atom *callee
         /*
         What does the base class field 'dst' get? Right now I'm giving it the 'dest' argument, 'destination' will be initialized empty.
         */
@@ -320,11 +324,10 @@ namespace IR{
         public:
             void gen(Function *f, std::ofstream &outputFile) override;
             explicit newArray(Variable *dest, int64_t counter);
+            int64_t count;
             std::vector<Item *> args; 
             
 
-
-            Variable *destination;
             /*
             What does the base class field 'dst' get? Right now I'm giving it the 'dest' argument, 'destination' will be initialized empty.
             */
