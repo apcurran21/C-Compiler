@@ -185,6 +185,13 @@ namespace IR {
       t_rule,
       I_rule
     > {};
+  struct type_keywords_rule:
+    pegtl::sor<
+      str_int64,
+      str_tuple,
+      str_code,
+      str_void
+    > {};
   struct type_rule:
     pegtl::sor<
       pegtl::seq<
@@ -192,13 +199,14 @@ namespace IR {
         pegtl::star< str_bracks >
       >,
       str_tuple,
-      str_code
-    > {};
-  struct T_rule:
-    pegtl::sor<
-      t_rule,
+      str_code,
       str_void
     > {};
+  // struct T_rule:
+  //   pegtl::sor<
+  //     t_rule,
+  //     str_void
+  //   > {};
   struct callee_rule:
     pegtl::sor<
       u_rule,
@@ -217,7 +225,7 @@ namespace IR {
     pegtl::seq<
       pegtl::one< '[' >,
       // arg_rule,
-      t_rule
+      t_rule,
       pegtl::one< ']' >
     > {};
   struct args_rule:
@@ -238,6 +246,15 @@ namespace IR {
       >
     > {};
 
+
+  /*
+  Label rules.
+  */
+  struct Label_label_rule:
+    // label
+    pegtl::seq<
+      label_rule
+    > {};
 
   /*
   Instruction rules.
@@ -283,13 +300,13 @@ namespace IR {
       spaces,
       var_rule,
       spaces,
-      full_array_access
+      full_array_access_rule
     > {};
   struct Instruction_store_rule:
     // var1[t]... <- s
     pegtl::seq<
       spaces,
-      full_array_access,
+      full_array_access_rule,
       spaces,
       str_arrow,
       spaces,
@@ -396,8 +413,8 @@ namespace IR {
       pegtl::seq< pegtl::at< Instruction_tuple_initialization_rule >, Instruction_tuple_initialization_rule >,
       pegtl::seq< pegtl::at< Instruction_call_function_assignment_rule >, Instruction_call_function_assignment_rule >,
       pegtl::seq< pegtl::at< Instruction_call_function_rule >, Instruction_call_function_rule >,
-      pegtl::seq< pegtl::at< Instruction_dim_length >, Instruction_dim_length >,
-      pegtl::seq< pegtl::at< Instruction_length >, Instruction_length >,
+      pegtl::seq< pegtl::at< Instruction_dim_length_rule >, Instruction_dim_length_rule >,
+      pegtl::seq< pegtl::at< Instruction_length_rule >, Instruction_length_rule >,
       pegtl::seq< pegtl::at< Instruction_operation_rule >, Instruction_operation_rule >,
       pegtl::seq< pegtl::at< Instruction_assignment_rule >, Instruction_assignment_rule >,
       pegtl::seq< pegtl::at<Instruction_load_rule>, Instruction_load_rule >,
@@ -477,12 +494,12 @@ namespace IR {
   /*
   Function rules.
   */
-  struct Function_rule:
+  struct Function_header_rule:
     pegtl::seq<
       spaces,
       str_define,
       spaces,
-      T_rule,
+      type_rule,
       spaces,
       I_rule,
       spaces,
@@ -506,7 +523,11 @@ namespace IR {
         >
       >,
       spaces,
-      pegtl::one< ')' >,
+      pegtl::one< ')' >,    
+    > {};
+  struct Function_rule:
+    pegtl::seq<
+      Function_header_rule,
       seps,
       spaces,
       pegtl::one< '{' >,
@@ -549,6 +570,42 @@ namespace IR {
   /*
   Terminal actions.
   */
+  template<> struct action < str_bracks > {
+    template< typename Input >
+    static void apply( const Input & in, Program & p) {
+      if (debug) std::cerr << "Recognized a str_bracks rule\n";
+
+      TypeEnum bracks;
+      auto it = stringToTypeEnum.find(in.string());
+      if (it != stringToTypeEnum.end()) {
+        bracks = it->second;
+      } else {
+        if (debug) std::cerr << "string " << in.string() << " is not a valid type.\n";
+      }
+
+      auto type = new Type(bracks);
+      parsed_items.push_back(type);
+    }
+  };
+
+  template<> struct action < type_keywords_rule > {
+    template< typename Input >
+    static void apply( const Input & in, Program & p) {
+      if (debug) std::cerr << "Recognized a type_keywords rule\n";
+
+      TypeEnum type_keyword;
+      auto it = stringToTypeEnum.find(in.string());
+      if (it != stringToTypeEnum.end()) {
+        type_keyword = it->second;
+      } else {
+        if (debug) std::cerr << "string " << in.string() << " is not a valid type.\n";
+      }
+
+      auto type = new Type(type_keyword);
+      parsed_items.push_back(type);
+    }
+  };
+
   template<> struct action < label_rule > {
     template< typename Input >
     static void apply( const Input & in, Program & p) {
@@ -618,6 +675,25 @@ namespace IR {
   //   }
   // };
 
+  template<> struct action < type_rule > {
+    template< typename Input >
+    static void apply( const Input & in, Program & p) {
+      if (debug) std::cerr << "Recognized a type rule\n";
+
+      auto type = parsed_items.front();
+      parsed_items.erase(parsed_items.begin());
+
+      int64_t dims = 0;
+      while (!parsed_items.empty()) {
+        parsed_items.pop_back();
+        dims++;
+      }
+
+      type->dims = dims;
+      parsed_items.push_back(type);
+    }
+  };
+
   // custom, not in explicit grammar ()
   template<> struct action < defined_fname > {
     template< typename Input >
@@ -658,48 +734,66 @@ namespace IR {
     }
   };
 
-  // for matching variables in a function call.
-  template<> struct action < args_rule > {
+  // // for matching variables in a function call.
+  // template<> struct action < args_rule > {
+  //   template< typename Input >
+  //   static void apply( const Input & in, Program & p) {
+  //     if (debug) std::cerr << "Recognized an args rule\n";
+
+  //     std::vector<Item*> args_vec;
+
+  //     /*
+  //     Populate the new vector of args, avoid making a copy just in case.
+  //     */
+  //     while (!parsed_items.empty()) {
+  //       auto arg = parsed_items.front();
+  //       parsed_items.erase(parsed_items.begin());
+  //       args_vec.push_back(arg);
+  //     }
+
+  //     auto args = new varArguments(args_vec);
+  //   }
+  // };
+
+  // template<> struct action < full_array_access_rule > {
+  //   template< typename Input >
+  //   static void apply( const Input & in, Program & p) {
+  //     if (debug) std::cerr << "Recognized an full_array rule\n";
+
+  //     std::vector<Item*> accesses_vec;
+
+  //     /*
+  //     Populate the new vector of access args, avoid making a copy just in case.
+  //     */
+  //     while (!parsed_items.empty()) {
+  //       auto access = parsed_items.front();
+  //       parsed_items.erase(parsed_items.begin());
+  //       accesses_vec.push_back(access);
+  //     }
+
+  //     /*
+  //     TODO need to wrap up here once i figure out what arrAccess class is for.
+  //     */
+
+  //     auto args = new varArguments()
+  //   }
+  // };
+
+  /*
+  Label actions.
+  */
+  template<> struct action < Label_label_rule > {
     template< typename Input >
     static void apply( const Input & in, Program & p) {
-      if (debug) std::cerr << "Recognized an args rule\n";
+      // label
+      if (debug) std::cerr << "Recognized an Label_label rule\n";
 
-      std::vector<Item*> args_vec;
+      auto f = p.functions.back();
+      auto label = parsed_items.back();
+      parsed_items.pop_back();
 
-      /*
-      Populate the new vector of args, avoid making a copy just in case.
-      */
-      while (!parsed_items.empty()) {
-        auto arg = parsed_items.front();
-        parsed_items.erase(parsed_items.begin());
-        args_vec.push_back(arg);
-      }
-
-      auto args = new varArguments(args_vec);
-    }
-  };
-
-  template<> struct action < full_array_access_rule > {
-    template< typename Input >
-    static void apply( const Input & in, Program & p) {
-      if (debug) std::cerr << "Recognized an full_array rule\n";
-
-      std::vector<Item*> accesses_vec;
-
-      /*
-      Populate the new vector of access args, avoid making a copy just in case.
-      */
-      while (!parsed_items.empty()) {
-        auto access = parsed_items.front();
-        parsed_items.erase(parsed_items.begin());
-        accesses_vec.push_back(access);
-      }
-
-      /*
-      TODO need to wrap up here once i figure out what arrAccess class is for.
-      */
-
-      auto args = new varArguments()
+      auto i = new labelInstruction(label);
+      f->instructions.push_back(i);
     }
   };
 
@@ -726,10 +820,8 @@ namespace IR {
       f->variableNameToPointer[var_name] = var;
       f->variableToTypeMapping[var] = type;
 
-      /*
-      Create the instruction and append to the current function.
-      */
-      // ...
+      auto i = new declarationInstruction(type, var);
+      f->instructions.push_back(i);
     }
   };
 
@@ -939,13 +1031,106 @@ namespace IR {
       f->instructions.push_back(i);
     }
   };
-  
 
+
+  /*
+  Terminator actions.
+  */
+  template<> struct action < Terminator_single_branch_rule > {
+    template< typename Input >
+    static void apply( const Input & in, Program & p) {
+      // br label
+      if (debug) std::cerr << "Recognized an Terminator_single_branch rule\n";
+
+      auto f = p.functions.back();
+      auto label = parsed_items.back();
+      parsed_items.pop_back();
+
+      auto i = new oneSuccBranch(label);
+      f->instructions.push_back(i);
+    }
+  };
   
+  template<> struct action < Terminator_double_branch_rule > {
+    template< typename Input >
+    static void apply( const Input & in, Program & p) {
+      // br t label1 label2
+      if (debug) std::cerr << "Recognized an Terminator_double_branch rule\n";
+
+      auto f = p.functions.back();
+      auto label2 = parsed_items.back();
+      parsed_items.pop_back();
+      auto label1 = parsed_items.back();
+      parsed_items.pop_back();
+      auto t = parsed_items.back();
+      parsed_items.pop_back();
+
+      auto i = new twoSuccBranch(t, label1, label2);
+      f->instructions.push_back(i);
+    }
+  };
+
+  template<> struct action < Terminator_return_val_rule > {
+    template< typename Input >
+    static void apply( const Input & in, Program & p) {
+      // return t
+      if (debug) std::cerr << "Recognized an Terminator_return_val rule\n";
+
+      auto f = p.functions.back();
+      auto t = parsed_items.back();
+      parsed_items.pop_back();
+
+      auto i = new trueReturn(t);
+      f->instructions.push_back(i);
+    }
+  };
+
+  template<> struct action < Terminator_return_rule > {
+    template< typename Input >
+    static void apply( const Input & in, Program & p) {
+      // return
+      if (debug) std::cerr << "Recognized an Terminator_return rule\n";
+
+      auto f = p.functions.back();
+
+      auto i = new falseReturn();
+      f->instructions.push_back(i);
+    }
+  };
+
 
   /*
   Function actions.
   */
+  template<> struct action < Function_header_rule > {
+    template< typename Input >
+    static void apply( const Input & in, Program & p) {
+      if (debug) std::cerr << "Recognized a Function_header rule\n";
+
+      auto f = p.functions.back();
+      // auto type = parsed_items.front()
+      // parsed_items.erase(parsed_items.begin());
+      // auto fname = parsed_items.front()
+      // parsed_items.erase(parsed_items.begin());
+      // ^ i think the above should have already have been taken care of.
+
+      /*
+      There should be an even number of items in the parsed_items stack now, a function definition
+      is made up of (type var) starred.
+      */
+      while (!parsed_items.empty()) {
+        auto type = parsed_items.front();         // it seems like we aren't currently doing anything with this
+        parsed_items.erase(parsed_items.begin());
+        auto var = parsed_items.front();
+        parsed_items.erase(parsed_items.begin());
+
+        f.parameters.push_back(var);
+      }
+
+    }
+  };
+
+
   template<> struct action < Function_rule > {
     template< typename Input >
     static void apply( const Input & in, Program & p) {

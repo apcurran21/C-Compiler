@@ -62,33 +62,56 @@ namespace IR{
         public:
     };
 
-    class Type : public Item{};
+    // class Type : public Item{};
 
-    class TupleType : public Type {
-        friend class Singleton;
-        TupleType() = default;
+    // class TupleType : public Type {
+    //     friend class Singleton;
+    //     TupleType() = default;
+    // };
+
+    // class CodeType : public Type {
+    //     friend class Singleton;
+    //     CodeType() = default;
+    // };
+
+    // class IntType : public Type {
+    //     friend class Singleton;
+    //     IntType() = default;
+    // };
+
+    // class VoidType : public Type{
+    //     friend class Singleton;
+    //     VoidType() = default;
+    // };
+
+    enum TypeEnum {
+        int64,  // encodes both single and array int64s using its dims field
+        tuple,
+        code,
+        voidt,
+        bracks  // to catch the "[]" dimensions in int64 arrays
     };
 
-    class CodeType : public Type {
-        friend class Singleton;
-        CodeType() = default;
+    std::map<std::string, TypeEnum> stringToTypeEnum = {
+        {"int64", TypeEnum::int64},
+        {"tuple", TypeEnum::tuple},
+        {"code", TypeEnum::code},
+        {"void", TypeEnum::voidt},
+        {"[]", TypeEnum::bracks}
     };
 
-    class IntType : public Type {
-        friend class Singleton;
-        IntType() = default;
-    };
-
-    class VoidType : public Type{
-        friend class Singleton;
-        VoidType() = default;
+    class Type : public Item {
+        public:
+            explicit Type(TypeEnum t);
+            TypeEnum type;
+            int64_t dims;
     };
 
     class Label : public Item {
         public:
             explicit Label(std::string name);
             std::string name;
-    }
+    };
 
     class Number : public Item {
         public:
@@ -102,12 +125,11 @@ namespace IR{
             std::string name;
     };
 
-    class arrAccess: public Item{
-        public:
-            explicit arrAccess(Variable *obj);
-            Variable *const object;
-    };
-
+    // class arrAccess: public Item{
+    //     public:
+    //         explicit arrAccess(Variable *obj);
+    //         Variable *const object;
+    // };
 
     class userFuncName : public Item {
         public:
@@ -212,8 +234,10 @@ namespace IR{
     class declarationInstruction : public voidInstruction {
         public
             void gen(Function *f, std::ofstream &outputFile) override;
-            explicit declarationInstruction();
-    }
+            explicit declarationInstruction(Type *type, Variable *var);
+            Type *type;
+            Variable *var;
+    };
 
     class Assignment : public nonVoidInstruction{
         public:
@@ -376,29 +400,38 @@ namespace IR{
 
     class oneSuccBranch : public teInstruction {
         public: 
-            explicit oneSuccBranch(Block *block);
+            // explicit oneSuccBranch(Block *block);
+            explicit oneSuccBranch(Label *label);
             std::vector<Block *> getSuccessors() override;
-            Block *const block;
+            // Block *const block;
+
+            Label *label;
     };
 
     class twoSuccBranch : public teInstruction {
         public:
-            twoSuccBranch(Item *t, Block *trueBBlock , Block *falseB);
+            // twoSuccBranch(Item *t, Block *trueBBlock , Block *falseB);
+            explicit twoSuccBranch(Item *t, Label *label1, Label *label2);
             std::vector<Block*> getSuccessors() override;
-            Item *const t;
-            Block *const trueB;
-            Block *const falseB;
+            // Block *const trueB;
+            // Block *const falseB;
+
+            Item *const t;  // do we need it const?
+            Label *label1;
+            Label *label2;
     };
 
     class falseReturn : public teInstruction{
         public:
             std::vector<Block *> getSuccessors() override;
+            explicit falseReturn();
     };
 
     class trueReturn : public teInstruction {
         public:
             explicit trueReturn(Item *returnVal);
             std::vector<Block *> getSuccessors() override;
+
             Item *const returnVal;
     };
     class blockVisitor{

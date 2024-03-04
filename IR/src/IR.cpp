@@ -15,6 +15,11 @@ namespace IR {
 /*
 Token/Item constructors
 */
+Type::Type(TypeEnum type) :
+    type(type)
+{
+}
+
 Label::Label(std::string name) :
     name(name)
 {
@@ -48,7 +53,11 @@ Instruction constructors.
 /*
 Void
 */
-declarationInstruction::declarationInstruction()
+declarationInstruction::declarationInstruction(Type *type, Variable *var) : 
+    type(type),
+    var(var)
+{
+}
 
 labelInstruction::labelInstruction(Label *label) :
     label(label)
@@ -83,7 +92,7 @@ operationInstruction::operationInstruction(Variable *dst, Item *t1, Operator *op
 {
 }
 
-loadInstruction::loadInstruction(Variable *dst Item *var) :
+loadInstruction::loadInstruction(Variable *dst, Item *var) :
     nonVoidInstruction(dst),
     var(var)
 {
@@ -126,6 +135,30 @@ newTuple::newTuple(Variable *dest, Item *size) :
     size(size)
 {
 }
+
+
+/*
+Terminator constructors.
+*/
+oneSuccBranch::oneSuccBranch(Label *label) :
+    label(label)
+{
+}
+
+twoSuccBranch::twoSuccBranch(Item *t, Label *label1, Label *label2) :
+    t(t),
+    label1(label1),
+    label2(label2)
+{
+}
+
+
+trueReturn::trueReturn(Item *returnVal) :
+    returnVal(returnVal)
+{
+}
+
+falseReturn::falseReturn() : {}
 
 
 

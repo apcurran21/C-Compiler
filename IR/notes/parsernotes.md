@@ -23,3 +23,15 @@ A feature of the language is that a variable must be declared with its type befo
 
 Bruhh i can just access from the front of the vector too. 
 * eg if I recognize a load instruction, I know the first two elements in the vector will be the var <- var, and after getting rid of those all others will be args.
+
+### Types
+when defining the types, do we need to track the number of dimensions an int64 array is ? or is it sufficient for this to only be tracked in the corresponding instruction that uses it?
+* I'm thinking that this might not work.
+
+It would not be too hard to store the dimensions of an int64, we could just create an action to add the empty brackets to the parsed_items stack then count parsed_items size to get the dimension.
+* But what would the benefit of this be? Like if this info is absolutely necessary how would we use it later on in the program?
+
+#### Note about type vs T_rule
+since they are so similar, we are going to assume the correctness of the IR program and just place type and T_rule under the same type_rule
+* we are also gonna make a terminal type_keyword rule so that this action will place the keywords onto the parsed_items stack, and then whenever we recognize a type_rule we will have both the keywords and any brackets on the stack.
+    * we are highly simplifying these rules so make sure the program is correct (ie errors won't be caught in the parser).
