@@ -35,3 +35,6 @@ It would not be too hard to store the dimensions of an int64, we could just crea
 since they are so similar, we are going to assume the correctness of the IR program and just place type and T_rule under the same type_rule
 * we are also gonna make a terminal type_keyword rule so that this action will place the keywords onto the parsed_items stack, and then whenever we recognize a type_rule we will have both the keywords and any brackets on the stack.
     * we are highly simplifying these rules so make sure the program is correct (ie errors won't be caught in the parser).
+
+### Monday
+I think i just need to fully commit to ignoring the basic blocks in the parser, and only creating a list of instructions. it's repeated work, but that code is already written to create basic blocks from a vector of instructions.

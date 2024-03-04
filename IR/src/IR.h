@@ -85,6 +85,7 @@ namespace IR{
     //     VoidType() = default;
     // };
 
+
     enum TypeEnum {
         int64,  // encodes both single and array int64s using its dims field
         tuple,
@@ -93,13 +94,15 @@ namespace IR{
         bracks  // to catch the "[]" dimensions in int64 arrays
     };
 
-    std::map<std::string, TypeEnum> stringToTypeEnum = {
-        {"int64", TypeEnum::int64},
-        {"tuple", TypeEnum::tuple},
-        {"code", TypeEnum::code},
-        {"void", TypeEnum::voidt},
-        {"[]", TypeEnum::bracks}
-    };
+    // std::map<std::string, TypeEnum> stringToTypeEnum = {
+    //     {"int64", TypeEnum::int64},
+    //     {"tuple", TypeEnum::tuple},
+    //     {"code", TypeEnum::code},
+    //     {"void", TypeEnum::voidt},
+    //     {"[]", TypeEnum::bracks}
+    // };
+
+    extern std::map<std::string, TypeEnum> stringToTypeEnum;
 
     class Type : public Item {
         public:
@@ -120,7 +123,7 @@ namespace IR{
         public:
             explicit Number(int64_t value);
             std::string print() const override;
-            std::string const value; 
+            int64_t const value; 
     };
 
     class Variable : public Item{
@@ -161,19 +164,21 @@ namespace IR{
         amp
     };
 
-    std::map<std::string, OperatorEnum> stringToOperatorEnum = {
-        {">", OperatorEnum::gt},
-        {">=", OperatorEnum::geq},
-        {"=", OperatorEnum::eq},
-        {"<=", OperatorEnum::leq},
-        {"*", OperatorEnum::times},
-        {"-", OperatorEnum::minus},
-        {"+", OperatorEnum::plus},
-        {"<", OperatorEnum::lt},
-        {"<<", OperatorEnum::left},
-        {">>", OperatorEnum::right},
-        {"&", OperatorEnum::amp}
-    };
+    // std::map<std::string, OperatorEnum> stringToOperatorEnum = {
+    //     {">", OperatorEnum::gt},
+    //     {">=", OperatorEnum::geq},
+    //     {"=", OperatorEnum::eq},
+    //     {"<=", OperatorEnum::leq},
+    //     {"*", OperatorEnum::times},
+    //     {"-", OperatorEnum::minus},
+    //     {"+", OperatorEnum::plus},
+    //     {"<", OperatorEnum::lt},
+    //     {"<<", OperatorEnum::left},
+    //     {">>", OperatorEnum::right},
+    //     {"&", OperatorEnum::amp}
+    // };
+
+    extern std::map<std::string, OperatorEnum> stringToOperatorEnum;
 
     class Operator : public Item {
         public:
@@ -227,19 +232,19 @@ namespace IR{
     };
     class voidInstruction : public Instruction {
         public:
-            virtual void gen(Function *f, std::ofstream &outputFile) = 0;
+            // virtual void gen(Function *f, std::ofstream &outputFile) = 0;
     }; 
 
     class nonVoidInstruction : public Instruction {
         public:
-            virtual void gen(Function *f, std::ofstream &outputFile) = 0;
+            // virtual void gen(Function *f, std::ofstream &outputFile) = 0;
             explicit nonVoidInstruction(Variable *dst);
             Variable *const dst;
     };
 
     class declarationInstruction : public voidInstruction {
         public:
-            void gen(Function *f, std::ofstream &outputFile) override;
+            // void gen(Function *f, std::ofstream &outputFile) override;
             explicit declarationInstruction(Type *type, Variable *var);
             Type *type;
             Variable *var;
@@ -247,19 +252,19 @@ namespace IR{
 
     class Assignment : public nonVoidInstruction{
         public:
-            void gen(Function *f, std::ofstream &outputFile) override;
+            // void gen(Function *f, std::ofstream &outputFile) override;
             explicit Assignment(Variable *dst, Item *src);
             Item *const src;
     };
     class labelInstruction : public voidInstruction {
         public:
-            void gen(Function *f, std::ofstream &outputFile) override;
+            // void gen(Function *f, std::ofstream &outputFile) override;
             explicit labelInstruction(Label *label);
             Label *label;
     };
     class operationInstruction: public nonVoidInstruction{
         public:
-            void gen(Function *f, std::ofstream &outputFile) override;
+            // void gen(Function *f, std::ofstream &outputFile) override;
 
             explicit operationInstruction(Variable *dst, Item *t1, Operator *op, Item *t2);
             
@@ -269,7 +274,7 @@ namespace IR{
     };
     class loadInstruction : public nonVoidInstruction{
         public:
-            void gen(Function *f, std::ofstream &outputFile) override;
+            // void gen(Function *f, std::ofstream &outputFile) override;
             explicit loadInstruction(Variable *dst, Item *var);
             // arrAccess *const access;
             Item *const var;
@@ -277,7 +282,7 @@ namespace IR{
     };
     class storeInstruction: public nonVoidInstruction {
         public:
-            void gen(Function *f, std::ofstream &outputFile) override;
+            // void gen(Function *f, std::ofstream &outputFile) override;
             /*
             In this constructor, var has to be the source since dst was already defined in the base nonVoidInstruction class.
             */
@@ -289,30 +294,28 @@ namespace IR{
     };
     class arrLength : public nonVoidInstruction{
         public:
-            void gen(Function *f, std::ofstream &outputFile) override;
+            // void gen(Function *f, std::ofstream &outputFile) override;
             explicit arrLength(Variable *dst, Variable *arr, Item *dim);
             Variable *const arr;
-            Variable *const dst;
             Item *const dim;
     };
     class tupleLength : public nonVoidInstruction{
         public:
-            void gen(Function *f, std::ofstream &outputFile) override;
+            // void gen(Function *f, std::ofstream &outputFile) override;
             explicit tupleLength(Variable *dst, Variable *tuple);
-            // Variable *const dst;
             Variable *const tuple;
     };
 
     class VoidCallInstruction : public voidInstruction {
         public:
-            void gen(Function *f, std::ofstream &outputFile) override;
+            // void gen(Function *f, std::ofstream &outputFile) override;
             explicit VoidCallInstruction(Item *callee);
             Item *const callee;
             std::vector<Item *> args; 
     };
     class NonVoidCallInstruction : public nonVoidInstruction {
     public:
-        void gen(Function *f, std::ofstream &outputFile) override;
+        // void gen(Function *f, std::ofstream &outputFile) override;
         explicit NonVoidCallInstruction(Variable *dest, Item *callee);
         Item *const callee;
         std::vector<Item *> args; // Now included directly in this class
@@ -320,8 +323,8 @@ namespace IR{
 
     class newArray : public nonVoidInstruction {
         public:
-            void gen(Function *f, std::ofstream &outputFile) override;
-            explicit newArray(Variable *dest,int64_t counter);
+            // void gen(Function *f, std::ofstream &outputFile) override;
+            explicit newArray(Variable *dest, int64_t counter);
             std::vector<Item *> args; 
             void calculate_array(Function *f, std::ofstream &outputFile);
             Variable *destination;
@@ -332,58 +335,58 @@ namespace IR{
     };
     class newTuple : public nonVoidInstruction {
         public:
-            void gen(Function *f, std::ofstream &outputFile) override;
+            // void gen(Function *f, std::ofstream &outputFile) override;
             explicit newTuple(Variable *dest, Item *size);
             Item *const size;
     };
 
-    enum SystemFunctionType {
-        Print,
-        Input,
-        ToUpper,
-        Tenserr
-    };
+    // enum SystemFunctionType {
+    //     Print,
+    //     Input,
+    //     ToUpper,
+    //     Tenserr
+    // };
 
-    class SystemCallFunction : public Item {
-    private:
-        explicit SystemCallFunction(SystemFunctionType type) : type_(type) {}
+    // class SystemCallFunction : public Item {
+    // private:
+    //     explicit SystemCallFunction(SystemFunctionType type) : type_(type) {}
 
-    public:
-        const SystemFunctionType type_;
-
-
-        SystemFunctionType getType() const {
-            return type_;
-        }
-
-        // Singleton instances
-        static SystemCallFunction *const PrintInstance() {
-            static SystemCallFunction instance(SystemFunctionType::Print);
-            return &instance;
-        }
-
-        static SystemCallFunction *const InputInstance() {
-            static SystemCallFunction instance(SystemFunctionType::Input);
-            return &instance;
-        }
-
-        static SystemCallFunction *const ToUpperInstance() {
-            static SystemCallFunction instance(SystemFunctionType::ToUpper);
-            return &instance;
-        }
-
-        static SystemCallFunction *const TenserrInstance() {
-            static SystemCallFunction instance(SystemFunctionType::Tenserr);
-            return &instance;
-        }
-    };
+    // public:
+    //     const SystemFunctionType type_;
 
 
-    class varArguments : public Token {
-        public:
-            explicit varArguments(std::vector<Item*> args);
-            std::vector<Item *> args;
-    };
+    //     SystemFunctionType getType() const {
+    //         return type_;
+    //     }
+
+    //     // Singleton instances
+    //     static SystemCallFunction *const PrintInstance() {
+    //         static SystemCallFunction instance(SystemFunctionType::Print);
+    //         return &instance;
+    //     }
+
+    //     static SystemCallFunction *const InputInstance() {
+    //         static SystemCallFunction instance(SystemFunctionType::Input);
+    //         return &instance;
+    //     }
+
+    //     static SystemCallFunction *const ToUpperInstance() {
+    //         static SystemCallFunction instance(SystemFunctionType::ToUpper);
+    //         return &instance;
+    //     }
+
+    //     static SystemCallFunction *const TenserrInstance() {
+    //         static SystemCallFunction instance(SystemFunctionType::Tenserr);
+    //         return &instance;
+    //     }
+    // };
+
+
+    // class varArguments : public Token {
+    //     public:
+    //         explicit varArguments(std::vector<Item*> args);
+    //         std::vector<Item *> args;
+    // };
 
 
     class Block : public Token {
@@ -399,14 +402,14 @@ namespace IR{
     };
     class teInstruction : public voidInstruction {
         public:
-            virtual std::vector<Block *> getSuccessors() = 0;
+            // virtual std::vector<Block *> getSuccessors() = 0;
     };
 
     class oneSuccBranch : public teInstruction {
         public: 
             // explicit oneSuccBranch(Block *block);
             explicit oneSuccBranch(Label *label);
-            std::vector<Block *> getSuccessors() override;
+            // std::vector<Block *> getSuccessors() override;
             // Block *const block;
 
             Label *label;
@@ -415,26 +418,26 @@ namespace IR{
     class twoSuccBranch : public teInstruction {
         public:
             // twoSuccBranch(Item *t, Block *trueBBlock , Block *falseB);
-            explicit twoSuccBranch(Item *t, Label *label1, Label *label2);
-            std::vector<Block*> getSuccessors() override;
+            explicit twoSuccBranch(Item *t, Label *labelTrue, Label *labelFalse);
+            // std::vector<Block*> getSuccessors() override;
             // Block *const trueB;
             // Block *const falseB;
 
             Item *const t;  // do we need it const?
-            Label *label1;
-            Label *label2;
+            Label *labelTrue;
+            Label *labelFalse;
     };
 
     class falseReturn : public teInstruction{
         public:
-            std::vector<Block *> getSuccessors() override;
+            // std::vector<Block *> getSuccessors() override;
             explicit falseReturn();
     };
 
     class trueReturn : public teInstruction {
         public:
             explicit trueReturn(Item *returnVal);
-            std::vector<Block *> getSuccessors() override;
+            // std::vector<Block *> getSuccessors() override;
 
             Item *const returnVal;
     };
@@ -445,11 +448,11 @@ namespace IR{
     class Function {
         public:
             explicit Function(userFuncName* functionName, Type* returnType);
-            void accept(blockVisitor* visitor); 
-            void assignTypeToVariable(Variable* variable, Type* type);
-            Block* getBlockByName(const std::string& blockName);
-            Variable* getVariableByName(const std::string& variableName);
-            userFuncName* getFunctionName() const;
+            // void accept(blockVisitor* visitor); 
+            // void assignTypeToVariable(Variable* variable, Type* type);
+            // Block* getBlockByName(const std::string& blockName);
+            // Variable* getVariableByName(const std::string& variableName);
+            // userFuncName* getFunctionName() const;
             std::vector<Instruction *> instructions;
             std::vector<Variable*> parameters;
             std::vector<Block*> codeBlocks;
@@ -466,11 +469,11 @@ namespace IR{
 
     class Program {
         public:
-            void accept(ProgramVisitor *v);
+            // void accept(ProgramVisitor *v);
             std::vector<Function *> functions;
             userFuncName *getFunctionName(const std::string& name);
             std::unordered_map<std::string, userFuncName *> functionNames;
     };
     
 
-};
+}
