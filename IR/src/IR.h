@@ -218,7 +218,10 @@ namespace IR{
 
     class Visitor {
         public:
-           
+        // virtual void visit(Function function) = 0;
+        // virtual void visit(Instruction *instruction) = 0;
+            virtual void visit(declarationInstruction *instruction) = 0;
+            virtual void visit(declarationInstruction *instruction) = 0;
     };
 
     // Specific IR declarations
@@ -228,6 +231,7 @@ namespace IR{
     */
     class Instruction : public Token {
         public:
+            virtual void accept(Visitor *visitor) = 0; 
 
     };
     class voidInstruction : public Instruction {

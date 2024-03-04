@@ -14,7 +14,7 @@
 #include <assert.h>
 
 #include "parser.h"
-// #include "code_generator.h"
+#include "code_generator.h"
 #include "IR.h"
 
 
@@ -84,9 +84,9 @@ int main(
   /*
    * Generate x86_64 assembly.
    */
-  // if (enable_code_generator){
-  //   IR::generate_code(p);
-  // }
+  if (enable_code_generator){
+    IR::generate_code(p);
+  }
 
   return 0;
 }

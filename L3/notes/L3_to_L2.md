@@ -439,3 +439,29 @@ Segmentation fault
 ```
 
 okay the program went nuts infinite looping after this. However it did produce the expected behavior when compiled with simone's L3c. Note that you pass in encoded values to allocate (we pass in 5 to allocate, this is an encoded 2 so the allocate function creates an array of size 2.)
+
+### Questions for OH
+* We have instances of things like this, is this even okay? we are accessing rsp past the amount that we allocated:    
+```
+_main:
+subq $96, %rsp
+_MainEntry_global_0:
+movq $10, %r10
+movq %r10, 400(%rsp)
+```
+* My understanding of the stack:
+    * picturing the stack as a column, the lowest addresses are towards the bottom and high addresses at the top.
+    * to allocate space on the stack, we subtract a certain amount from rsp. This moves the stack pointer downward, leaving space to store local variables, args, and other things. So if we access rsp + 400 after only allocating 96 bytes of stack space, is this undefined behavior? Are the stack frames from previous functions stored above or below us?
+        * either way this is a problem.
+    * For reference, this is what happens whenever we run test 319 (and pretty much the same thing happens whenever running test320):
+    ```
+    [apc6353@moore L3]$ ./a.out 
+    1
+    {s:6, 2, 2, 0, 1, 1, 1}
+    2
+    nil
+    Segmentation fault
+    ```
+    * What makes me believe this even more is that running simone's L1 compiler on the prog.L1 output of our L3 and L2 compilers also results in the segfault error. We definitely spill on this testcase, which is triggering the invalid stack access
+* potential sources of the error:
+    * something to do with spill.

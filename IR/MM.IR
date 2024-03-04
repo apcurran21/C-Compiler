@@ -1,0 +1,56 @@
+// note it seems a function parameter doesn't have to be declared before usage.
+
+define void @main () {
+    :main_entry
+
+    int64 %M1_rows
+    int64 %M1_cols
+    int64[][] %M1
+
+    // get the first user matrix
+    %M1_rows <- call input()
+    %M1_cols <- call input()
+    %M1 <- call @read_matrix(%M1_rows, %M1_cols)
+    
+
+    return
+}
+
+
+// encode a number %n using the integer encoding scheme
+define int64 @encode ( int64 %n ) {
+    :encode_entry
+    %n <- %n << 1
+    %n <- %n + 1
+    return %n
+}
+
+// decode a number %n using the integer encoding scheme
+define int64 @decode ( int64 %n ) {
+    :decode_entry
+    %n <- %n >> 1
+    return %n
+}
+
+// read a matrix from the user into memory given the encoded number of rows and cols
+define int64[][] @read_matrix (%rows, %cols) {
+    :read_matrix_entry
+
+    int64[][] %matrix
+
+    %matrix = new Array(%rows, %cols)
+
+    br :FORL_OUTER
+
+    :FORL_OUTER
+
+
+
+
+
+    
+    br :FORL_OUTER
+    
+    :ENDL_OUTER
+
+}
