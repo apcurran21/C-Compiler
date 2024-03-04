@@ -283,6 +283,7 @@ namespace IR{
             */
             explicit storeInstruction(Variable *dst, Item *var);
             // arrAccess *const access;
+            Variable *dst;
             Item *const var;
             std::vector<Item *> index_args_vec;
     };
@@ -320,12 +321,14 @@ namespace IR{
     class newArray : public nonVoidInstruction {
         public:
             void gen(Function *f, std::ofstream &outputFile) override;
-            explicit newArray(Variable *dest, int64_t counter);
-            int64_t count;
+            explicit newArray(Variable *dest,int64_t counter);
             std::vector<Item *> args; 
-            
+            void calculate_array(Function *f, std::ofstream &outputFile);
+            Variable *destination;
             int offset;
-            std::vector<int> dimensions;    
+            int64_t count;
+            std::vector<std::string> variableDimensions;
+            std::vector<int> dimensions;
     };
     class newTuple : public nonVoidInstruction {
         public:
@@ -469,4 +472,5 @@ namespace IR{
             std::unordered_map<std::string, userFuncName *> functionNames;
     };
     
-}
+
+};

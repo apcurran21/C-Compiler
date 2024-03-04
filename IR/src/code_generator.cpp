@@ -12,11 +12,14 @@ namespace IR{
     void arrLength::gen(Function *f,std::ofstream &outputFile){
         auto array = f->variableNameToArray[this->arr->name];
         auto number = dynamic_cast<Number *>(this->dim);
-        int offset_val = 8*(number->value+1)
+        int offset_val = 8*(std::stoi(number->value)+1);
         outputFile<<"%offset <-"<<offset_val<<'\n\t';
         outputFile<<"%address <-"<<"%m + %offset"<<"\n\t";
         outputFile<<this->dst->name<<" <- load %address"<<"\n\t";
     };
+    void storeInstruction::gen(Function *f,std::ofstream &outputFile){
+      
+    }
 
 
   void generate_code(Program& p) {
@@ -55,4 +58,5 @@ namespace IR{
    
     return ;
   }
+}
 

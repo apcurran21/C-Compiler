@@ -876,13 +876,6 @@ rdi <- 5
 rsi <- 1
 call allocate 2
 %printing_buf <- rax
-%andy_var <- mem %printing_buf 0
-%andy_var <- %andy_var
-%andy_var <<= 1
-%andy_var <- %andy_var
-%andy_var += 1
-rdi <- %andy_var
-call print 1
 mem rsp -8 <- :ret_main_global_108
 call @vec_ctor 0
 :ret_main_global_108

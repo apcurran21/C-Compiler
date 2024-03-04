@@ -23,7 +23,7 @@ namespace IR {
                         appendBlock.push_back(currentBlock);
                         fptr->blockNameToPointer[currentBlock->label] = currentBlock;
                     }
-                    currentBlock = new Block(label_cast->label); 
+                    currentBlock = new Block(label_cast->label->name); 
 
                 }
                 currentBlock->appendInstruction(i); 
@@ -45,7 +45,7 @@ namespace IR {
                 auto label_cast = dynamic_cast<labelInstruction *>(i);
                 auto te_cast = dynamic_cast<teInstruction*>(i);
                 if (label_cast){
-                    curr_label = label_cast->label;
+                    curr_label = label_cast->label->name;
                 } else if (te_cast) {
                     auto one_succ_branch = dynamic_cast<oneSuccBranch*>(i);
                     auto two_succ_branch = dynamic_cast<twoSuccBranch*>(i);

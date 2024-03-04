@@ -10,8 +10,41 @@
 #include <tuple>
 #include "IR.h"
 
-namespace IR {
-    
+
+namespace IR { 
+    void newArray::calculate_array(Function *f, std::ofstream &outputFile){
+        for (auto num:this->args){
+            auto number = dynamic_cast<Number *>(num);
+            this->variableDimensions.push_back(number->value+"D");
+            outputFile << number->value << "D <- " << number->value << " >> 1" << "\n\t";
+        }
+        outputFile<<"%v0 <- ";
+        auto it = args.begin(); // Iterator to the start of the vector
+        auto end = args.end() - 1;
+        while (it != end) {
+            auto number = dynamic_cast<Number*>(*it);
+            outputFile << number->value << "D * ";
+            ++it;
+        }
+        auto number = dynamic_cast<Number*>(*it);
+        outputFile << number->value <<"D" << "\n\t";
+
+        outputFile << "%v0 <- %v0 +" << this->args.size();
+        outputFile<< "%v0 <- %v0 << 1";
+        outputFile << "%v0 <- %v0 + 1";
+        outputFile << "%a <- call allocate(%v0,1)";
+        /*
+        These should be instructions to access vals
+        int count = 2;
+        for (auto num:this->args){
+            auto number = dynamic_cast<Number *>(num);
+            outputFile<<"%v" << count <<" <- "<< "%a + " << (count-1)* 8 << "\n\t";
+            outputFile<<"store %v" << count<<" <- "<< "%" << number->value << "\n\t";
+        }
+        */
+        
+    }
+
 /*
 Token/Item constructors
 */
@@ -125,19 +158,16 @@ Instruction constructors.
 /*
 Void
 */
-declarationInstruction::declarationInstruction(Type *type, Variable *var) : 
-    type(type),
-    var(var)
-{
-}
+declarationInstruction::declarationInstruction()
 
 labelInstruction::labelInstruction(Label *label) :
     label(label)
 {
 }
 
-VoidCallInstruction::VoidCallInstruction(Item *callee) :
+VoidCallInstruction::VoidCallInstruction(Item *callee, std::vector<Item *> args) :
     callee(callee),
+    args(args)
 {
 }
 
@@ -163,7 +193,7 @@ operationInstruction::operationInstruction(Variable *dst, Item *t1, Operator *op
 {
 }
 
-loadInstruction::loadInstruction(Variable *dst, Item *var) :
+loadInstruction::loadInstruction(Variable *dst Item *var) :
     nonVoidInstruction(dst),
     var(var)
 {
@@ -206,30 +236,6 @@ newTuple::newTuple(Variable *dest, Item *size) :
     size(size)
 {
 }
-
-
-/*
-Terminator constructors.
-*/
-oneSuccBranch::oneSuccBranch(Label *label) :
-    label(label)
-{
-}
-
-twoSuccBranch::twoSuccBranch(Item *t, Label *label1, Label *label2) :
-    t(t),
-    label1(label1),
-    label2(label2)
-{
-}
-
-
-trueReturn::trueReturn(Item *returnVal) :
-    returnVal(returnVal)
-{
-}
-
-falseReturn::falseReturn() : {}
 
 
 
