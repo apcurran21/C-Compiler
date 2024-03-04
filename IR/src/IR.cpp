@@ -64,9 +64,8 @@ labelInstruction::labelInstruction(Label *label) :
 {
 }
 
-VoidCallInstruction::VoidCallInstruction(Item *callee, std::vector<Item *> args) :
+VoidCallInstruction::VoidCallInstruction(Item *callee) :
     callee(callee),
-    args(args)
 {
 }
 

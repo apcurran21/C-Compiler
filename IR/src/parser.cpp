@@ -21,6 +21,11 @@ namespace IR {
   */
 
   /*
+  Counters for temporary variables, etc.
+  */
+  int64_t counter = 0;
+
+  /*
   Stack for storing the parsed items.
   */
   std::vector<Item*> parsed_items;
@@ -1003,7 +1008,8 @@ namespace IR {
       auto var = parsed_items.front();
       parsed_items.erase(parsed_items.begin());
 
-      auto i = new newArray(var);
+      auto i = new newArray(var, counter);
+      counter++;
 
       while (!parsed_items.empty()) {
         auto arg = parsed_items.front();

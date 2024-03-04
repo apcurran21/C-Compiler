@@ -60,6 +60,7 @@ namespace IR{
     */
     class Item : public Token {
         public:
+            virtual std::string print() const = 0;
     };
 
     // class Type : public Item{};
@@ -197,13 +198,13 @@ namespace IR{
         inline static Operator *const LEFT = new Operator(OperatorEnum::left);
     };
 
-    class Singleton {
-        public:
-            inline static IntType *const INT_TYPE = new IntType();
-            inline static VoidType *const VOID_TYPE = new VoidType();
-            inline static TupleType *const TUPLE_TYPE = new TupleType();
-            inline static CodeType *const CODE_TYPE = new CodeType();
-    };
+    // class Singleton {
+    //     public:
+    //         inline static IntType *const INT_TYPE = new IntType();
+    //         inline static VoidType *const VOID_TYPE = new VoidType();
+    //         inline static TupleType *const TUPLE_TYPE = new TupleType();
+    //         inline static CodeType *const CODE_TYPE = new CodeType();
+    // };
 
     class Visitor {
         public:
@@ -232,7 +233,7 @@ namespace IR{
     };
 
     class declarationInstruction : public voidInstruction {
-        public
+        public:
             void gen(Function *f, std::ofstream &outputFile) override;
             explicit declarationInstruction(Type *type, Variable *var);
             Type *type;
