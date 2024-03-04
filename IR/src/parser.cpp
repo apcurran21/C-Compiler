@@ -267,6 +267,49 @@ namespace IR {
     > {};
 
   /*
+  Terminator rules.
+  */
+  struct Terminator_single_branch_rule:
+    // br label
+    pegtl::seq<
+      spaces,
+      str_branch,
+      spaces,
+      label_rule
+    > {};
+  struct Terminator_double_branch_rule:
+    // br t label1 label2
+    pegtl::seq<
+      spaces,
+      str_branch,
+      spaces,
+      label_rule,
+      spaces,
+      label_rule
+    > {};
+  struct Terminator_return_val_rule:
+    // return t
+    pegtl::seq<
+      spaces,
+      str_return,
+      spaces,
+      t_rule
+    > {};
+  struct Terminator_return_rule:
+    // return
+    pegtl::seq<
+      spaces,
+      str_return
+    > {};
+  // struct Terminator_rule:
+  //   pegtl::sor<
+  //     pegtl::seq< pegtl::at< Terminator_return_val_rule >, Terminator_return_val_rule >,
+  //     pegtl::seq< pegtl::at< Terminator_return_rule >, Terminator_return_rule >,
+  //     pegtl::seq< pegtl::at< Terminator_double_branch_rule >, Terminator_double_branch_rule >,
+  //     pegtl::seq< pegtl::at< Terminator_single_branch_rule >, Terminator_single_branch_rule >
+  //   > {};
+
+  /*
   Instruction rules.
   */
   struct Instruction_type_declaration_rule:
@@ -274,6 +317,7 @@ namespace IR {
     pegtl::seq<
       spaces,
       type_rule,
+      spaces,
       var_rule
     > {};
   struct Instruction_operation_rule:
@@ -418,6 +462,12 @@ namespace IR {
     > {};
   struct Instruction_rule:
     pegtl::sor<
+      pegtl::seq< pegtl::at< Label_label_rule >, Label_label_rule >,
+      pegtl::seq< pegtl::at< Terminator_return_val_rule >, Terminator_return_val_rule >,
+      pegtl::seq< pegtl::at< Terminator_return_rule >, Terminator_return_rule >,
+      pegtl::seq< pegtl::at< Terminator_double_branch_rule >, Terminator_double_branch_rule >,
+      pegtl::seq< pegtl::at< Terminator_single_branch_rule >, Terminator_single_branch_rule >,
+      // ^new additions for the "everything is an instruction" approach
       pegtl::seq< pegtl::at< Instruction_type_declaration_rule >, Instruction_type_declaration_rule >,
       pegtl::seq< pegtl::at< Instruction_array_initialization_rule >, Instruction_array_initialization_rule >,
       pegtl::seq< pegtl::at< Instruction_tuple_initialization_rule >, Instruction_tuple_initialization_rule >,
@@ -434,7 +484,7 @@ namespace IR {
     pegtl::star<
       pegtl::seq<
         seps_with_comments,
-        pegtl::bol,
+        // pegtl::bol,
         spaces,
         Instruction_rule,
         seps_with_comments
@@ -442,64 +492,26 @@ namespace IR {
     > {};
       
   /*
-  Terminator rules.
-  */
-  struct Terminator_single_branch_rule:
-    // br label
-    pegtl::seq<
-      spaces,
-      str_branch,
-      label_rule
-    > {};
-  struct Terminator_double_branch_rule:
-    // br t label1 label2
-    pegtl::seq<
-      spaces,
-      str_branch,
-      spaces,
-      label_rule,
-      spaces,
-      label_rule
-    > {};
-  struct Terminator_return_val_rule:
-    // return t
-    pegtl::seq<
-      spaces,
-      str_return,
-      spaces,
-      t_rule
-    > {};
-  struct Terminator_return_rule:
-    // return
-    pegtl::seq<
-      spaces,
-      str_return
-    > {};
-  struct Terminator_rule:
-    pegtl::sor<
-      pegtl::seq< pegtl::at< Terminator_return_val_rule >, Terminator_return_val_rule >,
-      pegtl::seq< pegtl::at< Terminator_return_rule >, Terminator_return_rule >,
-      pegtl::seq< pegtl::at< Terminator_double_branch_rule >, Terminator_double_branch_rule >,
-      pegtl::seq< pegtl::at< Terminator_single_branch_rule >, Terminator_single_branch_rule >
-    > {};
-
-  /*
   Basic Block rules.
   */
-  struct BB_rule:
-    pegtl::seq<
-      spaces,
-      label_rule,
-      Instructions_rule,
-      spaces,
-      Terminator_rule
-    > {};
-  struct BBs_rule:
-    pegtl::plus<
-      seps_with_comments,
-      BB_rule,
-      seps_with_comments
-    > {};
+  // struct BB_rule:
+  //   pegtl::seq<
+  //     spaces,
+  //     // label_rule,
+  //     Label_label_rule,
+  //     seps_with_comments,
+  //     spaces,
+  //     Instructions_rule,
+  //     seps_with_comments,
+  //     spaces,
+  //     Terminator_rule
+  //   > {};
+  // struct BBs_rule:
+  //   pegtl::plus<
+  //     seps_with_comments,
+  //     BB_rule,
+  //     seps_with_comments
+  //   > {};
   
   /*
   Function rules.
@@ -541,7 +553,8 @@ namespace IR {
       seps,
       spaces,
       pegtl::one< '{' >,
-      BBs_rule,
+      // BBs_rule,
+      Instructions_rule,
       spaces,
       pegtl::one< '}' >
     > {};
@@ -576,6 +589,31 @@ namespace IR {
   */
   template< typename Rule >
   struct action : pegtl::nothing< Rule > {};
+
+  /*
+  Debug actions.
+  */
+  template<> struct action < str_branch > {
+    template< typename Input >
+    static void apply( const Input & in, Program & p) {
+      if (debug) std::cerr << "Recognized a str_branch rule\n";
+    }
+  };
+
+  template<> struct action < spaces > {
+    template< typename Input >
+    static void apply( const Input & in, Program & p) {
+      // if (debug) std::cerr << "Recognized a spaces rule\n";
+    }
+  };
+
+  template<> struct action < seps_with_comments > {
+    template< typename Input >
+    static void apply( const Input & in, Program & p) {
+      // if (debug) std::cerr << "Recognized a seps_with_comments rule\n";
+    }
+  };
+
 
   /*
   Terminal actions.
@@ -632,6 +670,7 @@ namespace IR {
 
       auto name = new userFuncName(in.string());
       parsed_items.push_back(name);
+      if (debug) std::cerr << "pushed new fname onto, parsed_items now has size " << parsed_items.size() << "\n";
     }
   };
 
@@ -708,6 +747,7 @@ namespace IR {
 
       type->dims = dims;
       parsed_items.push_back(type);
+      if (debug) std::cerr << "pushed onto, parsed_items now has size " << parsed_items.size() << "\n";
     }
   };
 
@@ -720,6 +760,7 @@ namespace IR {
       auto fname_temp = parsed_items.back();
       parsed_items.pop_back();
       auto type_temp = parsed_items.back();
+      parsed_items.pop_back();
 
       auto fname = dynamic_cast<userFuncName*>(fname_temp);
       if (!fname) {
@@ -731,8 +772,13 @@ namespace IR {
         if (debug) std::cerr << "Program is incorrect, " << type->print() << " should be of Type type.\n";
       }
 
+      if (debug) std::cerr << "grabbed the type and fname, parsed_items now has size " << parsed_items.size() << "\n";
+      if (debug) std::cerr << "p.functions has size " << p.functions.size() << "\n";
+
       auto function = new Function(fname, type);
       p.functions.push_back(function);
+
+      if (debug) std::cerr << "created a function and added it, p.functions now has size " << p.functions.size() << "\n";
     }
   };
 
@@ -1245,6 +1291,9 @@ namespace IR {
       There should be an even number of items in the parsed_items stack now, a function definition
       is made up of (type var) starred.
       */
+
+      if (debug) std::cerr << "parsed_items has size " << parsed_items.size() << " before the while loop\n";
+
       while (!parsed_items.empty()) {
         auto type = parsed_items.front();         // it seems like we aren't currently doing anything with this
         if (debug) std::cerr << "made it past grabbing the type " << type->print() << "\n";
