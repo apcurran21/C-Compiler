@@ -184,9 +184,12 @@ namespace L2{
     
       //This might supposed to be stack_size here 
 
-      if (stack_size > 0) {
-        stack_size++;
-      } 
+      /*
+      This was our potential fix for the L3 bugs, but this caused other problems with the L2 tests.
+      */
+      // if (stack_size > 0) {
+      //   stack_size++;
+      // } 
       outputFile << fptr->arguments<<" "<<stack_size<<"\n\t";
       for (Instruction *iptr : fptr->instructions) {
         // iptr->accept(myColorVisitor);
