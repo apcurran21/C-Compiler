@@ -17,6 +17,9 @@ namespace IR{
         outputFile<<"%address <-"<<"%m + %offset"<<"\n\t";
         outputFile<<this->dst->name<<" <- load %address"<<"\n\t";
     };
+    void storeInstruction::gen(Function *f,std::ofstream &outputFile){
+      
+    }
 
 
   void generate_code(Program& p) {
