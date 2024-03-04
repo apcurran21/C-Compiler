@@ -13,6 +13,30 @@
 
 namespace IR { 
 
+    /*
+    Utility dictionaries.
+    */
+    std::map<std::string, TypeEnum> stringToTypeEnum = {
+        {"int64", TypeEnum::int64},
+        {"tuple", TypeEnum::tuple},
+        {"code", TypeEnum::code},
+        {"void", TypeEnum::voidt},
+        {"[]", TypeEnum::bracks}
+    };
+    std::map<std::string, OperatorEnum> stringToOperatorEnum = {
+        {">", OperatorEnum::gt},
+        {">=", OperatorEnum::geq},
+        {"=", OperatorEnum::eq},
+        {"<=", OperatorEnum::leq},
+        {"*", OperatorEnum::times},
+        {"-", OperatorEnum::minus},
+        {"+", OperatorEnum::plus},
+        {"<", OperatorEnum::lt},
+        {"<<", OperatorEnum::left},
+        {">>", OperatorEnum::right},
+        {"&", OperatorEnum::amp}
+    };
+
 
     void newArray::calculate_array(Function *f, std::ofstream &outputFile){
         for (auto num:this->args){
@@ -100,6 +124,14 @@ namespace IR {
     {
     }
     std::string Variable::print() const  {
+        return name;
+    }
+
+    userFuncName::userFuncName(const std::string& name) :
+        name(name)
+    {
+    }
+    std::string userFuncName::print() const {
         return name;
     }
 
@@ -267,6 +299,14 @@ namespace IR {
     /*
     Function/Program methods.
     */
+
+    Function::Function(userFuncName* functionName, Type* returnType) :
+        functionName(functionName),
+        returnType(returnType)
+    {
+    }
+
+
     userFuncName* Program::getFunctionName(const std::string& name) {
         userFuncName* res;
         auto it = functionNames.find(name);

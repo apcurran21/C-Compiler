@@ -198,15 +198,20 @@ namespace IR {
       str_void
     > {};
   struct type_rule:
-    pegtl::sor<
-      pegtl::seq<
-        str_int64,
-        pegtl::star< str_bracks >
-      >,
-      str_tuple,
-      str_code,
-      str_void
+    pegtl::seq<
+      type_keywords_rule,
+      pegtl::star< str_bracks >
     > {};
+  // struct type_rule:
+  //   pegtl::sor<
+  //     pegtl::seq<
+  //       str_int64,
+  //       pegtl::star< str_bracks >
+  //     >,
+  //     str_tuple,
+  //     str_code,
+  //     str_void
+  //   > {};
   // struct T_rule:
   //   pegtl::sor<
   //     t_rule,
@@ -431,7 +436,7 @@ namespace IR {
         seps_with_comments,
         pegtl::bol,
         spaces,
-        Instructions_rule,
+        Instruction_rule,
         seps_with_comments
       >
     > {};
@@ -506,7 +511,7 @@ namespace IR {
       spaces,
       type_rule,
       spaces,
-      I_rule,
+      defined_fname,
       spaces,
       pegtl::one< '(' >,
       spaces,
@@ -656,7 +661,7 @@ namespace IR {
       if (debug) std::cerr << "Recognized an op rule\n";
 
       OperatorEnum op;
-      auto it = stringToOperatorEnum.find(in.string);
+      auto it = stringToOperatorEnum.find(in.string());
       if (it != stringToOperatorEnum.end()) {
         op = it->second;
       } else {
@@ -687,6 +692,8 @@ namespace IR {
 
       auto type_temp = parsed_items.front();
       parsed_items.erase(parsed_items.begin());
+      if (debug) std::cerr << "made it past grabbing the type " << type_temp->print() << "\n";
+      if (debug) std::cerr << "parsed_items now has size " << parsed_items.size() << "\n";
 
       int64_t dims = 0;
       while (!parsed_items.empty()) {
@@ -1225,6 +1232,9 @@ namespace IR {
       if (debug) std::cerr << "Recognized a Function_header rule\n";
 
       auto f = p.functions.back();
+
+      if (debug) std::cerr << "made it past grabbing the current function\n";
+
       // auto type = parsed_items.front()
       // parsed_items.erase(parsed_items.begin());
       // auto fname = parsed_items.front()
@@ -1237,9 +1247,13 @@ namespace IR {
       */
       while (!parsed_items.empty()) {
         auto type = parsed_items.front();         // it seems like we aren't currently doing anything with this
+        if (debug) std::cerr << "made it past grabbing the type " << type->print() << "\n";
         parsed_items.erase(parsed_items.begin());
+        if (debug) std::cerr << "made it past erasing the type\n";
         auto var_temp = parsed_items.front();
+        if (debug) std::cerr << "made it past grabbing the var " << var_temp->print() << "\n";
         parsed_items.erase(parsed_items.begin());
+        if (debug) std::cerr << "made it past erasing the var\n";
 
         auto var = dynamic_cast<Variable*>(var_temp);
         if (!var) {

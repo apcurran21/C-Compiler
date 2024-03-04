@@ -8,7 +8,8 @@
 #include <list>
 #include <map>
 #include <tuple>
-#include "IR.h"
+
+#include "createCodeBlock.h"
 
 namespace IR {
     void createCodeBlock(Program *p) {

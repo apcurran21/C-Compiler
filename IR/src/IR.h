@@ -85,6 +85,7 @@ namespace IR{
     //     VoidType() = default;
     // };
 
+
     enum TypeEnum {
         int64,  // encodes both single and array int64s using its dims field
         tuple,
@@ -93,13 +94,15 @@ namespace IR{
         bracks  // to catch the "[]" dimensions in int64 arrays
     };
 
-    std::map<std::string, TypeEnum> stringToTypeEnum = {
-        {"int64", TypeEnum::int64},
-        {"tuple", TypeEnum::tuple},
-        {"code", TypeEnum::code},
-        {"void", TypeEnum::voidt},
-        {"[]", TypeEnum::bracks}
-    };
+    // std::map<std::string, TypeEnum> stringToTypeEnum = {
+    //     {"int64", TypeEnum::int64},
+    //     {"tuple", TypeEnum::tuple},
+    //     {"code", TypeEnum::code},
+    //     {"void", TypeEnum::voidt},
+    //     {"[]", TypeEnum::bracks}
+    // };
+
+    extern std::map<std::string, TypeEnum> stringToTypeEnum;
 
     class Type : public Item {
         public:
@@ -161,19 +164,21 @@ namespace IR{
         amp
     };
 
-    std::map<std::string, OperatorEnum> stringToOperatorEnum = {
-        {">", OperatorEnum::gt},
-        {">=", OperatorEnum::geq},
-        {"=", OperatorEnum::eq},
-        {"<=", OperatorEnum::leq},
-        {"*", OperatorEnum::times},
-        {"-", OperatorEnum::minus},
-        {"+", OperatorEnum::plus},
-        {"<", OperatorEnum::lt},
-        {"<<", OperatorEnum::left},
-        {">>", OperatorEnum::right},
-        {"&", OperatorEnum::amp}
-    };
+    // std::map<std::string, OperatorEnum> stringToOperatorEnum = {
+    //     {">", OperatorEnum::gt},
+    //     {">=", OperatorEnum::geq},
+    //     {"=", OperatorEnum::eq},
+    //     {"<=", OperatorEnum::leq},
+    //     {"*", OperatorEnum::times},
+    //     {"-", OperatorEnum::minus},
+    //     {"+", OperatorEnum::plus},
+    //     {"<", OperatorEnum::lt},
+    //     {"<<", OperatorEnum::left},
+    //     {">>", OperatorEnum::right},
+    //     {"&", OperatorEnum::amp}
+    // };
+
+    extern std::map<std::string, OperatorEnum> stringToOperatorEnum;
 
     class Operator : public Item {
         public:
@@ -443,11 +448,11 @@ namespace IR{
     class Function {
         public:
             explicit Function(userFuncName* functionName, Type* returnType);
-            void accept(blockVisitor* visitor); 
-            void assignTypeToVariable(Variable* variable, Type* type);
-            Block* getBlockByName(const std::string& blockName);
-            Variable* getVariableByName(const std::string& variableName);
-            userFuncName* getFunctionName() const;
+            // void accept(blockVisitor* visitor); 
+            // void assignTypeToVariable(Variable* variable, Type* type);
+            // Block* getBlockByName(const std::string& blockName);
+            // Variable* getVariableByName(const std::string& variableName);
+            // userFuncName* getFunctionName() const;
             std::vector<Instruction *> instructions;
             std::vector<Variable*> parameters;
             std::vector<Block*> codeBlocks;
@@ -464,7 +469,7 @@ namespace IR{
 
     class Program {
         public:
-            void accept(ProgramVisitor *v);
+            // void accept(ProgramVisitor *v);
             std::vector<Function *> functions;
             userFuncName *getFunctionName(const std::string& name);
             std::unordered_map<std::string, userFuncName *> functionNames;

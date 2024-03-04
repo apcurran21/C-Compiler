@@ -9,7 +9,6 @@
 #include <map>
 #include <queue>
 #include <tuple>
-#include "IR.h"
 #include "calculateCFG.h"
 
 namespace IR {
