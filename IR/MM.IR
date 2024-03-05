@@ -37,20 +37,35 @@ define int64[][] @read_matrix (%rows, %cols) {
     :read_matrix_entry
 
     int64[][] %matrix
+    int64 %outer_cond
+    int64 %outer_index
+    int64 %rows_decoded
+    int64 %inner_cond
+    int64 %inner_ind
+    int64 %cols_decoded
 
-    %matrix = new Array(%rows, %cols)
+    %rows_decoded <- call @decode(%rows)
+    %cols_decoded <- call @decode(%rows)
 
+    %matrix <- new Array(%rows, %cols)
+    %outer_index <- 0
     br :FORL_OUTER
 
     :FORL_OUTER
+    %outer_cond <- %outer_index >= %rows_decoded
+    br %outer_cond :ENDL_OUTER :ENTER_FORL_OUTER
 
+        :ENTER_FORL_OUTER
 
+        // just to test the looping, we should expect to see %rows number of prints
+        call print(0)
 
+        %outer_index <- %outer_index + 1
 
-
-    
-    br :FORL_OUTER
+        br :FORL_OUTER
     
     :ENDL_OUTER
+
+    return %matrix
 
 }

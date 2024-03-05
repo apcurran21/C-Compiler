@@ -86,7 +86,7 @@ define int64[] @read_input_arr(){
         %user_val <- call input()
         %user_arr[%index] <- %user_val
         %index <- %index + 1
-        call print(%user_arr)
+        //call print(%user_arr)
         br :FORL
     :ENDL
     return %user_arr
