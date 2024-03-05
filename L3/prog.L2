@@ -2,20 +2,10 @@
 (@main
 0
 :entry_global_0
-%v1 <- 1
-%v2 <- 2
-goto :myLabel1_global_1
-:myLabel1_global_1
-%v3 <- %v1
-%v3 += %v2
-%check <- 1 < %v3
-cjump 1 = %check :true_global_3
-goto :false_global_4
-:false_global_4
+rdi <- 1
+rsi <- 0
+mem rsp -8 <- :ret_main_global_1
+call @buildASandwich 2
+:ret_main_global_1
 return
-:true_global_3
-rdi <- %v3
-call print 1
-return
-)
 )

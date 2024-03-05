@@ -108,24 +108,25 @@ namespace IR{
         auto array = f->variableNameToArray[this->var->print()];
         int offset_val = 8 + (array->args.size()*8);
         outputFile << "%offset <- " <<offset_val<<"\n\t";
-        outputFile << "%offset <- %offset * (";
+        outputFile << "%temp <- 1 * ";
         // stop one before the last one in order to add the last offset value in check slide 63 if confused 
         // this is to add j value in 
         int last_i = 0;
-        for (int i = 0; i<array->args.size();i++){
+        for (int i = 0; i<array->args.size()-1;i++){
           outputFile<< this->index_args_vec[i]->print() << "*";
           int last_j = 0;
-          for (int j = i+1;i<array->args.size();i++){
-            last_j = j;
+          for (int j = i+1;i<array->args.size()-1;i++){
             outputFile << array->args[j] << "*";
+              last_j = j+1;
           }
-          outputFile<<array->args[last_j+1] << ") + (";
-          last_i = i;
+          outputFile<<array->args[last_j] << ")";
+          last_i = i+1;
         }
-        outputFile << this->index_args_vec[last_i+1]->print() <<") ) *8"<< "\n\t";
+        outputFile << this->index_args_vec[last_i]->print()<<"\n\t";
+        outputFile<<"%temp <- %temp * 8"<<"\n\t";
+        outputFile<<"%offset <- %offset + %temp"<< "\n\t";
         outputFile << "%addr"<< array->count << "<- "<< array->dst->print()<< "+ %offset"<<"\n\t";
-        array->count++;
-        outputFile << this->dst->print()<< "<- load %addr"<<"\n\t";
+        outputFile << this->dst->print()<< "<- load %addr"<<array->count<<"\n\t";
       } else {
         // we need to iterate the count somehow 
         auto tuple = f->variableNameToTuple[this->var->print()];
