@@ -483,9 +483,9 @@ namespace IR {
       pegtl::seq< pegtl::at< Instruction_dim_length_rule >, Instruction_dim_length_rule >,
       pegtl::seq< pegtl::at< Instruction_length_rule >, Instruction_length_rule >,
       pegtl::seq< pegtl::at< Instruction_operation_rule >, Instruction_operation_rule >,
-      pegtl::seq< pegtl::at< Instruction_assignment_rule >, Instruction_assignment_rule >,
       pegtl::seq< pegtl::at<Instruction_load_rule>, Instruction_load_rule >,
-      pegtl::seq< pegtl::at<Instruction_store_rule>, Instruction_store_rule>
+      pegtl::seq< pegtl::at<Instruction_store_rule>, Instruction_store_rule>,
+      pegtl::seq< pegtl::at< Instruction_assignment_rule >, Instruction_assignment_rule >
     > {};
   struct Instructions_rule:
     pegtl::star<
