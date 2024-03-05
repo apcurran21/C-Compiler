@@ -291,7 +291,7 @@ namespace IR{
             explicit storeInstruction(Variable *dst, Item *var);
 
             // arrAccess *const access;
-            Variable *dst;
+            // Variable *dst;
             Item *const var;
             std::vector<Item *> index_args_vec;
     };
