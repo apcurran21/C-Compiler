@@ -61,15 +61,13 @@ namespace IR {
         outputFile<< "%v0 <- %v0 << 1"<<"\n\t";
         outputFile << "%v0 <- %v0 + 1"<<"\n\t";
         outputFile << this->dst->name<<" <- call allocate(%v0,1)"<<"\n\t";
-        /*
-        These should be instructions to access vals
         int count = 2;
         for (auto num:this->args){
             auto number = dynamic_cast<Number *>(num);
-            outputFile<<"%v" << count <<" <- "<< "%a + " << (count-1)* 8 << "\n\t";
-            outputFile<<"store %v" << count<<" <- "<< "%" << number->value << "\n\t";
+            outputFile<<"%v" << count <<" <- "<< this->dst->name <<" + " << (count-1)* 8 << "\n\t";
+            outputFile<<"store %v" << count<<" <- "<< number->value << "\n\t";
         }
-        */
+        
         
     }
 
