@@ -367,6 +367,8 @@ namespace IR {
     // var1[t]... <- s
     pegtl::seq<
       spaces,
+      var_rule,
+      spaces,
       full_array_access_rule,
       spaces,
       str_arrow,
