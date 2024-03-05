@@ -143,6 +143,14 @@ namespace IR {
       pegtl::one< '@' >,
       name
     > {};
+  // custom rule
+  struct stdlib_rule:
+    pegtl::sor<
+      str_print,
+      str_input,
+      str_tuperr,
+      str_tenserr
+    > {};
   struct var_rule:
     pegtl::seq<
       pegtl::one< '%' >,
@@ -220,10 +228,7 @@ namespace IR {
   struct callee_rule:
     pegtl::sor<
       u_rule,
-      str_print,
-      str_input,
-      str_tuperr,
-      str_tenserr
+      stdlib_rule
     > {};
   // custom tokens
   struct defined_fname:
@@ -671,6 +676,16 @@ namespace IR {
       auto name = new userFuncName(in.string());
       parsed_items.push_back(name);
       if (debug) std::cerr << "pushed new fname onto, parsed_items now has size " << parsed_items.size() << "\n";
+    }
+  };
+
+  template<> struct action < stdlib_rule > {
+    template< typename Input >
+    static void apply( const Input & in, Program & p) {
+      if (debug) std::cerr << "Recognized an stdlib rule\n";
+
+      auto name = new userFuncName(in.string());
+      parsed_items.push_back(name);
     }
   };
 
