@@ -86,9 +86,9 @@ namespace IR{
     void VoidCallInstruction::gen(Function *f, std::ofstream &outputFile){
       outputFile << "call "<< callee->print() << " (";
       int last_i = 0;
-      for (int i =0;i<args.size();i++){
+      for (int i =0;i<args.size()-1;i++){
         outputFile << args[i]->print()<<",";
-        last_i = i;
+        last_i = i+1;
       }
       outputFile << args[last_i]->print()<<")"<<"\n\t";
     }
