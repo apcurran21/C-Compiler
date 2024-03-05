@@ -12,10 +12,12 @@
 #include "calculateCFG.h"
 
 namespace IR {
-
-    extern int const debug;
-    
-    void calculateCFG::forFunction(Function *f){
+    void forProgram(Program *p){
+        for (Function *fptr : p->functions){
+            forFunction(fptr);
+        }
+    }
+    void forFunction(Function *f){
             std::queue<Block *> queue;
             for (auto block : f->codeBlocks){
                 queue.push(block);
@@ -33,6 +35,6 @@ namespace IR {
                     }
                 }
             }
-        };
+        }
 
 }

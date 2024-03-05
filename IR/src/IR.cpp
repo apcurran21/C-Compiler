@@ -37,28 +37,30 @@ namespace IR {
         {"&", OperatorEnum::amp}
     };
 
-
+    void Block::appendInstruction(Instruction *i){
+        this->instructionBody.push_back(i);
+    }
     void newArray::calculate_array(Function *f, std::ofstream &outputFile){
         for (auto num:this->args){
             auto number = dynamic_cast<Number *>(num);
             this->variableDimensions.push_back(number->value+"D");
-            outputFile << number->value << "D <- " << number->value << " >> 1" << "\n\t";
+            outputFile <<"%"<< "D"<< number->value << "<- " << number->value << " >> 1" << "\n\t";
         }
         outputFile<<"%v0 <- ";
         auto it = args.begin(); // Iterator to the start of the vector
         auto end = args.end() - 1;
         while (it != end) {
             auto number = dynamic_cast<Number*>(*it);
-            outputFile << number->value << "D * ";
+            outputFile << "D"<< number->value<<" * ";
             ++it;
         }
         auto number = dynamic_cast<Number*>(*it);
-        outputFile << number->value <<"D" << "\n\t";
+        outputFile << "%"<< "D"<< number->value << "\n\t";
 
-        outputFile << "%v0 <- %v0 +" << this->args.size();
-        outputFile<< "%v0 <- %v0 << 1";
-        outputFile << "%v0 <- %v0 + 1";
-        outputFile << this->destination->name<<" <- call allocate(%v0,1)";
+        outputFile << "%v0 <- %v0 +" << this->args.size()<<"\n\t";
+        outputFile<< "%v0 <- %v0 << 1"<<"\n\t";
+        outputFile << "%v0 <- %v0 + 1"<<"\n\t";
+        outputFile << this->dst->name<<" <- call allocate(%v0,1)"<<"\n\t";
         /*
         These should be instructions to access vals
         int count = 2;
@@ -201,7 +203,7 @@ namespace IR {
     labelInstruction::labelInstruction(Label *label) :
         label(label)
     {
-    }
+    }   
 
     VoidCallInstruction::VoidCallInstruction(Item *callee) :
         callee(callee)
@@ -261,14 +263,14 @@ namespace IR {
     {
     }
 
-    newArray::newArray(Variable *dest, int64_t counter) :
-        nonVoidInstruction(dest),
+    newArray::newArray(Variable *dst, int64_t counter) :
+        nonVoidInstruction(dst),
         count(counter)
     {
     }
 
-    newTuple::newTuple(Variable *dest, Item *size,int64_t counter) :
-        nonVoidInstruction(dest),
+    newTuple::newTuple(Variable *dst, Item *size,int64_t counter) :
+        nonVoidInstruction(dst),
         size(size),
         count(counter)
     {

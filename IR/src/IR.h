@@ -327,10 +327,10 @@ namespace IR{
 
     class newArray : public nonVoidInstruction {
         public:
-            explicit newArray(Variable *destination, int64_t counter);
+            void gen(Function *f, std::ofstream &outputFile) override;
+            explicit newArray(Variable *dst, int64_t counter);
             std::vector<Item *> args; 
             void calculate_array(Function *f, std::ofstream &outputFile);
-            Variable *destination;
             int offset;
             int64_t count;
             std::vector<std::string> variableDimensions;
@@ -339,9 +339,9 @@ namespace IR{
     class newTuple : public nonVoidInstruction {
         public:
             void gen(Function *f, std::ofstream &outputFile) override;
-            explicit newTuple(Variable *dest, Item *size,int64_t counter);
+            explicit newTuple(Variable *dst, Item *size,int64_t counter);
             Item *const size;
-            Variable *dest;
+            Variable *dst;
             int64_t count;
 
             

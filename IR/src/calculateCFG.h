@@ -10,13 +10,8 @@
 #include <map>
 #include <tuple>
 #include "IR.h"
+
 namespace IR {
-
-    extern int const debug;
-    
-    class calculateCFG {
-    public:
-        void forFunction(Function *f);
-
-    };
+    void forFunction(Function *f);
+    void forProgram(Program *p);
 }
