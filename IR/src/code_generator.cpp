@@ -27,7 +27,7 @@ namespace IR{
         auto number = dynamic_cast<Number *>(this->dim);
         int offset_val = 8*(number->value+1);
         outputFile<<"%offset <-"<<offset_val<<"\n\t";
-        outputFile<<"%address <-"<<"%m + %offset"<<"\n\t";
+        outputFile<<"%address <- "<< array->print() <<" + %offset"<<"\n\t";
         outputFile<<this->dst->name<<" <- load %address"<<"\n\t";
     }
     void Assignment::gen(Function *f,std::ofstream &outputFile){
