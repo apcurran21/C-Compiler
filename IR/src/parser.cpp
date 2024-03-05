@@ -288,6 +288,8 @@ namespace IR {
       spaces,
       str_branch,
       spaces,
+      t_rule,
+      spaces,
       label_rule,
       spaces,
       label_rule

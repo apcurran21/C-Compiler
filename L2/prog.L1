@@ -1,0 +1,21 @@
+(@main
+(@main
+	0 0
+	:entry_global_0
+	r10 <- 1
+	r11 <- 2
+	goto :myLabel1_global_1
+	:myLabel1_global_1
+	r10 <- r10
+	r10 += r11
+	r11 <- 1 < r10
+	cjump 1 = r11 :true_global_3
+	goto :false_global_4
+	:false_global_4
+	return
+	:true_global_3
+	rdi <- r10
+	call print 1
+	return
+	)
+)
