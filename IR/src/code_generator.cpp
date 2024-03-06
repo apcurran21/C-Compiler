@@ -33,7 +33,36 @@ namespace IR{
     void Assignment::gen(Function *f,std::ofstream &outputFile){
         outputFile <<this->dst->print()<< " <- "<<this->src->print()<<"\n\t";
     }
-    
+
+    void loadInstruction::gen(Function *f, std::ofstream &outputFile){
+      auto key = this->var->print();
+      auto key_var = f->variableNameToPointer[key];
+      if (f->variableToTypeMapping[key_var]->type == TypeEnum::int64){
+        auto array = f->variableNameToArray[this->var->print()];
+        int offset_val = 8 + (array->args.size()*8);
+        outputFile << "%offset <- " <<offset_val<<"\n\t";
+        // stop one before the last one in order to add the last offset value in check slide 63 if confused 
+        // this is to add j value in 
+        int temp_offset_val = 0;
+        int temp_offset = 0;
+        for (int i =0;i<array->args.size();i++){
+          temp_offset = std::stoi(this->index_args_vec[i]->print());
+          for (int j = i+1;j<array->args.size();j++){
+            temp_offset *= std::stoi(array->args[j]->print());
+          }
+          temp_offset_val += temp_offset;
+        }
+        outputFile << "%temp <- "<<temp_offset_val * 8<<"\n\t";
+        outputFile<<"%offset <- %offset + %temp"<< "\n\t";
+        outputFile << "%addr"<< array->count << "<- "<< array->dst->print()<< "+ %offset"<<"\n\t";
+        outputFile << this->dst->print()<< "<- load %addr"<<array->count<<"\n\t";
+      } else {
+        // we need to iterate the count somehow 
+        auto tuple = f->variableNameToTuple[this->var->print()];
+        outputFile << "%newVar" << tuple->count << "<- "<< tuple->dst->print()<<" + 8"<<"\n\t";
+        outputFile << this->dst->print()<< "<- load "<<"%newVar"<<tuple->count<< "\n\t";
+      }  
+     }
     void storeInstruction::gen(Function *f,std::ofstream &outputFile){
       auto key = this->dst->print();
       auto key_var = f->variableNameToPointer[key];
@@ -41,27 +70,25 @@ namespace IR{
         auto array = f->variableNameToArray[this->dst->print()];
         int offset_val = 8 + (array->args.size()*8);
         outputFile << "%offset <- " <<offset_val<<"\n\t"; 
-        outputFile << "%offset <- %offset * (";
       // stop one before the last one in order to add the last offset value in check slide 63 if confused 
       // this is to add j value in 
-        int last_i = 0;
-        for (int i = 0; i<array->args.size();i++){
-          outputFile<< this->index_args_vec[i]->print() << "*";
-          int last_j = 0;
-          for (int j = i+1;i<array->args.size();i++){
-            last_j = j;
-            outputFile << array->args[j] << "*";
+        int temp_offset_val = 0;
+        int temp_offset = 0;
+        for (int i =0;i<array->args.size();i++){
+          temp_offset = std::stoi(this->index_args_vec[i]->print());
+          for (int j = i+1;j<array->args.size();j++){
+            temp_offset *= std::stoi(array->args[j]->print());
           }
-          outputFile<<array->args[last_j+1] << ") + (";
-          last_i = i;
+          temp_offset_val += temp_offset;
         }
-        outputFile << this->index_args_vec[last_i+1]->print() <<") ) *8"<< "\n\t";
-        outputFile << "%addr" << array->count<<"<- "<< array->dst->print()<< "+ %offset"<<"\n\t";
-        outputFile << "store addr <- "<<this->dst->print()<<"\n\t";
+        outputFile << "%temp <- "<<temp_offset_val * 8<<"\n\t";
+        outputFile<<"%offset <- %offset + %temp"<< "\n\t";
+        outputFile << "%addr"<< array->count << "<- "<< array->dst->print()<< "+ %offset"<<"\n\t";
+        outputFile << "store %addr"<<array->count<<"<- "<<this->var->print()<<"\n\t";
         array->count++;
       } else {
         auto tuple = f->variableNameToTuple[this->dst->print()];
-        outputFile << "%newVar" << tuple->count << "<- "<< tuple->dst<<" + 8"<<"\n\t";
+        outputFile << "%newVar" << tuple->count << "<- "<< tuple->dst->print()<<" + 8"<<"\n\t";
         outputFile << "store %newVar" << tuple->count << " <- " << this->var->print()<<"\n\t";
         tuple->count++;
       } 
@@ -93,47 +120,19 @@ namespace IR{
       outputFile << args[last_i]->print()<<")"<<"\n\t";
     }
     void NonVoidCallInstruction::gen(Function *f, std::ofstream &outputFile){
-      outputFile << dest->print()<<" <- call "<< callee->print() << " (";
+      outputFile << dst->print()<<" <- call "<< callee->print() << " (";
       int last_i = 0;
       for (int i =0;i<args.size();i++){
         outputFile << args[i]->print()<<",";
         last_i = i;
       }
-      outputFile << args[last_i]->print()<<")"<<"\n\t";
-    }
-    void loadInstruction::gen(Function *f, std::ofstream &outputFile){
-      auto key = this->var->print();
-      auto key_var = f->variableNameToPointer[key];
-      if (f->variableToTypeMapping[key_var]->type == TypeEnum::int64){
-        auto array = f->variableNameToArray[this->var->print()];
-        int offset_val = 8 + (array->args.size()*8);
-        outputFile << "%offset <- " <<offset_val<<"\n\t";
-        outputFile << "%temp <- 1 * ";
-        // stop one before the last one in order to add the last offset value in check slide 63 if confused 
-        // this is to add j value in 
-        int last_i = 0;
-        for (int i = 0; i<array->args.size()-1;i++){
-          outputFile<< this->index_args_vec[i]->print() << "*";
-          int last_j = 0;
-          for (int j = i+1;i<array->args.size()-1;i++){
-            outputFile << array->args[j] << "*";
-              last_j = j+1;
-          }
-          outputFile<<array->args[last_j] << ")";
-          last_i = i+1;
-        }
-        outputFile << this->index_args_vec[last_i]->print()<<"\n\t";
-        outputFile<<"%temp <- %temp * 8"<<"\n\t";
-        outputFile<<"%offset <- %offset + %temp"<< "\n\t";
-        outputFile << "%addr"<< array->count << "<- "<< array->dst->print()<< "+ %offset"<<"\n\t";
-        outputFile << this->dst->print()<< "<- load %addr"<<array->count<<"\n\t";
+      if (args.size()>0) {
+        outputFile << args[last_i]->print()<<")"<<"\n\t";
       } else {
-        // we need to iterate the count somehow 
-        auto tuple = f->variableNameToTuple[this->var->print()];
-        outputFile << "%newVar" << tuple->count << "<- "<< tuple->dst<<" + 8"<<"\n\t";
-        outputFile << this->var->print()<< "<- load "<<"%newVar"<<tuple->count<< "\n\t";
-      }  
-     }
+        outputFile << ")"<<"\n\t";
+      }
+    }
+
 
 
   void generate_code(Program& p) {
@@ -165,8 +164,9 @@ namespace IR{
             }
           }
         }
+        outputFile<<"}\n";
+
       }
-      outputFile<<"}\n";
   }
 }
 

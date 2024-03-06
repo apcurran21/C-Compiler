@@ -320,7 +320,6 @@ namespace IR{
     public:
         void gen(Function *f, std::ofstream &outputFile) override;
         explicit NonVoidCallInstruction(Variable *dest, Item *callee);
-        Variable *dest;
         Item *const callee;
         std::vector<Item *> args; // Now included directly in this class
     };
@@ -341,7 +340,6 @@ namespace IR{
             void gen(Function *f, std::ofstream &outputFile) override;
             explicit newTuple(Variable *dst, Item *size,int64_t counter);
             Item *const size;
-            Variable *dst;
             int64_t count;
 
             

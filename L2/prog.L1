@@ -2,13 +2,15 @@
 (@main
 	0 1
 	:entry_global_0
-	goto :myLabel1_global_1
-	:myLabel1_global_1
 	r10 <- 3
 	r10 >>= 1
+	r11 <- 5
+	r11 >>= 1
 	r10 <- r10
 	r10 <- r10
-	r10 += 1
+	r10 *= r11
+	r10 <- r10
+	r10 += 2
 	r10 <- r10
 	r10 <<= 1
 	r10 <- r10
@@ -20,18 +22,28 @@
 	r10 <- r11
 	r10 += 8
 	mem r10 0 <- 3
-	r8 <- 16
-	r10 <- 1
-	r10 *= 0
-	r10 <- r10
-	r10 *= 8
-	r8 <- r8
-	r8 += r10
 	r10 <- r11
-	r10 += r8
-	r10 <- mem r10 0
+	r10 += 16
+	mem r10 0 <- 5
+	rdi <- r11
+	rsi <- r11
+	mem rsp -8 <- :ret_main_global_1
+	call @myF 2
+	:ret_main_global_1
+	r10 <- rax
 	rdi <- r10
 	call print 1
+	return
+	)
+(@myF
+	1 0
+	r10 <- rdi
+	:entry_global_2
+	r11 <- 16
+	r10 <- r10
+	r10 += r11
+	r10 <- mem r10 0
+	rax <- r10
 	return
 	)
 )

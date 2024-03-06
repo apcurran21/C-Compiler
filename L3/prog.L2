@@ -2,10 +2,48 @@
 (@main
 0
 :entry_global_0
-rdi <- 1
-rsi <- 0
+%D3 <- 3
+%D3 >>= 1
+%D5 <- 5
+%D5 >>= 1
+%v0 <- %D3
+%v0 <- %v0
+%v0 *= %D5
+%v0 <- %v0
+%v0 += 2
+%v0 <- %v0
+%v0 <<= 1
+%v0 <- %v0
+%v0 += 1
+rdi <- %v0
+rsi <- 1
+call allocate 2
+%ar <- rax
+%v2 <- %ar
+%v2 += 8
+mem %v2 0 <- 3
+%v3 <- %ar
+%v3 += 16
+mem %v3 0 <- 5
+rdi <- %ar
+rsi <- %ar
 mem rsp -8 <- :ret_main_global_1
-call @buildASandwich 2
+call @myF 2
 :ret_main_global_1
+%l <- rax
+rdi <- %l
+call print 1
 return
+)
+(@myF
+1
+%a <- rdi
+:entry_global_2
+%offset <- 16
+%address <- %a
+%address += %offset
+%l <- mem %address 0
+rax <- %l
+return
+)
 )

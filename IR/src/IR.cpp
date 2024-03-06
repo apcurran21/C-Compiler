@@ -46,17 +46,12 @@ namespace IR {
             this->variableDimensions.push_back(number->value+"D");
             outputFile <<"%"<< "D"<< number->value << "<- " << number->value << " >> 1" << "\n\t";
         }
-        outputFile<<"%v0 <- ";
-        auto it = args.begin(); // Iterator to the start of the vector
-        auto end = args.end() - 1;
-        while (it != end) {
-            auto number = dynamic_cast<Number*>(*it);
-            outputFile << "D"<< number->value<<" * ";
-            ++it;
+        auto number = dynamic_cast<Number*>(args[0]);
+        outputFile<<"%v0 <- "<<"%D"<<number->value<<"\n\t";
+        for (int i =1;i < args.size();i++){
+            auto number = dynamic_cast<Number*>(args[i]);
+            outputFile<<"%v0 <- %v0 * %D" << number->value<<"\n\t";
         }
-        auto number = dynamic_cast<Number*>(*it);
-        outputFile << "%"<< "D"<< number->value << "\n\t";
-
         outputFile << "%v0 <- %v0 +" << this->args.size()<<"\n\t";
         outputFile<< "%v0 <- %v0 << 1"<<"\n\t";
         outputFile << "%v0 <- %v0 + 1"<<"\n\t";
@@ -66,6 +61,7 @@ namespace IR {
             auto number = dynamic_cast<Number *>(num);
             outputFile<<"%v" << count <<" <- "<< this->dst->name <<" + " << (count-1)* 8 << "\n\t";
             outputFile<<"store %v" << count<<" <- "<< number->value << "\n\t";
+            count++;
         }
         
         
