@@ -217,9 +217,27 @@ namespace IR{
     // };
 
     class Visitor {
-        public:
-           
+        // public:
+        //    virtual void visit(declarationInstruction *instruction) = 0;
+        //    virtual void visit(Assignment *instruction) = 0;
+        //    virtual void visit(labelInstruction *instruction) = 0;
+        //    virtual void visit(operationInstruction *instruction) = 0;
+        //    virtual void visit(loadInstruction *instruction) = 0;
+        //    virtual void visit(storeInstruction *instruction) = 0;
+        //    virtual void visit(arrLength *instruction) = 0;
+        //    virtual void visit(tupleLength *instruction) = 0;
+        //    virtual void visit(VoidCallInstruction *instruction) = 0;
+        //    virtual void visit(NonVoidCallInstruction *instruction) = 0;
+        //    virtual void visit(newArray *instruction) = 0;
+        //    virtual void visit(newTuple *instruction) = 0;
+        //    virtual void visit(oneSuccBranch *instruction) = 0;
+        //    virtual void visit(twoSuccBranch *instruction) = 0;
+        //    virtual void visit(falseReturn *instruction) = 0;
+        //    virtual void visit(trueReturn *instruction) = 0;
+        //    virtual void visit(labelInstruction *instruction) = 0;
     };
+
+
 
     // Specific IR declarations
 

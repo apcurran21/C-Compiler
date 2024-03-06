@@ -1,0 +1,22 @@
+define @main () {
+	:entry
+	%res <- call @sum (1,3,5,7,7)
+	%res <- call @divide (%res,%res)
+	%res <- %res << 1
+	%res <- %res + 1
+	call print (%res)
+	return
+	}
+define @sum (%d ) {
+	:entry
+	%res <- %a
+	%res <- %res + %b
+	%res <- %res + %c
+	%res <- %res + %d
+	return%res
+	}
+define @divide (%a ) {
+	:entry
+	%res <- %a >> 2
+	return%res
+	}
