@@ -27,3 +27,13 @@
 * 15 - same key_var bug
 * 26 - same key_var bug
 * 71 - same doesn't generate spacing bug
+
+
+
+
+### Known parser bugs
+* 14 - codegen
+* 15 - codegen
+* 16 - codegen
+* 23 - codegen
+* 24 - calculate_array

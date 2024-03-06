@@ -954,7 +954,8 @@ namespace IR {
       */
       std::string var_name = var->print();
       f->variableNameToPointer[var_name] = var;
-      f->variableToTypeMapping[var] = type;
+      // f->variableToTypeMapping[var] = type;
+      f->variableNameToType[var_name] = type;
 
       auto i = new declarationInstruction(type, var);
       f->instructions.push_back(i);

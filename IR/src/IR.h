@@ -487,7 +487,8 @@ namespace IR{
             std::unordered_map<std::string, Variable*> variableNameToPointer;
             std::unordered_map<std::string, newArray*> variableNameToArray;
             std::unordered_map<std::string, newTuple*> variableNameToTuple;
-            std::unordered_map<Variable*, Type*> variableToTypeMapping;
+            // std::unordered_map<Variable*, Type*> variableToTypeMapping;
+            std::unordered_map<std::string, Type*> variableNameToType;
             std::unordered_map<std::string, Block*> blockNameToPointer;
             Type* returnType;
             userFuncName* functionName;

@@ -37,7 +37,8 @@ namespace IR{
     void loadInstruction::gen(Function *f, std::ofstream &outputFile){
       auto key = this->var->print();
       auto key_var = f->variableNameToPointer[key];
-      if (f->variableToTypeMapping[key_var]->type == TypeEnum::int64){
+      // if (f->variableToTypeMapping[key_var]->type == TypeEnum::int64){
+      if (f->variableNameToType[key]->type == TypeEnum::int64) {
         auto array = f->variableNameToArray[this->var->print()];
         int offset_val = 8 + (array->args.size()*8);
         outputFile << "%offset <- " <<offset_val<<"\n\t";
@@ -66,7 +67,8 @@ namespace IR{
     void storeInstruction::gen(Function *f,std::ofstream &outputFile){
       auto key = this->dst->print();
       auto key_var = f->variableNameToPointer[key];
-      if (f->variableToTypeMapping[key_var]->type == TypeEnum::int64){
+      // if (f->variableToTypeMapping[key_var]->type == TypeEnum::int64){
+      if (f->variableNameToType[key]->type == TypeEnum::int64) {
         auto array = f->variableNameToArray[this->dst->print()];
         int offset_val = 8 + (array->args.size()*8);
         outputFile << "%offset <- " <<offset_val<<"\n\t"; 
@@ -108,7 +110,7 @@ namespace IR{
       outputFile << "return" << "\n\t";
     }
     void trueReturn::gen(Function *f, std::ofstream &outputFile){
-      outputFile << "return" << returnVal->print()<<"\n\t";
+      outputFile << "return " << returnVal->print()<<"\n\t";
     }
     void VoidCallInstruction::gen(Function *f, std::ofstream &outputFile){
       outputFile << "call "<< callee->print() << " (";
