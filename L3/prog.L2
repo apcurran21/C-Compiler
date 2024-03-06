@@ -2,48 +2,73 @@
 (@main
 0
 :entry_global_0
-%D3 <- 3
-%D3 >>= 1
-%D5 <- 5
-%D5 >>= 1
-%v0 <- %D3
-%v0 <- %v0
-%v0 *= %D5
-%v0 <- %v0
-%v0 += 2
-%v0 <- %v0
-%v0 <<= 1
-%v0 <- %v0
-%v0 += 1
-rdi <- %v0
-rsi <- 1
-call allocate 2
-%ar <- rax
-%v2 <- %ar
-%v2 += 8
-mem %v2 0 <- 3
-%v3 <- %ar
-%v3 += 16
-mem %v3 0 <- 5
-rdi <- %ar
-rsi <- %ar
+rdi <- 541
+rsi <- 7919
+rdx <- 7919
 mem rsp -8 <- :ret_main_global_1
-call @myF 2
+call @gcd 3
 :ret_main_global_1
-%l <- rax
-rdi <- %l
+%res <- rax
+%res <- %res
+%res <<= 1
+%res <- %res
+%res += 1
+rdi <- %res
 call print 1
 return
 )
-(@myF
+(@gcd
 1
-%a <- rdi
+%b <- rdi
 :entry_global_2
-%offset <- 16
-%address <- %a
-%address += %offset
-%l <- mem %address 0
-rax <- %l
+%if <- %b = 0
+cjump 1 = %if :initialConditionTrue_global_3
+goto :initialConditionFalse_global_4
+:initialConditionFalse_global_4
+rdi <- %a
+rsi <- %b
+rdx <- %b
+mem rsp -8 <- :ret_gcd_global_6
+call @mod 3
+:ret_gcd_global_6
+%aModB <- rax
+rdi <- %b
+rsi <- %aModB
+rdx <- %aModB
+mem rsp -8 <- :ret_gcd_global_7
+call @gcd 3
+:ret_gcd_global_7
+%res <- rax
+rax <- %res
 return
+:initialConditionTrue_global_3
+rax <- %a
+return
+)
+(@mod
+1
+%b <- rdi
+:entry_global_9
+%i <- 0
+%res <- %a
+goto :while_global_10
+:while_global_10
+%bi <- %b
+%bi *= %i
+%if <- %bi <= %a
+cjump 1 = %if :whileInto_global_12
+goto :whileBreak_global_13
+:whileBreak_global_13
+rax <- %res
+return
+:whileInto_global_12
+%res <- %a
+%res <- %res
+%res -= %bi
+goto :whileIncrement_global_16
+:whileIncrement_global_16
+%i <- %i
+%i += 1
+goto :while_global_10
 )
 )

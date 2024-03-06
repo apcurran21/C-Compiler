@@ -536,26 +536,53 @@ namespace IR {
       spaces,
       pegtl::one< '(' >,
       spaces,
-      pegtl::seq<
-        pegtl::opt<
-          pegtl::seq<
-            type_rule,
-            spaces,
-            var_rule
-          >
-        >,
-        spaces,
-        pegtl::star<
-          pegtl::seq<
-            pegtl::one< ',' >,
-            spaces,
-            var_rule
-          >
+      pegtl::star<
+        pegtl::seq<
+          spaces,
+          type_rule,
+          spaces,
+          var_rule,
+          spaces,
+          pegtl::opt< 
+            pegtl::one< ',' >
+          >,
+          spaces
         >
       >,
       spaces,
       pegtl::one< ')' >
     > {};
+  // struct Function_header_rule:
+  //   pegtl::seq<
+  //     spaces,
+  //     str_define,
+  //     spaces,
+  //     type_rule,
+  //     spaces,
+  //     defined_fname,
+  //     spaces,
+  //     pegtl::one< '(' >,
+  //     spaces,
+  //     pegtl::seq<
+  //       pegtl::opt<
+  //         pegtl::seq<
+  //           type_rule,
+  //           spaces,
+  //           var_rule
+  //         >
+  //       >,
+  //       spaces,
+  //       pegtl::star<
+  //         pegtl::seq<
+  //           pegtl::one< ',' >,
+  //           spaces,
+  //           var_rule
+  //         >
+  //       >
+  //     >,
+  //     spaces,
+  //     pegtl::one< ')' >
+  //   > {};
   struct Function_rule:
     pegtl::seq<
       Function_header_rule,
@@ -563,7 +590,9 @@ namespace IR {
       spaces,
       pegtl::one< '{' >,
       // BBs_rule,
+      seps_with_comments,
       Instructions_rule,
+      seps_with_comments,
       spaces,
       pegtl::one< '}' >
     > {};
@@ -696,7 +725,7 @@ namespace IR {
   template<> struct action < var_rule > {
     template< typename Input >
     static void apply( const Input & in, Program & p) {
-      if (debug) std::cerr << "Recognized an var rule\n";
+      if (debug) std::cerr << "Recognized an var rule for " << in.string() << "\n";
 
       auto variable = new Variable(in.string());
       parsed_items.push_back(variable);
@@ -774,7 +803,7 @@ namespace IR {
   template<> struct action < defined_fname > {
     template< typename Input >
     static void apply( const Input & in, Program & p) {
-      if (debug) std::cerr << "Recognized a defined_fname rule\n";
+      if (debug) std::cerr << "Recognized a defined_fname rule for function " << in.string() << "\n";
 
       auto fname_temp = parsed_items.back();
       parsed_items.pop_back();

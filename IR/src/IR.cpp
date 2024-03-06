@@ -71,7 +71,8 @@ namespace IR {
     Token/Item constructors
     */
     Type::Type(TypeEnum type) :
-        type(type)
+        type(type),
+        dims(0)
     {
     }
     std::string Type::print() const {
