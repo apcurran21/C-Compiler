@@ -271,8 +271,8 @@ namespace IR {
     {
     }
 
-    NonVoidCallInstruction::NonVoidCallInstruction(Variable *dest, Item *callee) :
-        nonVoidInstruction(dest),
+    NonVoidCallInstruction::NonVoidCallInstruction(Variable *dst, Item *callee) :
+        nonVoidInstruction(dst),
         callee(callee)
     {
     }

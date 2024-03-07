@@ -103,7 +103,7 @@ namespace IR{
       } else {
         auto tuple = f->variableNameToTuple[this->dst->print()];
         outputFile << "%newVar" << tuple->count << "<- "<< tuple->dst->print()<<" + 8"<<"\n\t";
-        outputFile << "store %newVar " << tuple->count << " <- " << this->var->print()<<"\n\t";
+        outputFile << "store %newVar" << tuple->count << " <- " << this->var->print()<<"\n\t";
         tuple->count++;
       } 
       

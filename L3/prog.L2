@@ -1,19 +1,37 @@
 (@main
 (@main
 0
-:entry_main_global_0
-%v1 <- 5
-%v2 <- 7
-%v3 <- 9
-rdi <- %v1
-rsi <- %v2
-rdx <- %v3
+:entry_global_0
+rdi <- 3
+rsi <- 3
 mem rsp -8 <- :ret_main_global_1
-call @f 3
+call @createTuple 2
 :ret_main_global_1
+%t <- rax
 return
 )
-(@f
+(@createTuple
 1
-%v1 <- rdi
+%p1 <- rdi
+:entry_global_2
+%x2 <- 21
+rdi <- 5
+rsi <- 1
+call allocate 2
+%p <- rax
+%newVar0 <- %p
+%newVar0 += 8
+mem %newVar0 0 <- 0
+%newVar1 <- %p
+%newVar1 += 8
+mem %newVar1 0 <- 1
+%newVar2 <- %p
+%newVar2 += 8
+mem %newVar2 0 <- %p1
+%newVar3 <- %p
+%newVar3 += 8
+mem %newVar3 0 <- %x2
+rax <- %p
+return
+)
 )
