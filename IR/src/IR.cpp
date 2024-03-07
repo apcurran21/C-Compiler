@@ -43,14 +43,29 @@ namespace IR {
     void newArray::calculate_array(Function *f, std::ofstream &outputFile){
         for (auto num:this->args){
             auto number = dynamic_cast<Number *>(num);
-            this->variableDimensions.push_back(number->value+"D");
-            outputFile <<"%"<< "D"<< number->value << "<- " << number->value << " >> 1" << "\n\t";
+            if (number){
+                this->variableDimensions.push_back(num->print()+"D");
+                outputFile <<"%"<< "D"<< num->print() << "<- " << num->print() << " >> 1" << "\n\t";
+            } else {
+                this->variableDimensions.push_back(num->print()+"D");
+                outputFile << num->print() << "<- " << num->print() << " >> 1" << "\n\t";
+            }
+
         }
         auto number = dynamic_cast<Number*>(args[0]);
-        outputFile<<"%v0 <- "<<"%D"<<number->value<<"\n\t";
+        if (number){
+            outputFile<<"%v0 <- "<<"%D"<<number->value<<"\n\t";
+        } else {
+            outputFile<<"%v0 <- "<<args[0]->print()<<"\n\t";
+        }
         for (int i =1;i < args.size();i++){
             auto number = dynamic_cast<Number*>(args[i]);
-            outputFile<<"%v0 <- %v0 * %D" << number->value<<"\n\t";
+            if (number){
+                outputFile<<"%v0 <- %v0 * %D" << number->value<<"\n\t";
+            } else {
+                outputFile<<"%v0 <- %v0 * "<<args[i]->print()<<"\n\t";
+            }
+
         }
         outputFile << "%v0 <- %v0 +" << this->args.size()<<"\n\t";
         outputFile<< "%v0 <- %v0 << 1"<<"\n\t";
@@ -60,7 +75,11 @@ namespace IR {
         for (auto num:this->args){
             auto number = dynamic_cast<Number *>(num);
             outputFile<<"%v" << count <<" <- "<< this->dst->name <<" + " << (count-1)* 8 << "\n\t";
-            outputFile<<"store %v" << count<<" <- "<< number->value << "\n\t";
+            if (number){
+                outputFile<<"store %v" << count<<" <- "<< number->value << "\n\t";
+            } else {
+                outputFile<<"store %v"<<count<<" <- "<< num->print()<<"\n\t";
+            }
             count++;
         }
         

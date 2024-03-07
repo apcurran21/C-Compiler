@@ -9,6 +9,7 @@ namespace IR{
     void tupleLength::gen(Function *f, std::ofstream &outputFile){
       outputFile<<this->dst->print() << " <- load "<<this->tuple->print()<<"\n\t";
       outputFile << this->dst->print() << " <- "<< this->dst->print()<<" << 1"<<"\n\t";
+      outputFile << this->dst->print() << " <- "<< this->dst->print() <<" +1"<<"\n\t";
     }
     void newArray::gen(Function *f, std::ofstream &outputFile){
       
