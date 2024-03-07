@@ -40,24 +40,30 @@ namespace IR{
       auto key_var = f->variableNameToPointer[key];
       // if (f->variableToTypeMapping[key_var]->type == TypeEnum::int64){
       if (f->variableNameToType[key]->type == TypeEnum::int64) {
-        auto array = f->variableNameToArray[this->var->print()];
-        int offset_val = 8 + (array->args.size()*8);
-        outputFile << "%offset <- " <<offset_val<<"\n\t";
-        // stop one before the last one in order to add the last offset value in check slide 63 if confused 
-        // this is to add j value in 
-        int temp_offset_val = 0;
-        int temp_offset = 0;
-        for (int i =0;i<array->args.size();i++){
-          temp_offset = std::stoi(this->index_args_vec[i]->print());
-          for (int j = i+1;j<array->args.size();j++){
-            temp_offset *= std::stoi(array->args[j]->print());
-          }
-          temp_offset_val += temp_offset;
+        int iter = 0;
+        std::vector<std::string> toMultiply;
+        for (int i =0;i<index_args_vec.size();i++){
+            outputFile<<"%newVar"<<iter<<" <- " << key<<" +"<<(i+2)*8<<"\n\t"; //gets to the first param
+            iter++;
+            outputFile<<"%newVar"<<iter<<" <- load %newVar"<<iter-1<<"\n\t"; // this gets first val
+            iter++;
+            outputFile<<"%newVar"<<iter << " <- %newVar"<<iter-1<<" >> 1"<<"\n\t";
+            toMultiply.push_back("%newVar"+std::to_string(iter));
+            iter++;
         }
-        outputFile << "%temp <- "<<temp_offset_val * 8<<"\n\t";
-        outputFile<<"%offset <- %offset + %temp"<< "\n\t";
-        outputFile << "%addr"<< array->count << "<- "<< array->dst->print()<< "+ %offset"<<"\n\t";
-        outputFile << this->dst->print()<< "<- load %addr"<<array->count<<"\n\t";
+
+        outputFile << "%offset <- "<<0<<"\n\t";
+        for (int i =0;i<toMultiply.size();i++){
+          outputFile<< "%offset_temp <- "<<index_args_vec[i]->print()<<"\n\t";
+          for (int j = i+1;j<toMultiply.size();j++){
+            outputFile << "%offset_temp <- %offset_temp * "<<toMultiply[j]<<"\n\t";
+          }
+          outputFile<<"%offset <- %offset + %offset_temp"<<"\n\t";
+        }
+        outputFile << "%temp <- %offset * 8"<<"\n\t";
+        outputFile<<"%temp <- %temp + "<<8 * (1+toMultiply.size())<< "\n\t";
+        outputFile << "%addr"<< "<- "<< key << " + %temp"<<"\n\t";
+        outputFile << this->dst->print()<< "<- load %addr"<<"\n\t";
       } else {
         // we need to iterate the count somehow 
         auto tuple = f->variableNameToTuple[this->var->print()];
@@ -70,36 +76,41 @@ namespace IR{
       auto key_var = f->variableNameToPointer[key];
       // if (f->variableToTypeMapping[key_var]->type == TypeEnum::int64){
       if (f->variableNameToType[key]->type == TypeEnum::int64) {
-        auto array = f->variableNameToArray[this->dst->print()];
-        int offset_val = 8 + (array->args.size()*8);
-        outputFile << "%offset <- " <<offset_val<<"\n\t"; 
-      // stop one before the last one in order to add the last offset value in check slide 63 if confused 
-      // this is to add j value in 
-        int temp_offset_val = 0;
-        int temp_offset = 0;
-        for (int i =0;i<array->args.size();i++){
-          temp_offset = std::stoi(this->index_args_vec[i]->print());
-          for (int j = i+1;j<array->args.size();j++){
-            temp_offset *= std::stoi(array->args[j]->print());
-          }
-          temp_offset_val += temp_offset;
+        int iter = 0;
+        std::vector<std::string> toMultiply;
+        for (int i =0;i<index_args_vec.size();i++){
+            outputFile<<"%newVar"<<iter<<" <- " << key<<" +"<<(i+2)*8<<"\n\t"; //gets to the first param
+            iter++;
+            outputFile<<"%newVar"<<iter<<" <- load %newVar"<<iter-1<<"\n\t"; // this gets first val
+            iter++;
+            outputFile<<"%newVar"<<iter << " <- %newVar"<<iter-1<<" >> 1"<<"\n\t";
+            toMultiply.push_back("%newVar"+std::to_string(iter));
+            iter++;
         }
-        outputFile << "%temp <- "<<temp_offset_val * 8<<"\n\t";
-        outputFile<<"%offset <- %offset + %temp"<< "\n\t";
-        outputFile << "%addr"<< array->count << "<- "<< array->dst->print()<< "+ %offset"<<"\n\t";
-        outputFile << "store %addr"<<array->count<<"<- "<<this->var->print()<<"\n\t";
-        array->count++;
+
+        outputFile << "%offset <- "<<0<<"\n\t";
+        for (int i =0;i<toMultiply.size();i++){
+          outputFile<< "%offset_temp <- "<<index_args_vec[i]->print()<<"\n\t";
+          for (int j = i+1;j<toMultiply.size();j++){
+            outputFile << "%offset_temp <- %offset_temp * "<<toMultiply[j]<<"\n\t";
+          }
+          outputFile<<"%offset <- %offset + %offset_temp"<<"\n\t";
+        }
+        outputFile << "%temp <- %offset * 8"<<"\n\t";
+        outputFile<<"%temp <- %temp + "<<8 * (1+toMultiply.size())<< "\n\t";
+        outputFile << "%addr"<< "<- "<< key << " + %temp"<<"\n\t";
+        outputFile << "store %addr"<<"<- "<<var->print()<<"\n\t";
       } else {
         auto tuple = f->variableNameToTuple[this->dst->print()];
         outputFile << "%newVar" << tuple->count << "<- "<< tuple->dst->print()<<" + 8"<<"\n\t";
-        outputFile << "store %newVar" << tuple->count << " <- " << this->var->print()<<"\n\t";
+        outputFile << "store %newVar " << tuple->count << " <- " << this->var->print()<<"\n\t";
         tuple->count++;
       } 
       
     }
     void twoSuccBranch::gen(Function *f,std::ofstream &outputFile){
       outputFile <<"br "<<t->print()<<" "<<labelTrue->print()<<"\n\t";
-      outputFile <<"br "<< labelFalse->print()<<"\n\t";
+
     }
     void oneSuccBranch::gen(Function *f, std::ofstream &outputFile){
       outputFile << "br "<< label->print()<<"\n\t";
@@ -147,9 +158,13 @@ namespace IR{
     for (Function *fptr : p.functions) {
       std::string fname = fptr->functionName->print();
       outputFile << "define " << fname << " (";
-      for (auto var:fptr->parameters){
-         outputFile<<var->name<<" ";
-       }
+      if (fptr->parameters.size()!=0){
+          for (int i = 0;i<fptr->parameters.size()-1;i++){
+          outputFile<<fptr->parameters[i]->print()<<", ";
+        }
+        outputFile<<fptr->parameters[fptr->parameters.size()-1]->print();
+      }
+      
       outputFile<<") {"<<"\n\t";
         for (Block *block: fptr->executionTraceOrder){
           for (Instruction *iptr : block->instructionBody) {
@@ -159,6 +174,7 @@ namespace IR{
               arr_cast->calculate_array(fptr,outputFile);
               auto it = arr_cast->dst->print();
               fptr->variableNameToArray[it] = arr_cast;
+              int i = 500;
             } else if (tuple_cast){
               iptr->gen(fptr, outputFile);
               fptr->variableNameToTuple[tuple_cast->dst->print()] = tuple_cast;

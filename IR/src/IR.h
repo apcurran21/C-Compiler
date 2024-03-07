@@ -23,8 +23,6 @@ namespace IR{
     class teInstruction;
     class Operator;
 
-
-
     class Token {
         public:
         virtual ~Token() = default;
@@ -247,7 +245,6 @@ namespace IR{
     class Instruction : public Token {
         public:
             virtual void gen(Function *f, std::ofstream &outputFile) = 0;
-
 
     };
     class voidInstruction : public Instruction {
@@ -486,11 +483,12 @@ namespace IR{
             std::vector<Block*> codeBlocks;
             std::vector<Block*> executionTraceOrder;
             std::unordered_map<std::string, Variable*> variableNameToPointer;
-            std::unordered_map<std::string, newArray*> variableNameToArray;
             std::unordered_map<std::string, newTuple*> variableNameToTuple;
             // std::unordered_map<Variable*, Type*> variableToTypeMapping;
             std::unordered_map<std::string, Type*> variableNameToType;
+            std::unordered_map<std::string,newArray*>variableNameToArray;
             std::unordered_map<std::string, Block*> blockNameToPointer;
+            std::unordered_map<std::string, std::string> variableNameToParameter;
             Type* returnType;
             userFuncName* functionName;
     };
