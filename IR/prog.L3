@@ -1,0 +1,15 @@
+define @main () {
+	:entry_main
+	%v1 <- 5
+	%v2 <- 7
+	%v3 <- 9
+	call @f (%v1,%v2,%v3)
+	return
+	}
+define @f (%v1, %v2, %v3 ) {
+	:entry_f
+	call print (%v1)
+	call print (%v2)
+	call print (%v3)
+	return
+	}

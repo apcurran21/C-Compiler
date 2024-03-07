@@ -210,6 +210,10 @@ namespace IR {
       type_keywords_rule,
       pegtl::star< str_bracks >
     > {};
+  struct param_rule:
+    pegtl::seq<
+      var_rule
+    > {};
   // struct type_rule:
   //   pegtl::sor<
   //     pegtl::seq<
@@ -260,7 +264,6 @@ namespace IR {
         array_access
       >
     > {};
-
 
   /*
   Label rules.
@@ -525,6 +528,7 @@ namespace IR {
   /*
   Function rules.
   */
+
   struct Function_header_rule:
     pegtl::seq<
       spaces,
@@ -541,7 +545,8 @@ namespace IR {
           spaces,
           type_rule,
           spaces,
-          var_rule,
+          // var_rule,
+          param_rule,
           spaces,
           pegtl::opt< 
             pegtl::one< ',' >
@@ -777,6 +782,8 @@ namespace IR {
     static void apply( const Input & in, Program & p) {
       if (debug) std::cerr << "Recognized a type rule\n";
 
+      if (debug) std::cerr << "parsed_items has size " << parsed_items.size() << "\n";
+
       auto type_temp = parsed_items.front();
       parsed_items.erase(parsed_items.begin());
       if (debug) std::cerr << "made it past grabbing the type " << type_temp->print() << "\n";
@@ -784,6 +791,7 @@ namespace IR {
 
       int64_t dims = 0;
       while (!parsed_items.empty()) {
+        // if theres anything on the stack, i think it can be assumed that they're brackets. 
         parsed_items.pop_back();
         dims++;
       }
@@ -796,6 +804,39 @@ namespace IR {
       type->dims = dims;
       parsed_items.push_back(type);
       if (debug) std::cerr << "pushed onto, parsed_items now has size " << parsed_items.size() << "\n";
+    }
+  };
+
+  template<> struct action < param_rule > {
+    template< typename Input >
+    static void apply( const Input & in, Program & p) {
+      if (debug) std::cerr << "Recognized a param rule for " << in.string() << "\n";
+
+      auto f = p.functions.back();
+      auto param_temp = parsed_items.back();
+      parsed_items.pop_back();
+      auto type_temp = parsed_items.back();
+      parsed_items.pop_back();
+
+      auto param = dynamic_cast<Variable*>(param_temp);
+      if (!param) {
+        if (debug) std::cerr << "Program is incorrect, " << param->print() << " should be of variable type.\n";
+      }
+
+      auto type = dynamic_cast<Type*>(type_temp);
+      if (!type) {
+        if (debug) std::cerr << "Program is incorrect, " << type->print() << " should be of Type type.\n";
+      }
+
+      /*
+      Associate the variable within the containing function's maps.
+      */
+      std::string param_name = param->print();
+      f->variableNameToPointer[param_name] = param;
+      // f->variableToTypeMapping[var] = type;
+      f->variableNameToType[param_name] = type;
+
+      f->parameters.push_back(param);
     }
   };
 
@@ -1326,42 +1367,45 @@ namespace IR {
   template<> struct action < Function_header_rule > {
     template< typename Input >
     static void apply( const Input & in, Program & p) {
-      if (debug) std::cerr << "Recognized a Function_header rule\n";
+      if (debug) std::cerr << "Recognized a Function_header rule,\n";
+
 
       auto f = p.functions.back();
 
-      if (debug) std::cerr << "made it past grabbing the current function\n";
+      if (debug) std::cerr << "Here if the function's number of parameters: " << f->parameters.size() << "\n";
 
-      // auto type = parsed_items.front()
-      // parsed_items.erase(parsed_items.begin());
-      // auto fname = parsed_items.front()
-      // parsed_items.erase(parsed_items.begin());
-      // ^ i think the above should have already have been taken care of.
+      // if (debug) std::cerr << "made it past grabbing the current function\n";
 
-      /*
-      There should be an even number of items in the parsed_items stack now, a function definition
-      is made up of (type var) starred.
-      */
+      // // auto type = parsed_items.front()
+      // // parsed_items.erase(parsed_items.begin());
+      // // auto fname = parsed_items.front()
+      // // parsed_items.erase(parsed_items.begin());
+      // // ^ i think the above should have already have been taken care of.
 
-      if (debug) std::cerr << "parsed_items has size " << parsed_items.size() << " before the while loop\n";
+      // /*
+      // There should be an even number of items in the parsed_items stack now, a function definition
+      // is made up of (type var) starred.
+      // */
 
-      while (!parsed_items.empty()) {
-        auto type = parsed_items.front();         // it seems like we aren't currently doing anything with this
-        if (debug) std::cerr << "made it past grabbing the type " << type->print() << "\n";
-        parsed_items.erase(parsed_items.begin());
-        if (debug) std::cerr << "made it past erasing the type\n";
-        auto var_temp = parsed_items.front();
-        if (debug) std::cerr << "made it past grabbing the var " << var_temp->print() << "\n";
-        parsed_items.erase(parsed_items.begin());
-        if (debug) std::cerr << "made it past erasing the var\n";
+      // if (debug) std::cerr << "parsed_items has size " << parsed_items.size() << " before the while loop\n";
 
-        auto var = dynamic_cast<Variable*>(var_temp);
-        if (!var) {
-          if (debug) std::cerr << "Program is incorrect, " << var->print() << " should be of variable type.\n";
-        }
+      // while (!parsed_items.empty()) {
+      //   auto type = parsed_items.front();         // it seems like we aren't currently doing anything with this
+      //   if (debug) std::cerr << "made it past grabbing the type " << type->print() << "\n";
+      //   parsed_items.erase(parsed_items.begin());
+      //   if (debug) std::cerr << "made it past erasing the type\n";
+      //   auto var_temp = parsed_items.front();
+      //   if (debug) std::cerr << "made it past grabbing the var " << var_temp->print() << "\n";
+      //   parsed_items.erase(parsed_items.begin());
+      //   if (debug) std::cerr << "made it past erasing the var\n";
 
-        f->parameters.push_back(var);
-      }
+      //   auto var = dynamic_cast<Variable*>(var_temp);
+      //   if (!var) {
+      //     if (debug) std::cerr << "Program is incorrect, " << var->print() << " should be of variable type.\n";
+      //   }
+
+      //   f->parameters.push_back(var);
+      // }
 
     }
   };

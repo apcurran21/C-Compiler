@@ -1,74 +1,19 @@
 (@main
 (@main
 0
-:entry_global_0
-rdi <- 541
-rsi <- 7919
-rdx <- 7919
+:entry_main_global_0
+%v1 <- 5
+%v2 <- 7
+%v3 <- 9
+rdi <- %v1
+rsi <- %v2
+rdx <- %v3
 mem rsp -8 <- :ret_main_global_1
-call @gcd 3
+call @f 3
 :ret_main_global_1
-%res <- rax
-%res <- %res
-%res <<= 1
-%res <- %res
-%res += 1
-rdi <- %res
-call print 1
 return
 )
-(@gcd
+(@f
 1
-%b <- rdi
-:entry_global_2
-%if <- %b = 0
-cjump 1 = %if :initialConditionTrue_global_3
-goto :initialConditionFalse_global_4
-:initialConditionFalse_global_4
-rdi <- %a
-rsi <- %b
-rdx <- %b
-mem rsp -8 <- :ret_gcd_global_6
-call @mod 3
-:ret_gcd_global_6
-%aModB <- rax
-rdi <- %b
-rsi <- %aModB
-rdx <- %aModB
-mem rsp -8 <- :ret_gcd_global_7
-call @gcd 3
-:ret_gcd_global_7
-%res <- rax
-rax <- %res
-return
-:initialConditionTrue_global_3
-rax <- %a
-return
-)
-(@mod
-1
-%b <- rdi
-:entry_global_9
-%i <- 0
-%res <- %a
-goto :while_global_10
-:while_global_10
-%bi <- %b
-%bi *= %i
-%if <- %bi <= %a
-cjump 1 = %if :whileInto_global_12
-goto :whileBreak_global_13
-:whileBreak_global_13
-rax <- %res
-return
-:whileInto_global_12
-%res <- %a
-%res <- %res
-%res -= %bi
-goto :whileIncrement_global_16
-:whileIncrement_global_16
-%i <- %i
-%i += 1
-goto :while_global_10
-)
+%v1 <- rdi
 )
