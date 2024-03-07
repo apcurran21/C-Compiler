@@ -1,0 +1,125 @@
+void main ( ) {
+    int64[] arr
+    int64[] ans
+
+    arr <- read_arr()
+
+    sort_arr(arr)
+
+    print_arr(arr)
+
+    return
+}
+
+// sort a given array in increasing order
+void sort_arr ( int64[] arr ) {
+    int64 arr_len
+    arr_len <- length arr 0
+
+    int64 cond_outer
+    int64 cond_inner
+
+    int64 i
+    i <- arr_len - 1
+
+    :FORL_OUTER
+    cond_outer <- i <= 0
+    br cond_outer :ENDL_OUTER :ENTER_OUTER
+
+        :ENTER_OUTER
+        
+        int64 j
+        j <- 0
+
+        :FORL_INNER
+        cond_inner <- j >= i
+        br cond_inner :ENDL_INNER :ENTER_INNER
+
+            :ENTER_INNER
+
+            // get the values of the current elements (ie the j and j+1 elements)
+            int64 j_val
+            j_val <- arr[j]
+            int64 j_plus
+            j_plus <- j + 1
+            int64 j_plus_val
+            j_plus_val <- arr[j_plus]
+
+            // only swap if j is smaller than j+1
+            // wait this is kinda weird maybe not
+            int64 swap_cond
+            swap_cond <- j_val <= j_plus_val
+            br swap_cond :SKIP :SWAP
+
+                :SWAP
+                swap(j, j_plus, arr)
+
+            :SKIP 
+            
+            j <- j + 1
+
+            br :FORL_INNER
+
+        :ENDL_INNER
+
+        i <- i - 1
+
+        br :FORL_OUTER
+
+    :ENDL_OUTER
+
+
+}
+
+// swap two array elements in memory
+void swap ( int64 index_1, int64 index_2, int64[] arr ) {
+    int64 temp1
+    int64 temp2
+    temp1 <- arr[index_1]
+    temp2 <- arr[index_2]
+    arr[index_1] <- temp2
+    arr[index_2] <- temp1
+    return
+}
+
+// read in an array from the user
+int64[] read_arr ( ) {
+    int64 user_arr_len
+    user_arr_len <- input()
+    int64[] res
+    res <- new Array(user_arr_len)
+    int64 index
+    index <- 0
+    int64 cond
+    :FORL
+    cond <- index >= user_arr_len
+    br cond :ENDL :ENTER
+        :ENTER
+        int64 element
+        element <- input()
+        res[index] <- element
+        index <- index + 1
+        br :FORL
+    :ENDL
+    return res
+}
+
+// print the contents of a 1D array
+void print_arr ( int64[] arr ) {
+    int64 arr_len
+    arr_len <- length arr 0
+    int64 index
+    index <- 0
+    int64 cond
+    :FORL
+    cond <- index >= arr_len
+    br cond :ENDL :ENTER
+        :ENTER
+        int64 curr_element
+        curr_element <- arr[index]
+        print (curr_element)
+        index <- index + 1
+        br :FORL
+    :ENDL
+    return
+}
