@@ -37,6 +37,31 @@ namespace IR{
     }
 
     void loadInstruction::gen(Function *f, std::ofstream &outputFile){
+      auto is_integer = [](const std::string& str) -> bool {
+        try {
+            size_t pos;
+            int num = std::stoi(str, &pos);
+            return pos == str.length();  // Ensure entire string is consumed
+        } catch (std::invalid_argument& e) {
+            // Not an integer
+            return false;
+        } catch (std::out_of_range& e) {
+            // Not an integer or out of range
+            return false;
+        }
+      };
+      if (index_args_vec.size() > 0 && is_integer(index_args_vec[0]->print())) {
+        if (std::stoi(index_args_vec[0]->print())<0){
+          outputFile<< "%newVar" <<global_counter << " <- "<< index_args_vec[0]->print()<< " * 8"<<"\n\t";
+          global_counter++;
+          outputFile<< "%newVar" <<global_counter << " <- "<< "%newVar"<<global_counter - 1<< " + 8"<<"\n\t";
+          global_counter++;
+          outputFile<<"%newVar"<<global_counter<<" <- "<<var->print()<< " + %newVar"<< global_counter - 1<<"\n\t"; 
+          outputFile<<dst->print()<< " <- load %newVar"<<global_counter<<"\n\t";
+          global_counter++;
+          return;
+        }
+      }
       auto key = this->var->print();
       auto key_var = f->variableNameToPointer[key];
       // if (f->variableToTypeMapping[key_var]->type == TypeEnum::int64){
@@ -68,12 +93,32 @@ namespace IR{
       } else {
         // we need to iterate the count somehow 
         auto tuple = f->variableNameToTuple[this->var->print()];
-        outputFile << "%newVar" << global_counter << "<- "<< var->print()<<" + "<< 8*(std::stoi(index_args_vec[0]->print())+1)<<"\n\t";
+        if (index_args_vec.size() > 0 && is_integer(index_args_vec[0]->print()) && index_args_vec[0]) {
+          outputFile << "%newVar" << global_counter << "<- "<< var->print()<<" + "<<8 * (std::stoi(index_args_vec[0]->print())+1)<<"\n\t";
+        } else {
+          outputFile << "%addTemp" <<global_counter<< " <- "<<index_args_vec[0]->print() << " * 8"<<"\n\t";
+          global_counter++;
+          outputFile << "%addTemp" << global_counter << " <- "<<"%addTemp"<<global_counter-1<< " + 8"<<"\n\t";
+          outputFile << "%newVar" << global_counter << "<- "<< var->print()<<" + %addTemp"<< global_counter <<"\n\t";
+        }        
         outputFile << this->dst->print()<< "<- load "<<"%newVar"<<global_counter<< "\n\t";
         global_counter++;
       }  
      }
     void storeInstruction::gen(Function *f,std::ofstream &outputFile){
+      auto is_integer = [](const std::string& str) -> bool {
+        try {
+            size_t pos;
+            int num = std::stoi(str, &pos);
+            return pos == str.length();  // Ensure entire string is consumed
+        } catch (std::invalid_argument& e) {
+            // Not an integer
+            return false;
+        } catch (std::out_of_range& e) {
+            // Not an integer or out of range
+            return false;
+        }
+      };
       auto key = this->dst->print();
       auto key_var = f->variableNameToPointer[key];
       // if (f->variableToTypeMapping[key_var]->type == TypeEnum::int64){
@@ -98,13 +143,21 @@ namespace IR{
           }
           outputFile<<"%offset <- %offset + %offset_temp"<<"\n\t";
         }
+        
         outputFile << "%temp <- %offset * 8"<<"\n\t";
         outputFile<<"%temp <- %temp + "<<8 * (1+toMultiply.size())<< "\n\t";
-        outputFile << "%addr"<< "<- "<< key << " + %temp"<<"\n\t";
+        outputFile << "%addr"<< "<- "<< var->print() << " + %temp"<<"\n\t";
         outputFile << "store %addr"<<"<- "<<var->print()<<"\n\t";
       } else {
         auto tuple = f->variableNameToTuple[this->dst->print()];
-        outputFile << "%newVar" << global_counter << "<- "<< dst->print()<<" + "<<8 * (std::stoi(index_args_vec[0]->print())+1)<<"\n\t";
+        if (index_args_vec.size() > 0 && is_integer(index_args_vec[0]->print())) {
+          outputFile << "%newVar" << global_counter << "<- "<< dst->print()<<" + "<<8 * (std::stoi(index_args_vec[0]->print())+1)<<"\n\t";
+        } else {
+          outputFile << "%addTemp" <<global_counter<< " <- "<<index_args_vec[0]->print() << " * 8"<<"\n\t";
+          global_counter++;
+          outputFile << "%addTemp" << global_counter << " <- "<<"%addTemp"<<global_counter-1<< " + 8"<<"\n\t";
+          outputFile << "%newVar" << global_counter << "<- "<< dst->print()<<" + %addTemp"<< global_counter <<"\n\t";
+        }
         outputFile << "store %newVar" << global_counter << " <- " << this->var->print()<<"\n\t";
         global_counter++;
       } 

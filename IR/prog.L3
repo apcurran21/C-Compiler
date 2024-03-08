@@ -1,5 +1,24 @@
 define @main () {
 	:entry
-	call tensor-error (5,5,3,9)
+	br :myLabel1
+	:myLabel1
+	%D3<- 3 >> 1
+	%v0 <- %D3
+	%v0 <- %v0 + 1
+	%v0 <- %v0 << 1
+	%v0 <- %v0 + 1
+	%ar <- call allocate(%v0,1)
+	%v2 <- %ar + 8
+	store %v2 <- 3
+	%newVar0 <- %ar +8
+	%newVar1 <- load %newVar0
+	%newVar2 <- %newVar1 >> 1
+	%offset <- 0
+	%offset_temp <- 1
+	%offset <- %offset + %offset_temp
+	%temp <- %offset * 8
+	%temp <- %temp + 16
+	%addr<- 5 + %temp
+	store %addr<- 5
 	return
 	}
