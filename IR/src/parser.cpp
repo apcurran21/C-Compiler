@@ -407,7 +407,7 @@ namespace IR {
       spaces,
       var_rule
     > {};
-  struct Instruction_call_error_rule:
+  struct Terminator_call_error_rule:
     // call <tuple/tensor>-error ( args? )
     pegtl::seq<
       spaces,
@@ -421,7 +421,7 @@ namespace IR {
       spaces,
       pegtl::one< ')' >
     > {};
-  struct Instruction_call_error_assignment_rule:
+  struct Terminator_call_error_assignment_rule:
     // var <- call <tuple/tensor>-error ( args? )
     pegtl::seq<
       spaces,
@@ -510,6 +510,8 @@ namespace IR {
   struct Instruction_rule:
     pegtl::sor<
       pegtl::seq< pegtl::at< Label_label_rule >, Label_label_rule >,
+      pegtl::seq< pegtl::at< Terminator_call_error_rule >, Terminator_call_error_rule >,
+      pegtl::seq< pegtl::at< Terminator_call_error_assignment_rule >, Terminator_call_error_assignment_rule >,
       pegtl::seq< pegtl::at< Terminator_return_val_rule >, Terminator_return_val_rule >,
       pegtl::seq< pegtl::at< Terminator_return_rule >, Terminator_return_rule >,
       pegtl::seq< pegtl::at< Terminator_double_branch_rule >, Terminator_double_branch_rule >,
@@ -671,6 +673,13 @@ namespace IR {
   /*
   Debug actions.
   */
+  template<> struct action < str_call > {
+    template< typename Input >
+    static void apply( const Input & in, Program & p) {
+      if (debug) std::cerr << "Recognized a str_call rule\n";
+    }
+  };
+
   template<> struct action < str_branch > {
     template< typename Input >
     static void apply( const Input & in, Program & p) {
@@ -1220,11 +1229,11 @@ namespace IR {
     }
   };
 
- template<> struct action < Instruction_call_error_rule > {
+ template<> struct action < Terminator_call_error_rule > {
     template< typename Input >
     static void apply( const Input & in, Program & p) {
       // call callee ( args? )
-      if (debug) std::cerr << "Recognized an Instruction_call_error rule\n";
+      if (debug) std::cerr << "Recognized an Terminator_call_error rule\n";
 
       auto f = p.functions.back();
       auto callee = parsed_items.front();
@@ -1242,11 +1251,11 @@ namespace IR {
     }
   };
 
- template<> struct action < Instruction_call_error_assignment_rule > {
+ template<> struct action < Terminator_call_error_assignment_rule > {
     template< typename Input >
     static void apply( const Input & in, Program & p) {
       // call callee ( args? )
-      if (debug) std::cerr << "Recognized an Instruction_call_error_assignment rule\n";
+      if (debug) std::cerr << "Recognized an Terminator_call_error_assignment rule\n";
 
       auto f = p.functions.back();
       auto var_temp = parsed_items.front();
