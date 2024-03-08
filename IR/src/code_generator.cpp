@@ -110,9 +110,13 @@ namespace IR{
       } 
       
     }
+    void Error::gen(Function *f, std::ofstream &outpufFile) {
+      /*
+      TODO implement
+      */
+    }
     void twoSuccBranch::gen(Function *f,std::ofstream &outputFile){
       outputFile <<"br "<<t->print()<<" "<<labelTrue->print()<<"\n\t";
-
     }
     void oneSuccBranch::gen(Function *f, std::ofstream &outputFile){
       outputFile << "br "<< label->print()<<"\n\t";

@@ -36,9 +36,9 @@ namespace IR {
         {">>", OperatorEnum::right},
         {"&", OperatorEnum::amp}
     };
-    std::map<std::strring, ErrorEnum> stringToErrorEnum = {
-        {"tuple-error", ErrorEnum::tuple},
-        {"tensor-error", ErrorEnum::tensor}
+    std::map<std::string, ErrorEnum> stringToErrorEnum = {
+        {"tuple-error", ErrorEnum::tuple_err},
+        {"tensor-error", ErrorEnum::tensor_err}
     };
 
     void Block::appendInstruction(Instruction *i){

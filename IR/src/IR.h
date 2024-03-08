@@ -61,29 +61,6 @@ namespace IR{
             virtual std::string print() const = 0;
     };
 
-    // class Type : public Item{};
-
-    // class TupleType : public Type {
-    //     friend class Singleton;
-    //     TupleType() = default;
-    // };
-
-    // class CodeType : public Type {
-    //     friend class Singleton;
-    //     CodeType() = default;
-    // };
-
-    // class IntType : public Type {
-    //     friend class Singleton;
-    //     IntType() = default;
-    // };
-
-    // class VoidType : public Type{
-    //     friend class Singleton;
-    //     VoidType() = default;
-    // };
-
-
     enum TypeEnum {
         int64,  // encodes both single and array int64s using its dims field
         tuple,
@@ -91,14 +68,6 @@ namespace IR{
         voidt,
         bracks  // to catch the "[]" dimensions in int64 arrays
     };
-
-    // std::map<std::string, TypeEnum> stringToTypeEnum = {
-    //     {"int64", TypeEnum::int64},
-    //     {"tuple", TypeEnum::tuple},
-    //     {"code", TypeEnum::code},
-    //     {"void", TypeEnum::voidt},
-    //     {"[]", TypeEnum::bracks}
-    // };
 
     extern std::map<std::string, TypeEnum> stringToTypeEnum;
 
@@ -396,9 +365,11 @@ namespace IR{
     // };
 
     enum ErrorEnum {
-        tensor,
-        tuple
+        tensor_err,
+        tuple_err
     };
+
+    extern std::map<std::string, ErrorEnum> stringToErrorEnum;
 
     class Error : public teInstruction {
         public:
@@ -406,7 +377,6 @@ namespace IR{
             explicit Error(ErrorEnum error_type);
             ErrorEnum error_type;
             std::vector<Item *> args; 
-            bool has_dest = false;
             Variable *dest = nullptr;
     };
 

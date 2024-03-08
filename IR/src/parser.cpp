@@ -152,7 +152,7 @@ namespace IR {
   struct stdlib_rule:
     pegtl::sor<
       str_print,
-      str_input,
+      str_input
     > {};
   struct var_rule:
     pegtl::seq<
@@ -407,9 +407,27 @@ namespace IR {
       spaces,
       var_rule
     > {};
-  struct Instruction_error_call_rule:
+  struct Instruction_call_error_rule:
     // call <tuple/tensor>-error ( args? )
     pegtl::seq<
+      spaces,
+      str_call,
+      spaces,
+      stderr_rule,
+      spaces,
+      pegtl::one< '(' >,
+      spaces,
+      pegtl::opt< args_rule >,
+      spaces,
+      pegtl::one< ')' >
+    > {};
+  struct Instruction_call_error_assignment_rule:
+    // var <- call <tuple/tensor>-error ( args? )
+    pegtl::seq<
+      spaces,
+      var_rule,
+      spaces,
+      str_arrow,
       spaces,
       str_call,
       spaces,
@@ -1206,7 +1224,7 @@ namespace IR {
     template< typename Input >
     static void apply( const Input & in, Program & p) {
       // call callee ( args? )
-      if (debug) std::cerr << "Recognized an Instruction_error_call rule\n";
+      if (debug) std::cerr << "Recognized an Instruction_call_error rule\n";
 
       auto f = p.functions.back();
       auto callee = parsed_items.front();
@@ -1217,7 +1235,7 @@ namespace IR {
       if (it != stringToErrorEnum.end()) {
         i = new Error(it->second);
       } else {
-        if (debug) std::cerr << "Something went wrong, parser recognized an error call rule but callee " << callee->print() << " is not an error type.\n";
+        if (debug) std::cerr << "Something went wrong, parser recognized a call error rule but callee " << callee->print() << " is not an error type.\n";
       }
 
       while (!parsed_items.empty()) {
@@ -1234,7 +1252,7 @@ namespace IR {
     template< typename Input >
     static void apply( const Input & in, Program & p) {
       // call callee ( args? )
-      if (debug) std::cerr << "Recognized an Instruction_error_call_assignment rule\n";
+      if (debug) std::cerr << "Recognized an Instruction_call_error_assignment rule\n";
 
       auto f = p.functions.back();
       auto var_temp = parsed_items.front();
@@ -1247,7 +1265,7 @@ namespace IR {
       if (it != stringToErrorEnum.end()) {
         i = new Error(it->second);
       } else {
-        if (debug) std::cerr << "Something went wrong, parser recognized an error call rule but callee " << callee->print() << " is not an error type.\n";
+        if (debug) std::cerr << "Something went wrong, parser recognized a call error rule but callee " << callee->print() << " is not an error type.\n";
       }
 
       auto var = dynamic_cast<Variable*>(var_temp);
@@ -1255,7 +1273,6 @@ namespace IR {
         if (debug) std::cerr << "Program is incorrect, " << var->print() << " should be of variable type.\n";
       }
 
-      i->has_dest = true;
       i->dest = var;
 
       while (!parsed_items.empty()) {
