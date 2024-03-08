@@ -1229,14 +1229,8 @@ namespace IR {
       auto f = p.functions.back();
       auto callee = parsed_items.front();
       parsed_items.erase(parsed_items.begin());
+      auto i = new Error(callee->print());
 
-      Error *i;
-      auto it = stringToErrorEnum.find(callee->print());
-      if (it != stringToErrorEnum.end()) {
-        i = new Error(it->second);
-      } else {
-        if (debug) std::cerr << "Something went wrong, parser recognized a call error rule but callee " << callee->print() << " is not an error type.\n";
-      }
 
       while (!parsed_items.empty()) {
         auto arg = parsed_items.front();
@@ -1259,14 +1253,7 @@ namespace IR {
       parsed_items.erase(parsed_items.begin());
       auto callee = parsed_items.front();
       parsed_items.erase(parsed_items.begin());
-
-      Error *i;
-      auto it = stringToErrorEnum.find(callee->print());
-      if (it != stringToErrorEnum.end()) {
-        i = new Error(it->second);
-      } else {
-        if (debug) std::cerr << "Something went wrong, parser recognized a call error rule but callee " << callee->print() << " is not an error type.\n";
-      }
+      auto i = new Error(callee->print());
 
       auto var = dynamic_cast<Variable*>(var_temp);
       if (!var) {

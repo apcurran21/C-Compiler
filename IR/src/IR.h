@@ -364,18 +364,13 @@ namespace IR{
     //         std::vector<Item *> args; 
     // };
 
-    enum ErrorEnum {
-        tensor_err,
-        tuple_err
-    };
 
-    extern std::map<std::string, ErrorEnum> stringToErrorEnum;
 
     class Error : public teInstruction {
         public:
             void gen(Function *f, std::ofstream &outputFile) override;
-            explicit Error(ErrorEnum error_type);
-            ErrorEnum error_type;
+            explicit Error(std::string error_type);
+            std::string error_type;
             std::vector<Item *> args; 
             Variable *dest = nullptr;
     };

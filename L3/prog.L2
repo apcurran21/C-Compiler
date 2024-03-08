@@ -2,19 +2,15 @@
 (@main
 0
 :entry_global_0
-%D7 <- 7
-%D7 >>= 1
-%D7 <- 7
-%D7 >>= 1
-%D7 <- 7
-%D7 >>= 1
-%v0 <- %D7
+%D5 <- 5
+%D5 >>= 1
+%D5 <- 5
+%D5 >>= 1
+%v0 <- %D5
 %v0 <- %v0
-%v0 *= %D7
+%v0 *= %D5
 %v0 <- %v0
-%v0 *= %D7
-%v0 <- %v0
-%v0 += 3
+%v0 += 2
 %v0 <- %v0
 %v0 <<= 1
 %v0 <- %v0
@@ -22,42 +18,50 @@
 rdi <- %v0
 rsi <- 1
 call allocate 2
-%bigArr <- rax
-%v2 <- %bigArr
+%A <- rax
+%v2 <- %A
 %v2 += 8
-mem %v2 0 <- 7
-%v3 <- %bigArr
+mem %v2 0 <- 5
+%v3 <- %A
 %v3 += 16
-mem %v3 0 <- 7
-%v4 <- %bigArr
-%v4 += 24
-mem %v4 0 <- 7
-%newVar0 <- %bigArr
+mem %v3 0 <- 5
+%D5 <- 5
+%D5 >>= 1
+%D5 <- 5
+%D5 >>= 1
+%v0 <- %D5
+%v0 <- %v0
+%v0 *= %D5
+%v0 <- %v0
+%v0 += 2
+%v0 <- %v0
+%v0 <<= 1
+%v0 <- %v0
+%v0 += 1
+rdi <- %v0
+rsi <- 1
+call allocate 2
+%B <- rax
+%v2 <- %B
+%v2 += 8
+mem %v2 0 <- 5
+%v3 <- %B
+%v3 += 16
+mem %v3 0 <- 5
+%newVar0 <- %A
 %newVar0 += 8
 %newVar1 <- mem %newVar0 0
 %newVar2 <- %newVar1
 %newVar2 >>= 1
-%newVar3 <- %bigArr
+%newVar3 <- %A
 %newVar3 += 16
 %newVar4 <- mem %newVar3 0
 %newVar5 <- %newVar4
 %newVar5 >>= 1
-%newVar6 <- %bigArr
-%newVar6 += 24
-%newVar7 <- mem %newVar6 0
-%newVar8 <- %newVar7
-%newVar8 >>= 1
 %offset <- 0
 %offset_temp <- 0
 %offset_temp <- %offset_temp
 %offset_temp *= %newVar5
-%offset_temp <- %offset_temp
-%offset_temp *= %newVar8
-%offset <- %offset
-%offset += %offset_temp
-%offset_temp <- 0
-%offset_temp <- %offset_temp
-%offset_temp *= %newVar8
 %offset <- %offset
 %offset += %offset_temp
 %offset_temp <- 0
@@ -66,150 +70,24 @@ mem %v4 0 <- 7
 %temp <- %offset
 %temp *= 8
 %temp <- %temp
-%temp += 32
-%addr <- %bigArr
-%addr += %temp
-mem %addr 0 <- 1
-%newVar0 <- %bigArr
-%newVar0 += 8
-%newVar1 <- mem %newVar0 0
-%newVar2 <- %newVar1
-%newVar2 >>= 1
-%newVar3 <- %bigArr
-%newVar3 += 16
-%newVar4 <- mem %newVar3 0
-%newVar5 <- %newVar4
-%newVar5 >>= 1
-%newVar6 <- %bigArr
-%newVar6 += 24
-%newVar7 <- mem %newVar6 0
-%newVar8 <- %newVar7
-%newVar8 >>= 1
-%offset <- 0
-%offset_temp <- 0
-%offset_temp <- %offset_temp
-%offset_temp *= %newVar5
-%offset_temp <- %offset_temp
-%offset_temp *= %newVar8
-%offset <- %offset
-%offset += %offset_temp
-%offset_temp <- 0
-%offset_temp <- %offset_temp
-%offset_temp *= %newVar8
-%offset <- %offset
-%offset += %offset_temp
-%offset_temp <- 1
-%offset <- %offset
-%offset += %offset_temp
-%temp <- %offset
-%temp *= 8
-%temp <- %temp
-%temp += 32
-%addr <- %bigArr
-%addr += %temp
-mem %addr 0 <- 3
-%newVar0 <- %bigArr
-%newVar0 += 8
-%newVar1 <- mem %newVar0 0
-%newVar2 <- %newVar1
-%newVar2 >>= 1
-%newVar3 <- %bigArr
-%newVar3 += 16
-%newVar4 <- mem %newVar3 0
-%newVar5 <- %newVar4
-%newVar5 >>= 1
-%newVar6 <- %bigArr
-%newVar6 += 24
-%newVar7 <- mem %newVar6 0
-%newVar8 <- %newVar7
-%newVar8 >>= 1
-%offset <- 0
-%offset_temp <- 0
-%offset_temp <- %offset_temp
-%offset_temp *= %newVar5
-%offset_temp <- %offset_temp
-%offset_temp *= %newVar8
-%offset <- %offset
-%offset += %offset_temp
-%offset_temp <- 0
-%offset_temp <- %offset_temp
-%offset_temp *= %newVar8
-%offset <- %offset
-%offset += %offset_temp
-%offset_temp <- 2
-%offset <- %offset
-%offset += %offset_temp
-%temp <- %offset
-%temp *= 8
-%temp <- %temp
-%temp += 32
-%addr <- %bigArr
+%temp += 24
+%addr <- %A
 %addr += %temp
 mem %addr 0 <- 5
-%newVar0 <- %bigArr
+%newVar0 <- %A
 %newVar0 += 8
 %newVar1 <- mem %newVar0 0
 %newVar2 <- %newVar1
 %newVar2 >>= 1
-%newVar3 <- %bigArr
+%newVar3 <- %A
 %newVar3 += 16
 %newVar4 <- mem %newVar3 0
 %newVar5 <- %newVar4
 %newVar5 >>= 1
-%newVar6 <- %bigArr
-%newVar6 += 24
-%newVar7 <- mem %newVar6 0
-%newVar8 <- %newVar7
-%newVar8 >>= 1
 %offset <- 0
 %offset_temp <- 0
 %offset_temp <- %offset_temp
 %offset_temp *= %newVar5
-%offset_temp <- %offset_temp
-%offset_temp *= %newVar8
-%offset <- %offset
-%offset += %offset_temp
-%offset_temp <- 1
-%offset_temp <- %offset_temp
-%offset_temp *= %newVar8
-%offset <- %offset
-%offset += %offset_temp
-%offset_temp <- 0
-%offset <- %offset
-%offset += %offset_temp
-%temp <- %offset
-%temp *= 8
-%temp <- %temp
-%temp += 32
-%addr <- %bigArr
-%addr += %temp
-mem %addr 0 <- 7
-%newVar0 <- %bigArr
-%newVar0 += 8
-%newVar1 <- mem %newVar0 0
-%newVar2 <- %newVar1
-%newVar2 >>= 1
-%newVar3 <- %bigArr
-%newVar3 += 16
-%newVar4 <- mem %newVar3 0
-%newVar5 <- %newVar4
-%newVar5 >>= 1
-%newVar6 <- %bigArr
-%newVar6 += 24
-%newVar7 <- mem %newVar6 0
-%newVar8 <- %newVar7
-%newVar8 >>= 1
-%offset <- 0
-%offset_temp <- 0
-%offset_temp <- %offset_temp
-%offset_temp *= %newVar5
-%offset_temp <- %offset_temp
-%offset_temp *= %newVar8
-%offset <- %offset
-%offset += %offset_temp
-%offset_temp <- 1
-%offset_temp <- %offset_temp
-%offset_temp *= %newVar8
 %offset <- %offset
 %offset += %offset_temp
 %offset_temp <- 1
@@ -218,74 +96,24 @@ mem %addr 0 <- 7
 %temp <- %offset
 %temp *= 8
 %temp <- %temp
-%temp += 32
-%addr <- %bigArr
+%temp += 24
+%addr <- %A
 %addr += %temp
-mem %addr 0 <- 9
-%newVar0 <- %bigArr
+mem %addr 0 <- 5
+%newVar0 <- %A
 %newVar0 += 8
 %newVar1 <- mem %newVar0 0
 %newVar2 <- %newVar1
 %newVar2 >>= 1
-%newVar3 <- %bigArr
+%newVar3 <- %A
 %newVar3 += 16
 %newVar4 <- mem %newVar3 0
 %newVar5 <- %newVar4
 %newVar5 >>= 1
-%newVar6 <- %bigArr
-%newVar6 += 24
-%newVar7 <- mem %newVar6 0
-%newVar8 <- %newVar7
-%newVar8 >>= 1
 %offset <- 0
-%offset_temp <- 0
-%offset_temp <- %offset_temp
-%offset_temp *= %newVar5
-%offset_temp <- %offset_temp
-%offset_temp *= %newVar8
-%offset <- %offset
-%offset += %offset_temp
 %offset_temp <- 1
 %offset_temp <- %offset_temp
-%offset_temp *= %newVar8
-%offset <- %offset
-%offset += %offset_temp
-%offset_temp <- 2
-%offset <- %offset
-%offset += %offset_temp
-%temp <- %offset
-%temp *= 8
-%temp <- %temp
-%temp += 32
-%addr <- %bigArr
-%addr += %temp
-mem %addr 0 <- 11
-%newVar0 <- %bigArr
-%newVar0 += 8
-%newVar1 <- mem %newVar0 0
-%newVar2 <- %newVar1
-%newVar2 >>= 1
-%newVar3 <- %bigArr
-%newVar3 += 16
-%newVar4 <- mem %newVar3 0
-%newVar5 <- %newVar4
-%newVar5 >>= 1
-%newVar6 <- %bigArr
-%newVar6 += 24
-%newVar7 <- mem %newVar6 0
-%newVar8 <- %newVar7
-%newVar8 >>= 1
-%offset <- 0
-%offset_temp <- 0
-%offset_temp <- %offset_temp
 %offset_temp *= %newVar5
-%offset_temp <- %offset_temp
-%offset_temp *= %newVar8
-%offset <- %offset
-%offset += %offset_temp
-%offset_temp <- 2
-%offset_temp <- %offset_temp
-%offset_temp *= %newVar8
 %offset <- %offset
 %offset += %offset_temp
 %offset_temp <- 0
@@ -294,36 +122,24 @@ mem %addr 0 <- 11
 %temp <- %offset
 %temp *= 8
 %temp <- %temp
-%temp += 32
-%addr <- %bigArr
+%temp += 24
+%addr <- %A
 %addr += %temp
-mem %addr 0 <- 13
-%newVar0 <- %bigArr
+mem %addr 0 <- 5
+%newVar0 <- %A
 %newVar0 += 8
 %newVar1 <- mem %newVar0 0
 %newVar2 <- %newVar1
 %newVar2 >>= 1
-%newVar3 <- %bigArr
+%newVar3 <- %A
 %newVar3 += 16
 %newVar4 <- mem %newVar3 0
 %newVar5 <- %newVar4
 %newVar5 >>= 1
-%newVar6 <- %bigArr
-%newVar6 += 24
-%newVar7 <- mem %newVar6 0
-%newVar8 <- %newVar7
-%newVar8 >>= 1
 %offset <- 0
-%offset_temp <- 0
+%offset_temp <- 1
 %offset_temp <- %offset_temp
 %offset_temp *= %newVar5
-%offset_temp <- %offset_temp
-%offset_temp *= %newVar8
-%offset <- %offset
-%offset += %offset_temp
-%offset_temp <- 2
-%offset_temp <- %offset_temp
-%offset_temp *= %newVar8
 %offset <- %offset
 %offset += %offset_temp
 %offset_temp <- 1
@@ -332,74 +148,24 @@ mem %addr 0 <- 13
 %temp <- %offset
 %temp *= 8
 %temp <- %temp
-%temp += 32
-%addr <- %bigArr
+%temp += 24
+%addr <- %A
 %addr += %temp
-mem %addr 0 <- 15
-%newVar0 <- %bigArr
+mem %addr 0 <- 5
+%newVar0 <- %B
 %newVar0 += 8
 %newVar1 <- mem %newVar0 0
 %newVar2 <- %newVar1
 %newVar2 >>= 1
-%newVar3 <- %bigArr
+%newVar3 <- %B
 %newVar3 += 16
 %newVar4 <- mem %newVar3 0
 %newVar5 <- %newVar4
 %newVar5 >>= 1
-%newVar6 <- %bigArr
-%newVar6 += 24
-%newVar7 <- mem %newVar6 0
-%newVar8 <- %newVar7
-%newVar8 >>= 1
 %offset <- 0
 %offset_temp <- 0
 %offset_temp <- %offset_temp
 %offset_temp *= %newVar5
-%offset_temp <- %offset_temp
-%offset_temp *= %newVar8
-%offset <- %offset
-%offset += %offset_temp
-%offset_temp <- 2
-%offset_temp <- %offset_temp
-%offset_temp *= %newVar8
-%offset <- %offset
-%offset += %offset_temp
-%offset_temp <- 2
-%offset <- %offset
-%offset += %offset_temp
-%temp <- %offset
-%temp *= 8
-%temp <- %temp
-%temp += 32
-%addr <- %bigArr
-%addr += %temp
-mem %addr 0 <- 17
-%newVar0 <- %bigArr
-%newVar0 += 8
-%newVar1 <- mem %newVar0 0
-%newVar2 <- %newVar1
-%newVar2 >>= 1
-%newVar3 <- %bigArr
-%newVar3 += 16
-%newVar4 <- mem %newVar3 0
-%newVar5 <- %newVar4
-%newVar5 >>= 1
-%newVar6 <- %bigArr
-%newVar6 += 24
-%newVar7 <- mem %newVar6 0
-%newVar8 <- %newVar7
-%newVar8 >>= 1
-%offset <- 0
-%offset_temp <- 1
-%offset_temp <- %offset_temp
-%offset_temp *= %newVar5
-%offset_temp <- %offset_temp
-%offset_temp *= %newVar8
-%offset <- %offset
-%offset += %offset_temp
-%offset_temp <- 0
-%offset_temp <- %offset_temp
-%offset_temp *= %newVar8
 %offset <- %offset
 %offset += %offset_temp
 %offset_temp <- 0
@@ -408,36 +174,24 @@ mem %addr 0 <- 17
 %temp <- %offset
 %temp *= 8
 %temp <- %temp
-%temp += 32
-%addr <- %bigArr
+%temp += 24
+%addr <- %B
 %addr += %temp
-mem %addr 0 <- 19
-%newVar0 <- %bigArr
+mem %addr 0 <- 5
+%newVar0 <- %B
 %newVar0 += 8
 %newVar1 <- mem %newVar0 0
 %newVar2 <- %newVar1
 %newVar2 >>= 1
-%newVar3 <- %bigArr
+%newVar3 <- %B
 %newVar3 += 16
 %newVar4 <- mem %newVar3 0
 %newVar5 <- %newVar4
 %newVar5 >>= 1
-%newVar6 <- %bigArr
-%newVar6 += 24
-%newVar7 <- mem %newVar6 0
-%newVar8 <- %newVar7
-%newVar8 >>= 1
 %offset <- 0
-%offset_temp <- 1
-%offset_temp <- %offset_temp
-%offset_temp *= %newVar5
-%offset_temp <- %offset_temp
-%offset_temp *= %newVar8
-%offset <- %offset
-%offset += %offset_temp
 %offset_temp <- 0
 %offset_temp <- %offset_temp
-%offset_temp *= %newVar8
+%offset_temp *= %newVar5
 %offset <- %offset
 %offset += %offset_temp
 %offset_temp <- 1
@@ -446,74 +200,24 @@ mem %addr 0 <- 19
 %temp <- %offset
 %temp *= 8
 %temp <- %temp
-%temp += 32
-%addr <- %bigArr
+%temp += 24
+%addr <- %B
 %addr += %temp
-mem %addr 0 <- 21
-%newVar0 <- %bigArr
+mem %addr 0 <- 5
+%newVar0 <- %B
 %newVar0 += 8
 %newVar1 <- mem %newVar0 0
 %newVar2 <- %newVar1
 %newVar2 >>= 1
-%newVar3 <- %bigArr
+%newVar3 <- %B
 %newVar3 += 16
 %newVar4 <- mem %newVar3 0
 %newVar5 <- %newVar4
 %newVar5 >>= 1
-%newVar6 <- %bigArr
-%newVar6 += 24
-%newVar7 <- mem %newVar6 0
-%newVar8 <- %newVar7
-%newVar8 >>= 1
 %offset <- 0
 %offset_temp <- 1
 %offset_temp <- %offset_temp
 %offset_temp *= %newVar5
-%offset_temp <- %offset_temp
-%offset_temp *= %newVar8
-%offset <- %offset
-%offset += %offset_temp
-%offset_temp <- 0
-%offset_temp <- %offset_temp
-%offset_temp *= %newVar8
-%offset <- %offset
-%offset += %offset_temp
-%offset_temp <- 2
-%offset <- %offset
-%offset += %offset_temp
-%temp <- %offset
-%temp *= 8
-%temp <- %temp
-%temp += 32
-%addr <- %bigArr
-%addr += %temp
-mem %addr 0 <- 23
-%newVar0 <- %bigArr
-%newVar0 += 8
-%newVar1 <- mem %newVar0 0
-%newVar2 <- %newVar1
-%newVar2 >>= 1
-%newVar3 <- %bigArr
-%newVar3 += 16
-%newVar4 <- mem %newVar3 0
-%newVar5 <- %newVar4
-%newVar5 >>= 1
-%newVar6 <- %bigArr
-%newVar6 += 24
-%newVar7 <- mem %newVar6 0
-%newVar8 <- %newVar7
-%newVar8 >>= 1
-%offset <- 0
-%offset_temp <- 1
-%offset_temp <- %offset_temp
-%offset_temp *= %newVar5
-%offset_temp <- %offset_temp
-%offset_temp *= %newVar8
-%offset <- %offset
-%offset += %offset_temp
-%offset_temp <- 1
-%offset_temp <- %offset_temp
-%offset_temp *= %newVar8
 %offset <- %offset
 %offset += %offset_temp
 %offset_temp <- 0
@@ -522,36 +226,24 @@ mem %addr 0 <- 23
 %temp <- %offset
 %temp *= 8
 %temp <- %temp
-%temp += 32
-%addr <- %bigArr
+%temp += 24
+%addr <- %B
 %addr += %temp
-mem %addr 0 <- 25
-%newVar0 <- %bigArr
+mem %addr 0 <- 5
+%newVar0 <- %B
 %newVar0 += 8
 %newVar1 <- mem %newVar0 0
 %newVar2 <- %newVar1
 %newVar2 >>= 1
-%newVar3 <- %bigArr
+%newVar3 <- %B
 %newVar3 += 16
 %newVar4 <- mem %newVar3 0
 %newVar5 <- %newVar4
 %newVar5 >>= 1
-%newVar6 <- %bigArr
-%newVar6 += 24
-%newVar7 <- mem %newVar6 0
-%newVar8 <- %newVar7
-%newVar8 >>= 1
 %offset <- 0
 %offset_temp <- 1
 %offset_temp <- %offset_temp
 %offset_temp *= %newVar5
-%offset_temp <- %offset_temp
-%offset_temp *= %newVar8
-%offset <- %offset
-%offset += %offset_temp
-%offset_temp <- 1
-%offset_temp <- %offset_temp
-%offset_temp *= %newVar8
 %offset <- %offset
 %offset += %offset_temp
 %offset_temp <- 1
@@ -560,74 +252,47 @@ mem %addr 0 <- 25
 %temp <- %offset
 %temp *= 8
 %temp <- %temp
-%temp += 32
-%addr <- %bigArr
+%temp += 24
+%addr <- %B
 %addr += %temp
-mem %addr 0 <- 27
-%newVar0 <- %bigArr
-%newVar0 += 8
-%newVar1 <- mem %newVar0 0
-%newVar2 <- %newVar1
-%newVar2 >>= 1
-%newVar3 <- %bigArr
-%newVar3 += 16
-%newVar4 <- mem %newVar3 0
-%newVar5 <- %newVar4
-%newVar5 >>= 1
-%newVar6 <- %bigArr
-%newVar6 += 24
-%newVar7 <- mem %newVar6 0
-%newVar8 <- %newVar7
-%newVar8 >>= 1
-%offset <- 0
-%offset_temp <- 1
-%offset_temp <- %offset_temp
-%offset_temp *= %newVar5
-%offset_temp <- %offset_temp
-%offset_temp *= %newVar8
-%offset <- %offset
-%offset += %offset_temp
-%offset_temp <- 1
-%offset_temp <- %offset_temp
-%offset_temp *= %newVar8
-%offset <- %offset
-%offset += %offset_temp
-%offset_temp <- 2
-%offset <- %offset
-%offset += %offset_temp
-%temp <- %offset
-%temp *= 8
+mem %addr 0 <- 5
+%offset <- 16
+%address <- %A
+%address += %offset
+%Asize <- mem %address 0
+%offset <- 16
+%address <- %B
+%address += %offset
+%Bsize <- mem %address 0
+%Asize <- %Asize
+%Asize >>= 1
+%Bsize <- %Bsize
+%Bsize >>= 1
+%temp <- -1
+%temp2 <- 0
+goto :outerloop_global_1
+:outerloop_global_1
 %temp <- %temp
-%temp += 32
-%addr <- %bigArr
-%addr += %temp
-mem %addr 0 <- 29
-%newVar0 <- %bigArr
+%temp += 1
+%temp2 <- 0
+%check1 <- %temp = %Asize
+cjump 1 = %check1 :finish_global_3
+goto :innerloop_global_4
+:finish_global_3
+%newVar0 <- %A
 %newVar0 += 8
 %newVar1 <- mem %newVar0 0
 %newVar2 <- %newVar1
 %newVar2 >>= 1
-%newVar3 <- %bigArr
+%newVar3 <- %A
 %newVar3 += 16
 %newVar4 <- mem %newVar3 0
 %newVar5 <- %newVar4
 %newVar5 >>= 1
-%newVar6 <- %bigArr
-%newVar6 += 24
-%newVar7 <- mem %newVar6 0
-%newVar8 <- %newVar7
-%newVar8 >>= 1
 %offset <- 0
-%offset_temp <- 1
+%offset_temp <- 0
 %offset_temp <- %offset_temp
 %offset_temp *= %newVar5
-%offset_temp <- %offset_temp
-%offset_temp *= %newVar8
-%offset <- %offset
-%offset += %offset_temp
-%offset_temp <- 2
-%offset_temp <- %offset_temp
-%offset_temp *= %newVar8
 %offset <- %offset
 %offset += %offset_temp
 %offset_temp <- 0
@@ -636,449 +301,200 @@ mem %addr 0 <- 29
 %temp <- %offset
 %temp *= 8
 %temp <- %temp
-%temp += 32
-%addr <- %bigArr
+%temp += 24
+%addr <- %A
 %addr += %temp
-mem %addr 0 <- 31
-%newVar0 <- %bigArr
-%newVar0 += 8
-%newVar1 <- mem %newVar0 0
-%newVar2 <- %newVar1
-%newVar2 >>= 1
-%newVar3 <- %bigArr
-%newVar3 += 16
-%newVar4 <- mem %newVar3 0
-%newVar5 <- %newVar4
-%newVar5 >>= 1
-%newVar6 <- %bigArr
-%newVar6 += 24
-%newVar7 <- mem %newVar6 0
-%newVar8 <- %newVar7
-%newVar8 >>= 1
-%offset <- 0
-%offset_temp <- 1
-%offset_temp <- %offset_temp
-%offset_temp *= %newVar5
-%offset_temp <- %offset_temp
-%offset_temp *= %newVar8
-%offset <- %offset
-%offset += %offset_temp
-%offset_temp <- 2
-%offset_temp <- %offset_temp
-%offset_temp *= %newVar8
-%offset <- %offset
-%offset += %offset_temp
-%offset_temp <- 1
-%offset <- %offset
-%offset += %offset_temp
-%temp <- %offset
-%temp *= 8
+%temp <- mem %addr 0
 %temp <- %temp
-%temp += 32
-%addr <- %bigArr
-%addr += %temp
-mem %addr 0 <- 33
-%newVar0 <- %bigArr
-%newVar0 += 8
-%newVar1 <- mem %newVar0 0
-%newVar2 <- %newVar1
-%newVar2 >>= 1
-%newVar3 <- %bigArr
-%newVar3 += 16
-%newVar4 <- mem %newVar3 0
-%newVar5 <- %newVar4
-%newVar5 >>= 1
-%newVar6 <- %bigArr
-%newVar6 += 24
-%newVar7 <- mem %newVar6 0
-%newVar8 <- %newVar7
-%newVar8 >>= 1
-%offset <- 0
-%offset_temp <- 1
-%offset_temp <- %offset_temp
-%offset_temp *= %newVar5
-%offset_temp <- %offset_temp
-%offset_temp *= %newVar8
-%offset <- %offset
-%offset += %offset_temp
-%offset_temp <- 2
-%offset_temp <- %offset_temp
-%offset_temp *= %newVar8
-%offset <- %offset
-%offset += %offset_temp
-%offset_temp <- 2
-%offset <- %offset
-%offset += %offset_temp
-%temp <- %offset
-%temp *= 8
+%temp <<= 1
 %temp <- %temp
-%temp += 32
-%addr <- %bigArr
-%addr += %temp
-mem %addr 0 <- 35
-%newVar0 <- %bigArr
-%newVar0 += 8
-%newVar1 <- mem %newVar0 0
-%newVar2 <- %newVar1
-%newVar2 >>= 1
-%newVar3 <- %bigArr
-%newVar3 += 16
-%newVar4 <- mem %newVar3 0
-%newVar5 <- %newVar4
-%newVar5 >>= 1
-%newVar6 <- %bigArr
-%newVar6 += 24
-%newVar7 <- mem %newVar6 0
-%newVar8 <- %newVar7
-%newVar8 >>= 1
-%offset <- 0
-%offset_temp <- 2
-%offset_temp <- %offset_temp
-%offset_temp *= %newVar5
-%offset_temp <- %offset_temp
-%offset_temp *= %newVar8
-%offset <- %offset
-%offset += %offset_temp
-%offset_temp <- 0
-%offset_temp <- %offset_temp
-%offset_temp *= %newVar8
-%offset <- %offset
-%offset += %offset_temp
-%offset_temp <- 0
-%offset <- %offset
-%offset += %offset_temp
-%temp <- %offset
-%temp *= 8
-%temp <- %temp
-%temp += 32
-%addr <- %bigArr
-%addr += %temp
-mem %addr 0 <- 37
-%newVar0 <- %bigArr
-%newVar0 += 8
-%newVar1 <- mem %newVar0 0
-%newVar2 <- %newVar1
-%newVar2 >>= 1
-%newVar3 <- %bigArr
-%newVar3 += 16
-%newVar4 <- mem %newVar3 0
-%newVar5 <- %newVar4
-%newVar5 >>= 1
-%newVar6 <- %bigArr
-%newVar6 += 24
-%newVar7 <- mem %newVar6 0
-%newVar8 <- %newVar7
-%newVar8 >>= 1
-%offset <- 0
-%offset_temp <- 2
-%offset_temp <- %offset_temp
-%offset_temp *= %newVar5
-%offset_temp <- %offset_temp
-%offset_temp *= %newVar8
-%offset <- %offset
-%offset += %offset_temp
-%offset_temp <- 0
-%offset_temp <- %offset_temp
-%offset_temp *= %newVar8
-%offset <- %offset
-%offset += %offset_temp
-%offset_temp <- 1
-%offset <- %offset
-%offset += %offset_temp
-%temp <- %offset
-%temp *= 8
-%temp <- %temp
-%temp += 32
-%addr <- %bigArr
-%addr += %temp
-mem %addr 0 <- 39
-%newVar0 <- %bigArr
-%newVar0 += 8
-%newVar1 <- mem %newVar0 0
-%newVar2 <- %newVar1
-%newVar2 >>= 1
-%newVar3 <- %bigArr
-%newVar3 += 16
-%newVar4 <- mem %newVar3 0
-%newVar5 <- %newVar4
-%newVar5 >>= 1
-%newVar6 <- %bigArr
-%newVar6 += 24
-%newVar7 <- mem %newVar6 0
-%newVar8 <- %newVar7
-%newVar8 >>= 1
-%offset <- 0
-%offset_temp <- 2
-%offset_temp <- %offset_temp
-%offset_temp *= %newVar5
-%offset_temp <- %offset_temp
-%offset_temp *= %newVar8
-%offset <- %offset
-%offset += %offset_temp
-%offset_temp <- 0
-%offset_temp <- %offset_temp
-%offset_temp *= %newVar8
-%offset <- %offset
-%offset += %offset_temp
-%offset_temp <- 2
-%offset <- %offset
-%offset += %offset_temp
-%temp <- %offset
-%temp *= 8
-%temp <- %temp
-%temp += 32
-%addr <- %bigArr
-%addr += %temp
-mem %addr 0 <- 41
-%newVar0 <- %bigArr
-%newVar0 += 8
-%newVar1 <- mem %newVar0 0
-%newVar2 <- %newVar1
-%newVar2 >>= 1
-%newVar3 <- %bigArr
-%newVar3 += 16
-%newVar4 <- mem %newVar3 0
-%newVar5 <- %newVar4
-%newVar5 >>= 1
-%newVar6 <- %bigArr
-%newVar6 += 24
-%newVar7 <- mem %newVar6 0
-%newVar8 <- %newVar7
-%newVar8 >>= 1
-%offset <- 0
-%offset_temp <- 2
-%offset_temp <- %offset_temp
-%offset_temp *= %newVar5
-%offset_temp <- %offset_temp
-%offset_temp *= %newVar8
-%offset <- %offset
-%offset += %offset_temp
-%offset_temp <- 1
-%offset_temp <- %offset_temp
-%offset_temp *= %newVar8
-%offset <- %offset
-%offset += %offset_temp
-%offset_temp <- 0
-%offset <- %offset
-%offset += %offset_temp
-%temp <- %offset
-%temp *= 8
-%temp <- %temp
-%temp += 32
-%addr <- %bigArr
-%addr += %temp
-mem %addr 0 <- 43
-%newVar0 <- %bigArr
-%newVar0 += 8
-%newVar1 <- mem %newVar0 0
-%newVar2 <- %newVar1
-%newVar2 >>= 1
-%newVar3 <- %bigArr
-%newVar3 += 16
-%newVar4 <- mem %newVar3 0
-%newVar5 <- %newVar4
-%newVar5 >>= 1
-%newVar6 <- %bigArr
-%newVar6 += 24
-%newVar7 <- mem %newVar6 0
-%newVar8 <- %newVar7
-%newVar8 >>= 1
-%offset <- 0
-%offset_temp <- 2
-%offset_temp <- %offset_temp
-%offset_temp *= %newVar5
-%offset_temp <- %offset_temp
-%offset_temp *= %newVar8
-%offset <- %offset
-%offset += %offset_temp
-%offset_temp <- 1
-%offset_temp <- %offset_temp
-%offset_temp *= %newVar8
-%offset <- %offset
-%offset += %offset_temp
-%offset_temp <- 1
-%offset <- %offset
-%offset += %offset_temp
-%temp <- %offset
-%temp *= 8
-%temp <- %temp
-%temp += 32
-%addr <- %bigArr
-%addr += %temp
-mem %addr 0 <- 45
-%newVar0 <- %bigArr
-%newVar0 += 8
-%newVar1 <- mem %newVar0 0
-%newVar2 <- %newVar1
-%newVar2 >>= 1
-%newVar3 <- %bigArr
-%newVar3 += 16
-%newVar4 <- mem %newVar3 0
-%newVar5 <- %newVar4
-%newVar5 >>= 1
-%newVar6 <- %bigArr
-%newVar6 += 24
-%newVar7 <- mem %newVar6 0
-%newVar8 <- %newVar7
-%newVar8 >>= 1
-%offset <- 0
-%offset_temp <- 2
-%offset_temp <- %offset_temp
-%offset_temp *= %newVar5
-%offset_temp <- %offset_temp
-%offset_temp *= %newVar8
-%offset <- %offset
-%offset += %offset_temp
-%offset_temp <- 1
-%offset_temp <- %offset_temp
-%offset_temp *= %newVar8
-%offset <- %offset
-%offset += %offset_temp
-%offset_temp <- 2
-%offset <- %offset
-%offset += %offset_temp
-%temp <- %offset
-%temp *= 8
-%temp <- %temp
-%temp += 32
-%addr <- %bigArr
-%addr += %temp
-mem %addr 0 <- 47
-%newVar0 <- %bigArr
-%newVar0 += 8
-%newVar1 <- mem %newVar0 0
-%newVar2 <- %newVar1
-%newVar2 >>= 1
-%newVar3 <- %bigArr
-%newVar3 += 16
-%newVar4 <- mem %newVar3 0
-%newVar5 <- %newVar4
-%newVar5 >>= 1
-%newVar6 <- %bigArr
-%newVar6 += 24
-%newVar7 <- mem %newVar6 0
-%newVar8 <- %newVar7
-%newVar8 >>= 1
-%offset <- 0
-%offset_temp <- 2
-%offset_temp <- %offset_temp
-%offset_temp *= %newVar5
-%offset_temp <- %offset_temp
-%offset_temp *= %newVar8
-%offset <- %offset
-%offset += %offset_temp
-%offset_temp <- 2
-%offset_temp <- %offset_temp
-%offset_temp *= %newVar8
-%offset <- %offset
-%offset += %offset_temp
-%offset_temp <- 0
-%offset <- %offset
-%offset += %offset_temp
-%temp <- %offset
-%temp *= 8
-%temp <- %temp
-%temp += 32
-%addr <- %bigArr
-%addr += %temp
-mem %addr 0 <- 49
-%newVar0 <- %bigArr
-%newVar0 += 8
-%newVar1 <- mem %newVar0 0
-%newVar2 <- %newVar1
-%newVar2 >>= 1
-%newVar3 <- %bigArr
-%newVar3 += 16
-%newVar4 <- mem %newVar3 0
-%newVar5 <- %newVar4
-%newVar5 >>= 1
-%newVar6 <- %bigArr
-%newVar6 += 24
-%newVar7 <- mem %newVar6 0
-%newVar8 <- %newVar7
-%newVar8 >>= 1
-%offset <- 0
-%offset_temp <- 2
-%offset_temp <- %offset_temp
-%offset_temp *= %newVar5
-%offset_temp <- %offset_temp
-%offset_temp *= %newVar8
-%offset <- %offset
-%offset += %offset_temp
-%offset_temp <- 2
-%offset_temp <- %offset_temp
-%offset_temp *= %newVar8
-%offset <- %offset
-%offset += %offset_temp
-%offset_temp <- 1
-%offset <- %offset
-%offset += %offset_temp
-%temp <- %offset
-%temp *= 8
-%temp <- %temp
-%temp += 32
-%addr <- %bigArr
-%addr += %temp
-mem %addr 0 <- 51
-%newVar0 <- %bigArr
-%newVar0 += 8
-%newVar1 <- mem %newVar0 0
-%newVar2 <- %newVar1
-%newVar2 >>= 1
-%newVar3 <- %bigArr
-%newVar3 += 16
-%newVar4 <- mem %newVar3 0
-%newVar5 <- %newVar4
-%newVar5 >>= 1
-%newVar6 <- %bigArr
-%newVar6 += 24
-%newVar7 <- mem %newVar6 0
-%newVar8 <- %newVar7
-%newVar8 >>= 1
-%offset <- 0
-%offset_temp <- 2
-%offset_temp <- %offset_temp
-%offset_temp *= %newVar5
-%offset_temp <- %offset_temp
-%offset_temp *= %newVar8
-%offset <- %offset
-%offset += %offset_temp
-%offset_temp <- 2
-%offset_temp <- %offset_temp
-%offset_temp *= %newVar8
-%offset <- %offset
-%offset += %offset_temp
-%offset_temp <- 2
-%offset <- %offset
-%offset += %offset_temp
-%temp <- %offset
-%temp *= 8
-%temp <- %temp
-%temp += 32
-%addr <- %bigArr
-%addr += %temp
-mem %addr 0 <- 53
-rdi <- %bigArr
+%temp += 1
+rdi <- %temp
 call print 1
-%fp <- @diFF
-mem rsp -8 <- :ret_main_global_1
-call %fp 0
-:ret_main_global_1
-%r_val <- rax
-rdi <- 1
+%newVar0 <- %A
+%newVar0 += 8
+%newVar1 <- mem %newVar0 0
+%newVar2 <- %newVar1
+%newVar2 >>= 1
+%newVar3 <- %A
+%newVar3 += 16
+%newVar4 <- mem %newVar3 0
+%newVar5 <- %newVar4
+%newVar5 >>= 1
+%offset <- 0
+%offset_temp <- 0
+%offset_temp <- %offset_temp
+%offset_temp *= %newVar5
+%offset <- %offset
+%offset += %offset_temp
+%offset_temp <- 1
+%offset <- %offset
+%offset += %offset_temp
+%temp <- %offset
+%temp *= 8
+%temp <- %temp
+%temp += 24
+%addr <- %A
+%addr += %temp
+%temp <- mem %addr 0
+%temp <- %temp
+%temp <<= 1
+%temp <- %temp
+%temp += 1
+rdi <- %temp
 call print 1
-rdi <- %r_val
+%newVar0 <- %A
+%newVar0 += 8
+%newVar1 <- mem %newVar0 0
+%newVar2 <- %newVar1
+%newVar2 >>= 1
+%newVar3 <- %A
+%newVar3 += 16
+%newVar4 <- mem %newVar3 0
+%newVar5 <- %newVar4
+%newVar5 >>= 1
+%offset <- 0
+%offset_temp <- 1
+%offset_temp <- %offset_temp
+%offset_temp *= %newVar5
+%offset <- %offset
+%offset += %offset_temp
+%offset_temp <- 0
+%offset <- %offset
+%offset += %offset_temp
+%temp <- %offset
+%temp *= 8
+%temp <- %temp
+%temp += 24
+%addr <- %A
+%addr += %temp
+%temp <- mem %addr 0
+%temp <- %temp
+%temp <<= 1
+%temp <- %temp
+%temp += 1
+rdi <- %temp
+call print 1
+%newVar0 <- %A
+%newVar0 += 8
+%newVar1 <- mem %newVar0 0
+%newVar2 <- %newVar1
+%newVar2 >>= 1
+%newVar3 <- %A
+%newVar3 += 16
+%newVar4 <- mem %newVar3 0
+%newVar5 <- %newVar4
+%newVar5 >>= 1
+%offset <- 0
+%offset_temp <- 1
+%offset_temp <- %offset_temp
+%offset_temp *= %newVar5
+%offset <- %offset
+%offset += %offset_temp
+%offset_temp <- 1
+%offset <- %offset
+%offset += %offset_temp
+%temp <- %offset
+%temp *= 8
+%temp <- %temp
+%temp += 24
+%addr <- %A
+%addr += %temp
+%temp <- mem %addr 0
+%temp <- %temp
+%temp <<= 1
+%temp <- %temp
+%temp += 1
+rdi <- %temp
 call print 1
 return
-)
-(@diFF
-0
-:entry_global_2
-%duh <- 7
-%muh <- 9
-%val_to_return <- %duh
-%val_to_return *= %muh
-rax <- %val_to_return
-return
+:innerloop_global_4
+%check2 <- %temp2 = %Bsize
+cjump 1 = %check2 :outerloop_global_1
+goto :continue_global_8
+:continue_global_8
+%newVar0 <- %A
+%newVar0 += 8
+%newVar1 <- mem %newVar0 0
+%newVar2 <- %newVar1
+%newVar2 >>= 1
+%newVar3 <- %A
+%newVar3 += 16
+%newVar4 <- mem %newVar3 0
+%newVar5 <- %newVar4
+%newVar5 >>= 1
+%offset <- 0
+%offset_temp <- %temp
+%offset_temp <- %offset_temp
+%offset_temp *= %newVar5
+%offset <- %offset
+%offset += %offset_temp
+%offset_temp <- %temp2
+%offset <- %offset
+%offset += %offset_temp
+%temp <- %offset
+%temp *= 8
+%temp <- %temp
+%temp += 24
+%addr <- %A
+%addr += %temp
+%v1 <- mem %addr 0
+%newVar0 <- %B
+%newVar0 += 8
+%newVar1 <- mem %newVar0 0
+%newVar2 <- %newVar1
+%newVar2 >>= 1
+%newVar3 <- %B
+%newVar3 += 16
+%newVar4 <- mem %newVar3 0
+%newVar5 <- %newVar4
+%newVar5 >>= 1
+%offset <- 0
+%offset_temp <- %temp
+%offset_temp <- %offset_temp
+%offset_temp *= %newVar5
+%offset <- %offset
+%offset += %offset_temp
+%offset_temp <- %temp2
+%offset <- %offset
+%offset += %offset_temp
+%temp <- %offset
+%temp *= 8
+%temp <- %temp
+%temp += 24
+%addr <- %B
+%addr += %temp
+%v2 <- mem %addr 0
+%v3 <- %v1
+%v3 += %v2
+%newVar0 <- %A
+%newVar0 += 8
+%newVar1 <- mem %newVar0 0
+%newVar2 <- %newVar1
+%newVar2 >>= 1
+%newVar3 <- %A
+%newVar3 += 16
+%newVar4 <- mem %newVar3 0
+%newVar5 <- %newVar4
+%newVar5 >>= 1
+%offset <- 0
+%offset_temp <- %temp
+%offset_temp <- %offset_temp
+%offset_temp *= %newVar5
+%offset <- %offset
+%offset += %offset_temp
+%offset_temp <- %temp2
+%offset <- %offset
+%offset += %offset_temp
+%temp <- %offset
+%temp *= 8
+%temp <- %temp
+%temp += 24
+%addr <- %A
+%addr += %temp
+mem %addr 0 <- %v3
+%temp2 <- %temp2
+%temp2 += 1
+goto :innerloop_global_4
 )
 )
