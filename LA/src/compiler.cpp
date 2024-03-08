@@ -82,10 +82,10 @@ int main(
   }
 
   /*
-   * Generate IR code.
+   * Generate LA code.
    */
   if (enable_code_generator){
-    IR::generate_code(p);
+    LA::generate_code(p);
   }
 
   return 0;

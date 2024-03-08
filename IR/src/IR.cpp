@@ -36,38 +36,57 @@ namespace IR {
         {">>", OperatorEnum::right},
         {"&", OperatorEnum::amp}
     };
+    std::map<std::string, ErrorEnum> stringToErrorEnum = {
+        {"tuple-error", ErrorEnum::tuple_err},
+        {"tensor-error", ErrorEnum::tensor_err}
+    };
 
-
+    void Block::appendInstruction(Instruction *i){
+        this->instructionBody.push_back(i);
+    }
     void newArray::calculate_array(Function *f, std::ofstream &outputFile){
         for (auto num:this->args){
             auto number = dynamic_cast<Number *>(num);
-            this->variableDimensions.push_back(number->value+"D");
-            outputFile << number->value << "D <- " << number->value << " >> 1" << "\n\t";
-        }
-        outputFile<<"%v0 <- ";
-        auto it = args.begin(); // Iterator to the start of the vector
-        auto end = args.end() - 1;
-        while (it != end) {
-            auto number = dynamic_cast<Number*>(*it);
-            outputFile << number->value << "D * ";
-            ++it;
-        }
-        auto number = dynamic_cast<Number*>(*it);
-        outputFile << number->value <<"D" << "\n\t";
+            if (number){
+                this->variableDimensions.push_back(num->print()+"D");
+                outputFile <<"%"<< "D"<< num->print() << "<- " << num->print() << " >> 1" << "\n\t";
+            } else {
+                this->variableDimensions.push_back(num->print()+"D");
+                outputFile << num->print()<<"D" << "<- " << num->print() << " >> 1" << "\n\t";
+            }
 
-        outputFile << "%v0 <- %v0 +" << this->args.size();
-        outputFile<< "%v0 <- %v0 << 1";
-        outputFile << "%v0 <- %v0 + 1";
-        outputFile << "%a <- call allocate(%v0,1)";
-        /*
-        These should be instructions to access vals
+        }
+        auto number = dynamic_cast<Number*>(args[0]);
+        if (number){
+            outputFile<<"%v0 <- "<<"%D"<<number->value<<"\n\t";
+        } else {
+            outputFile<<"%v0 <- "<<args[0]->print()<<"D" <<"\n\t";
+        }
+        for (int i =1;i < args.size();i++){
+            auto number = dynamic_cast<Number*>(args[i]);
+            if (number){
+                outputFile<<"%v0 <- %v0 * %D" << number->value<<"\n\t";
+            } else {
+                outputFile<<"%v0 <- %v0 * "<<args[i]->print()<<"D"<<"\n\t";
+            }
+
+        }
+        outputFile << "%v0 <- %v0 + " << this->args.size()<<"\n\t";
+        outputFile<< "%v0 <- %v0 << 1"<<"\n\t";
+        outputFile << "%v0 <- %v0 + 1"<<"\n\t";
+        outputFile << this->dst->name<<" <- call allocate(%v0,1)"<<"\n\t";
         int count = 2;
         for (auto num:this->args){
             auto number = dynamic_cast<Number *>(num);
-            outputFile<<"%v" << count <<" <- "<< "%a + " << (count-1)* 8 << "\n\t";
-            outputFile<<"store %v" << count<<" <- "<< "%" << number->value << "\n\t";
+            outputFile<<"%v" << count <<" <- "<< this->dst->name <<" + " << (count-1)* 8 << "\n\t";
+            if (number){
+                outputFile<<"store %v" << count<<" <- "<< number->value << "\n\t";
+            } else {
+                outputFile<<"store %v"<<count<<" <- "<< num->print()<<"\n\t";
+            }
+            count++;
         }
-        */
+        
         
     }
 
@@ -75,7 +94,8 @@ namespace IR {
     Token/Item constructors
     */
     Type::Type(TypeEnum type) :
-        type(type)
+        type(type),
+        dims(0)
     {
     }
     std::string Type::print() const {
@@ -201,7 +221,7 @@ namespace IR {
     labelInstruction::labelInstruction(Label *label) :
         label(label)
     {
-    }
+    }   
 
     VoidCallInstruction::VoidCallInstruction(Item *callee) :
         callee(callee)
@@ -255,27 +275,33 @@ namespace IR {
     {
     }
 
-    NonVoidCallInstruction::NonVoidCallInstruction(Variable *dest, Item *callee) :
-        nonVoidInstruction(dest),
+    NonVoidCallInstruction::NonVoidCallInstruction(Variable *dst, Item *callee) :
+        nonVoidInstruction(dst),
         callee(callee)
     {
     }
 
-    newArray::newArray(Variable *dest, int64_t counter) :
-        nonVoidInstruction(dest),
+    newArray::newArray(Variable *dst, int64_t counter) :
+        nonVoidInstruction(dst),
         count(counter)
     {
     }
 
-    newTuple::newTuple(Variable *dest, Item *size) :
-        nonVoidInstruction(dest),
-        size(size)
+    newTuple::newTuple(Variable *dst, Item *size,int64_t counter) :
+        nonVoidInstruction(dst),
+        size(size),
+        count(counter)
     {
     }
 
     /*
     Terminator instructions.
     */
+    Error::Error(ErrorEnum error_type) :
+        error_type(error_type)
+    {
+    }
+
     oneSuccBranch::oneSuccBranch(Label *label) :
         label(label)
     {
@@ -318,9 +344,4 @@ namespace IR {
         return res;
     }
 
-
-    /*
-    Debugging Utilities.
-    */
-    
 }

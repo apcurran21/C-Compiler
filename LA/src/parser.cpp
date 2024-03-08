@@ -41,8 +41,54 @@ namespace LA {
 
 
 
+  /*
+  Program rules.
+  */
+  struct entry_point_rule:
+    pegtl::seq<
+      Functions_rule
+    > {};
+
+  /*
+  Grammar rules.
+  */
+  struct full_grammar :
+    pegtl::must<
+      entry_point_rule
+    > {};
+
+
+  /*
+  Actions.
+  */
+  template< typename Rule >
+  struct action : pegtl::nothing< Rule > {};
 
 
 
+
+
+  /*
+  Main parser function.
+  */
+  Program parse_file (char *filename) {
+    /* 
+    Check the grammar for some possible issues.
+    */
+    if (pegtl::analyze< full_grammar >() != 0){
+      std::cerr << "There are problems with the grammar\n";
+      exit(1);
+    }
+    std::cerr << "No problems with the grammar.\n";
+
+    /*
+     * Parse.
+     */
+    file_input< > fileInput(fileName);
+    Program p;
+    parse< full_grammar, action >(fileInput, p);
+
+    return p;
+  }
 
 }
