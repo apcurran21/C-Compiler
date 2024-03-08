@@ -146,7 +146,7 @@ namespace IR{
         
         outputFile << "%temp <- %offset * 8"<<"\n\t";
         outputFile<<"%temp <- %temp + "<<8 * (1+toMultiply.size())<< "\n\t";
-        outputFile << "%addr"<< "<- "<< var->print() << " + %temp"<<"\n\t";
+        outputFile << "%addr"<< "<- "<< dst->print() << " + %temp"<<"\n\t";
         outputFile << "store %addr"<<"<- "<<var->print()<<"\n\t";
       } else {
         auto tuple = f->variableNameToTuple[this->dst->print()];
