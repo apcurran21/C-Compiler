@@ -144,12 +144,15 @@ namespace IR {
       name
     > {};
   // custom rule
+  struct stderr_rule:
+    pegtl::sor<
+      str_tuperr,
+      str_tenserr
+    > {};
   struct stdlib_rule:
     pegtl::sor<
       str_print,
       str_input,
-      str_tuperr,
-      str_tenserr
     > {};
   struct var_rule:
     pegtl::seq<
@@ -403,6 +406,20 @@ namespace IR {
       str_length,
       spaces,
       var_rule
+    > {};
+  struct Instruction_error_call_rule:
+    // call <tuple/tensor>-error ( args? )
+    pegtl::seq<
+      spaces,
+      str_call,
+      spaces,
+      stderr_rule,
+      spaces,
+      pegtl::one< '(' >,
+      spaces,
+      pegtl::opt< args_rule >,
+      spaces,
+      pegtl::one< ')' >
     > {};
   struct Instruction_call_function_rule:
     // call callee ( args? )
@@ -714,6 +731,16 @@ namespace IR {
       auto name = new userFuncName(in.string());
       parsed_items.push_back(name);
       if (debug) std::cerr << "pushed new fname onto, parsed_items now has size " << parsed_items.size() << "\n";
+    }
+  };
+
+  template<> struct action < stderr_rule > {
+    template< typename Input >
+    static void apply( const Input & in, Program & p) {
+      if (debug) std::cerr << "Recognized an stderr rule\n";
+
+      auto name = new userFuncName(in.string());
+      parsed_items.push_back(name);
     }
   };
 
@@ -1174,6 +1201,73 @@ namespace IR {
       f->instructions.push_back(i);
     }
   };
+
+ template<> struct action < Instruction_call_error_rule > {
+    template< typename Input >
+    static void apply( const Input & in, Program & p) {
+      // call callee ( args? )
+      if (debug) std::cerr << "Recognized an Instruction_error_call rule\n";
+
+      auto f = p.functions.back();
+      auto callee = parsed_items.front();
+      parsed_items.erase(parsed_items.begin());
+
+      Error *i;
+      auto it = stringToErrorEnum.find(callee->print());
+      if (it != stringToErrorEnum.end()) {
+        i = new Error(it->second);
+      } else {
+        if (debug) std::cerr << "Something went wrong, parser recognized an error call rule but callee " << callee->print() << " is not an error type.\n";
+      }
+
+      while (!parsed_items.empty()) {
+        auto arg = parsed_items.front();
+        parsed_items.erase(parsed_items.begin());
+        i->args.push_back(arg);
+      }
+
+      f->instructions.push_back(i);
+    }
+  };
+
+ template<> struct action < Instruction_call_error_assignment_rule > {
+    template< typename Input >
+    static void apply( const Input & in, Program & p) {
+      // call callee ( args? )
+      if (debug) std::cerr << "Recognized an Instruction_error_call_assignment rule\n";
+
+      auto f = p.functions.back();
+      auto var_temp = parsed_items.front();
+      parsed_items.erase(parsed_items.begin());
+      auto callee = parsed_items.front();
+      parsed_items.erase(parsed_items.begin());
+
+      Error *i;
+      auto it = stringToErrorEnum.find(callee->print());
+      if (it != stringToErrorEnum.end()) {
+        i = new Error(it->second);
+      } else {
+        if (debug) std::cerr << "Something went wrong, parser recognized an error call rule but callee " << callee->print() << " is not an error type.\n";
+      }
+
+      auto var = dynamic_cast<Variable*>(var_temp);
+      if (!var) {
+        if (debug) std::cerr << "Program is incorrect, " << var->print() << " should be of variable type.\n";
+      }
+
+      i->has_dest = true;
+      i->dest = var;
+
+      while (!parsed_items.empty()) {
+        auto arg = parsed_items.front();
+        parsed_items.erase(parsed_items.begin());
+        i->args.push_back(arg);
+      }
+
+      f->instructions.push_back(i);
+    }
+  };
+
 
   template<> struct action < Instruction_call_function_rule > {
     template< typename Input >

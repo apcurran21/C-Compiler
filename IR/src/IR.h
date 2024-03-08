@@ -376,16 +376,40 @@ namespace IR{
         public:
         
     };
-    class tenserError : public teInstruction {
+    // class tensorError : public teInstruction {
+    //     public:
+    //         void gen(Function *f, std::ofstream &outputFile) override;
+    //         explicit tensorError();
+    //         // flag variable for accessing the optional destination field
+    //         bool has_dest = false;
+    //         Variable *dest = nullptr;
+    //         std::vector<Item *> args; 
+    // };
+    // class tupleError : public teInstruction {
+    //     public:
+    //         void gen(Function *f, std::ofstream &outputFile) override;
+    //         explicit tupleError();
+    //         // flag variable for accessing the optional destination field
+    //         bool has_dest = false;
+    //         Variable *dest = nullptr;
+    //         std::vector<Item *> args; 
+    // };
+
+    enum ErrorEnum {
+        tensor,
+        tuple
+    };
+
+    class Error : public teInstruction {
         public:
             void gen(Function *f, std::ofstream &outputFile) override;
-            explicit tenserError();
+            explicit Error(ErrorEnum error_type);
+            ErrorEnum error_type;
+            std::vector<Item *> args; 
+            bool has_dest = false;
+            Variable *dest = nullptr;
     };
-    class tupleError : public teInstruction {
-        public:
-            void gen(Function *f, std::ofstream &outputFile) override;
-            explicit tupleError();
-    };
+
     class oneSuccBranch : public teInstruction {
         public: 
             void gen(Function *f, std::ofstream &outputFile) override;
