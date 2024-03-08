@@ -3,7 +3,7 @@ using namespace std;
 
 // use 1 for debug statements, 0 for no printing
 // int debug = 1;
-
+int global_counter = 0;
 namespace IR{
 
     void tupleLength::gen(Function *f, std::ofstream &outputFile){
@@ -21,6 +21,7 @@ namespace IR{
 
     }
     void newTuple::gen(Function *f, std::ofstream &outputFile){
+
       outputFile<<this->dst->print() <<" <- call allocate ("<< this->size->print()<<",1)"<<"\n\t";
     }
     void arrLength::gen(Function *f,std::ofstream &outputFile){
@@ -43,7 +44,7 @@ namespace IR{
         int iter = 0;
         std::vector<std::string> toMultiply;
         for (int i =0;i<index_args_vec.size();i++){
-            outputFile<<"%newVar"<<iter<<" <- " << key<<" +"<<(i+2)*8<<"\n\t"; //gets to the first param
+            outputFile<<"%newVar"<<iter<<" <- " << key<<" +"<<(i+1)*8<<"\n\t"; //gets to the first param
             iter++;
             outputFile<<"%newVar"<<iter<<" <- load %newVar"<<iter-1<<"\n\t"; // this gets first val
             iter++;
@@ -67,8 +68,9 @@ namespace IR{
       } else {
         // we need to iterate the count somehow 
         auto tuple = f->variableNameToTuple[this->var->print()];
-        outputFile << "%newVar" << tuple->count << "<- "<< tuple->dst->print()<<" + 8"<<"\n\t";
-        outputFile << this->dst->print()<< "<- load "<<"%newVar"<<tuple->count<< "\n\t";
+        outputFile << "%newVar" << global_counter << "<- "<< var->print()<<" + "<< 8*(std::stoi(index_args_vec[0]->print())+1)<<"\n\t";
+        outputFile << this->dst->print()<< "<- load "<<"%newVar"<<global_counter<< "\n\t";
+        global_counter++;
       }  
      }
     void storeInstruction::gen(Function *f,std::ofstream &outputFile){
@@ -79,7 +81,7 @@ namespace IR{
         int iter = 0;
         std::vector<std::string> toMultiply;
         for (int i =0;i<index_args_vec.size();i++){
-            outputFile<<"%newVar"<<iter<<" <- " << key<<" +"<<(i+2)*8<<"\n\t"; //gets to the first param
+            outputFile<<"%newVar"<<iter<<" <- " << key<<" +"<<(i+1)*8<<"\n\t"; //gets to the first param
             iter++;
             outputFile<<"%newVar"<<iter<<" <- load %newVar"<<iter-1<<"\n\t"; // this gets first val
             iter++;
@@ -102,9 +104,9 @@ namespace IR{
         outputFile << "store %addr"<<"<- "<<var->print()<<"\n\t";
       } else {
         auto tuple = f->variableNameToTuple[this->dst->print()];
-        outputFile << "%newVar" << tuple->count << "<- "<< tuple->dst->print()<<" + 8"<<"\n\t";
-        outputFile << "store %newVar" << tuple->count << " <- " << this->var->print()<<"\n\t";
-        tuple->count++;
+        outputFile << "%newVar" << global_counter << "<- "<< dst->print()<<" + "<<8 * (std::stoi(index_args_vec[0]->print())+1)<<"\n\t";
+        outputFile << "store %newVar" << global_counter << " <- " << this->var->print()<<"\n\t";
+        global_counter++;
       } 
       
     }
@@ -127,24 +129,32 @@ namespace IR{
     void VoidCallInstruction::gen(Function *f, std::ofstream &outputFile){
       outputFile << "call "<< callee->print() << " (";
       int last_i = 0;
-      for (int i =0;i<args.size()-1;i++){
+      if (args.size()>1){
+        for (int i =0;i<args.size()-1;i++){
         outputFile << args[i]->print()<<",";
         last_i = i+1;
+        }
       }
-      outputFile << args[last_i]->print()<<")"<<"\n\t";
+        if (args.size()>0) {
+          outputFile << args[last_i]->print()<<")"<<"\n\t";
+        } else {
+          outputFile << ")"<<"\n\t";
+        }
     }
     void NonVoidCallInstruction::gen(Function *f, std::ofstream &outputFile){
       outputFile << dst->print()<<" <- call "<< callee->print() << " (";
       int last_i = 0;
-      for (int i =0;i<args.size();i++){
+      if (args.size()>1){
+        for (int i =0;i<args.size()-1;i++){
         outputFile << args[i]->print()<<",";
-        last_i = i;
+        last_i = i+1;
+        }
       }
-      if (args.size()>0) {
-        outputFile << args[last_i]->print()<<")"<<"\n\t";
-      } else {
-        outputFile << ")"<<"\n\t";
-      }
+        if (args.size()>0) {
+          outputFile << args[last_i]->print()<<")"<<"\n\t";
+        } else {
+          outputFile << ")"<<"\n\t";
+        }
     }
 
 
@@ -174,7 +184,6 @@ namespace IR{
               arr_cast->calculate_array(fptr,outputFile);
               auto it = arr_cast->dst->print();
               fptr->variableNameToArray[it] = arr_cast;
-              int i = 500;
             } else if (tuple_cast){
               iptr->gen(fptr, outputFile);
               fptr->variableNameToTuple[tuple_cast->dst->print()] = tuple_cast;

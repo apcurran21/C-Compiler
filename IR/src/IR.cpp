@@ -48,7 +48,7 @@ namespace IR {
                 outputFile <<"%"<< "D"<< num->print() << "<- " << num->print() << " >> 1" << "\n\t";
             } else {
                 this->variableDimensions.push_back(num->print()+"D");
-                outputFile << num->print() << "<- " << num->print() << " >> 1" << "\n\t";
+                outputFile << num->print()<<"D" << "<- " << num->print() << " >> 1" << "\n\t";
             }
 
         }
@@ -56,18 +56,18 @@ namespace IR {
         if (number){
             outputFile<<"%v0 <- "<<"%D"<<number->value<<"\n\t";
         } else {
-            outputFile<<"%v0 <- "<<args[0]->print()<<"\n\t";
+            outputFile<<"%v0 <- "<<args[0]->print()<<"D" <<"\n\t";
         }
         for (int i =1;i < args.size();i++){
             auto number = dynamic_cast<Number*>(args[i]);
             if (number){
                 outputFile<<"%v0 <- %v0 * %D" << number->value<<"\n\t";
             } else {
-                outputFile<<"%v0 <- %v0 * "<<args[i]->print()<<"\n\t";
+                outputFile<<"%v0 <- %v0 * "<<args[i]->print()<<"D"<<"\n\t";
             }
 
         }
-        outputFile << "%v0 <- %v0 +" << this->args.size()<<"\n\t";
+        outputFile << "%v0 <- %v0 + " << this->args.size()<<"\n\t";
         outputFile<< "%v0 <- %v0 << 1"<<"\n\t";
         outputFile << "%v0 <- %v0 + 1"<<"\n\t";
         outputFile << this->dst->name<<" <- call allocate(%v0,1)"<<"\n\t";

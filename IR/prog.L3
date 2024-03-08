@@ -1,0 +1,48 @@
+define @main () {
+	:var_declarations
+	br :start
+	:start
+	%len <- 5
+	%len <- call @int_encode (%len)
+	%ptr <- call allocate (%len,1)
+	%newVar0<- %ptr + 8
+	store %newVar0 <- 3
+	%newVar1<- %ptr + 16
+	store %newVar1 <- 9
+	%newVar2<- %ptr + 24
+	store %newVar2 <- 19
+	%newVar3<- %ptr + 32
+	store %newVar3 <- 33
+	%newVar4<- %ptr + 40
+	store %newVar4 <- 51
+	call print (%ptr)
+	%ptr2 <- call allocate (%len,1)
+	%newVar5<- %ptr + 40
+	%vv<- load %newVar5
+	%newVar6<- %ptr2 + 8
+	store %newVar6 <- %vv
+	%newVar7<- %ptr + 32
+	%vv<- load %newVar7
+	%newVar8<- %ptr2 + 16
+	store %newVar8 <- %vv
+	%newVar9<- %ptr + 24
+	%vv<- load %newVar9
+	%newVar10<- %ptr2 + 24
+	store %newVar10 <- %vv
+	%newVar11<- %ptr + 16
+	%vv<- load %newVar11
+	%newVar12<- %ptr2 + 32
+	store %newVar12 <- %vv
+	%newVar13<- %ptr + 8
+	%vv<- load %newVar13
+	%newVar14<- %ptr2 + 40
+	store %newVar14 <- %vv
+	call print (%ptr2)
+	return
+	}
+define @int_encode (%v) {
+	:entry
+	%v <- %v << 1
+	%v <- %v + 1
+	return %v
+	}
