@@ -1,0 +1,21 @@
+void main ( ){
+
+  print(1)
+
+  int64 j
+  j <- f(1)
+  j <- j + 4
+  print(j)
+
+  return
+
+}
+
+int64 f (int64 num) {
+
+    int64 i
+
+    i <- 2
+
+    return i
+}

@@ -1,0 +1,4 @@
+break compiler.cpp:96
+break check_memory.cpp:214
+break check_memory.cpp:220
+break check_memory.cpp:227

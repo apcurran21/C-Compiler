@@ -36,4 +36,3 @@
 * 15 - codegen
 * 16 - codegen
 * 23 - codegen
-* 24 - calculate_array

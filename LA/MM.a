@@ -1,0 +1,207 @@
+void main ( ) {
+    int64 M1_rows
+    int64 M1_cols
+    int64 M2_rows
+    int64 M2_cols
+    int64[][] M1
+    int64[][] M2
+    int64[][] MR
+
+    // get the first user matrix
+    M1_rows <- input()
+    M1_cols <- input()
+    M1 <- read_matrix(M1_rows, M1_cols)
+    // print(M1)
+    // print_matrix(M1)
+
+    // get the second user matrix
+    M2_rows <- input()
+    M2_cols <- input()
+    M2 <- read_matrix(M2_rows, M2_cols)
+    // print(M2)
+    // print_matrix(M2)
+
+    MR <- matrix_multiply(M1, M2)
+
+    print_matrix(MR)
+
+    return
+}
+
+int64[][] matrix_multiply ( int64[][] M1 , int64[][] M2 ) {
+    int64 M1_rows
+    int64 M1_cols
+    int64 M2_rows
+    int64 M2_cols
+
+    int64[][] MR
+    int64 temp
+    int64 sum
+    int64 sum_encoded
+    int64 M1val
+    int64 M2val
+
+    int64 outer_cond
+    int64 outer_index
+    int64 middle_cond
+    int64 middle_index
+    int64 inner_cond
+    int64 inner_index
+
+    // store necessary dimensions for looping, etc.
+    M1_rows <- length M1 0
+    M1_cols <- length M1 1
+    M2_rows <- length M2 0
+    M2_cols <- length M2 1
+
+    // initialize the results matrix
+    MR <- new Array(M1_rows, M2_cols)
+
+    outer_index <- 0
+    br :FORL_OUTER
+
+    // outer loop, for i from 1 to n
+    :FORL_OUTER
+    outer_cond <- outer_index >= M1_rows
+    br outer_cond :ENDL_OUTER :ENTER_FORL_OUTER
+
+        :ENTER_FORL_OUTER
+
+        middle_index <- 0
+        br :FORL_MIDDLE
+
+        // middle loop, for j from 1 to p
+        :FORL_MIDDLE
+        middle_cond <- middle_index >= M2_cols
+        br middle_cond :ENDL_MIDDLE :ENTER_FORL_MIDDLE
+
+            :ENTER_FORL_MIDDLE
+
+            sum <- 0
+
+            inner_index <- 0
+            br :FORL_INNER
+
+            // inner loop, for k from 1 to m
+            :FORL_INNER
+            inner_cond <- inner_index >= M1_cols
+            br inner_cond :ENDL_INNER :ENTER_FORL_INNER
+
+                :ENTER_FORL_INNER
+
+                M1val <- M1[outer_index][inner_index]
+                M2val <- M2[inner_index][middle_index]
+
+                temp <- M1val * M2val
+                sum <- sum + temp
+
+                MR[outer_index][middle_index] <- sum
+
+                inner_index <- inner_index + 1
+
+                br :FORL_INNER
+
+            :ENDL_INNER
+
+            middle_index <- middle_index + 1
+
+            br :FORL_MIDDLE
+
+        :ENDL_MIDDLE
+
+        outer_index <- outer_index + 1
+
+        br :FORL_OUTER
+    
+    :ENDL_OUTER
+
+    return MR
+}
+
+void print_matrix ( int64[][] matrix ) {
+    int64 outer_cond
+    int64 outer_index
+    int64 inner_cond
+    int64 inner_index
+    int64 value
+    int64 rows
+    int64 cols
+    
+    rows <- length matrix 0
+    cols <- length matrix 1
+
+    print(rows)
+    print(cols)
+
+    outer_index <- 0
+    :FORL_OUTER
+    outer_cond <- outer_index >= rows
+    br outer_cond :ENDL_OUTER :ENTER_OUTER
+
+        :ENTER_OUTER
+
+        inner_index <- 0
+        :FORL_INNER
+        inner_cond <- inner_index >= cols
+        br inner_cond :ENDL_INNER :ENTER_INNER
+
+            :ENTER_INNER
+
+            value <- matrix[outer_index][inner_index]
+            print(value)
+
+
+            inner_index <- inner_index + 1
+            br :FORL_INNER
+
+        :ENDL_INNER
+
+        outer_index <- outer_index + 1
+
+        br :FORL_OUTER
+
+    :ENDL_OUTER
+
+}
+
+int64[][] read_matrix ( int64 rows, int64 cols ) {
+    int64[][] matrix
+    int64 outer_cond
+    int64 outer_index
+    int64 inner_cond
+    int64 inner_index
+    int64 value
+    
+    matrix <- new Array(rows, cols)
+
+    outer_index <- 0
+    :FORL_OUTER
+    outer_cond <- outer_index >= rows
+    br outer_cond :ENDL_OUTER :ENTER_OUTER
+
+        :ENTER_OUTER
+
+        inner_index <- 0
+        :FORL_INNER
+        inner_cond <- inner_index >= cols
+        br inner_cond :ENDL_INNER :ENTER_INNER
+
+            :ENTER_INNER
+
+            value <- input()
+            matrix[outer_index][inner_index] <- value
+
+
+            inner_index <- inner_index + 1
+            br :FORL_INNER
+
+        :ENDL_INNER
+
+        outer_index <- outer_index + 1
+
+        br :FORL_OUTER
+
+    :ENDL_OUTER
+
+    return matrix
+}

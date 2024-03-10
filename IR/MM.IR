@@ -1,0 +1,268 @@
+// note it seems a function parameter doesn't have to be declared before usage.
+
+define void @main () {
+    :main_entry
+
+    int64 %M1_rows
+    int64 %M1_cols
+    int64[][] %M1
+    int64 %M2_rows
+    int64 %M2_cols
+    int64[][] %M2
+    int64[][] %MR
+
+    // get the first user matrix
+    %M1_rows <- call input()
+    %M1_cols <- call input()
+    %M1 <- call @read_matrixA(%M1_rows, %M1_cols)
+    //call print(%M1)
+
+    // get the second user matrix
+    %M2_rows <- call input()
+    %M2_cols <- call input()
+    %M2 <- call @read_matrixA(%M2_rows, %M2_cols)
+    //call print(%M2)
+
+    %MR <- call @matrix_multiply(%M1, %M2)
+
+    call @print_matrix(%MR)
+
+    return
+}
+
+// encode a number %n using the integer encoding scheme
+define int64 @encode ( int64 %n ) {
+    :encode_entry
+    int64 %res
+    %res <- %n << 1
+    %res <- %res + 1
+    return %res
+}
+
+// decode a number %n using the integer encoding scheme
+define int64 @decode ( int64 %n ) {
+    :decode_entry
+    int64 %res
+    %res <- %n >> 1
+    return %res
+}
+
+
+define int64[][] @matrix_multiply ( int64[][] %M1 , int64[][] %M2 ) {
+    :mat_mul_entry
+
+    int64 %M1_rows
+    int64 %M1_cols
+    int64 %M2_rows
+    int64 %M2_cols
+
+    int64 %M1_rows_decoded
+    int64 %M1_cols_decoded
+    int64 %M2_cols_decoded
+
+    int64[][] %MR
+    int64 %temp
+    int64 %sum
+    int64 %sum_encoded
+    int64 %M1val
+    int64 %M2val
+
+    int64 %outer_cond
+    int64 %outer_index
+    int64 %middle_cond
+    int64 %middle_index
+    int64 %inner_cond
+    int64 %inner_index
+
+    // store necessary dimensions for looping, etc.
+    %M1_rows <- length %M1 0
+    %M1_cols <- length %M1 1
+    %M2_rows <- length %M2 0
+    %M2_cols <- length %M2 1
+    %M1_rows_decoded <- call @decode(%M1_rows)
+    %M1_cols_decoded <- call @decode(%M1_cols)
+    %M2_cols_decoded <- call @decode(%M2_cols)
+
+    // initialize the results matrix
+    %MR <- new Array(%M1_rows, %M2_cols)
+
+    %outer_index <- 0
+    br :FORL_OUTER
+
+    // outer loop, for i from 1 to n
+    :FORL_OUTER
+    %outer_cond <- %outer_index >= %M1_rows_decoded
+    br %outer_cond :ENDL_OUTER :ENTER_FORL_OUTER
+
+        :ENTER_FORL_OUTER
+
+        %middle_index <- 0
+        br :FORL_MIDDLE
+
+        // middle loop, for j from 1 to p
+        :FORL_MIDDLE
+        %middle_cond <- %middle_index >= %M2_cols_decoded
+        br %middle_cond :ENDL_MIDDLE :ENTER_FORL_MIDDLE
+
+            :ENTER_FORL_MIDDLE
+
+            %sum <- 0
+
+            %inner_index <- 0
+            br :FORL_INNER
+
+            // inner loop, for k from 1 to m
+            :FORL_INNER
+            %inner_cond <- %inner_index >= %M1_cols_decoded
+            br %inner_cond :ENDL_INNER :ENTER_FORL_INNER
+
+                :ENTER_FORL_INNER
+
+                %M1val <- %M1[%outer_index][%inner_index]
+                %M2val <- %M2[%inner_index][%middle_index]
+                %M1val <- call @decode(%M1val)
+                %M2val <- call @decode(%M2val)
+
+                %temp <- %M1val * %M2val
+                %sum <- %sum + %temp
+                %sum_encoded <- call @encode(%sum)
+
+                %MR[%outer_index][%middle_index] <- %sum_encoded
+
+                %inner_index <- %inner_index + 1
+
+                br :FORL_INNER
+
+            :ENDL_INNER
+
+            %middle_index <- %middle_index + 1
+
+            br :FORL_MIDDLE
+
+        :ENDL_MIDDLE
+
+        %outer_index <- %outer_index + 1
+
+        br :FORL_OUTER
+    
+    :ENDL_OUTER
+
+    return %MR
+}
+
+
+// read a matrix from the user into memory given the encoded number of rows and cols
+define int64[][] @read_matrixA ( int64 %rows, int64 %cols) {
+    :read_matrix_entry
+
+    int64[][] %matrix
+    int64 %outer_cond
+    int64 %outer_index
+    int64 %rows_decoded
+    int64 %inner_cond
+    int64 %inner_index
+    int64 %cols_decoded
+    int64 %user_input
+
+    %matrix <- new Array(%rows, %cols)
+
+    %rows_decoded <- length %matrix 0
+    %rows_decoded <- %rows_decoded >> 1
+
+    %cols_decoded <- length %matrix 1
+    %cols_decoded <- %cols_decoded >> 1
+
+    %outer_index <- 0
+    br :FORL_OUTER
+
+    :FORL_OUTER
+    %outer_cond <- %outer_index >= %rows_decoded
+    br %outer_cond :ENDL_OUTER :ENTER_FORL_OUTER
+
+        :ENTER_FORL_OUTER
+
+        %inner_index <- 0
+        br :FORL_INNER
+
+        :FORL_INNER
+        %inner_cond <- %inner_index >= %cols_decoded
+        br %inner_cond :ENDL_INNER :ENTER_FORL_INNER
+
+            :ENTER_FORL_INNER
+
+            %user_input <- call input()
+            // user input should be already encoded by call input, we are safe to store
+            %matrix[%outer_index][%inner_index] <- %user_input
+
+            %inner_index <- %inner_index + 1
+
+            br :FORL_INNER
+
+        :ENDL_INNER
+
+        %outer_index <- %outer_index + 1
+
+        br :FORL_OUTER
+    
+    :ENDL_OUTER
+
+    return %matrix
+}
+
+
+
+
+define void @print_matrix ( int64[][] %matrix ) {
+    :print_matrix_entry
+
+    int64 %outer_cond
+    int64 %outer_index
+    int64 %rows_decoded
+    int64 %inner_cond
+    int64 %inner_index
+    int64 %cols_decoded
+    int64 %val
+
+    %rows_decoded <- length %matrix 0
+    call print(%rows_decoded)
+    %rows_decoded <- %rows_decoded >> 1
+
+    %cols_decoded <- length %matrix 1
+    call print(%cols_decoded)
+    %cols_decoded <- %cols_decoded >> 1
+
+    %outer_index <- 0
+    br :FORL_OUTER
+
+    :FORL_OUTER
+    %outer_cond <- %outer_index >= %rows_decoded
+    br %outer_cond :ENDL_OUTER :ENTER_FORL_OUTER
+
+        :ENTER_FORL_OUTER
+
+        %inner_index <- 0
+        br :FORL_INNER
+
+        :FORL_INNER
+        %inner_cond <- %inner_index >= %cols_decoded
+        br %inner_cond :ENDL_INNER :ENTER_FORL_INNER
+
+            :ENTER_FORL_INNER
+
+            %val <- %matrix[%outer_index][%inner_index]
+            call print(%val)
+
+            %inner_index <- %inner_index + 1
+
+            br :FORL_INNER
+
+        :ENDL_INNER
+
+        %outer_index <- %outer_index + 1
+
+        br :FORL_OUTER
+    
+    :ENDL_OUTER
+
+    return
+}

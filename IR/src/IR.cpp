@@ -36,6 +36,10 @@ namespace IR {
         {">>", OperatorEnum::right},
         {"&", OperatorEnum::amp}
     };
+    std::map<std::string, ErrorEnum> stringToErrorEnum = {
+        {"tuple-error", ErrorEnum::tuple_err},
+        {"tensor-error", ErrorEnum::tensor_err}
+    };
 
     void Block::appendInstruction(Instruction *i){
         this->instructionBody.push_back(i);
@@ -50,7 +54,6 @@ namespace IR {
                 this->variableDimensions.push_back(num->print()+"D");
                 outputFile << num->print()<<"D" << "<- " << num->print() << " >> 1" << "\n\t";
             }
-
         }
         auto number = dynamic_cast<Number*>(args[0]);
         if (number){
@@ -293,6 +296,7 @@ namespace IR {
     /*
     Terminator instructions.
     */
+
     Error::Error(std::string error_type) :
         error_type(error_type)
     {

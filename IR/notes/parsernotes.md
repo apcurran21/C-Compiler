@@ -38,3 +38,4 @@ since they are so similar, we are going to assume the correctness of the IR prog
 
 ### Monday
 I think i just need to fully commit to ignoring the basic blocks in the parser, and only creating a list of instructions. it's repeated work, but that code is already written to create basic blocks from a vector of instructions.
+
