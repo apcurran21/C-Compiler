@@ -16,6 +16,7 @@
 #include "parser.h"
 #include "code_generator.h"
 #include "encode.h"
+#include "check_memory.h"
 #include "LA.h"
 
 
@@ -92,7 +93,7 @@ int main(
   /*
   Check the program for memory/other errors.
   */
-
+  LA::check_program(p);
 
   /*
   Break the program into basic blocks.

@@ -31,6 +31,7 @@ namespace LA {
             void visit(Instruction_return* i) override;
             void visit(Instruction_return_value* i) override;
             void visit(Instruction_label* i) override;
+            void visit(Instruction_error* i) override;
     };
 
 
@@ -55,7 +56,8 @@ namespace LA {
             void visit(Instruction_return* i) override;
             void visit(Instruction_return_value* i) override;
             void visit(Instruction_label* i) override;
-
+            void visit(Instruction_error* i) override;
+            
             std::vector<Item*> decodeItems(std::vector<Item*>& items);
             std::vector<Instruction*> instructions;
     };

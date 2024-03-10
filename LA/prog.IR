@@ -1,26 +1,30 @@
 define void main ( ) {
-call print ( 3 )
-int64 j
-j <- 1
-j <- call f ( 3 )
+int64[] j
+j <- 0
+j <- new Array( 11 )
 int64 print___0
 print___0 <- 1
-print___0 <- j
+print___0 <- 0
 print___0 <- print___0 >> 1
-int64 print___1
-print___1 <- 1
-print___1 <- 9
-print___1 <- print___1 >> 1
-j <- print___0 + print___1
-j <- j << 1
-j <- j + 1
-call print ( j )
+int64 print___1_line_number
+print___1_line_number <- 1
+int64 print___2
+print___2 <- j = 0
+br print___2 print___3_ERROR print___4_CORRECT
+print___3_ERROR
+call tensor ( print___1_line_number)
+print___4_CORRECT
+print___6_length <- length j 0
+print___7 <- 0 >= 0
+br print___7 print___9_CORRECT print___8_ERROR
+print___8_ERROR
+call tensor-error ( print___5_line_number, print___6_length, 0)
+print___9_CORRECT
+print___10 <- 0 < print___6_length
+br print___10 print___11_CORRECT print___8_ERROR
+print___11_CORRECT
+j[0] <- 7
+call print ( 5 )
 return
-}
-
-define int64 f ( int64 num ) {
-int64 i
-i <- 1
-return i
 }
 

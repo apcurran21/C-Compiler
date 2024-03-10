@@ -235,7 +235,11 @@ namespace LA {
     }
 
     std::string Type::gen() const {
-        return print();
+        std::string res = print();
+        for (int j = 0; j < dims; j++) {
+            res = res + "[]";
+        }
+        return res;
     }
 
     TypeEnum Type::get_type() const {
@@ -501,6 +505,17 @@ namespace LA {
     }
 
     void Instruction_label::accept(FileVisitor *visitor, std::ofstream &outputFile) {
+        visitor->visit(this, outputFile);
+    }
+
+    Instruction_error::Instruction_error() {}
+    
+
+    void Instruction_error::accept(Visitor *visitor) {
+        visitor->visit(this);
+    }
+
+    void Instruction_error::accept(FileVisitor *visitor, std::ofstream &outputFile) {
         visitor->visit(this, outputFile);
     }
 

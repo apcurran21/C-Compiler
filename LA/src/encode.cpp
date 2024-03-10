@@ -12,6 +12,7 @@ Function* encode_function(Function *f) {
     Item* returnType_copy = new Type(stringToType(f->returnType->print()));
     Function* new_f = new Function(functionName_copy, returnType_copy);
     new_f->parameters = f->parameters;
+    new_f->variableNameToType = f->variableNameToType;
 
     /*
     Encode the constants by modifying current function's instruction vector
@@ -124,6 +125,10 @@ void EncodeConstants::visit(Instruction_label* i) {
     // nothing
 }
 
+void EncodeConstants::visit(Instruction_error* i) {
+    // nothing
+}
+
 
 
 /*
@@ -131,9 +136,21 @@ EncodingVisitor
 */
 void EncodingVisitor::visit(Instruction_type_declaration* i) {
     instructions.push_back(i);
-    auto n = new Number(1);
-    auto i0 = new Instruction_assignment(i->name, n);
-    instructions.push_back(i0);
+
+    auto type_ptr = dynamic_cast<Type*>(i->type);
+    if (type_ptr) {
+        Number* n;
+        TypeEnum type = type_ptr->get_type();
+        if (((type == TypeEnum::int64) && (type_ptr->dims > 0)) || (type==TypeEnum::tuple)) {
+            n = new Number(0);
+        } else {
+            n = new Number(1);
+        }
+        auto i0 = new Instruction_assignment(i->name, n);
+        instructions.push_back(i0);
+    } else {
+        if (debug) std::cerr << "something went wrong, type was not a type\n";
+    }
 }
 
 void EncodingVisitor::visit(Instruction_assignment* i) {
@@ -254,6 +271,10 @@ void EncodingVisitor::visit(Instruction_return_value* i) {
 }
 
 void EncodingVisitor::visit(Instruction_label* i) {
+    instructions.push_back(i);
+}
+
+void EncodingVisitor::visit(Instruction_error* i) {
     instructions.push_back(i);
 }
 

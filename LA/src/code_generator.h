@@ -20,6 +20,7 @@ namespace LA {
           void visit(Instruction_return* i, std::ofstream &outputFile) override;
           void visit(Instruction_return_value* i, std::ofstream &outputFile) override;
           void visit(Instruction_label* i, std::ofstream &outputFile) override;
+          void visit(Instruction_error* i, std::ofstream &outputFile) override;
     };
 
 

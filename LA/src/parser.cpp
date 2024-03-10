@@ -157,15 +157,19 @@ namespace LA {
     > {};
   struct type_keywords_rule:
     pegtl::sor<
+      str_bracks,
       str_int64,
       str_tuple,
       str_code,
       str_void
     > {};
   struct type_rule:
-    pegtl::seq<
-      type_keywords_rule,
-      pegtl::star< str_bracks >
+    // pegtl::seq<
+    //   type_keywords_rule,
+    //   pegtl::star< str_bracks >
+    // > {};
+    pegtl::plus<
+      type_keywords_rule
     > {};
   struct defined_fname:
     pegtl::seq<
@@ -287,6 +291,8 @@ namespace LA {
   struct Instruction_store_rule:
     // name1[t]... <- t
     pegtl::seq<
+      spaces,
+      name_rule,
       spaces,
       full_array_access_rule,
       spaces,
@@ -493,7 +499,39 @@ namespace LA {
   /*
   Debug actions.
   */
+  template<> struct action < str_bracks > {
+    template< typename Input >
+    static void apply( const Input & in, Program & p) {
+      if (debug) std::cerr << "Recognized a str_bracks rule\n";
 
+      // TypeEnum bracks = stringToType(in.string());  // stringToType() will error if string not in the dict.
+      // auto type = new Type(bracks);
+      // parsed_items.push_back(type);
+    }
+  };
+
+  template<> struct action < full_array_access_rule > {
+    template< typename Input >
+    static void apply( const Input & in, Program & p) {
+      if (debug) std::cerr << "Recognized a full_array_access_rule rule\n";
+
+      // TypeEnum bracks = stringToType(in.string());  // stringToType() will error if string not in the dict.
+      // auto type = new Type(bracks);
+      // parsed_items.push_back(type);
+    }
+  };
+
+
+  template<> struct action < array_access > {
+    template< typename Input >
+    static void apply( const Input & in, Program & p) {
+      if (debug) std::cerr << "Recognized an array_access\n";
+
+      // TypeEnum bracks = stringToType(in.string());  // stringToType() will error if string not in the dict.
+      // auto type = new Type(bracks);
+      // parsed_items.push_back(type);
+    }
+  };
 
   /*
   Terminal actions.
@@ -614,6 +652,21 @@ namespace LA {
   /*
   Instruction actions.
   */
+  template<> struct action < Instruction_assignment_rule > {
+    template< typename Input >
+    static void apply( const Input & in, Program & p) {
+      // name <- t
+      if (debug) std::cerr << "Recognized an Instruction_assignment rule\n";
+
+      auto f = p.getLastFunction();
+      auto t = popAndGrabBack(parsed_items);
+      auto name = popAndGrabBack(parsed_items);
+
+      auto i = new Instruction_assignment(name, t);
+      f->addInstruction(i);
+    }
+  };
+
   template<> struct action < Instruction_type_declaration_rule > {
     template< typename Input >
     static void apply( const Input & in, Program & p) {
@@ -624,6 +677,11 @@ namespace LA {
       auto name = popAndGrabBack(parsed_items);
       // name->isVariable = true;
       auto type = popAndGrabBack(parsed_items);
+
+      std::string var_name = name->print();
+      auto type_ptr = dynamic_cast<Type*>(type);
+      if (!type_ptr) if (debug) std::cerr << "Program is incorrect, " << type->print() << " should be of Type type.\n";
+      f->variableNameToType[var_name] = type_ptr;
 
       auto i = new Instruction_type_declaration(type, name);
       f->addInstruction(i);
@@ -761,6 +819,9 @@ namespace LA {
         i->addArg(arg);
       }
 
+      int64_t line_number = in.position().line;
+      i->line_number = line_number;
+
       f->addInstruction(i);
     }
   };
@@ -781,6 +842,9 @@ namespace LA {
         auto arg = popAndGrabFront(parsed_items);
         i->addArg(arg);
       }
+
+      int64_t line_number = in.position().line;
+      i->line_number = line_number;
 
       f->addInstruction(i);
     }

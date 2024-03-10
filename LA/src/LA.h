@@ -117,7 +117,7 @@ namespace LA {
             std::string gen() const override;
         // private:
             std::string value;
-            bool isVariable = false;
+            bool isFunctionName = false;
     };
 
     class Operation : public Item {
@@ -249,6 +249,7 @@ namespace LA {
             void addArg(Item* arg);
         // private:
             std::vector<Item *> args;
+            int64_t line_number;
     };
 
     class Instruction_load : public Instruction_assignment {
@@ -260,6 +261,7 @@ namespace LA {
             void addArg(Item* arg);
         // private:
             std::vector<Item *> args;
+            int64_t line_number;
     };
 
     class Instruction_operation : public Instruction {
@@ -324,6 +326,16 @@ namespace LA {
             Item *label;
     };
 
+    class Instruction_error : public Instruction {
+        // <tensor/tuple>-error( args )
+        public:
+            Instruction_error ();
+            void accept(Visitor *visitor) override;
+            void accept(FileVisitor *visitor, std::ofstream &outputFile) override;
+            std::string type;
+            std::vector<Item*> args;
+    };
+
 
 
     /*
@@ -339,6 +351,7 @@ namespace LA {
             std::vector<Parameter *> parameters;
             Item *functionName;
             Item *returnType;
+            std::unordered_map<std::string, Type*> variableNameToType;
     };
 
     class Program {
@@ -375,6 +388,7 @@ namespace LA {
             virtual void visit(Instruction_return* i) = 0;
             virtual void visit(Instruction_return_value* i) = 0;
             virtual void visit(Instruction_label* i) = 0;
+            virtual void visit(Instruction_error* i) = 0;
     };
 
     class FileVisitor {
@@ -393,6 +407,7 @@ namespace LA {
             virtual void visit(Instruction_return* i, std::ofstream &outputFile) = 0;
             virtual void visit(Instruction_return_value* i, std::ofstream &outputFile) = 0;
             virtual void visit(Instruction_label* i, std::ofstream &outputFile) = 0;
+            virtual void visit(Instruction_error* i, std::ofstream &outputFile) = 0;
     };
 
 

@@ -7,39 +7,39 @@ using namespace std;
 namespace LA {
 
   void GenVisitor::visit(Instruction_type_declaration* i, std::ofstream &outputFile) {
-    outputFile << i->type->print() << " " << i->name->print() << "\n";
+    outputFile << i->type->gen() << " " << i->name->gen() << "\n";
   }
 
   void GenVisitor::visit(Instruction_assignment* i, std::ofstream &outputFile) {
-    outputFile << i->dest->print() << " <- " << i->src->print() << "\n";
+    outputFile << i->dest->gen() << " <- " << i->src->gen() << "\n";
   }
 
   void GenVisitor::visit(Instruction_length* i, std::ofstream &outputFile) {
-    outputFile << i->dest->print() << " <- length " << i->src->print();
-    if (i->t) outputFile << " " << i->t->print();
+    outputFile << i->dest->gen() << " <- length " << i->src->gen();
+    if (i->t) outputFile << " " << i->t->gen();
     outputFile << "\n";
   }
 
   void GenVisitor::visit(Instruction_call_function* i, std::ofstream &outputFile) {
-    outputFile << "call " << i->callee->print() << " (";
+    outputFile << "call " << i->callee->gen() << " (";
     for (int j = 0; j < i->args.size(); j++) {
-      outputFile << " " << i->args[j]->print();
+      outputFile << " " << i->args[j]->gen();
       if (j < (i->args.size() - 1)) outputFile << ",";
     }
     outputFile << " )\n";
   }
 
   void GenVisitor::visit(Instruction_call_function_assignment* i, std::ofstream &outputFile) {
-    outputFile << i->dest->print() << " <- call " << i->callee->print() << " (";
+    outputFile << i->dest->gen() << " <- call " << i->callee->gen() << " (";
     for (int j = 0; j < i->args.size(); j++) {
-      outputFile << " " << i->args[j]->print();
+      outputFile << " " << i->args[j]->gen();
       if (j < (i->args.size() - 1)) outputFile << ",";
     }
     outputFile << " )\n";
   }
 
   void GenVisitor::visit(Instruction_initialization* i, std::ofstream &outputFile) {
-    outputFile << i->dest->print() << " <- new ";
+    outputFile << i->dest->gen() << " <- new ";
     switch (i->type) {
       case CollectionEnum::Array:
         outputFile << "Array";
@@ -50,38 +50,38 @@ namespace LA {
     }
     outputFile << "(";
     for (int j = 0; j < i->args.size(); j++) {
-      outputFile << " " << i->args[j]->print();
+      outputFile << " " << i->args[j]->gen();
       if (j < (i->args.size() - 1)) outputFile << ",";
     }
     outputFile << " )\n";
   }
 
   void GenVisitor::visit(Instruction_operation* i, std::ofstream &outputFile) {
-    outputFile << i->name->print() << " <- " << i->t1->print() << " " << i->op->print() << " " << i->t2->print() << "\n";
+    outputFile << i->name->gen() << " <- " << i->t1->gen() << " " << i->op->gen() << " " << i->t2->gen() << "\n";
   }
 
   void GenVisitor::visit(Instruction_store* i, std::ofstream &outputFile) {
-    outputFile << i->dest->print();
+    outputFile << i->dest->gen();
     for (auto arg : i->args) {
-      outputFile << "[" << arg->print() << "]";
+      outputFile << "[" << arg->gen() << "]";
     }
-    outputFile << " <- " << i->src->print() << "\n";
+    outputFile << " <- " << i->src->gen() << "\n";
   }
 
   void GenVisitor::visit(Instruction_load* i, std::ofstream &outputFile) {
-    outputFile << i->dest->print() << " <- " << i->src->print();
+    outputFile << i->dest->gen() << " <- " << i->src->gen();
     for (auto arg : i->args) {
-      outputFile << "[" << arg->print() << "]";
+      outputFile << "[" << arg->gen() << "]";
     }
     outputFile << "\n";
   }
 
   void GenVisitor::visit(Instruction_branch_single* i, std::ofstream &outputFile) {
-    outputFile << "br " << i->label1->print() << "\n";
+    outputFile << "br " << i->label1->gen() << "\n";
   }
 
   void GenVisitor::visit(Instruction_branch_double* i, std::ofstream &outputFile) {
-    outputFile << "br " << i->t->print() << " " << i->label1->print() << " " << i->label2->print() << "\n";
+    outputFile << "br " << i->t->gen() << " " << i->label1->gen() << " " << i->label2->gen() << "\n";
   }
 
   void GenVisitor::visit(Instruction_return* i, std::ofstream &outputFile) {
@@ -89,11 +89,20 @@ namespace LA {
   }
 
   void GenVisitor::visit(Instruction_return_value* i, std::ofstream &outputFile) {
-    outputFile << "return " << i->t->print() <<"\n";
+    outputFile << "return " << i->t->gen() <<"\n";
   }
 
   void GenVisitor::visit(Instruction_label* i, std::ofstream &outputFile) {
-    outputFile << i->label->print() <<"\n";
+    outputFile << i->label->gen() <<"\n";
+  }
+
+  void GenVisitor::visit(Instruction_error* i, std::ofstream &outputFile) {
+    outputFile << "call " << i->type << " (";
+    for (int j = 0; j < i->args.size(); j++) {
+      outputFile << " " << i->args[j]->gen();
+      if (j < (i->args.size() - 1)) outputFile << ",";
+    }
+    outputFile << ")\n";
   }
 
   /*
@@ -106,10 +115,10 @@ namespace LA {
 
 
     for (auto f: p.getFunctions()) {
-      outputFile << "define " << f->returnType->print() << " " << f->functionName->print() << " (";
+      outputFile << "define " << f->returnType->gen() << " " << f->functionName->gen() << " (";
       
       for (int j = 0; j < f->parameters.size(); j++) {
-        outputFile << " " << f->parameters[j]->print();
+        outputFile << " " << f->parameters[j]->gen();
         if (j < (f->parameters.size() - 1)) outputFile << ",";
       }
       
