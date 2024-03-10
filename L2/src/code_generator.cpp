@@ -165,7 +165,9 @@ namespace L2{
  
  
       int stack_size = 0;
+      int stack_arg_size = 0;
       std::unordered_map<int, bool> seen;
+      bool zero_seen = false;
       // ColorVariablesVisitor* myColorVisitor = new ColorVariablesVisitor(color_graph,fptr);
       for (Instruction *iptr : fptr->instructions) {
         auto instruction = dynamic_cast<Memory_assignment_store*>(iptr);
@@ -174,28 +176,29 @@ namespace L2{
           auto variable = dynamic_cast<Variable*>(instruction->s);
           if (number->value >=0){
             if (seen.find(number->value) == seen.end()) {
-              stack_size++;
+              stack_arg_size++;
               seen[number->value] = true;
+            }      
+            zero_seen = true;
+            if (number->value>stack_size){
+              stack_size = number->value;
             }
           }
         }
       }
- 
+      int append = 0;
+      if (zero_seen == true){
+        append = (stack_size+1);
+      }
     
       //This might supposed to be stack_size here 
 
-      /*
-      This was our potential fix for the L3 bugs, but this caused other problems with the L2 tests.
-      */
-      // if (stack_size > 0) {
-      //   stack_size++;
-      // } 
-      outputFile << fptr->arguments<<" "<<stack_size<<"\n\t";
+      outputFile << fptr->arguments<<" "<<append<<"\n\t";
       for (Instruction *iptr : fptr->instructions) {
         // iptr->accept(myColorVisitor);
         auto cast_stack_arg = dynamic_cast<stackarg_assignment*>(iptr);
         if (cast_stack_arg){
-          outputFile << cast_stack_arg->w->print()<<" <- "<< "mem rsp "<<std::stoi(cast_stack_arg->M->print())+ (8*stack_size) << "\n\t";
+          outputFile << cast_stack_arg->w->print()<<" <- "<< "mem rsp "<<std::stoi(cast_stack_arg->M->print())+ (8*(append)) << "\n\t";
         } else {
           iptr->gen(fptr, outputFile);
         }

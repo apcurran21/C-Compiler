@@ -36,38 +36,3 @@
 * 15 - codegen
 * 16 - codegen
 * 23 - codegen
-* 24 - calculate_array
-
-
-### Failing tests - 3/7
-```
-Test 31: test27.IR                                                                                            [FAILED]
-Test 32: test31.IR                                                                                            [FAILED]
-Test 33: test15.IR                                                                                            [FAILED]
-Test 35: test26.IR                                                                                            [FAILED]
-Test 37: test61.IR                                                                                            [FAILED]
-Test 42: test42.IR                                                                                            [FAILED]
-Test 43: test38.IR                                                                                            [FAILED]
-Test 52: test83.IR                                                                                            [FAILED]
-Test 56: test66.IR                                                                                            [FAILED]
-Test 58: test47.IR                                                                                            [FAILED]
-Test 63: test14.IR                                                                                            [FAILED]
-Test 64: test43.IR                                                                                            [FAILED]
-Test 65: test48.IR                                                                                            [FAILED]
-Test 66: test103.IR                                                                                           [FAILED]
-Test 70: test105.IR                                                                                           [FAILED]
-Test 71: test55.IR                                                                                            [FAILED]
-Test 72: test92.IR                                                                                            [FAILED]
-Test 73: test74.IR                                                                                            [FAILED]
-Test 75: test109.IR                                                                                           [FAILED]
-Test 76: test35.IR                                                                                            [FAILED]
-Test 77: test102.IR                                                                                           [FAILED]
-Test 78: test16.IR                                                                                            [FAILED]
-Test 79: test37.IR                                                                                            [FAILED]
-Test 80: test33.IR                                                                                            [FAILED]
-Test 82: test91.IR                                                                                            [FAILED]
-Test 85: test54.IR                                                                                            [FAILED]
-Test 89: test58.IR                                                                                            [FAILED]
-Test 90: test104.IR                                                                                           [FAILED]
-Test 91: test50.IR   
-```

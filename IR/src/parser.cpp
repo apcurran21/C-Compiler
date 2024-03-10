@@ -143,6 +143,17 @@ namespace IR {
       pegtl::one< '@' >,
       name
     > {};
+  // custom rule
+  struct stderr_rule:
+    pegtl::sor<
+      str_tuperr,
+      str_tenserr
+    > {};
+  struct stdlib_rule:
+    pegtl::sor<
+      str_print,
+      str_input
+    > {};
   struct var_rule:
     pegtl::seq<
       pegtl::one< '%' >,
@@ -202,6 +213,10 @@ namespace IR {
       type_keywords_rule,
       pegtl::star< str_bracks >
     > {};
+  struct param_rule:
+    pegtl::seq<
+      var_rule
+    > {};
   // struct type_rule:
   //   pegtl::sor<
   //     pegtl::seq<
@@ -220,10 +235,7 @@ namespace IR {
   struct callee_rule:
     pegtl::sor<
       u_rule,
-      str_print,
-      str_input,
-      str_tuperr,
-      str_tenserr
+      stdlib_rule
     > {};
   // custom tokens
   struct defined_fname:
@@ -256,7 +268,6 @@ namespace IR {
       >
     > {};
 
-
   /*
   Label rules.
   */
@@ -282,6 +293,8 @@ namespace IR {
     pegtl::seq<
       spaces,
       str_branch,
+      spaces,
+      t_rule,
       spaces,
       label_rule,
       spaces,
@@ -360,6 +373,8 @@ namespace IR {
     // var1[t]... <- s
     pegtl::seq<
       spaces,
+      var_rule,
+      spaces,
       full_array_access_rule,
       spaces,
       str_arrow,
@@ -391,6 +406,38 @@ namespace IR {
       str_length,
       spaces,
       var_rule
+    > {};
+  struct Terminator_call_error_rule:
+    // call <tuple/tensor>-error ( args? )
+    pegtl::seq<
+      spaces,
+      str_call,
+      spaces,
+      stderr_rule,
+      spaces,
+      pegtl::one< '(' >,
+      spaces,
+      pegtl::opt< args_rule >,
+      spaces,
+      pegtl::one< ')' >
+    > {};
+  struct Terminator_call_error_assignment_rule:
+    // var <- call <tuple/tensor>-error ( args? )
+    pegtl::seq<
+      spaces,
+      var_rule,
+      spaces,
+      str_arrow,
+      spaces,
+      str_call,
+      spaces,
+      stderr_rule,
+      spaces,
+      pegtl::one< '(' >,
+      spaces,
+      pegtl::opt< args_rule >,
+      spaces,
+      pegtl::one< ')' >
     > {};
   struct Instruction_call_function_rule:
     // call callee ( args? )
@@ -463,6 +510,8 @@ namespace IR {
   struct Instruction_rule:
     pegtl::sor<
       pegtl::seq< pegtl::at< Label_label_rule >, Label_label_rule >,
+      pegtl::seq< pegtl::at< Terminator_call_error_rule >, Terminator_call_error_rule >,
+      pegtl::seq< pegtl::at< Terminator_call_error_assignment_rule >, Terminator_call_error_assignment_rule >,
       pegtl::seq< pegtl::at< Terminator_return_val_rule >, Terminator_return_val_rule >,
       pegtl::seq< pegtl::at< Terminator_return_rule >, Terminator_return_rule >,
       pegtl::seq< pegtl::at< Terminator_double_branch_rule >, Terminator_double_branch_rule >,
@@ -476,9 +525,9 @@ namespace IR {
       pegtl::seq< pegtl::at< Instruction_dim_length_rule >, Instruction_dim_length_rule >,
       pegtl::seq< pegtl::at< Instruction_length_rule >, Instruction_length_rule >,
       pegtl::seq< pegtl::at< Instruction_operation_rule >, Instruction_operation_rule >,
-      pegtl::seq< pegtl::at< Instruction_assignment_rule >, Instruction_assignment_rule >,
       pegtl::seq< pegtl::at<Instruction_load_rule>, Instruction_load_rule >,
-      pegtl::seq< pegtl::at<Instruction_store_rule>, Instruction_store_rule>
+      pegtl::seq< pegtl::at<Instruction_store_rule>, Instruction_store_rule>,
+      pegtl::seq< pegtl::at< Instruction_assignment_rule >, Instruction_assignment_rule >
     > {};
   struct Instructions_rule:
     pegtl::star<
@@ -516,6 +565,7 @@ namespace IR {
   /*
   Function rules.
   */
+
   struct Function_header_rule:
     pegtl::seq<
       spaces,
@@ -527,26 +577,54 @@ namespace IR {
       spaces,
       pegtl::one< '(' >,
       spaces,
-      pegtl::seq<
-        pegtl::opt<
-          pegtl::seq<
-            type_rule,
-            spaces,
-            var_rule
-          >
-        >,
-        spaces,
-        pegtl::star<
-          pegtl::seq<
-            pegtl::one< ',' >,
-            spaces,
-            var_rule
-          >
+      pegtl::star<
+        pegtl::seq<
+          spaces,
+          type_rule,
+          spaces,
+          // var_rule,
+          param_rule,
+          spaces,
+          pegtl::opt< 
+            pegtl::one< ',' >
+          >,
+          spaces
         >
       >,
       spaces,
       pegtl::one< ')' >
     > {};
+  // struct Function_header_rule:
+  //   pegtl::seq<
+  //     spaces,
+  //     str_define,
+  //     spaces,
+  //     type_rule,
+  //     spaces,
+  //     defined_fname,
+  //     spaces,
+  //     pegtl::one< '(' >,
+  //     spaces,
+  //     pegtl::seq<
+  //       pegtl::opt<
+  //         pegtl::seq<
+  //           type_rule,
+  //           spaces,
+  //           var_rule
+  //         >
+  //       >,
+  //       spaces,
+  //       pegtl::star<
+  //         pegtl::seq<
+  //           pegtl::one< ',' >,
+  //           spaces,
+  //           var_rule
+  //         >
+  //       >
+  //     >,
+  //     spaces,
+  //     pegtl::one< ')' >
+  //   > {};
   struct Function_rule:
     pegtl::seq<
       Function_header_rule,
@@ -554,7 +632,9 @@ namespace IR {
       spaces,
       pegtl::one< '{' >,
       // BBs_rule,
+      seps_with_comments,
       Instructions_rule,
+      seps_with_comments,
       spaces,
       pegtl::one< '}' >
     > {};
@@ -593,6 +673,13 @@ namespace IR {
   /*
   Debug actions.
   */
+  template<> struct action < str_call > {
+    template< typename Input >
+    static void apply( const Input & in, Program & p) {
+      if (debug) std::cerr << "Recognized a str_call rule\n";
+    }
+  };
+
   template<> struct action < str_branch > {
     template< typename Input >
     static void apply( const Input & in, Program & p) {
@@ -674,10 +761,30 @@ namespace IR {
     }
   };
 
+  template<> struct action < stderr_rule > {
+    template< typename Input >
+    static void apply( const Input & in, Program & p) {
+      if (debug) std::cerr << "Recognized an stderr rule\n";
+
+      auto name = new userFuncName(in.string());
+      parsed_items.push_back(name);
+    }
+  };
+
+  template<> struct action < stdlib_rule > {
+    template< typename Input >
+    static void apply( const Input & in, Program & p) {
+      if (debug) std::cerr << "Recognized an stdlib rule\n";
+
+      auto name = new userFuncName(in.string());
+      parsed_items.push_back(name);
+    }
+  };
+
   template<> struct action < var_rule > {
     template< typename Input >
     static void apply( const Input & in, Program & p) {
-      if (debug) std::cerr << "Recognized an var rule\n";
+      if (debug) std::cerr << "Recognized an var rule for " << in.string() << "\n";
 
       auto variable = new Variable(in.string());
       parsed_items.push_back(variable);
@@ -729,6 +836,8 @@ namespace IR {
     static void apply( const Input & in, Program & p) {
       if (debug) std::cerr << "Recognized a type rule\n";
 
+      if (debug) std::cerr << "parsed_items has size " << parsed_items.size() << "\n";
+
       auto type_temp = parsed_items.front();
       parsed_items.erase(parsed_items.begin());
       if (debug) std::cerr << "made it past grabbing the type " << type_temp->print() << "\n";
@@ -736,6 +845,7 @@ namespace IR {
 
       int64_t dims = 0;
       while (!parsed_items.empty()) {
+        // if theres anything on the stack, i think it can be assumed that they're brackets. 
         parsed_items.pop_back();
         dims++;
       }
@@ -751,11 +861,44 @@ namespace IR {
     }
   };
 
+  template<> struct action < param_rule > {
+    template< typename Input >
+    static void apply( const Input & in, Program & p) {
+      if (debug) std::cerr << "Recognized a param rule for " << in.string() << "\n";
+
+      auto f = p.functions.back();
+      auto param_temp = parsed_items.back();
+      parsed_items.pop_back();
+      auto type_temp = parsed_items.back();
+      parsed_items.pop_back();
+
+      auto param = dynamic_cast<Variable*>(param_temp);
+      if (!param) {
+        if (debug) std::cerr << "Program is incorrect, " << param->print() << " should be of variable type.\n";
+      }
+
+      auto type = dynamic_cast<Type*>(type_temp);
+      if (!type) {
+        if (debug) std::cerr << "Program is incorrect, " << type->print() << " should be of Type type.\n";
+      }
+
+      /*
+      Associate the variable within the containing function's maps.
+      */
+      std::string param_name = param->print();
+      f->variableNameToPointer[param_name] = param;
+      // f->variableToTypeMapping[var] = type;
+      f->variableNameToType[param_name] = type;
+
+      f->parameters.push_back(param);
+    }
+  };
+
   // custom, not in explicit grammar ()
   template<> struct action < defined_fname > {
     template< typename Input >
     static void apply( const Input & in, Program & p) {
-      if (debug) std::cerr << "Recognized a defined_fname rule\n";
+      if (debug) std::cerr << "Recognized a defined_fname rule for function " << in.string() << "\n";
 
       auto fname_temp = parsed_items.back();
       parsed_items.pop_back();
@@ -906,7 +1049,8 @@ namespace IR {
       */
       std::string var_name = var->print();
       f->variableNameToPointer[var_name] = var;
-      f->variableToTypeMapping[var] = type;
+      // f->variableToTypeMapping[var] = type;
+      f->variableNameToType[var_name] = type;
 
       auto i = new declarationInstruction(type, var);
       f->instructions.push_back(i);
@@ -1085,6 +1229,59 @@ namespace IR {
     }
   };
 
+ template<> struct action < Terminator_call_error_rule > {
+    template< typename Input >
+    static void apply( const Input & in, Program & p) {
+      // call callee ( args? )
+      if (debug) std::cerr << "Recognized an Terminator_call_error rule\n";
+
+      auto f = p.functions.back();
+      auto callee = parsed_items.front();
+      parsed_items.erase(parsed_items.begin());
+      auto i = new Error(callee->print());
+
+
+      while (!parsed_items.empty()) {
+        auto arg = parsed_items.front();
+        parsed_items.erase(parsed_items.begin());
+        i->args.push_back(arg);
+      }
+
+      f->instructions.push_back(i);
+    }
+  };
+
+ template<> struct action < Terminator_call_error_assignment_rule > {
+    template< typename Input >
+    static void apply( const Input & in, Program & p) {
+      // call callee ( args? )
+      if (debug) std::cerr << "Recognized an Terminator_call_error_assignment rule\n";
+
+      auto f = p.functions.back();
+      auto var_temp = parsed_items.front();
+      parsed_items.erase(parsed_items.begin());
+      auto callee = parsed_items.front();
+      parsed_items.erase(parsed_items.begin());
+      auto i = new Error(callee->print());
+
+      auto var = dynamic_cast<Variable*>(var_temp);
+      if (!var) {
+        if (debug) std::cerr << "Program is incorrect, " << var->print() << " should be of variable type.\n";
+      }
+
+      i->dest = var;
+
+      while (!parsed_items.empty()) {
+        auto arg = parsed_items.front();
+        parsed_items.erase(parsed_items.begin());
+        i->args.push_back(arg);
+      }
+
+      f->instructions.push_back(i);
+    }
+  };
+
+
   template<> struct action < Instruction_call_function_rule > {
     template< typename Input >
     static void apply( const Input & in, Program & p) {
@@ -1182,7 +1379,9 @@ namespace IR {
         if (debug) std::cerr << "Program is incorrect, " << var->print() << " should be of variable type.\n";
       }
 
-      auto i = new newTuple(var, t);
+
+      auto i = new newTuple(var, t,counter);
+      counter++;
       f->instructions.push_back(i);
     }
   };
@@ -1275,42 +1474,45 @@ namespace IR {
   template<> struct action < Function_header_rule > {
     template< typename Input >
     static void apply( const Input & in, Program & p) {
-      if (debug) std::cerr << "Recognized a Function_header rule\n";
+      if (debug) std::cerr << "Recognized a Function_header rule,\n";
+
 
       auto f = p.functions.back();
 
-      if (debug) std::cerr << "made it past grabbing the current function\n";
+      if (debug) std::cerr << "Here if the function's number of parameters: " << f->parameters.size() << "\n";
 
-      // auto type = parsed_items.front()
-      // parsed_items.erase(parsed_items.begin());
-      // auto fname = parsed_items.front()
-      // parsed_items.erase(parsed_items.begin());
-      // ^ i think the above should have already have been taken care of.
+      // if (debug) std::cerr << "made it past grabbing the current function\n";
 
-      /*
-      There should be an even number of items in the parsed_items stack now, a function definition
-      is made up of (type var) starred.
-      */
+      // // auto type = parsed_items.front()
+      // // parsed_items.erase(parsed_items.begin());
+      // // auto fname = parsed_items.front()
+      // // parsed_items.erase(parsed_items.begin());
+      // // ^ i think the above should have already have been taken care of.
 
-      if (debug) std::cerr << "parsed_items has size " << parsed_items.size() << " before the while loop\n";
+      // /*
+      // There should be an even number of items in the parsed_items stack now, a function definition
+      // is made up of (type var) starred.
+      // */
 
-      while (!parsed_items.empty()) {
-        auto type = parsed_items.front();         // it seems like we aren't currently doing anything with this
-        if (debug) std::cerr << "made it past grabbing the type " << type->print() << "\n";
-        parsed_items.erase(parsed_items.begin());
-        if (debug) std::cerr << "made it past erasing the type\n";
-        auto var_temp = parsed_items.front();
-        if (debug) std::cerr << "made it past grabbing the var " << var_temp->print() << "\n";
-        parsed_items.erase(parsed_items.begin());
-        if (debug) std::cerr << "made it past erasing the var\n";
+      // if (debug) std::cerr << "parsed_items has size " << parsed_items.size() << " before the while loop\n";
 
-        auto var = dynamic_cast<Variable*>(var_temp);
-        if (!var) {
-          if (debug) std::cerr << "Program is incorrect, " << var->print() << " should be of variable type.\n";
-        }
+      // while (!parsed_items.empty()) {
+      //   auto type = parsed_items.front();         // it seems like we aren't currently doing anything with this
+      //   if (debug) std::cerr << "made it past grabbing the type " << type->print() << "\n";
+      //   parsed_items.erase(parsed_items.begin());
+      //   if (debug) std::cerr << "made it past erasing the type\n";
+      //   auto var_temp = parsed_items.front();
+      //   if (debug) std::cerr << "made it past grabbing the var " << var_temp->print() << "\n";
+      //   parsed_items.erase(parsed_items.begin());
+      //   if (debug) std::cerr << "made it past erasing the var\n";
 
-        f->parameters.push_back(var);
-      }
+      //   auto var = dynamic_cast<Variable*>(var_temp);
+      //   if (!var) {
+      //     if (debug) std::cerr << "Program is incorrect, " << var->print() << " should be of variable type.\n";
+      //   }
+
+      //   f->parameters.push_back(var);
+      // }
 
     }
   };
