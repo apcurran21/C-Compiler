@@ -23,11 +23,6 @@ namespace LA {
   */
 
   /*
-  Counters for temporary variables, etc.
-  */
-  int64_t counter = 0;
-
-  /*
   Stack for storing the parsed items.
   */
   std::vector<Item*> parsed_items;
@@ -543,6 +538,7 @@ namespace LA {
       auto name = new Name(in.string());
       parsed_items.push_back(name);
       // if (debug) std::cerr << "pushed new Name onto, parsed_items now has size " << parsed_items.size() << "\n";
+      UniqueNameTracker::updateLongestName(in.string());
     }
   };
 
@@ -626,6 +622,7 @@ namespace LA {
 
       auto f = p.getLastFunction();
       auto name = popAndGrabBack(parsed_items);
+      // name->isVariable = true;
       auto type = popAndGrabBack(parsed_items);
 
       auto i = new Instruction_type_declaration(type, name);
@@ -644,7 +641,8 @@ namespace LA {
       auto name2 = popAndGrabBack(parsed_items);
       auto name1 = popAndGrabBack(parsed_items);
 
-      auto i = new Instruction_length(name1, name2, t);
+      auto i = new Instruction_length(name1, name2);
+      i->setIndex(t);
       f->addInstruction(i);
     }
   };
@@ -660,7 +658,7 @@ namespace LA {
       auto name1 = popAndGrabBack(parsed_items);
 
       // we can determine if name2 is a tuple later by checking if t is a nullptr
-      auto i = new Instruction_length(name1, name2, nullptr);
+      auto i = new Instruction_length(name1, name2);
       f->addInstruction(i);
     }
   };
@@ -672,8 +670,8 @@ namespace LA {
       if (debug) std::cerr << "Recognized an Instruction_call_function_assignment rule\n";
 
       auto f = p.getLastFunction();
-      auto name2 = popAndGrabFront(parsed_items);
       auto name1 = popAndGrabFront(parsed_items);
+      auto name2 = popAndGrabFront(parsed_items);
 
       auto i = new Instruction_call_function_assignment(name1, name2);
 
@@ -876,8 +874,9 @@ namespace LA {
       while (!parsed_items.empty()) {
         auto type = popAndGrabFront(parsed_items);
         if (debug) std::cerr << "made it past grabbing the type " << type->print() << "\n";
-        auto param = popAndGrabFront(parsed_items);
-        if (debug) std::cerr << "made it past grabbing the var " << param->print() << "\n";
+        auto name = popAndGrabFront(parsed_items);
+        if (debug) std::cerr << "made it past grabbing the var " << name->print() << "\n";
+        auto param = new Parameter(type, name);
         f->addParameter(param);
       }
 

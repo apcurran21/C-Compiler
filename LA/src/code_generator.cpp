@@ -1,62 +1,127 @@
 #include "code_generator.h"
-
 using namespace std;
 
 // use 1 for debug statements, 0 for no printing
 // int debug = 1;
 
 namespace LA {
-    // void newArray::gen(Function *f, std::ofstream &outputFile){
 
-    // }
-    // void arrLength::gen(Function *f,std::ofstream &outputFile){
-    //     auto array = f->variableNameToArray[this->arr->name];
-    //     auto number = dynamic_cast<Number *>(this->dim);
-    //     int offset_val = 8*(std::stoi(number->value)+1);
-    //     outputFile<<"%offset <-"<<offset_val<<"\n\t";
-    //     outputFile<<"%address <-"<<"%m + %offset"<<"\n\t";
-    //     outputFile<<this->dst->name<<" <- load %address"<<"\n\t";
-    // };
-    // void storeInstruction::gen(Function *f,std::ofstream &outputFile){
-      
-    // }
+  void GenVisitor::visit(Instruction_type_declaration* i, std::ofstream &outputFile) {
+    outputFile << i->type->print() << " " << i->name->print() << "\n";
+  }
 
+  void GenVisitor::visit(Instruction_assignment* i, std::ofstream &outputFile) {
+    outputFile << i->dest->print() << " <- " << i->src->print() << "\n";
+  }
 
+  void GenVisitor::visit(Instruction_length* i, std::ofstream &outputFile) {
+    outputFile << i->dest->print() << " <- length " << i->src->print();
+    if (i->t) outputFile << " " << i->t->print();
+    outputFile << "\n";
+  }
+
+  void GenVisitor::visit(Instruction_call_function* i, std::ofstream &outputFile) {
+    outputFile << "call " << i->callee->print() << " (";
+    for (int j = 0; j < i->args.size(); j++) {
+      outputFile << " " << i->args[j]->print();
+      if (j < (i->args.size() - 1)) outputFile << ",";
+    }
+    outputFile << " )\n";
+  }
+
+  void GenVisitor::visit(Instruction_call_function_assignment* i, std::ofstream &outputFile) {
+    outputFile << i->dest->print() << " <- call " << i->callee->print() << " (";
+    for (int j = 0; j < i->args.size(); j++) {
+      outputFile << " " << i->args[j]->print();
+      if (j < (i->args.size() - 1)) outputFile << ",";
+    }
+    outputFile << " )\n";
+  }
+
+  void GenVisitor::visit(Instruction_initialization* i, std::ofstream &outputFile) {
+    outputFile << i->dest->print() << " <- new ";
+    switch (i->type) {
+      case CollectionEnum::Array:
+        outputFile << "Array";
+        break;
+      case CollectionEnum::Tuple:
+        outputFile << "Tuple";
+        break;
+    }
+    outputFile << "(";
+    for (int j = 0; j < i->args.size(); j++) {
+      outputFile << " " << i->args[j]->print();
+      if (j < (i->args.size() - 1)) outputFile << ",";
+    }
+    outputFile << " )\n";
+  }
+
+  void GenVisitor::visit(Instruction_operation* i, std::ofstream &outputFile) {
+    outputFile << i->name->print() << " <- " << i->t1->print() << " " << i->op->print() << " " << i->t2->print() << "\n";
+  }
+
+  void GenVisitor::visit(Instruction_store* i, std::ofstream &outputFile) {
+    outputFile << i->dest->print();
+    for (auto arg : i->args) {
+      outputFile << "[" << arg->print() << "]";
+    }
+    outputFile << " <- " << i->src->print() << "\n";
+  }
+
+  void GenVisitor::visit(Instruction_load* i, std::ofstream &outputFile) {
+    outputFile << i->dest->print() << " <- " << i->src->print();
+    for (auto arg : i->args) {
+      outputFile << "[" << arg->print() << "]";
+    }
+    outputFile << "\n";
+  }
+
+  void GenVisitor::visit(Instruction_branch_single* i, std::ofstream &outputFile) {
+    outputFile << "br " << i->label1->print() << "\n";
+  }
+
+  void GenVisitor::visit(Instruction_branch_double* i, std::ofstream &outputFile) {
+    outputFile << "br " << i->t->print() << " " << i->label1->print() << " " << i->label2->print() << "\n";
+  }
+
+  void GenVisitor::visit(Instruction_return* i, std::ofstream &outputFile) {
+    outputFile << "return\n";
+  }
+
+  void GenVisitor::visit(Instruction_return_value* i, std::ofstream &outputFile) {
+    outputFile << "return " << i->t->print() <<"\n";
+  }
+
+  void GenVisitor::visit(Instruction_label* i, std::ofstream &outputFile) {
+    outputFile << i->label->print() <<"\n";
+  }
+
+  /*
+  IR code generation.
+  */
   void generate_code(Program& p) {
-    // /* 
-    //  * Open the output file.
-    //  */ 
-    // std::ofstream outputFile;
-    // outputFile.open("prog.L3");
+    std::ofstream outputFile;
+    outputFile.open("prog.IR");
+    auto gen_visitor = new GenVisitor();
 
-    /*
-    Gen the entry point label
-    */
-    // outputFile << "" << entry_lab << "\n";
- 
-    // for (Function *fptr : p.functions) {
 
-    //   std::string fname = fptr->functionName;
+    for (auto f: p.getFunctions()) {
+      outputFile << "define " << f->returnType->print() << " " << f->functionName->print() << " (";
+      
+      for (int j = 0; j < f->parameters.size(); j++) {
+        outputFile << " " << f->parameters[j]->print();
+        if (j < (f->parameters.size() - 1)) outputFile << ",";
+      }
+      
+      outputFile << " ) {\n";
 
-    //   outputFile << "define @" << fname << " (";
-    //   for (auto var:fptr->parameters){
-    //     outputFile<<var->name<<" ";
-    //   }
-    //   outputFile<<") {";
- 
-    //    for (Instruction *iptr : fptr->instructions) {
-    //     // iptr->accept(myColorVisitor);
-    //       iptr->gen(fptr, outputFile);
-    //     }
-    //   }
-    //   outputFile<<")\n";
-    // }
-    // outputFile << ")\n";
+      for (auto i: f->instructions) {
+        i->accept(gen_visitor, outputFile);
+      }
 
-    // if (debug) std::cerr << "Finished code generation!" << std::endl;
-    // outputFile.close();
-   
-    return ;
+      outputFile << "}\n\n";
+    }
   }
 }
+
 

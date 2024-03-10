@@ -13,6 +13,26 @@
 namespace LA {
 
     /*
+    Unique naming utility.
+    */
+    int64_t UniqueNameTracker::counter = 0;
+    std::string UniqueNameTracker::longest_name = "";
+
+    std::string UniqueNameTracker::getLongestName() {
+        return longest_name;
+    }
+
+    void UniqueNameTracker::updateLongestName(const std::string& new_name) {
+        if (new_name.size() > longest_name.size()) longest_name = new_name;
+    }
+
+    std::string UniqueNameTracker::getUniqueName() {
+        std::string new_name = longest_name + "___" + std::to_string(counter);
+        counter++;
+        return new_name;
+    }
+
+    /*
     Utilities for the Operation enums and other strings
     */
     OperationEnum stringToOperation(const std::string& str) {
@@ -99,6 +119,14 @@ namespace LA {
         return std::to_string(value);
     }
 
+    std::string Number::gen() const {
+        return print();
+    }
+
+    void Number::encode() {
+        value = ( value * 2 ) + 1;
+    }
+
     /*
     Name
     */
@@ -109,6 +137,10 @@ namespace LA {
 
     std::string Name::print() const {
         return value;
+    }
+
+    std::string Name::gen() const {
+        return print();
     }
 
     /*
@@ -161,6 +193,11 @@ namespace LA {
         return res;
     }
 
+    std::string Operation::gen() const {
+        return print();
+    }
+
+
     OperationEnum Operation::get_operation() const {
         return value;
     }
@@ -197,6 +234,10 @@ namespace LA {
         return res;
     }
 
+    std::string Type::gen() const {
+        return print();
+    }
+
     TypeEnum Type::get_type() const {
         return value;
     }
@@ -221,6 +262,27 @@ namespace LA {
         return value;
     }
 
+    std::string Label::gen() const {
+        return print();
+    }
+
+    /*
+    Parameter
+    */
+    Parameter::Parameter(Item* type, Item* name) :
+        type(type),
+        name(name)
+    {
+    }
+
+    std::string Parameter::print() const {
+        return type->print() + " " + name->print();
+    }
+
+    std::string Parameter::gen() const {
+        return print();
+    }
+
 
     /*
     Instructions
@@ -231,22 +293,60 @@ namespace LA {
     {
     }
 
+    void Instruction_type_declaration::accept(Visitor *visitor) {
+        visitor->visit(this);
+    }
+
+    void Instruction_type_declaration::accept(FileVisitor *visitor, std::ofstream &outputFile) {
+        visitor->visit(this, outputFile);
+    }
+
+
     Instruction_assignment::Instruction_assignment(Item *dest, Item *src) :
         dest(dest),
         src(src)
     {
     }
 
-    Instruction_length::Instruction_length(Item *name1, Item *name2, Item *t) :
-        Instruction_assignment(name1, name2),
-        t(t)
+    void Instruction_assignment::accept(Visitor *visitor) {
+        visitor->visit(this);
+    }
+
+    void Instruction_assignment::accept(FileVisitor *visitor, std::ofstream &outputFile) {
+        visitor->visit(this, outputFile);
+    }
+
+
+    Instruction_length::Instruction_length(Item *name1, Item *name2) :
+        Instruction_assignment(name1, name2)
     {
+    }
+
+    void Instruction_length::accept(Visitor *visitor) {
+        visitor->visit(this);
+    }
+
+    void Instruction_length::accept(FileVisitor *visitor, std::ofstream &outputFile) {
+        visitor->visit(this, outputFile);
+    }
+
+    void Instruction_length::setIndex(Item *index) {
+        t = index;
     }
 
     Instruction_call_function::Instruction_call_function(Item *name1) :
         callee(name1)
     {
     }
+    
+    void Instruction_call_function::accept(Visitor *visitor) {
+        visitor->visit(this);
+    }
+
+    void Instruction_call_function::accept(FileVisitor *visitor, std::ofstream &outputFile) {
+        visitor->visit(this, outputFile);
+    }
+
 
     void Instruction_call_function::addArg(Item* arg) {
         args.push_back(arg);
@@ -258,11 +358,29 @@ namespace LA {
     {
     }
 
+    void Instruction_call_function_assignment::accept(Visitor *visitor) {
+        visitor->visit(this);
+    }
+
+    void Instruction_call_function_assignment::accept(FileVisitor *visitor, std::ofstream &outputFile) {
+        visitor->visit(this, outputFile);
+    }
+
+
     Instruction_initialization::Instruction_initialization(Item *name, CollectionEnum type) :
         dest(name),
         type(type)
     {
     }
+
+    void Instruction_initialization::accept(Visitor *visitor) {
+        visitor->visit(this);
+    }
+
+    void Instruction_initialization::accept(FileVisitor *visitor, std::ofstream &outputFile) {
+        visitor->visit(this, outputFile);
+    }
+
 
     void Instruction_initialization::addArg(Item* arg) {
         args.push_back(arg);
@@ -273,6 +391,15 @@ namespace LA {
     {
     }
 
+    void Instruction_store::accept(Visitor *visitor) {
+        visitor->visit(this);
+    }
+
+    void Instruction_store::accept(FileVisitor *visitor, std::ofstream &outputFile) {
+        visitor->visit(this, outputFile);
+    }
+
+
     void Instruction_store::addArg(Item* arg) {
         args.push_back(arg);
     }
@@ -280,6 +407,14 @@ namespace LA {
     Instruction_load::Instruction_load (Item *name1, Item *name2) :
         Instruction_assignment(name1, name2)
     {
+    }
+
+    void Instruction_load::accept(Visitor *visitor) {
+        visitor->visit(this);
+    }
+
+    void Instruction_load::accept(FileVisitor *visitor, std::ofstream &outputFile) {
+        visitor->visit(this, outputFile);
     }
 
     void Instruction_load::addArg(Item* arg) {
@@ -294,10 +429,26 @@ namespace LA {
     {
     }
 
+    void Instruction_operation::accept(Visitor *visitor) {
+        visitor->visit(this);
+    }
+
+    void Instruction_operation::accept(FileVisitor *visitor, std::ofstream &outputFile) {
+        visitor->visit(this, outputFile);
+    }
+
     Instruction_branch_single::Instruction_branch_single (Item *label1) :
         label1(label1)
     {
-    }   
+    }
+
+    void Instruction_branch_single::accept(Visitor *visitor) {
+        visitor->visit(this);
+    }
+    
+    void Instruction_branch_single::accept(FileVisitor *visitor, std::ofstream &outputFile) {
+        visitor->visit(this, outputFile);
+    }
 
     Instruction_branch_double::Instruction_branch_double (Item *t, Item *label1, Item *label2) :
         t(t),
@@ -306,13 +457,51 @@ namespace LA {
     {
     }
 
+    void Instruction_branch_double::accept(Visitor *visitor) {
+        visitor->visit(this);
+    }
+
+    void Instruction_branch_double::accept(FileVisitor *visitor, std::ofstream &outputFile) {
+        visitor->visit(this, outputFile);
+    }
+
+
     Instruction_return::Instruction_return ()
     {
+    }
+
+    void Instruction_return::accept(Visitor *visitor) {
+        visitor->visit(this);
+    }
+
+    void Instruction_return::accept(FileVisitor *visitor, std::ofstream &outputFile) {
+        visitor->visit(this, outputFile);
     }
 
     Instruction_return_value::Instruction_return_value (Item *t) :
         t(t)
     {
+    }
+
+    void Instruction_return_value::accept(Visitor *visitor) {
+        visitor->visit(this);
+    }
+
+    void Instruction_return_value::accept(FileVisitor *visitor, std::ofstream &outputFile) {
+        visitor->visit(this, outputFile);
+    }
+
+    Instruction_label::Instruction_label(Item *label) :
+        label(label)
+    {
+    }
+
+    void Instruction_label::accept(Visitor *visitor) {
+        visitor->visit(this);
+    }
+
+    void Instruction_label::accept(FileVisitor *visitor, std::ofstream &outputFile) {
+        visitor->visit(this, outputFile);
     }
 
 
@@ -329,7 +518,7 @@ namespace LA {
         instructions.push_back(new_instruction);
     }
 
-    void Function::addParameter(Item *param) {
+    void Function::addParameter(Parameter *param) {
         parameters.push_back(param);
     }
 
@@ -347,6 +536,10 @@ namespace LA {
 
     int64_t Program::getSize() {
         return functions.size();
+    }
+
+    const std::vector<Function*>& Program::getFunctions() const {
+        return functions;
     }
 
 

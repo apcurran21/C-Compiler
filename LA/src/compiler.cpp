@@ -15,6 +15,7 @@
 
 #include "parser.h"
 #include "code_generator.h"
+#include "encode.h"
 #include "LA.h"
 
 
@@ -28,7 +29,7 @@ int main(
   int argc, 
   char **argv
   ){
-  auto enable_code_generator = false;
+  auto enable_code_generator = true;
   int32_t optLevel = 0;
   bool verbose;
 
@@ -80,6 +81,24 @@ int main(
 
     std::cout << "Done.\n\n";
   }
+
+
+  /*
+  Encode the program according to our encoding scheme.
+  */
+  LA::encode_program(p);
+
+
+  /*
+  Check the program for memory/other errors.
+  */
+
+
+  /*
+  Break the program into basic blocks.
+  */
+
+
 
   /*
    * Generate LA code.

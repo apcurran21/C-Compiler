@@ -1,0 +1,26 @@
+define void main ( ) {
+call print ( 3 )
+int64 j
+j <- 1
+j <- call f ( 3 )
+int64 print___0
+print___0 <- 1
+print___0 <- j
+print___0 <- print___0 >> 1
+int64 print___1
+print___1 <- 1
+print___1 <- 9
+print___1 <- print___1 >> 1
+j <- print___0 + print___1
+j <- j << 1
+j <- j + 1
+call print ( j )
+return
+}
+
+define int64 f ( int64 num ) {
+int64 i
+i <- 1
+return i
+}
+
