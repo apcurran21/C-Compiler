@@ -28,8 +28,8 @@ namespace IR{
         auto array = this->arr;
         auto number = dynamic_cast<Number *>(this->dim);
         int offset_val = 8*(number->value+1);
-        outputFile<<"%offset <-"<<offset_val<<"\n\t";
-        outputFile<<"%address <- "<< array->print() <<" + %offset"<<"\n\t";
+        outputFile<<"%offsetPERSONAL <-"<<offset_val<<"\n\t";
+        outputFile<<"%address <- "<< array->print() <<" + %offsetPERSONAL"<<"\n\t";
         outputFile<<this->dst->name<<" <- load %address"<<"\n\t";
     }
     void Assignment::gen(Function *f,std::ofstream &outputFile){
@@ -78,17 +78,17 @@ namespace IR{
             iter++;
         }
 
-        outputFile << "%offset <- "<<0<<"\n\t";
+        outputFile << "%offsetPERSONAL <- "<<0<<"\n\t";
         for (int i =0;i<toMultiply.size();i++){
           outputFile<< "%offset_temp <- "<<index_args_vec[i]->print()<<"\n\t";
           for (int j = i+1;j<toMultiply.size();j++){
             outputFile << "%offset_temp <- %offset_temp * "<<toMultiply[j]<<"\n\t";
           }
-          outputFile<<"%offset <- %offset + %offset_temp"<<"\n\t";
+          outputFile<<"%offsetPERSONAL <- %offsetPERSONAL + %offset_temp"<<"\n\t";
         }
-        outputFile << "%temp <- %offset * 8"<<"\n\t";
-        outputFile<<"%temp <- %temp + "<<8 * (1+toMultiply.size())<< "\n\t";
-        outputFile << "%addr"<< "<- "<< key << " + %temp"<<"\n\t";
+        outputFile << "%tempOFFSET <- %offsetPERSONAL * 8"<<"\n\t";
+        outputFile<<"%tempOFFSET <- %tempOFFSET + "<<8 * (1+toMultiply.size())<< "\n\t";
+        outputFile << "%addr"<< "<- "<< key << " + %tempOFFSET"<<"\n\t";
         outputFile << this->dst->print()<< "<- load %addr"<<"\n\t";
       } else {
         // we need to iterate the count somehow 
@@ -135,18 +135,18 @@ namespace IR{
             iter++;
         }
 
-        outputFile << "%offset <- "<<0<<"\n\t";
+        outputFile << "%offsetPERSONAL <- "<<0<<"\n\t";
         for (int i =0;i<toMultiply.size();i++){
           outputFile<< "%offset_temp <- "<<index_args_vec[i]->print()<<"\n\t";
           for (int j = i+1;j<toMultiply.size();j++){
             outputFile << "%offset_temp <- %offset_temp * "<<toMultiply[j]<<"\n\t";
           }
-          outputFile<<"%offset <- %offset + %offset_temp"<<"\n\t";
+          outputFile<<"%offsetPERSONAL <- %offsetPERSONAL + %offset_temp"<<"\n\t";
         }
         
-        outputFile << "%temp <- %offset * 8"<<"\n\t";
-        outputFile<<"%temp <- %temp + "<<8 * (1+toMultiply.size())<< "\n\t";
-        outputFile << "%addr"<< "<- "<< dst->print() << " + %temp"<<"\n\t";
+        outputFile << "%tempOFFSET <- %offsetPERSONAL * 8"<<"\n\t";
+        outputFile<<"%tempOFFSET <- %tempOFFSET + "<<8 * (1+toMultiply.size())<< "\n\t";
+        outputFile << "%addr"<< "<- "<< dst->print() << " + %tempOFFSET"<<"\n\t";
         outputFile << "store %addr"<<"<- "<<var->print()<<"\n\t";
       } else {
         auto tuple = f->variableNameToTuple[this->dst->print()];
