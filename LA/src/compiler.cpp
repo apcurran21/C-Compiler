@@ -17,6 +17,7 @@
 #include "code_generator.h"
 #include "encode.h"
 #include "check_memory.h"
+#include "create_basicblocks.h"
 #include "LA.h"
 
 
@@ -98,7 +99,7 @@ int main(
   /*
   Break the program into basic blocks.
   */
-
+  LA::create_basicblocks(p);
 
 
   /*

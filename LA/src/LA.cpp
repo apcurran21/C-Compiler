@@ -267,7 +267,11 @@ namespace LA {
     }
 
     std::string Label::gen() const {
-        return print();
+        std::string res = print();
+        if (!res.empty() && res[0] != ':') {
+            res = ":" + res;
+        }
+        return res;
     }
 
     /*

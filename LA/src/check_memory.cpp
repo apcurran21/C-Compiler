@@ -37,8 +37,8 @@ namespace LA {
         auto equals_op = new Operation(OperationEnum::eq);
         auto i3 = new Instruction_operation(temp_var, array_variable, equals_op, number_zero);
         output.push_back(i3);
-        auto error_label = new Name(UniqueNameTracker::getUniqueName() + "_ERROR"); 
-        auto correct_label = new Name(UniqueNameTracker::getUniqueName() + "_CORRECT"); 
+        auto error_label = new Label(UniqueNameTracker::getUniqueName() + "_ERROR"); 
+        auto correct_label = new Label(UniqueNameTracker::getUniqueName() + "_CORRECT"); 
         auto i4 = new Instruction_branch_double(temp_var, error_label, correct_label);
         output.push_back(i4);
         auto i5 = new Instruction_label(error_label);
@@ -144,7 +144,7 @@ namespace LA {
         auto temp_var1 = new Name(UniqueNameTracker::getUniqueName());
         auto i6 = new Instruction_operation(temp_var1, index, less_op, length_var);
         output.push_back(i6);
-        auto correct_label1 = new Name(UniqueNameTracker::getUniqueName() + "_CORRECT");
+        auto correct_label1 = new Label(UniqueNameTracker::getUniqueName() + "_CORRECT");
         auto i7 = new Instruction_branch_double(temp_var1, correct_label1, error_label);
         output.push_back(i7);
         auto i8 = new Instruction_label(correct_label1);
