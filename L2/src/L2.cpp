@@ -124,9 +124,7 @@ namespace L2 {
                         printFunction(fptr);
                     }
                     stack_counter++;
-
                 }   
-
             }
 
         }
@@ -1069,7 +1067,11 @@ namespace L2 {
 
         if (replaceT) {
             t = this->replacementVariable;
-            this->spilledRHS = true;
+            auto varD = dynamic_cast<Variable*>(instruction->dst);
+            auto varT = dynamic_cast<Variable*>(instruction->t);
+            if (varD->name != varT->name){
+                this->spilledRHS = true;
+            }
         } else {
             auto varT = dynamic_cast<Variable*>(instruction->t);
             if (varT && varMap.find(varT->name) != varMap.end()) {
